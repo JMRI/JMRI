@@ -293,7 +293,7 @@ public class LayoutTurntable extends LayoutTrack {
     public Point2D getCoordsForConnectionType(int locationType) {
         Point2D result = getCoordsCenter();
         if (TURNTABLE_CENTER == locationType) {
-            // nothing to do here, move along...
+            // nothing to see here, move along...
             // (results are already correct)
         } else if (locationType >= TURNTABLE_RAY_OFFSET) {
             result = getRayCoordsIndexed(locationType - TURNTABLE_RAY_OFFSET);
@@ -805,7 +805,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void reCheckBlockBoundary() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -813,7 +813,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected List<LayoutConnectivity> getLayoutConnectivity() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
         return null;
     }
 
@@ -839,7 +839,7 @@ public class LayoutTurntable extends LayoutTrack {
     public boolean checkForUnAssignedBlocks() {
         // Layout turnouts get their block information from the
         // track segments attached to their rays so...
-        // nothing to do here... move along...
+        // nothing to see here... move along...
         return true;
     }
 
@@ -874,7 +874,7 @@ public class LayoutTurntable extends LayoutTrack {
                             Set<String> tracksSet = blockToTracksSetMap.get(blockName);
                             // this should never be null... but just in case...
                             if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                                log.info("•    add track '{}'for block '{}'", getName(), blockName);
+                                log.debug("•    add track '{}'for block '{}'", getName(), blockName);
                                 tracksSet.add(getName());
                             }
                             result = false;
@@ -882,13 +882,13 @@ public class LayoutTurntable extends LayoutTrack {
                             boolean check = true;
                             Set<String> tracksSet = blockToTracksSetMap.get(blockName);
                             if (tracksSet == null) { // (#2)
-                                log.info("•New block ('{}') tracksSet", blockName);
+                                log.debug("•New block ('{}') tracksSet", blockName);
                                 tracksSet = new LinkedHashSet<>();
-                                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                                 tracksSet.add(getName());
                                 blockToTracksSetMap.put(blockName, tracksSet);
                             } else if (!tracksSet.contains(getName())) {   // (#3)
-                                log.info("•    add track '{}'for block '{}'", getName(), blockName);
+                                log.debug("•    add track '{}'for block '{}'", getName(), blockName);
                                 tracksSet.add(getName());
                                 badBlocks.add(blockName);
                                 result = false;
@@ -924,7 +924,7 @@ public class LayoutTurntable extends LayoutTrack {
                         if (blk.equals(blockName)) {
                             // if we're not already in tracksSet...
                             if (!tracksSet.contains(getName())) {
-                                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                                 tracksSet.add(getName());  // add us (#1)
                             }
                             if (!tracksSet.contains(ts.getName())) {

@@ -1346,7 +1346,7 @@ public class PositionablePoint extends LayoutTrack {
 
     protected void drawTurnoutControls(Graphics2D g2) {
         // PositionablePoints don't have turnout controls...
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1478,7 +1478,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public boolean checkForUnAssignedBlocks() {
         // Positionable Points don't have blocks so…
-        // nothing to do here... move along...
+        // nothing to see here... move along...
         return true;
     }
 
@@ -1514,23 +1514,23 @@ public class PositionablePoint extends LayoutTrack {
                     Set<String> tracksSet = blockToTracksSetMap.get(blk1);
                     // this should never be null... but just in case...
                     if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                        log.info("•    add track '{}'for block '{}'", getName(), blk1);
+                        log.debug("•    add track '{}'for block '{}'", getName(), blk1);
                         tracksSet.add(getName());
                     }
                     result = false;
                 } else {
                     Set<String> tracksSet = blockToTracksSetMap.get(blk1);
                     if (tracksSet == null) { // (#2)
-                        log.info("•New block ('{}') tracksSet", blk1);
+                        log.debug("•New block ('{}') tracksSet", blk1);
                         tracksSet = new LinkedHashSet<>();
-                        log.info("•    Add track '{}'for block '{}'", getName(), blk1);
+                        log.debug("•    Add track '{}'for block '{}'", getName(), blk1);
                         tracksSet.add(getName());
                         blockToTracksSetMap.put(blk1, tracksSet);
                         if (connect1 != null) {
                             result &= connect1.checkForNonContiguousBlocks(blk1, tracksSet);
                         }
                     } else if (!tracksSet.contains(getName())) {   // (#3)
-                        log.info("•    add track '{}'for block '{}'", getName(), blk1);
+                        log.debug("•    add track '{}'for block '{}'", getName(), blk1);
                         tracksSet.add(getName());
                         badBlocksSet.add(blk1);
                         result = false;
@@ -1550,7 +1550,7 @@ public class PositionablePoint extends LayoutTrack {
                         Set<String> tracksSet = blockToTracksSetMap.get(blk2);
                         // this should never be null... but just in case...
                         if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                            log.info("•    add track '{}'for block '{}'", getName(), blk2);
+                            log.debug("•    add track '{}'for block '{}'", getName(), blk2);
                             tracksSet.add(getName());
                         }
                         result = false;
@@ -1558,15 +1558,15 @@ public class PositionablePoint extends LayoutTrack {
                         boolean check = true;
                         Set<String> tracksSet = blockToTracksSetMap.get(blk2);
                         if (tracksSet == null) { // (#2)
-                            log.info("•New block ('{}') tracksSet", blk2);
+                            log.debug("•New block ('{}') tracksSet", blk2);
                             tracksSet = new LinkedHashSet<>();
-                            log.info("•    Add track '{}'for block '{}'", getName(), blk2);
+                            log.debug("•    Add track '{}'for block '{}'", getName(), blk2);
                             tracksSet.add(getName());
                             blockToTracksSetMap.put(blk2, tracksSet);
                         } else // if blk1 didn't already put us in its track set
                         if (!blk1.equals(blk2)) {
                             if (!tracksSet.contains(getName())) {    // (#3)
-                                log.info("•    add track '{}'for block '{}'", getName(), blk2);
+                                log.debug("•    add track '{}'for block '{}'", getName(), blk2);
                                 tracksSet.add(getName());
                                 badBlocksSet.add(blk2);
                                 result = false;
@@ -1601,7 +1601,7 @@ public class PositionablePoint extends LayoutTrack {
             if (blk1.equals(blockName)) {
                 // if we're not in tracksSet...
                 if (!tracksSet.contains(getName())) {
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                     tracksSet.add(getName());  // add us
                 }
                 // this should never be null... but just in case...
@@ -1620,7 +1620,7 @@ public class PositionablePoint extends LayoutTrack {
             if (blk2.equals(blockName)) {
                 // if we're not in tracksSet...
                 if (!tracksSet.contains(getName())) {
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                     tracksSet.add(getName());  // add us
                 }
                 // this should never be null... but just in case...

@@ -411,14 +411,29 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public String getBlockBName() {
+        if (blockBName == null) {
+            if (getLayoutBlockB() != null) {
+                blockBName = getLayoutBlockB().getId();
+            }
+        }
         return blockBName;
     }
 
     public String getBlockCName() {
+        if (blockCName == null) {
+            if (getLayoutBlockC() != null) {
+                blockCName = getLayoutBlockC().getId();
+            }
+        }
         return blockCName;
     }
 
     public String getBlockDName() {
+        if (blockDName == null) {
+            if (getLayoutBlockD() != null) {
+                blockDName = getLayoutBlockD().getId();
+            }
+        }
         return blockDName;
     }
 
@@ -1492,7 +1507,9 @@ public class LayoutTurnout extends LayoutTrack {
     public void setLayoutBlockB(LayoutBlock b) {
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == RH_XOVER)) {
+                || (getTurnoutType() == RH_XOVER)
+                || (getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
             blockB = b;
             if (b != null) {
                 blockBName = b.getId();
@@ -1507,7 +1524,9 @@ public class LayoutTurnout extends LayoutTrack {
     public void setLayoutBlockC(LayoutBlock b) {
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == RH_XOVER)) {
+                || (getTurnoutType() == RH_XOVER)
+                || (getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
             blockC = b;
             if (b != null) {
                 blockCName = b.getId();
@@ -1522,7 +1541,9 @@ public class LayoutTurnout extends LayoutTrack {
     public void setLayoutBlockD(LayoutBlock b) {
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == RH_XOVER)) {
+                || (getTurnoutType() == RH_XOVER)
+                || (getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
             blockD = b;
             if (b != null) {
                 blockDName = b.getId();
@@ -1541,7 +1562,9 @@ public class LayoutTurnout extends LayoutTrack {
     public void setLayoutBlockBByName(@Nonnull String name) {
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == RH_XOVER)) {
+                || (getTurnoutType() == RH_XOVER)
+                || (getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
             blockBName = name;
         } else {
             log.error("Attempt to set block B name, but not a crossover");
@@ -1551,7 +1574,9 @@ public class LayoutTurnout extends LayoutTrack {
     public void setLayoutBlockCByName(@Nonnull String name) {
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == RH_XOVER)) {
+                || (getTurnoutType() == RH_XOVER)
+                || (getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
             blockCName = name;
         } else {
             log.error("Attempt to set block C name, but not a crossover");
@@ -1561,7 +1586,9 @@ public class LayoutTurnout extends LayoutTrack {
     public void setLayoutBlockDByName(@Nonnull String name) {
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == RH_XOVER)) {
+                || (getTurnoutType() == RH_XOVER)
+                || (getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
             blockDName = name;
         } else {
             log.error("Attempt to set block D name, but not a crossover");
@@ -1573,6 +1600,8 @@ public class LayoutTurnout extends LayoutTrack {
      * connecting track segment is mainline Defaults to not mainline if
      * connecting track segment is missing
      */
+    
+
     public boolean isMainlineA() {
         if (connectA != null) {
             return ((TrackSegment) connectA).isMainline();
@@ -1584,6 +1613,11 @@ public class LayoutTurnout extends LayoutTrack {
                 // All crossovers - straight continuing is B
                 if (connectB != null) {
                     return ((TrackSegment) connectB).isMainline();
+                }
+            } else if ((getTurnoutType() == SINGLE_SLIP)
+                    || (getTurnoutType() == DOUBLE_SLIP)) {
+                if (connectD != null) {
+                    return ((TrackSegment) connectD).isMainline();
                 }
             } // must be RH, LH, or WYE turnout - A is the switch throat
             else if (((connectB != null)
@@ -1607,6 +1641,10 @@ public class LayoutTurnout extends LayoutTrack {
                 // All crossovers - straight continuing is A
                 if (connectA != null) {
                     return ((TrackSegment) connectA).isMainline();
+                }
+            } else if (getTurnoutType() == DOUBLE_SLIP) {
+                if (connectD != null) {
+                    return ((TrackSegment) connectD).isMainline();
                 }
             } // must be RH, LH, or WYE turnout - A is the switch throat,
             //      B is normally the continuing straight
@@ -1632,6 +1670,10 @@ public class LayoutTurnout extends LayoutTrack {
                 if (connectD != null) {
                     return ((TrackSegment) connectD).isMainline();
                 }
+            } else if (getTurnoutType() == DOUBLE_SLIP) {
+                if (connectB != null) {
+                    return ((TrackSegment) connectB).isMainline();
+                }
             } // must be RH, LH, or WYE turnout - A is the switch throat,
             //      B is normally the continuing straight
             else if (continuingSense == Turnout.THROWN) {
@@ -1648,6 +1690,11 @@ public class LayoutTurnout extends LayoutTrack {
         // this is a crossover turnout
         if (connectD != null) {
             return ((TrackSegment) connectD).isMainline();
+        } else if ((getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
+            if (connectB != null) {
+                return ((TrackSegment) connectB).isMainline();
+            }
         } else if (connectC != null) {
             return ((TrackSegment) connectC).isMainline();
         }
@@ -2097,7 +2144,7 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == LH_TURNOUT)
                 || (getTurnoutType() == WYE_TURNOUT)) {
             if (getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED) {
-                log.debug("Block " + blockName + "is Occupied");
+                log.debug("Block " + getBlockName() + "is Occupied");
                 return true;
             }
         }
@@ -2108,12 +2155,12 @@ public class LayoutTurnout extends LayoutTrack {
             if (getTurnout().getKnownState() == Turnout.CLOSED) {
                 if ((getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED)
                         && (getLayoutBlockB().getOccupancy() == LayoutBlock.OCCUPIED)) {
-                    log.debug("Blocks " + blockName + " & " + blockBName + " are Occupied");
+                    log.debug("Blocks " + getBlockName() + " & " + getBlockBName() + " are Occupied");
                     return true;
                 }
                 if ((getLayoutBlockC().getOccupancy() == LayoutBlock.OCCUPIED)
                         && (getLayoutBlockD().getOccupancy() == LayoutBlock.OCCUPIED)) {
-                    log.debug("Blocks " + blockCName + " & " + blockDName + " are Occupied");
+                    log.debug("Blocks " + getBlockCName() + " & " + getBlockDName() + " are Occupied");
                     return true;
                 }
             }
@@ -2124,7 +2171,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (getTurnout().getKnownState() == Turnout.THROWN) {
                 if ((getLayoutBlockB().getOccupancy() == LayoutBlock.OCCUPIED)
                         && (getLayoutBlockD().getOccupancy() == LayoutBlock.OCCUPIED)) {
-                    log.debug("Blocks " + blockBName + " & " + blockDName + " are Occupied");
+                    log.debug("Blocks " + getBlockBName() + " & " + getBlockDName() + " are Occupied");
                     return true;
                 }
             }
@@ -2135,7 +2182,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (getTurnout().getKnownState() == Turnout.THROWN) {
                 if ((getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED)
                         && (getLayoutBlockC().getOccupancy() == LayoutBlock.OCCUPIED)) {
-                    log.debug("Blocks " + getLayoutBlock() + " & " + blockCName + " are Occupied");
+                    log.debug("Blocks " + getLayoutBlock() + " & " + getBlockCName() + " are Occupied");
                     return true;
                 }
             }
@@ -2298,7 +2345,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             jmi.setEnabled(false);
 
-            if (blockName.isEmpty()) {
+            if (getBlockName().isEmpty()) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
             } else {
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
@@ -2493,7 +2540,7 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(ssaa);
                 }
             }
-            if (!blockName.isEmpty()) {
+            if (!getBlockName().isEmpty()) {
                 final String[] boundaryBetween = getBlockBoundaries();
                 boolean blockBoundaries = false;
                 for (int i = 0; i < 4; i++) {
@@ -2502,7 +2549,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
                 if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-                    if (blockBName.isEmpty() && blockCName.isEmpty() && blockDName.isEmpty()) {
+                    if (getBlockBName().isEmpty() && getBlockCName().isEmpty() && getBlockDName().isEmpty()) {
                         popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -2512,44 +2559,44 @@ public class LayoutTurnout extends LayoutTrack {
                         });
                     } else {
                         JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
-                        viewRouting.add(new AbstractAction(blockName) {
+                        viewRouting.add(new AbstractAction(getBlockName()) {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, getLayoutBlock());
+                                AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getBlockName(), getLayoutBlock());
                                 routeTableAction.actionPerformed(e);
                             }
                         });
-                        if (!blockBName.isEmpty()
-                                && !blockBName.equals(blockName)) {
-                            viewRouting.add(new AbstractAction(blockBName) {
+                        if (!getBlockBName().isEmpty()
+                                && !getBlockBName().equals(getBlockName())) {
+                            viewRouting.add(new AbstractAction(getBlockBName()) {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
+                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getBlockBName(), getLayoutBlockB());
                                     routeTableAction.actionPerformed(e);
                                 }
                             });
                         }
 
-                        if (!blockCName.isEmpty()
-                                && !blockCName.equals(blockName)
-                                && !blockCName.equals(blockBName)) {
-                            viewRouting.add(new AbstractAction(blockCName) {
+                        if (!getBlockCName().isEmpty()
+                                && !getBlockCName().equals(getBlockName())
+                                && !getBlockCName().equals(getBlockBName())) {
+                            viewRouting.add(new AbstractAction(getBlockCName()) {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
+                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getBlockCName(), getLayoutBlockC());
                                     routeTableAction.actionPerformed(e);
                                 }
                             });
                         }
 
-                        if (!blockDName.isEmpty()
-                                && !blockDName.equals(blockName)
-                                && !blockDName.equals(blockBName)
-                                && !blockDName.equals(blockCName)) {
-                            viewRouting.add(new AbstractAction(blockDName) {
+                        if (!getBlockDName().isEmpty()
+                                && !getBlockDName().equals(getBlockName())
+                                && !getBlockDName().equals(getBlockBName())
+                                && !getBlockDName().equals(getBlockCName())) {
+                            viewRouting.add(new AbstractAction(getBlockDName()) {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
+                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getBlockDName(), getLayoutBlockD());
                                     routeTableAction.actionPerformed(e);
                                 }
                             });
@@ -3738,84 +3785,84 @@ public class LayoutTurnout extends LayoutTrack {
          *     if so return true
          *     else add it to bad blocks set and return false
          */
-        if (blockName != null) {
-            if (badBlocksSet.contains(blockName)) { // (#1)
-                Set<String> tracksSet = blockToTracksSetMap.get(blockName);
+        if (getBlockName() != null) {
+            if (badBlocksSet.contains(getBlockName())) { // (#1)
+                Set<String> tracksSet = blockToTracksSetMap.get(getBlockName());
                 // this should never be null... but just in case...
                 if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                    log.info("•    add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("•    add track '{}'for block '{}'", getName(), getBlockName());
                     tracksSet.add(getName());
                 }
                 result = false;
             } else if (connectA != null) {
-                Set<String> tracksSet = blockToTracksSetMap.get(blockName);
+                Set<String> tracksSet = blockToTracksSetMap.get(getBlockName());
                 if (tracksSet == null) { // (#2)
-                    log.info("•New block ('{}') tracksSet", blockName);
+                    log.debug("•New block ('{}') tracksSet", getBlockName());
                     tracksSet = new LinkedHashSet<>();
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), getBlockName());
                     tracksSet.add(getName());
-                    blockToTracksSetMap.put(blockName, tracksSet);
-                    result &= connectA.checkForNonContiguousBlocks(blockName, tracksSet);
+                    blockToTracksSetMap.put(getBlockName(), tracksSet);
+                    result &= connectA.checkForNonContiguousBlocks(getBlockName(), tracksSet);
                 } else if (!tracksSet.contains(getName())) {   // (#3)
-                    log.info("•    add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("•    add track '{}'for block '{}'", getName(), getBlockName());
                     tracksSet.add(getName());
-                    badBlocksSet.add(blockName);
+                    badBlocksSet.add(getBlockName());
                     result = false;
                 }
             }
         }
 
         //check the B connection point
-        if (blockBName != null) {
-            if (badBlocksSet.contains(blockBName)) {    // (#1)
-                Set<String> tracksSet = blockToTracksSetMap.get(blockBName);
+        if (getBlockBName() != null) {
+            if (badBlocksSet.contains(getBlockBName())) {    // (#1)
+                Set<String> tracksSet = blockToTracksSetMap.get(getBlockBName());
                 // this should never be null... but just in case...
                 if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                    log.info("•    add track '{}'for block '{}'", getName(), blockBName);
+                    log.debug("•    add track '{}'for block '{}'", getName(), getBlockBName());
                     tracksSet.add(getName());
                 }
                 result = false;
             } else if (connectB != null) {
-                Set<String> tracksSet = blockToTracksSetMap.get(blockBName);
+                Set<String> tracksSet = blockToTracksSetMap.get(getBlockBName());
                 if (tracksSet == null) { // (#2)
-                    log.info("•New block ('{}') tracksSet", blockBName);
+                    log.debug("•New block ('{}') tracksSet", getBlockBName());
                     tracksSet = new LinkedHashSet<>();
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockBName);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), getBlockBName());
                     tracksSet.add(getName());
-                    blockToTracksSetMap.put(blockBName, tracksSet);
-                    result &= connectB.checkForNonContiguousBlocks(blockBName, tracksSet);
+                    blockToTracksSetMap.put(getBlockBName(), tracksSet);
+                    result &= connectB.checkForNonContiguousBlocks(getBlockBName(), tracksSet);
                 } else if (!tracksSet.contains(getName())) {   // (#3)
-                    log.info("•    add track '{}'for block '{}'", getName(), blockBName);
+                    log.debug("•    add track '{}'for block '{}'", getName(), getBlockBName());
                     tracksSet.add(getName());
-                    badBlocksSet.add(blockBName);
+                    badBlocksSet.add(getBlockBName());
                     result = false;
                 }
             }
         }
 
         //check the C connection point
-        if (blockCName != null) {
-            if (badBlocksSet.contains(blockCName)) {    // (#1)
-                Set<String> tracksSet = blockToTracksSetMap.get(blockCName);
+        if (getBlockCName() != null) {
+            if (badBlocksSet.contains(getBlockCName())) {    // (#1)
+                Set<String> tracksSet = blockToTracksSetMap.get(getBlockCName());
                 // this should never be null... but just in case...
                 if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                    log.info("•    add track '{}'for block '{}'", getName(), blockCName);
+                    log.debug("•    add track '{}'for block '{}'", getName(), getBlockCName());
                     tracksSet.add(getName());
                 }
                 result = false;
             } else if (connectC != null) {
-                Set<String> tracksSet = blockToTracksSetMap.get(blockCName);
+                Set<String> tracksSet = blockToTracksSetMap.get(getBlockCName());
                 if (tracksSet == null) { // (#2)
-                    log.info("•New block ('{}') tracksSet", blockCName);
+                    log.debug("•New block ('{}') tracksSet", getBlockCName());
                     tracksSet = new LinkedHashSet<>();
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockCName);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), getBlockCName());
                     tracksSet.add(getName());
-                    blockToTracksSetMap.put(blockCName, tracksSet);
-                    result &= connectC.checkForNonContiguousBlocks(blockCName, tracksSet);
+                    blockToTracksSetMap.put(getBlockCName(), tracksSet);
+                    result &= connectC.checkForNonContiguousBlocks(getBlockCName(), tracksSet);
                 } else if (!tracksSet.contains(getName())) {   // (#3)
-                    log.info("•    add track '{}'for block '{}'", getName(), blockCName);
+                    log.debug("•    add track '{}'for block '{}'", getName(), getBlockCName());
                     tracksSet.add(getName());
-                    badBlocksSet.add(blockCName);
+                    badBlocksSet.add(getBlockCName());
                     result = false;
                 }
             }
@@ -3827,28 +3874,28 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == RH_XOVER)
                 || (getTurnoutType() == SINGLE_SLIP)
                 || (getTurnoutType() == DOUBLE_SLIP)) {
-            if (blockDName != null) {
-                if (badBlocksSet.contains(blockDName)) {    // (#1)
-                    Set<String> tracksSet = blockToTracksSetMap.get(blockDName);
+            if (getBlockDName() != null) {
+                if (badBlocksSet.contains(getBlockDName())) {    // (#1)
+                    Set<String> tracksSet = blockToTracksSetMap.get(getBlockDName());
                     // this should never be null... but just in case...
                     if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                        log.info("•    add track '{}'for block '{}'", getName(), blockDName);
+                        log.debug("•    add track '{}'for block '{}'", getName(), getBlockDName());
                         tracksSet.add(getName());
                     }
                     result = false;
                 } else if (connectD != null) {
-                    Set<String> tracksSet = blockToTracksSetMap.get(blockDName);
+                    Set<String> tracksSet = blockToTracksSetMap.get(getBlockDName());
                     if (tracksSet == null) { // (#2)
-                        log.info("•New block ('{}') tracksSet", blockDName);
+                        log.debug("•New block ('{}') tracksSet", getBlockDName());
                         tracksSet = new LinkedHashSet<>();
-                        log.info("•    Add track '{}'for block '{}'", getName(), blockDName);
+                        log.debug("•    Add track '{}'for block '{}'", getName(), getBlockDName());
                         tracksSet.add(getName());
-                        blockToTracksSetMap.put(blockDName, tracksSet);
-                        result &= connectD.checkForNonContiguousBlocks(blockDName, tracksSet);
+                        blockToTracksSetMap.put(getBlockDName(), tracksSet);
+                        result &= connectD.checkForNonContiguousBlocks(getBlockDName(), tracksSet);
                     } else if (!tracksSet.contains(getName())) {   // (#3)
-                        log.info("•    add track '{}'for block '{}'", getName(), blockDName);
+                        log.debug("•    add track '{}'for block '{}'", getName(), getBlockDName());
                         tracksSet.add(getName());
-                        badBlocksSet.add(blockDName);
+                        badBlocksSet.add(getBlockDName());
                         result = false;
                     }
                 }
@@ -3869,7 +3916,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (this.blockName.equals(blockName)) {
             // if we're not already in tracksSet...
             if (!tracksSet.contains(getName())) {
-                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                 tracksSet.add(getName());
             }
             // if we have a neighbor and it's not in tracksSet...
@@ -3879,10 +3926,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         //check the B connection point
-        if (blockBName.equals(blockName)) {
+        if (getBlockBName().equals(blockName)) {
             // if we're not already in tracksSet...
             if (!tracksSet.contains(getName())) {
-                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                 tracksSet.add(getName());
             }
             // if we have a neighbor and it's not in tracksSet...
@@ -3892,10 +3939,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         //check the C connection point
-        if (blockCName.equals(blockName)) {
+        if (getBlockCName().equals(blockName)) {
             // if we're not already in tracksSet...
             if (!tracksSet.contains(getName())) {
-                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                 tracksSet.add(getName());
             }
             // if we have a neighbor and it's not in tracksSet...
@@ -3911,10 +3958,10 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == RH_XOVER)
                 || (getTurnoutType() == SINGLE_SLIP)
                 || (getTurnoutType() == DOUBLE_SLIP)) {
-            if (blockDName.equals(blockName)) {
+            if (getBlockDName().equals(blockName)) {
                 // if we're not already in tracksSet...
                 if (!tracksSet.contains(getName())) {
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                     tracksSet.add(getName());
                 }
                 // if we have a neighbor and it's not in tracksSet...

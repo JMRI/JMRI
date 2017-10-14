@@ -383,7 +383,7 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to supress "does not override abstract method " error in compiler
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
-        // nothing to do here, move along
+        // nothing to see here, move along
         return null;
     }
 
@@ -395,7 +395,7 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to supress "does not override abstract method " error in compiler
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
-        // nothing to do here, move along
+        // nothing to see here, move along
     }
 
     public int getNumberOfBezierControlPoints() {
@@ -452,7 +452,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to scale Y coordinates
      */
     public void scaleCoords(float xFactor, float yFactor) {
-        // Nothing to do here, move along
+        // nothing to see here, move along
     }
 
     /**
@@ -462,7 +462,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to translate Y coordinates
      */
     public void translateCoords(float xFactor, float yFactor) {
-        // Nothing to do here, move along
+        // nothing to see here, move along
     }
 
     /**
@@ -1378,7 +1378,7 @@ public class TrackSegment extends LayoutTrack {
     @Override
     protected void drawUnconnected(Graphics2D g2) {
         // TrackSegments are always connected
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     private void drawHidden(Graphics2D g2) {
@@ -1486,7 +1486,7 @@ public class TrackSegment extends LayoutTrack {
 
     protected void drawTurnoutControls(Graphics2D g2) {
         // TrackSegments don't have turnout controls...
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1494,7 +1494,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void reCheckBlockBoundary() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1634,7 +1634,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             } else {
                 // this is routinely reached in normal operations
-                // (nothing to do here... move along)
+                // (nothing to see here... move along)
             }
         }   // if (lb1 != null)
         return results;
@@ -1647,7 +1647,7 @@ public class TrackSegment extends LayoutTrack {
     public List<Integer> checkForFreeConnections() {
         List<Integer> result = new ArrayList<>();
         // Track Segments always have all their connections so...
-        // (nothing to do here... move along)
+        // (nothing to see here... move along)
         return result;
     }
 
@@ -1685,16 +1685,16 @@ public class TrackSegment extends LayoutTrack {
                 Set<String> tracksSet = blockToTracksSetMap.get(blockName);
                 // this should never be null... but just in case...
                 if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                    log.info("•    add track '{}' for block '{}'", getName(), blockName);
+                    log.debug("•    add track '{}' for block '{}'", getName(), blockName);
                     tracksSet.add(getName());
                 }
                 result = false;
             } else {
                 Set<String> tracksSet = blockToTracksSetMap.get(blockName);
                 if (tracksSet == null) { // (#2)
-                    log.info("•New block ('{}') tracksSet", blockName);
+                    log.debug("•New block ('{}') tracksSet", blockName);
                     tracksSet = new LinkedHashSet<>();
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                     tracksSet.add(getName());
                     blockToTracksSetMap.put(blockName, tracksSet);
                     // this should never be null... but just in case...
@@ -1706,7 +1706,7 @@ public class TrackSegment extends LayoutTrack {
                         result &= connect2.checkForNonContiguousBlocks(blockName, tracksSet);
                     }
                 } else if (!tracksSet.contains(getName())) {  // (#3)
-                    log.info("•    add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("•    add track '{}'for block '{}'", getName(), blockName);
                     tracksSet.add(getName());
                     badBlocksSet.add(blockName);
                     result = false;
@@ -1727,7 +1727,7 @@ public class TrackSegment extends LayoutTrack {
         if (this.blockName.equals(blockName)) {
             // if we're not in tracksSet...
             if (!tracksSet.contains(getName())) {
-                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                 tracksSet.add(getName());  // add us
             }
             // these should never be null... but just in case...

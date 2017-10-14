@@ -1389,7 +1389,7 @@ public class LevelXing extends LayoutTrack {
 
     protected void drawTurnoutControls(Graphics2D g2) {
         // LevelXings don't have turnout controls...
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1397,7 +1397,7 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     public void reCheckBlockBoundary() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1405,7 +1405,7 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
         return null;
     }
 
@@ -1474,16 +1474,16 @@ public class LevelXing extends LayoutTrack {
                 Set<String> tracksSet = blockToTracksSetMap.get(blockNameAC);
                 // this should never be null... but just in case...
                 if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                    log.info("•    add track '{}'for block '{}'", getName(), blockNameAC);
+                    log.debug("•    add track '{}'for block '{}'", getName(), blockNameAC);
                     tracksSet.add(getName());
                 }
                 result = false;
             } else {
                 Set<String> tracksSet = blockToTracksSetMap.get(blockNameAC);
                 if (tracksSet == null) { // (#2)
-                    log.info("•New block ('{}') tracksSet", blockNameAC);
+                    log.debug("•New block ('{}') tracksSet", blockNameAC);
                     tracksSet = new LinkedHashSet<>();
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockNameAC);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), blockNameAC);
                     tracksSet.add(getName());
                     blockToTracksSetMap.put(blockNameAC, tracksSet);
                     if (connectA != null) {
@@ -1493,7 +1493,7 @@ public class LevelXing extends LayoutTrack {
                         result &= connectC.checkForNonContiguousBlocks(blockNameAC, tracksSet);
                     }
                 } else if (!tracksSet.contains(getName())) {  // (#3)
-                    log.info("•    add track '{}'for block '{}'", getName(), blockNameAC);
+                    log.debug("•    add track '{}'for block '{}'", getName(), blockNameAC);
                     tracksSet.add(getName());
                     badBlocksSet.add(blockNameAC);
                     result = false;
@@ -1507,16 +1507,16 @@ public class LevelXing extends LayoutTrack {
                 Set<String> tracksSet = blockToTracksSetMap.get(blockNameBD);
                 // this should never be null... but just in case...
                 if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                    log.info("•    add track '{}'for block '{}'", getName(), blockNameBD);
+                    log.debug("•    add track '{}'for block '{}'", getName(), blockNameBD);
                     tracksSet.add(getName());
                 }
                 result = false;
             } else {
                 Set<String> tracksSet = blockToTracksSetMap.get(blockNameBD);
                 if (tracksSet == null) { // (#2)
-                    log.info("•New block ('{}') tracksSet", blockNameBD);
+                    log.debug("•New block ('{}') tracksSet", blockNameBD);
                     tracksSet = new LinkedHashSet<>();
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockNameBD);
+                    log.debug("•    Add track '{}'for block '{}'", getName(), blockNameBD);
                     tracksSet.add(getName());
                     blockToTracksSetMap.put(blockNameBD, tracksSet);
                     if (connectB != null) {
@@ -1526,7 +1526,7 @@ public class LevelXing extends LayoutTrack {
                         result &= connectD.checkForNonContiguousBlocks(blockNameBD, tracksSet);
                     }
                 } else if (!tracksSet.contains(getName())) {  // (#3)
-                    log.info("•    add track '{}'for block '{}'", getName(), blockNameBD);
+                    log.debug("•    add track '{}'for block '{}'", getName(), blockNameBD);
                     tracksSet.add(getName());
                     badBlocksSet.add(blockNameBD);
                     result = false;
@@ -1550,7 +1550,7 @@ public class LevelXing extends LayoutTrack {
         if ((blockNameAC != null) && (blockNameAC.equals(blockName))) {
             // if we're not already in tracksSet...
             if (!tracksSet.contains(getName())) {
-                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                 tracksSet.add(getName());  // add us (#1)
             }
             if ((connectA != null) && (!tracksSet.contains(connectA.getName()))) {
@@ -1566,7 +1566,7 @@ public class LevelXing extends LayoutTrack {
         if ((blockNameBD != null) && (blockNameBD.equals(blockName))) {
             // if we're not already in tracksSet...
             if (!tracksSet.contains(getName())) {
-                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                 tracksSet.add(getName());  // add us (#1)
             }
             if ((connectB != null) && (!tracksSet.contains(connectB.getName()))) {

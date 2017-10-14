@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -55,7 +54,8 @@ public class JMenuUtil extends GuiUtilBase {
         return retval;
     }
 
-    static @Nonnull JMenu jMenuFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
+    static @Nonnull
+    JMenu jMenuFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         boolean addSep = false;
         String name = "<none>";
         if (main == null) {
@@ -120,7 +120,8 @@ public class JMenuUtil extends GuiUtilBase {
         return menu;
     }
 
-    static @Nonnull JMenu createMenuGroupFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
+    static @Nonnull
+    JMenu createMenuGroupFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         String name = "<none>";
         if (main == null) {
             log.warn("Menu from element called without an element");
@@ -201,45 +202,25 @@ public class JMenuUtil extends GuiUtilBase {
      * <p>
      * (at the same position in the parent menu)
      *
-     * @param orginalMenuItem the original menu item to be replaced
+     * @param orginalMenuItem     the original menu item to be replaced
      * @param replacementMenuItem the menu item to replace it with
-     * @return true if the original menu item was found and removed or replaced
+     * @return true if the original menu item was found and replaced
      */
     public static boolean replaceMenuItem(
-            @Nullable JMenuItem orginalMenuItem,
+            @Nonnull JMenuItem orginalMenuItem,
             @Nonnull JMenuItem replacementMenuItem) {
-        return internalReplaceMenuItem(orginalMenuItem, replacementMenuItem);
-    }
-
-    /**
-     * remove a menu item from its parent
-     *
-     * @param theMenuItem the menu item to be replaced
-     * @return true if the menu item was found and removed
-     */
-    public boolean removeMenuItem(@Nullable JMenuItem theMenuItem)
-    {
-        return internalReplaceMenuItem(theMenuItem, null);
-    }
-
-    private static boolean internalReplaceMenuItem(
-            JMenuItem orginalMenuItem,
-            JMenuItem replacementMenuItem) {
         boolean result = false; // assume failure (pessimist!)
-        if (orginalMenuItem != null) {
-            Container container = orginalMenuItem.getParent();
-            if (container != null) {
-                int index = container.getComponentZOrder(orginalMenuItem);
-                if (index > -1) {
-                    container.remove(orginalMenuItem);
-                    if (replacementMenuItem != null) {
-                        container.add(replacementMenuItem, index);
-                    }
-                    result = true;
-                }
+        Container container = orginalMenuItem.getParent();
+        if (container != null) {
+            int index = container.getComponentZOrder(orginalMenuItem);
+            if (index > -1) {
+                container.remove(orginalMenuItem);
+                container.add(replacementMenuItem, index);
+                result = true;
             }
         }
         return result;
     }
+
     private final static Logger log = LoggerFactory.getLogger(JMenuUtil.class);
 }   // class JMenuUtil

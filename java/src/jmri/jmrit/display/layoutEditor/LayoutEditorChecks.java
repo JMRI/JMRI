@@ -3,10 +3,12 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.annotation.Nonnull;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.event.MenuEvent;
@@ -24,6 +26,7 @@ public class LayoutEditorChecks {
     private JMenu checkMenu = new JMenu(Bundle.getMessage("CheckMenuTitle"));
     private JMenuItem checkInProgressMenuItem = new JMenuItem(Bundle.getMessage("CheckInProgressMenuItemTitle"));
     private JMenuItem checkNoResultsMenuItem = new JMenuItem(Bundle.getMessage("CheckNoResultsMenuItemTitle"));
+//    private ImageIcon checkmarkImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/misc/Checkmark-green.gif", FileUtil.Location.INSTALLED));
 
     // Check Un-Connected Tracks
     private JMenu checkUnConnectedTracksMenu = new JMenu(Bundle.getMessage("CheckUnConnectedTracksMenuTitle"));
@@ -72,13 +75,13 @@ public class LayoutEditorChecks {
 
             public void menuDeselected(MenuEvent menuEvent) {
                 log.debug("menuDeselected");
-                //nothing to do here... move along...
+                //nothing to see here... move along...
             }
 
             @Override
             public void menuCanceled(MenuEvent menuEvent) {
                 log.debug("menuCanceled");
-                //nothing to do here... move along...
+                //nothing to see here... move along...
             }
         }
         );
@@ -136,20 +139,20 @@ public class LayoutEditorChecks {
         checkNonContiguousBlocksMenu.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent menuEvent) {
-                log.info("menuSelected");
+                log.debug("menuSelected");
                 setupCheckNonContiguousBlocksMenu();
             }
 
             @Override
             public void menuDeselected(MenuEvent menuEvent) {
                 log.debug("menuDeselected");
-                //nothing to do here... move along...
+                //nothing to see here... move along...
             }
 
             @Override
             public void menuCanceled(MenuEvent menuEvent) {
                 log.debug("menuCanceled");
-                //nothing to do here... move along...
+                //nothing to see here... move along...
             }
         });
 
@@ -158,17 +161,6 @@ public class LayoutEditorChecks {
 //        checkNonContiguousBlocksMenu.add(checkNonContiguousBlocksMenuItem);
     }
 
-    //TODO: not used… dead-code strip
-    //private void installOnAllSubComponents(JComponent component, AncestorListener ancestorListener) {
-    //    component.addAncestorListener(ancestorListener);
-    //    for (int idx = 0; idx < component.getComponentCount(); idx++) {
-    //        Component subComponent = component.getComponent(idx);
-    //        if (subComponent instanceof JComponent) {
-    //            JComponent subJComponent = (JComponent) subComponent;
-    //            installOnAllSubComponents(subJComponent, ancestorListener);
-    //        }
-    //    }
-    //}
     //
     // run the un-connected tracks check and populate the checkUnConnectedTracksMenu
     //
@@ -188,10 +180,12 @@ public class LayoutEditorChecks {
                     flag = true;
                 }
                 // add this layout to the check un-connected menu
-                JMenuItem jmi = new JMenuItem(layoutTrack.getName());
+                JCheckBoxMenuItem jmi = new JCheckBoxMenuItem(layoutTrack.getName());
                 checkUnConnectedTracksMenu.add(jmi);
                 jmi.addActionListener((ActionEvent event) -> {
-                    JMenuItem menuItem = (JMenuItem) event.getSource();
+                    JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();
+                    // toggle checkmark state
+                    menuItem.setSelected(!menuItem.isSelected());
                     String menuItemName = menuItem.getText();
                     doCheckUnConnectedTracksMenuItem(menuItemName);
                 });
@@ -239,10 +233,12 @@ public class LayoutEditorChecks {
                     flag = true;
                 }
                 // add this layout to the check un-connected menu
-                JMenuItem jmi = new JMenuItem(layoutTrack.getName());
+                JCheckBoxMenuItem jmi = new JCheckBoxMenuItem(layoutTrack.getName());
                 checkUnBlockedTracksMenu.add(jmi);
                 jmi.addActionListener((ActionEvent event) -> {
-                    JMenuItem menuItem = (JMenuItem) event.getSource();
+                    JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();
+                    // toggle checkmark state
+                    menuItem.setSelected(!menuItem.isSelected());
                     String menuItemName = menuItem.getText();
                     doCheckUnBlockedTracksMenuItem(menuItemName);
                 });
@@ -282,12 +278,31 @@ public class LayoutEditorChecks {
     private void setupCheckNonContiguousBlocksMenu() {
         log.debug("setupCheckNonContiguousBlocksMenu");
 
+        // collect the names of all checkbox menu items with checkmarks
+        Set<String> checkMarkedSet = new HashSet<>();
+        for (int idx = 0; idx < checkNonContiguousBlocksMenu.getMenuComponentCount(); idx++) {
+            Component menuComponent = checkNonContiguousBlocksMenu.getMenuComponent(idx);
+            if (menuComponent instanceof JCheckBoxMenuItem) {
+                JCheckBoxMenuItem checkBoxMenuItem = (JCheckBoxMenuItem) menuComponent;
+                //if (checkBoxMenuItem.getIcon() != null) 
+                if (checkBoxMenuItem.isSelected()) {
+                    checkMarkedSet.add(checkBoxMenuItem.getText());
+                }
+            }
+        }
+
         checkNonContiguousBlocksMenu.removeAll();
         checkNonContiguousBlocksMenu.add(checkInProgressMenuItem);
 
         HashMap<String, Set<String>> blocksMap = new HashMap<>();
-        Set<String> badBlocks = new LinkedHashSet<>();
+        Set<String> badBlocks = new TreeSet<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
+
+            if (layoutTrack.getName().equals("EC5")
+                    || layoutTrack.getName().equals("T20")
+                    || layoutTrack.getName().equals("TO9")) {
+                log.debug("Stop here!");
+            }
             layoutTrack.checkForNonContiguousBlocks(blocksMap, badBlocks);
         }
         checkNonContiguousBlocksMenu.removeAll();
@@ -296,20 +311,34 @@ public class LayoutEditorChecks {
                 Set<String> trackSet = blocksMap.get(blockName);
 
                 // add this block to the check non-contiguous blocks menu
-                JMenuItem jmi = new JMenuItem(blockName + " (" + trackSet.size() + ")");
+                JCheckBoxMenuItem jmi = new JCheckBoxMenuItem(blockName + " (" + trackSet.size() + ")");
                 checkNonContiguousBlocksMenu.add(jmi);
-                if (true) {
-                    // we don't have anything to do for non-contiguous blocks
-                    // other than to report them (by adding them to the menu).
-                    jmi.setEnabled(false);
-                } else {
-                    // but when I think of what to do this code will do it!
-                    jmi.addActionListener((ActionEvent event) -> {
-                        JMenuItem menuItem = (JMenuItem) event.getSource();
-                        String menuItemName = menuItem.getText();
-                        doCheckNonContiguousBlocksMenuItem(menuItemName);
-                    });
+                // we currently don't have anything to do for non-contiguous 
+                // blocks other than to just add them to the menu.
+                //jmi.setEnabled(false); // don't disable (so checkmarks still work)
+                jmi.addActionListener((ActionEvent event) -> {
+                    log.info("event: {}", event.paramString());
+                    JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();
+                    // toggle checkmark state
+                    //menuItem.setSelected(!menuItem.isSelected());
+                    //menuItem.setSelected(true);
+                    // setState/Selected() doesn't work… try this:
+                    //if (menuItem.getIcon() == null) {
+                    //    menuItem.setIcon(checkmarkImageIcon);
+                    //} else {
+                    //    menuItem.setIcon(null);
+                    //}
 
+                    String menuItemName = menuItem.getText();
+                    doCheckNonContiguousBlocksMenuItem(menuItemName);
+                });
+                // if it's in the check marked set then checkmark it
+                for (String item : checkMarkedSet) {
+                    if (item.startsWith(blockName + " (")) {
+                        jmi.setSelected(true);
+                        //jmi.setIcon(checkmarkImageIcon);
+                        break;
+                    }
                 }
             }
             //// do the 1st one...
@@ -318,8 +347,8 @@ public class LayoutEditorChecks {
             checkNonContiguousBlocksMenu.add(checkNoResultsMenuItem);
         }
     }
-
     // action to be performed when checkNonContiguousBlocksMenu item is clicked
+
     private void doCheckNonContiguousBlocksMenuItem(String menuItemName) {
         log.debug("doCheckNonContiguousBlocksMenuItem({})", menuItemName);
 
