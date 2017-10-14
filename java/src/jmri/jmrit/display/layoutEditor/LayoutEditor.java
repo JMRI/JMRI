@@ -9740,7 +9740,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         // There's already code in the super class (Editor) to draw
         // the selection rect... We just have to set _selectRect
-        _selectRect = MathUtil.rectangle2DToRectangle(getSelectionRect());
+        _selectRect = MathUtil.rectangle2DToRectangle(selectionRect);
+        
+        selectionRect = MathUtil.scale(selectionRect, getZoom());
+        JScrollPane scrollPane = getPanelScrollPane();
+        scrollPane.scrollRectToVisible(MathUtil.rectangle2DToRectangle(selectionRect));
 
         clearSelectionGroups();
         selectionActive = true;

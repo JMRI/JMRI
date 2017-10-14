@@ -1466,7 +1466,7 @@ public class PositionablePoint extends LayoutTrack {
         List<Integer> result = new ArrayList<>();
 
         if ((getConnect1() == null)
-                || ((getType() != END_BUMPER) && (getConnect2() == null))) {
+                || ((getType() == ANCHOR) && (getConnect2() == null))) {
             result.add(Integer.valueOf(POS_POINT));
         }
         return result;
