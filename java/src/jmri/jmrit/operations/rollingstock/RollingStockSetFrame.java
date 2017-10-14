@@ -41,8 +41,6 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
-    RollingStockManager manager;
-
     protected LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
     protected TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
