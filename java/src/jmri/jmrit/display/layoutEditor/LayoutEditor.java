@@ -5168,7 +5168,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             yLabel.setText(Integer.toString(yLoc));
 
             if (event.isPopupTrigger()) {
-                if (event.isMetaDown() || event.isAltDown()) {
+                if (isMetaDown(event) || event.isAltDown()) {
                     //if requesting a popup and it might conflict with moving, delay the request to mouseReleased
                     delayedPopupTrigger = true;
                 } else {
@@ -5178,7 +5178,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 }
             }
 
-            if (event.isMetaDown() || event.isAltDown()) {
+            if (isMetaDown(event) || event.isAltDown()) {
                 layoutEditorMode = LayoutEditorMode.EDIT_DRAG;
                 //if dragging an item, identify the item for mouseDragging
                 selectedObject = null;
@@ -5285,14 +5285,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             if (prevSelectionActive) {
                 redrawPanel();
             }
-        } else if (allControlling() && !event.isMetaDown() && !event.isPopupTrigger()
+        } else if (allControlling() && !isMetaDown(event) && !event.isPopupTrigger()
                 && !event.isAltDown() && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             if (checkControls(true)) {
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             }
-        } else if ((event.isMetaDown() || event.isAltDown())
+        } else if ((isMetaDown(event) || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if moving a marker if there are any
             selectedObject = checkMarkerPopUps(dLoc);
@@ -5609,7 +5609,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             yLabel.setText(Integer.toString(yLoc));
 
             // released the mouse with shift down... see what we're adding
-            if (!event.isPopupTrigger() && !event.isMetaDown() && event.isShiftDown()) {
+            if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
                 layoutEditorMode = LayoutEditorMode.ADDING_OBJECT;
 
                 currentPoint = new Point2D.Double(xLoc, yLoc);
@@ -5684,7 +5684,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 whenReleased = event.getWhen();
                 showEditPopUps(event);
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
-                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turnouts, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
@@ -5692,14 +5692,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 t.toggleTurnout();
             } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT)
                     || (selectedPointType == LayoutTrack.SLIP_RIGHT))
-                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling slips, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedPointType);
             } else if ((selectedObject != null) && (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
-                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
@@ -5709,13 +5709,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                     || (selectedPointType == LayoutTrack.SLIP_CENTER)
                     || (selectedPointType == LayoutTrack.SLIP_LEFT)
                     || (selectedPointType == LayoutTrack.SLIP_RIGHT))
-                    && allControlling() && (event.isMetaDown() && !event.isAltDown())
+                    && allControlling() && (isMetaDown(event) && !event.isAltDown())
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a turnout (or slip)... see if it will connect to anything
                 layoutEditorMode = LayoutEditorMode.DROPPED_TURNOUT;
                 hitPointCheckLayoutTurnouts((LayoutTurnout) selectedObject);
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.POS_POINT)
-                    && allControlling() && (event.isMetaDown())
+                    && allControlling() && (isMetaDown(event))
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a PositionablePoint... see if it will connect to anything
                 layoutEditorMode = LayoutEditorMode.DROPPED_POSITIONABLE_POINT;
@@ -5735,7 +5735,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
             createSelectionGroups();
         } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
-                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             //controlling turnout out of edit mode
             layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
@@ -5747,14 +5747,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
         } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT)
                 || (selectedPointType == LayoutTrack.SLIP_RIGHT))
-                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling slip out of edit mode
             layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedPointType);
         } else if ((selectedObject != null) && (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
-                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
             layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
@@ -6021,7 +6021,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
-        if (!event.isMetaDown() && !event.isPopupTrigger() && !event.isAltDown()
+        if (!isMetaDown(event) && !event.isPopupTrigger() && !event.isAltDown()
                 && !awaitingIconChange && !event.isShiftDown() && !event.isControlDown()) {
             List<Positionable> selections = getSelectedItems(event);
 
@@ -6810,7 +6810,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //don't allow negative placement, objects could become unreachable
         currentPoint = MathUtil.max(currentPoint, MathUtil.zeroPoint2D);
 
-        if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown())
+        if ((selectedObject != null) && (isMetaDown(event) || event.isAltDown())
                 && (selectedPointType == LayoutTrack.MARKER)) {
             //marker moves regardless of editMode or positionable
             PositionableLabel pl = (PositionableLabel) selectedObject;
@@ -6821,7 +6821,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
 
         if (isEditable()) {
-            if ((selectedObject != null) && event.isMetaDown() && allPositionable()) {
+            if ((selectedObject != null) && isMetaDown(event) && allPositionable()) {
                 if (snapToGridOnMove != snapToGridInvert) {
                     // this snaps currentPoint to the grid
                     currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
@@ -7011,7 +7011,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 } else if (needResetCursor) {
                     setCursor(Cursor.getDefaultCursor());
                 }
-            } else if (selectionActive && !event.isShiftDown() && !event.isMetaDown()) {
+            } else if (selectionActive && !event.isShiftDown() && !isMetaDown(event)) {
                 selectionWidth = xLoc - selectionX;
                 selectionHeight = yLoc - selectionY;
             }
@@ -10325,6 +10325,18 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
         }
     } //vetoableChange
+    
+    // The meta key was until Java 8 the right mouse button on Windows.
+    // On Java 9 on Windows 10, there is no more meta key. Note that this
+    // method is called both on mouse button events and mouse move events,
+    // and therefore "event.getButton() == MouseEvent.BUTTON3" doesn't work.
+    // event.getButton() always return 0 for MouseMoveEvent. 
+    private boolean isMetaDown(MouseEvent event) {
+        if (SystemType.isWindows())
+            return SwingUtilities.isRightMouseButton(event);
+        else
+            return event.isMetaDown();
+    }
 
 //    protected void rename(String inFrom, String inTo) {
 //
