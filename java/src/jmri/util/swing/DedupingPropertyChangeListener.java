@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
  * guaranteed to be the last call's getNewValue(). Listeners that depend on exact sequencing of
  * oldValue and newValue objects should probably not be wrapped in this class.
  * <p>
- * Created by bracz on 10/14/17.
+ * @author Balazs Racz Copyright (C) 2017
  */
 
 public class DedupingPropertyChangeListener implements PropertyChangeListener {
