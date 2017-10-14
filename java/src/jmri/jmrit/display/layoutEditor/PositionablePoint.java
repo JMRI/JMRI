@@ -171,6 +171,8 @@ public class PositionablePoint extends LayoutTrack {
      */
     public Rectangle2D getBounds() {
         Point2D c = getCoordsCenter();
+        //Note: empty bounds don't draw...
+        // so now I'm mading them 0.5 bigger in all directions (1 pixel total)
         return new Rectangle2D.Double(c.getX() - 0.5, c.getY() - 0.5, 1.0, 1.0);
     }
 
@@ -1266,9 +1268,10 @@ public class PositionablePoint extends LayoutTrack {
                 }
             }
 
-            float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
-            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            double trackWidth = Math.min(layoutEditor.setTrackStrokeWidth(g2, mainline), 3.0);
+            Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            //Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            trackWidth *= 2.0;
 
             if (!ep1.equals(ep2)) {
                 setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
@@ -1284,18 +1287,20 @@ public class PositionablePoint extends LayoutTrack {
                     g2.setStroke(drawingStroke);
                     g2.draw(new Line2D.Double(p1, p2));
                 } else if (getType() == EDGE_CONNECTOR) {
-                    // draw an arrow
-                    p1 = new Point2D.Double(0.0, -trackWidth);
-                    p2 = new Point2D.Double(-trackWidth, 0.0);
-                    p3 = new Point2D.Double(0.0, +trackWidth);
-                    g2.setStroke(drawingStroke1);
+                    // draw an X
+                    p1 = new Point2D.Double(-trackWidth, -trackWidth);
+                    p2 = new Point2D.Double(-trackWidth, +trackWidth);
+                    p3 = new Point2D.Double(+trackWidth, +trackWidth);
+                    p4 = new Point2D.Double(+trackWidth, -trackWidth);
+
                     p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                     p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
                     p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
+                    p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
 
-                    g2.draw(new Line2D.Double(p1, p2));
-                    g2.draw(new Line2D.Double(p2, p3));
-                    g2.draw(new Line2D.Double(p3, p1));
+                    g2.setStroke(drawingStroke);
+                    g2.draw(new Line2D.Double(p1, p3));
+                    g2.draw(new Line2D.Double(p2, p4));
                 }
             }
             // this is to force setTrackStrokeWidth's mainline local to toggle
