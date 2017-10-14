@@ -848,19 +848,19 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public boolean checkForNonContiguousBlocks(
-            @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
-            @Nonnull Set<String> badBlocks) {
+            @Nonnull HashMap<String, Set<String>> blockNamesToTrackNamesSetMap,
+            @Nonnull Set<String> badBlockNamesSet) {
         boolean result = true; // assume success (optimist!)
 
         /* check all our (non-null) blocks and...
          * #1) If it's in the bad blocks set do:
-         *     add this track to the  blockToTracksSetMap track set
+         *     add this track to the  blockNamesToTrackNamesSetMap track set
          *     for this block and return false
-         * #2) else if it's not a key in the blockToTracksSetMap then add a
-         *     new set (with this track) to blockToTracksSetMap and check all
+         * #2) else if it's not a key in the blockNamesToTrackNamesSetMap then add a
+         *     new set (with this track) to blockNamesToTrackNamesSetMap and check all
          *     connections in this block (by calling the 2nd method below)
          * #3) else check to see if this track is in this blocks
-         *     (blockToTracksSetMap) track set:
+         *     (blockNamesToTrackNamesSetMap) track set:
          *     if so return true
          *     else add it to bad blocks set and return false
          */
@@ -870,8 +870,8 @@ public class LayoutTurntable extends LayoutTrack {
                 if (ts != null) {
                     String blockName = ts.getBlockName();
                     if (blockName != null) {
-                        if (badBlocks.contains(blockName)) {  // (#1)
-                            Set<String> tracksSet = blockToTracksSetMap.get(blockName);
+                        if (badBlockNamesSet.contains(blockName)) {  // (#1)
+                            Set<String> tracksSet = blockNamesToTrackNamesSetMap.get(blockName);
                             // this should never be null... but just in case...
                             if ((tracksSet != null) && !tracksSet.contains(getName())) {
                                 log.debug("•    add track '{}'for block '{}'", getName(), blockName);
@@ -880,17 +880,17 @@ public class LayoutTurntable extends LayoutTrack {
                             result = false;
                         } else {
                             boolean check = true;
-                            Set<String> tracksSet = blockToTracksSetMap.get(blockName);
+                            Set<String> tracksSet = blockNamesToTrackNamesSetMap.get(blockName);
                             if (tracksSet == null) { // (#2)
                                 log.debug("•New block ('{}') tracksSet", blockName);
                                 tracksSet = new LinkedHashSet<>();
                                 log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
                                 tracksSet.add(getName());
-                                blockToTracksSetMap.put(blockName, tracksSet);
+                                blockNamesToTrackNamesSetMap.put(blockName, tracksSet);
                             } else if (!tracksSet.contains(getName())) {   // (#3)
                                 log.debug("•    add track '{}'for block '{}'", getName(), blockName);
                                 tracksSet.add(getName());
-                                badBlocks.add(blockName);
+                                badBlockNamesSet.add(blockName);
                                 result = false;
                                 check = false;
                             }
@@ -909,11 +909,11 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     public boolean checkForNonContiguousBlocks(@Nonnull String blockName,
-            @Nonnull Set<String> tracksSet) {
+            @Nonnull Set<String> trackNamesSet) {
         boolean result = true; // assume success (optimist!)
 
         // check all the matching blocks in this track and...
-        //  #1) add us to tracksSet and...
+        //  #1) add us to trackNamesSet and...
         //  #2) flood them
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
@@ -922,14 +922,14 @@ public class LayoutTurntable extends LayoutTrack {
                     String blk = ts.getBlockName();
                     if (blk != null) {
                         if (blk.equals(blockName)) {
-                            // if we're not already in tracksSet...
-                            if (!tracksSet.contains(getName())) {
+                            // if we're not already in trackNamesSet...
+                            if (!trackNamesSet.contains(getName())) {
                                 log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
-                                tracksSet.add(getName());  // add us (#1)
+                                trackNamesSet.add(getName());  // add us (#1)
                             }
-                            if (!tracksSet.contains(ts.getName())) {
+                            if (!trackNamesSet.contains(ts.getName())) {
                                 // flood neighbour (#2)
-                                result &= ts.checkForNonContiguousBlocks(blockName, tracksSet);
+                                result &= ts.checkForNonContiguousBlocks(blockName, trackNamesSet);
                             }
                         }
                     }

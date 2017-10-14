@@ -465,17 +465,11 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * @return the bounds of this slip
+     * {@inheritDoc}
      */
+    // just here for testing; should be removed when I'm done...
     public Rectangle2D getBounds() {
-        Rectangle2D result;
-
-        Point2D pt = getCoordsA();
-        result = new Rectangle2D.Double(pt.getX(), pt.getY(), 0, 0);
-        result.add(getCoordsB());
-        result.add(getCoordsC());
-        result.add(getCoordsD());
-        return result;
+        return super.getBounds();
     }
 
     protected void updateBlockInfo() {
@@ -1319,8 +1313,8 @@ public class LayoutSlip extends LayoutTurnout {
         }
 
         boolean equals(TurnoutState ts) {
-            return ((this.getTurnoutAState() != ts.getTurnoutAState())
-                    || (this.getTurnoutBState() != ts.getTurnoutBState()));
+            return ((getTurnoutAState() != ts.getTurnoutAState())
+                    || (getTurnoutBState() != ts.getTurnoutBState()));
         }
     }   // class TurnoutState
 

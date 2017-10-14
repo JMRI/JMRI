@@ -9733,6 +9733,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public void setSelectionRect(@Nonnull Rectangle2D selectionRect) {
+        //selectionRect = selectionRect.createIntersection(MathUtil.infinityRectangle2D);
         selectionX = selectionRect.getX();
         selectionY = selectionRect.getY();
         selectionWidth = selectionRect.getWidth();
@@ -9761,7 +9762,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             Color color = g2.getColor();
 
             g2.setColor(new Color(204, 207, 88));
-            g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(3.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
             g2.draw(getSelectionRect());    // this sets _selectRect also
 
