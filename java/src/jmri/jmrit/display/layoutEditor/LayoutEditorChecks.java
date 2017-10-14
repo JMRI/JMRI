@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -234,7 +236,13 @@ public class LayoutEditorChecks {
         log.debug("docheckUnConnectedTracksMenuItem({})", menuItemName);
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(menuItemName);
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            Rectangle2D trackBounds = layoutTrack.getBounds();
+            double minScale = Math.min(trackBounds.getWidth(), trackBounds.getHeight());
+            if (minScale < 3.0) {
+                trackBounds = MathUtil.scale(trackBounds, 3.0 / minScale);
+            }
+            layoutEditor.setSelectionRect(trackBounds);
+
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
