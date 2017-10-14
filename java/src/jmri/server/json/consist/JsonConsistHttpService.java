@@ -54,7 +54,7 @@ public class JsonConsistHttpService extends JsonHttpService {
      * Change the properties and locomotives of a consist.
      *
      * This method takes as input the JSON representation of a consist as
-     * provided by {@link #getConsist(Locale, jmri.DccLocoAddress) }.
+     * provided by {@link #getConsist(Locale, jmri.LocoAddress) }.
      *
      * If present in the JSON, this method sets the following consist
      * properties:
