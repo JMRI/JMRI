@@ -417,7 +417,7 @@ public class LayoutEditorChecks {
 
             // amend all tracks in this block to the layout editor selection group
             for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-                if (trackNamesSet.contains(layoutTrack)) {
+                if (trackNamesSet.contains(layoutTrack.getName())) {
                     layoutEditor.amendSelectionGroup(layoutTrack);
                 }
             }
