@@ -478,7 +478,7 @@ public class NXFrame extends WarrantRoute {
         }
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         if (msg == null) {
-            WarrantTableAction.setNXFrame(this);
+//            WarrantTableAction.setNXFrame(this);        // redundant
             tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
             if (log.isDebugEnabled()) {
                 log.debug("NXWarrant added to table");

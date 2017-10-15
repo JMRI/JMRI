@@ -580,13 +580,6 @@ public class SpeedUtil {
         boolean increasing = (fromSpeed <= toSpeed);
         float momentumTime = getMomentumTime(increasing);
 
-        if (!increasing) {
-            float speed = toSpeed;
-            while (speed + deltaThrottle <= fromSpeed) {
-                speed += deltaThrottle;
-                deltaThrottle *= NXFrame.INCRE_RATE;
-            }            
-        }
         if (increasing) {
             while (fromSpeed <= toSpeed) {
                 float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
@@ -604,6 +597,12 @@ public class SpeedUtil {
                 numSteps++;
             }
         } else {
+            // Start with largest throttle increment
+            float tempSpeed = fromSpeed;
+            while (tempSpeed + deltaThrottle <= toSpeed) {
+                tempSpeed += deltaThrottle;
+                deltaThrottle *= NXFrame.INCRE_RATE;
+            }
             while (fromSpeed >= toSpeed) {
                 float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
                         + getTrackSpeed(fromSpeed - deltaThrottle, isForward) * (deltaTime - momentumTime);
