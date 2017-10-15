@@ -60,10 +60,13 @@ public class NceTrafficController extends AbstractMRTrafficController implements
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN));
 
-        if (NmraPacket.isAccSignalDecoderPkt(packet)) {
-            // intercept NMRA signal cmds
+        if (NmraPacket.isAccSignalDecoderPkt(packet)
+                && (NmraPacket.getAccSignalDecoderPktAddress(packet) > 0)
+                && (NmraPacket.getAccSignalDecoderPktAddress(packet) < 2048)) {
+            // intercept only those NMRA signal cmds we can handle with NCE binary commands
             int addr = NmraPacket.getAccSignalDecoderPktAddress(packet);
             int aspect = packet[2];
+            log.debug("isAccSignalDecoderPkt(packet) sigAddr ={}, aspect ={}", addr, aspect);
             m = NceMessage.createAccySignalMacroMessage(this, 5, addr, aspect);
         } else if (isUsb && NmraPacket.isAccDecoderPktOpsMode(packet)) {
             // intercept NMRA accessory decoder ops programming cmds to USB systems
@@ -77,7 +80,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
             int accyAddr = NmraPacket.getAccDecoderPktOpsModeLegacyAddress(packet);
             int cvData = (0xFF & packet[3]);
             int cvAddr = (((0x03 & packet[1]) << 8) | (0xFF & packet[2])) + 1;
-            log.debug("isAaccDecoderPktOpsModeLegacy(packet) accyAddr ={}, cvAddr = {}, cvData ={}", accyAddr, cvAddr, cvData);
+            log.debug("isAccDecoderPktOpsModeLegacy(packet) accyAddr ={}, cvAddr = {}, cvData ={}", accyAddr, cvAddr, cvData);
             m = NceMessage.createAccDecoderPktOpsMode(this, accyAddr, cvAddr, cvData);
         } else {
             m = NceMessage.sendPacketMessage(this, packet);
