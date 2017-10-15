@@ -65,13 +65,13 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             element.setAttribute("blockname", p.getBlockName());
         }
         // Only save these if they're different from block A
-        if (!p.getBlockBName().isEmpty() && (p.getBlockBName() != p.getBlockName())) {
+        if (!p.getBlockBName().isEmpty() && (!p.getBlockBName().equals(p.getBlockName()))) {
             element.setAttribute("blockbname", p.getBlockBName());
         }
-        if (!p.getBlockCName().isEmpty() && (p.getBlockCName() != p.getBlockName())) {
+        if (!p.getBlockCName().isEmpty() && (!p.getBlockCName().equals(p.getBlockName()))) {
             element.setAttribute("blockcname", p.getBlockCName());
         }
-        if (!p.getBlockDName().isEmpty() && (p.getBlockDName() != p.getBlockName())) {
+        if (!p.getBlockDName().isEmpty() && (!p.getBlockDName().equals(p.getBlockName()))) {
             element.setAttribute("blockdname", p.getBlockDName());
         }
 
@@ -213,19 +213,19 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
-            l.tBlockName = a.getValue();
+            l.setLayoutBlockByName(a.getValue());
         }
         a = element.getAttribute("blockbname");
         if (a != null) {
-            l.tBlockBName = a.getValue();
+            l.setLayoutBlockBByName(a.getValue());
         }
         a = element.getAttribute("blockcname");
         if (a != null) {
-            l.tBlockCName = a.getValue();
+            l.setLayoutBlockCByName(a.getValue());
         }
         a = element.getAttribute("blockdname");
         if (a != null) {
-            l.tBlockDName = a.getValue();
+            l.setLayoutBlockDByName(a.getValue());
         }
 
         a = element.getAttribute("connectaname");

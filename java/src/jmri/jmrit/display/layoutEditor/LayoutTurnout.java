@@ -2253,10 +2253,6 @@ public class LayoutTurnout extends LayoutTrack {
     public String connectBName = "";
     public String connectCName = "";
     public String connectDName = "";
-    public String tBlockName = "";
-    public String tBlockBName = "";
-    public String tBlockCName = "";
-    public String tBlockDName = "";
     public String tTurnoutName = "";
     public String tSecondTurnoutName = "";
 
@@ -2270,48 +2266,45 @@ public class LayoutTurnout extends LayoutTrack {
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
-        if (!tBlockName.isEmpty()) {
-            block = p.getLayoutBlock(tBlockName);
+
+        if (!blockName.isEmpty()) {
+            block = p.getLayoutBlock(blockName);
             if (block != null) {
-                blockName = tBlockName;
                 block.incrementUse();
             } else {
-                log.error("bad blockname '" + tBlockName + "' in layoutturnout " + getId());
+                log.error("bad blockname '" + blockName + "' in layoutturnout " + getId());
             }
         }
-        if (!tBlockBName.isEmpty()) {
-            blockB = p.getLayoutBlock(tBlockBName);
+        if (!blockBName.isEmpty()) {
+            blockB = p.getLayoutBlock(blockBName);
             if (blockB != null) {
-                blockBName = tBlockBName;
                 if (block != blockB) {
                     blockB.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + getId());
+                log.error("bad blockname '" + blockBName + "' in layoutturnout " + getId());
             }
         }
-        if (!tBlockCName.isEmpty()) {
-            blockC = p.getLayoutBlock(tBlockCName);
+        if (!blockCName.isEmpty()) {
+            blockC = p.getLayoutBlock(blockCName);
             if (getLayoutBlockC() != null) {
-                blockCName = tBlockCName;
                 if ((block != getLayoutBlockC())
                         && (blockB != getLayoutBlockC())) {
                     getLayoutBlockC().incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + getId());
+                log.error("bad blockname '" + blockCName + "' in layoutturnout " + getId());
             }
         }
-        if (!tBlockDName.isEmpty()) {
-            blockD = p.getLayoutBlock(tBlockDName);
+        if (!blockDName.isEmpty()) {
+            blockD = p.getLayoutBlock(blockDName);
             if (blockD != null) {
-                blockDName = tBlockDName;
                 if ((block != blockD) && (blockB != blockD)
                         && (getLayoutBlockC() != blockD)) {
                     blockD.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockDName + "' in layoutturnout " + getId());
+                log.error("bad blockname '" + blockDName + "' in layoutturnout " + getId());
             }
         }
 
@@ -2433,44 +2426,44 @@ public class LayoutTurnout extends LayoutTrack {
                     || (connectC != null) || (connectD != null)) {
                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
                 if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectAName) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectA.getName());
+                            LayoutTrack lt = lf.findObjectByName(connectAName);
                             layoutEditor.setSelectionRect(lt.getBounds());
                             lt.showPopup();
                         }
                     });
                 }
                 if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectBName) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectB.getName());
+                            LayoutTrack lt = lf.findObjectByName(connectBName);
                             layoutEditor.setSelectionRect(lt.getBounds());
                             lt.showPopup();
                         }
                     });
                 }
                 if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectCName) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectC.getName());
+                            LayoutTrack lt = lf.findObjectByName(connectCName);
                             layoutEditor.setSelectionRect(lt.getBounds());
                             lt.showPopup();
                         }
                     });
                 }
                 if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectDName) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectD.getName());
+                            LayoutTrack lt = lf.findObjectByName(connectDName);
                             layoutEditor.setSelectionRect(lt.getBounds());
                             lt.showPopup();
                         }
