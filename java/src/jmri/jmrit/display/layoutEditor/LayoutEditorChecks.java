@@ -231,10 +231,6 @@ public class LayoutEditorChecks {
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(menuItemName);
         if (layoutTrack != null) {
             Rectangle2D trackBounds = layoutTrack.getBounds();
-            double minScale = Math.min(trackBounds.getWidth(), trackBounds.getHeight());
-            if (minScale < 3.0) {
-                trackBounds = MathUtil.scale(trackBounds, 3.0 / minScale);
-            }
             layoutEditor.setSelectionRect(trackBounds);
 
             // setSelectionRect calls createSelectionGroups...

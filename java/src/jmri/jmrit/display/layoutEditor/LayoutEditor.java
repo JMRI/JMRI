@@ -9733,7 +9733,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public void setSelectionRect(@Nonnull Rectangle2D selectionRect) {
-        //selectionRect = selectionRect.createIntersection(MathUtil.infinityRectangle2D);
+        //selectionRect = selectionRect.createIntersection(MathUtil.zeroToInfinityRectangle2D);
         selectionX = selectionRect.getX();
         selectionY = selectionRect.getY();
         selectionWidth = selectionRect.getWidth();
@@ -9742,10 +9742,22 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         // There's already code in the super class (Editor) to draw
         // the selection rect... We just have to set _selectRect
         _selectRect = MathUtil.rectangle2DToRectangle(selectionRect);
-        
+
         selectionRect = MathUtil.scale(selectionRect, getZoom());
-        JScrollPane scrollPane = getPanelScrollPane();
-        scrollPane.scrollRectToVisible(MathUtil.rectangle2DToRectangle(selectionRect));
+
+        JComponent targetPanel = getTargetPanel();
+        Rectangle targetRect = targetPanel.getVisibleRect();
+        // this will make it the size of the targetRect
+        // (effectively centering it onscreen)
+        Rectangle2D selRect2D = MathUtil.inset(selectionRect, 
+                (selectionRect.getWidth() - targetRect.getWidth()) / 2.0,
+                (selectionRect.getHeight() - targetRect.getHeight()) / 2.0);
+        // don't let the origin go negative
+        selRect2D = selRect2D.createIntersection(MathUtil.zeroToInfinityRectangle2D);
+        Rectangle selRect = MathUtil.rectangle2DToRectangle(selRect2D);
+        if (!targetRect.contains(selRect)) {
+            targetPanel.scrollRectToVisible(selRect);
+        }
 
         clearSelectionGroups();
         selectionActive = true;
@@ -10330,17 +10342,18 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
         }
     } //vetoableChange
-    
+
     // The meta key was until Java 8 the right mouse button on Windows.
     // On Java 9 on Windows 10, there is no more meta key. Note that this
     // method is called both on mouse button events and mouse move events,
     // and therefore "event.getButton() == MouseEvent.BUTTON3" doesn't work.
     // event.getButton() always return 0 for MouseMoveEvent. 
     private boolean isMetaDown(MouseEvent event) {
-        if (SystemType.isWindows())
+        if (SystemType.isWindows()) {
             return SwingUtilities.isRightMouseButton(event);
-        else
+        } else {
             return event.isMetaDown();
+        }
     }
 
 //    protected void rename(String inFrom, String inTo) {
