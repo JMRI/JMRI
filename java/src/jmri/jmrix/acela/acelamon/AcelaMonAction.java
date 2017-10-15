@@ -17,7 +17,7 @@ public class AcelaMonAction extends AbstractAction {
 
     private jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;
 
-    public AcelaMonAction(String s,jmri.jmrix.acela.AcelaSystemConnectionMemo memo) {
+    public AcelaMonAction(String s, jmri.jmrix.acela.AcelaSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }

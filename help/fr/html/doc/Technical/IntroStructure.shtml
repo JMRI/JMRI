@@ -1,7 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; le 2013-09-06-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- Updated by Blorec Herv&#233; le 2016-08-01--> 
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -21,98 +20,78 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
-<body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->Introduction to JMRI Library Structure
+<!--#include virtual="Sidebar" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+	<div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI: Introduction &agrave; la Structure de la Librairie
-      de JMRI</h1>Parce que nous nous attendons &agrave; avoir des
-      interfaces diff&eacute;rentes dans le paquet jmrix, les
-      outils JMRI ne cr&eacute;ez pas directement les objets
-      d'interface dont ils ont besoin. Plut&ocirc;t, ils demandent
-      des exemples d'interfaces. Pour les interfaces dans le
-      package jmri, qui pourraient &ecirc;tre mises en oeuvre par
-      beaucoup de types de r&eacute;seaux diff&eacute;rents,
-      jmri.InstanceManager r&eacute;pond &agrave; ces demandes.
+<H1>JMRI: Introduction &#224; la Structure de la Librairie de JMRI</H1>
 
-      <p>Plus d'informations sur la fa&ccedil;on dont les choses
-      (par exemple des objets repr&eacute;sentant les
-      &eacute;l&eacute;ments sur ler &eacute;seau) sont
-      nomm&eacute;es et <a href="Names.shtml">sont disponibles sur
-      une page s&eacute;par&eacute;e</a> .</p>
+Parce que nous nous attendons &#224; avoir des interfaces diff&#233;rentes dans le paquet <code>jmrix</code>,
+les outils JMRI 
+ne cr&#233;ez pas directement les objets d'interface dont ils ont besoin. 
+Plut&#244;t, ils demandent des exemples 
+d'interfaces. 
+Pour les interfaces dans le paquet <code>jmri</code>, qui pourraient &#234;tre mises en oeuvre 
+par beaucoup de types de r&#233;seaux diff&#233;rents, <code>jmri.InstanceManager</code> r&#233;pond &#224; ces demandes.
 
-      <p>Plus pr&eacute;cis&eacute;ment:</p>
+<P>
+Plus d'informations sur la fa&#231;on dont les choses (par exemple des objets repr&#233;sentant les &#233;l&#233;ments sur ler &#233;seau)
+sont nomm&#233;es et
+<A HREF="Names.shtml"> sont disponibles sur une page s&#233;par&#233;e </a>.
 
-      <dl>
-        <dt>jmri</dt>
+<p>
+Plus pr&#233;cis&#233;ment:
 
-        <dd>contient des interfaces et impl&eacute;mentations de
-        classe de base pour les objets communs JMRI . Ceci est
-        l'interface de base de la biblioth&egrave;que globale JMRI
-        et de ses capacit&eacute;s. Le Code dans le paquet jmri
-        devrait d&eacute;pendre d'aucun autre code JMRI, mais il
-        peut d&eacute;pendre de code externes (log4j, etc)</dd>
+<dl>
+<dt>jmri
+<dd>Contient des interfaces et impl&#233;mentations de classe de base 
+pour les objets communs JMRI. Ceci est l'interface de base
+de la biblioth&#232;que globale JMRI et de ses capacit&#233;s.<br>
+Le Code dans le paquet jmri
+devrait d&#233;pendre d'aucun autre code JMRI, mais il peut d&#233;pendre de 
+code externes (log4j, etc)
 
-        <dt>jmrit</dt>
+<dt>jmrit 
+<dd>Contient des <strong>o</strong>utils utiles et des extensions commun&#233;ment utiles.<br> 
+Il peut d&#233;pendre de jmri.* et externes. Il ne doit pas d&#233;pendre de jmrix.*
 
-        <dd>contient des outils utiles et des extensions
-        commun&eacute;ment utiles. Il peut d&eacute;pendre de
-        jmri.* et externes. Il ne doit pas d&eacute;pendre de
-        jmrix.*</dd>
+<dt>jmrix
+<dd>Contient le code qui est sp&#233;cifique &#224; un syst&#232;me 
+e<strong>x</strong>terne particulier. Cela inclut les impl&#233;mentations des interfaces de jmri
+qui sont sp&#233;cifiques &#224; un syst&#232;me, plus les outils syst&#233;me sp&#233;cifiques (&#224; long terme, ceux-ci pourraient certainement &#234;tre s&#233;par&#233;es).<br>
+jmrix peut d&#233;pendre de jmri et d'externes, mais pas de  jmrit.
 
-        <dt>jmrix</dt>
+<dt>util
+<dd>Classes de services g&#233;n&#233;ral qui ne sont_pas_des outils au niveau de l'utilisateur.
 
-        <dd>contient le code qui est sp&eacute;cifique &agrave; un
-        syst&egrave;me externe particulier. Cela inclut les
-        impl&eacute;mentations des interfaces de jmri qui sont
-        sp&eacute;cifiques &agrave; un syst&egrave;me, plus les
-        outils syst&eacute;me sp&eacute;cifiques (&agrave; long
-        terme, ceux-ci pourraient certainement &ecirc;tre
-        s&eacute;par&eacute;es) jmrix peut d&eacute;pendre de jmri
-        et d'externes, mais pas de jmrit.</dd>
+<dt>gestionnaires (managers)
+<dd> R&#233;sum&#233; et impl&#233;mentations par d&#233;faut des diff&#233;rents
+type de Gestionnaires JMRI, par exemple, les classes concr&#232;tes de l'InstanceManager. 
+Il s'agit d'un accident de l'histoire que ceux-ci aient leurs propres paquets, 
+plut&#244;t que d'&#234;tre incorpor&#233;s dans jmri.implementations.
 
-        <dt>util</dt>
+<dt>impl&#233;mentations 
+<dd> R&#233;sum&#233; et impl&#233;mentations par d&#233;faut des diff&#233;rents objets jmri; 
+pas de code syst&#232;me sp&#233;cifique ou code Swing permis ici.
+Ils sont dans un paquet s&#233;par&#233;, plut&#244;t que dans jmri lui-m&#234;me, 
+pour rendre le paquet jmri simple &#224; comprendre pour les personnes 
+qui veulent juste utiliser la biblioth&#232;que.
 
-        <dd>classes des services g&eacute;n&eacute;raux qui ne
-        sont_pas_des outils au niveau de l'utilisateur.</dd>
+<dt>applications (apps)
+<dd> Contient les bases de l'application qui peut utiliser les classes jmri, jmrit, et 
+jmrix , ainsi que toute autre chose.
+En ayant cela ici, nous brisons la d&#233;pendance 
+entre les classes et jmrix jmrit (quelqu'un doit cr&#233;er les 
+objets outil g&#233;n&#233;raux et sp&#233;cifiques au syst&#232;me pour une application; 
+que la d&#233;pendance est du paquet apps)
+</dl>
 
-        <dt>gestionnaires (managers)</dt>
-
-        <dd>R&eacute;sum&eacute; et impl&eacute;mentations par
-        d&eacute;faut des diff&eacute;rents Gestionnaires de type
-        JMRI, par exemple, les classes concr&egrave;tes de
-        l'InstanceManager. Il s'agit d'un accident de l'histoire
-        que ceux-ci aient leurs propres paquets, plut&ocirc;t que
-        d'&ecirc;tre incorpor&eacute;s dans
-        jmri.implementations.</dd>
-
-        <dt>impl&eacute;mentations</dt>
-
-        <dd>R&eacute;sum&eacute; et impl&eacute;mentations par
-        d&eacute;faut des diff&eacute;rents objets jmri; pas de
-        code syst&egrave;me sp&eacute;cifique ou code Swing permis
-        ici.Ils sont dans un paquet s&eacute;par&eacute;,
-        plut&ocirc;t que dans jmri lui-m&ecirc;me, pour rendre le
-        paquet jmri simple &agrave; comprendre pour les personnes
-        qui veulent juste utiliser la biblioth&egrave;que.</dd>
-
-        <dt>applications (apps)</dt>
-
-        <dd>contient les bases de l'application qui peut utiliser
-        les classes jmri, jmrit, et jmrix , ainsi que toute autre
-        chose. En ayant cela ici, nous brisons la d&eacute;pendance
-        entre les classes et jmrix jmrit (quelqu'un doit
-        cr&eacute;er les objets outil g&eacute;n&eacute;raux et
-        sp&eacute;cifiques au syst&egrave;me pour une application;
-        que la d&eacute;pendance est du paquet apps)</dd>
-      </dl>En gros:
-      <pre>
+Basiquement
+<pre>
 
 
-   apps   -&gt;   jmri
+   apps   ->   jmri
 
                   A  A
                  /    \
@@ -120,20 +99,32 @@
               jmrix     jmrit
 
 
-</pre>(Cela devrait montrer des applications en utilisant jmrit et
-jmrix aussi, mais c'est trop difficile &agrave; dessiner en ASCII)
+</pre>
+(Cela devrait montrer des applications en utilisant jmrit et jmrix aussi, mais c'est trop difficile &#224; dessiner en ASCII)
+
+<P>
+L'utilisation intensive du pattern Factory via des objets que nous appelons "gestionnaire" des objets.</dl>
 
       <p>L'utilisation intensive du pattern Factory via des objets
       que nous appelons "gestionnaire" des objets.</p>
 
-      <h3>Exemple: un Aiguillage</h3>Aiguillages impliquent:
+     
+<h3>Exemple: un Aiguillage</h3>
+Les Aiguillages impliquent:
+<ul>
+<li> aiguillage - l'interface de base. C'est ce que vous devriez vous attendre &#224; trouver 
+					lorsque vous &#233;crivez votre code d'automatisation du r&#233;seau, c'est ce que vous obtenez 
+					lorsque vous faites une demande du TurnoutManager, etc
+<li> AbstractTurnout - fournit pour la commodit&#233; lors de l'impl&#233;mentation de l'interface de l'aiguillage 
+					pour du mat&#233;riel sp&#233;cifique, ceci offre la mise en oeuvre de base .
+<li> LnTurnout - une impl&#233;mentation sp&#233;cifique pour les aiguillages LocoNet - connect&#233;s.
+</ul>
 
-      <ul>
-        <li>aiguillage - l'interface de base. C'est ce que vous
-        devriez vous attendre &agrave; trouver lorsque vous
-        &eacute;crivez votre code d'automatisation du
-        r&eacute;seau, c'est ce que vous obtenez lorsque vous
-        faites une demande du TurnoutManager, etc</li>
+<P>
+Pour obtenir une exemple d'Aiguillage sp&#233;cifique qui repr&#233;sente quelque chose sur le r&#233;seau, vous 
+faite une demande au TurnoutManager. 
+Il s'agit &#233;galement d'une interface, avec une impl&#233;mentation
+semblable du mod&#232;le. </ul>
 
         <li>AbstractTurnout - fournit pour la commodit&eacute; lors
         de l'impl&eacute;mentation de l'interface de l'aiguillage

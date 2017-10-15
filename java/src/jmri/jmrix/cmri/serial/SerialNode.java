@@ -6,6 +6,7 @@ import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,7 +124,7 @@ public class SerialNode extends AbstractNode {
     protected int[] sensorTempSetting = new int[MAXSENSORS + 1];
 
     protected boolean monitorNodePackets = true;
-//    protected boolean[] monitorPacketBits = new boolean[SerialFilterFrame.numMonPkts];
+    protected boolean[] monitorPacketBits = new boolean[SerialFilterFrame.numMonPkts];
 
     /**
      * Assumes a node address of 0, and a node type of SMINI If this constructor
@@ -579,13 +580,12 @@ public class SerialNode extends AbstractNode {
    */
    public void setMonitorPacketBit(int pktTypeBit, boolean onoff)
    { 
- //      monitorPacketBits[pktTypeBit] = onoff; 
+       monitorPacketBits[pktTypeBit] = onoff; 
    }
    
    public boolean getMonitorPacketBit(int pktTypeBit)
    { 
- //      return monitorPacketBits[pktTypeBit]; 
-         return false;
+       return monitorPacketBits[pktTypeBit]; 
    }
    
         /**
@@ -1211,7 +1211,7 @@ public class SerialNode extends AbstractNode {
         } else {
             // multiple registration of the same sensor
             log.warn("multiple registration of same sensor: CS"
-                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERUA) + i + 1));
+                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERUA) + i + 1)); // TODO multichar prefix
         }
     }
 

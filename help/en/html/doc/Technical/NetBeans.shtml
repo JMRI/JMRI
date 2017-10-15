@@ -67,8 +67,8 @@
 
       <p>NetBeans 8 (available at <a href=
       "http://www.netbeans.org">www.netbeans.org</a>) makes a great
-      platform for working with JMRI. The JMRI code is setup to
-      work with NetBeans with almost no additional setup. (The
+      platform for working with JMRI. The JMRI code is set up to
+      work with NetBeans with almost no additional set-up. (The
       description below is accurate for the Windows version of
       NetBeans 8. NetBeans is <i>supposed</i> to be identical
       across platforms, but this hasn't been checked on anything
@@ -195,7 +195,7 @@
       "https://netbeans.org/kb/docs/ide/git.html">NetBeans Git help
       page</a></p>
 
-      <h3><a id="setup" name="setup"></a>Checking out code</h3>
+      <h3><a id="checkout" name="checkout"></a>Checking out code</h3>
 
       In NetBeans, under the "Team" menu, select Git, then
       Clone Repository. Enter the
@@ -361,9 +361,9 @@
           <p>Once NSIS is installed on the computer, it is
           necessary to create a file called local.properties in the
           same directory as JMRI's build.xml file. This file is
-          specifically <i>not</i> checked in via SVN, so that your
+          specifically <i>not</i> checked in via GitHub, so that your
           machine-specific tool installation paths are <i>not</i>
-          checked in to SVN. Create the file, and add a variable
+          checked in to GitHub. Create the file, and add a variable
           definition with the correct path to the directory which
           includes the NSIS executable, such as:</p>
 
@@ -497,9 +497,11 @@
 
           <p>A "diff patch file" was an easy way with SVN to gather
           up all your changes, even if they span multiple files,
-          into one file. This can be used to e.g. submit a patch.
-          Now that we're using Git and GitHub, however, we prefer
-          that you contribute your code changes as a <a href=
+          into one file. This can be used to store a set of local
+          changes in a separate file to try them on a new
+          branch or to send the patch to someone else.
+          Now that we're using Git and GitHub, we ask you
+          to only contribute your code changes as a <a href=
           "gitdeveloper.shtml">GitHub Pull Requests</a>.</p>
 
           <p>To create the "diff patch file"

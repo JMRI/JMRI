@@ -268,8 +268,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     /**
      * {@inheritDoc}
-     * 
-     * @return always 'VALID' 
+     *
+     * @return always 'VALID'
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {

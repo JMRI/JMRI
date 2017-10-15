@@ -7,7 +7,7 @@ import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to create and register a SimpleTurnoutCtrlFrame
- * object
+ * object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -28,11 +28,10 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
         if (jmri.InstanceManager.getNullableDefault(jmri.TurnoutManager.class) == null) {
             setEnabled(false);
         }
-
     }
 
     public SimpleTurnoutCtrlAction() {
-        this(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Turnouts"));
+        this(Bundle.getMessage("Turnouts"));
     }
 
     @Override
@@ -40,7 +39,6 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
 
         SimpleTurnoutCtrlFrame f = new SimpleTurnoutCtrlFrame();
         f.setVisible(true);
-
     }
 
     // never invoked, because we overrode actionPerformed above
@@ -48,4 +46,5 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
+
 }

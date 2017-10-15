@@ -26,8 +26,8 @@ public class Z21SimulatorTest {
     // verify there is a railComm manager
     @Test
     @Ignore("tests before this class are leaving the port open, need to close first")
-    public void testProgrammerManager() {
-        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.ProgrammerManager.class));
+    public void testAddressedProgrammerManager() {
+        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.AddressedProgrammerManager.class));
     }
 
     // verify there is a Reporter manager

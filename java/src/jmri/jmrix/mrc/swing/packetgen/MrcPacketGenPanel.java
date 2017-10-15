@@ -27,22 +27,27 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof MrcSystemConnectionMemo) {
-            try {
-                initComponents((MrcSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            initComponents((MrcSystemConnectionMemo) context);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel";
-    }//NOI18N
+        return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"; //NOI18N
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -56,8 +61,11 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(MrcSystemConnectionMemo m) throws Exception {
+    public void initComponents(MrcSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getMrcTrafficController();
 

@@ -13,7 +13,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -66,9 +65,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (2) 2014
  */
 public class PositionablePoint extends LayoutTrack {
-
-    // Defined text resource, should be called using Bundle.getMessage() to allow reuse of shared keys upstream
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants
     public static final int ANCHOR = 1;
@@ -962,7 +958,6 @@ public class PositionablePoint extends LayoutTrack {
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
-    
     /**
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
@@ -1298,6 +1293,17 @@ public class PositionablePoint extends LayoutTrack {
             }
             g2.setStroke(originalStroke);
         }   // if (getType() != ANCHOR)
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        if ((getConnect1() == null)
+                || ((getType() == ANCHOR) && (getConnect2() == null))) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+        }
     }
 
     /**

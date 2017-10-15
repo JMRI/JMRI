@@ -43,11 +43,11 @@ public class LayoutSlipTest {
 
         String ltsString = lts.toString();
         Assert.assertNotNull("ltsString not null", ltsString);
-        Assert.assertEquals(ltsString, "LayoutSlip single");
+        Assert.assertEquals("LayoutSlip single (Unknown)", ltsString);
 
         String ltdString = ltd.toString();
         Assert.assertNotNull("ltdString not null", ltdString);
-        Assert.assertEquals(ltdString, "LayoutSlip double");
+        Assert.assertEquals("LayoutSlip double (Unknown)", ltdString);
     }
 
     @Test
@@ -57,8 +57,8 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
-        Assert.assertEquals(lts.getDisplayName(), "Slip single");
-        Assert.assertEquals(ltd.getDisplayName(), "Slip double");
+        Assert.assertEquals("Slip single", lts.getDisplayName());
+        Assert.assertEquals("Slip double", ltd.getDisplayName());
     }
 
     @Test

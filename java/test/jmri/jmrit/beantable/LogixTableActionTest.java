@@ -11,6 +11,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
@@ -106,6 +107,33 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         Assert.assertNotNull(cdlFrame);
         new JButtonOperator(cdlFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
         lgxFrame.dispose();
+    }
+
+    @Test
+    public void testAddLogixAutoName() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LogixTableAction lgxTable = (LogixTableAction) a;
+
+        lgxTable.actionPerformed(null); // show table
+        JFrame lgxFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixTable"), true, true);  // NOI18N
+        Assert.assertNotNull("Found Logix Frame", lgxFrame);  // NOI18N
+
+        lgxTable.addPressed(null);
+        JFrameOperator addFrame = new JFrameOperator(LogixTableAction.rbx.getString("TitleAddLogix"));  // NOI18N
+        Assert.assertNotNull("Found Add Logix Frame", addFrame);  // NOI18N
+
+        new JCheckBoxOperator(addFrame, 0).clickMouse();
+        new JTextFieldOperator(addFrame, 1).setText("Logix 999");  // NOI18N
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+
+        Logix chk999 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getLogix("Logix 999");  // NOI18N
+        Assert.assertNotNull("Verify IX999 Added", chk999);  // NOI18N
+
+        // Add creates an edit frame; find and dispose
+        JFrame editFrame = JFrameOperator.waitJFrame(LogixTableAction.rbx.getString("TitleEditLogix"), true, true);  // NOI18N
+        JUnitUtil.dispose(editFrame);
+
+        JUnitUtil.dispose(lgxFrame);
     }
 
     @Test

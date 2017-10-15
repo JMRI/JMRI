@@ -35,7 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPThrottleManagerTest.class));
-        suite.addTest(new TestSuite(SRCPThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPPowerManagerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerManagerTest.class));

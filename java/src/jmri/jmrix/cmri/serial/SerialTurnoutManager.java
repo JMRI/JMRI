@@ -21,6 +21,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager(CMRISystemConnectionMemo memo) {
        _memo = memo;
+
     }
 
     /**
@@ -29,6 +30,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
+
     }
 
     /**
@@ -77,7 +79,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         t = new SerialTurnout(sName, userName,_memo);
 
         // does system name correspond to configured hardware
-        if (!_memo.validSystemNameConfig(sName, 'T',_memo.getTrafficController())) {
+        if (!_memo.validSystemNameConfig(sName, 'T', _memo.getTrafficController())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
@@ -162,7 +164,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     @Override
     public int askControlType(String systemName) {
         // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
-        //   'pulsed' output (some turnout controllers).
+        // 'pulsed' output (some turnout controllers).
         int iType = selectOutputType();
         if (iType == JOptionPane.CLOSED_OPTION) {
             /* user cancelled without selecting an output type */
@@ -251,7 +253,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         String tmpSName;
 
         if (curAddress.contains(":")) {
-            //Address format passed is in the form node:address
+            // Address format passed is in the form node:address
             seperator = curAddress.indexOf(":");
             nAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
             // check for non-numerical chars
@@ -280,7 +282,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             nAddress = _memo.getNodeAddressFromSystemName(tmpSName);
         } else {
             try {
-                //We do this to simply check that the value passed is a number!
+                // We do this to simply check that the value passed is a number!
                 Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
                 // show dialog to user
@@ -316,7 +318,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         //be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
         if (t == null) {
-            /*We look for the last instance of T, as the hardware address side 
+            /* We look for the last instance of T, as the hardware address side
              of the system name should not contain the letter, however parts of the prefix might */
             int seperator = tmpSName.lastIndexOf("T") + 1;
             curAddress = tmpSName.substring(seperator);
@@ -351,7 +353,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * * {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -359,7 +361,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * * {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -367,7 +369,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * * {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

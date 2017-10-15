@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
@@ -250,9 +249,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
     }
 
     private void replaceItem(String oldItem, String newItem) {
-        List<RollingStock> engines = engineManager.getList();
-        for (RollingStock rs : engines) {
-            Engine engine = (Engine) rs;
+        List<Engine> engines = engineManager.getList();
+        for (Engine engine : engines) {
             if (_comboboxName.equals(EngineEditFrame.MODEL)) {
                 // we need to copy the old model attributes, so find an engine.
                 if (engine.getModel().equals(oldItem)) {

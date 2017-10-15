@@ -70,7 +70,7 @@ public class RaspberryPiConnectionConfigXml extends AbstractConnectionConfigXml 
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         getInstance();
         loadCommon(shared, perNode, adapter);
 

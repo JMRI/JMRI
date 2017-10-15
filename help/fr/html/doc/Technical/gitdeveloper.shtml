@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="fr">
+<head>
+		<!-- Translated by Herv&#233; BLOREC<bzh56420@yahoo.fr> on 2016-08-25 -->
+    <TITLE>
+ 	JMRI: Developing with JMRI Code 
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code Git download">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+    <!--#include virtual="/Style" -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+  <h1>JMRI: Developpement avec le Code JMRI</h1>
+
+  <h2>Contexte</h2>
+
+Tout le monde est invit&#233; &#224; obtenir une copie du code JMRI et le modifier pour son 
+usage personnel. Ce qui fait qu'un d&#233;veloppeur JMRI contribue aux
+modifications pour les autres puissent les utiliser. Cette page explique comment  
+le faire, en supposant que vous avez obtenu une copie du code 
+en suivant les  
+<a href="getgitcode.shtml">proc&#233;dures pr&#233;c&#233;demment d&#233;crites</a>. 
+<p>Voir la <a href="GitFAQ.shtml">page FAQ JMRI Git</a> 
+pour plus de d&#233;tails sur ces processus.
+
+<p>Le lien &#224; gauche fournit plus d'information sur la construction avec des outils sp&#233;cifiques. 
+Vous pouvez lire la page pour votre configuration personnalis&#233;e.
+
+<p>Le reste de cette page fournit un aper&#231;u du processus de d&#233;veloppement du code JMRI 
+avec Git. Basiquement vous cr&#233;ez une nouvelle branche, 
+faites vos changements, compilez/ex&#233;cutez/testez jusqu'&#224; 
+ce que vous ayez finit vos modifications pr&#233;vues, et ensuite envoyez ce 
+changement pour inclusion dans le r&#233;pertoire principal.
+<p>
+Cela se fait avec un processus en quatre &#233;tapes: 
+
+<ol>
+<li>Vous cr&#233;ez une branche Git pour mettre votre travail 
+<li>P&#233;riodiquement vous &quot;soumettez&quot; vos modifications &#224; votre r&#233;pertoire 
+	local. 
+<li>P&#233;riodiquement vous &quot;poussez&quot; ces modifications dans un 
+r&#233;pertoire de votre votre branche personnelle sur GitHub. 
+<li>quand votre modification est compl&#232;te, vous cr&#233;ez un
+&quot;pull request&quot; 
+qui permet &#224; JMRI d'obtenir votre modification pour le r&#233;pertoire GitHub 
+et le fusionner dans le r&#233;pertoire principal JMRI.
+</ol>
+
+<h3>Cr&#233;er une Branche pour le D&#233;veloppement</h3>
+Git est tr&#232;s bien pour garder le d&#233;veloppement sur les "branches" parall&#232;les s&#233;par&#233;es. 
+Bien que le d&#233;veloppement primaire soit sur la branche "master", nous recommandons 
+fortement que vous ne fassiez pas vos modifications directement sur elle. Il y a beaucoup de d&#233;veloppeurs JMRI, 
+ et avoir tous les travaux sur une seule branche peut &#234;tre source de confusion. &#192; la place, vous devrez cr&#233;er une branche 
+s&#233;par&#233;e pour chacun de vos projets, et travailler dessus jusqu'&#224; ce qu'il soit pr&#234;t &#224; &#234;tre fusionn&#233; dans le r&#233;pertoire source principal 
+JMRI, et puis contribuer avec le contenu de la branche enti&#232;re dans notre d&#233;p&#244;t principal.
+<p>
+Pour cr&#233;er une nouvelle branche: 
+
+  <pre><code>
+  git checkout master<br/>
+  git pull<br/>
+  git checkout -b my-new-feature-or-fix<br/>
+  </code></pre>
+<p>
+Les deux premi&#232;res lignes "git checkout master" & "git pull" assurent que vous d&#233;marrez 
+depuis les contenus les plus r&#233;cents de la branche "ma&#238;tre". La branche principale est l'endroit o&#249; 
+nous faisons le d&#233;veloppement entre les versions de test.  
+<p>
+<p>
+L'option -b dans la derni&#232;re ligne cr&#233;e une nouvelle branche qui contiendra votre nouveau travail. 
+Ceci vous permet de travailler sans interf&#233;rence avec les changements d'autres personnes jusqu'&#224; ce que vous soyez pr&#234;t 
+&#224; fusionner avec ceux-ci. Le "checkout" signifie que vous travaillez sur cette nouvelle branche, qui 
+d&#233;tiendra tout ce que vous soumettrez dans les &#233;tapes ult&#233;rieures.
+
+<h3>Soumettre les Modifications &#224; Votre R&#233;pertoire Local</h3>
+Vous devrez soumettre souvent vos modifications &#224; votre r&#233;pertoire local.
+
+<p>
+Avec SVN, il y avait un r&#233;pertoire central que tout le monde partageait. 
+Git fournit tout le monde avec leur r&#233;pertoire local personnel, et ensuite 
+les lient ensemble avec les op&#233;rations "pull", "push" et "pull request".
+Quand vous soumettez, vous sauvez une copie de vos modifications dans votre r&#233;pertoire 
+local o&#249; elles sont prot&#233;g&#233;es et peuvent &#233;ventuellement &#234;tre d&#233;plac&#233;es &#224; partir de l&#224;.
+
+	<pre><code>
+  	git commit
+  	</code></pre>
+
+Quand vous faites ceci, Git ouvre un fen&#234;tre &#233;diteur pour votre note &#224; soumettre. La ligne du haut devient le sommaire, 
+qui doit &#234;tre clair par lui-m&#234;me car il appara&#238;tra dans les listes des modifications.
+Vous ne devez pas d&#233;passer 50 caract&#232;res pour ce sommaire, ainsi il peut &#234;tre affich&#233; de fa&#231;on compacte. 
+SVP ajoutez plus de d&#233;tails dans les lignes suppl&#233;mentaires apr&#232;s le sommaire, 
+parce que ceci aide vos amis et coll&#232;gues &#224; comprendre ce que vous avez fait.
+
+<a name="repo" id="repo"></a><h3>Obtenir un R&#233;pertoire Personnel GitHub</h3> 
+
+  	<ul>
+  	<li>Obtenir un <a href="https://github.com/join">compte GitHub</a> et connectez-vous
+	<li>Dites &#224; GitHub de <a href="https://help.github.com/articles/fork-a-repo/">"fork" un r&#233;pertoire JMRI</a> 
+	dans un des votres. Il y a de	
+	<a href="https://help.github.com/articles/fork-a-repo/">bonnes pages d'aide</a>, 
+	mais basiquement vous allez &#224; la
+	<a href="https://github.com/JMRI/JMRI">page r&#233;pertoire JMRI</a> 
+	et cliquez sur le bouton "fork" en haut &#224; droite.
+
+	</ul>
+	<P>
+	Ceci vous donne votre r&#233;pertoire personnel, avec lequel vous pouvez travaillez librement.
+
+<p>
+Si vous utilisez la ligne de commande 
+la prochaine &#233;tape est de vous connecter &#224; votre r&#233;pertoire local. 
+( Les utilisateurs d'IDEs feront la partie suivante sur leur IDE, voir 
+ces instructions )
+Sur la page web pour votre r&#233;pertoire, sur le cot&#233; droit, il y a un "HTTPS Clone URL". 
+Copiez le. Dans votre r&#233;pertoire de r&#233;f&#233;rentiel sur votre ordinateur local, faire 
+
+  <pre><code>
+  git remote set-url --push origin https://github.com/yourname/JMRI.git
+  </code></pre>
+  ( avec l'URL appropri&#233; )
+  <p>
+	Apr&#232;s ceci, faites un &quot;git push&quot; qui poussera vos modifications 
+	dans votre r&#233;pertoire. &quot;git pull&quot; qui sera toujours obtenu &#224; partir du r&#233;f&#233;rentiel principal 
+	de sorte que vous pouvez obtenir les plus r&#233;centes mises &#224; jour des autres. De 
+	v&#233;rifier ceci, faites un &quot;git remote -v&quot; qui devrait montrer:
+
+<code><pre>
+   % git remote -v<br/>
+   origin	https://github.com/JMRI/JMRI.git (fetch)<br/>
+   origin	https://github.com/yourname/JMRI.git (push)
+</pre></code>
+  
+
+<a name="push" id="push"></a><h3>Poussez vos modifications dans votre r&#233;f&#233;rentiel GitHub</h3>
+ 
+Maintenant que vous avez un ensemble coh&#233;rent de changements soumis localement, 
+vous pouvez les d&#233;placer dans votre r&#233;pertoire dans GitHub. Ceci les rends 
+visibles pour tout le monde.
+
+  <pre><code>
+  git push
+  </code></pre>
+
+Quelque fois, git vous dira que vous avez besoin d'un commentaire plus compliqu&#233;, avec plusieurs options qui d&#233;marrent avec - ou --.
+copiez et collez ces lignes pour les ex&#233;cuter.
+ 
+ <a name="pull" id="pull"></a><h3>Soumettre un Pull Request</h3>
+
+La derni&#232;re &#233;tape est de faire conna&#238;tre vos modifications, d&#233;j&#224; visibles dans votre r&#233;pertoire GitHub, 
+ aux mainteneurs JMRI de telle sorte que l'un d'entre eux peut tirer dans le r&#233;f&#233;rentiel
+principal JMRI. Pour faire ceci , vous cr&#233;ez et soumettez un "pull request" qui 
+a automatiquement toutes les infos.
+<ul>
+<li>Connexion &#224; GitHub et allez sur la page de votre r&#233;pertoire clone de JMRI, ( le votre, 
+	pas celui du JMRI principal )
+<li>Il y a un bouton "Pull Request" en haut &#224; droite de la liste des fichiers.
+    Cliquez dessus.
+<li>Sur la page suivante, s&#233;lectionnez la branche sur laquelle vous avez travaillez et cliquez le bouton "Create pull request".
+<li>Remplissez les formulaires. Un titre court qui d&#233;crit la fonction que vous avez &#233;crite
+	 aide les autres &#224; la trouver. Quelques lignes dans le commentaire &#224; propos de ce qu'elle fait, Comment
+    vous l'avez ajout&#233;e, etc est &#233;galement tr&#232;s utile.
+<li>Cliquez "Create pull request". Cela soumet toutes les infos et avertit les 
+	 les maintenanciers JMRI. L'un d'eux va la v&#233;rifier et vous contactera pour 
+	 de plus amples informations ( occasionnellement ), ou la fusionner dans la branche maitre du r&#233;pertoire principal ( le plus souvent). 
+	 Vous pouvez vous inscrire pour une notification lorsque cela se produit.
+</ul>
+
+ <!--#include virtual="/Footer" -->
+
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -28,13 +28,13 @@ import org.slf4j.LoggerFactory;
 public class ProgDebugger implements AddressedProgrammer {
 
     public ProgDebugger() {
-        mode = DefaultProgrammerManager.PAGEMODE;
+        mode = ProgrammingMode.PAGEMODE;
     }
 
     public ProgDebugger(boolean pLongAddress, int pAddress) {
         longAddr = pLongAddress;
         address = pAddress;
-        mode = DefaultProgrammerManager.OPSBITMODE;
+        mode = ProgrammingMode.OPSBITMODE;
     }
 
     // write CV is recorded for later use
@@ -231,8 +231,6 @@ public class ProgDebugger implements AddressedProgrammer {
 
             @Override
             public void run() {
-                // log.debug("read CV reply - start sleep");
-                // try { Thread.sleep(100); } catch (Exception e) {}
                 log.debug("read CV reply");
                 l.programmingOpReply(retval, 0);
             }  // 0 is OK status
@@ -267,18 +265,18 @@ public class ProgDebugger implements AddressedProgrammer {
             // addressed programmer
             return Arrays.asList(
                     new ProgrammingMode[]{
-                        DefaultProgrammerManager.OPSBITMODE,
-                        DefaultProgrammerManager.OPSBYTEMODE
+                        ProgrammingMode.OPSBITMODE,
+                        ProgrammingMode.OPSBYTEMODE
                     }
             );
         } else {
             // global programmer
             return Arrays.asList(
                     new ProgrammingMode[]{
-                        DefaultProgrammerManager.PAGEMODE,
-                        DefaultProgrammerManager.DIRECTBITMODE,
-                        DefaultProgrammerManager.DIRECTBYTEMODE,
-                        DefaultProgrammerManager.DIRECTMODE
+                        ProgrammingMode.PAGEMODE,
+                        ProgrammingMode.DIRECTBITMODE,
+                        ProgrammingMode.DIRECTBYTEMODE,
+                        ProgrammingMode.DIRECTMODE
                     }
             );
         }

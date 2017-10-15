@@ -15,7 +15,7 @@ import org.junit.Assert;
  */
 public class SerialNodeTest extends TestCase {
 
-    SerialNode b = new SerialNode();
+    private SerialNode b = new SerialNode();
 
     public void testConstructor1() {
         Assert.assertEquals("check default ctor address", 1, b.getNodeAddress());
@@ -68,6 +68,7 @@ public class SerialNodeTest extends TestCase {
 
     @Override
     protected void tearDown() {
+        b = null;
         JUnitUtil.tearDown();
     }
 

@@ -1,6 +1,7 @@
 package jmri.jmrit;
 
 import jmri.Programmer;
+import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -17,7 +18,7 @@ public class AbstractIdentifyTest extends TestCase {
 
     public void testFullSequence() {
         // walk through all 8 steps
-        AITest a = new AITest(new jmri.ProgrammerScaffold(jmri.managers.DefaultProgrammerManager.DIRECTMODE));
+        AITest a = new AITest(new jmri.ProgrammerScaffold(ProgrammingMode.DIRECTMODE));
 
         retval = false;
         invoked = -1;
@@ -77,7 +78,7 @@ public class AbstractIdentifyTest extends TestCase {
 
     public void testShortSequence() {
         // walk through just 4 steps
-        AITest a = new AITest(new jmri.ProgrammerScaffold(jmri.managers.DefaultProgrammerManager.DIRECTMODE));
+        AITest a = new AITest(new jmri.ProgrammerScaffold(ProgrammingMode.DIRECTMODE));
 
         retval = false;
         invoked = -1;
@@ -120,7 +121,7 @@ public class AbstractIdentifyTest extends TestCase {
     // internal class for testing
     class AITest extends AbstractIdentify {
         public AITest(Programmer p) { super(p);}
-        
+
         @Override
         public boolean test1() {
             invoked = 1;

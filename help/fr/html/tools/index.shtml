@@ -1,26 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; 2013-09-21, html by Egbert Broerse 2015-10-16-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+ <!-- UpDated  by Blorec Herv&#233; 2013-09-21, html by Egbert Broerse 2015-10-16-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <title>
+ 	JMRI: Tools
+  </title>
 
-  <title>JMRI: Tools</title>
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content=
-  "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
@@ -33,202 +25,315 @@
       <!--#include virtual="Sidebar" -->
 
       <div id="mainContent">
-        <!-- Page Body -->
+<!-- Page Body -->
+        <h1>
+		JMRI: Outils
+        </h1>
 
-        <h2>JMRI: Outils G&eacute;n&eacute;raux</h2>
+<p>JMRI fournit plusieurs outils qui sont optimis&#233;s &#224; des fins sp&#233;cifiques:
+<ul><!-- TOC -->
+	<li><a href="#commontools">Outils Communs</a></li>
+	<li><a href="#systemSpecificTools">Outils Syst&#232;mes sp&#233;cifiques</a></li>
+	<li><a href="#scripting">Cr&#233;er les votres par des Scripts JMRI</a></li>
+</ul>	
 
-        <p>JMRI fournit plusieurs outils qui sont optimis&eacute;s
-        &agrave; des fins sp&eacute;cifiques. Outils
-        g&eacute;n&eacute;raux:</p>
+<a name="commontools"></a><h2>Outils Communs</h2>
+		<p>Les outils suivants dans le menu Outils travaillent avec la plupart du mat&#233;riel DCC connect&#233;s:
+	<dl>
+		<dt><h3><a href="Turnouts.shtml">Aiguillages</a></h3></dt>	
+		<dd>
 
-        <dl>
-          <dd>
-            <h3><a href="Sensors.shtml">Capteurs</a></h3>
-          </dd>
+				JMRI appelle n'importe quelle sorties vers le r&#233;seau un "Aiguillage". L'objet Aiguillage a deux &#233;tats: Direct ( On ) et D&#233;vi&#233; ( Off ).<br/>Pour des sorties telles que <a href="#lights">Lumi&#232;res</a> et <a href="#signals">Signaux</a> JMRI fournit des objets sp&#233;ciaux ( voir ci-dessous ). 
+		</dd>
+		
+		<dt><h3><a name="lights" href="Lights.shtml">Lumi&#232;res</a></h3></dt>
+		<dd>
+			Les Lumi&#232;res sont des sorties	digitales qui fonctionnent comme des interrupteurs marche/arr&#234;t. 
+			Les Lumi&#232;res sont cr&#233;&#233;es pour fournir une commande facile depuis un tableau de commande de lumi&#232;res 
+			et de sc&#232;nes lumineuses.
+			Les Lumi&#232;res peuvent aussi &#234;tre pour toute action qui demande une commande marche/arr&#234;t. Une Lumi&#232;re 
+			peut-&#234;tre utilis&#233;e, par exemple, pour activer un d&#233;teleur &#233;lectromagn&#233;tique pendant une dur&#233;e d&#233;termin&#233;e 
+			en r&#233;ponse &#224; un commande par un bouton du tableau.
+		</dd>
 
-          <dd>Un capteur est une fa&ccedil;on pour JMRI de
-          repr&eacute;senter une information venant du
-          r&eacute;seau.</dd>
+		<dt><h3><a href="Sensors.shtml">Capteurs</a></h3></dt>
+		<dd>
+			Un Capteur est une m&#233;thode de JMRI pour repr&#233;senter une entr&#233;e en provenance du r&#233;seau.
+		</dd>
 
-          <dd>
-            <h3><a href="Turnouts.shtml">Aiguillages</a></h3>
-          </dd>
+		<dt><h3><a href="throttle/ThrottleMain.shtml">R&#233;gulateurs</a></h3></dt>
+		<dd>
+			Vous pouvez ouvrir de nombreux R&#233;gulateurs Logiciels pour faire 
+			circuler vos locomotives DCC.
+		</dd>
+	
+		<dt><h3><a href="consisttool/ConsistTool.shtml">Couplage</a></h3></dt>
+		<dd>		
+			JMRI fournit des outils pour g&#233;rer le couplage de locomotives.
+		</dd>
 
-          <dd>JMRI appelle "Aiguillage" &agrave; peu pr&egrave;s
-          n'importe quelle sortie vers le r&eacute;seau.</dd>
+		<dt><h3><a name="signals" href="signaling/index.shtml">Signaux</a></h3></dt>
+		<dd>
+			Les Feux de Signalisation et les M&#226;ts de Signalisation sont l'image de la fa&#231;on dont
+			JMRI repr&#233;sente et commande les signaux sur le r&#233;seau. 
+			Ils sont une sorte d'&#233;quipement de sortie sp&#233;cifique qui peuvent &#234;tre configur&#233;s pour diverses 
+			Apparences ( Rouge, Jaune, Vert, Flash Jaune, etc. ) et Aspects (Stop, Libre, Approche, etc. ) suivant les r&#232;gles types.
+		</dd>
 
-          <dd>
-            <h3><a href=
-            "throttle/ThrottleMain.shtml">R&eacute;gulateurs</a></h3>
-          </dd>
+		<dt><h3><a name="blocks" href="Blocks.shtml">Cantons</a></h3></dt>
+		<dd>
+			Les Cantons sont des sections de voie dont l'occupation peut &#234;tre surveill&#233;e par JMRI. La division de votre r&#233;seau en Cantons est optionnelle. L'occupation d'un canton est indiqu&#233;e par l'&#233;tat d'un Capteur d'occupation. 
+ 		</dd>
 
-          <dd>Vous pouvez ouvrir plusieurs r&eacute;gulateurs
-          logiciels pour piloter vos locomotives DCC.</dd>
+		<dt><h3><a href="Reporters.shtml">Rapports</a></h3></dt>
+		<dd>
+			 Les Rapports sont pour JMRI une fa&#231;on de repr&#233;senter les informations renvoy&#233;es du r&#233;seau et qui peuvent contenir des informations arbitraires. 
+		</dd>
 
-          <dd>
-            <h3><a href="ConsistTool/ConsistTool.shtml">Couplage
-            (UM)</a></h3>
-          </dd>
+		<dt><h3><a href="Memories.shtml">Variables M&#233;moire</a></h3></dt>
+		<dd>
+			Une Variable M&#233;moire peut contenir tout type d'objet sp&#233;cifi&#233; par l'utilisateur. 
+		</dd>
 
-          <dd>JMRI fournit les outils pour g&eacute;rer les
-          couplages de locomotives.</dd>
+		<dt><h3><a href="Routes.shtml">Itin&#233;raires</a></h3></dt>
+		<dd>
+			Les Itin&#233;raires sont un outil pour piloter de multiples aiguillages quand un &#233;v&#233;nement se produit sur le r&#233;seau. 
+			Vous pouvez avoir un panneau qui commande tous les Aiguillages au sein de votre triage, 
+			etc. Ils peuvent aussi changer l'&#233;tat des Capteurs, jouer des fichiers sons, et appeler des scripts. Ils
+			ont des capacit&#233;s logiques simples pour d&#233;cider quand configurer les sorties d'un itin&#233;raires.
+		</dd>
 
-          <dd>
-            <h3><a href="Signals.shtml">Signaux</a></h3>
-          </dd>
+		
+		<dt><h3><a href="LRoutes.shtml">LItin&#233;raires</a></h3></dt>
+		<dd>
+			Les LItin&#233;raires &#233;tendent les capacit&#233;s d'Itin&#233;raires 
+			en les mettant en &#339;uvre comme un Logix. Les LItin&#233;raires peuvent &#234;tre d&#233;finis 
+			avec un nombre illimit&#233; de Capteurs, Aiguillages, Lumi&#232;res, 
+			et/ou Feux de Signalisation pour actions ou contr&#244;les. LItin&#233;raires 
+			fournit un point de d&#233;part facile pour la cr&#233;ation de nouveau Logix 
+			puisqu'ils peuvent &#234;tre &#233;tendus pour inclure les fonctionnalit&#233;s Logix. 
+		</dd>
 
-          <dd>Signaux (ou plus formellement T&ecirc;tes Signal)
-          sont comment JMRI repr&eacute;sente et contr&ocirc;le les
-          T&ecirc;tes de signal sur un r&eacute;seau. Ils sont un
-          type sp&eacute;cifique de p&eacute;riph&eacute;rique de
-          sortie qui peut &ecirc;tre d&eacute;fini pour
-          diff&eacute;rentes couleurs: Rouge, Jaune, Vert, Jaune
-          clignotant, etc</dd>
+		<dt><h3><a href="Sections.shtml">Sections</a></h3></dt>
+		<dd>
+			Une <b>Section</b> est un groupe de un ou plusieurs <a href="Blocks.shtml">Cantons</a> connect&#233;s qui peuvent &#234;tre 
+			affect&#233;s &#224; un train circulant dans une direction donn&#233;e. Les Sections sont cr&#233;&#233;es pour r&#233;soudre 
+			les probl&#232;mes de direction qui peuvent survenir lors de l'utilisation des Cantons directement.
+		</dd>
 
-          <dd>
-            <h3><a href="Lights.shtml">Lumi&egrave;res</a></h3>
-          </dd>
+		<dt><h3><a href="Logix.shtml">Logix</a></h3></dt>
+		<dd>
+			Un Logix est un outil pour entrer des expressions logiques 
+			puissantes qui peuvent commander une partie d'un r&#233;seau. 
+			Chacun d'eux peut surveiller de multiples entr&#233;es et des 
+			op&#233;rations logiques par le biais d'un certain nombre d'expressions 
+			Conditionnelles, dont chacune peut prendre des mesures simples. 
+			Pour des commandes plus puissantes, combinez le raisonnement 
+			logique d'un Logix avec les commandes de sorties puissantes 
+			d'un Itin&#233;raire.
+		</dd>
 
-          <dd>Les lumi&egrave;res sont les bits de sortie
-          num&eacute;riques qui fonctionnent comme des
-          interrupteurs marche/arr&ecirc;t. Les lumi&egrave;res ont
-          &eacute;t&eacute; cr&eacute;&eacute;es pour fournir une
-          commande facile pour les lumi&egrave;res d'un panneau de
-          commande et l'&eacute;clairage des paysages. Les sorties
-          lumi&egrave;res peuvent aussi &ecirc;tre utilis&eacute;es
-          &agrave; des fins qui n&eacute;cessite un interrupteur
-          marche/arr&ecirc;t. La sortie lumi&egrave;re peut
-          &ecirc;tre utilis&eacute;e, par exemple, pour activer une
-          d&eacute;coupleur &eacute;lectromagn&eacute;tiques pour
-          un temps pr&eacute;-d&eacute;termin&eacute; en
-          r&eacute;ponse &agrave; un bouton du TCO</dd>
+		<dt><h3><a href="fastclock/index.shtml">Horloges Rapides</a></h3></dt>
+		<dd>
+			JMRI peut &#224; la fois fournir divers types d'Horloges Rapides
+			sur l'&#233;cran d'ordinateur, et travailler aussi avec 
+			les horloges rapides d&#233;j&#224; install&#233;es sur votre r&#233;seau DCC.
+		</dd>
 
-          <dd>
-            <h3><a href="Routes.shtml">Itin&eacute;raires
-            (Routes)</a></h3>
-          </dd>
+		<dt><h3><a href="speedometer/index.shtml">Compteur</a></h3></dt>
+		<dd>		 
+			Un outil pour d&#233;terminer la vitesse &#224; l'&#233;chelle de vos
+			locomotives. Vous pouvez l'utiliser pendant leur configuration 
+			pour &#233;viter des exc&#232;s de vitesse, pour v&#233;rifier les vitesses de circulation  
+			de deux locomotives avant de les faire circuler en couplage, ou pour ce que vous voulez. 
+		</dd>
 
-          <dd>Les itin&eacute;raires sont un outil pour le pilotage
-          de multiples aiguillages lorsque quelque chose se passe
-          sur le r&eacute;seau. Vous pouvez avoir un panneau
-          d'interrupteur pour tous les aiguillages de vos
-          acc&egrave;s au triage, etc. Ils peuvent &eacute;galement
-          changer l'&eacute;tat des capteurs, lire des fichiers
-          audio, et invoquer des scripts. Ils ont certaines
-          capacit&eacute;s logiques simples pour d&eacute;cider
-          quand r&eacute;gler les sorties de
-          l'itin&eacute;raire.</dd>
+		<dt><h3><a href="Audio.shtml">Audio</a></h3></dt>
+		<dd> 
+			Objets audio JMRI qui d&#233;tient des information au sujet de sons qui peuvent &#234;tre restitu&#233;s par l'ordinateur.
+		</dd>
 
-          <dd>
-            <h3><a href="Logix.shtml">Logix</a></h3>
-          </dd>
+		<dt><h3><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher(Pro)</a></h3></dt>
+		<dd>
+			L'outil Dispatcher fournit des fonctions et organise les informations 
+			relatives au dispatching des trains sur un r&#233;seau de trains miniatures. Sa
+			principale fonction est l'affectation de sections de voie aux divers Trains circulant
+			sur le r&#233;seau. Ce jeu d'outils a &#233;volu&#233; en une <a href="../apps/DispatcherPro/index.shtml">application DispatcherPro</a>
+		</dd>
 
-          <dd>Un Logix est un outil puissant pour entrer des
-          expressions logiques qui peuvent contr&ocirc;ler les
-          &eacute;l&eacute;ments d'un r&eacute;seau. Chacun peut
-          suivre de multiples entr&eacute;es et des
-          op&eacute;rations logiques contenant un certain nombre
-          d'expressions conditionnelles, dont chacune peut prendre
-          des mesures simples. Pour un contr&ocirc;le plus
-          puissants, combiner les raisonnements logiques d'un Logix
-          avec la puissante sortie de commande
-          d'Itin&eacute;raires.</dd>
+		<dt> <h3> <a href="../../package/jmri/jmrit/operations/Operations.shtml">Exploitations (Op&#233;rations)</a> </h3> </dt>
+		<dd>
+			L'outil d'Exploitation a &#233;volu&#233; en une application avanc&#233;e OperationsPro, qui vous permet de g&#233;n&#233;rer des trains et de produire par ordinateur les
+			manifestes et les listes de man&#339;uvre de votre chemin de fer &#224; partir des inventaires de mat&#233;riels roulants, d'horaires et de destinations. 
+ 			Ce jeu d'outils a &#233;volu&#233; vers une application vers une <a href="../../package/jmri/jmrit/operations/Operations.shtml">application OperationsPro</a>.
+		</dd>
+</dl>
 
-          <dd>
-            <h3><a href=
-            "LRoutes.shtml">LItin&eacute;raires</a></h3>
-          </dd>
+		
+<h2><a href="../apps/LocoTools/index.shtml">Outils Syst&#232;mes sp&#233;cifiques</a></h2>
+	
+<h3><a href="../hardware/acela/index.shtml#tools">Outils Acela</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via ce syst&#232;me, un menu <b>Acela</b> est montr&#233;:</p>
+<ul>
+<li><a href="../../package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml">Moniteur Acela</a></li>
+<li><a href="../../package/jmri/jmrix/acela/packetgen/SerialPacketGenFrame.shtml">Envoi Paquets Acela</a></li>
+<li><a href="../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configuration des N&#339;uds</a></li>
+</ul>
 
-          <dd>LItin&eacute;raires &eacute;tend les capacit&eacute;s
-          des Itin&eacute;raires par leur mise en oeuvre en tant
-          que Logix. LItin&eacute;raires peut &ecirc;tre
-          d&eacute;fini avec un nombre illimit&eacute; de capteurs,
-          d'aiguillages, de Lumi&egrave;res, et/ou T&ecirc;te
-          Signal pour des actions ou des contr&ocirc;les.
-          LItin&eacute;raire peut fournir un point de d&eacute;part
-          facile pour la cr&eacute;ation de nouveaux Logix car ils
-          peuvent &ecirc;tre &eacute;tendus pour inclure toute les
-          Capacit&eacute;s de Logix.</dd>
+<h3><a href="../hardware/bachrus/index.shtml#tools">Outils Bachrus</a></h3>
+<p>Quand JMRI est connect&#233; &#224; Bachrus MTS-DCC, vous pouvez utiliser la:</p>
+<ul>
+<li><a href="../hardware/bachrus/index.shtml#tools">Console Speedo</a>
+</ul>
+   
+<h3><a href="../hardware/cmri/CMRI.shtml#tools">Outils C/MRI</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via ce syst&#232;me, un menu <b>CMRI</b> est montr&#233;:</p>
+<ul>   
+<li>Moniteur CMRI 
+<li>Envoi Commande
+<li><a href="../../package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configuration des N&#339;uds C/MRI</a></li>
+<li><a href="../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Ex&#233;cuter un Diagnostic</a></li>
+<li><a href="../../package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">Liste des Affectations</a></li>
+</ul>
 
-          <dd>
-            <h3><a href="fastclock/index.shtml">Horloges
-            Rapides</a></h3>
-          </dd>
+<h3><a href="../hardware/can/index.shtml#tools">Outils CAN</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via CAN, un menu <b>CAN</b> contient:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/AbstractMonFrame.shtml">Outil Moniteur</a></li>
+<li><a href="../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Outil Envoi Trame</a></li>
+</ul>
 
-          <dd>JMRI peut &agrave; la fois fournir diff&eacute;rents
-          types d'horloges rapides sur l'&eacute;cran de
-          l'ordinateur, et aussi travailler avec les horloges
-          rapides d&eacute;j&agrave; install&eacute;es sur votre
-          r&eacute;seau.</dd>
+<h3><a href="../hardware/acela/index.shtml#tools">Outils MERG CBUS</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via CBUS, un menu <b>MERG</b> est montr&#233;:</p>
+<ul>   
+<li>Console</li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Envoi Trame</a></li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture d'&#201;v&#233;nement</a></li>
+<li>Table d'&#201;v&#233;nement</li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Outil de Configuration des N&#339;uds</a></li>
+</ul>
 
-          <dd>
-            <h3><a href=
-            "speedometer/index.shtml">Tachym&egrave;tre</a></h3>
-          </dd>
+<h3><a href="../hardware/can/index.shtml#tools">Outils DCC++</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via DCC++, le menu <b>DCC++</b> est montr&#233;:</p>
 
-          <dd>Un outil pour d&eacute;terminer la vitesse &agrave;
-          l'&eacute;chelle de vos locomotives . Vous pouvez
-          l'utiliser pendant leurs r&eacute;glages, pour
-          &eacute;viter les exc&egrave;s de vitesse, ou pour tout
-          ce que vous voulez.</dd>
+<li>Moniteur Trafic DCC++ 
+<li>Envoi Commande DCC
+<li>Mesure Courant Voie
+<li>Configuration  Capteurs et Aiguillages
+<li>Charger DC ++ sur Serveur TCP 
+</ul>
 
-          <dd>
-            <h3><a href=
-            "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></h3>
-          </dd>
+<h3><a href="../hardware/can/index.shtml#tools">Outils EasyDCC</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via EasyDCC, le menu <b>EasyDCC</b> est montr&#233;:</p>
+<ul>
+<li>Moniteur de Commande
+<li>Envoi Commande
+</ul>
 
-          <dd>L'outil offre des fonctions de r&eacute;partition et
-          organise l'information relative &agrave;
-          l'exp&eacute;dition des trains sur un r&eacute;seau en
-          mod&eacute;lisme ferroviaire. Sa principale fonction est
-          l'allocation des sections de voie pour que des trains
-          diff&eacute;rents puissent circuler sur le
-          r&eacute;seau.</dd>
+<h3><a href="../hardware/ecos/index.shtml#tools">Outils ESU ECoS</a></h3>
+<ul>
+<li>Pr&#233;f&#233;rence Ecos
+<li>G&#233;n&#233;rateur de Commande
+<li>&#201;tats Ecos
+</ul>
 
-          <dd>
-            <h3><a href=
-            "../../package/jmri/jmrit/operations/Operations.shtml">Exploitations
-            (Op&eacute;rations)</a></h3>
-          </dd>
+<h3><a href="../hardware/grapevine/index.shtml#tools">Outils Grapevine</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via ce syst&#232;me, le menu <strong>Grapevine</strong> donne acc&#232;s &#224;:
+<ul>
+<li><a href="../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Table des Noeuds</a></li>
+<li>
+<a href="../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configuration des Noeuds</a>
+</ul>
 
-          <dd>L'outil d'Exploitation vous permet de produire par
-          ordinateur les manifestes et les listes de manoeuvre de
-          votre chemin de fer.</dd>
-        </dl>
+<h3><a href="../apps/LocoTools/index.shtml">Outils LocoNet ( Digitrax )</a></h3>
+<p>Une gamme compl&#232;te d'outils sont disponibles &#224; partir du menu <b>LocoNet</b> quand JMRI est connect&#233; &#224; un r&#233;seau LocoNet DCC ( Digitrax ).<br>
+vous pouvez aussi y acc&#233;der en double cliquant sur l'ic&#244;ne <strong>Loco Tools</strong> dans le dossier d'installation JMRI. Pour en nommer quelques uns:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">Outil de Configuration DS64 </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Moniteur LocoNet </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Chargeur de Son </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Outil de Configuration SE8C </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Moniteur de Slot </a></li>
+</ul>
 
-        <h2><a href="../apps/LocoTools/index.shtml">Outils
-        sp&eacute;cifiques LocoNet</a></h2>Un jeu d'outils
-        sp&eacute;cifiques Digitrax LocoNet :
+<h3><a href="../hardware/marklin/index.shtml#tools">Outils M&auml;rklin </a></h3>
+<ul>
+<li>Moniteur de Commandes Marklin</li>
+<li>Envoi Commandes Marklin</li>
+</ul>
 
-        <ul>
-          <li><dfn>Moniteur LocoNet</dfn></li>
+<h3><a href="../hardware/can/index.shtml#tools">Outils NCE</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via ce syst&#232;me, un menu <b>NCE</b> est montr&#233;:</p>
+<ul>
+   
+<li><a href="../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Envoi Commande </a></li>
+<li>Envoi Macro</li>
+<li><a href="../../package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml">Modifier Macro </a></li>
+<li><a href="../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">Modifier Couplage </a></li>
+<li><a href="../../package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml">Analyzeur Paquet DCC  </a></li>
+<li><a href="../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">Moniteur Horloge </a></li>
+</ul>
 
-          <li><dfn>Moniteur Slot</dfn></li>
+<h3><a href="../hardware/can/index.shtml#tools">Outils OpenLCB</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via ce syst&#232;me, un menu <b>OpenLCB</b> est montr&#233;:</p>
+<ul>   
+	<li>Moniteur Trafic </li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Envoi Trame</a></li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configurer N&#339;uds</a></li>
+	<li>Start Hub</li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">Actualisation Firmware</a></li>
+</ul>
 
-          <li><dfn>Source de paquet</dfn></li>
 
-          <li><dfn>programmateur PM4</dfn></li>
+<h3><a href="../hardware/rps/index.shtml#tools">Outils RPS</a></h3>
+<p>Quand JMRI est connect&#233; au r&#233;seau avec <a href="../hardware/rps/sensors.shtml">des Capteurs RPS </a>, un menu <b>RPS</b> est montr&#233;:</p>
+<ul>
+<li>Moniteur RPS</li>
+<li><a href="../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">Commande R&#233;cepteur </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Commande du Groupage </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Fen&#234;tre de D&#233;bogage </a></li>
+<li><a href="../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Affichage du Suivi </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">Commande Vitesse du Son </a></li>
+<li><a href="../../package/jmri/jmrix/rps/reversealign/AlignmentPanel.shtml">Alignement RPS</a></li>
+</ul>
 
-          <li><dfn>programmateur BDL16</dfn></li>
+<h3><a href="../hardware/sprog/index.shtml#tools">Outils SPROG</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau avec <a href="../hardware/sprog/index.shtml">SPROG</a>, un menu <b>SPROG</b> est montr&#233;:</p>
+<ul>
+	<li><a href="../../package/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame.shtml">Moniteur de Slots SPROG </a></li>
+	<li><a href="../../package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">G&#233;n&#233;rateur de Paquet SPROG</a></li>
+  <li><a href="../../package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">Console SPROG</a></li>
+	<li>Actualisation Firmware</li>
+</ul>
 
-          <li><dfn>programmateur SE8c</dfn> 
-          <!-- <LI><dfn>programmateur LocoIO</dfn> --></li>
-        </ul>
+<h3><a href="../hardware/rps/index.shtml#tools">Outils XBee</a></h3>
+<p>Quand JMRI est connect&#233; au r&#233;seau avec  <a href="../hardware/XBee/index.shtml">XBee</a>, un menu <b>XBee</b> est montr&#233;:</p>
+<ul>
+<li><a href="../hardware/XBee/XBeeNodeConfigurationTool.shtml">Configuration N&#339;ud XBee</a></li>
+</ul
 
-        <h2><a href="scripting/index.shtml">&Eacute;criture de
-        scripts</a></h2>S'il n'y a pas un outil de
-        pr&eacute;-programm&eacute;s pour faire ce que vous voulez,
-        vous pouvez presque certainement &eacute;crire un script
-        qui fera exactement ce qu'il faut.
+<h3><a href="../hardware/rps/index.shtml#tools">Outils XPressNet (Lenz)</a></h3>
+<p>Quand JMRI est connect&#233; au r&#233;seau avec <a href="../hardware/lenz/index.shtml">XPressNet</a>, un menu <b>XPressNet</b> est montr&#233;:</p>
+<ul>
+<li>Moniteur XPressNet </li>
+<li><a href="../hardware/XPressNet/LZV100Configurationtool.shtml">Outil de Configuration LZV100</a></li>
+<li><a href="../hardware/XPressNet/LI101Configurationtool.shtml">Outil de Configuration LI101</a></li>
+<li><a href="../hardware/XPressNet/XNetSystemInformationtool.shtml">Information Syst&#232;me XPressNet</a></li>
+</ul>
+<!-- Plus d'outils syst&#232;me viennent ici-->
 
-        <p>Au lieu de d&eacute;finir notre propre langue, les
-        <a href="scripting/index.shtml">scripts JMRI</a> utilisent
-        le language "Python" qui est couramment utilis&eacute;e
-        dans le d&eacute;veloppement web. Bien qu'il vous prendra
-        un peu de temps pour vous y habituer, &agrave; la fin il
-        fournit beaucoup de puissance pour contr&ocirc;ler votre
-        r&eacute;seau de la fa&ccedil;on que vous souhaitez.. 
-        <!--#include virtual="/Footer" --></p>
+<a name="scripting"></a><h2><a href="scripting/index.shtml">Script JMRI</a></h2>
+Si JMRI manque d'outil pr&#233;programm&#233; pour faire ce que vous voulez,
+Vous pouvez &#233;crire un Script qui fait exactement ce qui est n&#233;cessaire, incluant l'interaction utilisateur. Au lieu de d&#233;finir votre propre langage, 
+ <a href="scripting/index.shtml">Script JMRI</a> utilise le 
+langage "Python" qui est commun&#233;ment utilis&#233; en d&#233;veloppement web. Bien que cela
+prendra un peu de temps pour s'y habituer, &#224; la fin il offre 
+beaucoup de puissance pour commander votre r&#233;seau de la fa&#231;on que vous souhaitez.
+			<P> Ex&#233;cutez vos propres scripts ou des scripts partag&#233;s par un autre utilisateur JMRI depuis  le menu Panneaux --> Ex&#233;cution Script....
+
+
+<!--#include virtual="/Footer" -->
+
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->

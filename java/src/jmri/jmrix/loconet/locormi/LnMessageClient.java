@@ -88,7 +88,7 @@ public class LnMessageClient extends LnTrafficRouter {
             lnMessageBuffer = lnServer.getMessageBuffer();
             lnMessageBuffer.enable(0);
             pollThread = new LnMessageClientPollThread(this);
-        } catch (Exception ex) {
+        } catch (java.rmi.NotBoundException | java.rmi.RemoteException | java.net.MalformedURLException ex) {
             log.error("Exception while trying to connect: " + ex); // NOI18N
             throw new LocoNetException("Failed to Connect to Server: " + serverName); // NOI18N
         }

@@ -1,173 +1,109 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- $Id$ -->
-  <!-- UpDated by Blorec Herv&#233; le 2013-09-10-->
 
-  <title>JMRI: Connecting the CTI Acela System</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- UpDated by Blorec Herv&#233; le 2017-01-16-->
+ <title>JMRI Hardware Support - CTI Acela System</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>SystemJMRI: Connexions avec le Syst&egrave;me
-      Acela</h1>D&eacute;signation des entr&eacute;es et sorties
-      Acela CTI sont d&eacute;crites sur une <a href=
-      "Names.shtml">page s&eacute;par&eacute;e</a>.
+<div id="mainContent">
 
-      <p>Si le mat&eacute;riel est connect&eacute;, les noeuds
-      (modules CTI) se trouvent automatiquement au
-      d&eacute;marrage. Les noeuds peuvent &eacute;galement
-      &ecirc;tre d&eacute;finis manuellement avec l'outil <a href=
-      "../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">
-      configurer les noeuds</a> . Quoi qu'il en soit, n'oubliez pas
-      de les enregistrer avec le bouton "Enregistrer" sur les
-      <a href=
-      "../../../package/apps/AppConfigPanel.shtml">Pr&eacute;f&eacute;rences
-      Fen&ecirc;tre</a> (sous Modifier dans le menu principal).</p>
+<h1>Structure Mat&#233;riel: Syst&#232;me CTI Acela</h1>
+<ul class="snav"><!-- TOC -->
+<li><a href="#hardware">Mat&#233;riel</a>
+<li><a href="#limitations">Limitations</a>
+<li><a href="#connecting">Connexion</a>
+<li><a href="#tools">Outils</a>
+<li><a href="#documentation">Documentation</a>
+</ul>
 
-      <h2>modules CTI</h2>Comme d&eacute;crit dans le documentation
-      Acela sur le <a href=
-      "http://www.cti-electronics.com/app_sw.htm">site web CTI
-      Acela</a>, il y a plusieurs modules CTI disponibles:
+<a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
+<H3>Modules CTI</h3>
 
-      <ul>
-        <li>Un module CTI Acela (actuellement seulement
-        lib&eacute;r&eacute; avec une interface s&eacute;rie) qui
-        effectue la plupart de la gestion du r&eacute;seau CTI de
-        bas niveau.</li>
+Comme d&#233;crit dans le documentation Acela sur le
+<a href="http://www.cti-electronics.com/app_sw.htm"> site web CTI Acela</a>, plusieurs modules sont disponibles
+<UL>
+		<LI> Un module CTI Acela (actuellement seulement existant avec une interface s&#233;rie) qui effectue la plupart de la gestion du r&#233;seau CTI de bas niveau.
+		<LI> Un module CTI SmartCAB  qui, lorsqu'il est utilis&#233; sur un r&#233;seau ferroviaire non DCC, commandes les trains dans un syst&#232;me traditionnel de CAB. Le module CTI SmartCAB n'est pas pris en charge par JMRI.
+		<LI> Un module CTI TrainBrain (4 relais de sortie et 4 circuits d'entr&#233;e).
+		<LI> Un module CTI Dash-8 (8 relais de sortie, pas de circuits d'entr&#233;e).
+		<LI> Un module CTI Watchman (gardien)(8 circuits d'entr&#233;e, pas de circuits de sortie).
+		<LI>Un module CTI SignalMan (16 circuits de sortie, pas de circuits d'entr&#233;e).
+		<LI> Un module CTI SwitchMan (16 circuits de sortie, pas de circuits d'entr&#233;e).
+		<LI> Un module CTI YardMaster (16 circuits de sortie, pas de circuits d'entr&#233;e).
+		<LI> Un module CTI Sentry (pas de circuits de sortie, 16 circuits d'entr&#233;e).
+</UL>
 
-        <li>Un module CTI SmartCAB qui, lorsqu'il est
-        utilis&eacute; sur un r&eacute;seau ferroviaire non DCC,
-        contr&ecirc;les les trains dans un syst&egrave;me
-        traditionnel de CAB. Le module CTI SmartCAB n'est pas pris
-        en charge par JMRI.</li>
+<a name="limitations"></a><h2>Limitations</h2>
 
-        <li>Un module CTI TrainBrain (4 relais de sortie et 4
-        circuits d'entr&eacute;e).</li>
+<UL>
+		<LI>Un r&#233;seau CTI est g&#233;n&#233;ralement reli&#233; &#224; un ordinateur via un CTI vers une interface s&#233;rie ( ou CTI-->USB). Dans cette configuration, tous les CTI du r&#233;seau doivent &#234;tre g&#233;r&#233;s par l'ordinateur. CTI offre &#233;galement un module Acela (actuellement r&#233;alis&#233; avec une interface s&#233;rie) qui effectue la plupart de la gestion du r&#233;seau CTI de bas niveau. JMRI prend uniquement en charge l'interface CTI Acela (il ne supporte pas la s&#233;rie directe - ni l'interface USB).
+		<LI>Un r&#233;seau CTI  peut &#234;tre utilis&#233; soit sur un r&#233;seau non DCC ou un  DCC. Lorsqu'il est utilis&#233; sur un r&#233;seau non DCC, CTI utilise des modules SmartCAB pour contr&#234;ler les trains dans un syst&#232;me traditionnel de CAB. JMRI PREND EN CHARGE le syst&#232;me CTI que lorsqu'il est utilis&#233; sur un r&#233;seau DCC et ne supporte pas les modules SmartCAB.
+		<LI>Les modules CTI capteur d'entr&#233;e (Train Brain, Watchman, Sentry)supportent cinq diff&#233;rents types de capteurs d'entr&#233;e: infrarouge, d&#233;tection de courant, &#224; bouton-poussoir, interrupteurs Reed magn&#233;tique, et des cellules photo&#233;lectriques. JMRI prend d&#233;sormais en charge l'ensemble de ces capteurs.
+		<LI>Les modules CTI capteur d'entr&#233;e prennent en charge la configuration unique de chaque capteur (invers&#233;, anti rebond, seuil). JMRI vous permet maintenant de <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">configurer</a> ceci .
+</UL>
 
-        <li>Un module CTI Dash-8 (8 relais de sortie, pas de
-        circuits d'entr&eacute;e).</li>
+<a name="connecting"></a><h2>Connexion</h2> 
+<h3>Cr&#233;ation de N&#339;uds</h3>
+<p>
+Si le mat&#233;riel est connect&#233;, les n&#339;uds (modules CTI) sont trouv&#233;s automatiquement au d&#233;marrage. Les n&#339;uds peuvent aussi &#234;tre
+d&#233;finis manuellement avec l'outil 
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configurer N&#339;uds</a>
+De toute fa&#231;on, n'oubliez pas de les enregistrer avec
+le bouton "Enregistrer" dans la
+<a href="../../../package/apps/AppConfigPanel.shtml">fen&#234;tre Pr&#233;f&#233;rences</a>
+( dans "&#201;dition" du menu principal )
 
-        <li>Un module CTI Watchman (gardien)(8 circuits
-        d'entr&eacute;e, pas de circuits de sortie).</li>
+<h3>C&#226;blage</h3>
+<p> 
+Chaque module est dot&#233; de deux prises t&#233;l&#233;phoniques quatre fils. L'une &#233;tiquett&#233;e avec un cercle rouge et l'autre marqu&#233; par un cercle vert. Pour compl&#233;ter le cycle, vous devez vous connecter en ligne droite &#224; travers quatre fils de la prise VERTE d'un module &#224; la prise ROUGE du module suivant. Le dernier c&#226;ble doit relier la prise VERTE dans le dernier module de retour sur la prise ROUGE dans le premier module.
+<p>
+Le module CTI Acela a les m&#234;me jacks VERT et ROUGE ainsi qu'un troisi&#232;me jack JAUNE. Le module CTI Acela doit &#234;tre plac&#233; quelque part dans la boucle tout comme n'importe quel autre module CTI.
+<p>
+Pour le module Acela CTI un c&#226;ble sp&#233;cial quatre fils doit &#234;tre connect&#233; de la prise JAUNE au port s&#233;rie de l'ordinateur de contr&#234;le (ou un convertisseur s&#233;rie vers USB).
+<p>
+Une fois sous tension et d&#233;marrer, si les voyants rouges sur chaque module ne sont pas
+clignotants alors la boucle est cass&#233;e (soit aucune alimentation sur un ou plusieurs modules ou un
+c&#226;ble est d&#233;fectueux ou les c&#226;bles encha&#234;n&#233;s sont mal connect&#233;s ou un c&#226;ble est en vrac).
+<p>
+Pour &#234;tre complet, sur l'alimentation, chaque module CTI a une LED rouge allum&#233;e
+<p>
+Une fois que le r&#233;seau Acela est d&#233;marr&#233;, la diode rouge sur chaque module flash quand un paquet
+passe (de sorte que vous voyez au fond que tous les n&#339;uds clignotent rapidement - presque en synchronisation).
+<p>
+Le module Acela lui-m&#234;me est diff&#233;rent en ce qu'une
+LED verte clignote toujours pour indiquer qu'il est correct (que la boucle est boucl&#233;e ou non).
+ 
+<a name="tools"></a><h2>Outils JMRI Acela </h2>
+<ul>
+<li>Les Entr&#233;es et Sorties peuvent &#234;tre configur&#233;es avec le 
+<a href="../../../package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml">Moniteur Acela </a></li>
+<li>Les Entr&#233;es et Sorties peuvent &#234;tre configur&#233;es avec
+<a href="../../../package/jmri/jmrix/acela/packetgen/SerialPacketGenFrame.shtml">Envoyer Paquets Acela</a></li>
+<li>Les Entr&#233;es et Sorties peuvent &#234;tre configur&#233;es avec l'outil  
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configurer N&#339;uds</a></li>
+</ul>
 
-        <li>Un module CTI Signaleur (16 circuits de sortie, pas de
-        circuits d'entr&eacute;e).</li>
+<a name="documentation"><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+<p>La d&#233;signation des entr&#233;es et sorties des modules CTI Acela est d&#233;crites dans une 
+<a href="Names.shtml">page s&#233;par&#233;e</a>.
+<h3>Autre info</h3>
+Plus d'informations sur le mat&#233;riel Acela peut &#234;tre consult&#233;e sur le
+<a href="http://www.cti-electronics.com/app_sw.htm"> site  web CTI</a>.
 
-        <li>Un module CTI SwitchMan (commutation)(16 circuits de
-        sortie, pas de circuits d'entr&eacute;e).</li>
-
-        <li>Un module CTI Un chef de triage (16 circuits de sortie,
-        pas de circuits d'entr&eacute;e).</li>
-
-        <li>Un module CTI Sentry (sentinelle) (pas de circuits de
-        sortie, 16 circuits d'entr&eacute;e).</li>
-      </ul>
-
-      <h2>Limitations</h2>
-
-      <ul>
-        <li>Un r&eacute;seau CTI est g&eacute;n&eacute;ralement
-        reli&eacute; &agrave; un ordinateur via un CTI vers une
-        interface s&eacute;rie ( ou CTI--&gt;USB). Dans cette
-        configuration, tous les CTI du r&eacute;seau doivent
-        &ecirc;tre g&eacute;r&eacute;s par l'ordinateur. CTI offre
-        &eacute;galement un module Acela (actuellement seulement
-        lib&eacute;r&eacute; avec une interface s&eacute;rie) qui
-        effectue la plupart de la gestion du r&eacute;seau CTI de
-        bas niveau. JMRI prend uniquement en charge l'interface CTI
-        Acela (il ne supporte pas la s&eacute;rie directe - ni
-        l'interface USB).</li>
-
-        <li>Un r&eacute;seau CTI peut &ecirc;tre utilis&eacute;
-        soit sur un r&eacute;seau non DCC ou un DCC. Lorsqu'il est
-        utilis&eacute; sur un r&eacute;seau non DCC, CTI utilise
-        des modules SmartCAB pour contr&ecirc;ler les trains dans
-        un syst&egrave;me traditionnel de CAB. JMRI supporte le
-        syst&egrave;me CTI que lorsqu'il est utilis&eacute; sur un
-        r&eacute;seau DCC et ne supporte pas les modules
-        SmartCAB.</li>
-
-        <li>Les modules CTI capteur d'entr&eacute;e (Train Brain,
-        Watchman, Sentry)supportent cinq diff&eacute;rents types de
-        capteurs d'entr&eacute;e: infrarouge, d&eacute;tection de
-        courant, &agrave; bouton-poussoir, interrupteurs Reed
-        magn&eacute;tique, et des cellules photo&eacute;lectriques.
-        JMRI prend d&eacute;sormais en charge l'ensemble de ces
-        capteurs.</li>
-
-        <li>Les modules CTI capteur d'entr&eacute;e supporte la
-        configuration unique de chaque capteur (invers&eacute;,
-        anti rebond, seuil). JMRI vous permet maintenant de
-        <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">
-        configurer</a> ceci .</li>
-      </ul>
-
-      <h2>Compl&eacute;ment d'Information</h2>Le r&eacute;seau CTI
-      Acela est un v&eacute;ritable Token ring (r&eacute;seau
-      boucl&eacute;) passant.
-
-      <p>Chaque module est dot&eacute; de deux prises
-      t&eacute;l&eacute;phoniques quatre fils. L'une
-      &eacute;tiquett&eacute;e avec un cercle rouge et l'autre
-      marqu&eacute; par un cercle vert. Pour compl&eacute;ter le
-      cycle, vous devez vous connecter en ligne droite &agrave;
-      travers quatre fils de la prise VERTE d'un module &agrave; la
-      prise ROUGE du module suivant. Le dernier c&acirc;ble doit
-      relier la prise VERTE dans le dernier module de retour sur la
-      prise ROUGE dans le premier module.</p>
-
-      <p>Le module CTI Acela a les m&ecirc;me jacks VERT et ROUGE
-      ainsi qu'un troisi&egrave;me jack JAUNE. Le module CTI Acela
-      doit &ecirc;tre plac&eacute; quelque part dans la boucle tout
-      comme n'importe quel autre module CTI.</p>
-
-      <p>Pour le module Acela CTI un c&acirc;ble sp&eacute;cial
-      quatre fils doit &ecirc;tre connect&eacute; de la prise JAUNE
-      au port s&eacute;rie de l'ordinateur de contr&ecirc;le (ou un
-      convertisseur s&eacute;rie vers USB).</p>
-
-      <p>Une fois sous tension et d&eacute;marrer, si les voyants
-      rouges sur chaque module ne sont pas clignotants alors la
-      boucle est cass&eacute;e (soit aucune alimentation sur un ou
-      plusieurs modules ou un c&acirc;ble est d&eacute;fectueux ou
-      les c&acirc;bles encha&ecirc;n&eacute;s sont mal
-      connect&eacute;s ou un c&acirc;ble est en vrac).</p>
-
-      <p>Pour &ecirc;tre complet, sur l'alimentation, chaque module
-      CTI a une LED rouge &eacute;clair&eacute;e.</p>
-
-      <p>Une fois que le r&eacute;seau Acela est
-      d&eacute;marr&eacute;, la diode rouge sur chaque module flash
-      quand un paquet passe (de sorte que vous voyez au fond que
-      tous les noeuds clignotent rapidement - presque dans la
-      synchro).</p>
-
-      <p>Le module Acela lui-m&ecirc;me est diff&eacute;rent en ce
-      qu'une LED verte clignote toujours pour indiquer qu'il est
-      correct (si la boucle est boucl&eacute;e ou non) pas).</p>
-
-      <h2>Plus d'Information</h2>Plus d'informations sur le
-      mat&eacute;riel Acela peut &ecirc;tre consult&eacute;e sur le
-      <a href="http://www.cti-electronics.com/app_sw.htm">site web
-      CTI</a>. <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

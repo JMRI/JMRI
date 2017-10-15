@@ -22,9 +22,8 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
      *
      * @param source The Signal Mast this SML is directly linked to
      * @param dest The Signal Mast this SML is looking at
-     * @throws Exception when an error occurs during initialization
      */
-    public void initComponents(jmri.SignalMast source, jmri.SignalMast dest) throws Exception {
+    public void initComponents(jmri.SignalMast source, jmri.SignalMast dest) {
         // the following code sets the frame's initial state
         sigPanel = new SignallingPanel(source, dest, this);
 
