@@ -91,7 +91,6 @@ public class LayoutEditorChecks {
         //  check for tracks with free connections
         //
         checkUnConnectedTracksMenu.setToolTipText(Bundle.getMessage("CheckUnConnectedTracksMenuToolTip"));
-        checkUnConnectedTracksMenu.setToolTipText(Bundle.getMessage("CheckUnConnectedTracksMenuToolTip"));
         checkUnConnectedTracksMenu.add(checkInProgressMenuItem);
         checkMenu.add(checkUnConnectedTracksMenu);
 
@@ -118,7 +117,6 @@ public class LayoutEditorChecks {
         //
         //  check for tracks without assigned blocks
         //
-        checkUnBlockedTracksMenu.setToolTipText(Bundle.getMessage("CheckUnBlockedTracksMenuToolTip"));
         checkUnBlockedTracksMenu.setToolTipText(Bundle.getMessage("CheckUnBlockedTracksMenuToolTip"));
         checkUnBlockedTracksMenu.add(checkInProgressMenuItem);
         checkMenu.add(checkUnBlockedTracksMenu);
@@ -293,6 +291,8 @@ public class LayoutEditorChecks {
                     }
                 }
             }
+        } else {
+            checkUnBlockedTracksMenu.add(checkNoResultsMenuItem);
         }
     }   // setupCheckUnBlockedTracksMenu
 
@@ -375,21 +375,6 @@ public class LayoutEditorChecks {
         }
     }   // setupCheckNonContiguousBlocksMenu
 
-    // collect the names of all checkbox menu items with checkmarks
-    private Set<String> getCheckMarkedMenuItemNames(@Nonnull JMenu menu) {
-        Set<String> results = new HashSet<>();
-        for (int idx = 0; idx < menu.getMenuComponentCount(); idx++) {
-            Component menuComponent = menu.getMenuComponent(idx);
-            if (menuComponent instanceof JCheckBoxMenuItem) {
-                JCheckBoxMenuItem checkBoxMenuItem = (JCheckBoxMenuItem) menuComponent;
-                if (checkBoxMenuItem.isSelected()) {
-                    results.add(checkBoxMenuItem.getText());
-                }
-            }
-        }
-        return results;
-    }   // getCheckMarkedMenuItemNames
-
 // action to be performed when checkNonContiguousBlocksMenu item is clicked
     private void doCheckNonContiguousBlocksMenuItem(
             @Nonnull String blockName,
@@ -425,6 +410,21 @@ public class LayoutEditorChecks {
             layoutEditor.setSelectionRect(MathUtil.zeroRectangle2D);
         }
     }   // doCheckNonContiguousBlocksMenuItem
+
+    // collect the names of all checkbox menu items with checkmarks
+    private Set<String> getCheckMarkedMenuItemNames(@Nonnull JMenu menu) {
+        Set<String> results = new HashSet<>();
+        for (int idx = 0; idx < menu.getMenuComponentCount(); idx++) {
+            Component menuComponent = menu.getMenuComponent(idx);
+            if (menuComponent instanceof JCheckBoxMenuItem) {
+                JCheckBoxMenuItem checkBoxMenuItem = (JCheckBoxMenuItem) menuComponent;
+                if (checkBoxMenuItem.isSelected()) {
+                    results.add(checkBoxMenuItem.getText());
+                }
+            }
+        }
+        return results;
+    }   // getCheckMarkedMenuItemNames
 
     private final static Logger log = LoggerFactory.getLogger(LayoutEditorChecks.class
     );
