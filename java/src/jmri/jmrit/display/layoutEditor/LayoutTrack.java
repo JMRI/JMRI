@@ -460,7 +460,7 @@ public abstract class LayoutTrack {
     protected JPopupMenu showPopup() {
         Point2D where = MathUtil.multiply(getCoordsCenter(),
                 layoutEditor.getZoom());
-        return this.showPopup(where); 
+        return this.showPopup(where);
     }
 
     /**
@@ -538,43 +538,35 @@ public abstract class LayoutTrack {
 
     /**
      * check this track and its neighbors for non-contiguous blocks
- 
-  For each (non-null blocks of this track do:
-  #1) If it's in the bad blocks set do:
-      add this track to the  blockNamesToTrackNamesSetMap track set
-      for this block and return false
-  #2) else if it's not a key in the blockNamesToTrackNamesSetMap then add a new
-      set (with this track) to blockNamesToTrackNamesSetMap and check all
-      connections in this block (by calling the 2nd method below)
-  #3) else check to see if this track is in this blocks
-      (blockNamesToTrackNamesSetMap) track set:
-      if so return true
-      else add it to bad blocks set and return false
-  
-      Basicly, we're maintaining track sets for each block found
-      (blockNamesToTrackNamesSetMap) and a bad blocks set (badBlockNamesSet)
+     * <p>
+     * For each (non-null) blocks of this track do:
+     * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+     * #2) If this track is not in one of the TrackNameSets for this block
+     * #3) add a new set (with this block/track) to
+     *     blockNamesToTrackNameSetMap and
+     * #4) check all the connections in this
+     *     block (by calling the 2nd method below)
+     * <p>
+     *     Basically, we're maintaining contiguous track sets for each block found
+     *     (in blockNamesToTrackNameSetMap)
      *
-     * @param blockNamesToTrackNamesSetMap hashmap of key:block names and
-     * the track name sets for those blocks
-     * @param badBlockNamesSet Set of bad blocks names
-     * @return true if the check is good; false otherwise
+     * @param blockNamesToTrackNameSetMaps hashmap of key:block names to
+     *        lists of track name sets for those blocks
      * <p>
      * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
      */
-    public abstract boolean checkForNonContiguousBlocks(
-            @Nonnull HashMap<String, Set<String>> blockNamesToTrackNamesSetMap,
-            @Nonnull Set<String> badBlockNamesSet);
+    public abstract void checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps);
 
     /**
-     * recursive routine to check for all contiguous trackNamesSet in this blockName
-     * 
+     * recursive routine to check for all contiguous tracks in this blockName
+     *
      * @param blockName  the block that we're checking for
-     * @param trackNamesSet the set of track names in this block
-     * @return true if this track in in this blockName
+     * @param TrackNameSet the set of track names in this block
      */
-    public abstract boolean checkForNonContiguousBlocks(
+    public abstract void collectContiguousTracksNamesInBlockNamed(
             @Nonnull String blockName,
-            @Nonnull Set<String> trackNamesSet);
+            @Nonnull Set<String> TrackNameSet);
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

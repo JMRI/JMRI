@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.JCheckBoxMenuItem;
@@ -329,37 +329,29 @@ public class LayoutEditorChecks {
         checkNonContiguousBlocksMenu.removeAll();
         checkNonContiguousBlocksMenu.add(checkInProgressMenuItem);
 
-        // check all tracks for non-contiguous blocks
-        HashMap<String, Set<String>> blocksMap = new HashMap<>();
-        Set<String> badBlocks = new TreeSet<>();
+        // collect all contiguous blocks
+        HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps = new HashMap<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-            //if (layoutTrack.getName().equals("EC5")
-            //        || layoutTrack.getName().equals("T20")
-            //        || layoutTrack.getName().equals("TO9")) {
-            //    log.debug("Stop here!");
+            //if (layoutTrack.getName().equals("TO33")
+            //        || layoutTrack.getName().equals("TO33")) {
+            //    log.info("•Stop here!");
             //}
-            layoutTrack.checkForNonContiguousBlocks(blocksMap, badBlocks);
+            layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
         }
 
         // clear the "in progress..." menu item
         checkNonContiguousBlocksMenu.removeAll();
 
         // for each bad block we found...
-        if (badBlocks.size() > 0) {
-            for (String blockName : badBlocks) {
-                // create a menu item for it
-                Set<String> trackSet = blocksMap.get(blockName);
-                JCheckBoxMenuItem jmi = new JCheckBoxMenuItem(blockName + " (" + trackSet.size() + ")");
+        for (Map.Entry<String, List<Set<String>>> entry : blockNamesToTrackNameSetMaps.entrySet()) {
+            String blockName = entry.getKey();
+            List<Set<String>> trackSets = entry.getValue();
+            if (trackSets.size() > 1) {
+                JCheckBoxMenuItem jmi = new JCheckBoxMenuItem(blockName + " (" + trackSets.size() + ")");
                 checkNonContiguousBlocksMenu.add(jmi);
 
-                // we currently don't have anything to do for non-contiguous 
-                // blocks other than to just add them to the menu.
                 jmi.addActionListener((ActionEvent event) -> {
-                    //log.info("event: {}", event.paramString());
-                    //JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();
-                    //String menuItemName = menuItem.getText();
-                    //String blockName = menuItemName.replaceAll("\\s\\([^)]+\\)$", "");
-                    doCheckNonContiguousBlocksMenuItem(blockName, blocksMap.get(blockName));
+                    doCheckNonContiguousBlocksMenuItem(blockName, trackSets);
                 });
 
                 // if it's in the check marked set then (re-)checkmark it
@@ -370,7 +362,9 @@ public class LayoutEditorChecks {
                     }
                 }
             }
-        } else {
+        }
+        // if we didn't find any...
+        if (checkNonContiguousBlocksMenu.getMenuComponentCount() == 0) {
             checkNonContiguousBlocksMenu.add(checkNoResultsMenuItem);
         }
     }   // setupCheckNonContiguousBlocksMenu
@@ -378,19 +372,21 @@ public class LayoutEditorChecks {
 // action to be performed when checkNonContiguousBlocksMenu item is clicked
     private void doCheckNonContiguousBlocksMenuItem(
             @Nonnull String blockName,
-            @Nullable Set<String> trackNamesSet) {
+            @Nullable List<Set<String>> TrackNameSets) {
         log.debug("doCheckNonContiguousBlocksMenuItem({})", blockName);
 
-        if (trackNamesSet != null) {
+        if (TrackNameSets != null) {
             // collect all the bounds...
             Rectangle2D bounds = null;
             for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-                if (trackNamesSet.contains(layoutTrack.getName())) {
-                    Rectangle2D trackBounds = layoutTrack.getBounds();
-                    if (bounds == null) {
-                        bounds = trackBounds.getBounds2D();
-                    } else {
-                        bounds.add(trackBounds);
+                for (Set<String> TrackNameSet : TrackNameSets) {
+                    if (TrackNameSet.contains(layoutTrack.getName())) {
+                        Rectangle2D trackBounds = layoutTrack.getBounds();
+                        if (bounds == null) {
+                            bounds = trackBounds.getBounds2D();
+                        } else {
+                            bounds.add(trackBounds);
+                        }
                     }
                 }
             }
@@ -402,7 +398,7 @@ public class LayoutEditorChecks {
 
             // amend all tracks in this block to the layout editor selection group
             for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-                if (trackNamesSet.contains(layoutTrack.getName())) {
+                if (TrackNameSets.contains(layoutTrack.getName())) {
                     layoutEditor.amendSelectionGroup(layoutTrack);
                 }
             }

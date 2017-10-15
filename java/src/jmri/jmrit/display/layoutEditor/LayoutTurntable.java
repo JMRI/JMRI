@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -847,96 +848,92 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean checkForNonContiguousBlocks(
-            @Nonnull HashMap<String, Set<String>> blockNamesToTrackNamesSetMap,
-            @Nonnull Set<String> badBlockNamesSet) {
-        boolean result = true; // assume success (optimist!)
-
-        /* check all our (non-null) blocks and...
-         * #1) If it's in the bad blocks set do:
-         *     add this track to the  blockNamesToTrackNamesSetMap track set
-         *     for this block and return false
-         * #2) else if it's not a key in the blockNamesToTrackNamesSetMap then add a
-         *     new set (with this track) to blockNamesToTrackNamesSetMap and check all
-         *     connections in this block (by calling the 2nd method below)
-         * #3) else check to see if this track is in this blocks
-         *     (blockNamesToTrackNamesSetMap) track set:
-         *     if so return true
-         *     else add it to bad blocks set and return false
+    public void checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
+        /*
+         * For each (non-null) blocks of this track do:
+         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+         * #2) If this track is already in the TrackNameSet for this block
+         *     then return (done!)
+         * #3) else add a new set (with this block/track) to
+         *     blockNamesToTrackNameSetMap and check all the connections in this
+         *     block (by calling the 2nd method below)
+         * <p>
+         *     Basically, we're maintaining contiguous track sets for each block found
+         *     (in blockNamesToTrackNameSetMap)
          */
+
+        // We're only using a map here because it's convient to
+        // use it to pair up blocks and connections
+        Map<LayoutTrack, String > blocksAndTracksMap = new HashMap<>();
         for (int k = 0; k < getNumberRays(); k++) {
-            if (getRayConnectOrdered(k) == null) {
-                TrackSegment ts = getRayConnectOrdered(k);
-                if (ts != null) {
-                    String blockName = ts.getBlockName();
-                    if (blockName != null) {
-                        if (badBlockNamesSet.contains(blockName)) {  // (#1)
-                            Set<String> tracksSet = blockNamesToTrackNamesSetMap.get(blockName);
-                            // this should never be null... but just in case...
-                            if ((tracksSet != null) && !tracksSet.contains(getName())) {
-                                log.debug("•    add track '{}'for block '{}'", getName(), blockName);
-                                tracksSet.add(getName());
-                            }
-                            result = false;
-                        } else {
-                            boolean check = true;
-                            Set<String> tracksSet = blockNamesToTrackNamesSetMap.get(blockName);
-                            if (tracksSet == null) { // (#2)
-                                log.debug("•New block ('{}') tracksSet", blockName);
-                                tracksSet = new LinkedHashSet<>();
-                                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
-                                tracksSet.add(getName());
-                                blockNamesToTrackNamesSetMap.put(blockName, tracksSet);
-                            } else if (!tracksSet.contains(getName())) {   // (#3)
-                                log.debug("•    add track '{}'for block '{}'", getName(), blockName);
-                                tracksSet.add(getName());
-                                badBlockNamesSet.add(blockName);
-                                result = false;
-                                check = false;
-                            }
-                            if (check) {
-                                result &= ts.checkForNonContiguousBlocks(blockName, tracksSet);
-                            }
-                        }
-                    }
+            TrackSegment ts = getRayConnectOrdered(k);
+            if (ts != null) {
+                String blockName = ts.getBlockName();
+                if (blockName != null) {
+                    blocksAndTracksMap.put(ts, blockName);
                 }
             }
         }
-        return result;
-    } // checkForNonContiguousBlocks
+
+        List<Set<String>> TrackNameSets = null;
+        Set<String> TrackNameSet = null;
+        for (Map.Entry<LayoutTrack, String> entry : blocksAndTracksMap.entrySet()) {
+            LayoutTrack theConnect = entry.getKey();
+            String theBlockName = entry.getValue();
+
+            TrackNameSet = null;    // assume not found (pessimist!)
+            TrackNameSets = blockNamesToTrackNameSetsMap.get(theBlockName);
+            if (TrackNameSets != null) { // (#1)
+                for (Set<String> checkTrackNameSet : TrackNameSets) {
+                    if (checkTrackNameSet.contains(getName())) { // (#2)
+                        TrackNameSet = checkTrackNameSet;
+                        break;
+                    }
+                }
+            } else {    // (#3)
+                log.info("•New block ('{}') trackNameSets", theBlockName);
+                TrackNameSets = new ArrayList<>();
+                blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
+            }
+            if (TrackNameSet == null) {
+                TrackNameSet = new LinkedHashSet<>();
+                TrackNameSets.add(TrackNameSet);
+            }
+            if (TrackNameSet.add(getName())) {
+                log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+            }
+            theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
+        }
+    } // collectContiguousTracksNamesInBlockNamed
 
     /**
      * {@inheritDoc}
      */
-    public boolean checkForNonContiguousBlocks(@Nonnull String blockName,
-            @Nonnull Set<String> trackNamesSet) {
-        boolean result = true; // assume success (optimist!)
-
-        // check all the matching blocks in this track and...
-        //  #1) add us to trackNamesSet and...
-        //  #2) flood them
-        for (int k = 0; k < getNumberRays(); k++) {
-            if (getRayConnectOrdered(k) == null) {
+    public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
+            @Nonnull Set<String> TrackNameSet) {
+        if (!TrackNameSet.contains(getName())) {
+            // for all the rays with matching blocks in this turnout
+            //  #1) if it's track segment's block is in this block
+            //  #2)     add turntable to TrackNameSet (if not already there)
+            //  #3)     if the track segment isn't in the TrackNameSet
+            //  #4)         flood it
+            for (int k = 0; k < getNumberRays(); k++) {
                 TrackSegment ts = getRayConnectOrdered(k);
                 if (ts != null) {
                     String blk = ts.getBlockName();
-                    if (blk != null) {
-                        if (blk.equals(blockName)) {
-                            // if we're not already in trackNamesSet...
-                            if (!trackNamesSet.contains(getName())) {
-                                log.debug("•    Add track '{}'for block '{}'", getName(), blockName);
-                                trackNamesSet.add(getName());  // add us (#1)
-                            }
-                            if (!trackNamesSet.contains(ts.getName())) {
-                                // flood neighbour (#2)
-                                result &= ts.checkForNonContiguousBlocks(blockName, trackNamesSet);
-                            }
+                    if ((blk != null) && (blk.equals(blockName))) { // (#1)
+                        // if we are added to the TrackNameSet
+                        if (TrackNameSet.add(getName())) {
+                            log.info("•    Add track '{}'for block '{}'", getName(), blockName);
                         }
+                        // it's time to play... flood your neighbours!
+                        ts.collectContiguousTracksNamesInBlockNamed(blockName,
+                                TrackNameSet); // (#4)
                     }
                 }
             }
         }
-        return result;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class

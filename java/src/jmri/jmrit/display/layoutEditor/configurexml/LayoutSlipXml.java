@@ -64,13 +64,14 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         if (!p.getBlockName().isEmpty()) {
             element.setAttribute("blockname", p.getBlockName());
         }
-        if (!p.getBlockBName().isEmpty()) {
+        // Only save these if they're different from block A
+        if (!p.getBlockBName().isEmpty() && (p.getBlockBName() != p.getBlockName())) {
             element.setAttribute("blockbname", p.getBlockBName());
         }
-        if (!p.getBlockCName().isEmpty()) {
+        if (!p.getBlockCName().isEmpty() && (p.getBlockCName() != p.getBlockName())) {
             element.setAttribute("blockcname", p.getBlockCName());
         }
-        if (!p.getBlockDName().isEmpty()) {
+        if (!p.getBlockDName().isEmpty() && (p.getBlockDName() != p.getBlockName())) {
             element.setAttribute("blockdname", p.getBlockDName());
         }
 

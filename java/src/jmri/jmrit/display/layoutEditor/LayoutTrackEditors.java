@@ -246,11 +246,8 @@ public class LayoutTrackEditors {
     private void editTrackSegmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
-        if (!trackSegment.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if (trackSegment.getLayoutBlock() != null) {
-                trackSegment.getLayoutBlock().decrementUse();
-            }
+        if ((trackSegment.getBlockName() == null)
+                || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -305,10 +302,6 @@ public class LayoutTrackEditors {
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
         if ((trackSegment.getBlockName() == null)
                 || !trackSegment.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if (trackSegment.getLayoutBlock() != null) {
-                trackSegment.getLayoutBlock().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -653,26 +646,13 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockNameComboBox.getUserName();
-        if (!layoutTurnout.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlock() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockB())
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlock().decrementUse();
-            }
+        if ((layoutTurnout.getBlockName() != null)
+                || !layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlock(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlock() != null)
-                    && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockB())
-                    || (layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlock().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -693,25 +673,11 @@ public class LayoutTrackEditors {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockBNameComboBox.getUserName();
         if (!layoutTurnout.getBlockBName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlockB() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockB())
-                    && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlockB().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlockB(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlockB() != null)
-                    && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockB())
-                    || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlockB().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -732,25 +698,11 @@ public class LayoutTrackEditors {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockCNameComboBox.getUserName();
         if (!layoutTurnout.getBlockCName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlockC() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlockC() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlockC().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlockC(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlockC() != null)
-                    && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlockC() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlockD().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -771,24 +723,11 @@ public class LayoutTrackEditors {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockDNameComboBox.getUserName();
         if (!layoutTurnout.getBlockDName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlockD() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockD())
-                    && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockD())
-                    && (layoutTurnout.getLayoutBlockC() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlockD().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlockD(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlockD() != null) && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockD())
-                    || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockD())
-                    || (layoutTurnout.getLayoutBlockC() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlockD().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -857,25 +796,11 @@ public class LayoutTrackEditors {
         // check if Block changed
         newName = editLayoutTurnoutBlockNameComboBox.getUserName();
         if (!layoutTurnout.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlock() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockB())
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlock().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlock(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlock() != null)
-                    && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockB())
-                    || (layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlock().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -886,25 +811,11 @@ public class LayoutTrackEditors {
             // check if Block 2 changed
             newName = editLayoutTurnoutBlockBNameComboBox.getUserName();
             if (!layoutTurnout.getBlockBName().equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((layoutTurnout.getLayoutBlockB() != null)
-                        && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockB())
-                        && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockC())
-                        && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockD())) {
-                    layoutTurnout.getLayoutBlockB().decrementUse();
-                }
                 // get new block, or null if block has been removed
                 try {
                     layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
                 } catch (IllegalArgumentException ex) {
                     layoutTurnout.setLayoutBlockB(null);
-                }
-                // decrement use if block was already counted
-                if ((layoutTurnout.getLayoutBlockB() != null)
-                        && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockB())
-                        || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockC())
-                        || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockD()))) {
-                    layoutTurnout.getLayoutBlockB().decrementUse();
                 }
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
@@ -912,26 +823,11 @@ public class LayoutTrackEditors {
             // check if Block 3 changed
             newName = editLayoutTurnoutBlockCNameComboBox.getUserName();
             if (!layoutTurnout.getBlockCName().equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((layoutTurnout.getLayoutBlockC() != null)
-                        && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockC())
-                        && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockC())
-                        && (layoutTurnout.getLayoutBlockC() != layoutTurnout.getLayoutBlockD())) {
-                    layoutTurnout.getLayoutBlockC().decrementUse();
-                }
                 // get new block, or null if block has been removed
                 try {
                     layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
                 } catch (IllegalArgumentException ex) {
                     layoutTurnout.setLayoutBlockC(null);
-                }
-
-                // decrement use if block was already counted
-                if ((layoutTurnout.getLayoutBlockC() != null)
-                        && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockC())
-                        || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockC())
-                        || (layoutTurnout.getLayoutBlockC() == layoutTurnout.getLayoutBlockD()))) {
-                    layoutTurnout.getLayoutBlockC().decrementUse();
                 }
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
@@ -939,25 +835,11 @@ public class LayoutTrackEditors {
             // check if Block 4 changed
             newName = editLayoutTurnoutBlockDNameComboBox.getUserName();
             if (!layoutTurnout.getBlockDName().equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((layoutTurnout.getLayoutBlockD() != null)
-                        && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockD())
-                        && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockD())
-                        && (layoutTurnout.getLayoutBlockC() != layoutTurnout.getLayoutBlockD())) {
-                    layoutTurnout.getLayoutBlockD().decrementUse();
-                }
                 // get new block, or null if block has been removed
                 try {
                     layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
                 } catch (IllegalArgumentException ex) {
                     layoutTurnout.setLayoutBlockD(null);
-                }
-                // decrement use if block was already counted
-                if ((layoutTurnout.getLayoutBlockD() != null)
-                        && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockD())
-                        || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockD())
-                        || (layoutTurnout.getLayoutBlockC() == layoutTurnout.getLayoutBlockD()))) {
-                    layoutTurnout.getLayoutBlockD().decrementUse();
                 }
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
@@ -1370,25 +1252,11 @@ public class LayoutTrackEditors {
         // check if a block name has been entered
         String newName = editLayoutSlipBlockNameComboBox.getUserName();
         if (!layoutSlip.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutSlip.getLayoutBlock() != null)
-                    && (layoutSlip.getLayoutBlock() != layoutSlip.getLayoutBlockB())
-                    && (layoutSlip.getLayoutBlock() != layoutSlip.getLayoutBlockC())
-                    && (layoutSlip.getLayoutBlock() != layoutSlip.getLayoutBlockD())) {
-                layoutSlip.getLayoutBlock().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutSlip.setLayoutBlock(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutSlip.getLayoutBlock() != null)
-                    && ((layoutSlip.getLayoutBlock() == layoutSlip.getLayoutBlockB())
-                    || (layoutSlip.getLayoutBlock() == layoutSlip.getLayoutBlockC())
-                    || (layoutSlip.getLayoutBlock() == layoutSlip.getLayoutBlockD()))) {
-                layoutSlip.getLayoutBlock().decrementUse();
             }
             editLayoutSlipNeedsRedraw = true;
             editLayoutSlipNeedsBlockUpdate = true;
@@ -1428,10 +1296,6 @@ public class LayoutTrackEditors {
 
         newName = editLayoutSlipBlockNameComboBox.getUserName();
         if (!layoutSlip.getBlockName().equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((layoutSlip.getLayoutBlock() != null)) {
-                layoutSlip.getLayoutBlock().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -1610,20 +1474,10 @@ public class LayoutTrackEditors {
         // check if a block name has been entered
         String newName = editLevelXingBlock1NameComboBox.getUserName();
         if (!levelXing.getBlockNameAC().equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((levelXing.getLayoutBlockAC() != null)
-                    && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
-                levelXing.getLayoutBlockAC().decrementUse();
-            }
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
                 try {
                     levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
-                    // decrement use if block was previously counted
-                    if ((levelXing.getLayoutBlockAC() != null)
-                            && (levelXing.getLayoutBlockAC() == levelXing.getLayoutBlockBD())) {
-                        levelXing.getLayoutBlockAC().decrementUse();
-                    }
                 } catch (IllegalArgumentException ex) {
                     levelXing.setLayoutBlockAC(null);
                     editLevelXingBlock1NameComboBox.setText("");
@@ -1656,19 +1510,10 @@ public class LayoutTrackEditors {
             newName = (newName != null) ? NamedBean.normalizeUserName(newName) : "";
         }
         if (!levelXing.getBlockNameBD().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((levelXing.getLayoutBlockBD() != null) && (levelXing.getLayoutBlockBD() != levelXing.getLayoutBlockAC())) {
-                levelXing.getLayoutBlockBD().decrementUse();
-            }
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
                 try {
                     levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
-                    // decrement use if block was previously counted
-                    if ((levelXing.getLayoutBlockBD() != null)
-                            && (levelXing.getLayoutBlockAC() == levelXing.getLayoutBlockBD())) {
-                        levelXing.getLayoutBlockBD().decrementUse();
-                    }
                 } catch (IllegalArgumentException ex) {
                     levelXing.setLayoutBlockBD(null);
                     editLevelXingBlock2NameComboBox.setText("");
@@ -1696,19 +1541,10 @@ public class LayoutTrackEditors {
         // check if Blocks changed
         String newName = editLevelXingBlock1NameComboBox.getUserName();
         if (!levelXing.getBlockNameAC().equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((levelXing.getLayoutBlockAC() != null) && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
-                levelXing.getLayoutBlockAC().decrementUse();
-            }
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
                 try {
                     levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
-                    // decrement use if block was previously counted
-                    if ((levelXing.getLayoutBlockAC() != null)
-                            && (levelXing.getLayoutBlockAC() == levelXing.getLayoutBlockBD())) {
-                        levelXing.getLayoutBlockAC().decrementUse();
-                    }
                 } catch (IllegalArgumentException ex) {
                     levelXing.setLayoutBlockAC(null);
                     editLevelXingBlock1NameComboBox.setText("");
@@ -1723,18 +1559,10 @@ public class LayoutTrackEditors {
         }
         newName = editLevelXingBlock2NameComboBox.getUserName();
         if (!levelXing.getBlockNameBD().equals(newName)) {
-            // block 2 has changed, if old block exists, decrement use
-            if ((levelXing.getLayoutBlockBD() != null) && (levelXing.getLayoutBlockBD() != levelXing.getLayoutBlockAC())) {
-                levelXing.getLayoutBlockBD().decrementUse();
-            }
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
                 try {
                     levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
-                    // decrement use if block was previously counted
-                    if ((levelXing.getLayoutBlockBD() != null) && (levelXing.getLayoutBlockAC() == levelXing.getLayoutBlockBD())) {
-                        levelXing.getLayoutBlockBD().decrementUse();
-                    }
                 } catch (IllegalArgumentException ex) {
                     levelXing.setLayoutBlockBD(null);
                     editLevelXingBlock2NameComboBox.setText("");

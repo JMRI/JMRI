@@ -1555,7 +1555,8 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
-    //NOTE: LayoutSlip uses the checkForNonContiguousBlocks methods
+    //NOTE: LayoutSlip uses the checkForNonContiguousBlocks 
+    //      and collectContiguousTracksNamesInBlockNamed methods
     //      inherited from LayoutTurnout
     private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class);
 }
