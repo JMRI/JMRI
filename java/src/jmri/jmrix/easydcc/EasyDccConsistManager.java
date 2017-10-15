@@ -1,8 +1,6 @@
 /**
- * EasyDccConsistManager.java
- *
- * Description: Consist Manager for use with the EasyDccConsist class for the
- * consists it builds
+ * Consist Manager for use with the EasyDccConsist class for the
+ * consists it builds.
  *
  * @author Paul Bender Copyright (C) 2006
  */
@@ -17,6 +15,7 @@ import org.slf4j.LoggerFactory;
 public class EasyDccConsistManager extends AbstractConsistManager {
 
     private EasyDccConsistReader reader;
+    private EasyDccSystemConnectionMemo _memo = null;
 
     /**
      * Constructor - call the constructor for the superclass, and initialize the
@@ -24,9 +23,10 @@ public class EasyDccConsistManager extends AbstractConsistManager {
      * command station
      *
      */
-    public EasyDccConsistManager() {
+    public EasyDccConsistManager(EasyDccSystemConnectionMemo memo) {
         super();
         reader = new EasyDccConsistReader();
+        _memo = memo;
     }
 
     /**
@@ -98,11 +98,11 @@ public class EasyDccConsistManager extends AbstractConsistManager {
 
         private void searchNext() {
             if (log.isDebugEnabled()) {
-                log.debug("Sending request for next consist, _lastAddress is: " + _lastAddress);
+                log.debug("Sending request for next consist, _lastAddress is: {}", _lastAddress);
             }
             currentState = SEARCHREQUESTSENT;
             EasyDccMessage msg = EasyDccMessage.getDisplayConsist(++_lastAddress);
-            EasyDccTrafficController.instance().sendEasyDccMessage(msg, this);
+            _memo.getTrafficController().sendEasyDccMessage(msg, this);
         }
 
         // Listener for messages from the command station
@@ -117,7 +117,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
                 // previously.  If the message has any other
                 // opcode, we can ignore the message.
                 if (log.isDebugEnabled()) {
-                    log.debug("Message Recieved in SEARCHREQUESTSENT state.  Message is: " + r.toString());
+                    log.debug("Message Recieved in SEARCHREQUESTSENT state.  Message is: {}", r.toString());
                 }
                 if (r.getOpCode() == 'G') {
                     // This is the response we're looking for
@@ -173,7 +173,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
                     }
                 } else {
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in IDLE state.  Message is: " + r.toString());
+                        log.debug("Message Recieved in IDLE state.  Message is: {}", r.toString());
                     }
                 }
             }
@@ -184,5 +184,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         public void message(EasyDccMessage m) {
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class);
+
 }

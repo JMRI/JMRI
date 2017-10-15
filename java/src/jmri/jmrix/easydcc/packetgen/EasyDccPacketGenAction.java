@@ -2,6 +2,7 @@ package jmri.jmrix.easydcc.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,23 +13,28 @@ import org.slf4j.LoggerFactory;
   */
 public class EasyDccPacketGenAction extends AbstractAction {
 
-    public EasyDccPacketGenAction(String s) {
+    private EasyDccSystemConnectionMemo _memo = null;
+
+    public EasyDccPacketGenAction(String s, EasyDccSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
-    public EasyDccPacketGenAction() {
-        this("Generate EasyDCC message");
+    public EasyDccPacketGenAction(EasyDccSystemConnectionMemo memo) {
+        this("Generate EasyDCC message", memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        EasyDccPacketGenFrame f = new EasyDccPacketGenFrame();
+        EasyDccPacketGenFrame f = new EasyDccPacketGenFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(EasyDccPacketGenAction.class);
+
 }

@@ -3,38 +3,40 @@ package jmri.jmrix.easydcc.networkdriver;
 import java.net.Socket;
 import java.util.Vector;
 import jmri.jmrix.easydcc.EasyDccNetworkPortController;
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the EasyDcc system network connection.
- * <P>
- * This connects an EasyDcc command station via a telnet connection. Normally
- * controlled by the NetworkDriverFrame class.
+ * Implements SerialPortAdapter for the EasyDCC system network connection.
+ * <p>
+ * This connects an EasyDCC command station via a telnet connection.
+ * Normally controlled by the NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
   */
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     public NetworkDriverAdapter() {
-        super(new jmri.jmrix.easydcc.EasyDccSystemConnectionMemo("E", "EasyDCC via Network"));
+        super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Network")); // pass customized user name
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
+        // create the traffic controller
+        this.getSystemConnectionMemo().setEasyDccTrafficController(new EasyDccTrafficController(this.getSystemConnectionMemo()));
     }
 
     /**
-     * set up all of the other objects to operate with an EasyDcc command
-     * station connected to this port
+     * Set up all of the other objects to operate with an EasyDCC command
+     * station connected to this port.
      */
     @Override
     public void configure() {
         // connect to the traffic controller
-        EasyDccTrafficController control = EasyDccTrafficController.instance();
+        EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
         control.connectPort(this);
         this.getSystemConnectionMemo().setEasyDccTrafficController(control);
+        // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
 
     @Override
@@ -45,19 +47,17 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
     // private control members
     private boolean opened = false;
 
+    /**
+     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
     static public NetworkDriverAdapter instance() {
-        if (mInstance == null) {
-            // initialize object, then make instance
-            NetworkDriverAdapter m = new NetworkDriverAdapter();
-            m.setPort(0);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-    static NetworkDriverAdapter mInstance = null;
 
-    //The following needs to be enabled once systemconnectionmemo has been correctly implemented
-    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    public EasyDccSystemConnectionMemo getSystemConnectionMemo() {
+        return super.getSystemConnectionMemo();
+    }
+
     Socket socket;
 
     public Vector<String> getPortNames() {

@@ -95,7 +95,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         if (m.getResultCode() == 0) {
             int ecosObjectId = m.getEcosObjectId();
             if ((ecosObjectId != 11) && ((ecosObjectId < 20000) || (ecosObjectId > 30000))) {
-                log.debug("message receieved that is not within the valid turnout object range");
+                log.debug("message received that is not within the valid turnout object range");
                 return;
             }
             List<String> headerDetails = m.getReplyHeaderDetails();

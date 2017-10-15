@@ -21,18 +21,15 @@ public class SystemMenu extends JMenu {
     }
 
     public SystemMenu(SRCPSystemConnectionMemo memo) {
-
         super();
         _memo = memo;
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        // setText(rb.getString("MenuSystems"));
         setText(rb.getString("MenuItemSRCP"));
 
-        add(new SRCPMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
-        add(new PacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
-
+        add(new SRCPMonAction(rb.getString("MenuItemCommandMonitor"), _memo));
+        add(new PacketGenAction(rb.getString("MenuItemSendCommand"), _memo));
     }
 
 }

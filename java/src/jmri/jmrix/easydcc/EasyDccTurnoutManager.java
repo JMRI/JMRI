@@ -18,12 +18,13 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     public final static int MAX_ACC_DECODER_ADDRESS = 511;
 
     public EasyDccTurnoutManager() {
-
+        log.debug("EasyDCC Turnout Manager null");
     }
 
     public EasyDccTurnoutManager(EasyDccSystemConnectionMemo memo) {
         _memo = memo;
         prefix = memo.getSystemPrefix();
+        log.debug("EasyDCC Turnout Manager prefix={}", prefix);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        t = new EasyDccTurnout(addr, getSystemPrefix());
+        t = new EasyDccTurnout(addr, _memo);
         t.setUserName(userName);
 
         return t;
@@ -58,7 +59,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.debug("illegal character in number field of system name: {}", systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
@@ -90,12 +91,21 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return entryToolTip;
     }
 
+    /**
+     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public EasyDccTurnoutManager instance() {
         if (_instance == null) {
             _instance = new EasyDccTurnoutManager();
         }
         return _instance;
     }
+
+    /**
+     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static EasyDccTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManager.class);

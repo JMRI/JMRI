@@ -194,6 +194,3 @@ public final class DCCppConstants {
     public final static int METER_INTERVAL_MS = 1000;
 
 }
-
-
-

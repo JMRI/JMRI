@@ -7,15 +7,15 @@ import jmri.jmrix.easydcc.networkdriver.NetworkDriverAdapter;
 /**
  * Handle XML persistance of layout connections by persistening the
  * NetworkDriverAdapter (and connections).
- * <P>
+ * <p>
  * Note this is named as the XML version of a ConnectionConfig object, but it's
  * actually persisting the NetworkDriverAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen, Copyright (c) 2003
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -24,7 +24,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      }*/
     @Override
     protected void getInstance() {
-        adapter = NetworkDriverAdapter.instance();
+        adapter = new NetworkDriverAdapter();
     }
 
     /*public Element store(Object o) {
@@ -79,6 +79,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      register(hostName, portNumber, manufacturer);
      return result;
      }*/
+
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));

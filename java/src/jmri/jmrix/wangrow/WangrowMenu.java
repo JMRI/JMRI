@@ -16,4 +16,5 @@ public class WangrowMenu extends jmri.jmrix.nce.swing.NceMenu {
     public WangrowMenu(NceSystemConnectionMemo memo) {
         super(memo);
     }
+
 }

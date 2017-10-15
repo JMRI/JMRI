@@ -5,17 +5,16 @@ import javax.swing.JMenu;
 
 /**
  * Create a "Systems" menu containing the Jmri Acela-specific tools
+ * Based on CMRI serial example, modified to establish Acela support.
  *
  * @author Bob Jacobsen Copyright 2003
- *
- * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
- * modified to establish Acela support.
+ * @author Bob Coleman, Copyright (C) 2007, 2008
  */
 public class AcelaMenu extends JMenu {
 
     private AcelaSystemConnectionMemo _memo = null;
 
-    public AcelaMenu(String name,AcelaSystemConnectionMemo memo) {
+    public AcelaMenu(String name, AcelaSystemConnectionMemo memo) {
         this(memo);
         setText(name);
     }
@@ -27,9 +26,9 @@ public class AcelaMenu extends JMenu {
 
         setText(rb.getString("MenuItemAcela"));
 
-        add(new jmri.jmrix.acela.acelamon.AcelaMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
-        add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
-        add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes"),_memo));
+        add(new jmri.jmrix.acela.acelamon.AcelaMonAction(rb.getString("MenuItemCommandMonitor"), _memo)); // TODO use Bundle and include Acela
+        add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(rb.getString("MenuItemSendCommand"), _memo));
+        add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes"), _memo));
     }
 
 }

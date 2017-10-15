@@ -211,7 +211,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.debug("illegal character in number field of system name: {}", systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {

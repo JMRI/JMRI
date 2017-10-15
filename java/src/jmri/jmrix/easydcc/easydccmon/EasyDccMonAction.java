@@ -2,6 +2,7 @@ package jmri.jmrix.easydcc.easydccmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,18 +13,17 @@ import org.slf4j.LoggerFactory;
   */
 public class EasyDccMonAction extends AbstractAction {
 
-    public EasyDccMonAction() {
-        this("EasyDCC Command Monitor");
-    }
+    private EasyDccSystemConnectionMemo _memo = null;
 
-    public EasyDccMonAction(String s) {
+    public EasyDccMonAction(String s, EasyDccSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a EasyDccMonFrame
-        EasyDccMonFrame f = new EasyDccMonFrame();
+        EasyDccMonFrame f = new EasyDccMonFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

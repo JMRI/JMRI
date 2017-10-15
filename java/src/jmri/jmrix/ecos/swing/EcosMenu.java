@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Create a "Systems" menu containing the Jmri ECoS-specific tools.
  *
  * @author Kevin Dickerson
  */

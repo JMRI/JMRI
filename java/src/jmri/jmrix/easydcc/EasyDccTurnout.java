@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * EasyDcc implementation of the Turnout interface.
+ * EasyDCC implementation of the Turnout interface.
  * <p>
  * This object doesn't listen to the EasyDcc communications. This is because it
  * should be the only object that is sending messages for this turnout; more
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EasyDccTurnout extends AbstractTurnout {
 
-    protected String _prefix = "E";
+    private EasyDccSystemConnectionMemo _memo = null;
 
     /**
      * Create a turnout. EasyDcc turnouts use the NMRA number (0-511) as their
@@ -25,9 +25,9 @@ public class EasyDccTurnout extends AbstractTurnout {
      *
      * @param number the NMRA turnout number from 0 to 511
      */
-    public EasyDccTurnout(int number, String prefix) {
-        super(prefix + "T" + number);
-        _prefix = prefix;
+    public EasyDccTurnout(int number, EasyDccSystemConnectionMemo memo) {
+        super(memo.getSystemPrefix() + "T" + number);
+        _memo = memo;
         _number = number;
         // At construction, register for messages
     }
@@ -64,7 +64,10 @@ public class EasyDccTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to {}", (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton {}T{}", _prefix, _number);
+            log.debug("Send command to {}",
+                    (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton {}T{}",
+                    _memo.getSystemPrefix(),
+                    _number);
         }
     }
 
@@ -115,8 +118,8 @@ public class EasyDccTurnout extends AbstractTurnout {
             m.setElement(i++, s.charAt(1));
         }
 
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
-
+        log.debug("send easydcc message for {}", _memo.getUserName());
+        _memo.getTrafficController().sendEasyDccMessage(m, null);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnout.class);

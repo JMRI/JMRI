@@ -11,7 +11,7 @@ import jmri.jmrix.JmrixConfigPane;
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -26,9 +26,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return "EasyDCC via network";
     }
 
-    /*public String getMode() {
-     return opt2Box.getSelectedItem().toString();
-     }*/
     /**
      * Reimplement this method to show the connected host, rather than the usual
      * port name.
@@ -47,11 +44,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     protected void setInstance() {
-        adapter = NetworkDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new NetworkDriverAdapter();
+        }
     }
 
     @Override
     public boolean isPortAdvanced() {
         return false;
     }
+
 }

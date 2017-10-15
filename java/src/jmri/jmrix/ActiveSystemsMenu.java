@@ -51,9 +51,9 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-        if (jmri.jmrix.easydcc.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
-        }
+//        if (jmri.jmrix.easydcc.ActiveFlag.isActive()) { // migrated 2017 4.9.5
+//            m.add(getMenu("jmri.jmrix.easydcc.EasyDccMenu"));
+//        }
 
         if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
@@ -82,7 +82,6 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.maple.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
         }
-
     }
 
     /**
@@ -90,7 +89,6 @@ public class ActiveSystemsMenu extends JMenu {
      * JmriDemo, which has a huge number of menus.
      */
     static public void addItems(JMenu m) {
-        //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
         // get ComponentFactory objects and create menus
         java.util.List<ComponentFactory> list
@@ -103,10 +101,9 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-
-        if (jmri.jmrix.easydcc.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
-        }
+//        if (jmri.jmrix.easydcc.ActiveFlag.isActive()) { // migrated 2017 4.9.6ish
+//            m.add(getMenu("jmri.jmrix.easydcc.EasyDccMenu"));
+//        }
         if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
         }
@@ -122,12 +119,12 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.tmcc.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
         }
+
         m.add(new javax.swing.JSeparator());
 
         if (jmri.jmrix.direct.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
         }
-
         if (jmri.jmrix.maple.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
         }

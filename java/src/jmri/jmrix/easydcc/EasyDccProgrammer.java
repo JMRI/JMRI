@@ -10,13 +10,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements the jmri.Programmer interface via commands for the EasyDcc
- * powerstation
+ * powerstation.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
-    public EasyDccProgrammer() {
+    private EasyDccSystemConnectionMemo _memo = null;
+
+    public EasyDccProgrammer(EasyDccSystemConnectionMemo memo) {
+        _memo = memo;
         // need a longer LONG_TIMEOUT
         LONG_TIMEOUT = 180000;
     }
@@ -213,7 +216,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     protected EasyDccTrafficController controller() {
         // connect the first time
         if (_controller == null) {
-            _controller = EasyDccTrafficController.instance();
+            _controller = _memo.getTrafficController();
         }
         return _controller;
     }

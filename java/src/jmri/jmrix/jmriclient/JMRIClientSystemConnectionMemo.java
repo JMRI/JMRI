@@ -229,7 +229,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {

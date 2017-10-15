@@ -194,7 +194,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                             }
                         }
                         int tempaddr = i + 1;
-                        new AcelaNode(tempaddr, nodetype,_memo.getTrafficController());
+                        new AcelaNode(tempaddr, nodetype, _memo.getTrafficController());
                         log.info("Created a new Acela Node [{}] as a result of Acela network Poll of type: {}", tempaddr, replynodetype);
                     }
                     _memo.getTrafficController().setAcelaTrafficControllerState(true);
