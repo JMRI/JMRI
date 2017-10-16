@@ -5,12 +5,16 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.swing.JPopupMenu;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.util.ColorUtil;
+import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,6 +141,7 @@ public abstract class LayoutTrack {
 
     /**
      * highlight unconnected connections
+     *
      * @param g2 the graphics context
      */
     protected abstract void drawUnconnected(Graphics2D g2);
@@ -418,7 +423,45 @@ public abstract class LayoutTrack {
      */
     public abstract Rectangle2D getBounds();
 
-    protected abstract void showPopup(MouseEvent e);
+    /**
+     * show the popup menu for this layout track
+     *
+     * @param mouseEvent the mouse down event that triggered this popup
+     * @return the popup menu for this layout track
+     */
+    @Nonnull
+    protected abstract JPopupMenu showPopup(@Nullable MouseEvent mouseEvent);
+
+    /**
+     * show the popup menu for this layout track
+     *
+     * @param where to show the popup
+     * @return the popup menu for this layout track
+     */
+    @Nonnull
+    protected JPopupMenu showPopup(Point2D where) {
+        return this.showPopup(new MouseEvent(
+                layoutEditor.getTargetPanel(), // source
+                MouseEvent.MOUSE_CLICKED, // id
+                System.currentTimeMillis(), // when
+                0, // modifiers
+                (int) where.getX(), (int) where.getY(), // where
+                0, // click count
+                true));                         // popup trigger
+
+    }
+
+    /**
+     * show the popup menu for this layout track
+     *
+     * @return the popup menu for this layout track
+     */
+    @Nonnull
+    protected JPopupMenu showPopup() {
+        Point2D where = MathUtil.multiply(getCoordsCenter(),
+                layoutEditor.getZoom());
+        return this.showPopup(where);
+    }
 
     /**
      * get the LayoutTrack connected at the specified connection type
@@ -469,6 +512,61 @@ public abstract class LayoutTrack {
         }
         return result;
     }
+
+    /**
+     * return a list of the available connections for this layout track
+     *
+     * @return the list of available connections
+     * <p>
+     * note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
+     * <p>
+     * (This could have just returned a boolean but I thought a list might be
+     * more useful (eventually... not currently being used; we just check to see
+     * if it's not empty.)
+     */
+    @Nonnull
+    public abstract List<Integer> checkForFreeConnections();
+
+    /**
+     * determine if all the appropriate blocks have been assigned to this track
+     *
+     * @return true if all appropriate blocks have been assigned
+     * <p>
+     * note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
+     */
+    public abstract boolean checkForUnAssignedBlocks();
+
+    /**
+     * check this track and its neighbors for non-contiguous blocks
+     * <p>
+     * For each (non-null) blocks of this track do:
+     * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+     * #2) If this track is not in one of the TrackNameSets for this block
+     * #3) add a new set (with this block/track) to
+     *     blockNamesToTrackNameSetMap and
+     * #4) check all the connections in this
+     *     block (by calling the 2nd method below)
+     * <p>
+     *     Basically, we're maintaining contiguous track sets for each block found
+     *     (in blockNamesToTrackNameSetMap)
+     *
+     * @param blockNamesToTrackNameSetMaps hashmap of key:block names to
+     *        lists of track name sets for those blocks
+     * <p>
+     * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
+     */
+    public abstract void checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps);
+
+    /**
+     * recursive routine to check for all contiguous tracks in this blockName
+     *
+     * @param blockName  the block that we're checking for
+     * @param TrackNameSet the set of track names in this block
+     */
+    public abstract void collectContiguousTracksNamesInBlockNamed(
+            @Nonnull String blockName,
+            @Nonnull Set<String> TrackNameSet);
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

@@ -11,7 +11,11 @@ import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
@@ -74,7 +78,7 @@ public class LayoutTurntable extends LayoutTrack {
 
     // this should only be used for debugging...
     public String toString() {
-        return "LayoutTurntable " + ident;
+        return "LayoutTurntable " + getName();
     }
 
     /**
@@ -290,7 +294,7 @@ public class LayoutTurntable extends LayoutTrack {
     public Point2D getCoordsForConnectionType(int locationType) {
         Point2D result = getCoordsCenter();
         if (TURNTABLE_CENTER == locationType) {
-            // nothing to do here, move along...
+            // nothing to see here, move along...
             // (results are already correct)
         } else if (locationType >= TURNTABLE_RAY_OFFSET) {
             result = getRayCoordsIndexed(locationType - TURNTABLE_RAY_OFFSET);
@@ -413,14 +417,14 @@ public class LayoutTurntable extends LayoutTrack {
         if (!requireUnconnected) {
             //check the center point
             if (r.contains(getCoordsCenter())) {
-                result = LayoutTrack.TURNTABLE_CENTER;
+                result = TURNTABLE_CENTER;
             }
         }
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
                 if (r.contains(getRayCoordsOrdered(k))) {
-                    result = LayoutTrack.TURNTABLE_RAY_OFFSET + getRayIndex(k);
+                    result = TURNTABLE_RAY_OFFSET + getRayIndex(k);
                 }
             }
         }
@@ -450,16 +454,18 @@ public class LayoutTurntable extends LayoutTrack {
     JPopupMenu popup = null;
 
     /**
-     * Display popup menu for information and editing
+     * {@inheritDoc}
      */
-    protected void showPopup(MouseEvent e) {
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
 
-        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + ident);
+        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + getName());
         jmi.setEnabled(false);
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -467,7 +473,7 @@ public class LayoutTurntable extends LayoutTrack {
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.getLayoutTrackEditors().editTurntable(LayoutTurntable.this);
+                layoutEditor.getLayoutTrackEditors().editLayoutTurntable(LayoutTurntable.this);
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -481,8 +487,9 @@ public class LayoutTurntable extends LayoutTrack {
             }
         });
         layoutEditor.setShowAlignmentMenu(popup);
-        popup.show(e.getComponent(), e.getX(), e.getY());
-    }
+        popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+        return popup;
+    }   // showPopup
 
     JPopupMenu rayPopup = null;
 
@@ -497,6 +504,20 @@ public class LayoutTurntable extends LayoutTrack {
             if (rt.getConnectionIndex() == index) {
                 JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
                 jmi.setEnabled(false);
+
+                rayPopup.add(new AbstractAction(
+                        Bundle.getMessage("MakeLabel",
+                                Bundle.getMessage("Connected"))
+                        + rt.getConnect().getName()) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        LayoutEditorFindItems lf = layoutEditor.getFinder();
+                        LayoutTrack lt = lf.findObjectByName(rt.getConnect().getName());
+                        layoutEditor.setSelectionRect(lt.getBounds());
+                        lt.showPopup();
+                    }
+                });
+
                 if (rt.getTurnout() != null) {
                     String info = rt.getTurnout().getDisplayName();
                     String stateString = getTurnoutStateString(rt.getTurnoutState());
@@ -785,7 +806,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void reCheckBlockBoundary() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -793,9 +814,128 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected List<LayoutConnectivity> getLayoutConnectivity() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> checkForFreeConnections() {
+        List<Integer> result = new ArrayList<>();
+
+        for (int k = 0; k < getNumberRays(); k++) {
+            if (getRayConnectOrdered(k) == null) {
+                result.add(Integer.valueOf(TURNTABLE_RAY_OFFSET + getRayIndex(k)));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForUnAssignedBlocks() {
+        // Layout turnouts get their block information from the
+        // track segments attached to their rays so...
+        // nothing to see here... move along...
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
+        /*
+         * For each (non-null) blocks of this track do:
+         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+         * #2) If this track is already in the TrackNameSet for this block
+         *     then return (done!)
+         * #3) else add a new set (with this block/track) to
+         *     blockNamesToTrackNameSetMap and check all the connections in this
+         *     block (by calling the 2nd method below)
+         * <p>
+         *     Basically, we're maintaining contiguous track sets for each block found
+         *     (in blockNamesToTrackNameSetMap)
+         */
+
+        // We're only using a map here because it's convient to
+        // use it to pair up blocks and connections
+        Map<LayoutTrack, String > blocksAndTracksMap = new HashMap<>();
+        for (int k = 0; k < getNumberRays(); k++) {
+            TrackSegment ts = getRayConnectOrdered(k);
+            if (ts != null) {
+                String blockName = ts.getBlockName();
+                if (blockName != null) {
+                    blocksAndTracksMap.put(ts, blockName);
+                }
+            }
+        }
+
+        List<Set<String>> TrackNameSets = null;
+        Set<String> TrackNameSet = null;
+        for (Map.Entry<LayoutTrack, String> entry : blocksAndTracksMap.entrySet()) {
+            LayoutTrack theConnect = entry.getKey();
+            String theBlockName = entry.getValue();
+
+            TrackNameSet = null;    // assume not found (pessimist!)
+            TrackNameSets = blockNamesToTrackNameSetsMap.get(theBlockName);
+            if (TrackNameSets != null) { // (#1)
+                for (Set<String> checkTrackNameSet : TrackNameSets) {
+                    if (checkTrackNameSet.contains(getName())) { // (#2)
+                        TrackNameSet = checkTrackNameSet;
+                        break;
+                    }
+                }
+            } else {    // (#3)
+                log.info("•New block ('{}') trackNameSets", theBlockName);
+                TrackNameSets = new ArrayList<>();
+                blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
+            }
+            if (TrackNameSet == null) {
+                TrackNameSet = new LinkedHashSet<>();
+                TrackNameSets.add(TrackNameSet);
+            }
+            if (TrackNameSet.add(getName())) {
+                log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+            }
+            theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
+        }
+    } // collectContiguousTracksNamesInBlockNamed
+
+    /**
+     * {@inheritDoc}
+     */
+    public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
+            @Nonnull Set<String> TrackNameSet) {
+        if (!TrackNameSet.contains(getName())) {
+            // for all the rays with matching blocks in this turnout
+            //  #1) if it's track segment's block is in this block
+            //  #2)     add turntable to TrackNameSet (if not already there)
+            //  #3)     if the track segment isn't in the TrackNameSet
+            //  #4)         flood it
+            for (int k = 0; k < getNumberRays(); k++) {
+                TrackSegment ts = getRayConnectOrdered(k);
+                if (ts != null) {
+                    String blk = ts.getBlockName();
+                    if ((blk != null) && (blk.equals(blockName))) { // (#1)
+                        // if we are added to the TrackNameSet
+                        if (TrackNameSet.add(getName())) {
+                            log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                        }
+                        // it's time to play... flood your neighbours!
+                        ts.collectContiguousTracksNamesInBlockNamed(blockName,
+                                TrackNameSet); // (#4)
+                    }
+                }
+            }
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class
+    );
 }
