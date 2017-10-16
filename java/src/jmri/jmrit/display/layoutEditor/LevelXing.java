@@ -8,6 +8,13 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -106,7 +113,7 @@ public class LevelXing extends LayoutTrack {
 
     // this should only be used for debugging...
     public String toString() {
-        return "LevelXing " + ident;
+        return "LevelXing " + getName();
     }
 
     /**
@@ -670,7 +677,7 @@ public class LevelXing extends LayoutTrack {
     public LayoutBlock getLayoutBlockBD() {
         if ((blockBD == null) && !blockNameBD.isEmpty()) {
             blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-            if ((blockBD != null) && (blockAC == blockBD)) {
+            if ((blockBD != null) && (blockBD == blockAC)) {
                 blockBD.decrementUse();
             }
         }
@@ -740,13 +747,34 @@ public class LevelXing extends LayoutTrack {
      * Add Layout Blocks
      */
     public void setLayoutBlockAC(LayoutBlock b) {
-        blockAC = b;
-        blockNameAC = (b == null) ? "" : b.getId();
+        if (blockAC != b) {
+            // block 1 has changed, if old block exists, decrement use
+            if ((blockAC != null) && (blockAC != blockBD)) {
+                blockAC.decrementUse();
+            }
+            blockAC = b;
+            blockNameAC = (b == null) ? "" : b.getId();
+            // decrement use if block was previously counted
+            if ((blockAC != null) && (blockAC == blockBD)) {
+                blockAC.decrementUse();
+            }
+        }
     }
 
     public void setLayoutBlockBD(LayoutBlock b) {
-        blockBD = b;
-        blockNameBD = (b == null) ? "" : b.getId();
+        if (blockBD != b) {
+            // block 1 has changed, if old block exists, decrement use
+            if ((blockBD != null) && (blockBD != blockAC)) {
+                blockBD.decrementUse();
+            }
+            blockBD = b;
+            blockNameBD = (b == null) ? "" : b.getId();
+            // decrement use if block was previously counted
+            if ((blockBD != null) && (blockBD == blockAC)) {
+                blockBD.decrementUse();
+            }
+        }
+
     }
 
     protected void updateBlockInfo() {
@@ -873,14 +901,14 @@ public class LevelXing extends LayoutTrack {
         if (!requireUnconnected) {
             //check the center point
             if (r.contains(getCoordsCenter())) {
-                result = LayoutTrack.LEVEL_XING_CENTER;
+                result = LEVEL_XING_CENTER;
             }
         }
 
         if (!requireUnconnected || (getConnectA() == null)) {
             //check the A connection point
             if (r.contains(getCoordsA())) {
-                result = LayoutTrack.LEVEL_XING_A;
+                result = LEVEL_XING_A;
             }
         }
 
@@ -888,21 +916,21 @@ public class LevelXing extends LayoutTrack {
             //check the B connection point
             if (r.contains(getCoordsB())) {
                 //mouse was pressed on this connection point
-                result = LayoutTrack.LEVEL_XING_B;
+                result = LEVEL_XING_B;
             }
         }
 
         if (!requireUnconnected || (getConnectC() == null)) {
             //check the C connection point
             if (r.contains(getCoordsC())) {
-                result = LayoutTrack.LEVEL_XING_C;
+                result = LEVEL_XING_C;
             }
         }
 
         if (!requireUnconnected || (getConnectD() == null)) {
             //check the D connection point
             if (r.contains(getCoordsD())) {
-                result = LayoutTrack.LEVEL_XING_D;
+                result = LEVEL_XING_D;
             }
         }
         return result;
@@ -934,7 +962,7 @@ public class LevelXing extends LayoutTrack {
                     blockAC.incrementUse();
                 }
             } else {
-                log.error("bad blocknameac '" + tBlockNameAC + "' in levelxing " + ident);
+                log.error("bad blocknameac '" + tBlockNameAC + "' in levelxing " + getName());
             }
         }
         if (!tBlockNameBD.isEmpty()) {
@@ -945,7 +973,7 @@ public class LevelXing extends LayoutTrack {
                     blockBD.incrementUse();
                 }
             } else {
-                log.error("bad blocknamebd '" + tBlockNameBD + "' in levelxing " + ident);
+                log.error("bad blocknamebd '" + tBlockNameBD + "' in levelxing " + getName());
             }
         }
     }
@@ -954,9 +982,11 @@ public class LevelXing extends LayoutTrack {
     LayoutEditorTools tools = null;
 
     /**
-     * Display popup menu for information and editing
+     * {@inheritDoc}
      */
-    protected void showPopup(MouseEvent e) {
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -964,7 +994,7 @@ public class LevelXing extends LayoutTrack {
         }
         tools = layoutEditor.getLETools();
         if (layoutEditor.isEditable()) {
-            JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LevelCrossing")) + ident);
+            JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LevelCrossing")) + getName());
             jmi.setEnabled(false);
 
             boolean blockACAssigned = false;
@@ -990,41 +1020,42 @@ public class LevelXing extends LayoutTrack {
                     || (connectC != null) || (connectD != null)) {
                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
                 if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack) connectA).getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectA).getName());
+                            LayoutTrack lt = lf.findObjectByName(connectA.getName());
                             layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
                         }
                     });
                 }
                 if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack) connectB).getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectB).getName());
+                            LayoutTrack lt = lf.findObjectByName(connectB.getName());
                             layoutEditor.setSelectionRect(lt.getBounds());
                         }
                     });
                 }
                 if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack) connectC).getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectC).getName());
+                            LayoutTrack lt = lf.findObjectByName(connectC.getName());
                             layoutEditor.setSelectionRect(lt.getBounds());
                         }
                     });
                 }
                 if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack) connectD).getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectD).getName());
+                            LayoutTrack lt = lf.findObjectByName(connectD.getName());
                             layoutEditor.setSelectionRect(lt.getBounds());
                         }
                     });
@@ -1140,12 +1171,13 @@ public class LevelXing extends LayoutTrack {
             }
 
             layoutEditor.setShowAlignmentMenu(popup);
-            popup.show(e.getComponent(), e.getX(), e.getY());
+            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         } else if (!viewAdditionalMenu.isEmpty()) {
             setAdditionalViewPopUpMenu(popup);
-            popup.show(e.getComponent(), e.getX(), e.getY());
+            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
-    }
+        return popup;
+    }   // showPopup
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -1379,7 +1411,7 @@ public class LevelXing extends LayoutTrack {
 
     protected void drawTurnoutControls(Graphics2D g2) {
         // LevelXings don't have turnout controls...
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1387,7 +1419,7 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     public void reCheckBlockBoundary() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1395,8 +1427,151 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> checkForFreeConnections() {
+        List<Integer> result = new ArrayList<>();
+
+        //check the A connection point
+        if (getConnectA() == null) {
+            result.add(Integer.valueOf(LEVEL_XING_A));
+        }
+
+        //check the B connection point
+        if (getConnectB() == null) {
+            result.add(Integer.valueOf(LEVEL_XING_B));
+        }
+
+        //check the C connection point
+        if (getConnectC() == null) {
+            result.add(Integer.valueOf(LEVEL_XING_C));
+        }
+
+        //check the D connection point
+        if (getConnectD() == null) {
+            result.add(Integer.valueOf(LEVEL_XING_D));
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForUnAssignedBlocks() {
+        return ((getLayoutBlockAC() != null) && (getLayoutBlockBD() != null));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
+        /*
+         * For each (non-null) blocks of this track do:
+         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+         * #2) If this track is already in the TrackNameSet for this block
+         *     then return (done!)
+         * #3) else add a new set (with this block/track) to
+         *     blockNamesToTrackNameSetMap and check all the connections in this
+         *     block (by calling the 2nd method below)
+         * <p>
+         *     Basically, we're maintaining contiguous track sets for each block found
+         *     (in blockNamesToTrackNameSetMap)
+         */
+
+        // We're only using a map here because it's convient to
+        // use it to pair up blocks and connections
+        Map<LayoutTrack, String> blocksAndTracksMap = new HashMap<>();
+        if ((getLayoutBlockAC() != null) && (connectA != null)) {
+            blocksAndTracksMap.put(connectA, getLayoutBlockAC().getDisplayName());
+        }
+        if ((getLayoutBlockAC() != null) && (connectC != null)) {
+            blocksAndTracksMap.put(connectC, getLayoutBlockAC().getDisplayName());
+        }
+        if ((getLayoutBlockBD() != null) && (connectB != null)) {
+            blocksAndTracksMap.put(connectB, getLayoutBlockBD().getDisplayName());
+        }
+        if ((getLayoutBlockBD() != null) && (connectD != null)) {
+            blocksAndTracksMap.put(connectD, getLayoutBlockBD().getDisplayName());
+        }
+
+        List<Set<String>> TrackNameSets = null;
+        Set<String> TrackNameSet = null;
+        for (Map.Entry<LayoutTrack, String> entry : blocksAndTracksMap.entrySet()) {
+            LayoutTrack theConnect = entry.getKey();
+            String theBlockName = entry.getValue();
+
+            TrackNameSet = null;    // assume not found (pessimist!)
+            TrackNameSets = blockNamesToTrackNameSetsMap.get(theBlockName);
+            if (TrackNameSets != null) { // (#1)
+                for (Set<String> checkTrackNameSet : TrackNameSets) {
+                    if (checkTrackNameSet.contains(getName())) { // (#2)
+                        TrackNameSet = checkTrackNameSet;
+                        break;
+                    }
+                }
+            } else {    // (#3)
+                log.info("•New block ('{}') trackNameSets", theBlockName);
+                TrackNameSets = new ArrayList<>();
+                blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
+            }
+            if (TrackNameSet == null) {
+                TrackNameSet = new LinkedHashSet<>();
+                TrackNameSets.add(TrackNameSet);
+            }
+            if (TrackNameSet.add(getName())) {
+                log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+            }
+            theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
+        }
+    }   // collectContiguousTracksNamesInBlockNamed
+
+    /**
+     * {@inheritDoc}
+     */
+    public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
+            @Nonnull Set<String> TrackNameSet) {
+        if (!TrackNameSet.contains(getName())) {
+            // check all the matching blocks in this track and...
+            //  #1) add us to TrackNameSet and...
+            //  #2) flood them
+            //check the AC blockName
+            if ((blockNameAC != null) && (blockNameAC.equals(blockName))) {
+                // if we are added to the TrackNameSet
+                if (TrackNameSet.add(getName())) {
+                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                }
+                // it's time to play... flood your neighbours!
+                if (connectA != null) {
+                    connectA.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+                }
+                if (connectC != null) {
+                    connectC.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+                }
+            }
+            //check the BD blockName
+            if ((blockNameBD != null) && (blockNameBD.equals(blockName))) {
+                // if we are added to the TrackNameSet
+                if (TrackNameSet.add(getName())) {
+                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                }
+                // it's time to play... flood your neighbours!
+                if (connectB != null) {
+                    connectB.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+                }
+                if (connectD != null) {
+                    connectD.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+                }
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
