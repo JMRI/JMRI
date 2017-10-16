@@ -1031,7 +1031,6 @@ public class NmraPacketTest {
         Assert.assertEquals("byte 5", 0x01, ba[5] & 0xFF);
     }
 
-
     @Test
     public void testAccSignalDecoderPktOpsMode252() {
         int address = 252;
@@ -1149,6 +1148,216 @@ public class NmraPacketTest {
         Assert.assertEquals("byte 3", 0xFF, ba[3] & 0xFF);
         Assert.assertEquals("byte 4", 0x97, ba[4] & 0xFF);
         Assert.assertEquals("byte 5", 0x3F, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt1Aspect23() {
+        int address = 1;
+        int aspect = 23;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x17, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xE7, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt2Aspect5() {
+        int address = 2;
+        int aspect = 5;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x73, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x05, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xF7, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt3Aspect9() {
+        int address = 3;
+        int aspect = 9;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x75, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x09, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xFD, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt4Aspect11() {
+        int address = 4;
+        int aspect = 11;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x0B, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xFD, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt5Aspect15() {
+        int address = 5;
+        int aspect = 15;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x0F, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xFC, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt6Aspect28() {
+        int address = 6;
+        int aspect = 28;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x73, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x1C, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xED, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt7Aspect10() {
+        int address = 7;
+        int aspect = 10;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x75, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x0A, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xFD, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt8Aspect11() {
+        int address = 8;
+        int aspect = 11;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x0B, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xFE, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt252Aspect13() {
+        int address = 252;
+        int aspect = 13;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x0D, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xC5, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt253Aspect19() {
+        int address = 253;
+        int aspect = 19;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x61, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x13, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xF2, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt254Aspect2() {
+        int address = 254;
+        int aspect = 2;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x63, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x02, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xE1, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt255Aspect3() {
+        int address = 255;
+        int aspect = 3;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x65, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x3, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xE6, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt256Aspect7() {
+        int address = 256;
+        int aspect = 7;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x67, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x07, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xE0, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt2044Aspect0() {
+        int address = 2044;
+        int aspect = 0;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x00, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xB8, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testAccSignalDecoderPkt2044Aspect31() {
+        int address = 2044;
+        int aspect = 31;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x1F, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xA7, ba[3] & 0xFF);
     }
 
     @Test
