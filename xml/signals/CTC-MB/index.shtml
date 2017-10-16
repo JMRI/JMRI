@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>JMRI: Non-Prototype USS H-2 Signal Masts</title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="824.48">
+  <style type="text/css">
+    body {background-color: #000000}
+    p.p1 {margin: 0.0px 0.0px 16.0px 0.0px; font: 24.0px Times}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times}
+    p.p3 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; color: #0024ef}
+    p.p4 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef}
+    span.s1 {color: #000000}
+  </style>
+</head>
+<body>
+<h1 style="margin: 0.0px 0.0px 16.0px 0.0px; font: 24.0px Times"><b>JMRI: Non-Prototype USS H-2 Signal Masts</b></h1>
+<p class="p2">This directory contains signaling definitions for Non-Prototype USS H-2 Signal Masts.</p>
+<p class="p3"><span class="s1">See the <a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/SP-SIGNALS/aspects.xml">aspect page</a>.</span></p>
+<p class="p4">Signal Mast definitions:</p>
+<ul>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SL-1-head.xml">Single searchlight absolute signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SL-2-head.xml">Double searchlight absolute signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SL-2A-head.xml">Double searchlight alternate signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SL-3-head.xml">Triple searchlight absolute signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SL-3A-head.xml">Triple searchlight alternate signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-DW-1-head.xml">Single dwarf searchlight signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-DW-2-head.xml">Double dwarf searchlight signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SE-1-head.xml">Single blade semaphore absolute signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SE-2-head.xml">Double blade semaphore absolute signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SDW-1-head.xml">Single blade dwarf semaphore signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SDW-2-head.xml">Double blade dwarf semaphore signal</a></li>
+  <li style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0024ef"><a href="file:///Users/bellavista/Desktop/JMRI%202.10/xml/signals/NYC-1948/appearance-SDW-2-head.xml">Train Order Board</a></li>
+</ul>
+</body>
+</html>
