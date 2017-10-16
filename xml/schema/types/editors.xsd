@@ -1233,6 +1233,9 @@
       <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
 
       <xs:attribute name="blockname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockbname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockcname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockdname" type="beanNameType"></xs:attribute>
       <xs:attribute name="connectaname" type="beanNameType"></xs:attribute>
       <xs:attribute name="connectbname" type="beanNameType"></xs:attribute>
       <xs:attribute name="connectcname" type="beanNameType"></xs:attribute>
