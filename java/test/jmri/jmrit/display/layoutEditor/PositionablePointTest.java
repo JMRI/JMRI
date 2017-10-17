@@ -125,7 +125,7 @@ public class PositionablePointTest {
         Point2D point = new Point2D.Double(666.6, 999.9);
         PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, point, le);
         Assert.assertNotNull("exists", pp);
-        Rectangle2D bounds = new Rectangle2D.Double(point.getX(), point.getY(), 0.0, 0.0);
+        Rectangle2D bounds = new Rectangle2D.Double(point.getX() - 0.5, point.getY() - 0.5, 1.0, 1.0);
         Assert.assertEquals("getBounds equal to {666.6, 999.9, 0.0, 0.0}", bounds, pp.getBounds());
     }
 
