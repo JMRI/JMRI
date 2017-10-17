@@ -57,10 +57,10 @@ public class TrackSegment extends LayoutTrack {
 
     // persistent instances variables (saved between sessions)
     private String blockName = "";
-    private LayoutTrack connect1 = null;
-    private int type1 = 0;
-    private LayoutTrack connect2 = null;
-    private int type2 = 0;
+    protected LayoutTrack connect1 = null;
+    protected int type1 = 0;
+    protected LayoutTrack connect2 = null;
+    protected int type2 = 0;
     private boolean dashed = false;
     private boolean mainline = false;
     private boolean arc = false;
@@ -688,8 +688,11 @@ public class TrackSegment extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
                         LayoutTrack lt = lf.findObjectByName(connect1.getName());
-                        layoutEditor.setSelectionRect(lt.getBounds());
-                        lt.showPopup();
+                        // this shouldn't ever be null... however...
+                        if (lt != null) {
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
+                        }
                     }
                 });
             }
@@ -699,8 +702,11 @@ public class TrackSegment extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
                         LayoutTrack lt = lf.findObjectByName(connect2.getName());
-                        layoutEditor.setSelectionRect(lt.getBounds());
-                        lt.showPopup();
+                        // this shouldn't ever be null... however...
+                        if (lt != null) {
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
+                        }
                     }
                 });
             }
@@ -740,6 +746,55 @@ public class TrackSegment extends LayoutTrack {
                 layoutEditor.removeTrackSegment(TrackSegment.this);
                 remove();
                 dispose();
+            }
+        });
+        popup.add(new AbstractAction(Bundle.getMessage("Split")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // create a new anchor
+                Point2D p = getCentreSeg();
+                PositionablePoint newAnchor = layoutEditor.addAnchor(p);
+                // link it to me
+                layoutEditor.setLink(TrackSegment.this, TRACK, newAnchor, POS_POINT);
+
+                //get unique name for a new track segment
+                String name = layoutEditor.getFinder().uniqueName("T", 0);
+
+                //create it between the new anchor and my connect2(/type2)
+                TrackSegment newTrackSegment = new TrackSegment(name,
+                        newAnchor, POS_POINT,
+                        connect2, type2,
+                        isDashed(), isMainline(), layoutEditor);
+                // add it to known tracks
+                layoutEditor.getLayoutTracks().add(newTrackSegment);
+                layoutEditor.setDirty();
+
+                // copy attributes to new track segment
+                newTrackSegment.setArc(TrackSegment.this.isArc());
+                newTrackSegment.setCircle(TrackSegment.this.isCircle());
+                //newTrackSegment.setBezier(TrackSegment.this.isBezier());
+                newTrackSegment.setFlip(TrackSegment.this.isFlip());
+
+                // link my connect2 to the new track segment
+                layoutEditor.setLink(newTrackSegment, TRACK, connect2, type2);
+
+                // link the new anchor to the new track segment
+                layoutEditor.setLink(newTrackSegment, TRACK, newAnchor, POS_POINT);
+
+                // link me to the new newAnchor
+                connect2 = newAnchor;
+                type2 = POS_POINT;
+
+                //check on layout block
+                LayoutBlock b = TrackSegment.this.getLayoutBlock();
+
+                if (b != null) {
+                    newTrackSegment.setLayoutBlock(b);
+                    layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+                    newTrackSegment.updateBlockInfo();
+                }
+                layoutEditor.setDirty();
+                layoutEditor.redrawPanel();
             }
         });
 
