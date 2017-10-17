@@ -179,7 +179,7 @@ public class LayoutEditorTools {
         LayoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
         LayoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
         LayoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
-    }
+    }   // LayoutEditorTools
 
     private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;
     private transient AddEntryExitPairAction entryExit = null;
@@ -13252,7 +13252,7 @@ public class LayoutEditorTools {
             addNearSensorToSlipLogic(nearSensorName);
             finalizeBlockBossLogic();
         }
-    }
+    }   // setLogicSlip
 
     private String setupNearLogixSlip(Turnout turn, int nearState,
             SignalHead head, Turnout farTurn, int farState, LayoutSlip slip, int number) {
@@ -13319,7 +13319,7 @@ public class LayoutEditorTools {
         }
         x.activateLogix();
         return sensorName;
-    }
+    }   // setupNearLogixSlip
 
     /*
 	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
