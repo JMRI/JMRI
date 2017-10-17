@@ -826,6 +826,19 @@ public final class MathUtil {
     }
 
     /**
+     * inset a rectangle
+     *
+     * @param r the rectangle
+     * @param h the horzontial inset (positive make it smaller, negative, bigger)
+     * @param v the vertical inset (positive make it smaller, negative, bigger)
+     * @return the inset rectangle
+     */
+    @CheckReturnValue
+    public static Rectangle2D inset(@Nonnull Rectangle2D r, double h, double v) {
+        return new Rectangle2D.Double(r.getX() + h, r.getY() + v, r.getWidth() - (2 * h), r.getHeight() - (2 * v));
+    }
+
+    /**
      * scale a rectangle
      *
      * @param r the rectangle

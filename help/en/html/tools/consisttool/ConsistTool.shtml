@@ -282,6 +282,8 @@
 	  Clicking the <b>Reset</b> button will clear the information on the New Loco entry line.
 	</p>
 	<p>
+	   <img src="images/ConsistTool-Reverse1.png" alt="Direction Normal (or reversed) check box"
+		height="125" width="457" align="right">
 	   The <b>Direction Normal</b> checkbox allows the user to specify if
 	   the new Locomotive is traveling in Forward or Reverse when the
 	   Consist is traveling Forward.

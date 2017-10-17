@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,7 +22,7 @@ public class DetectionPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditorScaffold es = new EditorScaffold();
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = new ItemPalette("Test ItemPalette", null);
+            ip = ItemPalette.getDefault("Test ItemPalette",  new EditorScaffold());
             ip.pack();
         });
         TextItemPanel tip = new TextItemPanel(ip, "test", es);

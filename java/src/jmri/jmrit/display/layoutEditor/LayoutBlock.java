@@ -1880,7 +1880,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     //Might be possible to refactor the removal to use a bit of common code.
     private void removeAdjacency(Path removedPath) {
         Block block = removedPath.getBlock();
-        if (null != block) {
+        if (block != null) {
             if (enableDeleteRouteLogging) {
                 log.info("From " + this.getDisplayName()
                         + " Adjacency to be removed " + block.getDisplayName()
@@ -2578,7 +2578,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     return;
                 }
             }
-            HashSet<LayoutTurnout> set = new HashSet<LayoutTurnout>();
+            Set<LayoutTurnout> set = new HashSet<>();
 
             for (int i = 0; i < stod.size(); i++) {
                 boolean val = set.add(stod.get(i));
@@ -2609,7 +2609,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 maxtSet = tmpdtosSet;
             }
 
-            Set<LayoutTurnout> set = new HashSet<LayoutTurnout>(maxt);
+            Set<LayoutTurnout> set = new HashSet<>(maxt);
 
             if (set.size() == maxt.size()) {
                 if (enableAddRouteLogging) {
@@ -3231,7 +3231,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     @CheckForNull
     Routes getValidRoute(Block nxtBlock, Block dstBlock) {
-        if ((null != nxtBlock) && (null != dstBlock)) {
+        if ((nxtBlock != null) && (dstBlock != null)) {
             List<Routes> rtr = getRouteByNeighbour(nxtBlock);
 
             if (rtr.size() == 0) {
@@ -3250,8 +3250,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             log.debug("From {}, no routes to {}.", this.getDisplayName(), nxtBlock.getDisplayName());
         } else {
             log.warn("getValidRoute({}, {}",
-                    (null != nxtBlock) ? nxtBlock.getDisplayName() : "<null>",
-                    (null != dstBlock) ? dstBlock.getDisplayName() : "<null>");
+                    (nxtBlock != null) ? nxtBlock.getDisplayName() : "<null>",
+                    (dstBlock != null) ? dstBlock.getDisplayName() : "<null>");
         }
         return null;
     }
@@ -4434,7 +4434,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         boolean pathActive = false;
 
-        HashMap<Turnout, Integer> _turnouts = new HashMap<Turnout, Integer>();
+        HashMap<Turnout, Integer> _turnouts = new HashMap<>();
 
         ThroughPaths(Block srcBlock, Path srcPath, Block destBlock, Path dstPath) {
             sourceBlock = srcBlock;
@@ -4478,7 +4478,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 setRoutesValid(destinationBlock, true);
                 return;
             }
-            _turnouts = new HashMap<Turnout, Integer>(turnouts.size());
+            _turnouts = new HashMap<>(turnouts.size());
             for (int i = 0; i < turnouts.size(); i++) {
                 if (turnouts.get(i) instanceof LayoutSlip) {
                     int slipState = turnoutSettings.get(i);

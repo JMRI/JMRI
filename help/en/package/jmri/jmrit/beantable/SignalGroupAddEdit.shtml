@@ -22,8 +22,8 @@
       <p>After clicking on the "Add..." button below the <a href=
       "../beantable/SignalGroupTable.shtml">Signal Group Table</a>,
       the following pane appears:</p><a href=
-      "SignalGroupAdd.png"><img src="SignalGroupAdd.png" width=
-      "310" height="269"></a>
+      "images/SignalGroupAdd.png"><img src="images/SignalGroupAdd.png"
+      width="310" height="269"></a>
 
       <h3>Enter Signal Group elements</h3>
 
@@ -43,8 +43,9 @@
         Signal Heads included in a Signal Group are picked from the
         Signal Head Table, but only Signal Heads that were created
         using the <em>Single Output</em> connection type (pictured
-        to the right) show up in the list. <a href=
-        "SingleSignalHead.png"><img src="SingleSignalHead.png"
+        to the right) show up in the list.
+        <a href=
+        "images/SingleSignalHead.png"><img src="images/SingleSignalHead.png"
         height="185" width="127" align="right"></a></li>
       </ul>
 
@@ -66,9 +67,11 @@
       corresponding <b>Edit</b> button in the last column of the
       Add/Edit Signal Group pane. A new pane like the one shown to
       the right will open, letting you define a specific Signal
-      Head that is part of your Indicator.</p><a href=
-      "SignalGroupAddEditHead.png"><img src=
-      "SignalGroupAddEditHead.png" height="234" width="297" align=
+      Head that is part of your Indicator.</p>
+
+      <a href=
+      "images/SignalGroupAddEditHead.png"><img src=
+      "images/SignalGroupAddEditHead.png" height="234" width="297" align=
       "right"></a>
 
       <p>Choose two <i>different</i> values in the pop up menus at
@@ -94,8 +97,8 @@
       the Table.</p>
 
       <p>Back to the <a href="SignalGroupTable.shtml">Signal Group
-      Table help page</a>.
-        <!--#include virtual="/Footer" --></p>
+      Table help page</a>.</p>
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

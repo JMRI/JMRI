@@ -63,6 +63,7 @@
                   <xs:attribute name="sequence" type="xs:integer" />
                   <xs:attribute name="direction" type="xs:integer" />
                   <xs:attribute name="alternate" type="yesNoType" />
+                  <xs:attribute name="safe" type="yesNoType" />
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

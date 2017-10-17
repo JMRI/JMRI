@@ -48,10 +48,14 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return ((jmri.GlobalProgrammerManager) get(jmri.GlobalProgrammerManager.class)).isGlobalProgrammerAvailable();
+            jmri.GlobalProgrammerManager mgr = ((jmri.GlobalProgrammerManager) get(jmri.GlobalProgrammerManager.class));
+            if (mgr == null) return false;
+            return mgr.isGlobalProgrammerAvailable();
         }
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return ((jmri.AddressedProgrammerManager) get(jmri.AddressedProgrammerManager.class)).isAddressedModePossible();
+            jmri.AddressedProgrammerManager mgr =((jmri.AddressedProgrammerManager) get(jmri.AddressedProgrammerManager.class));
+            if (mgr == null) return false;
+            return mgr.isAddressedModePossible();
         }
         return manager.provides(type);
     }

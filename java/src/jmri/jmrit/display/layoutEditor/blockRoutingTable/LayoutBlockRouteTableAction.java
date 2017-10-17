@@ -18,14 +18,14 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
      * resulting frame. Perhaps this should be changed?
      *
      */
-    public LayoutBlockRouteTableAction(String s, LayoutBlock lBlock) {
+    public LayoutBlockRouteTableAction(String s, LayoutBlock layoutBlock) {
         super(s);
-        this.lBlock = lBlock;
+        lBlock = layoutBlock;
     }
 
     //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    LayoutBlock lBlock;
+    private LayoutBlock lBlock = null;
 
     LayoutBlockRouteTable m;
     //LayoutBlockNeighbourTable mn;

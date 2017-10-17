@@ -454,7 +454,7 @@
         after the Commit (so others can access it and study it for
         inclusion into JMRI).<br>
         <a href="images/IntelliJ/IjCommitPush.png"><img src=
-        "images/IntelliJ/IjCommitPush.png" width="362" height="197"
+        "images/IntelliJ/IjCommitPush.png" width="181" height="98"
         alt="IntelliJ Commit and Push"></a></li>
 
         <li>In the Push Commits pane, review your description and
@@ -465,6 +465,12 @@
         <a href="images/IntelliJ/IjGitPushOptions.png"><img src=
         "images/IntelliJ/IjGitPushOptions.png" width="300" height=
         "279" alt="IntelliJ Push options"></a></li>
+
+        <li>If this went fine, a confirmation will appear at bottom
+        left over the Version Control tab:<br>
+        <a href="images/IntelliJ/IjVCSmenu.png"><img src=
+        "images/IntelliJ/IjVCSmenu.png" width="210" height=
+        "69" alt="IntelliJ Push OK balloon"></a></li>
       </ul>
 
       <p>Before you can Push your changes to GitHub for the first
@@ -550,6 +556,18 @@
       right:<br>
       <a href="images/IntelliJ/IjEditProperties.png">
       <img src="images/IntelliJ/IjEditProperties.png" width="480" height="260" alt="IntelliJ Bundle edit window"></a></p>
+
+      <h4>Error: Can't start Git</h4>
+      <p>On macOS, when you run into this error, usually when starting IntelliJ for the
+      first time after a system update:<br>
+      <a href="images/IntelliJ/IjXcodeGitProblem1.png">
+        <img src="images/IntelliJ/IjXcodeGitProblem1.png" width="373" height="110" alt="IntelliJ Git error"></a><br>
+      quit the program and start the Apple Xcode application.<br>
+      By this you be asked to agree with the licence agreement, and that will reenable
+      the Git installation to be used inside IntelliJ too.<br>
+      <a href="images/IntelliJ/IjXcode1.png">
+        <img src="images/IntelliJ/IjXcode1.png" width="223" height="111" alt="IntelliJ Git error"></a>
+      </p>
 
       <h4>Reset HEAD</h4>
 

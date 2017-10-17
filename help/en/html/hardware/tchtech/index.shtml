@@ -27,7 +27,8 @@
       supported)</h1>
 
       <p>As of November 10, 2008, JMRI no longer supports the TCH
-      Technology hardware. <!--#include virtual="/Footer" --></p>
+      Technology hardware.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
