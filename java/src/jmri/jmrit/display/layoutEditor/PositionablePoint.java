@@ -852,97 +852,99 @@ public class PositionablePoint extends LayoutTrack {
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
         if (getType() == ANCHOR) {
-            final PositionablePoint finalThis = this;
-            popup.add(new AbstractAction(Bundle.getMessage("MergeAdjacentTracks")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // if I'm fully connected...
-                    if ((connect1 != null) && (connect2 != null)) {
-                        // this is the other ("not me") connection to connect2
-                        LayoutTrack newConnect2 = null;
-                        int newType2 = TRACK;
-                        if (connect2.connect1 == finalThis) {
-                            newConnect2 = connect2.connect2;
-                            newType2 = connect2.type2;
-                        } else if (connect2.connect2 == finalThis) {
-                            newConnect2 = connect2.connect1;
-                            newType2 = connect2.type1;
-                        } else {
-                            //this should never happen however...
-                            log.error("Join: wrong connects error.");
-                        }
+            if (blockBoundary) {
+                jmi = popup.add(new JMenuItem(Bundle.getMessage("CanNotMergeAtBlockBoundary")));
+                jmi.setEnabled(false);
+            } else {
+                jmi = popup.add(new AbstractAction(Bundle.getMessage("MergeAdjacentTracks")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // if I'm fully connected...
+                        if ((connect1 != null) && (connect2 != null)) {
+                            // this is the other ("not me") connection to connect2
+                            LayoutTrack newConnect2 = null;
+                            int newType2 = TRACK;
+                            if (connect2.connect1 == PositionablePoint.this) {
+                                newConnect2 = connect2.connect2;
+                                newType2 = connect2.type2;
+                            } else if (connect2.connect2 == PositionablePoint.this) {
+                                newConnect2 = connect2.connect1;
+                                newType2 = connect2.type1;
+                            } else {
+                                //this should never happen however...
+                                log.error("Join: wrong connects error.");
+                            }
 
-                        // connect the other connection to my connect1
-                        if (newConnect2 != null) {  // (this should NEVER happen... however...)
-                            layoutEditor.setLink(connect1, TRACK, newConnect2, newType2);
-                        }
+                            // connect the other connection to my connect1
+                            if (newConnect2 != null) {  // (this should NEVER happen... however...)
+                                layoutEditor.setLink(connect1, TRACK, newConnect2, newType2);
+                            }
 
-                        // connect my old connect1 to the new connect 2
-                        if (connect1.connect1 == finalThis) {
-                            connect1.connect1 = newConnect2;
-                            connect1.type1 = newType2;
-                        } else if (connect1.connect2 == finalThis) {
-                            connect1.connect2 = newConnect2;
-                            connect1.type2 = newType2;
-                        } else {
-                            //this should never happen however...
-                            log.error("Join: wrong connects error.");
-                        }
-                        
-                        //remove connect2 from selection information
-                        if (layoutEditor.selectedObject == connect2) {
-                            layoutEditor.selectedObject = null;
-                        }
-                        if (layoutEditor.prevSelectedObject == connect2) {
-                            layoutEditor.prevSelectedObject = null;
-                        }
+                            // connect my old connect1 to the new connect 2
+                            if (connect1.connect1 == PositionablePoint.this) {
+                                connect1.connect1 = newConnect2;
+                                connect1.type1 = newType2;
+                            } else if (connect1.connect2 == PositionablePoint.this) {
+                                connect1.connect2 = newConnect2;
+                                connect1.type2 = newType2;
+                            } else {
+                                //this should never happen however...
+                                log.error("Join: wrong connects error.");
+                            }
 
-                        // remove connect2 from the layoutEditor's list of layout tracks
-                        if (layoutEditor.getLayoutTracks().contains(connect2)) {
-                            layoutEditor.getLayoutTracks().remove(connect2);
+                            //remove connect2 from selection information
+                            if (layoutEditor.selectedObject == connect2) {
+                                layoutEditor.selectedObject = null;
+                            }
+                            if (layoutEditor.prevSelectedObject == connect2) {
+                                layoutEditor.prevSelectedObject = null;
+                            }
+
+                            // remove connect2 from the layoutEditor's list of layout tracks
+                            if (layoutEditor.getLayoutTracks().contains(connect2)) {
+                                layoutEditor.getLayoutTracks().remove(connect2);
+                                layoutEditor.setDirty();
+                                layoutEditor.redrawPanel();
+                            }
+
+                            //update affected block
+                            LayoutBlock block = connect2.getLayoutBlock();
+                            if (block != null) {
+                                //decrement Block use count
+                                block.decrementUse();
+                                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+                                block.updatePaths();
+                            }
+                            connect2.remove();
+                            connect2.dispose();
+                            connect2 = null;
+
+                            //remove me from selection information
+                            if (layoutEditor.selectedObject == PositionablePoint.this) {
+                                layoutEditor.selectedObject = null;
+                            }
+                            if (layoutEditor.prevSelectedObject == PositionablePoint.this) {
+                                layoutEditor.prevSelectedObject = null;
+                            }
+
+                            // remove me from the layoutEditor's list of layout tracks
+                            if (layoutEditor.getLayoutTracks().contains(PositionablePoint.this)) {
+                                layoutEditor.getLayoutTracks().remove(PositionablePoint.this);
+                                layoutEditor.setDirty();
+                                layoutEditor.redrawPanel();
+                            }
+                            PositionablePoint.this.remove();
+                            PositionablePoint.this.dispose();
+
                             layoutEditor.setDirty();
                             layoutEditor.redrawPanel();
-                        }
+                        }   // if ((connect1 != null) && (connect2 != null))
+                    }   // actionPerformed
+                }); // jmi = popup.add(new AbstractAction(...) {
+            }   // if (blockBoundary) {} else {}
+        }   // if (getType() == ANCHOR)
 
-                        //update affected block
-                        LayoutBlock block = connect2.getLayoutBlock();
-                        if (block != null) {
-                            //decrement Block use count
-                            block.decrementUse();
-                            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-                            block.updatePaths();
-                        }
-                        connect2.remove();
-                        connect2.dispose();
-                        connect2 = null;
-                        
-                        //remove me from selection information
-                        if (layoutEditor.selectedObject == finalThis) {
-                            layoutEditor.selectedObject = null;
-                        }
-                        if (layoutEditor.prevSelectedObject == finalThis) {
-                            layoutEditor.prevSelectedObject = null;
-                        }
-
-                        // remove me from the layoutEditor's list of layout tracks
-                        if (layoutEditor.getLayoutTracks().contains(finalThis)) {
-                            layoutEditor.getLayoutTracks().remove(finalThis);
-                            layoutEditor.setDirty();
-                            layoutEditor.redrawPanel();
-                        }
-                        finalThis.remove();
-                        finalThis.dispose();
-
-                        layoutEditor.setDirty();
-                        layoutEditor.redrawPanel();
-                    }
-                }
-            }
-            );
-        }
-
-        popup.add(
-                new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
@@ -952,8 +954,7 @@ public class PositionablePoint extends LayoutTrack {
                     dispose();
                 }
             }
-        }
-        );
+        });
 
         JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Anchor")) {
@@ -1735,6 +1736,5 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
 }
