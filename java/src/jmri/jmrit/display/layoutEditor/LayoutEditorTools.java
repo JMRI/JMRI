@@ -101,9 +101,12 @@ public class LayoutEditorTools {
     private BlockBossLogic logic = null;
     private SignalHead auxSignal = null;
 
-    // constructor method
-    public LayoutEditorTools(@Nonnull LayoutEditor thePanel) {
-        layoutEditor = thePanel;
+    /**
+     * LayoutEditorTools construction method
+     * @param layoutEditor the Layout Editor associated with this instance
+     */
+    public LayoutEditorTools(@Nonnull LayoutEditor layoutEditor) {
+        this.layoutEditor = layoutEditor;
 
         LayoutEditor.setupComboBox(turnoutComboBox, true, true);
 
@@ -181,6 +184,10 @@ public class LayoutEditorTools {
     private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;
     private transient AddEntryExitPairAction entryExit = null;
 
+    /**
+     * setup the Layout Editor Tools menu
+     * @param menuBar the menu bar to add the Tools menu to
+     */
     protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
