@@ -78,6 +78,18 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         if (sessionProfiles == null || sessionProfiles.isEmpty()) {
             return false;
         }
+        boolean allEmpty = true;
+        Iterator<RosterSpeedProfile> it = sessionProfiles.values().iterator();
+        while(it.hasNext()) {
+            RosterSpeedProfile profile = it.next();
+            if (profile.hasForwardSpeeds() || profile.hasReverseSpeeds()) {
+                allEmpty = false;
+                break;
+            }
+        }
+        if (allEmpty) {
+            return false;
+        }
         _anomalies = new HashMap<>();
         _mergeCandidates = new HashMap<>();
         Iterator<java.util.Map.Entry<String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator();

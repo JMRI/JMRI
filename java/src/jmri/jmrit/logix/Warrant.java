@@ -878,7 +878,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         synchronized (_engineer) {
             switch (idx) {
                 case RAMP_HALT:
-                    cancelRamp();
+                    cancelDelayRamp();
                     _engineer.setHalt(true);
                     _engineer.rampSpeedTo(Warrant.Stop, 0);
                     ret = true;
@@ -905,21 +905,21 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             // speed restriction if signal or occupation found
                             float restrictSpeed = _speedUtil.modifySpeed(expectedSpeed, _curSpeedType, isForward);
                             float rampLen = _speedUtil.rampLengthForSpeedChange(expectedSpeed, restrictSpeed, isForward);
-                            if (rampLen <= dist || _idxCurrentOrder == _orders.size() - 1) {
+                            if ((idxBlockOrder > _idxCurrentOrder+1) &&rampLen <= dist || _idxCurrentOrder == _orders.size() - 1) {
                                 // this and next block were clear
-                                _engineer.setWaitforClear(false);
+                                _engineer.resumeSpeedFrom(RESUME); // will ramp if needed and clear wait
                                 //ramp up will clear WAIT_FOR_CLEAR and HALT flags
-                                _engineer.rampSpeedTo(_curSpeedType, 0);
-                                ret = setMovement(MID);
+                                //_engineer.rampSpeedTo(_curSpeedType, 0);
+                                //ret = setMovement(MID);
                             } else {
-                                firePropertyChange("controlFailed", runState, idx);
+                                ret = false;
                             }
                         } else if (runState == WAIT_FOR_TRAIN) {
                             // user wants to increase throttle of stalled train
-                            float speedStep = _engineer.getSpeedSetting();
-                            _engineer.setSpeed(speedStep +_speedUtil.getRampThrottleIncrement());
+                            float speedSetting = _engineer.getSpeedSetting();
+                            _engineer.setSpeed(speedSetting +_speedUtil.getRampThrottleIncrement());
                         } else {
-                            firePropertyChange("controlFailed", runState, idx);                            
+                            ret = false;
                         }
                     } // else? train must be lost. maybe fall through to retry?
                     break;
@@ -946,12 +946,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     break;
                 case HALT:
                 case STOP:
-                    cancelRamp();
+                    cancelDelayRamp();
                     _engineer.setStop(false); // sets _halt
                     ret = true;
                     break;
                 case ESTOP:
-                    cancelRamp();
+                    cancelDelayRamp();
                     _engineer.setStop(true); // E-stop
                     ret = true;
                     break;
@@ -960,6 +960,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         if (ret) {
             firePropertyChange("controlChange", runState, idx);
+        } else {
+            firePropertyChange("controlFailed", runState, idx);
         }
         return ret;
     }
@@ -1331,14 +1333,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return false; // dark or no specified speed
         } else if (speed.equals(Stop)) {
             _waitForSignal = true;
+            return true;
         } else {
             if (!_waitForBlock && _engineer != null) {
-                _engineer.setWaitforClear(false);
-                firePropertyChange("SpeedChange", _idxCurrentOrder, _idxCurrentOrder);
+                _engineer.resumeSpeedFrom(STOP);
+//                firePropertyChange("SpeedChange", _idxCurrentOrder, _idxCurrentOrder);
             }
             _waitForSignal = false;
+            return false;
         }
-        return true;
     }
 
     /**
@@ -1373,7 +1376,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _stoppingBlock = null;
             _waitForBlock = false;
             if (!_waitForSignal && _engineer != null) {
-                _engineer.setWaitforClear(false);
+                _engineer.resumeSpeedFrom(STOP);
             }
             allocateFromIndex(_idxCurrentOrder + 1);
             return true;
@@ -1604,12 +1607,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return;
         }
         if (_engineer != null) {
-            int runState = _engineer.getRunState();
-            if (runState == WAIT_FOR_CLEAR || runState == HALT ||
-                    runState == STOP_PENDING || runState == RAMP_HALT) {
-                _message = Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
-                return;
-            }
             _engineer.clearWaitForSync(); // Sync commands if train is faster than ET
         }
         block.setValue(_trainName);
@@ -1870,14 +1867,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
-    private void cancelRamp() {
+    private void cancelDelayRamp() {
         if (_delayCommand != null) {
             //            _delayCommand.interrupt();
             _delayCommand.cancel(true);
             _delayCommand = null;
         }
-        _engineer.cancelRamp();
-
     }
 
     @Override
@@ -2038,7 +2033,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     _waitForBlock, _waitForSignal, speedSetting, getDisplayName());
         }
 
-        if ((runState == WAIT_FOR_CLEAR || runState == HALT || runState == STOP_PENDING)) {
+        if (runState == WAIT_FOR_CLEAR || runState == HALT || 
+                runState == STOP_PENDING || runState == RAMP_HALT) {
             if (log.isTraceEnabled()) {
                 log.trace("Hold train at block \"{}\" runState= {}, speedSetting= {}.warrant {}",
                         curBlock.getDisplayName(), RUN_STATE[runState], speedSetting, getDisplayName());
@@ -2048,7 +2044,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         // Cancel any delayed speed changes currently in progress.
-        cancelRamp();
+        cancelDelayRamp();
 
         // checking situation for the current block
         // _curSpeedType is the speed type train is currently running

@@ -205,16 +205,16 @@ public class NXFrame extends WarrantRoute {
         button.setMaximumSize(new Dimension(bWidth, bHeight));
         return button;
     }
-    private RosterSpeedProfile getProfileForDirection(boolean isForward) {
+/*    private RosterSpeedProfile getProfileForDirection(boolean isForward) {
         if (_speedUtil.profileHasSpeedInfo(isForward)) {
             return _speedUtil.getSpeedProfile(); 
         }
         return null;
-    }
+    }*/
 
     private void maxThrottleEventAction() {
         boolean isForward = _forward.isSelected();
-        RosterSpeedProfile profile = getProfileForDirection(isForward);
+        RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
         if (profile != null) {
             float num = 0;
             try {
@@ -246,7 +246,7 @@ public class NXFrame extends WarrantRoute {
         
         _maxSpeedBox.addActionListener((ActionEvent evt)-> {
             boolean isForward = _forward.isSelected();
-            RosterSpeedProfile profile = getProfileForDirection(isForward);
+            RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
             if (profile != null) {
                 float num = 0;
                 try {
@@ -786,8 +786,8 @@ public class NXFrame extends WarrantRoute {
         BlockOrder bo = orders.get(nextIdx++);
         String blockName = bo.getBlock().getDisplayName();
         boolean isForward = _forward.isSelected();
-        getProfileForDirection(isForward);  // establish a SpeedProfile and present anomaly dialog. if needed
-        boolean hasProfileSpeeds = _speedUtil.profileHasSpeedInfo(isForward);
+//        getProfileForDirection(isForward);  // establish a SpeedProfile and present anomaly dialog. if needed
+        boolean hasProfileSpeeds = _speedUtil.profileHasSpeedInfo();
 
         int cmdNum;
         w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
