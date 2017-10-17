@@ -90,7 +90,7 @@ public class LayoutConnectivity {
             result = result + ", track: " + track1.getId();
         }
         if (connect2 != null) {
-            result = result + ", connect2: " + ((LayoutTrack) connect2).getId() + ", type2: " + typeConnect2;
+            result = result + ", connect2: " + connect2.getId() + ", type2: " + typeConnect2;
         }
         if (xover != null) {
             result = result + ", xover: " + xover.getId() + ", xoverBoundaryType: " + xoverBoundaryType;
