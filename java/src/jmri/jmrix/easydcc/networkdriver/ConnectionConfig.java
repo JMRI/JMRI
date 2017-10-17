@@ -11,19 +11,23 @@ import jmri.jmrix.JmrixConfigPane;
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
+     */
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
+        super(p);
+    }
+
+    /**
      * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
-    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
-        super(p);
-    }
-
     @Override
     public String name() {
-        return "EasyDCC via network";
+        return Bundle.getMessage("AdapterNetworkName");
     }
 
     /**
@@ -46,6 +50,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();
+//            adapter.setPort(1.2.3.4);
         }
     }
 

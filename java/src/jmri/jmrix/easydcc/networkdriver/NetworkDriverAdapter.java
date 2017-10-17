@@ -22,7 +22,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Network")); // pass customized user name
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
         // create the traffic controller
-        this.getSystemConnectionMemo().setEasyDccTrafficController(new EasyDccTrafficController(this.getSystemConnectionMemo()));
+//        this.getSystemConnectionMemo().setEasyDccTrafficController(new EasyDccTrafficController(this.getSystemConnectionMemo()));
     }
 
     /**
@@ -32,8 +32,10 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
     @Override
     public void configure() {
         // connect to the traffic controller
+        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
         EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
         control.connectPort(this);
+        control.setAdapterMemo(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setEasyDccTrafficController(control);
         // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
@@ -51,6 +53,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
      * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     static public NetworkDriverAdapter instance() {
+        log.error("Unexpected call to instance()");
         return null;
     }
 

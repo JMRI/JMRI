@@ -27,13 +27,15 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
         super("E", EasyDccConnectionTypeList.EASYDCC);
         this.et = et;
-        this.et.setSystemConnectionMemo(this);
+        et.setSystemConnectionMemo(this);
         register();
         log.debug("EasyDCC SystemConnectionMemo with TC");
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
-        // create and register the ComponentFactory for the GUI
+        // create and register the ComponentFactory for the GUI (menu)
         InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.EasyDccComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
+
+        log.debug("Created EasyDccSystemConnectionMemo");
     }
 
     public EasyDccSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
@@ -41,9 +43,11 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         register(); // registers general type
         log.debug("EasyDCC SystemConnectionMemo prefix={}", prefix);
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
-        // create and register the ComponentFactory for the GUI
+        // create and register the ComponentFactory for the GUI (menu)
         InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.EasyDccComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
+
+        log.debug("Created EasyDccSystemConnectionMemo");
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -57,6 +61,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     public void setEasyDccTrafficController(EasyDccTrafficController et) {
         this.et = et;
+        et.setAdapterMemo(this);
     }
 
     private EasyDccTrafficController et;

@@ -19,9 +19,10 @@ import jmri.jmrix.easydcc.networkdriver.NetworkDriverAdapter;
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
-    /*public ConnectionConfigXml() {
+    public ConnectionConfigXml() {
      super();
-     }*/
+     }
+
     @Override
     protected void getInstance() {
         adapter = new NetworkDriverAdapter();
@@ -84,6 +85,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
+
     /*protected void register(String host, String port, String manufacturer) {
      InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, manufacturer));
      }*/

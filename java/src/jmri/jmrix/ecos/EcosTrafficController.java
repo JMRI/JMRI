@@ -27,9 +27,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
 
     public EcosTrafficController() {
         super();
-        if (log.isDebugEnabled()) {
-            log.debug("creating a new EcosTrafficController object");
-        }
+        log.debug("creating a new EcosTrafficController object");
         // set as command station too
         jmri.InstanceManager.setCommandStation(this);
         this.setAllowUnexpectedReply(true);

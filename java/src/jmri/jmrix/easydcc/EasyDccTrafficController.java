@@ -24,8 +24,14 @@ import org.slf4j.LoggerFactory;
 public class EasyDccTrafficController extends AbstractMRTrafficController
         implements EasyDccInterface {
 
+    /**
+     * Ctor
+     * @param adaptermemo associated SystemConnectionMemo
+     */
     public EasyDccTrafficController(EasyDccSystemConnectionMemo adaptermemo) {
+        super();
         mMemo = adaptermemo;
+        log.debug("creating a new EcosTrafficController object");
     }
 
     // The methods to implement the EasyDccInterface

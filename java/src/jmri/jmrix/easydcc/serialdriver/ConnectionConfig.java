@@ -25,7 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "EasyDCC via Serial";
+        return Bundle.getMessage("AdapterSerialName");
     }
 
     @Override
