@@ -24,6 +24,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.verify;
 import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
 import org.powermock.core.classloader.annotations.MockPolicy;
 import org.powermock.api.mockito.PowerMockito;
@@ -54,7 +55,6 @@ public class ZeroConfServiceTest {
        Mockito.when(JmDNS.create()).thenReturn(jmdns);
        Mockito.when(JmDNS.create(any(InetAddress.class))).thenReturn(jmdns);
        Mockito.when(JmDNS.create(any(InetAddress.class), anyString())).thenReturn(jmdns);
-
     }
 
     @AfterClass
@@ -70,16 +70,13 @@ public class ZeroConfServiceTest {
 
         PowerMockito.doNothing().when(jmdnsi).send(any(DNSOutgoing.class));
         PowerMockito.doNothing().when(jmdnsi).respondToQuery(any(DNSIncoming.class));
+        PowerMockito.doNothing().when(jmdnsi).registerService(any(ServiceInfo.class));
+        PowerMockito.doNothing().when(jmdnsi).unregisterService(any(ServiceInfo.class));
         jmdns = jmdnsi;
     }
 
     @After
     public void tearDown() throws Exception {
-        ZeroConfService.stopAll();
-        /*JUnitUtil.waitFor(() -> {
-            return (ZeroConfService.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");*/
-        //Log4JFixture.tearDown(); // log4j is mocked
         jmdns = null;
     }
 
@@ -174,10 +171,10 @@ public class ZeroConfServiceTest {
     }
 
     /**
-     * Test of publish method, of class ZeroConfService.
+     * Test of the publish  method, of class ZeroConfService.
      */
     @Test
-    public void testPublish() {
+    public void testPublishAndStop() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
@@ -186,6 +183,9 @@ public class ZeroConfServiceTest {
             return instance.isPublished() == true;
         }));
         Assert.assertTrue(instance.isPublished());
+        instance.stop();
+        Assert.assertFalse(instance.isPublished());
+    
     }
 
     /**
@@ -196,10 +196,10 @@ public class ZeroConfServiceTest {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
         instance.publish();
-        JUnitUtil.waitFor(() -> {
+/*        JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
         }, "Publishing ZeroConf Service");
-        Assert.assertTrue(instance.isPublished());
+        Assert.assertTrue(instance.isPublished());*/
         instance.stop();
         JUnitUtil.waitFor(() -> {
             return instance.isPublished() == false;
@@ -236,11 +236,7 @@ public class ZeroConfServiceTest {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertEquals(WebServerPreferences.getDefault().getDefaultRailroadName(), instance.name());
         Assert.assertEquals(0, ZeroConfService.allServices().size());
-        // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
-        }));
         Assert.assertEquals(1, ZeroConfService.allServices().size());
     }
 
