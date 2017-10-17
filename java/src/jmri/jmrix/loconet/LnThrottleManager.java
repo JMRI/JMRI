@@ -168,29 +168,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     private void commitToAcquireThrottle(LocoNetSlot s) {
         // haven't identified a particular reason to refuse throttle acquisition at this time...
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
-
-        // when the slot goes in use, which is not always very quick
-        // set the slot throttle-ID, and, potentially, other things like speed step.
-        // This is a blocking process as no-one must use the slot until it goes in-use.
-        int retrys = 0;
-        while (s.slotStatus() != LnConstants.LOCO_IN_USE && retrys < 10) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                log.error("Interrupted while waiting for status" , e);
-            }
-            retrys += 1;
-        }
-        if (retrys < 10 ) {
-            log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
-            tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
-        } else {
-            log.warn("Slot [{}} has not gone IN-USE in required time, slot is in unreliable state.",s.getSlot());
-        }
-
-        s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
-        notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));
-        //end the waiting thread since we got a response
         if (waitingForNotification.containsKey(s.locoAddr())) {
             log.debug("LnThrottleManager.notifyChangedSlot() - removing throttle acquisition notification flagging for address {}", s.locoAddr() );
             waitingForNotification.get(s.locoAddr()).interrupt();
@@ -199,6 +176,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         else {
             log.debug("LnThrottleManager.notifyChangedSlot() - ignoring slot notification for slot {}, address {} account not attempting to acquire that address", s.getSlot(), s.locoAddr() );
         }
+// This seems a bad idea - slots should be getting notifications thru the slot class, not the throttle manager!
+//        s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
+
+        notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));
+        //end the waiting thread since we got a response
     }
     
     public void notifyRefused(int address, String cause) {
@@ -350,7 +332,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         }
     }
 
+    // TODO: make throttleID user-configuable as part of the configuration profile options
+    // for now: needs to be consistent here versus LocoNetThrottle.
     protected int throttleID = 0x0171;
+    
     /**
      * Dispose of this manager, typically for testing
      */

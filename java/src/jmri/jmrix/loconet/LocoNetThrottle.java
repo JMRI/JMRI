@@ -34,6 +34,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
+    
+    // TODO: make throttleID user-configuable as part of the configuration profile options
+    // for now: needs to be consistent here versus LnThrottleManager.
+    protected int throttleID = 0x0171;      
+
+    protected boolean flagNeedThrottleIdWrite;
 
     /**
      * Constructor
@@ -45,11 +51,15 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         super(memo);
         this.slot = slot;
         network = memo.getLnTrafficController();
-        LocoNetMessage msg = new LocoNetMessage(4);
-        msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
-        msg.setElement(1, slot.getSlot());
-        msg.setElement(2, slot.getSlot());
-        network.sendLocoNetMessage(msg);
+        if (slot.id() != throttleID) {
+            flagNeedThrottleIdWrite = true;
+        } else {
+            flagNeedThrottleIdWrite = false;
+        }
+    // listen for changes
+        slot.addSlotListener(this);
+
+        slotStatus = slot.slotStatus();
 
         // save last known layout state for spd/dirf/snd so we can
         // avoid race condition if another LocoNet process queries
@@ -115,14 +125,18 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 break;
         }
 
-        // listen for changes
-        slot.addSlotListener(this);
-
+        if (slotStatus != LnConstants.LOCO_IN_USE) {
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
+            msg.setElement(1, slot.getSlot());
+            msg.setElement(2, slot.getSlot());
+            network.sendLocoNetMessage(msg);
+        }
+    
         // start periodically sending the speed, to keep this
         // attached
         startRefresh();
         log.debug("constructed a new throttle using slot {} for loco address {}", slot.getSlot(), slot.locoAddr());
-
     }
 
     /**
@@ -593,8 +607,14 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             this.f28 = slot.isF28();
             notifyPropertyChangeListener(Throttle.F28, Boolean.valueOf(temp), Boolean.valueOf(slot.isF28()));
         }
-
-    }
+        
+        if ((slot.id() != throttleID) && (flagNeedThrottleIdWrite == true)) {
+            flagNeedThrottleIdWrite = false;
+            LocoNetMessage l = slot.writeThrottleID(throttleID);
+            network.sendLocoNetMessage(l);
+            log.debug("sending message to set slot {} throttle id to {}; slot status is {}", slot.getSlot(), throttleID, slot.slotStatus());
+        }
+   }
 
     /**
      * setSpeedStepMode - set the speed step value and the related
