@@ -1,28 +1,28 @@
 package jmri.jmrix.roco.z21;
 
+import apps.tests.Log4JFixture;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Z21XNetInitializationManagerTest.java
-
- Description:	tests for the jmri.jmrix.roco.z21.Z21XNetInitializationManager
- class
-
- Description:	tests for the jmri.jmrix.roco.z21.z21XNetInitializationManager
- class
  *
- * @author	Paul Bender Copyright (C) 2015
- * 
+ * Description:	tests for the jmri.jmrix.roco.z21.z21XNetInitializationManager
+ * class
+ *
+ * @author Paul Bender Copyright (C) 2015
+ *
  */
-public class Z21XNetInitializationManagerTest extends TestCase {
+public class Z21XNetInitializationManagerTest {
 
+    @Test
     public void testCtor() {
 
 // infrastructure objects
@@ -43,34 +43,17 @@ public class Z21XNetInitializationManagerTest extends TestCase {
         Assert.assertNotNull("exists", memo);
     }
 
-    // from here down is testing infrastructure
-    public Z21XNetInitializationManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Z21XNetInitializationManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21XNetInitializationManagerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+
+        JUnitUtil.initConnectionConfigManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        Log4JFixture.tearDown();
     }
 
 }

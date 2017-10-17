@@ -137,7 +137,7 @@ public class ConsistDataModel extends AbstractTableModel {
             case DIRECTIONCOLUMN:
                 return (Boolean.valueOf(_consist.getLocoDirection(_consist.getConsistList().get(row))));
             case DELCOLUMN:
-                return Bundle.getMessage("DeleteColumnButtonLabel");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return ("");
         }
@@ -164,5 +164,5 @@ public class ConsistDataModel extends AbstractTableModel {
                 log.error("Unknown Consist Operation");
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(ConsistDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistDataModel.class);
 }

@@ -20,7 +20,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -28,7 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "LocoNetOverTcp LbServer";
+        return Bundle.getMessage("ConnectionTitle");
     }
 
     public boolean isOptList1Advanced() {

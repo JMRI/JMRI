@@ -1,10 +1,8 @@
 package jmri.jmrix.dcc4pc.serialdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +13,11 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Dcc4Pc system.
@@ -28,7 +31,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new Dcc4PcSystemConnectionMemo());
-        option1Name = "Programmer";
+        option1Name = "Programmer"; // NOI18N
         options.put(option1Name, new Option("Programmer : ", validOption1()));
         setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
     }
@@ -47,8 +50,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             }
             try {
                 activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+                configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
             }
             log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
@@ -72,9 +75,9 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -109,7 +112,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             }
             for (int i = 0; i < connList.size(); i++) {
                 SystemConnectionMemo scm = connList.get(i);
-                if (scm.provides(jmri.ProgrammerManager.class) && (!scm.getUserName().equals(userName))) {
+                if ((scm.provides(jmri.AddressedProgrammerManager.class) || scm.provides(jmri.GlobalProgrammerManager.class))
+                        && (!scm.getUserName().equals(userName))) {
                     progConn.add(scm.getUserName());
                 }
             }
@@ -211,6 +215,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

@@ -12,7 +12,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,10 +22,12 @@ import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     JCheckBox eStopCB;
@@ -47,7 +48,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JRadioButton dccRB;
 
     WiThrottlePreferences localPrefs;
-    JFrame parentFrame = null;
 
     public WiThrottlePrefsPanel() {
         if (InstanceManager.getNullableDefault(WiThrottlePreferences.class) == null) {
@@ -56,11 +56,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);
         initGUI();
         setGUI();
-    }
-
-    public WiThrottlePrefsPanel(JFrame f) {
-        this();
-        parentFrame = f;
     }
 
     public void initGUI() {
@@ -131,23 +126,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         return didSet;
     }
 
-    public void storeValues() {
-        if (setValues()) {
-            this.localPrefs.save();
-
-            if (parentFrame != null) {
-                parentFrame.dispose();
-            }
-        }
-
-    }
-
-    protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
-        }
-    }
-
     private JPanel eStopDelayPanel() {
         JPanel panel = new JPanel();
 
@@ -177,7 +155,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
         port.setToolTipText(Bundle.getMessage("PortToolTip"));
         port.setEditor(new JSpinner.NumberEditor(port, "#"));
-        JLabel label = new JLabel(Bundle.getMessage("PortLabel"));
+        JLabel label = new JLabel(Bundle.getMessage("LabelPort"));
         label.setToolTipText(port.getToolTipText());
         SPPanel.add(port);
         SPPanel.add(label);
@@ -213,7 +191,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         powerCB.setToolTipText(Bundle.getMessage("ToolTipTrackPower"));
         panel.add(powerCB);
 
-        turnoutCB = new JCheckBox(Bundle.getMessage("LabelTurnout"));
+        turnoutCB = new JCheckBox(Bundle.getMessage("Turnouts"));
         turnoutCB.setToolTipText(Bundle.getMessage("ToolTipTurnout"));
         panel.add(turnoutCB);
 
@@ -242,7 +220,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         return panel;
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class);
     @Override
     public String getPreferencesItem() {
         return "WITHROTTLE"; // NOI18N
@@ -281,7 +259,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        this.storeValues();
+        if (setValues()) {
+            this.localPrefs.save();
+        }
     }
 
     @Override

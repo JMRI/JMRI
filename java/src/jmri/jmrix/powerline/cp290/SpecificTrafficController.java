@@ -90,6 +90,9 @@ public class SpecificTrafficController extends SerialTrafficController {
 
     /**
      * Turn a 1-16 device number into a mask bit
+     * @param devicemask mask value
+     * @param device     X10 device code
+     * @return           bit mask for device code
      */
     int setDeviceBit(int devicemask, int device) {
         return devicemask | (0x10000 >> device);
@@ -97,6 +100,10 @@ public class SpecificTrafficController extends SerialTrafficController {
 
     /**
      * Format a message and send it
+     * @param housecode  X10 housecode value
+     * @param devicemask X10 devicemask
+     * @param c          X10 cmd code
+     * @param l          listener
      */
     void formatAndSend(int housecode, int devicemask,
             X10Sequence.Function c, SerialListener l) {
@@ -200,7 +207,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class);
 }
 
 

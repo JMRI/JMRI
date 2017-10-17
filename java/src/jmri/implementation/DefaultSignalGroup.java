@@ -14,7 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A Conditional type to provide Signal Groups (n Signal Heads w/Conditionals for a main Mast).
+ * A Conditional type to provide Signal Groups (n Signal Heads w/Conditionals
+ * for a main Mast).
  *
  * @see jmri.SignalGroup SignalGroup
  * @author Pete Cressman Copyright (C) 2009
@@ -26,7 +27,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * Constructor for SignalGroup instance.
      *
      * @param systemName suggested system name
-     * @param userName provided user name
+     * @param userName   provided user name
      */
     public DefaultSignalGroup(String systemName, String userName) {
         super(systemName, userName);
@@ -83,7 +84,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             getSignalMast().removePropertyChangeListener(mSignalMastListener);
         }
         _signalMast = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                        .getNamedBeanHandle(mastName, signalMast);
+                .getNamedBeanHandle(mastName, signalMast);
         getSignalMast().addPropertyChangeListener(mSignalMastListener = new java.beans.PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -173,14 +174,14 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             log.warn("did not find a SignalHead named " + pName);
         } else {
             addSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                            .getNamedBeanHandle(pName, mHead));
+                    .getNamedBeanHandle(pName, mHead));
         }
     }
 
     @Override
     public void addSignalHead(SignalHead signalHead) {
-        addSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class) 
-                        .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
+        addSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
     }
 
     protected PropertyChangeListener mSignalMastListener = null;
@@ -481,7 +482,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
     ArrayList<SignalHeadItem> _signalHeadItem = new ArrayList<SignalHeadItem>();
 
-    private static class SignalHeadItem implements java.io.Serializable {
+    private static class SignalHeadItem {
 
         SignalHeadItem(NamedBeanHandle<SignalHead> sh) {
             namedHead = sh;
@@ -531,8 +532,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
         /**
          * Set whether the sensors and turnouts should be treated as separate
-         * calculations (OR) or as one (AND), when determining if the Signal Head in this item
-         * should be On or Off.
+         * calculations (OR) or as one (AND), when determining if the Signal
+         * Head in this item should be On or Off.
+         *
          * @param boo Provide true for AND, false for OR
          */
         public void setSensorTurnoutOper(boolean boo) {
@@ -569,7 +571,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
         ArrayList<SignalTurnout> _signalTurnoutList = new ArrayList<SignalTurnout>();
 
-        private static class SignalTurnout implements java.io.Serializable {
+        private static class SignalTurnout {
 
             NamedBeanHandle<Turnout> _turnout;
             int _state;
@@ -656,7 +658,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
         ArrayList<SignalSensor> _signalSensorList = new ArrayList<SignalSensor>();
 
-        private static class SignalSensor implements java.io.Serializable {
+        private static class SignalSensor {
 
             NamedBeanHandle<Sensor> _Sensor;
             int _state;
@@ -749,38 +751,5 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     }
 
-    /**
-     * Number of current listeners. May return -1 if the information is not
-     * available for some reason.
-     */
-    @Override
-    public synchronized int getNumPropertyChangeListeners() {
-        return pcs.getPropertyChangeListeners().length;
-    }
-
-    @Override
-    public synchronized java.beans.PropertyChangeListener[] getPropertyChangeListeners() {
-        return pcs.getPropertyChangeListeners();
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        if (pcs != null) {
-            pcs.firePropertyChange(p, old, n);
-        }
-    }
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroup.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroup.class);
 }

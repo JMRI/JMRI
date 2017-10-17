@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.NoSuchElementException;
 import java.util.Timer;
@@ -148,7 +149,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
 
         while (true) {
             try {
-                JsonNode root = reader.readTree(this.istream);
+                JsonNode root = reader.readTree((InputStream) this.istream);
                 String type = root.path(TYPE).asText();
                 JsonNode data = root.path(DATA);
                 log.debug("Processing {} with {}", type, data);

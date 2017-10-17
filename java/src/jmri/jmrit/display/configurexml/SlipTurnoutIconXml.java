@@ -5,6 +5,8 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SlipTurnoutIcon;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.TurnoutIcon objects.
@@ -59,7 +61,9 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
                 }
                 element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(), p.getLWLEText()));
                 element.setAttribute("turnoutType", "scissor");
-
+            default:
+                log.warn("Unhandled turnout type: {}", p.getTurnoutType());
+                break;
         }
 
         storeCommonAttributes(p, element);
@@ -235,4 +239,5 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             }
         }
     }
+    private final static Logger log = LoggerFactory.getLogger(SlipTurnoutIconXml.class);
 }

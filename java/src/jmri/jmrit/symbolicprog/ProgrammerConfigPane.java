@@ -15,12 +15,14 @@ import jmri.InstanceManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure symbolic programmer defaults.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2017
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
     private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");

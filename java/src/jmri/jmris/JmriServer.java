@@ -27,12 +27,14 @@ public class JmriServer {
     protected ZeroConfService service = null;
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
-    protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<ClientListener>();
+    protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<>();
 
     private static JmriServer _instance = null;
 
-    /*
-     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
+    /**
+     * @return the default instance of a JmriServer
+     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()}
+     * instead.
      */
     @Deprecated
     public synchronized static JmriServer instance() {
@@ -60,7 +62,7 @@ public class JmriServer {
         try {
             this.connectSocket = new ServerSocket(port);
         } catch (IOException e) {
-            log.error("Failed to connect to port " + port);
+            log.error("Failed to connect to port {}", port);
         }
         this.portNo = port;
         this.timeout = timeout;
@@ -86,7 +88,7 @@ public class JmriServer {
     public void start() {
         /* Start the server thread */
         if (this.listenThread == null) {
-            this.listenThread = new Thread(new newClientListener(connectSocket));
+            this.listenThread = new Thread(new NewClientListener(connectSocket));
             this.listenThread.start();
             this.advertise();
         }
@@ -101,7 +103,7 @@ public class JmriServer {
     }
 
     protected void advertise(String type) {
-        this.advertise(type, new HashMap<String, String>());
+        this.advertise(type, new HashMap<>());
     }
 
     protected void advertise(String type, HashMap<String, String> properties) {
@@ -112,9 +114,9 @@ public class JmriServer {
     }
 
     public void stop() {
-        for (ClientListener client : this.connectedClientThreads) {
+        this.connectedClientThreads.forEach((client) -> {
             client.stop(this);
-        }
+        });
         this.listenThread = null;
         this.service.stop();
         if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
@@ -123,12 +125,12 @@ public class JmriServer {
     }
 
     // Internal thread to listen for new connections
-    class newClientListener implements Runnable {
+    class NewClientListener implements Runnable {
 
         ServerSocket listenSocket = null;
         boolean running = true;
 
-        public newClientListener(ServerSocket socket) {
+        public NewClientListener(ServerSocket socket) {
 
             listenSocket = socket;
         }
@@ -158,7 +160,7 @@ public class JmriServer {
                 log.error("socket in ThreadedServer won't close");
             }
         }
-    } // end of newClientListener class
+    } // end of NewClientListener class
 
     // Internal class to handle a client
     protected class ClientListener implements Runnable {
@@ -232,5 +234,5 @@ public class JmriServer {
     public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         outStream.writeBytes("");
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriServer.class);
 }

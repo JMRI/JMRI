@@ -47,6 +47,7 @@ public class ThrottleWindow extends JmriJFrame {
     private JCheckBoxMenuItem viewControlPanel;
     private JCheckBoxMenuItem viewFunctionPanel;
     private JCheckBoxMenuItem viewAddressPanel;
+    private JCheckBoxMenuItem viewSpeedPanel;
     private JMenuItem viewAllButtons;
     private JMenuItem fileMenuSave;
     private JMenuItem editMenuExportRoster;
@@ -90,17 +91,17 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     private void initGUI() {
-        setTitle(Bundle.getMessage("ThrottleFrameTitle"));
+        setTitle(Bundle.getMessage("ThrottleTitle"));
         setLayout(new BorderLayout());
         throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
         throttlesPanel.setDoubleBuffered(true);
-        if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle())
-                && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingToolBar())) {
+        if ((InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
+                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingToolBar())) {
             initializeToolbar();
         }
-        /*        if ( (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
-         && ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isResizingWindow()))
+        /*        if ( (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle() ) 
+         && ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isResizingWindow()))
          setResizable(false);*/
         initializeMenu();
 
@@ -115,7 +116,7 @@ public class ThrottleWindow extends JmriJFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 ThrottleWindow me = (ThrottleWindow) e.getSource();
-                ThrottleFrameManager.instance().requestThrottleWindowDestruction(me);
+                InstanceManager.getDefault(ThrottleFrameManager.class).requestThrottleWindowDestruction(me);
                 if (throttleToolBar != null) {
                     Component[] cmps = throttleToolBar.getComponents();
                     if (cmps != null) {
@@ -138,10 +139,12 @@ public class ThrottleWindow extends JmriJFrame {
         viewAddressPanel.setEnabled(isEditMode);
         viewControlPanel.setEnabled(isEditMode);
         viewFunctionPanel.setEnabled(isEditMode);
+        viewSpeedPanel.setEnabled(isEditMode);
         if (isEditMode) {
             viewAddressPanel.setSelected(getCurrentThrottleFrame().getAddressPanel().isVisible());
             viewControlPanel.setSelected(getCurrentThrottleFrame().getControlPanel().isVisible());
             viewFunctionPanel.setSelected(getCurrentThrottleFrame().getFunctionPanel().isVisible());
+            viewSpeedPanel.setSelected(getCurrentThrottleFrame().getSpeedPanel().isVisible());
         }
         fileMenuSave.setEnabled(getCurrentThrottleFrame().getLastUsedSaveFile() != null || getCurrentThrottleFrame().getRosterEntry() != null);
         editMenuExportRoster.setEnabled(getCurrentThrottleFrame().getRosterEntry() != null);
@@ -395,6 +398,15 @@ public class ThrottleWindow extends JmriJFrame {
                 getCurrentThrottleFrame().getFunctionPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
+        viewSpeedPanel = new JCheckBoxMenuItem(Bundle.getMessage("ThrottleMenuViewSpeedPanel"));
+        viewSpeedPanel.setSelected(false);
+        viewSpeedPanel.addItemListener(new ItemListener() {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                getCurrentThrottleFrame().getSpeedPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
+            }
+        });
 
         viewAllButtons = new JMenuItem(Bundle.getMessage("ThrottleMenuViewAllFunctionButtons"));
         viewAllButtons.addActionListener(new AbstractAction() {
@@ -429,6 +441,7 @@ public class ThrottleWindow extends JmriJFrame {
         viewMenu.add(viewAddressPanel);
         viewMenu.add(viewControlPanel);
         viewMenu.add(viewFunctionPanel);
+        viewMenu.add(viewSpeedPanel);
         viewMenu.addSeparator();
         viewMenu.add(viewAllButtons);
         viewMenu.add(makeAllComponentsInBounds);
@@ -495,8 +508,8 @@ public class ThrottleWindow extends JmriJFrame {
 
             this.getJMenuBar().add(powerMenu);
 
-            if ((!jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle())
-                    || (!jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingToolBar())) {
+            if ((!InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
+                    || (!InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingToolBar())) {
                 this.getJMenuBar().add(new SmallPowerManagerButton());
             }
         }
@@ -506,10 +519,7 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     private void editPreferences() {
-        ThrottleFramePropertyEditor editor = new ThrottleFramePropertyEditor();
-        editor.setThrottleFrame(this);
-        editor.setLocation(this.getLocationOnScreen());
-        editor.setLocationRelativeTo(this);
+        ThrottleFramePropertyEditor editor = new ThrottleFramePropertyEditor(this);
         editor.setVisible(true);
     }
 
@@ -544,6 +554,10 @@ public class ThrottleWindow extends JmriJFrame {
 
     public JCheckBoxMenuItem getViewAddressPanel() {
         return viewAddressPanel;
+    }
+
+    public JCheckBoxMenuItem getViewSpeedPanel() {
+        return viewSpeedPanel;
     }
 
     public ThrottleFrame getCurrentThrottleFrame() {
@@ -688,7 +702,7 @@ public class ThrottleWindow extends JmriJFrame {
             ThrottleFrame cf = this.getCurrentThrottleFrame();
             for (Iterator<ThrottleFrame> tfi = throttleFrames.values().iterator(); tfi.hasNext();) {
                 ThrottleFrame tf = tfi.next();
-                if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isSavingThrottleOnLayoutSave())) {
+                if ((InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()) && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSavingThrottleOnLayoutSave())) {
                     tf.toFront();
                     tf.saveThrottle();
                 }
@@ -808,5 +822,5 @@ public class ThrottleWindow extends JmriJFrame {
         pcs.removePropertyChangeListener(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleWindow.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleWindow.class);
 }

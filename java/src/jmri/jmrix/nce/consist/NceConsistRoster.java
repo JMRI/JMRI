@@ -1,6 +1,7 @@
 package jmri.jmrix.nce.consist;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -8,6 +9,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.ProcessingInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,8 +70,8 @@ public class NceConsistRoster extends XmlFile {
             if (_instance.checkFile(defaultNceConsistRosterFilename())) {
                 try {
                     _instance.readFile(defaultNceConsistRosterFilename());
-                } catch (Exception e) {
-                    log.error("Exception during ConsistRoster reading: " + e);
+                } catch (IOException | JDOMException e) {
+                    log.error("Exception during ConsistRoster reading: {}", e.getMessage());
                 }
             }
         }
@@ -128,6 +130,7 @@ public class NceConsistRoster extends XmlFile {
      * <P>
      * This is based on a single model, so it can be updated when the
      * ConsistRoster changes.
+     * @return combo box of whole roster
      *
      */
     public JComboBox<String> fullRosterComboBox() {
@@ -136,6 +139,17 @@ public class NceConsistRoster extends XmlFile {
 
     /**
      * Get a JComboBox representing the choices that match. There's 10 elements.
+     * @param roadName value to match against roster roadname field
+     * @param roadNumber value to match against roster roadnumber field
+     * @param consistNumber value to match against roster consist number field
+     * @param eng1Address value to match against roster 1st engine address field
+     * @param eng2Address value to match against roster 2nd engine address field
+     * @param eng3Address value to match against roster 3rd engine address field
+     * @param eng4Address value to match against roster 4th engine address field
+     * @param eng5Address value to match against roster 5th engine address field
+     * @param eng6Address value to match against roster 6th engine address field
+     * @param id value to match against roster id field
+     * @return combo box of matching roster entries
      */
     public JComboBox<String> matchingComboBox(String roadName, String roadNumber,
             String consistNumber, String eng1Address, String eng2Address,
@@ -144,7 +158,7 @@ public class NceConsistRoster extends XmlFile {
         List<NceConsistRosterEntry> l = matchingList(roadName, roadNumber, consistNumber, eng1Address,
                 eng2Address, eng3Address, eng4Address, eng5Address,
                 eng6Address, id);
-        JComboBox<String> b = new JComboBox<String>();
+        JComboBox<String> b = new JComboBox<>();
         for (int i = 0; i < l.size(); i++) {
             NceConsistRosterEntry r = _list.get(i);
             b.addItem(r.titleString());
@@ -164,6 +178,8 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Return RosterEntry from a "title" string, ala selection in
      * matchingComboBox
+     * @param title title to search for in consist roster
+     * @return matching consist roster entry
      */
     public NceConsistRosterEntry entryFromTitle(String title) {
         for (int i = 0; i < numEntries(); i++) {
@@ -178,17 +194,28 @@ public class NceConsistRoster extends XmlFile {
     /**
      * List of contained RosterEntry elements.
      */
-    protected List<NceConsistRosterEntry> _list = new ArrayList<NceConsistRosterEntry>();
+    protected List<NceConsistRosterEntry> _list = new ArrayList<>();
 
     /**
      * Get a List of entries matching some information. The list may have null
      * contents.
+     * @param roadName value to match against roster roadname field
+     * @param roadNumber value to match against roster roadnumber field
+     * @param consistNumber value to match against roster consist number field
+     * @param eng1Address value to match against roster 1st engine address field
+     * @param eng2Address value to match against roster 2nd engine address field
+     * @param eng3Address value to match against roster 3rd engine address field
+     * @param eng4Address value to match against roster 4th engine address field
+     * @param eng5Address value to match against roster 5th engine address field
+     * @param eng6Address value to match against roster 6th engine address field
+     * @param id value to match against roster id field
+     * @return list of consist roster entries matching request
      */
     public List<NceConsistRosterEntry> matchingList(String roadName, String roadNumber,
             String consistNumber, String eng1Address, String eng2Address,
             String eng3Address, String eng4Address, String eng5Address,
             String eng6Address, String id) {
-        List<NceConsistRosterEntry> l = new ArrayList<NceConsistRosterEntry>();
+        List<NceConsistRosterEntry> l = new ArrayList<>();
         for (int i = 0; i < numEntries(); i++) {
             if (checkEntry(i, roadName, roadNumber, consistNumber, eng1Address,
                     eng2Address, eng3Address, eng4Address, eng5Address,
@@ -202,7 +229,18 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Check if an entry consistent with specific properties. A null String
      * entry always matches. Strings are used for convenience in GUI building.
-     *
+     * @param i index to consist roster entry
+     * @param roadName value to match against roster roadname field
+     * @param roadNumber value to match against roster roadnumber field
+     * @param consistNumber value to match against roster consist number field
+     * @param loco1Address value to match against roster 1st engine address field
+     * @param loco2Address value to match against roster 2nd engine address field
+     * @param loco3Address value to match against roster 3rd engine address field
+     * @param loco4Address value to match against roster 4th engine address field
+     * @param loco5Address value to match against roster 5th engine address field
+     * @param loco6Address value to match against roster 6th engine address field
+     * @param id value to match against roster id field
+     * @return true if values provided matches indexed entry
      */
     public boolean checkEntry(int i, String roadName, String roadNumber,
             String consistNumber, String loco1Address, String loco2Address,
@@ -248,6 +286,8 @@ public class NceConsistRoster extends XmlFile {
      * default location, does a backup and then calls this.
      *
      * @param name Filename for new file, including path info as needed.
+     * @throws java.io.FileNotFoundException when file not found
+     * @throws java.io.IOException when fault accessing file
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
@@ -263,7 +303,7 @@ public class NceConsistRoster extends XmlFile {
         Document doc = newDocument(root, dtdLocation + "consist-roster-config.dtd");
 
         // add XSLT processing instruction
-        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+        java.util.Map<String, String> m = new java.util.HashMap<>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation + "consistRoster.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -284,7 +324,7 @@ public class NceConsistRoster extends XmlFile {
             //back when the file is read.
             NceConsistRosterEntry r = _list.get(i);
             String tempComment = r.getComment();
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
 
             //transfer tempComment to xmlComment one character at a time, except
             //when \n is found.  In that case, insert <?p?>
@@ -315,7 +355,7 @@ public class NceConsistRoster extends XmlFile {
         for (int i = 0; i < numEntries(); i++) {
             NceConsistRosterEntry r = _list.get(i);
             String xmlComment = r.getComment();
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
 
             for (int k = 0; k < xmlComment.length(); k++) {
                 if (xmlComment.startsWith("<?p?>", k)) {
@@ -336,6 +376,9 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Read the contents of a roster XML file into this object. Note that this
      * does not clear any existing entries.
+     * @param name file name for consist roster
+     * @throws org.jdom2.JDOMException other errors
+     * @throws java.io.IOException error accessing file
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // find root
@@ -364,7 +407,7 @@ public class NceConsistRoster extends XmlFile {
 
                 //Extract the Comment field and create a new string for output
                 String tempComment = r.getComment();
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
 
                 //transfer tempComment to xmlComment one character at a time, except
                 //when <?p?> is found.  In that case, insert a \n and skip over those
@@ -381,7 +424,7 @@ public class NceConsistRoster extends XmlFile {
             }
 
         } else {
-            log.error("Unrecognized ConsistRoster file contents in file: " + name);
+            log.error("Unrecognized ConsistRoster file contents in file: {}", name);
         }
     }
 
@@ -412,8 +455,8 @@ public class NceConsistRoster extends XmlFile {
         NceConsistRoster.instance().makeBackupFile(defaultNceConsistRosterFilename());
         try {
             NceConsistRoster.instance().writeFile(defaultNceConsistRosterFilename());
-        } catch (Exception e) {
-            log.error("Exception while writing the new ConsistRoster file, may not be complete: " + e);
+        } catch (IOException e) {
+            log.error("Exception while writing the new ConsistRoster file, may not be complete: {}", e.getMessage());
         }
     }
 
@@ -427,23 +470,24 @@ public class NceConsistRoster extends XmlFile {
         // and read new
         try {
             _instance.readFile(defaultNceConsistRosterFilename());
-        } catch (Exception e) {
-            log.error("Exception during ConsistRoster reading: " + e);
+        } catch (IOException | JDOMException e) {
+            log.error("Exception during ConsistRoster reading: {}", e.getMessage());
         }
     }
 
     /**
      * Return the filename String for the default ConsistRoster file, including
      * location.
+     * @return consist roster file name
      */
     public static String defaultNceConsistRosterFilename() {
-        return Roster.getDefault().getRosterLocation() + NceConsistRosterFileName;
+        return Roster.getDefault().getRosterLocation() + nceConsistRosterFileName;
     }
 
     public static void setNceConsistRosterFileName(String name) {
-        NceConsistRosterFileName = name;
+        nceConsistRosterFileName = name;
     }
-    private static String NceConsistRosterFileName = "ConsistRoster.xml";
+    private static String nceConsistRosterFileName = "ConsistRoster.xml";
 
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
@@ -465,6 +509,7 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Notify that the ID of an entry has changed. This doesn't actually change
      * the ConsistRoster per se, but triggers recreation.
+     * @param r consist roster to recreate due to changes
      */
     public void entryIdChanged(NceConsistRosterEntry r) {
         log.debug("EntryIdChanged");
@@ -482,6 +527,6 @@ public class NceConsistRoster extends XmlFile {
         firePropertyChange("change", null, r);
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
 
 }

@@ -39,7 +39,7 @@ public class TransitCreationTool {
     public TransitCreationTool() {
     }
 
-    ArrayList<NamedBean> list = new ArrayList<NamedBean>();
+    ArrayList<NamedBean> list = new ArrayList<>();
 
     public void addNamedBean(NamedBean nb) throws JmriException {
         if (!list.isEmpty()) {
@@ -95,12 +95,12 @@ public class TransitCreationTool {
             }
         }
         //Once created clear the list for a fresh start.
-        list = new ArrayList<NamedBean>();
+        list = new ArrayList<>();
         return t;
     }
 
     public void cancelTransitCreate() {
-        list = new ArrayList<NamedBean>();
+        list = new ArrayList<>();
     }
 
     public List<NamedBean> getBeans() {
@@ -111,5 +111,5 @@ public class TransitCreationTool {
         return !list.isEmpty();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitCreationTool.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitCreationTool.class);
 }

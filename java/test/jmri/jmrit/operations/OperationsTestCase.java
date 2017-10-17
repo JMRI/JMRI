@@ -1,8 +1,8 @@
 package jmri.jmrit.operations;
 
 import java.util.Locale;
-import jmri.util.JUnitUtil;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 import junit.framework.TestCase;
 
 /**
@@ -34,6 +34,7 @@ public class OperationsTestCase extends TestCase {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
+        JUnitUtil.resetProfileManager();
         JUnitOperationsUtil.resetOperationsManager();
     }
 
@@ -43,7 +44,6 @@ public class OperationsTestCase extends TestCase {
         super.tearDown();
         // restore locale
         Locale.setDefault(Locale.getDefault());
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

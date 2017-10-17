@@ -50,8 +50,8 @@
       All three platforms provide the components in the same
       order.</p>
 
-      <p>Back to <a href="index.shtml">RailDriver page</a> 
-      <!--#include virtual="/Footer" --></p>
+      <p>Back to <a href="index.shtml">RailDriver page</a></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

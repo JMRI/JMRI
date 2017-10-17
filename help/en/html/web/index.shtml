@@ -229,7 +229,7 @@
       "/dist/web" and "/dist/xml" also work as prefixes.</p>
 
       <p>Note that if a directory contains a file named
-      <code>index.html</code> will display the index.html file
+      <code>index.html</code> it will display the contents of the index.html file
       instead of listing the directory contents.</p>
 
       <h3><a id="json" href="JsonServlet.shtml" name="json">JSON
@@ -319,7 +319,8 @@
       be provided in response to requests. This is not air-tight
       security, however, and you should be careful to not put
       important content in those directories or link them to other
-      parts of your computer.</p><!--#include virtual="/Footer" -->
+      parts of your computer.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

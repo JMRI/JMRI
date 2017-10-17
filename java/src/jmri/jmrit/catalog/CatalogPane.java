@@ -11,6 +11,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,7 @@ public class CatalogPane extends JPanel {
         super(true);
 
         // create basic GUI
-        dTree = new JTree(CatalogTreeModel.instance());
+        dTree = new JTree(InstanceManager.getDefault(CatalogTreeModel.class));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // build the tree GUI
@@ -77,8 +78,8 @@ public class CatalogPane extends JPanel {
                 public void valueChanged(TreeSelectionEvent e) {
                     if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null) {
                         // somebody has been selected
-                        log.debug("Selection event with " + dTree.getSelectionPath().toString());
-                        log.debug("          icon: " + getSelectedIcon());
+                        log.debug("Selection event with {}", dTree.getSelectionPath());
+                        log.debug("          icon: {}", getSelectedIcon());
                     }
                 }
             });
@@ -96,39 +97,39 @@ public class CatalogPane extends JPanel {
             return null;
         }
         // somebody has been selected
-        if (log.isDebugEnabled()) log.debug("getSelectedIcon with " + dTree.getSelectionPath().toString());
+        if (log.isDebugEnabled()) log.debug("getSelectedIcon with {}", dTree.getSelectionPath());
         TreePath path = dTree.getSelectionPath();
         int level = path.getPathCount();
         if (level < 3) {
             return null;
         }
-        StringBuffer buf;
+        StringBuilder buf;
         String name;
         if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("resources")) {
             // process a .jar icon
-            buf = new StringBuffer(CatalogTreeModel.resourceRoot);
+            buf = new StringBuilder(CatalogTreeModel.resourceRoot);
             for (int i = 2; i < level; i++) {
                 buf.append("/");
                 buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject());
             }
         } else if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("files")) {
             // process a file
-            buf = new StringBuffer(CatalogTreeModel.fileRoot);
+            buf = new StringBuilder(CatalogTreeModel.fileRoot);
             buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(2)).getUserObject());
             for (int i = 3; i < level; i++) {
                 buf.append(File.separator);
                 buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject());
             }
         } else {
-            log.error("unexpected first element on getSelectedIcon: " + path.getPathComponent(1));
+            log.error("unexpected first element on getSelectedIcon: {}", path.getPathComponent(1));
             return null;
         }
         name = buf.toString();
-        if (log.isDebugEnabled()) log.debug("attempt to load file from " + name);
+        if (log.isDebugEnabled()) log.debug("attempt to load file from {}", name);
         return NamedIcon.getIconByName(name);
     }
 
     JTree dTree;
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CatalogPane.class);
 }

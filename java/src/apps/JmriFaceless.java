@@ -35,7 +35,7 @@ public class JmriFaceless extends apps.AppsBase {
         // Once the configServlet is usable, require the web server
         // WebServerManager.getWebServer().start();
         //start LocoNetOverTcp server if configured to autostart
-        jmri.jmrix.loconet.loconetovertcp.Server.getInstance();
+        jmri.jmrix.loconet.loconetovertcp.LnTcpServer.getDefault();
     }
 
     // Main entry point

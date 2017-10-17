@@ -301,11 +301,11 @@ public class DefaultConditionalAction implements ConditionalAction {
     @Override
     public NamedBean getBean() {
         if (_namedBean != null) {
-            return (NamedBean) getNamedBean().getBean();
+            return getNamedBean().getBean();
         }
         setDeviceName(_deviceName); //ReApply name as that will create namedBean, save replicating it here
         if (_namedBean != null) {
-            return (NamedBean) getNamedBean().getBean();
+            return getNamedBean().getBean();
         }
         return null;
     }
@@ -490,6 +490,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (rbx.getString("Script"));
             case Conditional.ITEM_TYPE_OTHER:
                 return (rbx.getString("Other"));
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -602,6 +605,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (rbx.getString("ActionSetBlockOutOfService"));
             case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
                 return (rbx.getString("ActionBlockInService"));
+            default:
+                // fall through
+                break;
         }
         log.warn("Unexpected parameter to getActionTypeString(" + t + ")");
         return ("");
@@ -634,6 +640,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else {
                     return (rbx.getString("OnTrigger"));
                 }
+            default:
+                // fall through
+                break;
         }
         log.warn("Unexpected parameter to getOptionString(" + opt + ")");
         return "";
@@ -792,6 +801,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                         return (rbx.getString("AudioSourceFadeOut"));
                     case Audio.CMD_RESET_POSITION:
                         return (rbx.getString("AudioResetPosition"));
+                    default:
+                        log.error("Unhandled Audio operation command: {}", data);
+                        break;
                 }
                 break;
             case Conditional.ACTION_CONTROL_TRAIN:
@@ -802,6 +814,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else {
                     return (rbx.getString("WarrantAbort"));
                 }
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -932,5 +947,5 @@ public class DefaultConditionalAction implements ConditionalAction {
         return str;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalAction.class);
 }

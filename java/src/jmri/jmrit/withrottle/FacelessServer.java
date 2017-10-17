@@ -2,11 +2,9 @@ package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.util.zeroconf.ZeroConfService;
@@ -16,17 +14,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Copied from UserInterface, but with the UI stuff removed.
- * Sets up to advertise service, and creates a thread for it to run in.
- *
+ * Copied from UserInterface, but with the UI stuff removed. Sets up to
+ * advertise service, and creates a thread for it to run in.
+ * <p>
  * listen() has to run in a separate thread.
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
  */
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    private final static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
+    private final static Logger log = LoggerFactory.getLogger(FacelessServer.class);
 
     UserPreferencesManager userPreferences = InstanceManager.getNullableDefault(UserPreferencesManager.class);
 
@@ -35,23 +32,15 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     ZeroConfService service;
     boolean isListen = true;
     ServerSocket socket = null;
-    ArrayList<DeviceServer> deviceList;
+    final private ArrayList<DeviceServer> deviceList = new ArrayList<>();
 
     FacelessServer() {
-        if (deviceList == null) {
-            deviceList = new ArrayList<DeviceServer>(1);
-        }
         createServerThread();
     } // End of constructor
 
-    public void createServerThread() {
-        FacelessThread s = new FacelessThread(this);
-        s.setName("WiThrottleFacelessServer"); // NOI18N
-        s.start();
-    }
-
+    @Override
     public void listen() {
-        int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
+        int socketPort = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
 
         try { //Create socket on available port
             socket = new ServerSocket(socketPort);
@@ -72,7 +61,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         while (isListen) { //Create DeviceServer threads
             DeviceServer device;
             try {
-                log.info("Creating new WiThrottle DeviceServer(socket) on port " + port + ", waiting for incoming connection...");
+                log.info("Creating new WiThrottle DeviceServer(socket) on port {}, waiting for incoming connection...", port);
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
                 Thread t = new Thread(device);
@@ -81,7 +70,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
                 t.start();
             } catch (IOException e3) {
                 if (isListen) {
-                    log.error("Listen Failed on port " + port);
+                    log.error("Listen Failed on port {}", port);
                 }
                 return;
             }
@@ -112,16 +101,16 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
 //    }
     /**
      * Received an UDID, filter out any duplicate.
-     *
+     * <p>
+     * @param device the device to filter for duplicates
      */
     @Override
     public void notifyDeviceInfoChanged(DeviceServer device) {
 
         //  Filter duplicate connections
-        if ((device.getUDID() != null) && (deviceList.size() > 0)) {
-            for (int i = 0; i < deviceList.size(); i++) {
-                DeviceServer listDevice = deviceList.get(i);
-                if ((device != listDevice) && (listDevice.getUDID() != null) && (listDevice.getUDID().equals(device.getUDID()))) {
+        if ((device.getUDID() != null)) {
+            for (DeviceServer listDevice : deviceList) {
+                if (device != listDevice && device.getUDID().equals(listDevice.getUDID())) {
                     //  If in here, array contains duplicate of a device
                     log.debug("Has duplicate of device, clearing old one.");
                     listDevice.closeThrottles();
@@ -177,8 +166,8 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     public void servicePublished(ZeroConfServiceEvent se) {
         try {
             InetAddress addr = se.getDNS().getInetAddress();
-            // most addresses are Inet6Address objects, 
-            if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+            // most addresses are Inet6Address objects,
+            if (!addr.isLoopbackAddress()) {
                 log.info("Published ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
             }
         } catch (NullPointerException ex) {
@@ -192,21 +181,4 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     public void serviceUnpublished(ZeroConfServiceEvent se) {
     }
 
-    //  listen() has to run in a separate thread.
-    static class FacelessThread extends Thread {
-
-        FacelessServer fs;
-
-        FacelessThread(FacelessServer _fs) {
-            fs = _fs;
-        }
-
-        @Override
-        public void run() {
-            fs.listen();
-            log.debug("Leaving ThreadNoUI.run()");
-        }
-
-    private final static Logger log = LoggerFactory.getLogger(FacelessThread.class.getName());
-    }
 }

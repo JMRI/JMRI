@@ -2,6 +2,7 @@ package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 
@@ -100,16 +101,17 @@ public abstract class JsonHttpService {
      * Respond to an HTTP GET request for a list of items of type.
      *
      * This is called by the {@link jmri.web.servlet.json.JsonServlet} to handle
-     * get requests for a type, but no name. Some services that can't return a
-     * list may prefer to return a single object instead of a list in this case,
-     * while other services may simply throw a 400 Bad Request JsonException in
-     * this case.
+     * get requests for a type, but no name. Services that do not have named
+     * objects, such as the {@link jmri.server.json.time.JsonTimeHttpService}
+     * should respond to this with a list containing a single JSON object.
+     * Services that can't return a list may throw a 400 Bad Request
+     * JsonException in this case.
      *
      * @param type   the type of the requested list
      * @param locale the requesting client's Locale
-     * @return a JSON list.
+     * @return a JSON list
      * @throws jmri.server.json.JsonException may be thrown by concrete
      *                                        implementations
      */
-    public abstract JsonNode doGetList(String type, Locale locale) throws JsonException;
+    public abstract ArrayNode doGetList(String type, Locale locale) throws JsonException;
 }

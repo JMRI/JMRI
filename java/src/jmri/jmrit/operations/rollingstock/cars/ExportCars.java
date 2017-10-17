@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,7 +10,6 @@ import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -28,9 +26,9 @@ public class ExportCars extends XmlFile {
     static final String ESC = "\""; // escape character NOI18N
     private String del = ","; // delimiter
 
-    List<RollingStock> _carList;
+    List<Car> _carList;
 
-    public ExportCars(List<RollingStock> carList) {
+    public ExportCars(List<Car> carList) {
         _carList = carList;
     }
 
@@ -64,8 +62,6 @@ public class ExportCars extends XmlFile {
         }
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "CarManager only provides Car Objects")
     public void writeFile(String name) {
         log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
@@ -134,8 +130,7 @@ public class ExportCars extends XmlFile {
         String extensions;
 
         // store car number, road, type, length, weight, color, owner, built date, location and track
-        for (RollingStock rs : _carList) {
-            Car car = (Car) rs;
+        for (Car car : _carList) {
             carType = car.getTypeName();
             if (carType.contains(del)) {
                 carType = ESC + car.getTypeName() + ESC;
@@ -221,15 +216,15 @@ public class ExportCars extends XmlFile {
     }
 
     public static void setOperationsFileName(String name) {
-        OperationsFileName = name;
+        operationsFileName = name;
     }
 
     public static String getOperationsFileName() {
-        return OperationsFileName;
+        return operationsFileName;
     }
 
-    private static String OperationsFileName = "ExportOperationsCarRoster.csv"; // NOI18N
+    private static String operationsFileName = "ExportOperationsCarRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCars.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExportCars.class);
 
 }

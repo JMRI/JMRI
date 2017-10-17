@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -23,6 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmris.Bundle {
 
+    @Nullable
     private static final String name = "jmri.jmris.srcp.JmriSRCPServerBundle"; // NOI18N
 
     //
@@ -105,7 +106,7 @@ public class Bundle extends jmri.jmris.Bundle {
 
     @Override
     protected String retry(Locale locale, String key) {
-        return super.getBundle().handleGetMessage(locale,key);
+        return super.getBundle().handleGetMessage(locale, key);
     }
 
 }

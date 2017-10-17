@@ -44,5 +44,5 @@ public class LogixLoadAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LogixLoadAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LogixLoadAction.class);
 }

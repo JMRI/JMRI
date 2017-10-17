@@ -1,5 +1,7 @@
 package jmri.util.exceptionhandler;
 
+import jmri.util.JUnitUtil;
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,6 +28,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.exceptionhandler.PackageTest");   // no tests in this class itself
 
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(UncaughtExceptionHandlerTest.suite());
 
         return suite;
@@ -34,12 +37,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

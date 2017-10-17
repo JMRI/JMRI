@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- %3$s is the railroad name -->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" data-railroad="%3$s"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" data-railroad="%3$s"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>%1$s</title><!-- %1$s is title from Servlet -->
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/panel.css">
+        <link rel="stylesheet" href="/css/user.css">
+
+        <script src="/js/jquery-1.11.2.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/user.js"></script>
+        <script src="/js/home.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">U gebruikt een <strong>verouderde</strong> Browser. <a href="http://browsehappy.com/">werk uw browser bij</a> of <a href="http://www.google.com/chromeframe/?redirect=true">activeer Google Chrome Frame</a> om de gebruikerservaring te verbeteren.</p>
+        <![endif]-->
+        <div id="wrap">
+            <!-- Navigation Bar %2$s -->
+
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>%3$s</h1>
+                    <p>Welkom bij <em>%3$s</em>, ondersteund door <a href="http://jmri.org">JMRI</a>.</p>
+                </div>
+            </div>
+
+            <div class="container">
+
+                <div class="row">
+                    <!-- throttles -->
+                    <div class="col-md-4">
+                        <h2>Rijregelaar</h2>
+                        <h4><a href="/web/webThrottle.html">webRijregelaar</a></h4>
+                        <p><em>webRijregelaar</em> biedt geïntegreerde bediening van modules op de baan en Panelen via een browser.</p>
+                        <p>
+                            <a class="btn btn-default" href="/web/webThrottle.html" target="webThrottle" role="button">Open nu »</a>
+                            <a class="btn btn-default" href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml" role="button">Lees meer »</a>
+                        </p>
+                        <div class="visible-jmri_withrottle">
+                            <h4><a href="http://enginedriver.rrclubs.org">Engine Driver</a></h4>
+                            <p><em>Engine Driver</em> is een rijregelaar voor Android telefoons en tablets.</p>
+                            <p>
+                                <!-- should have open/download button as appropriate -->
+                                <a class="btn btn-default" href="http://enginedriver.rrclubs.org" role="button">Lees meer »</a>
+                            </p>
+                            <h4><a href="http://www.withrottle.com">WiThrottle</a></h4>
+                            <p><em>WiThrottle</em> is een rijregelaar voor iPhone, iPad, en iPod.</p>
+                            <p>
+                                <!-- should have open/download button as appropriate -->
+                                <a class="btn btn-default" href="http://www.withrottle.com" role="button">Lees meer »</a>
+                            </p>
+                            <h4><a href="https://www.microsoft.com/store/apps/9NBLGGH4VF5J">Train Throttle</a></h4>
+                            <p><em>Train Throttle</em> is een rijregelaar voor hardware met Windows 10, geoptimaliseerd voor tablets en telefoons.</p>
+                            <p>
+                                <!-- should have open/download button as appropriate -->
+                                <a class="btn btn-default" href="http://drewhoffman.net/trainthrottle" role="button">Lees meer »</a>
+                            </p>
+                        </div>
+                        <div class="hidden-jmri_withrottle alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Deze rijregelaar-apps zijn beschikbaar zodra WiThrottle Server ingeschakeld is (via het Gereedschap menu in JMRI).</div>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Geopende vensters</h2>
+                        <div id="no-open-frames" class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Geen geopende vensters beschikbaar.</div>
+                        <ul id="frame-list" class="list-group"></ul>
+                    </div>
+                    <!-- contributed / frames / file access -->
+                    <div class="col-md-4">
+                        <h2>Gereedschap</h2>
+                        <h4 class="hidden-jmri_jmri-json">JSON Console</h4>
+                        <h4 class="visible-jmri_jmri-json"><a href="/json">JSON Console</a></h4>
+                        <p class="hidden-jmri_jmri-json alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>De JSON Console is uitgeschakeld.</p>
+                        <p>Via deze Console kan men JSON instructies aan JMRI sturen.</p>
+                        <h4 class="hidden-jmri_jmri-simple">Simpele Console</h4>
+                        <h4 class="visible-jmri_jmri-simple"><a href="/simple">Simpele Console</a></h4>
+                        <p class="hidden-jmri_jmri-simple alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>De Simpele Console is uitgeschakeld.</p>
+                        <p>Via deze Console kan men instructies als tekst aan JMRI sturen.</p>
+                        <h2>Gegevenstoegang</h2>
+                        <p>Directe toegang tot bestanden en mappen:</p>
+                        <dl>
+                            <dt><a href="/prefs">/prefs</a></dt>
+                            <dd>De map met Gebruikersiinstellingen voor het actieve JMRI Profiel.</dd>
+                            <dt><a href="/dist">/dist</a><dt>
+                            <dd>De JMRI programmamap.</dd>
+                            <dt><a href="/web">/web</a></dt>
+                            <dd>Map met het programma en gegevens voor JMRI Web Server.</dd>
+                            <dt><a href="/images">/images</a></dt>
+                            <dd>Afbeeldingen die bij JMRI horen.</dd>
+                            <dt><a href="/xml/signals">/xml/signals</a></dt>
+                            <dd>Op deze computer opgeslagen Seindefinities, leesbaar als tekst.</dd>
+                        </dl>
+                        <p><small>Indien in een map een bestand genaamd index.html aanweig is, dan wordt dat bestand getoond i.p.v. de lijst met bestandsnamen.</small></p>
+                        <p><small>Als een map zowel in de gebruikersmap als in de JMRI programmamap voorkomt, dan wordt de gebruikersmap getoond tenzij het pad begint met <code/>/dist</code> of <code>/xml</code>.</small></p>
+                    </div>
+                </div>
+
+            </div> <!-- /container -->
+        </div> <!-- /wrap -->
+        <!-- Footer %4$s -->
+    </body>
+</html>

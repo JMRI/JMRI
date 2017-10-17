@@ -81,6 +81,9 @@ public class SlipIconAdder extends IconAdder {
             case 0x08:
                 scissorButton.setSelected(true);
                 break;
+            default:
+                log.warn("Unhandled dbslip code: {}", dblSlip);
+                break;
         }
     }
 
@@ -333,7 +336,7 @@ public class SlipIconAdder extends IconAdder {
             String key = _order.get(i);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            p.add(new JLabel(rbean.getString(key)));
+            p.add(new JLabel(Bundle.getMessage(key)));
             p.add(_iconMap.get(key));
             panel.add(p);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -433,6 +436,9 @@ public class SlipIconAdder extends IconAdder {
                 delete(5);
                 updateSingleSlipRoute(false);
                 break;
+            default:
+                log.warn("Unhandled slip code: {}", slip);
+                break;
         }
         doubleSlip = slip;
         makeIconPanel(true);
@@ -527,9 +533,6 @@ public class SlipIconAdder extends IconAdder {
         }
     }
 
-    /**
-     *
-     */
     void delete(int index) {
         if (index >= _order.size()) {
             return;
@@ -695,5 +698,5 @@ public class SlipIconAdder extends IconAdder {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SlipIconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlipIconAdder.class);
 }

@@ -57,9 +57,12 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 boolean routeLocked = r.getLocked();
                 String cLockTurnout = r.getLockControlTurnout();
 
-                Element elem = new Element("route")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("route");
                 elem.addContent(new Element("systemName").addContent(sname));
+
+                // As a work-around for backward compatibility, store systemName and username as attribute.
+                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                if (r.getUserName()!=null && !r.getUserName().equals("")) elem.setAttribute("userName", r.getUserName());
 
                 // store common parts
                 storeCommon(r, elem);
@@ -248,7 +251,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 break;
             }
 
-            String userName = null;
+            String userName = getUserName(routeList.get(i));
             String cTurnout = null;
             String cTurnoutState = null;
             String addedDelayTxt = null;
@@ -256,9 +259,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             String cLockTurnout = null;
             String cLockTurnoutState = null;
             int addedDelay = 0;
-            if (routeList.get(i).getAttribute("userName") != null) {
-                userName = routeList.get(i).getAttribute("userName").getValue();
-            }
 
             if (routeList.get(i).getAttribute("controlTurnout") != null) {
                 cTurnout = routeList.get(i).getAttribute("controlTurnout").getValue();
@@ -518,5 +518,5 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         return InstanceManager.getDefault(jmri.RouteManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXml.class);
 }

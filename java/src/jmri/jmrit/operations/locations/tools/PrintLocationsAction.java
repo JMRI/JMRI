@@ -13,13 +13,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -53,7 +54,7 @@ public class PrintLocationsAction extends AbstractAction {
 
     static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 
-    LocationManager manager = LocationManager.instance();
+    LocationManager manager = InstanceManager.getDefault(LocationManager.class);
 
     public PrintLocationsAction(String actionName, boolean isPreview) {
         super(actionName);
@@ -268,7 +269,7 @@ public class PrintLocationsAction extends AbstractAction {
                 Bundle.getMessage("SpurName") +
                 NEW_LINE;
         writer.write(s);
-        List<Schedule> schedules = ScheduleManager.instance().getSchedulesByNameList();
+        List<Schedule> schedules = InstanceManager.getDefault(ScheduleManager.class).getSchedulesByNameList();
         for (Schedule schedule : schedules) {
             for (Location location : locations) {
                 if (_location != null && location != _location) {
@@ -438,10 +439,10 @@ public class PrintLocationsAction extends AbstractAction {
     private final boolean showStaging = false;
 
     private void printAnalysisSelected() throws IOException {
-        CarManager carManager = CarManager.instance();
+        CarManager carManager = InstanceManager.getDefault(CarManager.class);
         List<Location> locations = manager.getLocationsByNameList();
-        List<RollingStock> cars = carManager.getByLocationList();
-        String[] carTypes = CarTypes.instance().getNames();
+        List<Car> cars = carManager.getByLocationList();
+        String[] carTypes = InstanceManager.getDefault(CarTypes.class).getNames();
 
         String s = Bundle.getMessage("TrackAnalysis") + NEW_LINE;
         writer.write(s);
@@ -451,7 +452,7 @@ public class PrintLocationsAction extends AbstractAction {
             // get the total length for a given car type
             int numberOfCars = 0;
             int totalTrackLength = 0;
-            for (RollingStock car : cars) {
+            for (Car car : cars) {
                 if (car.getTypeName().equals(type) && car.getLocation() != null) {
                     numberOfCars++;
                     totalTrackLength += car.getTotalLength();
@@ -611,7 +612,7 @@ public class PrintLocationsAction extends AbstractAction {
         int charCount = 0;
         int typeCount = 0;
 
-        for (String type : CarTypes.instance().getNames()) {
+        for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
             if (location.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
@@ -623,7 +624,7 @@ public class PrintLocationsAction extends AbstractAction {
             }
         }
 
-        for (String type : EngineTypes.instance().getNames()) {
+        for (String type : InstanceManager.getDefault(EngineTypes.class).getNames()) {
             if (location.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
@@ -637,7 +638,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (buf.length() > 2) {
             buf.setLength(buf.length() - 2); // remove trailing separators
         } // does this location accept all types?
-        if (typeCount == CarTypes.instance().getNames().length + EngineTypes.instance().getNames().length) {
+        if (typeCount == InstanceManager.getDefault(CarTypes.class).getNames().length + InstanceManager.getDefault(EngineTypes.class).getNames().length) {
             buf = new StringBuffer(TAB + TAB + Bundle.getMessage("LocationAcceptsAllTypes"));
         }
         buf.append(NEW_LINE);
@@ -649,7 +650,7 @@ public class PrintLocationsAction extends AbstractAction {
         int charCount = 0;
         int typeCount = 0;
 
-        for (String type : CarTypes.instance().getNames()) {
+        for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
             if (track.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
@@ -661,7 +662,7 @@ public class PrintLocationsAction extends AbstractAction {
             }
         }
 
-        for (String type : EngineTypes.instance().getNames()) {
+        for (String type : InstanceManager.getDefault(EngineTypes.class).getNames()) {
             if (track.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
@@ -675,7 +676,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (buf.length() > 2) {
             buf.setLength(buf.length() - 2); // remove trailing separators
         } // does this track accept all types?
-        if (typeCount == CarTypes.instance().getNames().length + EngineTypes.instance().getNames().length) {
+        if (typeCount == InstanceManager.getDefault(CarTypes.class).getNames().length + InstanceManager.getDefault(EngineTypes.class).getNames().length) {
             buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TrackAcceptsAllTypes"));
         }
         buf.append(NEW_LINE);
@@ -796,7 +797,7 @@ public class PrintLocationsAction extends AbstractAction {
             }
             buf = new StringBuffer(TAB + TAB + trainType + NEW_LINE + TAB + TAB);
             for (String id : ids) {
-                Train train = TrainManager.instance().getTrainById(id);
+                Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
                 if (train == null) {
                     log.info("Could not find a train for id: " + id + " track (" + track.getName() + ")");
                     continue;
@@ -815,7 +816,7 @@ public class PrintLocationsAction extends AbstractAction {
             }
             buf = new StringBuffer(TAB + TAB + routeType + NEW_LINE + TAB + TAB);
             for (String id : ids) {
-                Route route = RouteManager.instance().getRouteById(id);
+                Route route = InstanceManager.getDefault(RouteManager.class).getRouteById(id);
                 if (route == null) {
                     log.info("Could not find a route for id: " +
                             id +
@@ -855,7 +856,7 @@ public class PrintLocationsAction extends AbstractAction {
             }
             buf = new StringBuffer(TAB + TAB + trainType + NEW_LINE + TAB + TAB);
             for (String id : ids) {
-                Train train = TrainManager.instance().getTrainById(id);
+                Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
                 if (train == null) {
                     log.info("Could not find a train for id: " + id + " track (" + track.getName() + ")");
                     continue;
@@ -874,7 +875,7 @@ public class PrintLocationsAction extends AbstractAction {
             }
             buf = new StringBuffer(TAB + TAB + routeType + NEW_LINE + TAB + TAB);
             for (String id : ids) {
-                Route route = RouteManager.instance().getRouteById(id);
+                Route route = InstanceManager.getDefault(RouteManager.class).getRouteById(id);
                 if (route == null) {
                     log.info("Could not find a route for id: " +
                             id +
@@ -913,7 +914,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
             op = Bundle.getMessage("Exclude") +
                     " " +
-                    (LocationManager.instance().getNumberOfLocations() - track.getDestinationListSize()) +
+                    (InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - track.getDestinationListSize()) +
                     " " +
                     Bundle.getMessage("Destinations") +
                     ":";
@@ -1027,5 +1028,5 @@ public class PrintLocationsAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintLocationsAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintLocationsAction.class);
 }

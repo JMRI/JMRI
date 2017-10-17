@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * display in the status line of the pane.
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2015
- * @author B. Milhaupt Copyright (C) 2013, 2014
+ * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
   */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {
@@ -48,29 +48,39 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      */
     protected LocoNetSystemConnectionMemo memo;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof LocoNetSystemConnectionMemo) {
             initComponents((LocoNetSystemConnectionMemo) context);
         }
     }
 
     /** This gets invoked early. We don't want it to do anything, so 
-     * ew just fail to pass it up. Instead, we wait for the later call of
+     * we just fail to pass it up. Instead, we wait for the later call of
      * initComponents(LocoNetSystemConnectionMemo memo)
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents(){
     }
         
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(LocoNetSystemConnectionMemo memo) throws Exception {
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo; 
         super.initComponents();
     }
 
     /**
      * LnPanelInterface implementation creates standard form of title
+     * 
+     * @param menuTitle is a string containing the name of the tool
+     * @return a new string containing the connection's UserName plus the name 
+     *          of the tool
      */
     public String getTitle(String menuTitle) { return jmri.jmrix.loconet.swing.LnPanel.getTitleHelper(memo, menuTitle); }
 
@@ -86,6 +96,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     JTextField software = new JTextField();
     JTextField delay = new JTextField();
     JTextField eestart = new JTextField();
+    JTextField eraseBlockSize = new JTextField();
 
     JRadioButton checkhardwareno = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareNo"));
     JRadioButton checkhardwareexact = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareExact"));
@@ -126,6 +137,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     private static final String MAX_EESTART_VALUE = "FFFFF8"; // NOI18N
     private static final String MIN_DELAY_VALUE = "5"; // NOI18N
     private static final String MAX_DELAY_VALUE = "500"; // NOI18N
+    private static final String MIN_VALUE_64 = "64"; // NOI18N
+    private static final String MAX_VALUE_128 = "128"; // NOI18N
 
     public LoaderPane() {
     }
@@ -381,6 +394,30 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             add(p);
         }
 
+        {
+            // create a panel for displaying/modifying the Erase Block Size
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+            p.add(new JLabel(Bundle.getMessage("LabelEraseBlockSize")
+                    + " ")); //NOI18N
+            eraseBlockSize.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_64, MAX_VALUE_128));
+            p.add(eraseBlockSize);
+            eraseBlockSize.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (!intParameterIsValid(eraseBlockSize, 64, 128)) {
+                        status.setText(Bundle.getMessage("ErrorInvalidParameter"));
+                    }
+                    updateDownloadVerifyButtons();
+                }
+            });
+            add(p);
+        }
         add(new JSeparator());
 
     }
@@ -424,10 +461,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                 this.setOptionsRadiobuttons(text);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("ErrorInvalidOptionInFile", text, "Options"), 
+                        Bundle.getMessage("ErrorInvalidOptionInFile", text, "Options"), // NOI18N
                         Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
+                log.warn("Invalid dmf file 'Options' value {0}",text);
                 return;
             }
         }
@@ -441,18 +479,47 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         if (text != null) {
             eestart.setText(text);
         }
+        
+        text = inputContent.extractValueOfKey("Erase Blk Size"); // NOI18N
+        if (text != null) {
+            eraseBlockSize.setText(text);
+            boolean interpretationProblem = false;
+            try {
+                int i = Integer.parseInt(text);
+                if ((i > 128) || (i < 64)) {
+                    interpretationProblem = true;
+                }
+            } catch (java.lang.NumberFormatException e) {
+                interpretationProblem = true;
+            }
+            
+            if (interpretationProblem == true) {
+                log.warn("Invalid dmf file 'Erase Blk Size' value {0}",text);
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ErrorInvalidEraseBlkSize", text, "Erase Blk Size"), // NOI18N
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                this.disableDownloadVerifyButtons();
+                // clear out the firmware image to ensure that the user won't 
+                // write it to the device
+                inputContent.clear();
+                setDefaultFieldValues();
+                clearInputFileName();        
+            }
+        }
     }
 
     /**
      * Add filter(s) for possible types to the input file chooser.
+     * @param chooser - a JFileChooser to which the filter is to be added
      */
     @Override
     protected void addChooserFilters(JFileChooser chooser) {
             javax.swing.filechooser.FileNameExtensionFilter filter
                     = new javax.swing.filechooser.FileNameExtensionFilter(
-                            Bundle.getMessage("FileFilterLabel",
-                                    "*.dfm, *.hex"), // NOI18N // NOI18N
-                            "dmf", "hex");   // NOI18N // NOI18N
+                            Bundle.getMessage("FileFilterLabel", // NOI18N
+                                    "*.dfm, *.hex"), // NOI18N
+                            "dmf", "hex");   // NOI18N
 
             chooser.addChoosableFileFilter(
                     new javax.swing.filechooser.FileNameExtensionFilter(
@@ -759,11 +826,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
             location = location & 0x00FFFFF8;  // mask off bits to be multiple of 8
 
+            doLongWait(location, 5);
             setAddr(location);
+            doLongWait(location, 2);
 
             do {
-                // wait for completion of last operation
-                doWait(location);
 
                 // send this data
                 sentmsgs++;
@@ -783,24 +850,29 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     updateGUI(100 * sentmsgs / totalmsgs);
                 }
 
+                // wait for completion of last operation
+                doWait(location);
+
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
                 if (next < 0) {
                     break;   // no data left
                 }
                 next = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
-                if (next != location) {
+                if ((next != location) || ((location & 0x3f) == 0x00)) {
                     // wait for completion
-                    doWait(next);
+                    doLongWait(next, 4);  // extra wait while device writes memory
                     // change to next location
                     setAddr(next);
+                    doLongWait(next, 2); // double wait after sending new address
+                    
                 }
                 location = next;
 
             } while (!isOperationAborted() && (location <= endaddr));
 
             // send end (after wait)
-            doWait(location);
+            doLongWait(location,4);
             sendOne(PXCT2ENDOPERATION, 0, 0, 0, 0, 0, 0, 0, 0);
 
             this.updateGUI(100); //draw bar to 100%
@@ -818,6 +890,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         /**
          * Send a command to resume at another address
+         * @param location to be written next
          */
         void setAddr(int location) {
             sendOne(PXCT2SENDADDRESS,
@@ -831,6 +904,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
          * Wait the specified time.
          *
          * 16*10/16.44 = 14 msec is the time it takes to send the message.
+         * @param address to be sent next, for computing the delay before 
+         *          sending the next message
          */
         void doWait(int address) {
             try {
@@ -841,8 +916,31 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         tdelay = delayval + 50 + 14;
                     } else {
                         tdelay = delayval + 4 + 14;
-                    }
+                    }                        
+                    // do the actual wait
+                    wait(tdelay);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
+            }
+        }
 
+        /**
+         * Wait the time appropriate for the address.
+         *
+         * @param address to be sent next, for computing the delay before 
+         *          sending the next message
+         */
+        void doLongWait(int address, int multiplier) {
+            try {
+                synchronized (this) {
+                    // make sure enough time in EEPROM address space
+                    int tdelay;
+                    if (address >= eestartval) {
+                        tdelay = (delayval + 50 + 14) * multiplier;
+                    } else {
+                        tdelay = (delayval) * multiplier;
+                    }                        
                     // do the actual wait
                     wait(tdelay);
                 }
@@ -862,6 +960,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         /**
          * Update the GUI for progress
+         * @param value is the percentage of "doneness" to be displayed
          */
         void updateGUI(final int value) {
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -871,7 +970,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         log.debug("updateGUI with " + value);
                     }
                     // update progress bar
-                    bar.setValue(100 * sentmsgs / totalmsgs);
+                    bar.setValue(value);
                 }
             });
         }
@@ -889,7 +988,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         software.setText("1"); // NOI18N
         delay.setText("200"); // NOI18N
         eestart.setText("C00000"); // NOI18N
-
+        eraseBlockSize.setText("64"); // NOI18N
+        
         try {
             setOptionsRadiobuttons(Integer.toString(DO_NOT_CHECK_SOFTWARE_VERSION + REQUIRE_HARDWARE_VERSION_EXACT_MATCH));
         } catch (NumberFormatException ex) {
@@ -991,8 +1091,15 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
         }
         eestart.updateUI();
-
+        
         allIsOk &= temp;
+
+        temp = intParameterIsValid(eraseBlockSize, 64, 128);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Erase Block Sizez is not valid: " + eraseBlockSize.getText());
+        }
+        
         if (allIsOk == true) {
             log.debug("No problems found when checking parameter values.");
         }
@@ -1033,6 +1140,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         updateDownloadVerifyButtons();
         log.info("ActionListener");
     }
-    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class);
 
 }

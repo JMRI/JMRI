@@ -1,13 +1,13 @@
 package jmri.jmrix.dcc4pc.swing;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for Dcc4PcMenu class.
@@ -16,7 +16,7 @@ import java.awt.GraphicsEnvironment;
  **/
 
 public class Dcc4PcMenuTest {
-        
+
    private Dcc4PcSystemConnectionMemo memo = null;
 
    @Test
@@ -26,9 +26,9 @@ public class Dcc4PcMenuTest {
    }
 
    @Before
-   public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+   public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         memo = new Dcc4PcSystemConnectionMemo();
    }
@@ -36,8 +36,7 @@ public class Dcc4PcMenuTest {
    @After
    public void tearDown(){
         memo=null;
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
    }
 
 }

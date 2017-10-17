@@ -20,9 +20,11 @@ public class PiSprogNanoSerialDriverAdapter
 
     public PiSprogNanoSerialDriverAdapter() {
         super(SprogMode.OPS, 115200);
-        options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
+        options.put("TrackPowerState", new Option(Bundle.getMessage("OptionTrackPowerLabel"),
+                new String[]{Bundle.getMessage("PowerStateOff"), Bundle.getMessage("PowerStateOn")},
+                true)); // first element (TrackPowerState) NOI18N
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        this.getSystemConnectionMemo().setUserName("Pi-SPROG Nano Command Station");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("PiSprogNanoCSTitle"));
     }
 
     /**
@@ -40,7 +42,6 @@ public class PiSprogNanoSerialDriverAdapter
     static public PiSprogNanoSerialDriverAdapter instance() {
         return null;
     }
-
-    static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class);
 
 }

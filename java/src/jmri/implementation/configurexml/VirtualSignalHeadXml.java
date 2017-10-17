@@ -31,7 +31,6 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -62,5 +61,5 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class);
 }

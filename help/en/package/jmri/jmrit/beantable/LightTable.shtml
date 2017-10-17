@@ -44,12 +44,16 @@
       other on/off tasks where the control mechanisms of Lights fit
       the need.</p>
 
-      <p>Optionally a Light may be controlled in five ways: it may
-      be controlled by a single Sensor, by two Sensors, by a
-      Turnout, by the JMRI Fast Clock, or switched on for a
-      specified time by a Sensor. One or more of these controls may
-      be specified when the Light is created, or when it is edited
-      via the Light Table.</p>
+      <p>Optionally a Light may be controlled in five ways:
+      <ul>
+        <li>by a single Sensor</li>
+        <li>by two Sensors</li>
+        <li>by a Turnout</li>
+        <li>by the JMRI Fast Clock</li>
+        <li>or switched on for a specified time by a Sensor.</li>
+      </ul>
+      One or more of these controls may be specified when the
+      Light is created, or when it is edited via the Light Table.</p>
 
       <p>When a Light is created, or when it is read from a
       configuration file, the Light is 'activated'; it is set up to
@@ -65,15 +69,24 @@
       control Turnout, it must be "Enabled", that is, its check box
       in the 'Enabled' column must be checked. You can uncheck this
       box to temporarily disable a Light from being triggered, i.e.
-      prevent it switching when its control mechanism fires.</p>
+      prevent it switching when its control mechanism fires.<br>
+      You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to
+      a column title.</p>
 
       <p>A Light may also be a variable light. This will depend on
       the interface and the hardware driving the physical
       light.</p>
 
+      <img src="images/LightTableGraphic.png" height="135" width="276"
+      align="right" alt="Graphic Light state column">
+      <p>Choose between textual and graphic display of the Light state
+      in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+      </p>
+
       <h2>Switching a Light On or Off</h2>
 
-      <p>Lights may be turned on or off by clicking the button in
+      <p>Lights may be turned on or off by clicking the button/icon in
       the State column of the Light Table. A Light may be set up to
       follow the state of a track switch (Turnout), On when the
       Turnout is Closed, and Off when it is Thrown, or vice versa.
@@ -110,7 +123,8 @@
       not the target intensity, when transition effects are
       enabled.</p>
 
-      <h2>Creating New Lights</h2>To define a new light, click the
+      <h2>Creating New Lights</h2>
+      To define a new light, click the
       <a href="LightAddEdit.shtml">Add...</a> button the Light
       Table. This will take you to a <a href=
       "LightAddEdit.shtml">new pane</a> for adding or editing
@@ -126,7 +140,11 @@
       <b>Panel</b> menu. Note that the enabled/disabled state of
       each Light is not saved in the configuration file. When
       Lights are loaded from a configuration file, they are all
-      enabled. <!--#include virtual="/Footer" --></p>
+      enabled.</p>
+
+      <p>Back to the
+        <a href="../../../../html/tools/Lights.shtml">Lights help intro</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

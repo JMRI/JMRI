@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An XPA+Modem implementation of the Throttle for XPressNet Systems
+ * An XPA+Modem implementation of the Throttle for XpressNet Systems
  *
  * @author Paul Bender Copyright (C) 2004
  */
@@ -241,6 +241,6 @@ public class XpaThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XpaThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaThrottle.class);
 
 }

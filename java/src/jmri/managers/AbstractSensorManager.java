@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003
  */
-public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
+public abstract class AbstractSensorManager extends AbstractManager<Sensor> implements SensorManager {
 
     @Override
     public int getXMLOrder() {
@@ -70,17 +70,17 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
             key = makeSystemName(key);
         }
         String name = normalizeSystemName(key);
-        return (Sensor) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
-    protected Object getInstanceBySystemName(String systemName) {
+    protected Sensor getInstanceBySystemName(String systemName) {
         return getBySystemName(systemName);
     }
 
     @Override
     public Sensor getByUserName(String key) {
-        return (Sensor) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -166,8 +166,10 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     /**
      * A method that determines if it is possible to add a range of sensors in
      * numerical order eg 10 to 30, primarily used to enable/disable the add
-     * range box in the add sensor panel
+     * range box in the add sensor panel.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -179,7 +181,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         try {
             Integer.parseInt(curAddress);
         } catch (java.lang.NumberFormatException ex) {
-            log.error("Hardware Address passed should be a number", ex);
+            log.warn("Hardware Address passed should be a number, was {}", curAddress);
             throw new JmriException("Hardware Address passed should be a number");
         }
         return prefix + typeLetter() + curAddress;
@@ -187,15 +189,15 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address past does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         String tmpSName = "";
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
             return null;
         }
         Sensor s = getBySystemName(tmpSName);
@@ -210,7 +212,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
             return null;
         }
 
@@ -252,8 +254,8 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         sensorDebounceGoingActive = timer;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
-            Sensor sen = (Sensor) _tsys.get(en.nextElement());
-            if (sen.useDefaultTimerSettings()) {
+            Sensor sen = _tsys.get(en.nextElement());
+            if (sen.getUseDefaultTimerSettings()) {
                 sen.setSensorDebounceGoingActiveTimer(timer);
             }
         }
@@ -267,8 +269,8 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         sensorDebounceGoingInActive = timer;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
-            Sensor sen = (Sensor) _tsys.get(en.nextElement());
-            if (sen.useDefaultTimerSettings()) {
+            Sensor sen = _tsys.get(en.nextElement());
+            if (sen.getUseDefaultTimerSettings()) {
                 sen.setSensorDebounceGoingInActiveTimer(timer);
             }
         }
@@ -278,7 +280,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
      * Do the sensor objects provided by this manager support configuring
      * an internal pullup or pull down resistor?
      * <p>
-     * This default implementaiton always returns false.
+     * This default implementation always returns false.
      *
      * @return true if pull up/pull down configuration is supported.
      */
@@ -287,6 +289,15 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
        return false;
     }
 
+    /**
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);
+
 }

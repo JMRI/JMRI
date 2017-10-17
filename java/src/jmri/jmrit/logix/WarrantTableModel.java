@@ -164,7 +164,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         fireTableDataChanged();
     }
 
-    public void addNXWarrant(Warrant w) {
+    protected void addNXWarrant(Warrant w) {
         _warList.add(w);
         _warNX.add(w);
         w.addPropertyChangeListener(this);
@@ -253,6 +253,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return Bundle.getMessage("MRun");
         case CONTROL_COLUMN:
             return Bundle.getMessage("Control");
+        default:
+            // fall out
+            break;
         }
         return "";
     }
@@ -274,6 +277,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case EDIT_COLUMN:
         case DELETE_COLUMN:
             return true;
+        default:
+            // fall out
+            break;
         }
         return false;
     }
@@ -305,6 +311,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return JButton.class;
         case DELETE_COLUMN:
             return JButton.class;
+        default:
+            // fall out
+            break;
         }
         return String.class;
     }
@@ -330,6 +339,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case EDIT_COLUMN:
         case DELETE_COLUMN:
             return new JButton("DELETE").getPreferredSize().width;
+        default:
+            // fall out
+            break;
         }
         return new JTextField(10).getPreferredSize().width;
     }
@@ -353,19 +365,15 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case WARRANT_COLUMN:
             return w.getDisplayName();
         case ROUTE_COLUMN:
-            BlockOrder bo = w.getfirstOrder();
-            if (bo != null) {
-                return Bundle.getMessage("Origin", bo.getBlock()
-                        .getDisplayName());
-            }
-            break;
+            BlockOrder bo0 = w.getfirstOrder();
+            BlockOrder bo1 = w.getLastOrder();
+            return Bundle.getMessage("WarrantRoute", 
+                        (bo0==null?"?":bo0.getBlock().getDisplayName()),
+                        (bo1==null?"?":bo1.getBlock().getDisplayName()));
         case TRAIN_NAME_COLUMN:
             return w.getTrainName();
         case ADDRESS_COLUMN:
-            if (w.getDccAddress() != null) {
-                return w.getDccAddress().toString();
-            }
-            break;
+            return w.getSpeedUtil().getAddress();
         case ALLOCATE_COLUMN:
             if (w.isTotalAllocated()) {
                 return new NamedIcon(
@@ -394,7 +402,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-green.gif",
                         "off");
-            } else if (w.hasRouteSet() && w.isAllocated()) {
+            } else if (/*w.hasRouteSet() &&*/ w.isAllocated()) {
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
                         "occupied");
@@ -428,15 +436,18 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return Bundle.getMessage("ButtonEdit");
         case DELETE_COLUMN:
             return Bundle.getMessage("ButtonDelete");
+        default:
+            // fall out
+            break;
         }
         return "";
     }
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (log.isDebugEnabled())
-            log.debug("setValueAt: row= " + row + ", column= " + col
-                    + ", value= " + (value==null ? value : (value.toString()==null ? value.getClass().getName() :value.toString())));
+//        if (log.isDebugEnabled())
+//            log.debug("setValueAt: row= " + row + ", column= " + col
+//                    + ", value= " + (value==null ? value : (value.toString()==null ? value.getClass().getName() :value.toString())));
         Warrant w = getWarrantAt(row);
         if (w == null) {
             log.warn("setValueAt row= " + row + " Warrant is null!");
@@ -452,7 +463,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case ADDRESS_COLUMN:
             String addr = (String) value;
-            if (!w.setDccAddress(addr)) {
+            if (!w.getSpeedUtil().setDccAddress(addr)) {
                 msg = Bundle.getMessage("BadDccAddress", addr);                
             }
             break;
@@ -463,6 +474,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         Bundle.getMessage("completeAllocate",
                                 w.getDisplayName()), myGreen, false);
             } else {
+                w.deAllocate();
                 _frame.setStatusText(msg, myGold, false);
                 msg = null;
             }
@@ -476,7 +488,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             }
             break;
         case SET_COLUMN:
-            msg = w.setRoute(0, null);
+            msg = w.setRoute(1, null);
             if (msg == null) {
                 _frame.setStatusText(
                         Bundle.getMessage("pathsSet", w.getDisplayName()),
@@ -500,7 +512,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             // getRunningMessage()
             int mode = w.getRunMode();
             if (mode == Warrant.MODE_LEARN) {
-                Bundle.getMessage("Learning", w.getCurrentBlockName());
+                msg = Bundle.getMessage("Learning", w.getCurrentBlockName());
             } else if (value!=null) {
                 String setting = (String) value;
                 if (mode == Warrant.MODE_RUN || mode == Warrant.MODE_MANUAL) {
@@ -515,14 +527,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.ESTOP;
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                         s = Warrant.ABORT;
+                    } else if (setting.equals(WarrantTableFrame.ramp)) {
+                        s = Warrant.RAMP_HALT;
                     }
                     w.controlRunTrain(s);
-                } else if (setting.equals(WarrantTableFrame.abort)) {
-                    w.deAllocate();
-                } else if (mode == Warrant.MODE_NONE) {
-                    msg = Bundle.getMessage("NotRunning", w.getDisplayName());
-                } else {
-                    getValueAt(row, col);
                 }
             }
             break;
@@ -544,6 +552,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
            log.error("Invalid Column " + col + " requested.");
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
+        if (row < getRowCount()) {
+            fireTableRowsUpdated(row, row);                    
+        }
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
                     Bundle.getMessage("WarningTitle"),
@@ -553,27 +564,29 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     }
 
     private void openWarrantFrame(Warrant warrant) {
-        if (WarrantTableAction._openFrame != null) {
-            WarrantTableAction._openFrame.dispose();
-        }
-        WarrantTableAction._openFrame = null;
+        WarrantFrame frame = null;
         for (int i = 0; i < _warList.size(); i++) {
             if (warrant.equals(_warList.get(i))) {
-                WarrantTableAction._openFrame = new WarrantFrame(warrant);
+                frame = new WarrantFrame(warrant);
                 break;
             }
         }
-        if (WarrantTableAction._openFrame == null) {
+        if (frame == null) {
             for (int i = 0; i < _warNX.size(); i++) {
                 if (warrant.equals(_warList.get(i))) {
-                    WarrantTableAction._openFrame = new WarrantFrame(warrant);
+                    frame= new WarrantFrame(warrant);
                     break;
                 }
             }
-            if (WarrantTableAction._openFrame != null) {
-                WarrantTableAction._openFrame.setVisible(true);
-                WarrantTableAction._openFrame.toFront();
+        }
+        if (frame != null) {
+            WarrantFrame f = WarrantTableAction.getWarrantFrame();
+            if (f != null) {
+                WarrantTableAction.closeWarrantFrame(f);
             }
+            frame.setVisible(true);
+            frame.toFront();
+            WarrantTableAction.setWarrantFrame(frame);
         }
     }
 

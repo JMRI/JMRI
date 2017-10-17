@@ -56,7 +56,14 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    //Turnout address format is more than a simple number.
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
+     * @return current instance of connection
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
@@ -71,22 +78,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Deprecated
     static SerialTurnoutManager _instance = null;
-
-    //Turnout address format is more than a simple number.
-    //public boolean allowMultipleAdditions(String systemName) { return true;  }
-    /**
-     * A method that creates an array of systems names to allow bulk creation of
-     * turnouts.
-     */
-    //further work needs to be done on how to format a number of CMRI turnout, therefore this method will only return one entry.
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {
-        numberToAdd = 1;
-        String range[] = new String[numberToAdd];
-        for (int x = 0; x < numberToAdd; x++) {
-            range[x] = prefix + "T" + start;
-        }
-        return range;
-    }
 
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
@@ -124,14 +115,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
-        //If the hardware address past does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
         if (t == null) {
             int seperator = tmpSName.lastIndexOf("T") + 1;
@@ -166,6 +158,24 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else return 'false'
+     */
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }

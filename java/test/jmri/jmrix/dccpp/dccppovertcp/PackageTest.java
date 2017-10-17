@@ -14,7 +14,8 @@ import org.slf4j.LoggerFactory;
    ServerActionTest.class,
    ServerFrameTest.class,
    ConnectionConfigTest.class,
-   DCCppTcpDriverAdapterTest.class
+   DCCppTcpDriverAdapterTest.class,
+   ClientRxHandlerTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.dccppovertcp package.
@@ -36,6 +37,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

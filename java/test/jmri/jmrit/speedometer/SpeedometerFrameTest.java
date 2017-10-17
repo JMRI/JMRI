@@ -1,13 +1,12 @@
 package jmri.jmrit.speedometer;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of SpeedometerFrame
@@ -21,6 +20,7 @@ public class SpeedometerFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
         Assert.assertNotNull("exists", frame);
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -30,6 +30,7 @@ public class SpeedometerFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
         frame.setInputs("IS1","IS2","IS3","5280","5280");
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -58,6 +59,7 @@ public class SpeedometerFrameTest {
              Throwable cause = ite.getCause();
              Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
         }
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -86,6 +88,7 @@ public class SpeedometerFrameTest {
              Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
         }
         jmri.util.JUnitAppender.assertErrorMessage("Start sensor invalid:");
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -102,18 +105,15 @@ public class SpeedometerFrameTest {
         operator.setStopSensor2Value("IS3");
         operator.setDistance2Value("400");
         operator.pushStartButton();
+        JUnitUtil.dispose(frame);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

@@ -22,14 +22,14 @@ import java.util.List;
  * <P>
  * @author Dave Duchamp Copyright (C) 2007
  */
-public interface LogixManager extends Manager {
+public interface LogixManager extends Manager<Logix> {
 
     /**
      * Method to create a new Logix if the Logix does not exist.
      *
      * @param systemName the system name
      * @param userName   the user name
-     * @return a new Logix or null if unable to create
+     * @return a new Logix or null if unable to create: An error, or the Logix already exists
      */
     public Logix createNewLogix(String systemName, String userName);
 

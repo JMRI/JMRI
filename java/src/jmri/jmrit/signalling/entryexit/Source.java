@@ -68,8 +68,8 @@ public class Source {
         if (entryExitPopUp != null) {
             return;
         }
-        entryExitPopUp = new JMenu(Bundle.getMessage("MenuEntryExit"));
-        editClear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));
+        entryExitPopUp = new JMenu(Bundle.getMessage("MenuEntryExit"));  // NOI18N
+        editClear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));  // NOI18N
         editClear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,7 +77,7 @@ public class Source {
             }
         });
         entryExitPopUp.add(editClear);
-        editCancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));
+        editCancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));  // NOI18N
         editCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,7 +86,7 @@ public class Source {
         });
         entryExitPopUp.add(editCancel);
 
-        editOneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));
+        editOneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));  // NOI18N
         editOneClick.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,7 +95,7 @@ public class Source {
         });
         entryExitPopUp.add(editOneClick);
 
-        clear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));
+        clear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));  // NOI18N
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,7 +103,7 @@ public class Source {
             }
         });
 
-        cancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));
+        cancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));  // NOI18N
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,7 +111,7 @@ public class Source {
             }
         });
 
-        oneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));
+        oneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));  // NOI18N
         oneClick.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

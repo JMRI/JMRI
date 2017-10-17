@@ -7,7 +7,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URI;
 import java.net.URISyntaxException;
-import jmri.util.FileUtil;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -19,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.VSDecoderPreferences;
+import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -356,5 +356,5 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class);
 }

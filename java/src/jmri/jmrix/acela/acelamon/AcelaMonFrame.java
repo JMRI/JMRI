@@ -22,13 +22,20 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
 
     @Override
     protected String title() {
-        return "Acela Command Monitor";
+        return Bundle.getMessage("AcelaMonitorTitle");
     }
 
     @Override
     protected void init() {
         // connect to TrafficController
         _memo.getTrafficController().addAcelaListener(this);
+    }
+
+    /**
+     * Define system-specific help item
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.acela.acelamon.AcelaMonFrame", true);  // NOI18N
     }
 
     @Override
@@ -47,4 +54,5 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
         l.setBinary(true);
         nextLine("rep: \"" + l.toString() + "\"\n", "");
     }
+
 }

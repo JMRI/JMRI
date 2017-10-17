@@ -7,12 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message to an SPROG command station.
+ * Encode a message to an SPROG command station.
  * <P>
  * The {@link SprogReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     // Special characters (NOTE: microchip bootloader does not use standard ASCII)
@@ -41,8 +41,8 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Creates a new SprogMessage containing a byte array to represent a packet
-     * to output
+     * Create a new SprogMessage containing a byte array to represent a packet
+     * to output.
      *
      * @param packet The contents of the packet
      */
@@ -233,7 +233,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Get formatted message for direct output to stream - this is the final
-     * format of the message as a byte array
+     * format of the message as a byte array.
      *
      * @param sprogState a SprogState variable representing the current state of
      *                   the Sprog
@@ -319,7 +319,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
      */
     static public SprogMessage getReadCV(int cv, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(6);
-        if (mode == DefaultProgrammerManager.PAGEMODE) {
+        if (mode == ProgrammingMode.PAGEMODE) {
             m.setOpCode('V');
         } else { // Bit direct mode
             m.setOpCode('C');
@@ -331,7 +331,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public SprogMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(10);
-        if (mode == DefaultProgrammerManager.PAGEMODE) {
+        if (mode == ProgrammingMode.PAGEMODE) {
             m.setOpCode('V');
         } else { // Bit direct mode
             m.setOpCode('C');
@@ -370,7 +370,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Get a message containing a DCC packet
+     * Get a message containing a DCC packet.
      *
      * @param bytes byte[]
      * @return SprogMessage
@@ -549,8 +549,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogMessage.class);
 
 }
-
-

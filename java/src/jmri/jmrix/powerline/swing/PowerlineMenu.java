@@ -16,12 +16,11 @@ public class PowerlineMenu extends JMenu {
     /**
      * Create a Powerline menu. And loads the SerialSystemConnectionMemo to the
      * various actions. Actions will open new windows.
+     * @param memo Connection details memo
      */
     // Need to Sort out the Powerline server menu items;
     public PowerlineMenu(SerialSystemConnectionMemo memo) {
         super();
-
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.powerline.SystemBundle");
 
         // memo can not be null!
         if (memo == null) {
@@ -37,7 +36,7 @@ public class PowerlineMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                PowerlineNamedPaneAction a = new PowerlineNamedPaneAction(rb.getString(item.name), wi, item.load, memo);
+                PowerlineNamedPaneAction a = new PowerlineNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo);
                 add(a);
                 a.setEnabled(item.enable.equals(ALL));
             }
@@ -50,7 +49,7 @@ public class PowerlineMenu extends JMenu {
     }
 
     // Enable or disable menu items based on system connection
-    private static final String ALL = "All Powerline connections";
+    private static final String ALL = "All Powerline connections"; // NOI18N
 
     private Item[] panelItems = new Item[]{
         new Item("MenuItemCommandMonitor", "jmri.jmrix.powerline.swing.serialmon.SerialMonPane", ALL),
@@ -68,6 +67,5 @@ public class PowerlineMenu extends JMenu {
         String load;
         String enable;
     }
+
 }
-
-

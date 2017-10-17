@@ -37,8 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2008,2009
  * @author Bob Jacobsen Copyright (C) 2008,2009
  */
-public abstract class AbstractVariableLight extends AbstractLight
-        implements java.io.Serializable {
+public abstract class AbstractVariableLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractVariableLight.class);
 

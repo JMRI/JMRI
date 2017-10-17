@@ -14,19 +14,32 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
+    OakTreeSystemConnectionMemo _memo = null;
+    protected String prefix = "O";
+
     public SerialTurnoutManager() {
+        prefix = getSystemPrefix();
 
     }
 
+    public SerialTurnoutManager(OakTreeSystemConnectionMemo memo) {
+        _memo = memo;
+        prefix = memo.getSystemPrefix();
+    }
+
+    /**
+     * Return the Oak Tree system prefix
+     */
     @Override
     public String getSystemPrefix() {
-        return "O";
+        return prefix;
+
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        String sName = SerialAddress.normalizeSystemName(systemName, prefix);
         if (sName.equals("")) {
             // system name is not valid
             return null;
@@ -37,20 +50,35 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
+        String altName = SerialAddress.convertSystemNameToAlternate(sName, prefix);
         t = getBySystemName(altName);
         if (t != null) {
             return null;
         }
         // create the turnout
-        t = new SerialTurnout(sName, userName);
+        t = new SerialTurnout(sName, userName, _memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', _memo)) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return VALID if system name has a valid format, else return INVALID
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T', prefix));
+    }
+
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
     }
 
     static public SerialTurnoutManager instance() {
@@ -59,10 +87,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
         return _instance;
     }
+
     static SerialTurnoutManager _instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
-
-

@@ -15,8 +15,7 @@ public class IEEE802154PortControllerTest extends jmri.jmrix.AbstractSerialPortC
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        IEEE802154SystemConnectionMemo memo = new IEEE802154SystemConnectionMemo();
        apc = new IEEE802154PortController(memo){
             @Override
@@ -58,8 +57,7 @@ public class IEEE802154PortControllerTest extends jmri.jmrix.AbstractSerialPortC
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

@@ -1,13 +1,13 @@
 package jmri.implementation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 
 /**
@@ -17,19 +17,41 @@ import jmri.NamedBean;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
+public abstract class AbstractNamedBean implements NamedBean {
 
-    protected AbstractNamedBean(String sys) {
-        mSystemName = sys;
-        mUserName = null;
+    // force changes through setUserName() to ensure rules are applied
+    // as a side effect require reads through getUserName()
+    private String mUserName;
+    // final so does not need to be private to protect against changes
+    protected final String mSystemName;
+
+    /**
+     * Simple constructor.
+     *
+     * @param sys the system name for this bean; must not be null
+     */
+    protected AbstractNamedBean(@Nonnull String sys) {
+        this(sys, null);
     }
 
-    protected AbstractNamedBean(String sys, String user) throws NamedBean.BadUserNameException {
-        this(sys);
-
-        // this is really a transition from null -> name, but nobody is
-        // listening yet
-        setUserName(user);
+    /**
+     * Designated constructor.
+     *
+     * @param sys  the system name for this bean; must not be null
+     * @param user the user name for this bean; can be null
+     * @throws jmri.NamedBean.BadUserNameException   if the user name cannot be
+     *                                               normalized
+     * @throws jmri.NamedBean.BadSystemNameException if the system name is null
+     */
+    protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+        if (sys == null) {
+            throw new NamedBean.BadSystemNameException();
+        }
+        mSystemName = sys;
+        // normalize the user name or refuse construction if unable to
+        // use this form to prevent subclass from overriding setUserName
+        // during construction
+        AbstractNamedBean.this.setUserName(user);
     }
 
     /**
@@ -51,7 +73,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     @OverridingMethodsMustInvokeSuper
     public void setComment(String comment) {
         String old = this.comment;
-        if (comment == null || comment.isEmpty() || comment.trim().length() < 1 ) {
+        if (comment == null || comment.trim().isEmpty()) {
             this.comment = null;
         } else {
             this.comment = comment;
@@ -60,10 +82,15 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
     private String comment;
 
+    /**
+     * if not null or empty return user name else system name
+     *
+     * @return user name or system name
+     */
     @Override
     public String getDisplayName() {
         String name = getUserName();
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             return name;
         } else {
             return getSystemName();
@@ -89,9 +116,9 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     // _once_ if anything has changed state
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
-    final java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    final Hashtable<PropertyChangeListener, String> register = new Hashtable<>();
-    final Hashtable<PropertyChangeListener, String> listenerRefs = new Hashtable<>();
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    protected final HashMap<PropertyChangeListener, String> register = new HashMap<>();
+    protected final HashMap<PropertyChangeListener, String> listenerRefs = new HashMap<>();
 
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -124,13 +151,12 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
-        Enumeration<PropertyChangeListener> en = register.keys();
-        while (en.hasMoreElements()) {
-            PropertyChangeListener l = en.nextElement();
-            if (register.get(l).equals(name)) {
+        register.entrySet().forEach((entry) -> {
+            PropertyChangeListener l = entry.getKey();
+            if (entry.getValue().equals(name)) {
                 list.add(l);
             }
-        }
+        });
         return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
@@ -141,13 +167,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
      */
     @Override
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<String>();
-        Enumeration<PropertyChangeListener> en = listenerRefs.keys();
-        while (en.hasMoreElements()) {
-            PropertyChangeListener l = en.nextElement();
-            list.add(listenerRefs.get(l));
-        }
-        return list;
+        return new ArrayList<>(listenerRefs.values());
     }
 
     @Override
@@ -191,18 +211,9 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     @OverridingMethodsMustInvokeSuper
     public void setUserName(String s) throws NamedBean.BadUserNameException {
         String old = mUserName;
-        if (s != null)
-            mUserName = NamedBean.normalizeUserName(s);
-        else
-            mUserName = null;
+        mUserName = NamedBean.normalizeUserName(s);
         firePropertyChange("UserName", old, mUserName);
     }
-
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
-            justification = "Sync of mUserName protected by ctor invocation")
-    protected String mUserName;
-
-    protected String mSystemName;
 
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
@@ -217,24 +228,27 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
             pcs.removePropertyChangeListener(l);
             register.remove(l);
             listenerRefs.remove(l);
-       }
+        }
     }
 
     @Override
     @CheckReturnValue
     public String describeState(int state) {
         switch (state) {
-            case UNKNOWN: return Bundle.getMessage("BeanStateUnknown");
-            case INCONSISTENT: return Bundle.getMessage("BeanStateInconsistent");
-            default: return Bundle.getMessage("BeanStateUnexpected", state);
+            case UNKNOWN:
+                return Bundle.getMessage("BeanStateUnknown");
+            case INCONSISTENT:
+                return Bundle.getMessage("BeanStateInconsistent");
+            default:
+                return Bundle.getMessage("BeanStateUnexpected", state);
         }
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-        public void setProperty(String key, Object value) {
+    public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         parameters.put(key, value);
     }
@@ -243,7 +257,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     @OverridingMethodsMustInvokeSuper
     public Object getProperty(String key) {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         return parameters.get(key);
     }
@@ -252,7 +266,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     @OverridingMethodsMustInvokeSuper
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         return parameters.keySet();
     }
@@ -266,9 +280,57 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         parameters.remove(key);
     }
 
-    HashMap<String, Object> parameters = null;
+    private HashMap<String, Object> parameters = null;
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation tests that the results of
+     * {@link jmri.NamedBean#getSystemName()} and
+     * {@link jmri.NamedBean#getUserName()} are equal for this and obj.
+     *
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj argument;
+     *         {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // test the obj == this
+        boolean result = super.equals(obj);
+
+        if (!result && (obj != null) && obj instanceof AbstractNamedBean) {
+            AbstractNamedBean b = (AbstractNamedBean) obj;
+            if (this.getSystemName().equals(b.getSystemName())) {
+                String bUserName = b.getUserName();
+                if ((mUserName != null) && (bUserName != null)
+                        && mUserName.equals(bUserName)) {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * calculate our hash code
+     *
+     * @return our hash code
+     */
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        if (mSystemName != null) {
+            result = mSystemName.hashCode();
+            if (mUserName != null) {
+                result = (result * 37) + mUserName.hashCode();
+            }
+        } else if (mUserName != null) {
+            result = mUserName.hashCode();
+        }
+        return result;
     }
 }

@@ -6,15 +6,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -30,9 +26,7 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -66,7 +60,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener {
 
-    
     // Map of Mnemonic KeyEvent values to GUI Components
     private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
 
@@ -81,7 +74,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
-    private DCCppTrafficController tc;
+    private final DCCppTrafficController tc;
 
     private JTabbedPane tabbedPane;
     private JPanel sensorPanel;
@@ -97,7 +90,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     private TableRowSorter<TableModel> outputSorter;
 
     private List<JMenu> menuList;
-    private enum CurrentTab { SENSOR, TURNOUT, OUTPUT }
+
+    private enum CurrentTab {
+        SENSOR, TURNOUT, OUTPUT
+    }
     private CurrentTab cTab;
 
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
@@ -106,8 +102,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             + "papering this over with a deep copy of the arguments. "
             + "In any case, there's no risk of exposure here.")
     public ConfigBaseStationFrame(DCCppSensorManager sm,
-                                         DCCppTurnoutManager tm,
-                                         DCCppTrafficController t) {
+            DCCppTurnoutManager tm,
+            DCCppTrafficController t) {
         super(false, false);
         tc = t;
         initGui();
@@ -117,7 +113,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         // NOTE: Look at jmri.jmrit.vsdecoder.swing.ManageLocationsFrame
         // for how to add a tab for turnouts and other things.
-
         this.setTitle(Bundle.getMessage("FieldManageBaseStationFrameTitle"));
         this.buildMenu();
 
@@ -128,32 +123,22 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddSensor"));
         addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFAdd"));
         addButton.setMnemonic(Mnemonics.get("AddButton")); // NOI18N
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addButtonPressed(e);
-            }
+        addButton.addActionListener((ActionEvent e) -> {
+            addButtonPressed(e);
         });
 
         JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFClose"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                closeButtonPressed(e);
-            }
+        closeButton.addActionListener((ActionEvent e) -> {
+            closeButtonPressed(e);
         });
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSaveSensors"));
         saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFSave"));
         saveButton.setMnemonic(Mnemonics.get("SaveButton")); // NOI18N
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveButtonPressed(e);
-            }
+        saveButton.addActionListener((ActionEvent e) -> {
+            saveButtonPressed(e);
         });
-
 
         JScrollPane sensorScrollPanel = new JScrollPane();
         sensorModel = new SensorTableModel();
@@ -180,7 +165,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         sensorSorter.setSortKeys(sensorSortKeys);
         sensorSorter.sort();
         sensorSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
-
 
         JScrollPane turnoutScrollPanel = new JScrollPane();
         turnoutModel = new TurnoutTableModel();
@@ -246,32 +230,29 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         tabbedPane.setMnemonicAt(0, Mnemonics.get("OutputTab")); // NOI18N
         cTab = CurrentTab.SENSOR;
         tabbedPane.setSelectedIndex(0);
-        tabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                switch(tabbedPane.getSelectedIndex()) {
-                    case 2:
-                        // Set Add to "Add Output"
-                        cTab = CurrentTab.OUTPUT;
-                        addButton.setText(Bundle.getMessage("ButtonAddOutput"));
-                        saveButton.setText(Bundle.getMessage("ButtonSaveOutputs"));
-                        log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
-                        break;
-                    case 1:
-                        // Set Add to "Add Turnout"
-                        cTab = CurrentTab.TURNOUT;
-                        addButton.setText(Bundle.getMessage("ButtonAddTurnout"));
-                        saveButton.setText(Bundle.getMessage("ButtonSaveTurnouts"));
-                        log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
-                        break;
-                    case 0:
-                    default:
-                        // Set Add to "Add Sensor"
-                        cTab = CurrentTab.SENSOR;
-                        addButton.setText(Bundle.getMessage("ButtonAddSensor"));
-                        saveButton.setText(Bundle.getMessage("ButtonSaveSensors"));
-                        log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
-                }
+        tabbedPane.addChangeListener((ChangeEvent e) -> {
+            switch (tabbedPane.getSelectedIndex()) {
+                case 2:
+                    // Set Add to "Add Output"
+                    cTab = CurrentTab.OUTPUT;
+                    addButton.setText(Bundle.getMessage("ButtonAddOutput"));
+                    saveButton.setText(Bundle.getMessage("ButtonSaveOutputs"));
+                    log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
+                    break;
+                case 1:
+                    // Set Add to "Add Turnout"
+                    cTab = CurrentTab.TURNOUT;
+                    addButton.setText(Bundle.getMessage("ButtonAddTurnout"));
+                    saveButton.setText(Bundle.getMessage("ButtonSaveTurnouts"));
+                    log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
+                    break;
+                case 0:
+                default:
+                    // Set Add to "Add Sensor"
+                    cTab = CurrentTab.SENSOR;
+                    addButton.setText(Bundle.getMessage("ButtonAddSensor"));
+                    saveButton.setText(Bundle.getMessage("ButtonSaveSensors"));
+                    log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
             }
         });
 
@@ -296,14 +277,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         //fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile")));
         //fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile")));
         //fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
-
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         //editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
 
         //fileMenu.getItem(1).setEnabled(false); // disable XML store
         //fileMenu.getItem(2).setEnabled(false); // disable XML load
-
-        menuList = new ArrayList<JMenu>(3);
+        menuList = new ArrayList<>(3);
 
         menuList.add(fileMenu);
         menuList.add(editMenu);
@@ -321,7 +300,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         // When we get a SensorDefReply message, add the
         // sensor information to the data map for the model.
         if (r.isSensorDefReply()) {
-            Vector<Object> v = new Vector<Object>();
+            List<Object> v = new ArrayList<>();
             v.add(r.getSensorDefNumInt());
             v.add(r.getSensorDefPinInt());
             v.add(r.getSensorDefPullupBool());
@@ -329,14 +308,14 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             sensorModel.insertData(v, false);
             sensorSorter.sort();
         } else if (r.isTurnoutDefReply()) {
-            Vector<Object> v = new Vector<Object>();
+            List<Object> v = new ArrayList<>();
             v.add(r.getTurnoutDefNumInt());
             v.add(r.getTurnoutDefAddrInt());
             v.add(r.getTurnoutDefSubAddrInt());
             turnoutModel.insertData(v, false);
             turnoutSorter.sort();
         } else if (r.isOutputListReply()) {
-            Vector<Object> v = new Vector<Object>();
+            List<Object> v = new ArrayList<>();
             v.add(r.getOutputNumInt());
             v.add(r.getOutputListPinInt());
             v.add((r.getOutputListIFlagInt() & 0x01) == 1); // (bool) Invert
@@ -359,92 +338,80 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     }
 
     /**
-     * Add a standard help menu, including window specific help item.
+     * Handle mouse clicks within a table.
+     * <p>
+     * This is currently the workings behind the "Delete" button in the table.
      *
-     * @param ref    JHelp reference for the desired window-specific help page
-     * @param direct true if the help menu goes directly to the help system,
-     *               e.g. there are no items in the help menu
-     *
-     * WARNING: BORROWED FROM JmriJFrame.
+     * @param table the table where the event occurred
+     * @param evt   the mouse click
      */
-    @Override
-    public void addHelpMenu(String ref, boolean direct) {
-        // only works if no menu present?
-        JMenuBar bar = getJMenuBar();
-        if (bar == null) {
-            bar = new JMenuBar();
-        }
-        // add Window menu
-        bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
-        // add Help menu
-        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
-        setJMenuBar(bar);
-    }
-
-    /** handleTableMouseClick()
-     * 
-     * This is currently the workings behind the "Delete" button in
-     * the table.
-     * 
-     * @param table
-     * @param evt 
-     */
-    
     private void handleTableMouseClick(JTable table, java.awt.event.MouseEvent evt) {
         int row = table.rowAtPoint(evt.getPoint());
         int col = table.columnAtPoint(evt.getPoint());
-        if (row < 0 || col < 0) { return; }
+        if (row < 0 || col < 0) {
+            return;
+        }
         DCCppTableModel model = (DCCppTableModel) table.getModel();
         if (col == table.convertColumnIndexToView(model.getDeleteColumn())) {
             // This is a row delete action.  Handle it as such.
             int sel = table.convertRowIndexToModel(row);
-            int idx = (int)model.getValueAt(sel,0);
+            int idx = (int) model.getValueAt(sel, 0);
             int value = JOptionPane.showConfirmDialog(null, "Delete ID " + Integer.toString(idx) + "\nAre you sure?",
-                "Delete Item",
-                JOptionPane.OK_CANCEL_OPTION);
+                    "Delete Item",
+                    JOptionPane.OK_CANCEL_OPTION);
             if (value == JOptionPane.OK_OPTION) {
                 model.removeRow(sel);
                 log.debug("Delete sensor {}", idx);
             }
-            
-        }
-    }
-    
-    /** addButtonPressed()
-     * 
-     * Respond to the user pressing the "Add" button...
-     * Response depends on which tab is active.
-     * 
-     * @param e 
-     */
-    private void addButtonPressed(ActionEvent e) {
-        if (cTab == CurrentTab.SENSOR) {
-            Vector<Object> v = new Vector<Object>();
-            v.add(0);     // Index
-            v.add(0);     // Pin
-            v.add(false); // Pullup
-            sensorModel.insertData(v, true);
-        } else if (cTab == CurrentTab.TURNOUT) {
-            Vector<Object> v = new Vector<Object>();
-            v.add(0); // Index
-            v.add(0); // Address
-            v.add(0); // Subaddress
-            turnoutModel.insertData(v, true);
-        } else if (cTab == CurrentTab.OUTPUT) {
-            Vector<Object> v = new Vector<Object>();
-            v.add(0); // Index
-            v.add(0); // Pin
-            v.add(false); // Invert
-            v.add(false); // Restore state
-            v.add(false); // Force high/low
-            outputModel.insertData(v, true);
+
         }
     }
 
-    /** saveButtonPressed()
-     * 
+    /**
+     * Responder for pressing the "Add" button. Response depends on which tab is
+     * active.
+     *
+     * @param e the press event
+     */
+    private void addButtonPressed(ActionEvent e) {
+        if (null != cTab) {
+            switch (cTab) {
+                case SENSOR: {
+                    List<Object> v = new ArrayList<>();
+                    v.add(0);     // Index
+                    v.add(0);     // Pin
+                    v.add(false); // Pullup
+                    sensorModel.insertData(v, true);
+                    break;
+                }
+                case TURNOUT: {
+                    List<Object> v = new ArrayList<>();
+                    v.add(0); // Index
+                    v.add(0); // Address
+                    v.add(0); // Subaddress
+                    turnoutModel.insertData(v, true);
+                    break;
+                }
+                case OUTPUT: {
+                    List<Object> v = new ArrayList<>();
+                    v.add(0); // Index
+                    v.add(0); // Pin
+                    v.add(false); // Invert
+                    v.add(false); // Restore state
+                    v.add(false); // Force high/low
+                    outputModel.insertData(v, true);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
      * Respond to the user pressing the "Save Sensors/Turnouts/Outputs" button.
-     * @param e 
+     *
+     * @param e the button press event
      */
     private void saveButtonPressed(ActionEvent e) {
         int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
@@ -469,113 +436,118 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }*/
     }
 
-    /** saveTableValues()
-     * 
-     * Actually save the values for the currently selected tab.
-     * 
+    /**
+     * Save the values for the currently selected tab.
      */
-    @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
-        if (cTab == CurrentTab.SENSOR) {
-            for (int i = 0; i < sensorModel.getRowData().size(); i++) {
+        if (null != cTab) {
+            switch (cTab) {
+                case SENSOR:
+                    for (int i = 0; i < sensorModel.getRowData().size(); i++) {
 
-                Vector<Object> r = sensorModel.getRowData().elementAt(i);
-                boolean isnew = (boolean)r.elementAt(4);
-                boolean isdirty = (boolean)r.elementAt(5);
-                boolean isdelete = (boolean)r.elementAt(6);
-                int row = sensorModel.getRowData().indexOf(r);
-                //if (sensorModel.isNewRow(row)) {
-                if (isnew) {
-                    tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int)r.elementAt(0),
-                                                                      (int)r.elementAt(1),
-                                                                      ((boolean)r.elementAt(2) ? 1 : 0)), this);
-                    sensorModel.setNewRow(row, false);
-                //} else if (sensorModel.isMarkedForDelete(row)) {
-                } else if (isdelete) {
-                    tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int)r.elementAt(0)), this);
-                    //log.debug("Sending: " + m);
-                    sensorModel.getRowData().remove(r);
-                //} else if (sensorModel.isDirtyRow(row)) {
-                } else if (isdirty) {
-                    // Send a Delete, then an Add (for now).
-                    tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int)r.elementAt(0)), this);
-                    //log.debug("Sending: " + m);
-                    // WARNING: Conversions here are brittle. Be careful.
-                    tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int)r.elementAt(0),
-                                                                      (int)r.elementAt(1),
-                                                                      ((boolean)r.elementAt(2) ? 1 : 0)), this);
-                    //log.debug("Sending: " + m);
-                    sensorModel.setNewRow(row, false);
-                    sensorModel.setDirtyRow(row, false);
-                }
-            }
-        } else if (cTab == CurrentTab.TURNOUT) {
-            for (int i = 0; i < turnoutModel.getRowData().size(); i++) {
+                        List<Object> r = sensorModel.getRowData().get(i);
+                        boolean isnew = (boolean) r.get(4);
+                        boolean isdirty = (boolean) r.get(5);
+                        boolean isdelete = (boolean) r.get(6);
+                        int row = sensorModel.getRowData().indexOf(r);
+                        //if (sensorModel.isNewRow(row)) {
+                        if (isnew) {
+                            tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
+                                    (int) r.get(1),
+                                    ((boolean) r.get(2) ? 1 : 0)), this);
+                            sensorModel.setNewRow(row, false);
+                            //} else if (sensorModel.isMarkedForDelete(row)) {
+                        } else if (isdelete) {
+                            tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
+                            //log.debug("Sending: " + m);
+                            sensorModel.getRowData().remove(r);
+                            //} else if (sensorModel.isDirtyRow(row)) {
+                        } else if (isdirty) {
+                            // Send a Delete, then an Add (for now).
+                            tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
+                            //log.debug("Sending: " + m);
+                            // WARNING: Conversions here are brittle. Be careful.
+                            tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
+                                    (int) r.get(1),
+                                    ((boolean) r.get(2) ? 1 : 0)), this);
+                            //log.debug("Sending: " + m);
+                            sensorModel.setNewRow(row, false);
+                            sensorModel.setDirtyRow(row, false);
+                        }
+                    }
+                    break;
+                case TURNOUT:
+                    for (int i = 0; i < turnoutModel.getRowData().size(); i++) {
 
-                Vector<Object> r = turnoutModel.getRowData().elementAt(i);
-                boolean isnew = (boolean)r.elementAt(4);
-                boolean isdirty = (boolean)r.elementAt(5);
-                boolean isdelete = (boolean)r.elementAt(6);
-                int row = turnoutModel.getRowData().indexOf(r);
-                //if (sensorModel.isNewRow(row)) {
-                if (isnew) {
-                    // WARNING: Conversions here are brittle. Be careful.
-                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int)r.elementAt(0),
-                            (int)r.elementAt(1), (int)r.elementAt(2)), this);
-                    turnoutModel.setNewRow(row, false);
-                //} else if (sensorModel.isMarkedForDelete(row)) {
-                } else if (isdelete) {
-                    String m = "T " + Integer.toString((int)r.elementAt(0));
-                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                    log.debug("Sending: " + m);
-                    turnoutModel.getRowData().remove(r);
-                //} else if (sensorModel.isDirtyRow(row)) {
-                } else if (isdirty) {
-                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int)r.elementAt(0)), this);
-                    // Send a Delete, then an Add (for now).
-                    // WARNING: Conversions here are brittle. Be careful.
-                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int)r.elementAt(0),
-                            (int)r.elementAt(1), (int)r.elementAt(2)), this);
-                    turnoutModel.setNewRow(row, false);
-                    turnoutModel.setDirtyRow(row, false);
-                }
-            }
-        } else if (cTab == CurrentTab.OUTPUT) {
-            for (int i = 0; i < outputModel.getRowData().size(); i++) {
+                        List<Object> r = turnoutModel.getRowData().get(i);
+                        boolean isnew = (boolean) r.get(4);
+                        boolean isdirty = (boolean) r.get(5);
+                        boolean isdelete = (boolean) r.get(6);
+                        int row = turnoutModel.getRowData().indexOf(r);
+                        //if (sensorModel.isNewRow(row)) {
+                        if (isnew) {
+                            // WARNING: Conversions here are brittle. Be careful.
+                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
+                                    (int) r.get(1), (int) r.get(2)), this);
+                            turnoutModel.setNewRow(row, false);
+                            //} else if (sensorModel.isMarkedForDelete(row)) {
+                        } else if (isdelete) {
+                            String m = "T " + Integer.toString((int) r.get(0));
+                            tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
+                            log.debug("Sending: {}", m);
+                            turnoutModel.getRowData().remove(r);
+                            //} else if (sensorModel.isDirtyRow(row)) {
+                        } else if (isdirty) {
+                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int) r.get(0)), this);
+                            // Send a Delete, then an Add (for now).
+                            // WARNING: Conversions here are brittle. Be careful.
+                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
+                                    (int) r.get(1), (int) r.get(2)), this);
+                            turnoutModel.setNewRow(row, false);
+                            turnoutModel.setDirtyRow(row, false);
+                        }
+                    }
+                    break;
+                case OUTPUT:
+                    for (int i = 0; i < outputModel.getRowData().size(); i++) {
 
-                Vector<Object> r = outputModel.getRowData().elementAt(i);
-                boolean isnew = (boolean)r.elementAt(6);
-                boolean isdirty = (boolean)r.elementAt(7);
-                boolean isdelete = (boolean)r.elementAt(8);
-                int row = outputModel.getRowData().indexOf(r);
-                //if (sensorModel.isNewRow(row)) {
-                if (isnew) {
-                    // WARNING: Conversions here are brittle. Be careful.
-                    int f = ((boolean)r.elementAt(2) ? 1 : 0); // Invert
-                    f += ((boolean)r.elementAt(3) ? 2 : 0); // Restore
-                    f += ((boolean)r.elementAt(4) ? 4 : 0); // Force
-                    tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int)r.elementAt(0),
-                            (int)r.elementAt(1), f), this);
-                    outputModel.setNewRow(row, false);
-                //} else if (sensorModel.isMarkedForDelete(row)) {
-                } else if (isdelete) {
-                    tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int)r.elementAt(0)), this);
-                    outputModel.getRowData().remove(r);
-                //} else if (sensorModel.isDirtyRow(row)) {
-                } else if (isdirty) {
-                    // Send a Delete, then an Add (for now).
-                    tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int)r.elementAt(0)), this);
-                    int f = ((boolean)r.elementAt(2) ? 1 : 0); // Invert
-                    f += ((boolean)r.elementAt(3) ? 2 : 0); // Restore
-                    f += ((boolean)r.elementAt(4) ? 4 : 0); // Force
-                    tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int)r.elementAt(0),
-                            (int)r.elementAt(1), f), this);
-                    outputModel.setNewRow(row, false);
-                    outputModel.setDirtyRow(row, false);
-                }
+                        List<Object> r = outputModel.getRowData().get(i);
+                        boolean isnew = (boolean) r.get(6);
+                        boolean isdirty = (boolean) r.get(7);
+                        boolean isdelete = (boolean) r.get(8);
+                        int row = outputModel.getRowData().indexOf(r);
+                        //if (sensorModel.isNewRow(row)) {
+                        if (isnew) {
+                            // WARNING: Conversions here are brittle. Be careful.
+                            int f = ((boolean) r.get(2) ? 1 : 0); // Invert
+                            f += ((boolean) r.get(3) ? 2 : 0); // Restore
+                            f += ((boolean) r.get(4) ? 4 : 0); // Force
+                            tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int) r.get(0),
+                                    (int) r.get(1), f), this);
+                            outputModel.setNewRow(row, false);
+                            //} else if (sensorModel.isMarkedForDelete(row)) {
+                        } else if (isdelete) {
+                            tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
+                            outputModel.getRowData().remove(r);
+                            //} else if (sensorModel.isDirtyRow(row)) {
+                        } else if (isdirty) {
+                            // Send a Delete, then an Add (for now).
+                            tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
+                            int f = ((boolean) r.get(2) ? 1 : 0); // Invert
+                            f += ((boolean) r.get(3) ? 2 : 0); // Restore
+                            f += ((boolean) r.get(4) ? 4 : 0); // Force
+                            tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int) r.get(0),
+                                    (int) r.get(1), f), this);
+                            outputModel.setNewRow(row, false);
+                            outputModel.setDirtyRow(row, false);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
-        
+
         // Offer to write the changes to EEPROM
         int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFCloseDialogConfirmMessage"),
                 Bundle.getMessage("FieldMCFCloseDialogTitle"),
@@ -591,11 +563,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }
     }
 
-    /** closeButtonPressed()
-     * 
-     * Respond to the user pressing the "Close" button
-     * 
-     * @param e 
+    /**
+     * Respond to the user pressing the "Close" button.
+     *
+     * @param e the button press event
      */
     private void closeButtonPressed(ActionEvent e) {
         // If clicked while editing, stop the cell editor(s)
@@ -638,9 +609,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrame.class);
 
-    
     /**
      * Private class to serve as TableModel for Sensors
      */
@@ -659,7 +629,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             columnNames[5] = "isDirty";     // hidden column // NOI18N
             columnNames[6] = "isDelete";    // hidden column // NOI18N
         }
-        
+
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
@@ -718,7 +688,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }
     }
 
-        /**
+    /**
      * Private class to serve as TableModel for Reporters and Ops Locations
      */
     @SuppressWarnings("unused")
@@ -741,9 +711,9 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         @Override
         public int getDeleteColumn() {
-            return(5);
+            return (5);
         }
-        
+
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
@@ -766,17 +736,16 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }
     }
 
-
     static class ButtonRenderer extends JButton implements TableCellRenderer {
-    
+
         public ButtonRenderer() {
-            setOpaque(true);
-            setSelected(false);
+            super.setOpaque(true);
+            super.setSelected(false);
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
-                        boolean isSelected, boolean hasFocus, int row, int column) {
+                boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {
                 setForeground(table.getSelectionForeground());
                 setBackground(table.getSelectionBackground());
@@ -789,37 +758,33 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }
     }
 
-    /** Button Editor class to replace the DefaultCellEditor in the table
-     * for the delete button.
-     * 
+    /**
+     * Button Editor class to replace the DefaultCellEditor in the table for the
+     * delete button.
+     * <p>
      * NOTE: This isn't actually used anymore except as being a unique class
-     * type that can be returned from the TableModel classes for the column
-     * that includes the Delete buttons.
-     * 
+     * type that can be returned from the TableModel classes for the column that
+     * includes the Delete buttons.
      */
     class ButtonEditor extends DefaultCellEditor {
 
         protected JButton button;
         private String label;
-        private boolean isPushed;
-        private JTable table;
+        private final JTable table;
 
         public ButtonEditor(JCheckBox checkBox, JTable t) {
             super(checkBox);
             button = new JButton();
             button.setOpaque(true);
             table = t;
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //fireEditingStopped();
-                }
+            button.addActionListener((ActionEvent e) -> {
+                //fireEditingStopped();
             });
         }
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
-                    boolean isSelected, int row, int column) {
+                boolean isSelected, int row, int column) {
             if (isSelected) {
                 button.setForeground(table.getSelectionForeground());
                 button.setBackground(table.getSelectionBackground());
@@ -829,50 +794,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             }
             label = (value == null) ? "" : value.toString();
             button.setText(label);
-            isPushed = true;
             return button;
         }
 
         @Override
         public Object getCellEditorValue() {
-            /*
-            if (isPushed) {
-                int sel = table.getEditingRow();
-                sel = table.convertRowIndexToModel(sel);
-                DCCppTableModel model = (DCCppTableModel) table.getModel();
-                int idx = (int)model.getValueAt(sel,0);
-                log.debug("Editing row {} Index value {}", sel, idx);
-                int value = JOptionPane.showConfirmDialog(null, "Delete Item. Are you sure?",
-                    Bundle.getMessage("FieldMCFSaveDialogTitle"),
-                    JOptionPane.OK_CANCEL_OPTION);
-                /*
-                if (model.isMarkedForDelete(sel)) {
-                    model.markForDelete(sel, false);
-                    log.debug("UnDelete sensor {}", idx);
-                    JOptionPane.showMessageDialog(button, "Sensor " + Integer.toString(idx) +
-                                                " Not Marked for Deletion");
-                } else {
-                if (value == JOptionPane.OK_OPTION) {
-                    model.removeRow(sel);
-                    log.debug("Delete sensor {}", idx);
-                    //JOptionPane.showMessageDialog(button, "Sensor " + Integer.toString(idx) +
-                    //                            " Marked for Deletion");
-                }
-            }
-            isPushed = false;
-            */
             return label;
-        }
-
-        @Override
-        public boolean stopCellEditing() {
-            isPushed = false;
-            return super.stopCellEditing();
-        }
-
-        @Override
-        protected void fireEditingStopped() {
-            super.fireEditingStopped();
         }
     }
 

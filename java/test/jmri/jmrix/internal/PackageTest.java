@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
    InternalLightManagerTest.class,
    InternalAdapterTest.class,
    InternalConnectionTypeListTest.class,
-   InternalSystemConnectionMemoTest.class
+   InternalSystemConnectionMemoTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.internal package.
@@ -38,6 +39,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

@@ -13,7 +13,9 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="jclutterbuck2001@yahoo.co.uk" version="3.4" lastUpdated="2011/04/06"/>
+  <version author="nigel cliffe" version="3.5" lastUpdated="2017/06/15"/>
+  <!--  Re-instating meaningful labels to CV116 which were mysteriously changed somewhere without any documentation as to how that change happened  --> 
+  <!-- <version author="jclutterbuck2001@yahoo.co.uk" version="3.4" lastUpdated="2011/04/06"/>  -->
   <!--  v3.4: -->
   <!--  Split from old file - this one now applies to just SL75 & SL51 v100 onwards -->
   <!--  Major changes to Yard Mode and Uncoupling Panel CVs 55,56,58 & 151-152 all confirmed by testing (on v102 SL75) -->
@@ -2132,7 +2134,7 @@
             <choice>On</choice>
           </enumChoice>
         </enumVal>
-        <label>Switching 1</label>
+        <label>Ignore CV3 and CV4 accel/decel</label>
       </variable>
       <variable item="Switching 2" CV="116" mask="XXXXXXVX" default="0">
         <enumVal>
@@ -2143,7 +2145,7 @@
             <choice>On</choice>
           </enumChoice>
         </enumVal>
-        <label>Switching 2</label>
+        <label>Half speed running</label>
       </variable>
       <variable item="Switching 3" CV="116" mask="XXXXXVXX" default="0">
         <enumVal>
@@ -2154,7 +2156,7 @@
             <choice>On</choice>
           </enumChoice>
         </enumVal>
-        <label>Switching 3</label>
+        <label>Reverse 65% of forwards speed, (ignores "Yard" key)</label>
       </variable>
       <!-- CV116 = 8 brakes with diode 4-1 is active 
 CV116 = 16 brakes with Diode NOT richtungsabhangig 

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class provides a base implementation for Command Station/interface
- * dependent initilization for XPressNet. It adds the appropriate Managers via
+ * dependent initilization for XpressNet. It adds the appropriate Managers via
  * the Initialization Manager based on the Command Station Type.
  *
  * @author Paul Bender Copyright (C) 2003-2010
@@ -28,7 +28,7 @@ abstract public class AbstractXNetInitializationManager {
         /* spawn a thread to request version information and wait for the 
          command station to respond */
         if (log.isDebugEnabled()) {
-            log.debug("Starting XPressNet Initialization Process");
+            log.debug("Starting XpressNet Initialization Process");
         }
         systemMemo = memo;
         initThread = new Thread(new XNetInitializer(this));
@@ -67,7 +67,7 @@ abstract public class AbstractXNetInitializationManager {
 
             initTimer = setupInitTimer();
 
-            // Register as an XPressNet Listener
+            // Register as an XpressNet Listener
             systemMemo.getXNetTrafficController().addXNetListener(XNetInterface.CS_INFO, this);
 
             //Send Information request to LI100/LI100
@@ -158,6 +158,6 @@ abstract public class AbstractXNetInitializationManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class);
 
 }

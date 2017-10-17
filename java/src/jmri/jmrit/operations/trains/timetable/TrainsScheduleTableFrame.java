@@ -45,9 +45,9 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    TrainManager trainManager = TrainManager.instance();
-    TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
-    LocationManager locationManager = LocationManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+    TrainScheduleManager trainScheduleManager = InstanceManager.getDefault(TrainScheduleManager.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     TrainsScheduleTableModel trainsScheduleModel = new TrainsScheduleTableModel();
     javax.swing.JTable trainsScheduleTable = new javax.swing.JTable(trainsScheduleModel);
@@ -61,6 +61,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     JRadioButton sortByTime = new JRadioButton(Bundle.getMessage("Time"));
 
     JRadioButton noneButton = new JRadioButton(Bundle.getMessage("None"));
+    JRadioButton anyButton = new JRadioButton(Bundle.getMessage("Any"));
 
     // radio button groups
     ButtonGroup schGroup = new ButtonGroup();
@@ -204,6 +205,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         addRadioButtonAction(sortByName);
 
         addRadioButtonAction(noneButton);
+        addRadioButtonAction(anyButton);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -237,9 +239,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYNAME);
         } else if (ae.getSource() == sortByTime) {
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYTIME);
-        } else if (ae.getSource() == noneButton) {
+        } else if (ae.getSource() == noneButton || ae.getSource() == anyButton) {
             enableButtons(false);
-            commentTextArea.setText(""); // no text for the noneButton
+            commentTextArea.setText(""); // no text for the noneButton or anyButton
             // must be one of the schedule radio buttons
         } else {
             enableButtons(true);
@@ -272,12 +274,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!TrainCustomManifest.instance().excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.instance().getDirectoryName()
-                        + ", file name: " + TrainCustomManifest.instance().getFileName()); // NOI18N
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: " + InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()
+                        + ", file name: " + InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
+                            InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()}), Bundle
                         .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -294,13 +296,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
-                        TrainCustomManifest.instance().addCVSFile(csvFile);
+                        InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(csvFile);
                     }
                 }
             }
 
             // Now run the user specified custom Manifest processor program
-            TrainCustomManifest.instance().process();
+            InstanceManager.getDefault(TrainCustomManifest.class).process();
         }
         if (ae.getSource() == switchListsButton) {
             trainScheduleManager.buildSwitchLists();
@@ -325,9 +327,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
      */
     private void updateControlPanel() {
         schedule.removeAll();
-        noneButton.setName(""); // Name holds schedule id for the selected radio button
+        noneButton.setName(TrainSchedule.NONE); // Name holds schedule id for the selected radio button
         noneButton.setSelected(true);
-        commentTextArea.setText(""); // no text for the noneButton
+        commentTextArea.setText(""); // no text for the noneButton or anyButton
         enableButtons(false);
         schedule.add(noneButton);
         schGroup.add(noneButton);
@@ -350,6 +352,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                 }
             }
         }
+        anyButton.setName(TrainSchedule.ANY); // Name holds schedule id for the selected radio button
+        schedule.add(anyButton);
+        schGroup.add(anyButton);
+        anyButton.setSelected(trainManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY));
         schedule.revalidate();
     }
 
@@ -529,5 +535,5 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsScheduleTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsScheduleTableFrame.class);
 }

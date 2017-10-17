@@ -26,6 +26,9 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     /**
      * Mrc turnouts use any address allowed as an accessory decoder address on
      * the particular command station.
+     * @param number turnout address value
+     * @param tc traffic controller for connection
+     * @param p system prefix for connection
      */
     public MrcTurnout(int number, MrcTrafficController tc, String p) {
         super(p + "T" + number);
@@ -116,7 +119,7 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcTurnout.class);
 
 }
 

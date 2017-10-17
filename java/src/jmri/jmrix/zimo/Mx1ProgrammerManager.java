@@ -9,11 +9,11 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers for MRC
  * systems
  *
- * @see jmri.ProgrammerManager
+ * @see jmri.managers.DefaultProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
- * 
+ *
  */
 public class Mx1ProgrammerManager extends DefaultProgrammerManager {
 
@@ -50,6 +50,3 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 }
-
-
-

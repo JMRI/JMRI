@@ -5,7 +5,7 @@ import jmri.PowerManager;
 
 /**
  * PowerManager implementation for controlling layout power from an XPA+modem
- * connected to an XPressNet based system.
+ * connected to an XpressNet based system.
  *
  * @author	Paul Bender Copyright (C) 2004
   *
@@ -100,5 +100,3 @@ public class XpaPowerManager implements PowerManager, XpaListener {
     }
 
 }
-
-

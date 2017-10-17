@@ -1,10 +1,10 @@
 package jmri.jmrix.dccpp;
 
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
 
 /**
  * Abstract base for classes representing a DCC++ communications port
@@ -20,7 +20,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
 
     protected SerialPort activeSerialPort = null;
 
-    private boolean OutputBufferEmpty = true;
+    private boolean outputBufferEmpty = true;
 
     public DCCppSerialPortController() {
         super(new DCCppSystemConnectionMemo());
@@ -55,23 +55,23 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     public boolean okToSend() {
         if ((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
             if (checkBuffer) {
-                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
-                return (activeSerialPort.isCTS() && OutputBufferEmpty);
+                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + outputBufferEmpty);
+                return (activeSerialPort.isCTS() && outputBufferEmpty);
             } else {
                 log.debug("CTS: " + activeSerialPort.isCTS());
                 return (activeSerialPort.isCTS());
             }
         } else {
             if (checkBuffer) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
-                return (OutputBufferEmpty);
+                log.debug("Buffer Empty: " + outputBufferEmpty);
+                return (outputBufferEmpty);
             } else {
                 log.debug("No Flow Control or Buffer Check");
                 return (true);
             }
         }
     }
-
+    
     /**
      * we need a way to say if the output buffer is empty or full this should
      * only be set to false by external processes
@@ -79,16 +79,19 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
      */
     @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
-        OutputBufferEmpty = s;
+        outputBufferEmpty = s;
     }
-
-
+    
+    
     /* Option 2 is not currently used with RxTx 2.0.  In the past, it
-     was used for the "check buffer status when sending" If this is still set        in a configuration file, we need to handle it, but we are not writing it        to new configuration files. */
+       was used for the "check buffer status when sending" If this is still set
+       in a configuration file, we need to handle it, but we are not writing it
+       to new configuration files. */
     /*public String getCurrentOption2Setting() {
-     if(getOptionState(option2Name)==null) return("no");
+      if(getOptionState(option2Name)==null) return("no");
      else return getOptionState(option2Name);
      }*/
+
     protected String[] validOption2 = new String[]{"yes", "no"};
     private boolean checkBuffer = false;
 
@@ -96,13 +99,13 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     protected void setCheckBuffer(boolean b) {
         checkBuffer = b;
     }
-
+    
     @Override
     public DCCppSystemConnectionMemo getSystemConnectionMemo() {
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSerialPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSerialPortController.class);
 
 }
 

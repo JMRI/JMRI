@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
-public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
+public abstract class AbstractSensor extends AbstractNamedBean implements Sensor {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
@@ -78,7 +78,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     @Override
-    public void useDefaultTimerSettings(boolean boo) {
+    public void setUseDefaultTimerSettings(boolean boo) {
         if (boo == useDefaultTimerSettings) {
             return;
         }
@@ -91,9 +91,22 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     @Override
-    public boolean useDefaultTimerSettings() {
+    public boolean getUseDefaultTimerSettings() {
         return useDefaultTimerSettings;
     }
+    
+    @Override
+    @Deprecated
+    public void useDefaultTimerSettings(boolean boo) {
+        setUseDefaultTimerSettings(boo);
+    }
+    
+    @Override
+    @Deprecated
+    public boolean useDefaultTimerSettings() {
+        return getUseDefaultTimerSettings();
+    }
+    
 
     protected Thread thr;
     protected Runnable r;

@@ -11,9 +11,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.throttle.ThrottleFrameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +47,7 @@ public class LocoIcon extends PositionableLabel {
                 "resources/icons/markers/loco-white.gif"), editor);
         _locoColor = Color.WHITE;
         setDisplayLevel(Editor.MARKERS);
-        setShowTooltip(false);
+        setShowToolTip(false);
         //setEditable(false);
         _text = true; //Markers are an icon with text
         setPopupUtility(new PositionablePopupUtil(this, this) {       // need this class for Font Edit
@@ -83,11 +85,11 @@ public class LocoIcon extends PositionableLabel {
 
     // Marker tool tips are always disabled
     @Override
-    public void setShowTooltip(boolean set) {
-        super.setShowTooltip(false);
+    public void setShowToolTip(boolean set) {
+        super.setShowToolTip(false);
     }
 
-    // Markers are always positionable 
+    // Markers are always positionable
     @Override
     public void setPositionable(boolean enabled) {
         super.setPositionable(true);
@@ -110,7 +112,7 @@ public class LocoIcon extends PositionableLabel {
             popup.add(new AbstractAction("Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.getAddressPanel().setRosterEntry(_entry);
                     tf.toFront();
                 }
@@ -324,7 +326,7 @@ public class LocoIcon extends PositionableLabel {
                     if (name == null || name.length() == 0) {
                         name = getUnRotatedText();
                     }
-                    if (TrackerTableAction.markNewTracker(block, name) != null) {
+                    if (InstanceManager.getDefault(TrackerTableAction.class).markNewTracker(block, name) != null) {
                         dock();
                     }
                 }
@@ -333,5 +335,5 @@ public class LocoIcon extends PositionableLabel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIcon.class);
 }

@@ -20,18 +20,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
 
     @Test
     public void testSendThenRcvReply() throws Exception {
-        EasyDccTrafficController c = (EasyDccTrafficController)tc;
-        /*EasyDccTrafficController c = new EasyDccTrafficController() {
-            // skip timeout message
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
-            }
-
-            public void receiveLoop() {
-            }
-
-            protected void portWarn(Exception e) {
-            }
-        };*/
+        c = (EasyDccTrafficController)tc;
 
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -151,10 +140,13 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     DataOutputStream tistream; // tests write to this
     DataInputStream istream;  // so the traffic controller can read from this
 
+    EasyDccTrafficController c;
+    
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
+        c = null;
         apps.tests.Log4JFixture.setUp();
         tc = new EasyDccTrafficController();
     }
@@ -162,6 +154,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     @Override
     @After
     public void tearDown() {
+        if (c!=null) c.terminateThreads();
         apps.tests.Log4JFixture.tearDown();
     }
 

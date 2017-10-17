@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -28,7 +29,7 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
 
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     public PrintTrainsByCarTypesAction(String actionName, Frame frame, boolean preview, Component pWho) {
         super(actionName);
@@ -60,7 +61,7 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
 
         // Loop through the car types showing which locations and tracks will
         // service that car type
-        String carTypes[] = CarTypes.instance().getNames();
+        String carTypes[] = InstanceManager.getDefault(CarTypes.class).getNames();
 
         List<Train> trains = trainManager.getTrainsByNameList();
 
@@ -96,5 +97,5 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainsByCarTypesAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintTrainsByCarTypesAction.class);
 }

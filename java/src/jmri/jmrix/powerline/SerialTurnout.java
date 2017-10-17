@@ -27,6 +27,9 @@ public class SerialTurnout extends AbstractTurnout {
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
+     * @param systemName system name
+     * @param tc traffic controller
+     * @param userName user name
      */
     public SerialTurnout(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, userName);
@@ -90,7 +93,7 @@ public class SerialTurnout extends AbstractTurnout {
         tc.sendX10Sequence(out, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
 }
 
 

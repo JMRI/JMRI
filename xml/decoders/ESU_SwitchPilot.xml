@@ -70,7 +70,7 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="SwitchPilot Servo (2013)" connector ="Wires">
+            <model model="SwitchPilot Servo (2013)" lowVersionID="177" highVersionID="177"  connector ="Wires">
                 <output name="1" label="Servo|1"/>
                 <output name="2" label="Servo|2"/>
                 <output name="3" label="Servo|3"/>
@@ -94,7 +94,7 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="SwitchPilot Servo V2.0" lowVersionID="153" highVersionID="153" connector ="Wires" productID="33554522">
+            <model model="SwitchPilot Servo V2.0" lowVersionID="153" highVersionID="200" connector ="Wires" productID="33554522">
                 <output name="1" label="Servo|1"/>
                 <output name="2" label="Servo|2"/>
                 <output name="3" label="Servo|3"/>

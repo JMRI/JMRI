@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -57,7 +58,7 @@ public class QualifiedVarTest extends TestCase {
                 p.setVisible(true);
 
                 // close the window for cleanliness
-                p.dispose();
+                JUnitUtil.dispose(p);
             }
         });
     }
@@ -146,12 +147,6 @@ public class QualifiedVarTest extends TestCase {
                         )
                 )
                 .addContent(new Element("pane")
-                        .setAttribute("name", "iCV")
-                        .addContent(new Element("column")
-                                .addContent(new Element("indxcvtable"))
-                        )
-                )
-                .addContent(new Element("pane")
                         .setAttribute("name", "CV3>50")
                         .addContent(new Element("qualifier")
                                 .addContent(new Element("variableref")
@@ -198,17 +193,17 @@ public class QualifiedVarTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class);
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

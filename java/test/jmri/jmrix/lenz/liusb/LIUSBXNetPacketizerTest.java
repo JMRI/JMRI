@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.liusb;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,14 +44,11 @@ public class LIUSBXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new LIUSBXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        tc = null;
-        apps.tests.Log4JFixture.tearDown();
+        tc = new LIUSBXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation()) {
+            @Override
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
+            }
+        };
     }
 
 }

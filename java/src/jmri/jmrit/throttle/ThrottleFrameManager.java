@@ -5,32 +5,28 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Interface for allocating and deallocating throttles frames. Not to be
- * confused with ThrottleManager
+ * confused with ThrottleManager.
  *
  * @author Glen Oberhauser
  */
-public class ThrottleFrameManager {
+public class ThrottleFrameManager implements InstanceManagerAutoDefault {
 
-    /**
-     * record the single instance of Roster *
-     */
-    private static ThrottleFrameManager instance = null;
-
-    private static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
-    private static int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
+    private final static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
+    private final static int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
 
     private int activeFrame;
-    private ThrottleCyclingKeyListener throttleCycler;
+    private final ThrottleCyclingKeyListener throttleCycler;
 
     private ArrayList<ThrottleWindow> throttleWindows;
 
-    private ThrottlesPreferences throttlesPref;
     private JmriJFrame throttlePreferencesFrame;
     private JmriJFrame throttlesListFrame;
     private ThrottlesListPanel throttlesListPanel;
@@ -38,25 +34,25 @@ public class ThrottleFrameManager {
     /**
      * Constructor for the ThrottleFrameManager object
      */
-    private ThrottleFrameManager() // can only be created by instance() => private
-    {
+    public ThrottleFrameManager() {
         throttleCycler = new ThrottleCyclingKeyListener();
-        throttleWindows = new ArrayList<ThrottleWindow>(0);
-        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.throttle.ThrottlesPreferences.class) == null) {
-            jmri.InstanceManager.store(new jmri.jmrit.throttle.ThrottlesPreferences(), jmri.jmrit.throttle.ThrottlesPreferences.class);
+        throttleWindows = new ArrayList<>(0);
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
         }
-        throttlesPref = jmri.InstanceManager.getDefault(jmri.jmrit.throttle.ThrottlesPreferences.class);
         buildThrottleListFrame();
     }
 
     /**
      * Get the singleton instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static ThrottleFrameManager instance() {
-        if (instance == null) {
-            instance = new ThrottleFrameManager();
-        }
-        return instance;
+        return InstanceManager.getDefault(ThrottleFrameManager.class);
     }
 
     /**
@@ -106,7 +102,7 @@ public class ThrottleFrameManager {
             ThrottleWindow frame = i.next();
             destroyThrottleWindow(frame);
         }
-        throttleWindows = new ArrayList<ThrottleWindow>(0);
+        throttleWindows = new ArrayList<>(0);
     }
 
     /**
@@ -153,14 +149,14 @@ public class ThrottleFrameManager {
         if (throttleWindows == null) {
             return null;
         }
-        if (throttleWindows.size() == 0) {
+        if (throttleWindows.isEmpty()) {
             return null;
         }
         return throttleWindows.get(activeFrame);
     }
 
     public ThrottlesPreferences getThrottlesPreferences() {
-        return throttlesPref;
+        return InstanceManager.getDefault(ThrottlesPreferences.class);
     }
 
     /**
@@ -220,5 +216,5 @@ public class ThrottleFrameManager {
         throttlePreferencesFrame.requestFocus();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
 }

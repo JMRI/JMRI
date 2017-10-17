@@ -1,19 +1,22 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.ieee802154.IEEE802154PortController;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to IEEE802.15.4 devices via a serial comm port. Derived from
@@ -51,7 +54,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
             // try to set it for serial
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -151,16 +154,12 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (IOException ioe) {
-            log.error("IOException exception while opening port " + portName + " trace follows: " + ioe);
-            ioe.printStackTrace();
-            return "IO exception while opening port " + portName + ": " + ioe;
-        } catch (java.util.TooManyListenersException tmle) {
-            log.error("TooManyListenersException while opening port " + portName + " trace follows: " + tmle);
-            tmle.printStackTrace();
-            return "Too Many Listeners exception while opening port " + portName + ": " + tmle;
+        } catch (IOException | TooManyListenersException ex) {
+            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
+            ex.printStackTrace();
+            return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
         return null; // normal operation
@@ -168,6 +167,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     /**
      * Can the port accept additional characters? Yes, always
+     * @return always true
      */
     public boolean okToSend() {
         return true;
@@ -220,21 +220,18 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     /**
      * Local method to do specific port configuration
+     * @throws UnsupportedCommOperationException if options not supported by port
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
 
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -260,18 +257,22 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     /**
      * Option 1 not used, so return a null string.
+     * @return fixed string 'Adapter'
      */
     public String option1Name() {
         return "Adapter";
     }
 
     private String[] validSpeeds = new String[]{"(automatic)"};
+    @SuppressWarnings("unused")
     private int[] validSpeedValues = new int[]{9600};
+    @SuppressWarnings("unused")
     private String selectedSpeed = validSpeeds[0];
 
     /**
      * Get an array of valid values for "option 2"; used to display valid
      * options. May not be null, but may have zero entries
+     * @return empty string array
      */
     public String[] validOption2() {
         return new String[]{""};
@@ -280,6 +281,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Get a String that says what Option 2 represents May be an empty string,
      * but will not be null
+     * @return empty string
      */
     public String option2Name() {
         return "";
@@ -288,6 +290,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     // private control members
     protected InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

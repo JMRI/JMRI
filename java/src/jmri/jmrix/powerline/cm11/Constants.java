@@ -22,6 +22,8 @@ public class Constants {
 
     /**
      * Pretty-print a header code
+     * @param b header byte
+     * @return  formated as text of header byte
      */
     public static String formatHeaderByte(int b) {
         return "Dim: " + ((b >> 3) & 0x1F)

@@ -1,5 +1,6 @@
 package jmri;
 
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,7 @@ import jmri.managers.AbstractManager;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2011
  */
-public class TransitManager extends AbstractManager
-        implements java.beans.PropertyChangeListener {
+public class TransitManager extends AbstractManager<Transit> implements PropertyChangeListener, InstanceManagerAutoDefault {
 
     public TransitManager() {
         super();
@@ -145,11 +145,11 @@ public class TransitManager extends AbstractManager
 
     public Transit getBySystemName(String name) {
         String key = name.toUpperCase();
-        return (Transit) _tsys.get(key);
+        return  _tsys.get(key);
     }
 
     public Transit getByUserName(String key) {
-        return (Transit) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -158,7 +158,7 @@ public class TransitManager extends AbstractManager
      * @param z the transit to remove
      */
     public void deleteTransit(Transit z) {
-        // delete the Transit    
+        // delete the Transit
         deregister(z);
         z.dispose();
     }
@@ -224,13 +224,15 @@ public class TransitManager extends AbstractManager
         return list;
     }
 
-    static TransitManager _instance = null;
-
+    /**
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public TransitManager instance() {
-        if (_instance == null) {
-            _instance = new TransitManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(TransitManager.class);
     }
 
     @Override

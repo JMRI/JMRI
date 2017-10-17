@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the CBUS-specific Reporter implementation.
- *
+ * <p>
  * System names are "MRnnn", where nnn is the reporter number without padding.
  * <hr>
  * This file is part of JMRI.
@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Mark Riddoch Copyright (C) 2015
  */
@@ -48,11 +47,17 @@ public class CbusReporterManager extends AbstractReporterManager implements
     TrafficController tc;
     String prefix;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         if (tc != null) {
@@ -61,10 +66,13 @@ public class CbusReporterManager extends AbstractReporterManager implements
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter t;
-        log.debug("ReporterManager create new CbusReporter: " + systemName);
+        log.debug("ReporterManager create new CbusReporter: {}", systemName);
         int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         t = new CbusReporter(addr, tc, prefix);
         t.setUserName(userName);
@@ -73,13 +81,42 @@ public class CbusReporterManager extends AbstractReporterManager implements
         return t;
     }
 
-    /* (non-Javadoc)
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
+        try {
+            // try to parse the string; success returns true
+            Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1, systemName.length()));
+        } catch (NumberFormatException e) {
+            log.debug("Warning: illegal character in number field of system name: {}", systemName);
+            return NameValidity.INVALID;
+        }
+        return NameValidity.VALID;
+    }
+
+    /**
+     * Provide a manager-specific tool tip for the Add new item beantable pane.
+     *
+     * @return the tool tip
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddReporterEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @see jmri.jmrix.can.CanListener#message(jmri.jmrix.can.CanMessage)
      */
     @Override
     public void message(CanMessage m) {
         // TODO Auto-generated method stub
-        log.debug("CbusReporterManager: handle message: " + m.getOpCode());
+        log.debug("CbusReporterManager: handle message: {}", m.getOpCode());
         if (m.getOpCode() != CbusConstants.CBUS_DDES) {
             return;
         }
@@ -91,13 +128,15 @@ public class CbusReporterManager extends AbstractReporterManager implements
 
     }
 
-    /* (non-Javadoc)
+    /**
+     * {@inheritDoc}
+     *
      * @see jmri.jmrix.can.CanListener#reply(jmri.jmrix.can.CanReply)
      */
     @Override
     public void reply(CanReply m) {
         // TODO Auto-generated method stub
-        log.debug("CbusReporterManager: handle reply: " + m.getOpCode() + " node: " + CbusMessage.getNodeNumber(m));
+        log.debug("CbusReporterManager: handle reply: {} node: {}", m.getOpCode(), CbusMessage.getNodeNumber(m));
         if (m.getOpCode() != CbusConstants.CBUS_DDES || m.getOpCode() != CbusConstants.CBUS_ACDAT) {
             return;
         }
@@ -109,5 +148,6 @@ public class CbusReporterManager extends AbstractReporterManager implements
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusReporterManager.class);
+
 }

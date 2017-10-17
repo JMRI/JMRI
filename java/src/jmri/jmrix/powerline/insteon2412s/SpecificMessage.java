@@ -3,6 +3,8 @@ package jmri.jmrix.powerline.insteon2412s;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a serial packet.
@@ -99,6 +101,9 @@ public class SpecificMessage extends SerialMessage {
                             case Constants.FLAG_TYPE_GBCLEANNAK:
                                 text.append(" Group Broadcast Cleanup NAK");
                                 break;
+                            default:
+                                log.warn("Unhandled flag type: {}", getElement(5) & Constants.FLAG_MASK_MSGTYPE);
+                                break;
                         }
                         text.append(" message,");
                         text.append(String.format(" %d hops left", (getElement(5) & Constants.FLAG_MASK_HOPSLEFT >> Constants.FLAG_SHIFT_HOPSLEFT)));
@@ -179,6 +184,7 @@ public class SpecificMessage extends SerialMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l length of expected reply
      */
     public SpecificMessage(byte[] a, int l) {
         super(a, l);
@@ -208,8 +214,10 @@ public class SpecificMessage extends SerialMessage {
 
     /**
      * create an Insteon message with the X10 address
+     * @param housecode  X10 housecode
+     * @param devicecode X10 devicecode
      *
-     * @return message
+     * @return message   formated message
      */
     static public SpecificMessage getX10Address(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(4);
@@ -224,7 +232,11 @@ public class SpecificMessage extends SerialMessage {
     /**
      * create an Insteon message with the X10 address and dim steps
      *
-     * @return message
+     * @param housecode  X10 housecode
+     * @param devicecode X10 devicecode
+     * @param dimcode    value for dimming
+     *
+     * @return message   formated message
      */
     static public SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(4);
@@ -294,6 +306,8 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(SpecificMessage.class);
 }
 
 

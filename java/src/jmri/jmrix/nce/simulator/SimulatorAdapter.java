@@ -219,17 +219,12 @@ public class SimulatorAdapter extends NcePortController implements
             log.info("NCE Simulator Started");
         }
         while (true) {
-            try {
-                wait(100);
-            } catch (Exception e) {
-
-            }
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 buf.append("Nce Simulator Thread received message: ");
                 for (int i = 0; i < m.getNumDataElements(); i++) {
-                    buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+                    buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
                 }
                 log.debug(buf.toString());
             }
@@ -237,10 +232,10 @@ public class SimulatorAdapter extends NcePortController implements
                 NceReply r = generateReply(m);
                 writeReply(r);
                 if (log.isDebugEnabled() && r != null) {
-                    StringBuffer buf = new StringBuffer();
+                    StringBuilder buf = new StringBuilder();
                     buf.append("Nce Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                     }
                     log.debug(buf.toString());
                 }
@@ -288,7 +283,7 @@ public class SimulatorAdapter extends NcePortController implements
         {
             return null;      // command less than 0x80 (times out)
         }
-        if (command < 0x80 || command > 0xBF) { // Command is out of range
+        if (command > 0xBF) { // Command is out of range
             reply.setElement(0, NCE_ERROR);  // Nce command not supported
             return reply;
         }
@@ -342,15 +337,7 @@ public class SimulatorAdapter extends NcePortController implements
                 accessoryCommand(m, reply);
                 break;
             case NceMessage.READ_DIR_CV_CMD:
-                reply.setElement(0, 123);   // dummy data
-                //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
-                reply.setElement(1, NCE_OKAY);  // forces succeed
-                break;
             case NceMessage.READ_PAGED_CV_CMD:
-                reply.setElement(0, 123);   // dummy data
-                //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
-                reply.setElement(1, NCE_OKAY);  // forces succeed
-                break;
             case NceMessage.READ_REG_CMD:
                 reply.setElement(0, 123);   // dummy data
                 //reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
@@ -504,6 +491,6 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

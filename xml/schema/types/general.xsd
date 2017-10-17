@@ -244,7 +244,7 @@
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
         <!-- accepts, but should not, the greater than and less than characters in file names -->
-      <xs:pattern value="((program:|preference:|settings:|home:|profile:|file:|[a-zA-Z]:|\/)(\/|\\|[^/?*:;{}\\]+)+|https?:\/\/.+\/?.*)"/>
+      <xs:pattern value="((program:|preference:|settings:|home:|profile:|file:|[a-zA-Z]:|/)(/|\\|[^\\/?*:;{}]+)+|https?://.+/?.*)"/>
     </xs:restriction>
   </xs:simpleType>
 

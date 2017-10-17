@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleEditFrame;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
@@ -30,7 +31,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
     JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));
     JLabel textSchError = new JLabel();
     JButton editScheduleButton = new JButton();
-    JComboBox<Schedule> comboBoxSchedules = ScheduleManager.instance().getComboBox();
+    JComboBox<Schedule> comboBoxSchedules = InstanceManager.getDefault(ScheduleManager.class).getComboBox();
 
     JPanel panelSchedule = panelOpt4;
 
@@ -74,7 +75,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         // Select the spur's Schedule
         updateScheduleComboBox();
 
-        ScheduleManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(ScheduleManager.class).addPropertyChangeListener(this);
         
         // finish
         panelOrder.setVisible(false); // Car order out of spurs is not available
@@ -146,9 +147,9 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
     }
 
     private void updateScheduleComboBox() {
-        ScheduleManager.instance().updateComboBox(comboBoxSchedules);
+        InstanceManager.getDefault(ScheduleManager.class).updateComboBox(comboBoxSchedules);
         if (_track != null) {
-            Schedule sch = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
+            Schedule sch = InstanceManager.getDefault(ScheduleManager.class).getScheduleById(_track.getScheduleId());
             comboBoxSchedules.setSelectedItem(sch);
             textSchError.setText(_track.checkScheduleValid());
             if (sch != null) {
@@ -160,9 +161,9 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 
     @Override
     public void dispose() {
-        ScheduleManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(ScheduleManager.class).removePropertyChangeListener(this);
         if (_track != null) {
-            Schedule sch = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
+            Schedule sch = InstanceManager.getDefault(ScheduleManager.class).getScheduleById(_track.getScheduleId());
             if (sch != null)
                 sch.removePropertyChangeListener(this);
         }
@@ -185,5 +186,5 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.propertyChange(e);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpurEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpurEditFrame.class);
 }

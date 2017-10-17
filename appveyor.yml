@@ -10,6 +10,10 @@ install:
   - mvn -version
 build: off
 
+environment:
+  global:
+    MAVEN_OPTS: "-Xmx2048M"
+
 before_test:
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/set-screenresolution.ps1'))
 - ps: Set-ScreenResolution 1280 768
@@ -26,6 +30,9 @@ on_finish:
     )
 
 deploy: off
+
+artifacts:
+  - path: instanceManagerSequence.txt
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml

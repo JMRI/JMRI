@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from C/MRI serial messages.
+ * Converts Stream-based I/O to/from Maple serial messages.
  * <P>
  * The "SerialInterface" side sends/receives message objects.
  * <P>
@@ -77,7 +77,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for Maple serial");
+        log.warn("enterProgMode doesn't make sense for Maple serial");
         return null;
     }
 
@@ -377,5 +377,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return len;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+
 }

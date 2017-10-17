@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     RosterToEcosTest.class,
     RemoveObjectFromEcosTest.class,
-    GetEcosObjectNumberTest.class
+    GetEcosObjectNumberTest.class,
+    EcosLocoToRosterTest.class,
+    BundleTest.class,
+    AddRosterEntryToEcosTest.class
 })
 /**
  * Tests for the jmri.jmrix.ecos.utilities package.
@@ -32,6 +35,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

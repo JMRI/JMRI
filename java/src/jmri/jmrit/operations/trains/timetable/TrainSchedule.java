@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains.timetable;
 
 import java.util.ArrayList;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import org.jdom2.Element;
@@ -16,7 +17,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainSchedule {
     
-    public String NONE = "";
+    public static final String NONE = "";
+    public static final String ANY = "ANY"; // allow cars to be picked up any day of the week NOI18N
 
     public static final String NAME_CHANGED_PROPERTY = "trainScheduleName"; // NOI18N
     public static final String SCHEDULE_CHANGED_PROPERTY = "trainScheduleChanged"; // NOI18N
@@ -151,10 +153,10 @@ public class TrainSchedule {
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        TrainManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainSchedule.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainSchedule.class);
 
 }

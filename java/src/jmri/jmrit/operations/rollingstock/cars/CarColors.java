@@ -1,17 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the colors that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  */
-public class CarColors extends RollingStockAttribute {
+public class CarColors extends RollingStockAttribute implements InstanceManagerAutoDefault {
 
     private static final String COLORS = Bundle.getMessage("carColors");
     public static final String CARCOLORS_CHANGED_PROPERTY = "CarColors"; // NOI18N
@@ -21,20 +20,15 @@ public class CarColors extends RollingStockAttribute {
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private static CarColors _instance = null;
-
+    @Deprecated
     public static synchronized CarColors instance() {
-        if (_instance == null) {
-            log.debug("CarColors creating instance");
-            // create and load
-            _instance = new CarColors();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("CarColors returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(CarColors.class);
     }
 
     @Override
@@ -64,8 +58,8 @@ public class CarColors extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
-     * @param root The common Element for operations-cars.dtd.
      *
+     * @param root The common Element for operations-cars.dtd.
      */
     public void store(Element root) {
         store(root, Xml.COLORS, Xml.COLOR, Xml.CAR_COLORS);
@@ -77,10 +71,10 @@ public class CarColors extends RollingStockAttribute {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        CarManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarColors.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(CarColors.class);
 
 }

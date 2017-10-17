@@ -6,19 +6,19 @@
 
 import jmri
 
-import gnu.io
+import purejavacomm
 #import ch.ntb.usb
 
 def portType(type):
-    if type == gnu.io.CommPortIdentifier.PORT_PARALLEL:
+    if type == purejavacomm.CommPortIdentifier.PORT_PARALLEL:
         return "Parallel"
-    elif type == gnu.io.CommPortIdentifier.PORT_SERIAL:
+    elif type == purejavacomm.CommPortIdentifier.PORT_SERIAL:
         return "Serial"
-    elif type == gnu.io.CommPortIdentifier.PORT_I2C:
+    elif type == purejavacomm.CommPortIdentifier.PORT_I2C:
         return "I2C"
-    elif type == gnu.io.CommPortIdentifier.PORT_RS485:
+    elif type == purejavacomm.CommPortIdentifier.PORT_RS485:
         return "RS485"
-    elif type == gnu.io.CommPortIdentifier.PORT_RAW:
+    elif type == purejavacomm.CommPortIdentifier.PORT_RAW:
         return "Raw"
     else:
         return "Unknown type"
@@ -27,7 +27,7 @@ print "---------------------------------"
 print "Enumerating available com ports"
 print "---------------------------------"
 
-portnames = gnu.io.CommPortIdentifier.getPortIdentifiers()
+portnames = purejavacomm.CommPortIdentifier.getPortIdentifiers()
 
 for portname in portnames:
     print "Port: ", portname.name, " type: ", portType(portname.getPortType())

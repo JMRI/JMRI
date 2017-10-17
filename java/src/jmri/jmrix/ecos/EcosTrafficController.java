@@ -60,14 +60,15 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     /**
-     * CommandStation implementation This is NOT Supported in the ECOS
+     * CommandStation implementation.
+     * This is NOT Supported in the ECoS
      */
     @Override
     public void sendPacket(byte[] packet, int count) {
     }
 
     /**
-     * Forward a EcosMessage to all registered EcosInterface listeners.
+     * Forward an EcosMessage to all registered EcosInterface listeners.
      */
     @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
@@ -107,7 +108,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
 
     protected boolean unsolicitedSensorMessageSeen = false;
 
-    //Ecos doesn't support this function.
+    /**
+     *  ECoS doesn't support this function.
+     */
     @Override
     protected AbstractMRMessage enterProgMode() {
         return EcosMessage.getProgMode();
@@ -120,7 +123,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     /**
-     * static function returning the EcosTrafficController instance to use.
+     * Static function returning the EcosTrafficController instance to use.
      *
      * @return The registered EcosTrafficController instance for general use, if
      *         need be creating one.
@@ -148,7 +151,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return reply;
     }
 
-    // for now, receive always OK
+    /**
+     * @return for now, receive always OK
+     */
     @Override
     protected boolean canReceive() {
         return true;
@@ -307,7 +312,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     @Override
     public String getUserName() {
         if (adaptermemo == null) {
-            return "ECoS";
+            return "ECoS"; // NOI18N
         }
         return adaptermemo.getUserName();
     }
@@ -319,5 +324,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
-    private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class);
+
 }

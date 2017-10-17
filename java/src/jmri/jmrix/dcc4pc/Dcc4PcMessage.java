@@ -36,7 +36,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     public Dcc4PcMessage(byte[] packet) {
         this((packet.length));
         int i = 0; // counter of byte in output message
-        int j = 0; // counter of byte in input packet
+        int j; // counter of byte in input packet
         setBinary(true);
         // add each byte of the input message
         for (j = 0; j < packet.length; j++) {
@@ -90,11 +90,13 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String toHexString() {
 
-        StringBuffer buf = new StringBuffer();
-        buf.append("0x" + Integer.toHexString(0xFF & _dataChars[0]));
+        StringBuilder buf = new StringBuilder();
+        buf.append("0x");
+        buf.append(Integer.toHexString(0xFF & _dataChars[0]));
         for (int i = 1; i < _nDataChars; i++) {
-            //s+=;
-            buf.append(", 0x" + Integer.toHexString(0xFF & _dataChars[i]));
+            buf.append(".0x");
+            buf.append(Integer.toHexString(0xff & _dataChars[i]));
+            //buf.append(", 0x" + Integer.toHexString(0xFF & _dataChars[i]));
         }
         return buf.toString();
     }
@@ -132,63 +134,105 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    boolean response = false;
+    boolean isResponse = false;
 
     public boolean isGetResponse() {
-        return response;
+        return isResponse;
     }
-
+    
+    int board = -1;
+    
+    public int getBoard(){
+        return board;
+    }
+    
+    int messageType = -1;
+    public int getMessageType(){
+        return messageType;
+    }
+    
+    static final int INFO = 0x00;
+    static final int DESC = 0x01;
+    static final int SERIAL = 0x02;
+    static final int CHILDENABLEDINPUTS = 0x07;
+    static final int CHILDRESET = 0x09;
+    static final int CHILDPOLL = 0x0a;
+    static final int RESPONSE = 0x0c;
+    
     static public Dcc4PcMessage getInfo(int address) {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) 0x00});
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) INFO});
         m.childBoard = true;
+        m.board = address;
+        m.messageType = INFO;
+        m.setRetries(2);
         return m;
     }
 
     static public Dcc4PcMessage getDescription(int address) {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) 0x01});
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) DESC});
         m.childBoard = true;
+        m.board = address;
+        m.messageType = DESC;
         return m;
     }
 
     static public Dcc4PcMessage getSerialNumber(int address) {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) 0x02});
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) SERIAL});
         m.childBoard = true;
+        m.board = address;
+        m.messageType = SERIAL;
         return m;
     }
 
     static public Dcc4PcMessage resetBoardData(int address) {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) 0x09});
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDRESET});
         m.childBoard = true;
+        m.board = address;
+        m.messageType = CHILDRESET;
+        return m;
+    }
+       
+    static public Dcc4PcMessage pollBoard(int address){
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDPOLL});
+        m.childBoard = true;
+        m.setTimeout(500);
+        m.board = address;
+        m.messageType = CHILDPOLL;
         return m;
     }
 
     static public Dcc4PcMessage getEnabledInputs(int address) {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) 0x07});
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDENABLEDINPUTS});
         m.childBoard = true;
+        m.board = address;
+        m.messageType = CHILDENABLEDINPUTS;
         return m;
     }
 
     static public Dcc4PcMessage getInfo() {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x00});
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) INFO});
+        m.messageType = INFO;
         return m;
     }
 
     static public Dcc4PcMessage getResponse() {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0C});
-        m.response = true;
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) RESPONSE});
+        m.isResponse = true;
+        m.messageType = RESPONSE;
         return m;
     }
 
     static public Dcc4PcMessage getDescription() {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x01});
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) DESC});
+        m.messageType = DESC;
         return m;
     }
 
     static public Dcc4PcMessage getSerialNumber() {
-        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x02});
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) SERIAL});
+        m.messageType = SERIAL;
         return m;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class.getName());
-
+    
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class);
 }

@@ -52,17 +52,17 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2005, 2006
  * @author Randall Wood Copyright 2012, 2016
  */
-public final class WebServer implements LifeCycle.Listener {
+public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     private static enum Registration {
         DENIAL, REDIRECTION, RESOURCE, SERVLET
-    };
-    private Server server;
+    }
+    private final Server server;
     private ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
     private ShutDownTask shutDownTask = null;
     private final HashMap<String, Registration> registeredUrls = new HashMap<>();
-    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class);
 
     /**
      * Create a WebServer instance with the default preferences.
@@ -77,6 +77,10 @@ public final class WebServer implements LifeCycle.Listener {
      * @param preferences the preferences
      */
     protected WebServer(WebServerPreferences preferences) {
+        QueuedThreadPool threadPool = new QueuedThreadPool();
+        threadPool.setName("WebServer");
+        threadPool.setMaxThreads(1000);
+        server = new Server(threadPool);
         this.preferences = preferences;
     }
 
@@ -96,12 +100,9 @@ public final class WebServer implements LifeCycle.Listener {
     /**
      * Start the web server.
      */
+    @Override
     public void start() {
-        if (server == null) {
-            QueuedThreadPool threadPool = new QueuedThreadPool();
-            threadPool.setName("WebServer");
-            threadPool.setMaxThreads(1000);
-            server = new Server(threadPool);
+        if (!server.isRunning()) {
             ServerConnector connector = new ServerConnector(server);
             connector.setIdleTimeout(5 * 60 * 1000); // 5 minutes
             connector.setSoLingerTime(-1);
@@ -130,7 +131,6 @@ public final class WebServer implements LifeCycle.Listener {
             Thread serverThread = new ServerThread(server);
             serverThread.setName("WebServer"); // NOI18N
             serverThread.start();
-
         }
 
     }
@@ -138,8 +138,9 @@ public final class WebServer implements LifeCycle.Listener {
     /**
      * Stop the server.
      *
-     * @throws Exception if there is an error stopping the server
+     * @throws Exception if there is an error stopping the server; defined by Jetty superclass
      */
+    @Override
     public void stop() throws Exception {
         server.stop();
     }
@@ -382,6 +383,46 @@ public final class WebServer implements LifeCycle.Listener {
         log.debug("Web Server stopped");
     }
 
+    @Override
+    public boolean isRunning() {
+        return this.server.isRunning();
+    }
+
+    @Override
+    public boolean isStarted() {
+        return this.server.isStarted();
+    }
+
+    @Override
+    public boolean isStarting() {
+        return this.server.isStarting();
+    }
+
+    @Override
+    public boolean isStopping() {
+        return this.server.isStopping();
+    }
+
+    @Override
+    public boolean isStopped() {
+        return this.server.isStopped();
+    }
+
+    @Override
+    public boolean isFailed() {
+        return this.server.isFailed();
+    }
+
+    @Override
+    public void addLifeCycleListener(Listener ll) {
+        this.server.addLifeCycleListener(ll);
+    }
+
+    @Override
+    public void removeLifeCycleListener(Listener ll) {
+        this.server.removeLifeCycleListener(ll);
+    }
+
     static private class ServerThread extends Thread {
 
         private final Server server;
@@ -413,7 +454,7 @@ public final class WebServer implements LifeCycle.Listener {
 
         @Override
         public boolean execute() {
-            new Thread(() -> {
+            Thread t = new Thread(() -> {
                 try {
                     server.stop();
                 } catch (Exception ex) {
@@ -423,7 +464,9 @@ public final class WebServer implements LifeCycle.Listener {
                     log.debug("Details follow: ", ex);
                 }
                 this.isComplete = true;
-            }).start();
+            });
+            t.setName("ServerShutDownTask");
+            t.start();
             return true;
         }
 

@@ -20,23 +20,29 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>The Section Table</h1>
-      <p>Before we dive into the workings ofthe Section Table, lets
-      provide some background on Sections.
+      <p>Before we dive into the workings of the Section Table, lets
+      provide some background on Sections and how they are used with
+      <a href="../dispatcher/Dispatcher.shtml">Dispatcher</a>.
 
       <h2>Requirements for using Sections</h2>
 
       <p>Sections may be used with a Panel Editor panel, with a
-      Layout Editor panel, with a CTC machine, or directly without
+      <a href="../display/LayoutEditor.shtml">Layout Editor
+      </a> panel, with a CTC machine, or directly without
       any panel provided. Sections are part of <a href=
       "../dispatcher/Dispatcher.shtml">Dispatcher</a>
       and build on JMRI's Blocks and Paths structure.
       So before attempting to create any Sections, you
-      should have Blocks and Paths fully initialized for your
-      layout. (An easy way to automatically initialize your Blocks
-      and Paths is to sketch out a Layout Editor panel of your
+      should have <a href="BlockTable.shtml">Blocks</a>
+      and <a href="BlockTable.shtml#blockPaths">Paths</a>
+      fully initialized for your layout.
+      (An easy way to automatically initialize your Blocks
+      and Paths is to sketch out a
+      <a href="../display/LayoutEditor.shtml">Layout Editor
+      </a> panel of your
       layout, with Blocks assigned. By assigning Blocks to all
-      track segments, turnouts, etc., the paths will be created
-      automatically for you by the software.)</p>
+      track segments, turnouts, etc. in Layout Editor, the Paths
+      will be created automatically for you by the software.)</p>
 
       <p>Layout blocking should be carefully planned, to provide
       "<i>reasonable</i>" Sections--Sections that make sense for a
@@ -53,14 +59,15 @@
       for Sections also.</p>
 
       <p>Signals are not required for using Sections, but Sections
-      will work fine with signals installed. If signals are
-      installed, the direction sensors included in Sections provide
+      will work fine with signals installed. If
+      <a href="../../../../html/tools/signaling/index.shtml#tools">signals</a>
+      are installed, the direction sensors included in Sections provide
       an easy way to set up simple APB signaling (see below).</p>
 
       <h2>Using the Section Table</h2>
 
       <p>All the Sections that JMRI knows about can be viewed using
-      the <b>Sections Table</b>. Sections can either be created
+      the <b>Section Table</b>. Sections can either be created
       manually within the Section Table pane, or they can be
       created automatically if you also plan to use Signal Mast
       Logic <a href="#SignalMast">(see below)</a>.</p>
@@ -69,8 +76,10 @@
       <b>Tables</b> submenu of the <b>Tools</b> menu of the main
       JMRI program window.</p>
 
-      <h3>Section Table Columns</h3>There are eight columns in the
-      Section Table:
+      <h3>Section Table Columns</h3>
+      You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to
+      a column title. There are eight columns in the Section Table:
 
       <ul>
         <li><b>System Name</b> - The system name is assigned to the
@@ -93,11 +102,13 @@
         any comment you may want to use to keep track of your
         Sections. It is for information only.</li>
 
-        <li>Click the <b>Delete</b> button in a specific row to
+        <li><img src="images/SectionDeleteWarning.png" height="57" width="279" align="right">
+        Click the <b>Delete</b> button in a specific row to
         delete the Section in that row. Remember to remove any
         Transits that are using this Section. Any Transit that uses a
         deleted Section will be broken! Use this button with
-        caution!</li>
+        caution!
+        </li>
 
         <li><b>First Block</b> - This column displays the first
         block in the Section. Since a section is a group of one or
@@ -117,8 +128,8 @@
 
       <h3>Creating a new Section</h3>
 
-      <p>To Create a new Section, click the "<a href=
-      "SectionAddEdit.shtml">Add.." button</a> at the bottom of the
+      <p>To Create a new Section, click the
+      "<a href="SectionAddEdit.shtml">Add.."</a> button at the bottom of the
       Section Table pane. A window will be brought up that will
       allow you to define the blocks included in the new Section,
       and if necessary, designate which entry points to the section
@@ -159,9 +170,9 @@
       </ul>
 
       <p><b>WARNING: If Entry Points are not consistent strange
-      behavior may result when using the Section.</b></p><a name=
-      "tools" id="tools"></a>
+      behavior may result when using the Section.</b></p>
 
+      <a name="tools" id="tools"></a>
       <h3>Section Table Tools</h3>
 
       <p>The Section Table has a <b>Tools</b> menu to facilitate
@@ -369,7 +380,7 @@
 
       <p>Back to the <a href=
       "../../../../html/tools/Sections.shtml">Sections help
-      page</a>.</p>
+      intro</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

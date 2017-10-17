@@ -423,7 +423,7 @@ public class SerialNode extends AbstractNode {
             // multiple registration of the same sensor
             new Exception("mult reg " + i + " S:" + s.getSystemName()).printStackTrace();
             log.warn("multiple registration of same sensor: GS"
-                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERNODE) + i));
+                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERNODE) + i)); // TODO multichar prefix
         }
     }
 
@@ -465,5 +465,5 @@ public class SerialNode extends AbstractNode {
         timeout = 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
 }

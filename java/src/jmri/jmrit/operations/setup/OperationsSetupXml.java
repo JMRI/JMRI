@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 import jmri.jmrit.operations.trains.TrainManifestText;
@@ -17,27 +19,21 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  */
-public class OperationsSetupXml extends OperationsXml {
+public class OperationsSetupXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public OperationsSetupXml() {
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private static OperationsSetupXml _instance = null;
-
+    @Deprecated
     public static synchronized OperationsSetupXml instance() {
-        if (_instance == null) {
-            log.debug("OperationsSetupXml creating instance");
-            // create and load
-            _instance = new OperationsSetupXml();
-            _instance.load();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("OperationsSetupXml returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(OperationsSetupXml.class);
     }
 
     @Override
@@ -59,7 +55,7 @@ public class OperationsSetupXml extends OperationsXml {
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
-        // add top-level elements         
+        // add top-level elements
         root.addContent(Setup.store());
         // add manifest header text strings
         root.addContent(TrainManifestHeaderText.store());
@@ -112,12 +108,10 @@ public class OperationsSetupXml extends OperationsXml {
 
     private String operationsFileName = "Operations.xml"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class);
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
-    public void dispose() {
-        _instance = null;
+    @Override
+    public void initialize() {
+        load();
     }
-
 }

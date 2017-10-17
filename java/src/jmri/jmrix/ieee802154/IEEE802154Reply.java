@@ -1,6 +1,5 @@
 package jmri.jmrix.ieee802154;
 
-
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
  * payload.
@@ -261,6 +260,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     /**
      * check whether the message has a valid parity IEEE 802.15.4 messages have
      * a two byte parity.
+     * @return true if parity valid
      */
     public boolean checkParity() {
         int len = getNumDataElements();
@@ -280,5 +280,3 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     }
 
 }
-
-

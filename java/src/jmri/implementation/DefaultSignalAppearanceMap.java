@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 import jmri.SignalHead;
@@ -12,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Default implementation of a basic signal head table.
+ * Default implementation of a basic signal mast aspect - appearance mapping.
  * <p>
  * The default contents are taken from the NamedBeanBundle properties file. This
  * makes creation a little more heavy-weight, but speeds operation.
@@ -78,9 +79,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             log.debug("   reading {} aspectname elements", l.size());
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getChild("aspectname").getText();
-                if (log.isDebugEnabled()) {
-                    log.debug("aspect name " + name);
-                }
+                log.debug("aspect name {}", name);
 
                 // add 'show' sub-elements as ints
                 List<Element> c = l.get(i).getChildren("show");
@@ -158,9 +157,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     static void loadSpecificMap(String signalSystemName, String aspectMapName, DefaultSignalAppearanceMap SMmap, Element root) {
-        if (log.isDebugEnabled()) {
-            log.debug("load specific signalSystem= \"" + signalSystemName + "\", aspectMap= \"" + aspectMapName + "\"");
-        }
+        log.debug("load specific signalSystem= \"{}\", aspectMap= \"{}\"" + signalSystemName, aspectMapName);
         loadSpecificAspect(signalSystemName, aspectMapName, HELD, SMmap, root);
         loadSpecificAspect(signalSystemName, aspectMapName, DANGER, SMmap, root);
         loadSpecificAspect(signalSystemName, aspectMapName, PERMISSIVE, SMmap, root);
@@ -259,7 +256,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     /**
-     * Get a property associated with a specific aspect
+     * Get a property associated with a specific aspect.
      */
     @Override
     public String getProperty(String aspect, String key) {
@@ -291,7 +288,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         if (!checkAspect(aspect)) {
             return new Vector<String>();
         }
-        java.util.Enumeration<String> e = aspectImageMap.get(aspect).keys();
+        Enumeration<String> e = aspectImageMap.get(aspect).keys();
         Vector<String> v = new Vector<String>();
         while (e.hasMoreElements()) {
             v.add(e.nextElement());
@@ -357,8 +354,14 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         table.put(aspect, appearances);
     }
 
+    /**
+     * Provide the Aspect elements to GUI and store methods.
+     *
+     * @return all aspects in this signal mast appearance map, in the order defined in xml definition
+     */
     @Override
-    public java.util.Enumeration<String> getAspects() {
+    public Enumeration<String> getAspects() {
+        log.debug("list of aspects provided");
         return table.keys();
     }
 
@@ -429,5 +432,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class);
+
 }

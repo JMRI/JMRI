@@ -322,6 +322,9 @@ public class SignalTableModel extends AbstractTableModel {
                 return Bundle.getMessage("Offset");
             case UNITSCOL:
                 return "  ";
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -372,6 +375,9 @@ public class SignalTableModel extends AbstractTableModel {
                 return signalRow.isMetric();
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -643,7 +649,10 @@ public class SignalTableModel extends AbstractTableModel {
                     deleteSignal(signalRow);
                     _signalList.remove(signalRow);
                     fireTableDataChanged();
-
+                    break;
+                default:
+                    // fall through
+                    break;
             }
         }
 
@@ -705,6 +714,8 @@ public class SignalTableModel extends AbstractTableModel {
         return String.class;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
     static public int getPreferredWidth(int col) {
         switch (col) {
             case NAME_COLUMN:
@@ -721,6 +732,9 @@ public class SignalTableModel extends AbstractTableModel {
                 return new JTextField(2).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }
@@ -734,5 +748,5 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalTableModel.class);
 }

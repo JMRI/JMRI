@@ -17,16 +17,12 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListener {
 
-    final java.util.ResourceBundle rb
-            = java.util.ResourceBundle.
-            getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
-
     protected XNetTrafficController tc = null;
     protected XNetSystemConnectionMemo memo = null;
 
     @Override
     public String getTitle() {
-        return (rb.getString("XNetMonFrameTitle"));
+        return (Bundle.getMessage("MenuItemXNetCommandMonitor"));
     }
 
     @Override
@@ -55,7 +51,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     }
 
     @Override
-    public synchronized void message(XNetReply l) {    // receive a XpressNet message and log it
+    public synchronized void message(XNetReply l) { // receive a XpressNet message and log it
         // display the raw data if requested
         StringBuilder raw = new StringBuilder();
         if (rawCheckBox.isSelected()) {
@@ -69,7 +65,9 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
 
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101
+     */
     @SuppressWarnings("fallthrough")
     @Override
     public synchronized void message(XNetMessage l) {
@@ -86,14 +84,13 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
 
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+        log.debug("Notified of timeout on message {}", msg.toString());
     }
-
 
     /**
      * Nested class to create one of these using old-style defaults
@@ -101,14 +98,12 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     static public class Default extends jmri.util.swing.JmriNamedPaneAction {
 
         public Default() {
-            super(java.util.ResourceBundle.
-                    getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle").
-                    getString("XNetMonFrameTitle"), XNetMonPane.class.getName());
+            super(Bundle.getMessage("MenuItemXNetCommandMonitor"), XNetMonPane.class.getName());
             setContext(jmri.InstanceManager.
                     getDefault(XNetSystemConnectionMemo.class));
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetMonPane.class);
 
 }

@@ -2,9 +2,9 @@ package jmri.jmrix.sprog.sprogmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogMonFrame object
@@ -32,7 +32,7 @@ public class SprogMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogMonAction.class);
 
 }
 

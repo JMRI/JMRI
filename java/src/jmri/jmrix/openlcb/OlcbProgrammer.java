@@ -25,7 +25,7 @@ import jmri.ProgrammingMode;
  * Depending on which type you have, only certain modes can be set. Valid modes
  * are specified by the class static constants.
  * <P>
- * You get a Programmer object from a {@link jmri.ProgrammerManager}, which in turn
+ * You get a Programmer object from a {@link jmri.AddressedProgrammer}, which in turn
  * can be located from the {@link jmri.InstanceManager}.
  * <p>
  * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
@@ -41,8 +41,7 @@ import jmri.ProgrammingMode;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @see jmri.ProgrammerManager
- * @see jmri.Programmer
+ * @see jmri.AddressedProgrammer
  * @author Bob Jacobsen Copyright (C) 2015
  * @since 4.1.1
  */

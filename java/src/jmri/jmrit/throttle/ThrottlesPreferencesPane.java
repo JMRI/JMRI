@@ -16,11 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author lionel
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeListener, PreferencesPanel {
 
     private JCheckBox cbUseToolBar;
@@ -248,24 +250,24 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
     }
 
     private void jbApplyActionPerformed(ActionEvent evt) {
-        ThrottleFrameManager.instance().getThrottlesPreferences().set(getThrottlesPreferences());
+        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().set(getThrottlesPreferences());
     }
 
     public void jbSaveActionPerformed(ActionEvent evt) {
-        ThrottleFrameManager.instance().getThrottlesPreferences().set(getThrottlesPreferences());
-        ThrottleFrameManager.instance().getThrottlesPreferences().save();
+        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().set(getThrottlesPreferences());
+        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().save();
         if (m_container != null) {
-            ThrottleFrameManager.instance().getThrottlesPreferences().removePropertyChangeListener(this);
+            InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().removePropertyChangeListener(this);
             m_container.setVisible(false); // should do with events...
             m_container.dispose();
         }
     }
 
     private void jbCancelActionPerformed(ActionEvent evt) {
-        setComponents(ThrottleFrameManager.instance().getThrottlesPreferences());
+        setComponents(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences());
         checkConsistancy();
         if (m_container != null) {
-            ThrottleFrameManager.instance().getThrottlesPreferences().removePropertyChangeListener(this);
+            InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().removePropertyChangeListener(this);
             m_container.setVisible(false); // should do with events...
             m_container.dispose();
         }

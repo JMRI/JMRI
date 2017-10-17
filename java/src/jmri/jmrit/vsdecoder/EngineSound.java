@@ -226,6 +226,6 @@ class EngineSound extends VSDSound {
                 + " Fade-Out-Time: " + this.getFadeOutTime());
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EngineSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(EngineSound.class);
 
 }

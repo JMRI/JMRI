@@ -1,6 +1,7 @@
 package jmri.jmrix.ecos;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 
 /**
@@ -67,13 +68,13 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.ecos.EcosDccThrottleManager(this);
         jmri.InstanceManager.setThrottleManager(throttleManager);
 
+        reporterManager = new jmri.jmrix.ecos.EcosReporterManager(this);
+        jmri.InstanceManager.setReporterManager(reporterManager);
+
         sensorManager = new jmri.jmrix.ecos.EcosSensorManager(this);
         jmri.InstanceManager.setSensorManager(sensorManager);
 
-        reporterManager = new jmri.jmrix.ecos.EcosReporterManager(this);
-        jmri.InstanceManager.setReporterManager(reporterManager);
-        
-        jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
+        jmri.InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
 
     }
 
@@ -127,7 +128,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tell which managers this provides by class.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -147,9 +148,6 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         }
         if (type.equals(jmri.ReporterManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
             return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
@@ -178,9 +176,6 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if (T.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -222,7 +217,5 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         super.dispose();
     }
+
 }
-
-
-

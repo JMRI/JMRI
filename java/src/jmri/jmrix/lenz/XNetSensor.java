@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractSensor for XPressNet layouts.
- * <P>
+ * Extend jmri.AbstractSensor for XpressNet layouts.
+ *
  * @author Paul Bender Copyright (C) 2003-2010
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
@@ -28,25 +28,46 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
+    /**
+     * Create XNet sensor using fixed connection prefix
+     * @deprecated JMRI Since 4.9.5
+     */
     public XNetSensor(String systemName, String userName, XNetTrafficController controller) {
         super(systemName, userName);
         tc = controller;
-        init(systemName);
-    }
-
-    public XNetSensor(String systemName, XNetTrafficController controller) {
-        super(systemName);
-        tc = controller;
-        init(systemName);
+        init(systemName, "X"); // Should not give Null
     }
 
     /**
-     * Common initialization for both constructors
+     * Create XNet sensor using fixed connection prefix
+     * @deprecated JMRI Since 4.9.5
      */
-    private void init(String id) {
+    @Deprecated
+    public XNetSensor(String systemName, XNetTrafficController controller) {
+        super(systemName);
+        tc = controller;
+        init(systemName, "X");
+    }
+
+    public XNetSensor(String systemName, String userName, XNetTrafficController controller, String prefix) {
+        super(systemName, userName);
+        tc = controller;
+        init(systemName, prefix);
+    }
+
+    public XNetSensor(String systemName, XNetTrafficController controller, String prefix) {
+        super(systemName);
+        tc = controller;
+        init(systemName, prefix);
+    }
+
+    /**
+     * Common initialization for all constructors.
+     */
+    private void init(String id, String prefix) {
         // store address
         systemName = id;
-        address = Integer.parseInt(id.substring(2, id.length()));
+        address = XNetAddress.getBitFromSystemName(systemName, prefix);
         // calculate the base address, the nibble, and the bit to examine
         baseaddress = ((address - 1) / 8);
         int temp = (address - 1) % 8;
@@ -73,23 +94,21 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
                 nibblebit = 0x00;
         }
         if (log.isDebugEnabled()) {
-            log.debug("Created Sensor " + systemName
-                    + " (Address " + baseaddress
-                    + " position " + (((address - 1) % 8) + 1)
-                    + ")");
+            log.debug("Created Sensor {} (Address {},  position {})",
+                    systemName, baseaddress,
+                    (((address - 1) % 8) + 1)
+            );
         }
         // Finally, request the current state from the layout.
-        //this.requestUpdateFromLayout();
         tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
-
     }
 
     /**
-     * request an update on status by sending an XPressNet message
+     * Request an update on status by sending an XpressNet message.
      */
     @Override
     public void requestUpdateFromLayout() {
-        // To do this, we send an XpressNet Accessory Decoder Information 
+        // To do this, we send an XpressNet Accessory Decoder Information
         // Request.
         // The generated message works for Feedback modules and turnouts 
         // with feedback, but the address passed is translated as though it 
@@ -107,12 +126,10 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     /**
-     * initmessage is a package proteceted class which allows the Manger to send
-     * a feedback message at initilization without changing the state of the
+     * initmessage is a package protected class which allows the Manger to send
+     * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
-     *
-     *
      */
     synchronized void initmessage(XNetReply l) {
         boolean oldState = statusRequested;
@@ -126,12 +143,11 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * firePropertyChange(String propertyName, Object oldValue, Object newValue)
      * _once_ if anything has changed state (or set the commanded state
      * directly)
-     *
      */
     @Override
     public synchronized void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
@@ -160,12 +176,16 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         return;
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
     @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -178,21 +198,27 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         super.dispose();
     }
 
-    // package protected routine to get the Sensor Number
+    /**
+     * Package protected routine to get the Sensor Number.
+     */
     int getNumber() {
         return address;
     }
 
-    // package protected routine to get the Sensor Base Address
+    /**
+     * Package protected routine to get the Sensor Base Address.
+     */
     int getBaseAddress() {
         return baseaddress;
     }
 
-    // package protected routine to get the Sensor Nibble
+    /**
+     * Package protected routine to get the Sensor Nibble.
+     */
     int getNibble() {
         return nibble;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSensor.class);
 
 }

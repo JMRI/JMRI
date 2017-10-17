@@ -54,8 +54,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 }
                 log.debug("system name is " + sname);
                 Reporter r = tm.getBySystemName(sname);
-                Element elem = new Element("reporter")
-                        .setAttribute("systemName", sname); // deprecated for 2.9.* series
+                Element elem = new Element("reporter");
                 elem.addContent(new Element("systemName").addContent(sname));
                 // store common parts
                 storeCommon(r, elem);
@@ -119,5 +118,5 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class);
 }

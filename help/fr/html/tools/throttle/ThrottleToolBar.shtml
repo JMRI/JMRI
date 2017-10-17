@@ -1,98 +1,73 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-10-05-->
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- UpDated by Blorec Herv&#233; le 2017-01-07-->
+<html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
-  <meta content="text/html; charset=us-ascii" http-equiv=
-  "content-type" />
-
-  <title>Throttle Tool Bar</title>
-  <meta name="keywords" content=
-  "JMRI decoderpro dcc nmra throttle throttlepro" />
-  <meta name="Description" content=
-  "Throttle documentation for JMRI project" />
-  <meta name="Keywords" content="JMRI" />
-  <meta name="Author" content="Lionel Jeanson" />
-  <meta name="Language" content="fr" />
-  <meta name="Robots" content="Index, Follow" />
-  <meta name="Revisit-After" content="7 Days" />
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii" />
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen" />
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print" />
-  <link rel="icon" href="/images/jmri.ico" type="image/png" />
-  <link rel="home" title="Home" href="/" /><!-- /Style -->
+  <title>Throttle pane Toolbar</title>
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
+	<meta name="Description" content="Throttle documentation for JMRI project" >
+	<meta name="Author" content="Lionel Jeanson" >
+	<meta name="Language" content="EN" >
+	
+	<!-- Style -->
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
+	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
+	<link rel="icon" href="/images/jmri.ico" type="image/png" >
+	<link rel="home" title="Home" href="/" >
+	<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
-    <div id="mainContent">
-      <h1>Barre d'outils R&eacute;gulateur</h1><img src=
-      "images/ThrottleToolBar.png" alt="" /><br />
-      <br />
-      La barre d'outils r&eacute;gulateur est activable depuis le
-      <a href="ThrottlesPreferencesPane.shtml">Panneau des
-      Pr&eacute;f&eacute;rences R&eacute;gulateurs</a> .<br />
-      <br />
-      Lorsque elle est activ&eacute;e, une Fen&ecirc;tre
-      R&eacute;gulateur peut accueillir un ensemble de
-      R&eacute;gulateurs, ces R&eacute;gulateurs peuvent &ecirc;tre
-      list&eacute;s en utilisant le:<br />
+<h1>Barre d'outils R&#233;gulateur</h1>
 
-      <h2>bouton Pr&eacute;c&eacute;dent</h2>D&eacute;placer vers
-      le R&eacute;gulateur pr&eacute;c&eacute;dent pour cette
-      Fen&ecirc;tre de R&eacute;gulateur.<br />
-      <br />
+<img src="images/ThrottleToolBar.png" alt="" ><br >
 
-      <h2>bouton Suivant</h2>D&eacute;placer vers le
-      R&eacute;gulateur suivant pour cette Fen&ecirc;tre de
-      R&eacute;gulateur.<br />
-      <br />
+<br >
+La barre d'outils r&#233;gulateur est activable depuis le <a href="ThrottlesPreferencesPane.shtml"> Panneau des Pr&#233;f&#233;rences R&#233;gulateurs </a>. <br>
+<br>
+Lorsque elle est activ&#233;e, une Fen&#234;tre R&#233;gulateur peut accueillir un ensemble de R&#233;gulateurs, ces R&#233;gulateurs peuvent &#234;tre  list&#233;s en utilisant le: <br>
 
-      <h2>Bouton Nouveau</h2>Ajouter un nouveau R&eacute;gulateur
-      dans cette Fen&ecirc;tre de R&eacute;gulateur.<br />
-      <br />
-      Une fois que le nombre de R&eacute;gulateurs dans une
-      Fen&ecirc;tre R&eacute;gulateur est sup&eacute;rieure
-      &agrave; un, ensuite les boutons Pr&eacute;c&eacute;dent et
-      Corbeille sont activ&eacute;s.<br />
-      <br />
+<h2> bouton Pr&#233;c&#233;dent </h2>
 
-      <h2>Bouton Corbeille</h2>Retirez le R&eacute;gulateur actuel
-      de cette Fen&ecirc;tre de R&eacute;gulateur.<br />
-      <br />
-      Lorsque le nombre de R&eacute;gulateur dans une Fen&ecirc;tre
-      de R&eacute;gulateur est &eacute;gal &agrave; un, les boutons
-      Suivant, Pr&eacute;c&eacute;dent et Corbeille sont
-      d&eacute;sactiv&eacute;s<br />
+D&#233;place vers le R&#233;gulateur pr&#233;c&#233;dent pour cette Fen&#234;tre de R&#233;gulateur.
 
-      <h2>Bouton d'arr&ecirc;t</h2>Envoyer un message d'arr&ecirc;t
-      &agrave; tous les R&eacute;gulateurs g&eacute;r&eacute;s par
-      JMRI.<br />
-      <br />
+<h2> bouton Suivant </h2>
 
-      <h2>Le bouton d'alimentation</h2>Permet la commandee de
-      l'alimentation du r&eacute;seau si possible (rouge =
-      Arr&ecirc;t, vert = Marche , le jaune est le statut
-      inconnu).<br />
-      <br />
+D&#233;place vers le R&#233;gulateur suivant pour cette Fen&#234;tre de R&#233;gulateur.
 
-      <h2>Bouton Liste</h2>Afficher/Masquer la liste des
-      fen&ecirc;tre R&eacute;gulateurs <a href=
-      "ThrottlesListWindow.shtml">.</a><br />
-      <br />
-      <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<h2> Bouton Nouveau </h2>
+
+Ajouter un nouveau R&#233;gulateur dans cette Fen&#234;tre de R&#233;gulateur.<br> 
+Une fois que le nombre de R&#233;gulateurs dans une Fen&#234;tre R&#233;gulateur est sup&#233;rieure &#224; un, ensuite les boutons 
+Pr&#233;c&#233;dent et Corbeille sont activ&#233;s.
+
+<h2>Bouton Corbeille</h2>
+
+Retirez le R&#233;gulateur actuel de cette Fen&#234;tre de R&#233;gulateur. <br>
+Lorsque le nombre de R&#233;gulateur dans une Fen&#234;tre de R&#233;gulateur est &#233;gal &#224; un, les boutons  Suivant, 
+Pr&#233;c&#233;dent et Corbeille sont d&#233;sactiv&#233;s 
+
+ <h2>Bouton d'Arr&#234;t Urgence</h2>
+
+Envoie un message d'arr&#234;t &#224; tous les R&#233;gulateurs g&#233;r&#233;s par JMRI.
+
+ <h2>Le bouton d'alimentation </h2>
+
+Permet la commande de l'alimentation du r&#233;seau  si possible (rouge = Arr&#234;t,  vert = Marche , le jaune est le statut 
+inconnu).
+
+<h2>Bouton Liste</h2>
+
+Afficher/Masquer la liste des R&#233;gulateurs <a href="ThrottlesListWindow.shtml"> . </A>
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>

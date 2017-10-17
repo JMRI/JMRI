@@ -1,4 +1,3 @@
-// XNetInterface
 package jmri.jmrix.lenz;
 
 /**
@@ -25,11 +24,10 @@ package jmri.jmrix.lenz;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrix.lenz.XNetListener
  * @see jmri.jmrix.lenz.XNetTrafficController
- *
  */
 public interface XNetInterface {
 
-    /*
+    /**
      * Request a message be sent to the attached XNet. Return is immediate,
      * with the message being queued for eventual sending.  If you're interested
      * in a reply, you need to register a XNetListener object to watch the
@@ -60,13 +58,13 @@ public interface XNetInterface {
      */
     void addXNetListener(int mask, XNetListener l);
 
-    /*
+    /**
      * Stop notification of things happening on the XNet. Note that mask and XNetListener
      * must match a previous request exactly.
      */
     void removeXNetListener(int mask, XNetListener listener);
 
-    /*
+    /**
      * Check whether an implementation is operational. True indicates OK.
      */
     public boolean status();
@@ -96,7 +94,7 @@ public interface XNetInterface {
     public static final int PROGRAMMING = 4;
 
     /**
-     * Mask value to request notification of XPressNet FeedBack (i.e. sensor)
+     * Mask value to request notification of XpressNet FeedBack (i.e. sensor)
      * related messages
      */
     public static final int FEEDBACK = 8;
@@ -121,6 +119,3 @@ public interface XNetInterface {
     public static final int INTERFACE = 64;
 
 }
-
-
-

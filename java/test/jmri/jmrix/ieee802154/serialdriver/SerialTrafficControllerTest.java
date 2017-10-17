@@ -1,6 +1,7 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.jmrix.ieee802154.IEEE802154Node;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -162,7 +163,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

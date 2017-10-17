@@ -11,7 +11,7 @@ import jmri.Memory;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
-public abstract class AbstractMemory extends AbstractNamedBean implements Memory, java.io.Serializable {
+public abstract class AbstractMemory extends AbstractNamedBean implements Memory {
 
     public AbstractMemory(String systemName) {
         super(systemName.toUpperCase());

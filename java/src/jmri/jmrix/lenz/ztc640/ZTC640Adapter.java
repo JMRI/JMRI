@@ -1,15 +1,11 @@
 package jmri.jmrix.lenz.ztc640;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -17,9 +13,16 @@ import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XPressNet via a ZTC640 connected via an FTDI virtual comm
+ * Provide access to XpressNet via a ZTC640 connected via an FTDI virtual comm
  * port. Normally controlled by the lenz.ztc640.ZTC640Frame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -29,13 +32,13 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
 
     public ZTC640Adapter() {
         super();
-        option1Name = "FlowControl";
-        options.put(option1Name, new Option("ZTC640 connection uses : ", validOption1));
+        option1Name = "FlowControl"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ZTC640ConnectionLabel"), validOption1));
     }
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
@@ -47,15 +50,20 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
             // try to set it for XNet
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+            } catch (UnsupportedCommOperationException e) {
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set timeout
-            activeSerialPort.enableReceiveTimeout(10);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                      + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            try {
+                // set timeout
+                activeSerialPort.enableReceiveTimeout(10);
+            } catch (UnsupportedCommOperationException ex) {
+                log.error("Cannot set receive timeout on port {}: {}", portName, ex.getMessage());
+                return "Cannot set receive timeout on port " + portName + ": " + ex.getMessage();
+            }
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -75,11 +83,9 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
                         + "  CD: " + activeSerialPort.isCD()
                 );
             }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
-            }
+            // report additional status
+            log.debug(" port flow control shows {}",
+                    (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
                 @Override
@@ -87,60 +93,38 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
                     int type = e.getEventType();
                     switch (type) {
                         case SerialPortEvent.DATA_AVAILABLE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
                             setOutputBufferEmpty(true);
                             return;
                         case SerialPortEvent.CTS:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CTS is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CTS is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.DSR:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DSR is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DSR is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.RI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: RI is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: RI is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.CD:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CD is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CD is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OE (overrun error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.PE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: PE (parity error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: PE (parity error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.FE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: FE (framing error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: FE (framing error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.BI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
                             return;
                         default:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
                             return;
                     }
                 }
@@ -188,28 +172,20 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("IO exception while opening port " + portName + " trace follows: " + ex);
+        } catch (IOException | TooManyListenersException ex) {
+            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "IO Exception while opening port " + portName + ": " + ex;
-        } catch (java.util.TooManyListenersException tmlex) {
-            log.error("Too Many Listeners exception while opening port " + portName + " trace follows: " + tmlex);
-            tmlex.printStackTrace();
-            return "Too Many Listeners Exception while opening port " + portName + ": " + tmlex;
-        } catch (gnu.io.UnsupportedCommOperationException ucex) {
-            log.error("unsupported Comm Operation exception while opening port " + portName + " trace follows: " + ucex);
-            ucex.printStackTrace();
-            return "Unsupported Comm Exception while opening port " + portName + ": " + ucex;
         }
 
         return null; // normal operation
     }
 
     /**
-     * set up all of the other objects to operate with a ZTC640 connected to
-     * this port
+     * Set up all of the other objects to operate with a ZTC640 connected to
+     * this port.
      */
     @Override
     public void configure() {
@@ -224,6 +200,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     }
 
     // base class methods for the XNetSerialPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -241,7 +218,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -252,9 +229,9 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -267,16 +244,14 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = 0; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
-        activeSerialPort.setFlowControlMode(flow);
+
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+
         /* if (getOptionState(option2Name).equals(validOption2[0]))
          setCheckBuffer(true);*/
     }
@@ -286,11 +261,11 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    protected String[] validSpeeds = new String[]{"19,200 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200")};
     protected int[] validSpeedValues = new int[]{19200};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"no flow control (recommended)", "hardware flow control "};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
 
     private boolean opened = false;
     InputStream serialStream = null;
@@ -304,6 +279,6 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     }
     static volatile ZTC640Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC640Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC640Adapter.class);
 
 }

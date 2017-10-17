@@ -326,6 +326,77 @@ public class RosterTest {
         Assert.assertTrue("registered a default", jmri.InstanceManager.getNullableDefault(Roster.class) != null);
     }
 
+    @Test
+    public void testProfileOnePointForward() {
+        RosterEntry r = new RosterEntry();
+        RosterSpeedProfile rp = new RosterSpeedProfile(r);
+        rp.setSpeed(1000, 500, 5000);
+        Assert.assertEquals(500.0,rp.getForwardSpeed(1.0f),0.0);
+        Assert.assertEquals(375.0,rp.getForwardSpeed(0.75f),0.0);
+        Assert.assertEquals(250.0,rp.getForwardSpeed(0.5f), 0.0);
+        Assert.assertEquals(125.0,rp.getForwardSpeed(0.25f),0.0);
+        Assert.assertEquals(4.0,rp.getForwardSpeed(0.0078125f),0.0); //routine will use 8 (round( value * 1000))
+    }
+
+    @Test
+    public void testProfileTwoPointForward() {
+        RosterEntry r = new RosterEntry();
+        RosterSpeedProfile rp = new RosterSpeedProfile(r);
+        rp.setSpeed(1000, 500, 5000);
+        rp.setSpeed(500, 250, 2500);
+        Assert.assertEquals(500.0,rp.getForwardSpeed(1.0f),0.0);
+        Assert.assertEquals(375.0,rp.getForwardSpeed(0.75f),0.0);
+        Assert.assertEquals(250.0,rp.getForwardSpeed(0.5f), 0.0);
+        Assert.assertEquals(125.0,rp.getForwardSpeed(0.25f),0.0);
+        Assert.assertEquals(4.0,rp.getForwardSpeed(0.0078125f),0.0); //routine will use 8 (round( value * 1000))
+    }
+    @Test
+    public void testProfileOnePointReverse() {
+        RosterEntry r = new RosterEntry();
+        RosterSpeedProfile rp = new RosterSpeedProfile(r);
+        rp.setSpeed(1000, 500, 5000);
+        Assert.assertEquals(5000.0,rp.getReverseSpeed(1.0f),0.0);
+        Assert.assertEquals(3750.0,rp.getReverseSpeed(0.75f),0.0);
+        Assert.assertEquals(2500.0,rp.getReverseSpeed(0.5f), 0.0);
+        Assert.assertEquals(1250.0,rp.getReverseSpeed(0.25f),0.0);
+        Assert.assertEquals(40.0,rp.getReverseSpeed(0.0078125f),0.0);   //routine will use 8 (round( value * 1000))
+    }
+
+    @Test
+    public void testProfileTwoPointReverse() {
+        RosterEntry r = new RosterEntry();
+        RosterSpeedProfile rp = new RosterSpeedProfile(r);
+        rp.setSpeed(1000, 500, 5000);
+        rp.setSpeed(500, 250, 2500);
+        Assert.assertEquals(5000.0,rp.getReverseSpeed(1.0f),0.0);
+        Assert.assertEquals(3750.0,rp.getReverseSpeed(0.75f),0.0);
+        Assert.assertEquals(2500.0,rp.getReverseSpeed(0.5f), 0.0);
+        Assert.assertEquals(1250.0,rp.getReverseSpeed(0.25f),0.0);
+        Assert.assertEquals(40.0,rp.getReverseSpeed(0.0078125f),0.0); //routine will use 8 (round( value * 1000))
+    }
+
+    @Test
+    public void testProfileTwoPointForwardGetThrottleSetting() {
+        RosterEntry r = new RosterEntry();
+        RosterSpeedProfile rp = new RosterSpeedProfile(r);
+        rp.setSpeed(1000, 500, 5000);
+        rp.setSpeed(500, 250, 2500);
+        Assert.assertEquals(1.0,rp.getThrottleSetting(500,true),0.0);
+        Assert.assertEquals(0.5,rp.getThrottleSetting(250,true),0.0);
+        Assert.assertEquals(0.25,rp.getThrottleSetting(125,true),0.0);
+    }
+
+   @Test
+    public void testProfileTwoPointReverseGetThrottleSetting() {
+        RosterEntry r = new RosterEntry();
+        RosterSpeedProfile rp = new RosterSpeedProfile(r);
+        rp.setSpeed(1000, 500, 5000);
+        rp.setSpeed(500, 250, 2500);
+        Assert.assertEquals(1.0,rp.getThrottleSetting(5000,false),0.0);
+        Assert.assertEquals(0.5,rp.getThrottleSetting(2500,false),0.0);
+        Assert.assertEquals(0.25,rp.getThrottleSetting(1250,false),0.0);
+    }
+
     public Roster createTestRoster() throws IOException, FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
@@ -378,14 +449,12 @@ public class RosterTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

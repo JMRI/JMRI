@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.swing.stackmon;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -8,9 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * StackMonFrameTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.swing.stackmon.StackMonFrame class
+ * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonFrame class
  *
  * @author	Paul Bender
  */
@@ -24,17 +23,18 @@ public class StackMonFrameTest {
 
         StackMonFrame f = new StackMonFrame(memo);
         Assert.assertNotNull(f);
+        f.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

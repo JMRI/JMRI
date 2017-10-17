@@ -70,6 +70,8 @@ public class TieTableModel extends AbstractTableModel {
      * lines between each column. Data is word wrapped within a column. Can only
      * handle 4 columns of data as strings. Adapted from routines in
      * BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
+     * @param w hard copy writer connection
+     * @param colWidth array of column widths
      */
     public void printTable(HardcopyWriter w, int colWidth[]) {
         // determine the column sizes - proportionately sized, with space between for lines
@@ -199,6 +201,6 @@ public class TieTableModel extends AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TieTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TieTableModel.class);
 
 }

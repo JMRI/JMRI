@@ -22,6 +22,9 @@ public class SRCPTurnout extends AbstractTurnout {
     /**
      * SRCP turnouts use the NMRA number (0-511) as their numerical
      * identification.
+     *
+     * @param number the turnout number
+     * @param memo   the associated connection
      */
     public SRCPTurnout(int number, SRCPBusConnectionMemo memo) {
         super(memo.getSystemPrefix() + memo.getTurnoutManager().typeLetter() + number);
@@ -91,9 +94,6 @@ public class SRCPTurnout extends AbstractTurnout {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class);
 
 }
-
-
-

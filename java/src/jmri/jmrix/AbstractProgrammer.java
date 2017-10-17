@@ -282,6 +282,9 @@ public abstract class AbstractProgrammer implements Programmer {
                 return 7;
             case 8:
                 return 8;
+            default:
+                log.warn("Unhandled register from cv: {}", cv);
+                break;
         }
         throw new ProgrammerException();
     }
@@ -296,6 +299,6 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class);
 
 }

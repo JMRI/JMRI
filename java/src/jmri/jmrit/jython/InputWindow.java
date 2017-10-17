@@ -108,7 +108,7 @@ public class InputWindow extends JPanel {
         });
         languages = new JComboBox<>(names.toArray(new String[names.size()]));
         if (pref.getComboBoxLastSelection(languageSelection) != null) {
-            languages.setSelectedItem((String) pref.getComboBoxLastSelection(languageSelection));
+            languages.setSelectedItem(pref.getComboBoxLastSelection(languageSelection));
         }
 
         JPanel p = new JPanel();
@@ -191,8 +191,8 @@ public class InputWindow extends JPanel {
                         buf = new char[1024];
                     }
                 }
-
                 area.setText(fileData.toString());
+                results = true;
 
             } catch (IOException e) {
                 log.error("Unhandled problem in loadFile: " + e);
@@ -230,6 +230,7 @@ public class InputWindow extends JPanel {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                     writer.append(fileData);
                 }
+                results = true;
 
             } catch (HeadlessException | IOException e) {
                 log.error("Unhandled problem in storeFile: " + e);
@@ -285,5 +286,5 @@ public class InputWindow extends JPanel {
         }
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InputWindow.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InputWindow.class);
 }

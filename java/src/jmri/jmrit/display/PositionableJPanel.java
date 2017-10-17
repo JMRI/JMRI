@@ -50,7 +50,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         pos._hidden = _hidden;
         pos._positionable = _positionable;
         pos._showTooltip = _showTooltip;
-        pos.setTooltip(getTooltip());
+        pos.setToolTip(getToolTip());
         pos._editable = _editable;
         if (getPopupUtility() == null) {
             pos.setPopupUtility(null);
@@ -120,9 +120,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         }
     }
 
-    /**
-     * Delayed setDisplayLevel for DnD
-     */
     public void setLevel(int l) {
         _displayLevel = l;
     }
@@ -143,22 +140,22 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     }
 
     @Override
-    public void setShowTooltip(boolean set) {
+    public void setShowToolTip(boolean set) {
         _showTooltip = set;
     }
 
     @Override
-    public boolean showTooltip() {
+    public boolean showToolTip() {
         return _showTooltip;
     }
 
     @Override
-    public void setTooltip(ToolTip tip) {
+    public void setToolTip(ToolTip tip) {
         _tooltip = tip;
     }
 
     @Override
-    public ToolTip getTooltip() {
+    public ToolTip getToolTip() {
         return _tooltip;
     }
 
@@ -287,9 +284,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         return setEditIconMenu(popup);
     }
 
-    /**
-     * Utility
-     */
     protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
         if (editor != null) {
             _iconEditor = editor;
@@ -335,7 +329,8 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     boolean active = true;
 
     /**
-     * "active" means that the object is still displayed, and should be stored.
+     * @return true if this object is still displayed, and should be stored;
+     *         false otherwise
      */
     public boolean isActive() {
         return active;
@@ -488,5 +483,5 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableJPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableJPanel.class);
 }

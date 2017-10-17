@@ -112,6 +112,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return Bundle.getMessage("PortalName");
             case TO_BLOCK_COLUMN:
                 return Bundle.getMessage("BlockName");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -144,6 +147,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     return portal.getToBlockName();
                 case DELETE_COL:
                     return Bundle.getMessage("ButtonDelete");
+                default:
+                    // fall through
+                    break;
             }
         }
         return "";
@@ -277,6 +283,10 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 if (deletePortal(portal)) {
                     fireTableDataChanged();
                 }
+                break;
+            default:
+                log.warn("Unhandled column: {}", col);
+                break;
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
@@ -314,6 +324,8 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return String.class;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
     @Override
     public int getPreferredWidth(int col) {
         switch (col) {
@@ -324,9 +336,12 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return new JTextField(20).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class);
 }

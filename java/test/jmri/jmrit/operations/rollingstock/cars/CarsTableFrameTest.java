@@ -3,15 +3,16 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,21 +27,21 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
     public void testCarsTableFrame() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // remove previous cars
-        CarManager.instance().dispose();
-        CarRoads.instance().dispose();
+        InstanceManager.getDefault(CarManager.class).dispose();
+        InstanceManager.getDefault(CarRoads.class).dispose();
 
         // add Owner1 and Owner2
-        CarOwners co = CarOwners.instance();
+        CarOwners co = InstanceManager.getDefault(CarOwners.class);
         co.addName("Owner1");
         co.addName("Owner2");
         // add road names
-        CarRoads cr = CarRoads.instance();
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.addName("NH");
         cr.addName("UP");
         cr.addName("AA");
         cr.addName("SP");
         // add locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location westford = lManager.newLocation("Newer Westford");
         Track westfordYard = westford.addTrack("Yard", Track.YARD);
         westfordYard.setLength(300);
@@ -65,7 +66,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         // table should be empty
         Assert.assertEquals("number of cars", "0", ctf.numCars.getText());
 
-        CarManager cManager = CarManager.instance();
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
         // confirm no cars
         Assert.assertEquals("number of cars", 0, cManager.getNumEntries());
         // add 5 cars to table
@@ -100,7 +101,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of cars", "5", ctf.numCars.getText());
 
         // default is sort by number
-        List<RollingStock> cars = ctf.carsTableModel.getSelectedCarList();
+        List<Car> cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by number list", c1.getId(), cars.get(0).getId());
         Assert.assertEquals("2nd car in sort by number list", c4.getId(), cars.get(1).getId());
         Assert.assertEquals("3rd car in sort by number list", c3.getId(), cars.get(2).getId());
@@ -134,7 +135,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by destination list", c5, cars.get(4));
 
         enterClickAndLeave(ctf.sortByKernel);
-		//TODO add kernels
+        //TODO add kernels
 
         // now sort by load
         enterClickAndLeave(ctf.sortByLoad);
@@ -181,7 +182,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("3rd car in sort by owner list", c2, cars.get(2));
         Assert.assertEquals("4th car in sort by owner list", c5, cars.get(3));
         Assert.assertEquals("5th car in sort by owner list", c1, cars.get(4));
-        
+
         // test sort by rfid
         //enterClickAndLeave(ctf.sortByRfid);
         // use doClick() in case the radio button isn't visible due to scrollbars
@@ -203,7 +204,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by road list", c2, cars.get(4));
 
         enterClickAndLeave(ctf.sortByTrain);
-		//TODO add trains
+        //TODO add trains
 
         // test sort by type
         enterClickAndLeave(ctf.sortByType);
@@ -225,12 +226,12 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         // create the CarEditFrame
         enterClickAndLeave(ctf.addButton);
 
-        ctf.dispose();
+        JUnitUtil.dispose(ctf);
 
     }
 
     private void loadCars() {
-        CarManager cManager = CarManager.instance();
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
         // add 5 cars to table
         Car c1 = cManager.newCar("NH", "1");
         c1.setBuilt("2009");

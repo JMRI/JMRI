@@ -1,8 +1,8 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.CheckReturnValue;
 import java.util.ArrayList;
+import javax.annotation.CheckReturnValue;
 import jmri.Light;
 
 /**
@@ -42,7 +42,7 @@ import jmri.Light;
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public abstract class AbstractLight extends AbstractNamedBean
-        implements Light, java.io.Serializable {
+        implements Light {
 
     public AbstractLight(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
@@ -77,8 +77,8 @@ public abstract class AbstractLight extends AbstractNamedBean
     @CheckReturnValue
     public String describeState(int state) {
         switch (state) {
-            case ON: return Bundle.getMessage("LightStateOn");
-            case OFF: return Bundle.getMessage("LightStateOff");
+            case ON: return Bundle.getMessage("StateOn");
+            case OFF: return Bundle.getMessage("StateOff");
             case INTERMEDIATE: return Bundle.getMessage("LightStateIntermediate");
             case TRANSITIONINGTOFULLON: return Bundle.getMessage("LightStateTransitioningToFullOn");
             case TRANSITIONINGHIGHER: return Bundle.getMessage("LightStateTransitioningHigher");
@@ -257,7 +257,7 @@ public abstract class AbstractLight extends AbstractNamedBean
             throw new IllegalArgumentException("Illegal intensity value: " + intensity);
         }
         if (intensity <= mMinIntensity) {
-            throw new IllegalArgumentException("Requested intensity " + intensity + " not less than minIntensity " + mMinIntensity);
+            throw new IllegalArgumentException("Requested intensity " + intensity + " must be higher than minIntensity " + mMinIntensity);
         }
 
         double oldValue = mMaxIntensity;
@@ -302,7 +302,7 @@ public abstract class AbstractLight extends AbstractNamedBean
             throw new IllegalArgumentException("Illegal intensity value: " + intensity);
         }
         if (intensity >= mMaxIntensity) {
-            throw new IllegalArgumentException("Requested intensity " + intensity + " not more than maxIntensity " + mMaxIntensity);
+            throw new IllegalArgumentException("Requested intensity " + intensity + " should be less than maxIntensity " + mMaxIntensity);
         }
 
         double oldValue = mMinIntensity;
@@ -510,4 +510,5 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);
+
 }

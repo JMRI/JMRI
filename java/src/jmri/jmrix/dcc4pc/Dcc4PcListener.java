@@ -15,6 +15,4 @@ public interface Dcc4PcListener extends jmri.jmrix.AbstractMRListener {
     public void reply(Dcc4PcReply m);
 
     public void handleTimeout(Dcc4PcMessage m);
-
-    public void processingData();
 }

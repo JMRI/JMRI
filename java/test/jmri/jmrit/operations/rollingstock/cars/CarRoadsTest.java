@@ -1,15 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
- * Tests for the Operations RollingStock Cars Roads class Last manually cross-checked
- * on 20090131
- *
+ * Tests for the Operations RollingStock Cars Roads class Last manually
+ * cross-checked on 20090131
+ * <p>
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
@@ -17,7 +18,7 @@ import junit.framework.TestSuite;
 public class CarRoadsTest extends OperationsTestCase {
 
     public void testCarRoads() {
-        CarRoads cr1 = CarRoads.instance();
+        CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
         cr1.getNames();	//load predefined roads
 
         Assert.assertTrue("Car Roads Predefined AA", cr1.containsName("AA"));
@@ -71,6 +72,6 @@ public class CarRoadsTest extends OperationsTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

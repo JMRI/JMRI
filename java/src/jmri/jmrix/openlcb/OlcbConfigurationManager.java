@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -32,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * Does configuration for OpenLCB communications implementations.
  *
  * @author Bob Jacobsen Copyright (C) 2010
- *
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
@@ -67,8 +67,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
-        InstanceManager.setProgrammerManager(
-                getProgrammerManager());
+        if (getProgrammerManager().isAddressedModePossible()) {
+            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            jmri.InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        }
 
         // start alias acquisition
         new StartUpHandler().start();
@@ -331,7 +335,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
      */
     protected void getOurNodeID() {
         long pid = getProcessId(1);
-        log.debug("Process ID: " + pid);
+        log.debug("Process ID: {}", pid);
 
         // get first network interface internet address
         // almost certainly the wrong approach, isn't likely to
@@ -345,7 +349,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         } catch (SocketException e) {
             log.warn("Can't get IP address to make NodeID", e);
         }
-        log.debug("InetAddress: " + address);
+        log.debug("InetAddress: {}", address);
         int b1 = 0;
         if (address != null) {
             b1 = address.getAddress()[0];
@@ -353,7 +357,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         // store new NodeID
         nodeID = new NodeID(new byte[]{2, 1, 18, (byte) (b1 & 0xFF), (byte) ((pid >> 8) & 0xFF), (byte) (pid & 0xFF)});
-        log.debug("Node ID: " + nodeID);
+        log.debug("Node ID: {}", nodeID);
     }
 
     protected long getProcessId(final long fallback) {
@@ -428,23 +432,19 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         void start() {
             log.debug("StartUpHandler starts up");
             // wait geological time for adapter startup
-            javax.swing.Action doNextStep = new javax.swing.AbstractAction() {
+            timer = new javax.swing.Timer(START_DELAY, new javax.swing.AbstractAction() {
 
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     new Thread(() -> {
                         olcbCanInterface.initialize();
-                    }).start();
-                    timer.stop();
+                    }, "olcbCanInterface.initialize").start();
                 }
-            };
-
-            timer = new javax.swing.Timer(START_DELAY, doNextStep);
+            });
+            timer.setRepeats(false);
             timer.start();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class);
 }
-
-

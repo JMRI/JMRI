@@ -133,7 +133,8 @@ public class BusyGlassPane extends JComponent {
             }
 
             for (int i = 0; i < liveRectangles.size(); i++) {
-                if (liveRectangles.get(i).contains(containerPoint)) {
+                Rectangle rectangle = this.liveRectangles.get(i);
+                if (rectangle != null && rectangle.contains(containerPoint)) {
                     inButton = true;
                     testForDrag(eventID);
                 }

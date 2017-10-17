@@ -6,10 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement sensor manager for Ecos systems. The Manager handles all the state
+ * Implement sensor manager for ECoS systems. The Manager handles all the state
  * changes.
- * <P>
- * System names are "USnnn:yy", where nnn is the Ecos Object Number for a given
+ * <p>
+ * System names are "USnnn:yy", where nnn is the ECoS Object Number for a given
  * s88 Bus Module and yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
@@ -213,7 +213,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         tc.sendEcosMessage(m, this);
 
     }
-    private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class);
+
 }
-
-

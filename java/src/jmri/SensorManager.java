@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SensorManager extends Manager {
+public interface SensorManager extends Manager<Sensor> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -152,11 +152,16 @@ public interface SensorManager extends Manager {
     public void setDefaultSensorDebounceGoingInActive(long timer);
 
     /**
-     * Do the sensor objects provided by this manager support configuring 
+     * Do the sensor objects provided by this manager support configuring
      * an internal pullup or pull down resistor?
-     * 
+     *
      * @return true if pull up/pull down configuration is supported.
      */
     public boolean isPullResistanceConfigurable();
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    public String getEntryToolTip();
 
 }

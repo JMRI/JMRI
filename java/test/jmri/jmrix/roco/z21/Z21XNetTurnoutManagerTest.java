@@ -6,6 +6,7 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,8 +99,7 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 
     @After
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Override
@@ -113,6 +113,6 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManagerTest.class);
 
 }

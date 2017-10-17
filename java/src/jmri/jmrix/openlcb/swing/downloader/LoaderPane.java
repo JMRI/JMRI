@@ -2,6 +2,9 @@ package jmri.jmrix.openlcb.swing.downloader;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -9,18 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import org.openlcb.Connection;
+import org.openlcb.LoaderClient;
+import org.openlcb.LoaderClient.LoaderStatusReporter;
 import org.openlcb.MimicNodeStore;
+import org.openlcb.NodeID;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
-import org.openlcb.NodeID;
-import org.openlcb.LoaderClient;
-import org.openlcb.LoaderClient.LoaderStatusReporter;
-import org.openlcb.Connection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +51,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     public String getTitle(String menuTitle) { return Bundle.getMessage("TitleLoader"); }
 
     @Override
-    public void initComponents(CanSystemConnectionMemo memo) throws Exception {
+    public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
         this.connection = memo.get(Connection.class);
         this.mcs = memo.get(MemoryConfigurationService.class);
@@ -172,6 +172,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * Get NodeID from the GUI
+     * @return selected node id
      */
     NodeID destNodeID() {
         return (NodeID) nodeSelector.getSelectedItem();
@@ -245,5 +246,5 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class);
 }

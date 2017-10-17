@@ -346,6 +346,8 @@
       Names</a>. For example, if the second attachment is to a
       LocoNet system, you'd refer to a LocoNet Turnout as LT13; a
       LocoNet Sensor as LS21, etc.</p>
+      <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">
+        PanelPro help page</a>.
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

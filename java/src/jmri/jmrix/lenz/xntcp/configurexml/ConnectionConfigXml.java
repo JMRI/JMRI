@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of layout connections by persistening the XnTcpAdapter
+ * Handle XML persistence of layout connections by persisting the XnTcpAdapter
  * (and connections). Note this is named as the XML version of a
  * ConnectionConfig object, but it's actually persisting the XnTcpAdapter.
  * <P>
@@ -38,7 +38,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         try {
             result = super.load(shared, perNode);
@@ -56,11 +56,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             if (log.isDebugEnabled()) {
                 log.debug("Null Pointer Exception Occured");
             }
-            String manualOption = null;
-            String hostName = null;
-            int portNumber = 0;
             try {
-                manualOption = shared.getAttribute("port").getValue();
+                String manualOption = shared.getAttribute("port").getValue();
                 adapter.configureOption1(manualOption);
             } catch (NullPointerException e1) {
                 // it is considered normal if this fails when the 
@@ -68,7 +65,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             }
 
             try {
-                hostName = shared.getAttribute("option1").getValue();
+                String hostName = shared.getAttribute("option1").getValue();
                 adapter.setHostName(hostName);
             } catch (NullPointerException e1) {
                 // it is considered normal if this fails when the 
@@ -76,7 +73,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             }
 
             try {
-                portNumber = shared.getAttribute("option2").getIntValue();
+                int portNumber = shared.getAttribute("option2").getIntValue();
                 adapter.setPort(portNumber);
             } catch (org.jdom2.DataConversionException e2) {
                 log.warn("Could not parse port attribute");
@@ -123,11 +120,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             try {
                 adapter.connect();
             } catch (Exception e1) {
-                jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
-                        null, "opening connection",
-                        e1.getMessage(),
-                        null, null, null
-                );
+                handleException(e1.getMessage(), "opening connection", null, null, e1);
                 return false;
             }
 
@@ -148,6 +141,6 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
 
 }

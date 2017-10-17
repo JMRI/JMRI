@@ -13,11 +13,12 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 public interface MrcPanelInterface {
 
     /**
-     * 2nd stage of initialization, invoked after the constuctor is complete.
+     * 2nd stage of initialization, invoked after the constructor is complete.
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * @param memo system connection memo
      */
-    public void initComponents(MrcSystemConnectionMemo memo) throws Exception;
+    public void initComponents(MrcSystemConnectionMemo memo);
 
 }

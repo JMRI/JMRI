@@ -5,6 +5,9 @@ import java.util.EventListener;
 /**
  * A listener interface for a class requesting a DccThrottle from the
  * ThrottleManager.
+ * <P>
+ * Implementing classes used the methods here as part of the throttle request and initilization process as described shown in
+ * <img src="doc-files/ThrottleListener-Sequence.png" alt="Throttle initialization sequence UML diagram">
  *
  * <hr>
  * This file is part of JMRI.
@@ -36,4 +39,66 @@ public interface ThrottleListener extends EventListener {
      */
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason);
 
+    /**
+     * Get notification that a throttle request requires is in use by another
+     * device, and a "steal" may be required.
+     *
+     * @param address DccLocoAddress of the throttle that needs to be stolen.
+     */
+    public void notifyStealThrottleRequired(DccLocoAddress address);
+
 }
+
+/*
+ * @startuml jmri/doc-files/ThrottleListener-Sequence.png
+ * participant ThrottleListener
+ * participant ThrottleManager
+ * participant Throttle
+ *
+ * == Quick Failure Scenario ==
+ *
+ * ThrottleListener-> ThrottleManager : requestThrottle(address,ThrottleListener)
+ * group If Throttle Request Cannot Continue
+ *    ThrottleListener <-- ThrottleManager : return false 
+ *    deactivate ThrottleManager
+ *    note over ThrottleListener : Request ends here
+ * end
+ * deactivate ThrottleListener
+ *
+ * == Normal Request Scenario ==
+ * 
+ * ThrottleListener-> ThrottleManager : requestThrottle(address,ThrottleListener)
+ *
+ * group If Throttle Request Can Continue
+ *    ThrottleListener <-- ThrottleManager : return true
+ *    note over ThrottleListener : Waits for callback to proceed.
+ *    group If Throttle Object Does not exist
+ *       note over ThrottleManager : Throttle Manager start system specific actions requred to create a throttle.
+ *    == Optional Steal ==
+ *       ThrottleListener <-- ThrottleManager : notifyStealThrottleRequired(address)
+ *       note over ThrottleListener : To steal or not is determined by the throttle Listener. 
+ *       group If the Throttle does not wish to steal
+ *           ThrottleListener --> ThrottleManager : stealThrottleRequest(address info, false )
+ *           note over ThrottleListener : Request ends here
+ *       end
+ *       group If the Throttle wishes to steal
+ *           ThrottleListener --> ThrottleManager : stealThrottleRequest(address info, true)
+ *               
+ *               note over ThrottleManager : Throttle creation continues normally.
+ *           end
+ *
+ *    == Creating the throttle  ==
+ *       ThrottleManager --> Throttle : new Throttle(address)
+ *       group If the Throttle creation fails
+            ThrottleListener <-- ThrottleManager: notifyFailedThrottleReqest(address)
+ *          note over ThrottleListener : Request ends here
+ *       end                    
+ *       group If the Throttle creation request succeeds
+            ThrottleManager <-- Throttle: return new Throttle
+ *       end
+ *    end
+ * ThrottleListener <-- ThrottleManager: notifyThrottleFound(Throttle)
+ * note over ThrottleListener : Throttle can now be controlled by ThrottleListener or a delegate.
+ * 
+ * @enduml
+ */ 

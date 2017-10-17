@@ -1,44 +1,40 @@
 package jmri.jmrix.nce;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class NceThrottleManagerTest {
+public class NceThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     private NceTrafficControlScaffold tcis = null;
     private NceSystemConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
-        NceThrottleManager t = new NceThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tcis = new NceTrafficControlScaffold();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(tcis);
+        tm = new NceThrottleManager(memo);
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceThrottleManagerTest.class);
 
 }

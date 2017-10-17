@@ -1,12 +1,14 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JComboBox;
+import jmri.Disposable;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
@@ -21,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
  */
-public class Setup {
+public class Setup implements InstanceManagerAutoDefault, Disposable {
 
     public static final String NONE = "";
 
@@ -176,149 +178,155 @@ public class Setup {
     public static final String FEET = Bundle.getMessage("Feet");
     public static final String METER = Bundle.getMessage("Meter");
 
-    private static final String[] carAttributes =
-            {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
-                    TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
-                    PICKUP_COMMENT, RWE};
-    private static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
-            LOCATION, DESTINATION, COMMENT};
+    private static final String[] CAR_ATTRIBUTES
+            = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
+                TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
+                PICKUP_COMMENT, RWE};
+    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
+        LOCATION, DESTINATION, COMMENT};
+    /*
+     * The print Manifest and switch list user selectable options are stored in the xml file using the English translation.
+     */
+    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Load", "Color", // NOI18N
+        "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", // NOI18N
+        "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"}; // NOI18N
 
-    private static int scale = HO_SCALE; // Default scale
-    private static int ratio = HO_RATIO;
-    private static int ratioTons = HO_RATIO_TONS;
-    private static int initWeight = HO_INITIAL_WEIGHT;
-    private static int addWeight = HO_ADD_WEIGHT;
-    private static String railroadName = NONE;
-    private static int traindir = EAST + WEST + NORTH + SOUTH;
-    private static int maxTrainLength = 1000; // maximum train length
-    private static int maxEngineSize = 6; // maximum number of engines that can be assigned to a train
-    private static int horsePowerPerTon = 1; // Horsepower per ton
-    private static int carMoves = 5; // default number of moves when creating a route
-    private static String carTypes = DESCRIPTIVE;
-    private static String ownerName = NONE;
-    private static String fontName = MONOSPACED;
-    private static int manifestFontSize = 10;
-    private static int buildReportFontSize = 10;
-    private static String manifestOrientation = PORTRAIT;
-    private static String switchListOrientation = PORTRAIT;
-    private static String pickupColor = BLACK;
-    private static String dropColor = BLACK;
-    private static String localColor = BLACK;
-    private static String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
-    private static String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
-    private static String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            COMMENT, PICKUP_COMMENT};
-    private static String[] dropManifestMessageFormat =
-            {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
-                    COMMENT, DROP_COMMENT};
-    private static String[] localManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            DESTINATION, COMMENT};
-    private static String[] pickupSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-            LOCATION, COMMENT, PICKUP_COMMENT};
-    private static String[] dropSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-            DESTINATION, COMMENT, DROP_COMMENT};
-    private static String[] localSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-            LOCATION, DESTINATION, COMMENT};
-    private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
-    private static String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
-    private static String dropEnginePrefix = BOX + Bundle.getMessage("SetOutPrefix");
-    private static String pickupCarPrefix = BOX + Bundle.getMessage("PickUpPrefix");
-    private static String dropCarPrefix = BOX + Bundle.getMessage("SetOutPrefix");
-    private static String localPrefix = BOX + Bundle.getMessage("LocalCarPrefix");
-    private static String switchListPickupCarPrefix = BOX + Bundle.getMessage("PickUpPrefix");
-    private static String switchListDropCarPrefix = BOX + Bundle.getMessage("SetOutPrefix");
-    private static String switchListLocalPrefix = BOX + Bundle.getMessage("LocalCarPrefix");
-    private static String miaComment = Bundle.getMessage("misplacedCars");
-    private static String hazardousMsg = "(" + Bundle.getMessage("Hazardous") + ")";
-    private static String logoURL = NONE;
-    private static String panelName = "Panel"; // NOI18N
-    private static String buildReportLevel = BUILD_REPORT_VERY_DETAILED;
-    private static String routerBuildReportLevel = BUILD_REPORT_NORMAL;
-    private static int carSwitchTime = 3; // how long it takes to move a car in minutes
-    private static int travelTime = 4; // how long it takes a train to move from one location to another in minutes
-    private static String yearModeled = NONE; // year being modeled
-    private static String lengthUnit = FEET;
-    private static String iconNorthColor = NONE;
-    private static String iconSouthColor = NONE;
-    private static String iconEastColor = NONE;
-    private static String iconWestColor = NONE;
-    private static String iconLocalColor = NONE;
-    private static String iconTerminateColor = NONE;
+    private int scale = HO_SCALE; // Default scale
+    private int ratio = HO_RATIO;
+    private int ratioTons = HO_RATIO_TONS;
+    private int initWeight = HO_INITIAL_WEIGHT;
+    private int addWeight = HO_ADD_WEIGHT;
+    private String railroadName = NONE;
+    private int traindir = EAST + WEST + NORTH + SOUTH;
+    private int maxTrainLength = 1000; // maximum train length
+    private int maxEngineSize = 6; // maximum number of engines that can be assigned to a train
+    private int horsePowerPerTon = 1; // Horsepower per ton
+    private int carMoves = 5; // default number of moves when creating a route
+    private String carTypes = DESCRIPTIVE;
+    private String ownerName = NONE;
+    private String fontName = MONOSPACED;
+    private int manifestFontSize = 10;
+    private int buildReportFontSize = 10;
+    private String manifestOrientation = PORTRAIT;
+    private String switchListOrientation = PORTRAIT;
+    private String pickupColor = BLACK;
+    private String dropColor = BLACK;
+    private String localColor = BLACK;
+    private String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
+    private String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
+    private String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+        COMMENT, PICKUP_COMMENT};
+    private String[] dropManifestMessageFormat
+            = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
+                COMMENT, DROP_COMMENT};
+    private String[] localManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+        DESTINATION, COMMENT};
+    private String[] pickupSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
+        LOCATION, COMMENT, PICKUP_COMMENT};
+    private String[] dropSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
+        DESTINATION, COMMENT, DROP_COMMENT};
+    private String[] localSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
+        LOCATION, DESTINATION, COMMENT};
+    private String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
+    private String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
+    private String dropEnginePrefix = BOX + Bundle.getMessage("SetOutPrefix");
+    private String pickupCarPrefix = BOX + Bundle.getMessage("PickUpPrefix");
+    private String dropCarPrefix = BOX + Bundle.getMessage("SetOutPrefix");
+    private String localPrefix = BOX + Bundle.getMessage("LocalCarPrefix");
+    private String switchListPickupCarPrefix = BOX + Bundle.getMessage("PickUpPrefix");
+    private String switchListDropCarPrefix = BOX + Bundle.getMessage("SetOutPrefix");
+    private String switchListLocalPrefix = BOX + Bundle.getMessage("LocalCarPrefix");
+    private String miaComment = Bundle.getMessage("misplacedCars");
+    private String hazardousMsg = "(" + Bundle.getMessage("Hazardous") + ")";
+    private String logoURL = NONE;
+    private String panelName = "Panel"; // NOI18N
+    private String buildReportLevel = BUILD_REPORT_VERY_DETAILED;
+    private String routerBuildReportLevel = BUILD_REPORT_NORMAL;
+    private int carSwitchTime = 3; // how long it takes to move a car in minutes
+    private int travelTime = 4; // how long it takes a train to move from one location to another in minutes
+    private String yearModeled = NONE; // year being modeled
+    private String lengthUnit = FEET;
+    private String iconNorthColor = NONE;
+    private String iconSouthColor = NONE;
+    private String iconEastColor = NONE;
+    private String iconWestColor = NONE;
+    private String iconLocalColor = NONE;
+    private String iconTerminateColor = NONE;
 
-    private static boolean tab = false; // when true, tab out manifest and switch lists
-    private static int tab1CharLength = Control.max_len_string_attibute;
-    private static int tab2CharLength = 6; // arbitrary lengths
-    private static int tab3CharLength = 8;
+    private boolean tab = false; // when true, tab out manifest and switch lists
+    private int tab1CharLength = Control.max_len_string_attibute;
+    private int tab2CharLength = 6; // arbitrary lengths
+    private int tab3CharLength = 8;
 
-    private static String manifestFormat = STANDARD_FORMAT;
-    private static boolean manifestEditorEnabled = false; // when true use text editor to view build report
-    private static boolean switchListSameManifest = true; // when true switch list format is the same as the manifest
-    private static boolean manifestTruncated = false; // when true, manifest is truncated if switch list is available
-    private static boolean manifestDepartureTime = false; // when true, manifest shows train's departure time
-    private static boolean switchListRouteComment = true; // when true, switch list have route location comments
-    private static boolean trackSummary = true; // when true, print switch list track summary
+    private String manifestFormat = STANDARD_FORMAT;
+    private boolean manifestEditorEnabled = false; // when true use text editor to view build report
+    private boolean switchListSameManifest = true; // when true switch list format is the same as the manifest
+    private boolean manifestTruncated = false; // when true, manifest is truncated if switch list is available
+    private boolean manifestDepartureTime = false; // when true, manifest shows train's departure time
+    private boolean switchListRouteComment = true; // when true, switch list have route location comments
+    private boolean trackSummary = true; // when true, print switch list track summary
 
-    private static boolean switchListRealTime = true; // when true switch list only show work for built trains
-    private static boolean switchListAllTrains = true; // when true show all trains that visit the location
-    private static String switchListPageFormat = PAGE_NORMAL; // how switch lists pages are printed
+    private boolean switchListRealTime = true; // when true switch list only show work for built trains
+    private boolean switchListAllTrains = true; // when true show all trains that visit the location
+    private String switchListPageFormat = PAGE_NORMAL; // how switch lists pages are printed
 
-    private static boolean buildReportEditorEnabled = false; // when true use text editor to view build report
-    private static boolean buildReportIndentEnabled = true; // when true use text editor to view build report
-    private static boolean buildReportAlwaysPreviewEnabled = false; // when true use text editor to view build report
+    private boolean buildReportEditorEnabled = false; // when true use text editor to view build report
+    private boolean buildReportIndentEnabled = true; // when true use text editor to view build report
+    private boolean buildReportAlwaysPreviewEnabled = false; // when true use text editor to view build report
 
-    private static boolean enableTrainIconXY = true;
-    private static boolean appendTrainIcon = false; // when true, append engine number to train name
-    private static String setupComment = NONE;
+    private boolean enableTrainIconXY = true;
+    private boolean appendTrainIcon = false; // when true, append engine number to train name
+    private String setupComment = NONE;
 
-    private static boolean mainMenuEnabled = false; // when true add operations menu to main menu bar
-    private static boolean closeWindowOnSave = false; // when true, close window when save button is activated
-    private static boolean autoSave = true; // when true, automatically save files if modified
-    private static boolean autoBackup = true; // when true, automatically backup files
-    private static boolean enableValue = false; // when true show value fields for rolling stock
-    private static String labelValue = Bundle.getMessage("Value");
-    private static boolean enableRfid = false; // when true show RFID fields for rolling stock
-    private static String labelRfid = Bundle.getMessage("RFID");
+    private boolean mainMenuEnabled = false; // when true add operations menu to main menu bar
+    private boolean closeWindowOnSave = false; // when true, close window when save button is activated
+    private boolean autoSave = true; // when true, automatically save files if modified
+    private boolean autoBackup = true; // when true, automatically backup files
+    private boolean enableValue = false; // when true show value fields for rolling stock
+    private String labelValue = Bundle.getMessage("Value");
+    private boolean enableRfid = false; // when true show RFID fields for rolling stock
+    private String labelRfid = Bundle.getMessage("RFID");
 
-    private static boolean carRoutingEnabled = true; // when true enable car routing
-    private static boolean carRoutingYards = true; // when true enable car routing via yard tracks
-    private static boolean carRoutingStaging = false; // when true staging tracks can be used for car routing
-    private static boolean forwardToYardEnabled = true; // when true forward car to yard if track is full
-    private static boolean onlyActiveTrains = false; // when true only active trains are used for routing
-    private static boolean checkCarDestination = false; // when true check car's track for valid destination
+    private boolean carRoutingEnabled = true; // when true enable car routing
+    private boolean carRoutingYards = true; // when true enable car routing via yard tracks
+    private boolean carRoutingStaging = false; // when true staging tracks can be used for car routing
+    private boolean forwardToYardEnabled = true; // when true forward car to yard if track is full
+    private boolean onlyActiveTrains = false; // when true only active trains are used for routing
+    private boolean checkCarDestination = false; // when true check car's track for valid destination
 
-    private static boolean carLogger = false; // when true car logger is enabled
-    private static boolean engineLogger = false; // when true engine logger is enabled
-    private static boolean trainLogger = false; // when true train logger is enabled
-    private static boolean saveTrainManifests = false; // when true save previous train manifest
+    private boolean carLogger = false; // when true car logger is enabled
+    private boolean engineLogger = false; // when true engine logger is enabled
+    private boolean trainLogger = false; // when true train logger is enabled
+    private boolean saveTrainManifests = false; // when true save previous train manifest
 
-    private static boolean aggressiveBuild = false; // when true subtract car length from track reserve length
-    private static int numberPasses = 2; // the number of passes in train builder
-    private static boolean allowLocalInterchangeMoves = false; // when true local C/I to C/I moves are allowed
-    private static boolean allowLocalYardMoves = false; // when true local yard to yard moves are allowed
-    private static boolean allowLocalSpurMoves = false; // when true local spur to spur moves are allowed
+    private boolean aggressiveBuild = false; // when true subtract car length from track reserve length
+    private int numberPasses = 2; // the number of passes in train builder
+    private boolean allowLocalInterchangeMoves = false; // when true local C/I to C/I moves are allowed
+    private boolean allowLocalYardMoves = false; // when true local yard to yard moves are allowed
+    private boolean allowLocalSpurMoves = false; // when true local spur to spur moves are allowed
 
-    private static boolean trainIntoStagingCheck = true; // staging track must accept train's rolling stock types and roads
-    private static boolean trackImmediatelyAvail = false; // when true staging track is available for other trains
-    private static boolean allowCarsReturnStaging = false; // allow cars on a turn to return to staging if necessary (prevent build failure)
-    private static boolean promptFromStaging = false; // prompt user to specify which departure staging track to use
-    private static boolean promptToStaging = false; // prompt user to specify which arrival staging track to use
+    private boolean trainIntoStagingCheck = true; // staging track must accept train's rolling stock types and roads
+    private boolean trackImmediatelyAvail = false; // when true staging track is available for other trains
+    private boolean allowCarsReturnStaging = false; // allow cars on a turn to return to staging if necessary (prevent build failure)
+    private boolean promptFromStaging = false; // prompt user to specify which departure staging track to use
+    private boolean promptToStaging = false; // prompt user to specify which arrival staging track to use
 
-    private static boolean generateCsvManifest = false; // when true generate csv manifest
-    private static boolean generateCsvSwitchList = false; // when true generate csv switch list
-    private static boolean enableVsdPhysicalLocations = false;
+    private boolean generateCsvManifest = false; // when true generate csv manifest
+    private boolean generateCsvSwitchList = false; // when true generate csv switch list
+    private boolean enableVsdPhysicalLocations = false;
 
-    private static boolean printLocationComments = false; // when true print location comments on the manifest
-    private static boolean printRouteComments = false; // when true print route comments on the manifest
-    private static boolean printLoadsAndEmpties = false; // when true print Loads and Empties on the manifest
-    private static boolean printTimetableName = false; // when true print timetable name on manifests and switch lists
-    private static boolean use12hrFormat = false; // when true use 12hr rather than 24hr format
-    private static boolean printValid = true; // when true print out the valid time and date
-    private static boolean sortByTrack = false; // when true manifest work is sorted by track names
-    private static boolean printHeaders = false; // when true add headers to manifest and switch lists
+    private boolean printLocationComments = false; // when true print location comments on the manifest
+    private boolean printRouteComments = false; // when true print route comments on the manifest
+    private boolean printLoadsAndEmpties = false; // when true print Loads and Empties on the manifest
+    private boolean printTimetableName = false; // when true print timetable name on manifests and switch lists
+    private boolean use12hrFormat = false; // when true use 12hr rather than 24hr format
+    private boolean printValid = true; // when true print out the valid time and date
+    private boolean sortByTrack = false; // when true manifest work is sorted by track names
+    private boolean printHeaders = false; // when true add headers to manifest and switch lists
 
-    private static boolean printCabooseLoad = false; // when true print caboose load
-    private static boolean printPassengerLoad = false; // when true print passenger car load
-    private static boolean showTrackMoves = false; // when true show track moves in table
+    private boolean printCabooseLoad = false; // when true print caboose load
+    private boolean printPassengerLoad = false; // when true print passenger car load
+    private boolean showTrackMoves = false; // when true show track moves in table
 
     // property changes
     public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
@@ -328,42 +336,43 @@ public class Setup {
     public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
-        OperationsSetupXml.instance(); // load file
-        return mainMenuEnabled;
+        InstanceManager.getDefault(OperationsSetupXml.class); // load file
+        return getDefault().mainMenuEnabled;
     }
 
     public static void setMainMenuEnabled(boolean enabled) {
-        mainMenuEnabled = enabled;
+        getDefault().mainMenuEnabled = enabled;
     }
 
     public static boolean isCloseWindowOnSaveEnabled() {
-        return closeWindowOnSave;
+        return getDefault().closeWindowOnSave;
     }
 
     public static void setCloseWindowOnSaveEnabled(boolean enabled) {
-        closeWindowOnSave = enabled;
+        getDefault().closeWindowOnSave = enabled;
     }
 
     public static boolean isAutoSaveEnabled() {
-        return autoSave;
+        return getDefault().autoSave;
     }
 
     public static void setAutoSaveEnabled(boolean enabled) {
-        boolean old = autoSave;
-        autoSave = enabled;
-        if (!old && enabled) {
-            new AutoSave();
+        getDefault().autoSave = enabled;
+        if (enabled) {
+            new AutoSave().start();
+        } else {
+            new AutoSave().stop();
         }
     }
 
     public static boolean isAutoBackupEnabled() {
-        return autoBackup;
+        return getDefault().autoBackup;
     }
 
     public static void setAutoBackupEnabled(boolean enabled) {
         // Do an autoBackup only if we are changing the setting from false to
         // true.
-        if (enabled && !autoBackup) {
+        if (enabled && !getDefault().autoBackup) {
             try {
                 new AutoBackup().autoBackup();
             } catch (IOException ex) {
@@ -371,415 +380,415 @@ public class Setup {
             }
         }
 
-        autoBackup = enabled;
+        getDefault().autoBackup = enabled;
     }
 
     public static boolean isValueEnabled() {
-        return enableValue;
+        return getDefault().enableValue;
     }
 
     public static void setValueEnabled(boolean enabled) {
-        enableValue = enabled;
+        getDefault().enableValue = enabled;
     }
 
     public static String getValueLabel() {
-        return labelValue;
+        return getDefault().labelValue;
     }
 
     public static void setValueLabel(String label) {
-        labelValue = label;
+        getDefault().labelValue = label;
     }
 
     public static boolean isRfidEnabled() {
-        return enableRfid;
+        return getDefault().enableRfid;
     }
 
     public static void setRfidEnabled(boolean enabled) {
-        enableRfid = enabled;
+        getDefault().enableRfid = enabled;
     }
 
     public static String getRfidLabel() {
-        return labelRfid;
+        return getDefault().labelRfid;
     }
 
     public static void setRfidLabel(String label) {
-        labelRfid = label;
+        getDefault().labelRfid = label;
     }
 
     public static boolean isCarRoutingEnabled() {
-        return carRoutingEnabled;
+        return getDefault().carRoutingEnabled;
     }
 
     public static void setCarRoutingEnabled(boolean enabled) {
-        carRoutingEnabled = enabled;
+        getDefault().carRoutingEnabled = enabled;
     }
 
     public static boolean isCarRoutingViaYardsEnabled() {
-        return carRoutingYards;
+        return getDefault().carRoutingYards;
     }
 
     public static void setCarRoutingViaYardsEnabled(boolean enabled) {
-        carRoutingYards = enabled;
+        getDefault().carRoutingYards = enabled;
     }
 
     public static boolean isCarRoutingViaStagingEnabled() {
-        return carRoutingStaging;
+        return getDefault().carRoutingStaging;
     }
 
     public static void setCarRoutingViaStagingEnabled(boolean enabled) {
-        carRoutingStaging = enabled;
+        getDefault().carRoutingStaging = enabled;
     }
 
     public static boolean isForwardToYardEnabled() {
-        return forwardToYardEnabled;
+        return getDefault().forwardToYardEnabled;
     }
 
     public static void setForwardToYardEnabled(boolean enabled) {
-        forwardToYardEnabled = enabled;
+        getDefault().forwardToYardEnabled = enabled;
     }
 
     public static boolean isOnlyActiveTrainsEnabled() {
-        return onlyActiveTrains;
+        return getDefault().onlyActiveTrains;
     }
 
     public static void setOnlyActiveTrainsEnabled(boolean enabled) {
-        onlyActiveTrains = enabled;
+        getDefault().onlyActiveTrains = enabled;
     }
 
     public static boolean isCheckCarDestinationEnabled() {
-        return checkCarDestination;
+        return getDefault().checkCarDestination;
     }
 
     public static void setCheckCarDestinationEnabled(boolean enabled) {
-        checkCarDestination = enabled;
+        getDefault().checkCarDestination = enabled;
     }
 
     public static boolean isBuildAggressive() {
-        return aggressiveBuild;
+        return getDefault().aggressiveBuild;
     }
 
     public static void setBuildAggressive(boolean enabled) {
-        aggressiveBuild = enabled;
+        getDefault().aggressiveBuild = enabled;
     }
 
     public static int getNumberPasses() {
-        return numberPasses;
+        return getDefault().numberPasses;
     }
 
     public static void setNumberPasses(int number) {
-        numberPasses = number;
+        getDefault().numberPasses = number;
     }
 
     public static boolean isLocalInterchangeMovesEnabled() {
-        return allowLocalInterchangeMoves;
+        return getDefault().allowLocalInterchangeMoves;
     }
 
     public static void setLocalInterchangeMovesEnabled(boolean enabled) {
-        allowLocalInterchangeMoves = enabled;
+        getDefault().allowLocalInterchangeMoves = enabled;
     }
 
     public static boolean isLocalYardMovesEnabled() {
-        return allowLocalYardMoves;
+        return getDefault().allowLocalYardMoves;
     }
 
     public static void setLocalYardMovesEnabled(boolean enabled) {
-        allowLocalYardMoves = enabled;
+        getDefault().allowLocalYardMoves = enabled;
     }
 
     public static boolean isLocalSpurMovesEnabled() {
-        return allowLocalSpurMoves;
+        return getDefault().allowLocalSpurMoves;
     }
 
     public static void setLocalSpurMovesEnabled(boolean enabled) {
-        allowLocalSpurMoves = enabled;
+        getDefault().allowLocalSpurMoves = enabled;
     }
 
     public static boolean isTrainIntoStagingCheckEnabled() {
-        return trainIntoStagingCheck;
+        return getDefault().trainIntoStagingCheck;
     }
 
     public static void setTrainIntoStagingCheckEnabled(boolean enabled) {
-        trainIntoStagingCheck = enabled;
+        getDefault().trainIntoStagingCheck = enabled;
     }
 
     public static boolean isStagingTrackImmediatelyAvail() {
-        return trackImmediatelyAvail;
+        return getDefault().trackImmediatelyAvail;
     }
 
     public static void setStagingTrackImmediatelyAvail(boolean enabled) {
-        trackImmediatelyAvail = enabled;
+        getDefault().trackImmediatelyAvail = enabled;
     }
 
     public static boolean isAllowReturnToStagingEnabled() {
-        return allowCarsReturnStaging;
+        return getDefault().allowCarsReturnStaging;
     }
 
     public static void setAllowReturnToStagingEnabled(boolean enabled) {
-        allowCarsReturnStaging = enabled;
+        getDefault().allowCarsReturnStaging = enabled;
     }
 
     public static boolean isPromptFromStagingEnabled() {
-        return promptFromStaging;
+        return getDefault().promptFromStaging;
     }
 
     public static void setPromptFromStagingEnabled(boolean enabled) {
-        promptFromStaging = enabled;
+        getDefault().promptFromStaging = enabled;
     }
 
     public static boolean isPromptToStagingEnabled() {
-        return promptToStaging;
+        return getDefault().promptToStaging;
     }
 
     public static void setPromptToStagingEnabled(boolean enabled) {
-        promptToStaging = enabled;
+        getDefault().promptToStaging = enabled;
     }
 
     public static boolean isGenerateCsvManifestEnabled() {
-        return generateCsvManifest;
+        return getDefault().generateCsvManifest;
     }
 
     public static void setGenerateCsvManifestEnabled(boolean enabled) {
-        boolean old = generateCsvManifest;
-        generateCsvManifest = enabled;
+        boolean old = getDefault().generateCsvManifest;
+        getDefault().generateCsvManifest = enabled;
         if (enabled && !old) {
-            TrainManagerXml.instance().createDefaultCsvManifestDirectory();
+            InstanceManager.getDefault(TrainManagerXml.class).createDefaultCsvManifestDirectory();
         }
         setDirtyAndFirePropertyChange(MANIFEST_CSV_PROPERTY_CHANGE, old, enabled);
     }
 
     public static boolean isGenerateCsvSwitchListEnabled() {
-        return generateCsvSwitchList;
+        return getDefault().generateCsvSwitchList;
     }
 
     public static void setGenerateCsvSwitchListEnabled(boolean enabled) {
-        boolean old = generateCsvSwitchList;
-        generateCsvSwitchList = enabled;
+        boolean old = getDefault().generateCsvSwitchList;
+        getDefault().generateCsvSwitchList = enabled;
         if (enabled && !old) {
-            TrainManagerXml.instance().createDefaultCsvSwitchListDirectory();
+            InstanceManager.getDefault(TrainManagerXml.class).createDefaultCsvSwitchListDirectory();
         }
         setDirtyAndFirePropertyChange(SWITCH_LIST_CSV_PROPERTY_CHANGE, old, enabled);
     }
 
     public static boolean isVsdPhysicalLocationEnabled() {
-        return enableVsdPhysicalLocations;
+        return getDefault().enableVsdPhysicalLocations;
     }
 
     public static void setVsdPhysicalLocationEnabled(boolean enabled) {
-        enableVsdPhysicalLocations = enabled;
+        getDefault().enableVsdPhysicalLocations = enabled;
     }
 
     public static String getRailroadName() {
-        if (railroadName == null) {
-            return WebServerPreferences.getDefault().getRailRoadName();
+        if (getDefault().railroadName == null) {
+            return WebServerPreferences.getDefault().getRailroadName();
         }
-        return railroadName;
+        return getDefault().railroadName;
     }
 
     public static void setRailroadName(String name) {
-        String old = railroadName;
-        railroadName = name;
+        String old = getDefault().railroadName;
+        getDefault().railroadName = name;
         if (old == null || !old.equals(name)) {
             setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
         }
     }
 
     public static String getHazardousMsg() {
-        return hazardousMsg;
+        return getDefault().hazardousMsg;
     }
 
     public static void setHazardousMsg(String message) {
-        hazardousMsg = message;
+        getDefault().hazardousMsg = message;
     }
 
     public static String getMiaComment() {
-        return miaComment;
+        return getDefault().miaComment;
     }
 
     public static void setMiaComment(String comment) {
-        miaComment = comment;
+        getDefault().miaComment = comment;
     }
 
     public static void setTrainDirection(int direction) {
-        traindir = direction;
+        getDefault().traindir = direction;
     }
 
     public static int getTrainDirection() {
-        return traindir;
+        return getDefault().traindir;
     }
 
     public static void setMaxTrainLength(int length) {
-        maxTrainLength = length;
+        getDefault().maxTrainLength = length;
     }
 
     public static int getMaxTrainLength() {
-        return maxTrainLength;
+        return getDefault().maxTrainLength;
     }
 
     public static void setMaxNumberEngines(int value) {
-        maxEngineSize = value;
+        getDefault().maxEngineSize = value;
     }
 
     public static int getMaxNumberEngines() {
-        return maxEngineSize;
+        return getDefault().maxEngineSize;
     }
 
     public static void setHorsePowerPerTon(int value) {
-        horsePowerPerTon = value;
+        getDefault().horsePowerPerTon = value;
     }
 
     public static int getHorsePowerPerTon() {
-        return horsePowerPerTon;
+        return getDefault().horsePowerPerTon;
     }
 
     public static void setCarMoves(int moves) {
-        carMoves = moves;
+        getDefault().carMoves = moves;
     }
 
     public static int getCarMoves() {
-        return carMoves;
+        return getDefault().carMoves;
     }
 
     public static String getPanelName() {
-        return panelName;
+        return getDefault().panelName;
     }
 
     public static void setPanelName(String name) {
-        panelName = name;
+        getDefault().panelName = name;
     }
 
     public static String getLengthUnit() {
-        return lengthUnit;
+        return getDefault().lengthUnit;
     }
 
     public static void setLengthUnit(String unit) {
-        lengthUnit = unit;
+        getDefault().lengthUnit = unit;
     }
 
     public static String getYearModeled() {
-        return yearModeled;
+        return getDefault().yearModeled;
     }
 
     public static void setYearModeled(String year) {
-        yearModeled = year;
+        getDefault().yearModeled = year;
     }
 
     public static String getCarTypes() {
-        return carTypes;
+        return getDefault().carTypes;
     }
 
     public static void setCarTypes(String types) {
-        carTypes = types;
+        getDefault().carTypes = types;
     }
 
     public static void setTrainIconCordEnabled(boolean enable) {
-        enableTrainIconXY = enable;
+        getDefault().enableTrainIconXY = enable;
     }
 
     public static boolean isTrainIconCordEnabled() {
-        return enableTrainIconXY;
+        return getDefault().enableTrainIconXY;
     }
 
     public static void setTrainIconAppendEnabled(boolean enable) {
-        appendTrainIcon = enable;
+        getDefault().appendTrainIcon = enable;
     }
 
     public static boolean isTrainIconAppendEnabled() {
-        return appendTrainIcon;
+        return getDefault().appendTrainIcon;
     }
 
     public static void setComment(String comment) {
-        setupComment = comment;
+        getDefault().setupComment = comment;
     }
 
     public static String getComment() {
-        return setupComment;
+        return getDefault().setupComment;
     }
 
     public static void setBuildReportLevel(String level) {
-        buildReportLevel = level;
+        getDefault().buildReportLevel = level;
     }
 
     public static String getBuildReportLevel() {
-        return buildReportLevel;
+        return getDefault().buildReportLevel;
     }
 
     public static void setRouterBuildReportLevel(String level) {
-        routerBuildReportLevel = level;
+        getDefault().routerBuildReportLevel = level;
     }
 
     public static String getRouterBuildReportLevel() {
-        return routerBuildReportLevel;
+        return getDefault().routerBuildReportLevel;
     }
 
     public static void setManifestEditorEnabled(boolean enable) {
-        manifestEditorEnabled = enable;
+        getDefault().manifestEditorEnabled = enable;
     }
 
     public static boolean isManifestEditorEnabled() {
-        return manifestEditorEnabled;
+        return getDefault().manifestEditorEnabled;
     }
 
     public static void setBuildReportEditorEnabled(boolean enable) {
-        buildReportEditorEnabled = enable;
+        getDefault().buildReportEditorEnabled = enable;
     }
 
     public static boolean isBuildReportEditorEnabled() {
-        return buildReportEditorEnabled;
+        return getDefault().buildReportEditorEnabled;
     }
 
     public static void setBuildReportIndentEnabled(boolean enable) {
-        buildReportIndentEnabled = enable;
+        getDefault().buildReportIndentEnabled = enable;
     }
 
     public static boolean isBuildReportIndentEnabled() {
-        return buildReportIndentEnabled;
+        return getDefault().buildReportIndentEnabled;
     }
 
     public static void setBuildReportAlwaysPreviewEnabled(boolean enable) {
-        buildReportAlwaysPreviewEnabled = enable;
+        getDefault().buildReportAlwaysPreviewEnabled = enable;
     }
 
     public static boolean isBuildReportAlwaysPreviewEnabled() {
-        return buildReportAlwaysPreviewEnabled;
+        return getDefault().buildReportAlwaysPreviewEnabled;
     }
 
     public static void setSwitchListFormatSameAsManifest(boolean b) {
-        switchListSameManifest = b;
+        getDefault().switchListSameManifest = b;
     }
 
     public static boolean isSwitchListFormatSameAsManifest() {
-        return switchListSameManifest;
+        return getDefault().switchListSameManifest;
     }
 
     public static void setTrackSummaryEnabled(boolean b) {
-        trackSummary = b;
+        getDefault().trackSummary = b;
     }
 
     public static boolean isTrackSummaryEnabled() {
-        return trackSummary;
+        return getDefault().trackSummary;
     }
 
     public static void setSwitchListRouteLocationCommentEnabled(boolean b) {
-        switchListRouteComment = b;
+        getDefault().switchListRouteComment = b;
     }
 
     public static boolean isSwitchListRouteLocationCommentEnabled() {
-        return switchListRouteComment;
+        return getDefault().switchListRouteComment;
     }
 
     public static void setSwitchListRealTime(boolean b) {
-        boolean old = switchListRealTime;
-        switchListRealTime = b;
+        boolean old = getDefault().switchListRealTime;
+        getDefault().switchListRealTime = b;
         setDirtyAndFirePropertyChange(REAL_TIME_PROPERTY_CHANGE, old, b);
     }
 
     public static boolean isSwitchListRealTime() {
-        return switchListRealTime;
+        return getDefault().switchListRealTime;
     }
 
     public static void setSwitchListAllTrainsEnabled(boolean b) {
-        boolean old = switchListAllTrains;
-        switchListAllTrains = b;
+        boolean old = getDefault().switchListAllTrains;
+        getDefault().switchListAllTrains = b;
         setDirtyAndFirePropertyChange("Switch List All Trains", old, b); // NOI18N
     }
 
@@ -791,346 +800,350 @@ public class Setup {
      * @return When true show all trains visiting a location.
      */
     public static boolean isSwitchListAllTrainsEnabled() {
-        return switchListAllTrains;
+        return getDefault().switchListAllTrains;
     }
 
     public static void setSwitchListPageFormat(String format) {
-        switchListPageFormat = format;
+        getDefault().switchListPageFormat = format;
     }
 
     public static String getSwitchListPageFormat() {
-        return switchListPageFormat;
+        return getDefault().switchListPageFormat;
     }
 
     public static void setTruncateManifestEnabled(boolean b) {
-        manifestTruncated = b;
+        getDefault().manifestTruncated = b;
     }
 
     public static boolean isTruncateManifestEnabled() {
-        return manifestTruncated;
+        return getDefault().manifestTruncated;
     }
 
     public static void setUseDepartureTimeEnabled(boolean b) {
-        manifestDepartureTime = b;
+        getDefault().manifestDepartureTime = b;
     }
 
     public static boolean isUseDepartureTimeEnabled() {
-        return manifestDepartureTime;
+        return getDefault().manifestDepartureTime;
     }
 
     public static void setPrintLocationCommentsEnabled(boolean enable) {
-        printLocationComments = enable;
+        getDefault().printLocationComments = enable;
     }
 
     public static boolean isPrintLocationCommentsEnabled() {
-        return printLocationComments;
+        return getDefault().printLocationComments;
     }
 
     public static void setPrintRouteCommentsEnabled(boolean enable) {
-        printRouteComments = enable;
+        getDefault().printRouteComments = enable;
     }
 
     public static boolean isPrintRouteCommentsEnabled() {
-        return printRouteComments;
+        return getDefault().printRouteComments;
     }
 
     public static void setPrintLoadsAndEmptiesEnabled(boolean enable) {
-        printLoadsAndEmpties = enable;
+        getDefault().printLoadsAndEmpties = enable;
     }
 
     public static boolean isPrintLoadsAndEmptiesEnabled() {
-        return printLoadsAndEmpties;
+        return getDefault().printLoadsAndEmpties;
     }
 
     public static void setPrintTimetableNameEnabled(boolean enable) {
-        printTimetableName = enable;
+        getDefault().printTimetableName = enable;
     }
 
     public static boolean isPrintTimetableNameEnabled() {
-        return printTimetableName;
+        return getDefault().printTimetableName;
     }
 
     public static void set12hrFormatEnabled(boolean enable) {
-        use12hrFormat = enable;
+        getDefault().use12hrFormat = enable;
     }
 
     public static boolean is12hrFormatEnabled() {
-        return use12hrFormat;
+        return getDefault().use12hrFormat;
     }
 
     public static void setPrintValidEnabled(boolean enable) {
-        printValid = enable;
+        getDefault().printValid = enable;
     }
 
     public static boolean isPrintValidEnabled() {
-        return printValid;
+        return getDefault().printValid;
     }
 
-    public static void setSortByTrackEnabled(boolean enable) {
-        sortByTrack = enable;
+    public static void setSortByTrackNameEnabled(boolean enable) {
+        getDefault().sortByTrack = enable;
     }
 
-    public static boolean isSortByTrackEnabled() {
-        return sortByTrack;
+    /**
+     * when true manifest work is sorted by track names.
+     * @return true if work at a location is to be sorted by track names.
+     */
+    public static boolean isSortByTrackNameEnabled() {
+        return getDefault().sortByTrack;
     }
 
     public static void setPrintHeadersEnabled(boolean enable) {
-        printHeaders = enable;
+        getDefault().printHeaders = enable;
     }
 
     public static boolean isPrintHeadersEnabled() {
-        return printHeaders;
+        return getDefault().printHeaders;
     }
 
     public static void setPrintCabooseLoadEnabled(boolean enable) {
-        printCabooseLoad = enable;
+        getDefault().printCabooseLoad = enable;
     }
 
     public static boolean isPrintCabooseLoadEnabled() {
-        return printCabooseLoad;
+        return getDefault().printCabooseLoad;
     }
 
     public static void setPrintPassengerLoadEnabled(boolean enable) {
-        printPassengerLoad = enable;
+        getDefault().printPassengerLoad = enable;
     }
 
     public static boolean isPrintPassengerLoadEnabled() {
-        return printPassengerLoad;
+        return getDefault().printPassengerLoad;
     }
 
     public static void setShowTrackMovesEnabled(boolean enable) {
-        boolean old = showTrackMoves;
-        showTrackMoves = enable;
+        boolean old = getDefault().showTrackMoves;
+        getDefault().showTrackMoves = enable;
         setDirtyAndFirePropertyChange(SHOW_TRACK_MOVES_PROPERTY_CHANGE, old, enable);
     }
 
     public static boolean isShowTrackMovesEnabled() {
-        return showTrackMoves;
+        return getDefault().showTrackMoves;
     }
 
     public static void setSwitchTime(int minutes) {
-        carSwitchTime = minutes;
+        getDefault().carSwitchTime = minutes;
     }
 
     public static int getSwitchTime() {
-        return carSwitchTime;
+        return getDefault().carSwitchTime;
     }
 
     public static void setTravelTime(int minutes) {
-        travelTime = minutes;
+        getDefault().travelTime = minutes;
     }
 
     public static int getTravelTime() {
-        return travelTime;
+        return getDefault().travelTime;
     }
 
     public static void setTrainIconColorNorth(String color) {
-        iconNorthColor = color;
+        getDefault().iconNorthColor = color;
     }
 
     public static String getTrainIconColorNorth() {
-        return iconNorthColor;
+        return getDefault().iconNorthColor;
     }
 
     public static void setTrainIconColorSouth(String color) {
-        iconSouthColor = color;
+        getDefault().iconSouthColor = color;
     }
 
     public static String getTrainIconColorSouth() {
-        return iconSouthColor;
+        return getDefault().iconSouthColor;
     }
 
     public static void setTrainIconColorEast(String color) {
-        iconEastColor = color;
+        getDefault().iconEastColor = color;
     }
 
     public static String getTrainIconColorEast() {
-        return iconEastColor;
+        return getDefault().iconEastColor;
     }
 
     public static void setTrainIconColorWest(String color) {
-        iconWestColor = color;
+        getDefault().iconWestColor = color;
     }
 
     public static String getTrainIconColorWest() {
-        return iconWestColor;
+        return getDefault().iconWestColor;
     }
 
     public static void setTrainIconColorLocal(String color) {
-        iconLocalColor = color;
+        getDefault().iconLocalColor = color;
     }
 
     public static String getTrainIconColorLocal() {
-        return iconLocalColor;
+        return getDefault().iconLocalColor;
     }
 
     public static void setTrainIconColorTerminate(String color) {
-        iconTerminateColor = color;
+        getDefault().iconTerminateColor = color;
     }
 
     public static String getTrainIconColorTerminate() {
-        return iconTerminateColor;
+        return getDefault().iconTerminateColor;
     }
 
     public static String getFontName() {
-        return fontName;
+        return getDefault().fontName;
     }
 
     public static void setFontName(String name) {
-        fontName = name;
+        getDefault().fontName = name;
     }
 
     public static int getManifestFontSize() {
-        return manifestFontSize;
+        return getDefault().manifestFontSize;
     }
 
     public static void setManifestFontSize(int size) {
-        manifestFontSize = size;
+        getDefault().manifestFontSize = size;
     }
 
     public static int getBuildReportFontSize() {
-        return buildReportFontSize;
+        return getDefault().buildReportFontSize;
     }
 
     public static void setBuildReportFontSize(int size) {
-        buildReportFontSize = size;
+        getDefault().buildReportFontSize = size;
     }
 
     public static String getManifestOrientation() {
-        return manifestOrientation;
+        return getDefault().manifestOrientation;
     }
 
     public static void setManifestOrientation(String orientation) {
-        manifestOrientation = orientation;
+        getDefault().manifestOrientation = orientation;
     }
 
     public static String getSwitchListOrientation() {
         if (isSwitchListFormatSameAsManifest()) {
-            return manifestOrientation;
+            return getDefault().manifestOrientation;
         } else {
-            return switchListOrientation;
+            return getDefault().switchListOrientation;
         }
     }
 
     public static void setSwitchListOrientation(String orientation) {
-        switchListOrientation = orientation;
+        getDefault().switchListOrientation = orientation;
     }
 
     public static boolean isTabEnabled() {
-        return tab;
+        return getDefault().tab;
     }
 
     public static void setTabEnabled(boolean enable) {
-        tab = enable;
+        getDefault().tab = enable;
     }
 
     public static int getTab1Length() {
-        return tab1CharLength;
+        return getDefault().tab1CharLength;
     }
 
     public static void setTab1length(int length) {
-        tab1CharLength = length;
+        getDefault().tab1CharLength = length;
     }
 
     public static int getTab2Length() {
-        return tab2CharLength;
+        return getDefault().tab2CharLength;
     }
 
     public static void setTab2length(int length) {
-        tab2CharLength = length;
+        getDefault().tab2CharLength = length;
     }
 
     public static int getTab3Length() {
-        return tab3CharLength;
+        return getDefault().tab3CharLength;
     }
 
     public static void setTab3length(int length) {
-        tab3CharLength = length;
+        getDefault().tab3CharLength = length;
     }
 
     public static String getManifestFormat() {
-        return manifestFormat;
+        return getDefault().manifestFormat;
     }
 
     public static void setManifestFormat(String format) {
-        manifestFormat = format;
+        getDefault().manifestFormat = format;
     }
 
     public static boolean isCarLoggerEnabled() {
-        return carLogger;
+        return getDefault().carLogger;
     }
 
     public static void setCarLoggerEnabled(boolean enable) {
-        carLogger = enable;
-        RollingStockLogger.instance().enableCarLogging(enable);
+        getDefault().carLogger = enable;
+        InstanceManager.getDefault(RollingStockLogger.class).enableCarLogging(enable);
     }
 
     public static boolean isEngineLoggerEnabled() {
-        return engineLogger;
+        return getDefault().engineLogger;
     }
 
     public static void setEngineLoggerEnabled(boolean enable) {
-        engineLogger = enable;
-        RollingStockLogger.instance().enableEngineLogging(enable);
+        getDefault().engineLogger = enable;
+        InstanceManager.getDefault(RollingStockLogger.class).enableEngineLogging(enable);
     }
 
     public static boolean isTrainLoggerEnabled() {
-        return trainLogger;
+        return getDefault().trainLogger;
     }
 
     public static void setTrainLoggerEnabled(boolean enable) {
-        trainLogger = enable;
-        TrainLogger.instance().enableTrainLogging(enable);
+        getDefault().trainLogger = enable;
+        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(enable);
     }
 
     public static boolean isSaveTrainManifestsEnabled() {
-        return saveTrainManifests;
+        return getDefault().saveTrainManifests;
     }
 
     public static void setSaveTrainManifestsEnabled(boolean enable) {
-        boolean old = saveTrainManifests;
-        saveTrainManifests = enable;
+        boolean old = getDefault().saveTrainManifests;
+        getDefault().saveTrainManifests = enable;
         setDirtyAndFirePropertyChange(SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE, old, enable);
     }
 
     public static String getPickupEnginePrefix() {
-        return pickupEnginePrefix;
+        return getDefault().pickupEnginePrefix;
     }
 
     public static void setPickupEnginePrefix(String prefix) {
-        pickupEnginePrefix = prefix;
+        getDefault().pickupEnginePrefix = prefix;
     }
 
     public static String getDropEnginePrefix() {
-        return dropEnginePrefix;
+        return getDefault().dropEnginePrefix;
     }
 
     public static void setDropEnginePrefix(String prefix) {
-        dropEnginePrefix = prefix;
+        getDefault().dropEnginePrefix = prefix;
     }
 
     public static String getPickupCarPrefix() {
-        return pickupCarPrefix;
+        return getDefault().pickupCarPrefix;
     }
 
     public static void setPickupCarPrefix(String prefix) {
-        pickupCarPrefix = prefix;
+        getDefault().pickupCarPrefix = prefix;
     }
 
     public static String getDropCarPrefix() {
-        return dropCarPrefix;
+        return getDefault().dropCarPrefix;
     }
 
     public static void setDropCarPrefix(String prefix) {
-        dropCarPrefix = prefix;
+        getDefault().dropCarPrefix = prefix;
     }
 
     public static String getLocalPrefix() {
-        return localPrefix;
+        return getDefault().localPrefix;
     }
 
     public static void setLocalPrefix(String prefix) {
-        localPrefix = prefix;
+        getDefault().localPrefix = prefix;
     }
 
     public static int getManifestPrefixLength() {
@@ -1152,38 +1165,38 @@ public class Setup {
 
     public static String getSwitchListPickupCarPrefix() {
         if (isSwitchListFormatSameAsManifest()) {
-            return pickupCarPrefix;
+            return getDefault().pickupCarPrefix;
         } else {
-            return switchListPickupCarPrefix;
+            return getDefault().switchListPickupCarPrefix;
         }
     }
 
     public static void setSwitchListPickupCarPrefix(String prefix) {
-        switchListPickupCarPrefix = prefix;
+        getDefault().switchListPickupCarPrefix = prefix;
     }
 
     public static String getSwitchListDropCarPrefix() {
         if (isSwitchListFormatSameAsManifest()) {
-            return dropCarPrefix;
+            return getDefault().dropCarPrefix;
         } else {
-            return switchListDropCarPrefix;
+            return getDefault().switchListDropCarPrefix;
         }
     }
 
     public static void setSwitchListDropCarPrefix(String prefix) {
-        switchListDropCarPrefix = prefix;
+        getDefault().switchListDropCarPrefix = prefix;
     }
 
     public static String getSwitchListLocalPrefix() {
         if (isSwitchListFormatSameAsManifest()) {
-            return localPrefix;
+            return getDefault().localPrefix;
         } else {
-            return switchListLocalPrefix;
+            return getDefault().switchListLocalPrefix;
         }
     }
 
     public static void setSwitchListLocalPrefix(String prefix) {
-        switchListLocalPrefix = prefix;
+        getDefault().switchListLocalPrefix = prefix;
     }
 
     public static int getSwitchListPrefixLength() {
@@ -1204,104 +1217,95 @@ public class Setup {
     }
 
     public static String[] getEngineAttributes() {
-        return engineAttributes.clone();
+        return ENGINE_ATTRIBUTES.clone();
     }
 
     public static String[] getPickupEngineMessageFormat() {
-        return pickupEngineMessageFormat.clone();
+        return getDefault().pickupEngineMessageFormat.clone();
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setPickupEngineMessageFormat(String[] format) {
-        pickupEngineMessageFormat = format;
+        getDefault().pickupEngineMessageFormat = format;
     }
 
     public static String[] getDropEngineMessageFormat() {
-        return dropEngineMessageFormat.clone();
+        return getDefault().dropEngineMessageFormat.clone();
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setDropEngineMessageFormat(String[] format) {
-        dropEngineMessageFormat = format;
+        getDefault().dropEngineMessageFormat = format;
     }
 
     public static String[] getCarAttributes() {
-        return carAttributes.clone();
+        return CAR_ATTRIBUTES.clone();
     }
 
     public static String[] getPickupManifestMessageFormat() {
-        return pickupManifestMessageFormat.clone();
+        return getDefault().pickupManifestMessageFormat.clone();
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setPickupManifestMessageFormat(String[] format) {
-        pickupManifestMessageFormat = format;
+        getDefault().pickupManifestMessageFormat = format;
     }
 
     public static String[] getDropManifestMessageFormat() {
-        return dropManifestMessageFormat.clone();
+        return getDefault().dropManifestMessageFormat.clone();
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setDropManifestMessageFormat(String[] format) {
-        dropManifestMessageFormat = format;
+        getDefault().dropManifestMessageFormat = format;
     }
 
     public static String[] getLocalManifestMessageFormat() {
-        return localManifestMessageFormat.clone();
+        return getDefault().localManifestMessageFormat.clone();
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setLocalManifestMessageFormat(String[] format) {
-        localManifestMessageFormat = format;
+        getDefault().localManifestMessageFormat = format;
     }
 
     public static String[] getMissingCarMessageFormat() {
-        return missingCarMessageFormat.clone();
+        return getDefault().missingCarMessageFormat.clone();
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setMissingCarMessageFormat(String[] format) {
-        missingCarMessageFormat = format;
+        getDefault().missingCarMessageFormat = format;
     }
 
     public static String[] getPickupSwitchListMessageFormat() {
         if (isSwitchListFormatSameAsManifest()) {
-            return pickupManifestMessageFormat.clone();
+            return getDefault().pickupManifestMessageFormat.clone();
         } else {
-            return pickupSwitchListMessageFormat.clone();
+            return getDefault().pickupSwitchListMessageFormat.clone();
         }
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setPickupSwitchListMessageFormat(String[] format) {
-        pickupSwitchListMessageFormat = format;
+        getDefault().pickupSwitchListMessageFormat = format;
     }
 
     public static String[] getDropSwitchListMessageFormat() {
         if (isSwitchListFormatSameAsManifest()) {
-            return dropManifestMessageFormat.clone();
+            return getDefault().dropManifestMessageFormat.clone();
         } else {
-            return dropSwitchListMessageFormat.clone();
+            return getDefault().dropSwitchListMessageFormat.clone();
         }
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setDropSwitchListMessageFormat(String[] format) {
-        dropSwitchListMessageFormat = format;
+        getDefault().dropSwitchListMessageFormat = format;
     }
 
     public static String[] getLocalSwitchListMessageFormat() {
         if (isSwitchListFormatSameAsManifest()) {
-            return localManifestMessageFormat.clone();
+            return getDefault().localManifestMessageFormat.clone();
         } else {
-            return localSwitchListMessageFormat.clone();
+            return getDefault().localSwitchListMessageFormat.clone();
         }
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
     public static void setLocalSwitchListMessageFormat(String[] format) {
-        localSwitchListMessageFormat = format;
+        getDefault().localSwitchListMessageFormat = format;
     }
 
     /**
@@ -1311,30 +1315,30 @@ public class Setup {
      * @return Utility car format
      */
     public static String[] getPickupUtilityManifestMessageFormat() {
-        return createUitlityCarMessageFormat(getPickupManifestMessageFormat());
+        return getDefault().createUitlityCarMessageFormat(getPickupManifestMessageFormat());
     }
 
     public static String[] getDropUtilityManifestMessageFormat() {
-        return createUitlityCarMessageFormat(getDropManifestMessageFormat());
+        return getDefault().createUitlityCarMessageFormat(getDropManifestMessageFormat());
     }
 
     public static String[] getLocalUtilityManifestMessageFormat() {
-        return createUitlityCarMessageFormat(getLocalManifestMessageFormat());
+        return getDefault().createUitlityCarMessageFormat(getLocalManifestMessageFormat());
     }
 
     public static String[] getPickupUtilitySwitchListMessageFormat() {
-        return createUitlityCarMessageFormat(getPickupSwitchListMessageFormat());
+        return getDefault().createUitlityCarMessageFormat(getPickupSwitchListMessageFormat());
     }
 
     public static String[] getDropUtilitySwitchListMessageFormat() {
-        return createUitlityCarMessageFormat(getDropSwitchListMessageFormat());
+        return getDefault().createUitlityCarMessageFormat(getDropSwitchListMessageFormat());
     }
 
     public static String[] getLocalUtilitySwitchListMessageFormat() {
-        return createUitlityCarMessageFormat(getLocalSwitchListMessageFormat());
+        return getDefault().createUitlityCarMessageFormat(getLocalSwitchListMessageFormat());
     }
 
-    private static String[] createUitlityCarMessageFormat(String[] format) {
+    private String[] createUitlityCarMessageFormat(String[] format) {
         // remove car's road, number, color
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals(ROAD)) {
@@ -1349,14 +1353,14 @@ public class Setup {
     }
 
     public static String[] getPickupTruncatedManifestMessageFormat() {
-        return createTruncatedManifestMessageFormat(getPickupManifestMessageFormat());
+        return getDefault().createTruncatedManifestMessageFormat(getPickupManifestMessageFormat());
     }
 
     public static String[] getDropTruncatedManifestMessageFormat() {
-        return createTruncatedManifestMessageFormat(getDropManifestMessageFormat());
+        return getDefault().createTruncatedManifestMessageFormat(getDropManifestMessageFormat());
     }
 
-    private static String[] createTruncatedManifestMessageFormat(String[] format) {
+    private String[] createTruncatedManifestMessageFormat(String[] format) {
         // remove car's destination and location
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals(DESTINATION)) {
@@ -1373,22 +1377,22 @@ public class Setup {
     }
 
     public static String[] getPickupTwoColumnByTrackManifestMessageFormat() {
-        return createTwoColumnByTrackPickupMessageFormat(getPickupManifestMessageFormat());
+        return getDefault().createTwoColumnByTrackPickupMessageFormat(getPickupManifestMessageFormat());
     }
 
     public static String[] getPickupTwoColumnByTrackSwitchListMessageFormat() {
-        return createTwoColumnByTrackPickupMessageFormat(getPickupSwitchListMessageFormat());
+        return getDefault().createTwoColumnByTrackPickupMessageFormat(getPickupSwitchListMessageFormat());
     }
 
     public static String[] getPickupTwoColumnByTrackUtilityManifestMessageFormat() {
-        return createTwoColumnByTrackPickupMessageFormat(getPickupUtilityManifestMessageFormat());
+        return getDefault().createTwoColumnByTrackPickupMessageFormat(getPickupUtilityManifestMessageFormat());
     }
 
     public static String[] getPickupTwoColumnByTrackUtilitySwitchListMessageFormat() {
-        return createTwoColumnByTrackPickupMessageFormat(getPickupUtilitySwitchListMessageFormat());
+        return getDefault().createTwoColumnByTrackPickupMessageFormat(getPickupUtilitySwitchListMessageFormat());
     }
 
-    private static String[] createTwoColumnByTrackPickupMessageFormat(String[] format) {
+    private String[] createTwoColumnByTrackPickupMessageFormat(String[] format) {
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals(LOCATION)) {
                 format[i] = BLANK;
@@ -1400,22 +1404,22 @@ public class Setup {
     }
 
     public static String[] getDropTwoColumnByTrackManifestMessageFormat() {
-        return createTwoColumnByTrackDropMessageFormat(getDropManifestMessageFormat());
+        return getDefault().createTwoColumnByTrackDropMessageFormat(getDropManifestMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackSwitchListMessageFormat() {
-        return createTwoColumnByTrackDropMessageFormat(getDropSwitchListMessageFormat());
+        return getDefault().createTwoColumnByTrackDropMessageFormat(getDropSwitchListMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackUtilityManifestMessageFormat() {
-        return createTwoColumnByTrackDropMessageFormat(getDropUtilityManifestMessageFormat());
+        return getDefault().createTwoColumnByTrackDropMessageFormat(getDropUtilityManifestMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackUtilitySwitchListMessageFormat() {
-        return createTwoColumnByTrackDropMessageFormat(getDropUtilitySwitchListMessageFormat());
+        return getDefault().createTwoColumnByTrackDropMessageFormat(getDropUtilitySwitchListMessageFormat());
     }
 
-    private static String[] createTwoColumnByTrackDropMessageFormat(String[] format) {
+    private String[] createTwoColumnByTrackDropMessageFormat(String[] format) {
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals(DESTINATION)) {
                 format[i] = BLANK;
@@ -1427,191 +1431,183 @@ public class Setup {
     }
 
     public static String getDropTextColor() {
-        return dropColor;
+        return getDefault().dropColor;
     }
 
     public static void setDropTextColor(String color) {
-        dropColor = color;
+        getDefault().dropColor = color;
     }
 
     public static String getPickupTextColor() {
-        return pickupColor;
+        return getDefault().pickupColor;
     }
 
     public static void setPickupTextColor(String color) {
-        pickupColor = color;
+        getDefault().pickupColor = color;
     }
 
     public static String getLocalTextColor() {
-        return localColor;
+        return getDefault().localColor;
     }
 
     public static void setLocalTextColor(String color) {
-        localColor = color;
+        getDefault().localColor = color;
     }
 
     public static Color getPickupColor() {
-        return getColor(pickupColor);
+        return getColor(getDefault().pickupColor);
     }
 
     public static Color getDropColor() {
-        return getColor(dropColor);
+        return getColor(getDefault().dropColor);
     }
 
     public static Color getLocalColor() {
-        return getColor(localColor);
+        return getColor(getDefault().localColor);
     }
 
     public static Color getColor(String colorName) {
         if (colorName.equals(BLACK)) {
             return Color.black;
-        }
-        if (colorName.equals(BLUE)) {
+        } else if (colorName.equals(BLUE)) {
             return Color.blue;
-        }
-        if (colorName.equals(GREEN)) {
+        } else if (colorName.equals(GREEN)) {
             return Color.green;
-        }
-        if (colorName.equals(RED)) {
+        } else if (colorName.equals(RED)) {
             return Color.red;
-        }
-        if (colorName.equals(ORANGE)) {
+        } else if (colorName.equals(ORANGE)) {
             return Color.orange;
-        }
-        if (colorName.equals(GRAY)) {
+        } else if (colorName.equals(GRAY)) {
             return Color.gray;
-        }
-        if (colorName.equals(YELLOW)) {
+        } else if (colorName.equals(YELLOW)) {
             return Color.yellow;
-        }
-        if (colorName.equals(PINK)) {
+        } else if (colorName.equals(PINK)) {
             return Color.pink;
-        }
-        if (colorName.equals(CYAN)) {
+        } else if (colorName.equals(CYAN)) {
             return Color.cyan;
-        }
-        if (colorName.equals(MAGENTA)) {
+        } else if (colorName.equals(MAGENTA)) {
             return Color.magenta;
+        } else {
+            return null; // default
         }
-        return null; // default
     }
 
     public static String getManifestLogoURL() {
-        return logoURL;
+        return getDefault().logoURL;
     }
 
     public static void setManifestLogoURL(String pathName) {
-        logoURL = pathName;
+        getDefault().logoURL = pathName;
     }
 
     public static String getOwnerName() {
-        return ownerName;
+        return getDefault().ownerName;
     }
 
     public static void setOwnerName(String name) {
-        ownerName = name;
+        getDefault().ownerName = name;
     }
 
     public static int getScaleRatio() {
-        if (scale == 0) {
+        if (getDefault().scale == 0) {
             log.error("Scale not set");
         }
-        return ratio;
+        return getDefault().ratio;
     }
 
     public static int getScaleTonRatio() {
-        if (scale == 0) {
+        if (getDefault().scale == 0) {
             log.error("Scale not set");
         }
-        return ratioTons;
+        return getDefault().ratioTons;
     }
 
     public static int getInitalWeight() {
-        if (scale == 0) {
+        if (getDefault().scale == 0) {
             log.error("Scale not set");
         }
-        return initWeight;
+        return getDefault().initWeight;
     }
 
     public static int getAddWeight() {
-        if (scale == 0) {
+        if (getDefault().scale == 0) {
             log.error("Scale not set");
         }
-        return addWeight;
+        return getDefault().addWeight;
     }
 
     public static int getScale() {
-        return scale;
+        return getDefault().scale;
     }
 
     public static void setScale(int s) {
-        scale = s;
-        switch (scale) {
+        getDefault().scale = s;
+        switch (getDefault().scale) {
             case Z_SCALE:
-                ratio = Z_RATIO;
-                initWeight = Z_INITIAL_WEIGHT;
-                addWeight = Z_ADD_WEIGHT;
-                ratioTons = Z_RATIO_TONS;
+                getDefault().ratio = Z_RATIO;
+                getDefault().initWeight = Z_INITIAL_WEIGHT;
+                getDefault().addWeight = Z_ADD_WEIGHT;
+                getDefault().ratioTons = Z_RATIO_TONS;
                 break;
             case N_SCALE:
-                ratio = N_RATIO;
-                initWeight = N_INITIAL_WEIGHT;
-                addWeight = N_ADD_WEIGHT;
-                ratioTons = N_RATIO_TONS;
+                getDefault().ratio = N_RATIO;
+                getDefault().initWeight = N_INITIAL_WEIGHT;
+                getDefault().addWeight = N_ADD_WEIGHT;
+                getDefault().ratioTons = N_RATIO_TONS;
                 break;
             case TT_SCALE:
-                ratio = TT_RATIO;
-                initWeight = TT_INITIAL_WEIGHT;
-                addWeight = TT_ADD_WEIGHT;
-                ratioTons = TT_RATIO_TONS;
+                getDefault().ratio = TT_RATIO;
+                getDefault().initWeight = TT_INITIAL_WEIGHT;
+                getDefault().addWeight = TT_ADD_WEIGHT;
+                getDefault().ratioTons = TT_RATIO_TONS;
                 break;
             case HOn3_SCALE:
-                ratio = HO_RATIO;
-                initWeight = HOn3_INITIAL_WEIGHT;
-                addWeight = HOn3_ADD_WEIGHT;
-                ratioTons = HOn3_RATIO_TONS;
+                getDefault().ratio = HO_RATIO;
+                getDefault().initWeight = HOn3_INITIAL_WEIGHT;
+                getDefault().addWeight = HOn3_ADD_WEIGHT;
+                getDefault().ratioTons = HOn3_RATIO_TONS;
                 break;
             case OO_SCALE:
-                ratio = OO_RATIO;
-                initWeight = OO_INITIAL_WEIGHT;
-                addWeight = OO_ADD_WEIGHT;
-                ratioTons = OO_RATIO_TONS;
+                getDefault().ratio = OO_RATIO;
+                getDefault().initWeight = OO_INITIAL_WEIGHT;
+                getDefault().addWeight = OO_ADD_WEIGHT;
+                getDefault().ratioTons = OO_RATIO_TONS;
                 break;
             case HO_SCALE:
-                ratio = HO_RATIO;
-                initWeight = HO_INITIAL_WEIGHT;
-                addWeight = HO_ADD_WEIGHT;
-                ratioTons = HO_RATIO_TONS;
+                getDefault().ratio = HO_RATIO;
+                getDefault().initWeight = HO_INITIAL_WEIGHT;
+                getDefault().addWeight = HO_ADD_WEIGHT;
+                getDefault().ratioTons = HO_RATIO_TONS;
                 break;
             case Sn3_SCALE:
-                ratio = S_RATIO;
-                initWeight = Sn3_INITIAL_WEIGHT;
-                addWeight = Sn3_ADD_WEIGHT;
-                ratioTons = Sn3_RATIO_TONS;
+                getDefault().ratio = S_RATIO;
+                getDefault().initWeight = Sn3_INITIAL_WEIGHT;
+                getDefault().addWeight = Sn3_ADD_WEIGHT;
+                getDefault().ratioTons = Sn3_RATIO_TONS;
                 break;
             case S_SCALE:
-                ratio = S_RATIO;
-                initWeight = S_INITIAL_WEIGHT;
-                addWeight = S_ADD_WEIGHT;
-                ratioTons = S_RATIO_TONS;
+                getDefault().ratio = S_RATIO;
+                getDefault().initWeight = S_INITIAL_WEIGHT;
+                getDefault().addWeight = S_ADD_WEIGHT;
+                getDefault().ratioTons = S_RATIO_TONS;
                 break;
             case On3_SCALE:
-                ratio = O_RATIO;
-                initWeight = On3_INITIAL_WEIGHT;
-                addWeight = On3_ADD_WEIGHT;
-                ratioTons = On3_RATIO_TONS;
+                getDefault().ratio = O_RATIO;
+                getDefault().initWeight = On3_INITIAL_WEIGHT;
+                getDefault().addWeight = On3_ADD_WEIGHT;
+                getDefault().ratioTons = On3_RATIO_TONS;
                 break;
             case O_SCALE:
-                ratio = O_RATIO;
-                initWeight = O_INITIAL_WEIGHT;
-                addWeight = O_ADD_WEIGHT;
-                ratioTons = O_RATIO_TONS;
+                getDefault().ratio = O_RATIO;
+                getDefault().initWeight = O_INITIAL_WEIGHT;
+                getDefault().addWeight = O_ADD_WEIGHT;
+                getDefault().ratioTons = O_RATIO_TONS;
                 break;
             case G_SCALE:
-                ratio = G_RATIO;
-                initWeight = G_INITIAL_WEIGHT;
-                addWeight = G_ADD_WEIGHT;
-                ratioTons = G_RATIO_TONS;
+                getDefault().ratio = G_RATIO;
+                getDefault().initWeight = G_INITIAL_WEIGHT;
+                getDefault().addWeight = G_ADD_WEIGHT;
+                getDefault().ratioTons = G_RATIO_TONS;
                 break;
             default:
                 log.error("Unknown scale");
@@ -1706,17 +1702,17 @@ public class Setup {
      * @return List of valid train directions
      */
     public static List<String> getTrainDirectionList() {
-        List<String> directions = new ArrayList<String>();
-        if ((traindir & EAST) == EAST) {
+        List<String> directions = new ArrayList<>();
+        if ((getDefault().traindir & EAST) == EAST) {
             directions.add(EAST_DIR);
         }
-        if ((traindir & WEST) == WEST) {
+        if ((getDefault().traindir & WEST) == WEST) {
             directions.add(WEST_DIR);
         }
-        if ((traindir & NORTH) == NORTH) {
+        if ((getDefault().traindir & NORTH) == NORTH) {
             directions.add(NORTH_DIR);
         }
-        if ((traindir & SOUTH) == SOUTH) {
+        if ((getDefault().traindir & SOUTH) == SOUTH) {
             directions.add(SOUTH_DIR);
         }
         return directions;
@@ -1792,7 +1788,7 @@ public class Setup {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
         e.addContent(values = new Element(Xml.RAIL_ROAD));
-        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
+        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
             values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
         } else {
             values.setAttribute(Xml.NAME, getRailroadName());
@@ -1913,7 +1909,7 @@ public class Setup {
         values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.TRUNCATE, isTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2018,10 +2014,10 @@ public class Setup {
 
     private static void storeXmlMessageFormat(Element values, String prefix, String[] messageFormat) {
         values.setAttribute(Xml.PREFIX, prefix);
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         stringToTagConversion(messageFormat);
         for (String attibute : messageFormat) {
-            buf.append(attibute + ",");
+            buf.append(attibute).append(",");
         }
         values.setAttribute(Xml.SETTING, buf.toString());
     }
@@ -2034,22 +2030,22 @@ public class Setup {
         Element operations = e.getChild(Xml.OPERATIONS);
         org.jdom2.Attribute a;
 
-        if ((operations.getChild(Xml.RAIL_ROAD) != null) &&
-                (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
+        if ((operations.getChild(Xml.RAIL_ROAD) != null)
+                && (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
             String name = a.getValue();
             log.debug("railroadName: {}", name);
             if (name.equals(Xml.USE_JMRI_RAILROAD_NAME)) {
-                railroadName = null;
+                getDefault().railroadName = null;
             } else {
-                railroadName = name; // don't set the dirty bit
+                getDefault().railroadName = name; // don't set the dirty bit
             }
         }
 
-        if ((operations.getChild(Xml.SETUP) != null) &&
-                (a = operations.getChild(Xml.SETUP).getAttribute(Xml.COMMENT)) != null) {
+        if ((operations.getChild(Xml.SETUP) != null)
+                && (a = operations.getChild(Xml.SETUP).getAttribute(Xml.COMMENT)) != null) {
             String comment = a.getValue();
             log.debug("setup comment: {}", comment);
-            setupComment = comment;
+            getDefault().setupComment = comment;
         }
 
         if (operations.getChild(Xml.SETTINGS) != null) {
@@ -2101,7 +2097,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SCALE)) != null) {
                 String scale = a.getValue();
-                log.debug("scale: " + scale);
+                log.debug("scale: {}", scale);
                 try {
                     setScale(Integer.parseInt(scale));
                 } catch (NumberFormatException ee) {
@@ -2110,7 +2106,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_TYPES)) != null) {
                 String types = a.getValue();
-                log.debug("CarTypes: " + types);
+                log.debug("CarTypes: {}", types);
                 setCarTypes(types);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SWITCH_TIME)) != null) {
@@ -2195,7 +2191,7 @@ public class Setup {
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SORT_BY_TRACK)) != null) {
                 String enable = a.getValue();
                 log.debug("sortByTrack: {}", enable);
-                setSortByTrackEnabled(enable.equals(Xml.TRUE));
+                setSortByTrackNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();
@@ -2287,23 +2283,23 @@ public class Setup {
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.REAL_TIME)) != null) {
                 String b = a.getValue();
                 log.debug("realTime: {}", b);
-                switchListRealTime = b.equals(Xml.TRUE);
+                getDefault().switchListRealTime = b.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.ALL_TRAINS)) != null) {
                 String b = a.getValue();
                 log.debug("allTrains: {}", b);
-                switchListAllTrains = b.equals(Xml.TRUE);
+                getDefault().switchListAllTrains = b.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PAGE_FORMAT)) != null) {
                 switch (a.getValue()) {
                     case Xml.PAGE_NORMAL:
-                        switchListPageFormat = PAGE_NORMAL;
+                        getDefault().switchListPageFormat = PAGE_NORMAL;
                         break;
                     case Xml.PAGE_PER_TRAIN:
-                        switchListPageFormat = PAGE_PER_TRAIN;
+                        getDefault().switchListPageFormat = PAGE_PER_TRAIN;
                         break;
                     case Xml.PAGE_PER_VISIT:
-                        switchListPageFormat = PAGE_PER_VISIT;
+                        getDefault().switchListPageFormat = PAGE_PER_VISIT;
                         break;
                     default:
                         log.error("Unknown switch list page format {}", a.getValue());
@@ -2313,7 +2309,7 @@ public class Setup {
                 String b = a.getValue();
                 log.debug("old style pageMode: {}", b);
                 if (b.equals(Xml.TRUE)) {
-                    switchListPageFormat = PAGE_PER_TRAIN;
+                    getDefault().switchListPageFormat = PAGE_PER_TRAIN;
                 }
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PRINT_ROUTE_LOCATION)) != null) {
@@ -2386,14 +2382,14 @@ public class Setup {
                 setTrainIconAppendEnabled(enable.equals(Xml.TRUE));
             }
         }
-        if ((operations.getChild(Xml.FONT_NAME) != null) &&
-                (a = operations.getChild(Xml.FONT_NAME).getAttribute(Xml.NAME)) != null) {
+        if ((operations.getChild(Xml.FONT_NAME) != null)
+                && (a = operations.getChild(Xml.FONT_NAME).getAttribute(Xml.NAME)) != null) {
             String font = a.getValue();
             log.debug("fontName: {}", font);
             setFontName(font);
         }
-        if ((operations.getChild(Xml.FONT_SIZE) != null) &&
-                (a = operations.getChild(Xml.FONT_SIZE).getAttribute(Xml.SIZE)) != null) {
+        if ((operations.getChild(Xml.FONT_SIZE) != null)
+                && (a = operations.getChild(Xml.FONT_SIZE).getAttribute(Xml.SIZE)) != null) {
             String size = a.getValue();
             log.debug("fontsize: {}", size);
             try {
@@ -2499,7 +2495,7 @@ public class Setup {
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.SORT_BY_TRACK)) != null) {
                 String enable = a.getValue();
                 log.debug("manifest sortByTrack: {}", enable);
-                setSortByTrackEnabled(enable.equals(Xml.TRUE));
+                setSortByTrackNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();
@@ -2541,13 +2537,13 @@ public class Setup {
             if ((a = operations.getChild(Xml.MANIFEST_FORMAT).getAttribute(Xml.VALUE)) != null) {
                 switch (a.getValue()) {
                     case Xml.STANDARD:
-                        manifestFormat = STANDARD_FORMAT;
+                        getDefault().manifestFormat = STANDARD_FORMAT;
                         break;
                     case Xml.TWO_COLUMN:
-                        manifestFormat = TWO_COLUMN_FORMAT;
+                        getDefault().manifestFormat = TWO_COLUMN_FORMAT;
                         break;
                     case Xml.TWO_COLUMN_TRACK:
-                        manifestFormat = TWO_COLUMN_TRACK_FORMAT;
+                        getDefault().manifestFormat = TWO_COLUMN_TRACK_FORMAT;
                         break;
                     default:
                         log.debug("Unknown manifest format");
@@ -2573,7 +2569,7 @@ public class Setup {
             if ((a = operations.getChild(Xml.MANIFEST_FILE_OPTIONS).getAttribute(Xml.MANIFEST_SAVE)) != null) {
                 String enable = a.getValue();
                 log.debug("manifest file save option: {}", enable);
-                saveTrainManifests = enable.equals(Xml.TRUE);
+                getDefault().saveTrainManifests = enable.equals(Xml.TRUE);
             }
         }
         if ((operations.getChild(Xml.BUILD_OPTIONS) != null)) {
@@ -2634,12 +2630,12 @@ public class Setup {
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.GENERATE_CSV_MANIFEST)) != null) {
                 String enable = a.getValue();
                 log.debug("generateCvsManifest: {}", enable);
-                generateCsvManifest = enable.equals(Xml.TRUE);
+                getDefault().generateCsvManifest = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.GENERATE_CSV_SWITCH_LIST)) != null) {
                 String enable = a.getValue();
                 log.debug("generateCvsSwitchList: {}", enable);
-                generateCsvSwitchList = enable.equals(Xml.TRUE);
+                getDefault().generateCsvSwitchList = enable.equals(Xml.TRUE);
             }
         }
         if (operations.getChild(Xml.BUILD_REPORT) != null) {
@@ -2734,8 +2730,8 @@ public class Setup {
             }
         }
 
-        if ((operations.getChild(Xml.OWNER) != null) &&
-                (a = operations.getChild(Xml.OWNER).getAttribute(Xml.NAME)) != null) {
+        if ((operations.getChild(Xml.OWNER) != null)
+                && (a = operations.getChild(Xml.OWNER).getAttribute(Xml.NAME)) != null) {
             String owner = a.getValue();
             log.debug("owner: {}", owner);
             setOwnerName(owner);
@@ -2784,7 +2780,7 @@ public class Setup {
             if ((a = operations.getChild(Xml.DISPLAY).getAttribute(Xml.SHOW_TRACK_MOVES)) != null) {
                 String enable = a.getValue();
                 log.debug("show track moves: {}", enable);
-                showTrackMoves = enable.equals(Xml.TRUE);
+                getDefault().showTrackMoves = enable.equals(Xml.TRUE);
             }
         }
 
@@ -2818,34 +2814,34 @@ public class Setup {
             if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.CAR_LOGGER)) != null) {
                 String enable = a.getValue();
                 log.debug("carLogger: {}", enable);
-                carLogger = enable.equals(Xml.TRUE);
+                getDefault().carLogger = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.ENGINE_LOGGER)) != null) {
                 String enable = a.getValue();
                 log.debug("engineLogger: {}", enable);
-                engineLogger = enable.equals(Xml.TRUE);
+                getDefault().engineLogger = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.TRAIN_LOGGER)) != null) {
                 String enable = a.getValue();
                 log.debug("trainLogger: {}", enable);
-                trainLogger = enable.equals(Xml.TRUE);
+                getDefault().trainLogger = enable.equals(Xml.TRUE);
             }
         } else if (operations.getChild(Xml.SETTINGS) != null) {
             // for backward compatibility
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_LOGGER)) != null) {
                 String enable = a.getValue();
                 log.debug("carLogger: {}", enable);
-                carLogger = enable.equals(Xml.TRUE);
+                getDefault().carLogger = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.ENGINE_LOGGER)) != null) {
                 String enable = a.getValue();
                 log.debug("engineLogger: {}", enable);
-                engineLogger = enable.equals(Xml.TRUE);
+                getDefault().engineLogger = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAIN_LOGGER)) != null) {
                 String enable = a.getValue();
                 log.debug("trainLogger: {}", enable);
-                trainLogger = enable.equals(Xml.TRUE);
+                getDefault().trainLogger = enable.equals(Xml.TRUE);
             }
         }
     }
@@ -2865,7 +2861,7 @@ public class Setup {
         }
     }
 
-   /**
+    /**
      * Converts the xml key to the proper locale text
      *
      */
@@ -2883,13 +2879,6 @@ public class Setup {
     }
 
     /*
-     * The print Manifest and switch list user selectable options are stored in the xml file using the English translation.
-     */
-    private static final String[] keys = {"Road", "Number", "Type", "Model", "Length", "Load", "Color",
-            "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel",
-            "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"};
-
-    /*
      * Converts the strings into English tags for xml storage
      *
      */
@@ -2899,7 +2888,7 @@ public class Setup {
             if (old.equals(BLANK)) {
                 continue;
             }
-            for (String key : keys) {
+            for (String key : KEYS) {
                 if (strings[i].equals(Bundle.getMessage(key))) {
                     strings[i] = Bundle.getMessage(Locale.ROOT, key);
                     break;
@@ -2908,14 +2897,14 @@ public class Setup {
             // log.debug("Converted {} to {}", old, strings[i]);
         }
     }
-    
+
     /*
      * The xml attributes stored using the English translation. This converts
      * the attribute to the appropriate key for language conversion.
      */
     private static void xmlAttributeToKeyConversion(String[] format) {
         for (int i = 0; i < format.length; i++) {
-            for (String key : keys) {
+            for (String key : KEYS) {
                 if (format[i].equals(Bundle.getMessage(Locale.ROOT, key))) {
                     format[i] = key;
                 }
@@ -2934,10 +2923,19 @@ public class Setup {
     }
 
     protected static void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        OperationsSetupXml.instance().setDirty(true);
+        InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Setup.class.getName());
+    public static Setup getDefault() {
+        return InstanceManager.getDefault(Setup.class);
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(Setup.class);
+
+    @Override
+    public void dispose() {
+        new AutoSave().stop();
+    }
 
 }

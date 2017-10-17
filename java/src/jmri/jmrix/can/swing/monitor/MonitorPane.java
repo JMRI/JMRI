@@ -42,7 +42,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     @Override
     public String getTitle() {
-        return "CAN Monitor";
+        return Bundle.getMessage("CanMonitorTitle");
     }
 
     @Override
@@ -97,13 +97,13 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("CAN Monitor",
+            super(Bundle.getMessage("CanMonitorTitle"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     MonitorPane.class.getName(),
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MonitorPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonitorPane.class);
 
 }

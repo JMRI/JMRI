@@ -11,7 +11,28 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     ItemPaletteTest.class,
-    BundleTest.class
+    BundleTest.class,
+    BackgroundItemPanelTest.class,
+    ClockItemPanelTest.class,
+    IconItemPanelTest.class,
+    IndicatorItemPanelTest.class,
+    PortalItemPanelTest.class,
+    RPSItemPanelTest.class,
+    TextItemPanelTest.class,
+    DecoratorPanelTest.class,
+    DetectionPanelTest.class,
+    MemoryItemPanelTest.class,
+    IndicatorTOItemPanelTest.class,
+    MultiSensorItemPanelTest.class,
+    SignalHeadItemPanelTest.class,
+    SignalMastItemPanelTest.class,
+    TableItemPanelTest.class,
+    ReporterItemPanelTest.class,
+    DropJLabelTest.class,
+    ItemDialogTest.class,
+    IconDialogTest.class,
+    IndicatorTOIconDialogTest.class,
+    MultiSensorIconDialogTest.class,
 })
 public class PackageTest {
 }

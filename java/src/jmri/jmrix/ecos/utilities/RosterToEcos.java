@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.utilities;
 
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ecos.EcosListener;
@@ -22,7 +23,7 @@ public class RosterToEcos implements EcosListener {
     private boolean createloco;
     EcosSystemConnectionMemo adaptermemo;
 
-    DecoderIndexFile decoderind = DecoderIndexFile.instance();
+    DecoderIndexFile decoderind = InstanceManager.getDefault(DecoderIndexFile.class);
 
     public RosterToEcos() {
     }
@@ -130,7 +131,7 @@ public class RosterToEcos implements EcosListener {
                             default:
                                 objEcosLoco.setProtocol("DCC128");
                         }
-                        _re.writeFile(null, null, null);
+                        _re.writeFile(null, null);
                         jmri.jmrit.roster.Roster.getDefault().writeRoster();
                         objEcosLocoManager.register(objEcosLoco);
                         createloco = false;
@@ -152,4 +153,5 @@ public class RosterToEcos implements EcosListener {
         _re = null;
         createloco = false;
     }
+
 }

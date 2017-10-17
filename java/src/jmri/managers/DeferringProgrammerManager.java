@@ -1,26 +1,27 @@
 package jmri.managers;
 
+import java.util.ArrayList;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
-import jmri.ProgrammerManager;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Defers GlobalProgrammer operations to the default GlobalProgrammer, and
- * AddressedProgrammer operations to the default AddressedProgrammer.
+ * Defers global programmer operations to the default global Programmer, and
+ * addressed programmer operations to the default AddressedProgrammer.
  * <p>
- * The underlying Programmer is looked up for each access to ensure that it's
+ * The underlying Programmer is looked up for each access to ensure that it is
  * current.
  *
- * @see jmri.ProgrammerManager
+ * @see jmri.GlobalProgrammerManager
+ * @see jmri.AddressedProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2014
  */
-public class DeferringProgrammerManager implements ProgrammerManager {
+public class DeferringProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
 
     public DeferringProgrammerManager() {
     }
@@ -29,8 +30,8 @@ public class DeferringProgrammerManager implements ProgrammerManager {
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in user interface components, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface components, so it should
+     * return a user-provided name for this particular one.
      */
     @Override
     public String getUserName() {
@@ -39,8 +40,8 @@ public class DeferringProgrammerManager implements ProgrammerManager {
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in user interface components, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface components, so it should
+     * return a user-provided name for this particular one.
      */
     @Override
     public String toString() {
@@ -50,20 +51,20 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     @Override
     public Programmer getGlobalProgrammer() {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
-        if (gp == null) {
-            log.debug("no defaultGlobal ProgrammerManager, getGlobalProgrammer returns null" );
+        if (gp == null || this.equals(gp)) {
+            log.debug("no defaultGlobal ProgrammerManager, getGlobalProgrammer returns null");
             return null;
         }
         Programmer p = gp.getGlobalProgrammer();
-        log.debug("getGlobalProgrammer returns default service-mode programmer of type {} from {}", 
-            (p != null ? p.getClass() : "(null)"), gp.getClass() );
+        log.debug("getGlobalProgrammer returns default service-mode programmer of type {} from {}",
+                (p != null ? p.getClass() : "(null)"), gp.getClass());
         return p;
     }
 
     @Override
     public Programmer reserveGlobalProgrammer() {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
-        if (gp == null) {
+        if (gp == null || this.equals(gp)) {
             return null;
         }
         return gp.reserveGlobalProgrammer();
@@ -72,7 +73,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     @Override
     public void releaseGlobalProgrammer(Programmer p) {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
-        if (gp == null) {
+        if (gp == null || this.equals(gp)) {
             return;
         }
         gp.releaseGlobalProgrammer(p);
@@ -86,7 +87,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     @Override
     public boolean isGlobalProgrammerAvailable() {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
-        if (gp == null) {
+        if (gp == null || this.equals(gp)) {
             return false;
         }
         return InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable();
@@ -95,7 +96,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
-        if (ap == null) {
+        if (ap == null || this.equals(ap)) {
             return null;
         }
         return ap.getAddressedProgrammer(pLongAddress, pAddress);
@@ -104,7 +105,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
-        if (ap == null) {
+        if (ap == null || this.equals(ap)) {
             return null;
         }
         return ap.reserveAddressedProgrammer(pLongAddress, pAddress);
@@ -113,7 +114,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     @Override
     public void releaseAddressedProgrammer(AddressedProgrammer p) {
         AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
-        if (ap == null) {
+        if (ap == null || this.equals(ap)) {
             return;
         }
         ap.releaseAddressedProgrammer(p);
@@ -127,7 +128,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     @Override
     public boolean isAddressedModePossible() {
         AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
-        if (ap == null) {
+        if (ap == null || this.equals(ap)) {
             return false;
         }
         return ap.isAddressedModePossible();
@@ -145,9 +146,12 @@ public class DeferringProgrammerManager implements ProgrammerManager {
 
     @Override
     public java.util.List<ProgrammingMode> getDefaultModes() {
+        AddressedProgrammerManager ap = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
+        if (ap == null || this.equals(ap)) {
+            return new ArrayList<>();
+        }
         return InstanceManager.getDefault(AddressedProgrammerManager.class).getDefaultModes();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class);
 }
-

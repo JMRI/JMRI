@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * AcelaLight.java
- *
+ * <p>
  * Implementation of the Light Object for Acela
  * <P>
  * Based in part on SerialTurnout.java
@@ -20,14 +20,16 @@ import org.slf4j.LoggerFactory;
 public class AcelaTurnout extends AbstractTurnout {
 
     private AcelaSystemConnectionMemo _memo = null;
-    private String prefix = null;
 
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
+     *
+     * @param systemName the system name for this Turnout
+     * @param memo       the memo for the system connection
      */
-    public AcelaTurnout(String systemName,AcelaSystemConnectionMemo memo) {
+    public AcelaTurnout(String systemName, AcelaSystemConnectionMemo memo) {
         super(systemName);
         _memo = memo;
         initializeTurnout(systemName);
@@ -37,11 +39,14 @@ public class AcelaTurnout extends AbstractTurnout {
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
+     *
+     * @param systemName the system name for this Turnout
+     * @param userName   the user name for this Turnout
+     * @param memo       the memo for the system connection
      */
-    public AcelaTurnout(String systemName, String userName,AcelaSystemConnectionMemo memo) {
+    public AcelaTurnout(String systemName, String userName, AcelaSystemConnectionMemo memo) {
         super(systemName, userName);
         _memo = memo;
-        prefix = _memo.getSystemPrefix() + "T";
         initializeTurnout(systemName);
     }
 
@@ -51,67 +56,20 @@ public class AcelaTurnout extends AbstractTurnout {
      * AbstractLight.java
      */
     private void initializeTurnout(String systemName) {
-        // Save system name
-        mSystemName = systemName;
-
         // Extract the Bit from the name
-        mBit = AcelaAddress.getBitFromSystemName(systemName);
+        mBit = AcelaAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
 
         // Set initial state
-//        setState( OFF );
         setState(UNKNOWN);
         // Set defaults for all other instance variables
-/*
-         setControlType( NO_CONTROL );
-         setControlSensor( null );
-         setControlSensorSense(Sensor.ACTIVE);
-         setFastClockControlSchedule( 0,0,0,0 );
-         setControlTurnout( null );
-         setControlTurnoutState( Turnout.CLOSED );
-         */
     }
 
     /**
      * System dependent instance variables
      */
-    String mSystemName = "";     // system name 
-//    protected int mState = OFF;  // current state of this light
     protected int mState = UNKNOWN;  // current state of this turnout
     int mBit = -1;                // global address from 0
 
-    /**
-     * Return the current state of this Light
-     */
-//  public int getState() { return mState; }
-    /**
-     * Set the current state of this Light This routine requests the hardware to
-     * change. If this is really a change in state of this bit (tested in
-     * AcelaNode), a Transmit packet will be sent before this Node is next
-     * polled.
-     */
-    /*
-     public void setState(int newState) {
-     AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
-
-     if (mNode!=null) {
-     if (newState==ON) {
-     mNode.setOutputBit(mBit,true);
-     } else if (newState==OFF) {
-     mNode.setOutputBit(mBit,false);
-     } else {
-     log.warn("illegal state requested for Turnout: "+getSystemName());
-     }
-     }
- 
-     if (newState!=mState) {
-     int oldState = mState;
-     mState = newState;
-            
-     // notify listeners, if any
-     firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
-     }
-     }
-     */
     // Handle a request to change state by sending a turnout command
     @Override
     protected void forwardCommandChangeToLayout(int s) {
@@ -119,8 +77,7 @@ public class AcelaTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
+                log.error("Cannot command both CLOSED and THROWN {}", s);
             } else {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
@@ -132,22 +89,17 @@ public class AcelaTurnout extends AbstractTurnout {
     }
 
     /**
-     * Send a message to the layout to lock or unlock the turnout pushbuttons if
-     * true, pushbutton lockout enabled
+     * Send a message to the layout to lock or unlock the turnout push buttons.
+     * <p>
+     * This implementation does nothing, as Acela turnouts do not support
+     * lockout.
+     *
+     * @param pushButtonLockout true to lockout turnout push buttons; false
+     *                          otherwise
      */
     @Override
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
         // Acela turnouts do not currently support lockout
-/*
-         if (log.isDebugEnabled())
-         log.debug("Send command to "
-         + (pushButtonLockout ? "Lock" : "Unlock")
-         + " Pushbutton NT" + _number);
-  
-         byte[] bl = PushbuttonPacket.pushbuttonPkt(prefix, _number, pushButtonLockout);
-         AcelaMessage m = AcelaMessage.sendPacketMessage(bl);
-         AcelaTrafficController.instance().sendAcelaMessage(m, null);
-         */
     }
 
     // Acela turnouts do support inversion
@@ -174,24 +126,24 @@ public class AcelaTurnout extends AbstractTurnout {
     protected void sendMessage(boolean closed) {
         int newState;
         if (closed) {
-//            newState = adjustStateForInversion(ON);
             newState = adjustStateForInversion(CLOSED);
         } else {
-//            newState = adjustStateForInversion(OFF);
             newState = adjustStateForInversion(THROWN);
         }
 
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName, _memo);
 
         if (mNode != null) {
-//            if (newState==ON) {
-            if (newState == THROWN) {
-                mNode.setOutputBit(mBit, true);
-//            } else if (newState==OFF) {
-            } else if (newState == CLOSED) {
-                mNode.setOutputBit(mBit, false);
-            } else {
-                log.warn("illegal state requested for Turnout: " + getSystemName());
+            switch (newState) {
+                case THROWN:
+                    mNode.setOutputBit(mBit, true);
+                    break;
+                case CLOSED:
+                    mNode.setOutputBit(mBit, false);
+                    break;
+                default:
+                    log.warn("illegal state requested for Turnout: {}", getSystemName());
+                    break;
             }
         }
 
@@ -200,9 +152,10 @@ public class AcelaTurnout extends AbstractTurnout {
             mState = newState;
 
             // notify listeners, if any
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
+            firePropertyChange("KnownState", oldState, newState);
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnout.class);
+
 }

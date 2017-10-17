@@ -77,6 +77,17 @@ public class LnPowerManager
     // to free resources when no longer used
     @Override
     public void dispose() {
+        if (thread != null) {
+            try {
+                thread.interrupt();
+                thread.join();
+            } catch (InterruptedException ex) {
+                log.warn("dispose interrupted");
+            } finally {
+                thread = null;
+            }
+        }
+    
         if (tc != null) {
             tc.removeLocoNetListener(~0, this);
         }
@@ -123,10 +134,13 @@ public class LnPowerManager
      * state info.
      */
     private void updateTrackPowerStatus() {
-        LnTrackStatusUpdateThread thread = new LnTrackStatusUpdateThread(tc);
+        thread = new LnTrackStatusUpdateThread(tc);
+        thread.setName("LnPowerManager LnTrackStatusUpdateThread");
         thread.start();
     }
 
+    volatile LnTrackStatusUpdateThread thread;
+    
     /**
      * Class providing a thread to delay then query slot 0. The LnPowerManager
      * can use the resulting OPC_SL_RD_DATA message to update its view of the
@@ -159,6 +173,7 @@ public class LnPowerManager
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
+                return; // and stop work
             }
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
@@ -167,5 +182,5 @@ public class LnPowerManager
             tc.sendLocoNetMessage(msg);
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class);
 }

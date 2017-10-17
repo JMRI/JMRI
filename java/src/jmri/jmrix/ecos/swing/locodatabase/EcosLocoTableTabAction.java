@@ -91,7 +91,7 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
 
     @Override
     protected String helpTarget() {
-        return "package.jmri.jmrit.beantable.EcosLocoTable";
+        return "package.jmri.jmrix.ecos.swing.locodatabase.EcosLocoTable"; // very simple help page
     }
 
     @Override
@@ -101,6 +101,7 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
 
     @Override
     public String getClassDescription() {
-        return "Ecos Loco Table";
+        return Bundle.getMessage("EcosLocoTableTitle");
     }
+
 }

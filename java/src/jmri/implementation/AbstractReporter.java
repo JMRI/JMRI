@@ -16,7 +16,7 @@ import jmri.Reporter;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Matthew Harris Copyright (C) 2011
  */
-public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
+public abstract class AbstractReporter extends AbstractNamedBean implements Reporter {
 
     public AbstractReporter(String systemName) {
         super(systemName.toUpperCase());

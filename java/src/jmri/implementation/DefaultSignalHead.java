@@ -25,6 +25,23 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance; // store the current appearance
         mAppearance = newAppearance;
+        appearanceSetsFlashTimer(newAppearance);
+
+        /* there are circumstances (admittedly rare) where signals and turnouts can get out of sync
+         * allow 'newAppearance' to be set to resync these cases - P Cressman
+         * if (oldAppearance != newAppearance) */
+        updateOutput();
+
+        // notify listeners, if any
+        firePropertyChange("Appearance", oldAppearance, newAppearance);
+    }
+
+    /**
+     * Call to set timer when updating the appearance.
+     *
+     * @param newAppearance the new appearance
+     */
+    protected void appearanceSetsFlashTimer(int newAppearance) {
         if (mLit && ((newAppearance == FLASHGREEN)
                 || (newAppearance == FLASHYELLOW)
                 || (newAppearance == FLASHRED)
@@ -36,15 +53,6 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
                 && (newAppearance != FLASHRED)
                 && (newAppearance != FLASHLUNAR))) {
             stopFlash();
-        }
-
-        /* there are circumstances (admittedly rare) where signals and turnouts can get out of sync
-         * allow 'newAppearance' to be set to resync these cases - P Cressman
-         if (oldAppearance != newAppearance) */ {
-            updateOutput();
-
-            // notify listeners, if any
-            firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
         }
     }
 
@@ -64,7 +72,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
             }
             updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
+            firePropertyChange("Lit", oldLit, newLit);
         }
 
     }
@@ -76,7 +84,8 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
      * held parameter is a local variable which effects the aspect only via
      * higher-level logic.
      *
-     * @param newHeld new Held state, true if Held, to be compared with current Held state
+     * @param newHeld new Held state, true if Held, to be compared with current
+     *                Held state
      */
     @Override
     public void setHeld(boolean newHeld) {
@@ -84,7 +93,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mHeld = newHeld;
         if (oldHeld != newHeld) {
             // notify listeners, if any
-            firePropertyChange("Held", Boolean.valueOf(oldHeld), Boolean.valueOf(newHeld));
+            firePropertyChange("Held", oldHeld, newHeld);
         }
 
     }
@@ -120,11 +129,8 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         // note that we don't force mFlashOn to be true at the start
         // of this; that way a flash in process isn't disturbed.
         if (timer == null) {
-            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    timeout();
-                }
+            timer = new javax.swing.Timer(delay, (java.awt.event.ActionEvent e) -> {
+                timeout();
             });
             timer.setInitialDelay(delay);
             timer.setRepeats(true);
@@ -133,11 +139,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     }
 
     private void timeout() {
-        if (mFlashOn) {
-            mFlashOn = false;
-        } else {
-            mFlashOn = true;
-        }
+        mFlashOn = !mFlashOn;
 
         updateOutput();
     }
@@ -145,7 +147,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     /*
      * Stop the timer that controls flashing.
      * <p>
-     * This is only a resource-saver; the actual use of 
+     * This is only a resource-saver; the actual use of
      * flashing happens elsewhere.
      */
     protected void stopFlash() {
@@ -155,7 +157,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mFlashOn = true;
     }
 
-    final static private int[] validStates = new int[]{
+    final static private int[] VALID_STATES = new int[]{
         DARK,
         RED,
         YELLOW,
@@ -163,7 +165,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         FLASHRED,
         FLASHYELLOW,
         FLASHGREEN,}; // No int for Lunar
-    final static private String[] validStateNames = new String[]{
+    final static private String[] VALID_STATE_NAMES = new String[]{
         Bundle.getMessage("SignalHeadStateDark"),
         Bundle.getMessage("SignalHeadStateRed"),
         Bundle.getMessage("SignalHeadStateYellow"),
@@ -174,12 +176,12 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
 
     @Override
     public int[] getValidStates() {
-        return Arrays.copyOf(validStates, validStates.length);
+        return Arrays.copyOf(VALID_STATES, VALID_STATES.length);
     }
 
     @Override
     public String[] getValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length);
+        return Arrays.copyOf(VALID_STATE_NAMES, VALID_STATE_NAMES.length);
     }
 
     @Override

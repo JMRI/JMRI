@@ -4,10 +4,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
@@ -37,9 +39,9 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     public RoutesTableModel() {
         super();
-        routemanager = RouteManager.instance();
+        routemanager = InstanceManager.getDefault(RouteManager.class);
         routemanager.addPropertyChangeListener(this);
-        LocationManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
         updateList();
     }
 
@@ -198,6 +200,13 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         if (ref != null) {
             ref.dispose();
         }
+        Route route = sysList.get(row);
+        if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
+            // warn user
+            log.debug("Can not edit a route that has a built train");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("DoNotModifyRoute"), Bundle.getMessage("TrainBuilt"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -245,9 +254,9 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             ref.dispose();
         }
         routemanager.removePropertyChangeListener(this);
-        LocationManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(this);
         removePropertyChangeRoutes();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RoutesTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RoutesTableModel.class);
 }

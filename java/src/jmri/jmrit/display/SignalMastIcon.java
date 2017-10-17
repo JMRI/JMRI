@@ -82,7 +82,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * @param pName Used as a system/user name to lookup the SignalMast object
      */
     public void setSignalMast(String pName) {
-        SignalMast mMast = (SignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(pName);
+        SignalMast mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(pName);
         if (mMast == null) {
             log.warn("did not find a SignalMast named " + pName);
         } else {
@@ -454,8 +454,10 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * This was added in so that the layout editor can handle the mouseclicked
-     * when zoomed in
+     * Handle mouse clicks when no modifier keys are pressed. Mouse clicks with
+     * modifier keys pressed can be processed by the containing component.
+     *
+     * @param e the mouse click event
      */
     public void performMouseClicked(java.awt.event.MouseEvent e) {
         if (e.isMetaDown() || e.isAltDown()) {
@@ -517,6 +519,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     /**
      * Drive the current state of the display from the state of the underlying
      * SignalMast object.
+     *
+     * @param state the state to display
      */
     public void displayState(String state) {
         updateSize();
@@ -549,7 +553,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 }
                 if (s.equals("")) {
                     /*We have no appearance to set, therefore we will exit at this point.
-                     This can be considered normal if we are requesting an appearance 
+                     This can be considered normal if we are requesting an appearance
                      that is not support or configured, such as dark or held */
                     return;
                 }
@@ -638,5 +642,5 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastIcon.class);
 }

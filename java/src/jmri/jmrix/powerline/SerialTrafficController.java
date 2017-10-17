@@ -55,6 +55,8 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     * @param s sequence to send
+     * @param l listener for reply
      */
     public void sendX10Sequence(X10Sequence s, SerialListener l) {
     }
@@ -66,6 +68,8 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     * @param s sequence to send
+     * @param l listener for reply
      */
     public void sendInsteonSequence(InsteonSequence s, SerialListener l) {
     }
@@ -84,6 +88,8 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     * @param length message size
+     * @return null
      */
     public SerialMessage getSerialMessage(int length) {
         return null;
@@ -226,7 +232,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
 
 }
 

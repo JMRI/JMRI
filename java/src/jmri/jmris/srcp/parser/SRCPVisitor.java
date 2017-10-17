@@ -1,7 +1,7 @@
 package jmri.jmris.srcp.parser;
 
 import jmri.InstanceManager;
-import jmri.managers.DefaultProgrammerManager;
+import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
                         outputString = "422 ERROR unsupported device group";
                     }
                 } else if (devicegroup.equals("SM")) {
-                    if (memo.provides(jmri.ProgrammerManager.class)) {
+                    if (memo.provides(jmri.GlobalProgrammerManager.class)) {
                         return true;
                     } else {
                         // respond this isn't supported
@@ -177,11 +177,11 @@ public class SRCPVisitor implements SRCPParserVisitor {
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SM")
                 && isSupported(bus, "SM")) {
             // This is a Service Mode read request.
-            jmri.ProgrammingMode modeno = DefaultProgrammerManager.REGISTERMODE;
+            ProgrammingMode modeno = ProgrammingMode.REGISTERMODE;
             if (node.jjtGetChild(3).getClass() == ASTcv.class) {
-                modeno = DefaultProgrammerManager.DIRECTBYTEMODE;
+                modeno = ProgrammingMode.DIRECTBYTEMODE;
             } else if (node.jjtGetChild(3).getClass() == ASTcvbit.class) {
-                modeno = DefaultProgrammerManager.DIRECTBITMODE;
+                modeno = ProgrammingMode.DIRECTBITMODE;
             }
 
             int cv = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(4)).jjtGetValue()));
@@ -244,7 +244,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
                             if (memo.provides(jmri.PowerManager.class)) {
                                 outputString = outputString + " POWER";
                             }
-                            if (memo.provides(jmri.ProgrammerManager.class)) {
+                            if (memo.provides(jmri.GlobalProgrammerManager.class)) {
                                 outputString = outputString + " SM";
                             }
                         } else {
@@ -405,11 +405,11 @@ public class SRCPVisitor implements SRCPParserVisitor {
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SM")
                 && isSupported(bus, "SM")) {
             // This is a Service Mode write request
-            jmri.ProgrammingMode modeno = DefaultProgrammerManager.REGISTERMODE;
+            ProgrammingMode modeno = ProgrammingMode.REGISTERMODE;
             if (node.jjtGetChild(3).getClass() == ASTcv.class) {
-                modeno = DefaultProgrammerManager.DIRECTBYTEMODE;
+                modeno = ProgrammingMode.DIRECTBYTEMODE;
             } else if (node.jjtGetChild(3).getClass() == ASTcvbit.class) {
-                modeno = DefaultProgrammerManager.DIRECTBITMODE;
+                modeno = ProgrammingMode.DIRECTBITMODE;
             }
             int cv = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(4)).jjtGetValue()));
             int value = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(5)).jjtGetValue()));
@@ -826,6 +826,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return data;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPVisitor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPVisitor.class);
 
 }

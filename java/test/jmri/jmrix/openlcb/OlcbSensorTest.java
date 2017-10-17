@@ -1,11 +1,15 @@
 package jmri.jmrix.openlcb;
 
+import java.util.regex.Pattern;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.openlcb.EventID;
+import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,12 +19,9 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorTest extends TestCase {
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
 
     public void testIncomingChange() {
-        // load dummy TrafficController
-        OlcbTestInterface t = new OlcbTestInterface();
-        t.waitForStartup();
         Assert.assertNotNull("exists", t);
         OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
 
@@ -49,9 +50,6 @@ public class OlcbSensorTest extends TestCase {
     }
 
     public void testRecoverUponStartup() {
-        // load dummy TrafficController
-        OlcbTestInterface t = new OlcbTestInterface();
-        t.waitForStartup();
         Assert.assertNotNull("exists", t);
         t.tc.rcvMessage = null;
 
@@ -89,9 +87,6 @@ public class OlcbSensorTest extends TestCase {
     }
 
     public void testMomentarySensor() throws Exception {
-        // load dummy TrafficController
-        OlcbTestInterface t = new OlcbTestInterface();
-        t.waitForStartup();
         Assert.assertNotNull("exists", t);
         OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8", t.iface);
 
@@ -130,8 +125,6 @@ public class OlcbSensorTest extends TestCase {
     }
 
     public void testLocalChange() throws jmri.JmriException {
-        // load dummy TrafficController
-        OlcbTestInterface t = new OlcbTestInterface();
         OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         t.waitForStartup();
 
@@ -148,7 +141,40 @@ public class OlcbSensorTest extends TestCase {
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
         t.flush();
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
+
+        // Repeat send
+        t.tc.rcvMessage = null;
+        s.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
+        t.flush();
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
     }
+
+    public void testEventTable() {
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+
+        EventTable.EventTableEntry[] elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertTrue("Incorrect name: " + elist[0].getDescription(), Pattern.compile("Sensor.*Active").matcher(elist[0].getDescription()).matches());
+
+        s.setUserName("MyInput");
+
+        elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertEquals("Sensor MyInput Active", elist[0].getDescription());
+
+        elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.9")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertEquals("Sensor MyInput Inactive", elist[0].getDescription());
+    }
+
+    OlcbTestInterface t;
 
     // from here down is testing infrastructure
     public OlcbSensorTest(String s) {
@@ -171,10 +197,13 @@ public class OlcbSensorTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        // load dummy TrafficController
+        t = new OlcbTestInterface();
+        t.waitForStartup();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

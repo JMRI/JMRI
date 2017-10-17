@@ -6,6 +6,7 @@ import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +26,18 @@ import org.slf4j.LoggerFactory;
  * USIC/SUSIC nodes can have 0-63 inputs and 0-63 output cards, but no more than
  * 64 total cards.
  *
+ * A CPNODE (Control Point Node) is defined as having 2 inputs and 2 outputs //c2
+ * on the node board and 0-128 bits of input or output (in 8 bit increments)
+ * for added I/O extender cards IOX16,IOX32.  
+ *
+ * A CPMEGA (Open Source Node) is defined as having 8 bytes of input or output //c2
+ * on the node board and 0-128 bits of input or output (in 8 bit increments)
+ * for added I/O extender cards IOX16,IOX32.  
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- */
+ * @author Chuck Catania, cpNode Extensions 2013, 2014, 2015, 2016
+*/
 public class SerialNode extends AbstractNode {
 
     /**
@@ -47,9 +57,19 @@ public class SerialNode extends AbstractNode {
     // class constants
     public static final int SMINI = 1;          // SMINI node type
     public static final int USIC_SUSIC = 2;     // USIC/SUSIC node type
+    public static final int CPNODE = 3;         // cpNode Control Point (Arduino) node type  c2
+    public static final int CPMEGA = 4;         // Open Source Node (OSN)  e.g Mega2560 R3 c2
+    
+    public static final int NDP_USICSUSIC24 = 78; // 'N' USIC/SUSIC 24 bit cards
+    public static final int NDP_USICSUSIC32 = 88; // 'X' USIC/SUSIC 32 bit cards
+    public static final int NDP_SMINI       = 77; // 'M' SMINI      24 bit cards
+    public static final int NDP_CPNODE      = 67; // 'C' CPNODE      8 bit cards
+    public static final int NDP_CPMEGA      = 79; // 'O' CPMEGA      8 bit cards
+
     public static final byte INPUT_CARD = 1;    // USIC/SUSIC input card type for specifying location
     public static final byte OUTPUT_CARD = 2;   // USIC/SUSIC output card type for specifying location
     public static final byte NO_CARD = 0;       // USIC/SUSIC unused location
+ 
     // node definition instance variables (must persist between runs)
     protected int nodeType = SMINI;             // See above
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
@@ -64,12 +84,47 @@ public class SerialNode extends AbstractNode {
     //   NO_CARD locations must be at the end of the array.  The
     //   array is indexed by card address.
     // operational instance variables  (should not be preserved between runs)
+ 
+    // cpNode/Open Source Node variables  c2
+    public static final int INITMSGLEN = 12;
+    public static final int NUMCMRINETOPTS = 16;
+    public static final int NUMCPNODEOPTS = 16;
+    protected int cmrinetOptions[] = new int[NUMCMRINETOPTS];  // CMRInet options stored as 16 binary digits 
+    protected int cpnodeOptions[] = new int[NUMCPNODEOPTS];  // cpNode options stored as 16 binary digits 
+    
+    protected String cmriNodeDesc = ""; // CMRI node name for display    
+    protected int pollListPosition = 0;
+    
+    public int pollStatus = 1;
+    public static final int POLLSTATUS_ERROR    = 0;
+    public static final int POLLSTATUS_IDLE     = 1;
+    public static final int POLLSTATUS_POLLING  = 2;
+    public static final int POLLSTATUS_TIMEOUT  = 3;
+    public static final int POLLSTATUS_INIT     = 4;
+    
+    // CMRInet options stored in XML
+    public static final int optbitNet_AUTOPOLL  = 0;
+    public static final int optbitNet_USECMRIX  = 1;
+    public static final int optbitNet_USEBCC    = 2;
+    public static final int optbitNet_BIT8      = 8;
+    public static final int optbitNet_BIT15     = 15;
+
+    // cpNode/osNode options in initialization message
+    public static final int optbitNode_USECMRIX = 0;
+    public static final int optbitNode_SENDEOT  = 1;
+    public static final int optbitNode_USEBCC   = 2;
+    public static final int optbitNode_BIT8     = 8;
+    public static final int optbitNode_BIT15    = 15;
+    
     protected byte[] outputArray = new byte[256]; // current values of the output bits for this node
     protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node
     protected int lastUsedSensor = 0;           // grows as sensors defined
     protected Sensor[] sensorArray = new Sensor[MAXSENSORS + 1];
     protected int[] sensorLastSetting = new int[MAXSENSORS + 1];
     protected int[] sensorTempSetting = new int[MAXSENSORS + 1];
+
+    protected boolean monitorNodePackets = true;
+    protected boolean[] monitorPacketBits = new boolean[SerialFilterFrame.numMonPkts];
 
     /**
      * Assumes a node address of 0, and a node type of SMINI If this constructor
@@ -230,13 +285,34 @@ public class SerialNode extends AbstractNode {
             }
         }
 
+/*
         // check consistency
         if (nodeType == SMINI && result != 1) {
             warn("C/MRI SMINI node with " + result + " input cards");
         }
         if (nodeType == USIC_SUSIC && result >= MAXCARDLOCATIONBYTES) {
             warn("C/MRI USIC/SUSIC node with " + result + " input cards");
+*/
+        switch (nodeType)  //c2
+        {
+          case SMINI:      if (result!=1)
+                           {
+                            warn("C/MRI SMINI with "+result+" INPUT cards");
+                           }
+          break;
+          case USIC_SUSIC: if(result>=MAXCARDLOCATIONBYTES)
+                            warn("C/MRI USIC/SUSIC node with "+result+" INPUT cards");
+          break;
+          case CPNODE:     if(result<2)  //c2
+                            warn("C/MRI CPNODE node with "+result+" INPUT cards");
+          break;
+          case CPMEGA:    if(result<1)  //c2
+                            warn("C/MRI CPMEGA node with "+result+" INPUT cards");
+          break;
+          default:
+          break;
         }
+
 
         return result;
     }
@@ -251,7 +327,7 @@ public class SerialNode extends AbstractNode {
                 result++;
             }
         }
-
+/*
         // check consistency
         if (nodeType == SMINI && result != 2) {
             warn("C/MRI SMINI node with " + result + " output cards");
@@ -259,7 +335,29 @@ public class SerialNode extends AbstractNode {
         if (nodeType == USIC_SUSIC && result >= MAXCARDLOCATIONBYTES) {
             warn("C/MRI USIC/SUSIC node with " + result + " output cards");
         }
-
+*/
+         switch (nodeType)  //c2
+         {
+           case SMINI:     if (result!=2) 
+                           {
+                            warn("C/MRI SMINI with "+result+" OUTPUT cards");
+                           }
+           break;
+           case USIC_SUSIC: 
+            if(result>=MAXCARDLOCATIONBYTES)
+             warn("C/MRI  USIC/SUSIC node with "+result+" OUTPUT cards");
+           break;
+           case CPNODE:     //c2
+           if(result<2)
+             warn("C/MRI  CPNODE node with "+result+" OUTPUT cards");
+           break;
+           case CPMEGA:     //c2
+           if(result<1)
+             warn("C/MRI  CPMEGA node with "+result+" OUTPUT cards");
+           break;
+           default: 
+         }
+         
         return result;
     }
 
@@ -276,7 +374,8 @@ public class SerialNode extends AbstractNode {
      * cardTypeLocation
      */
     public void setNodeType(int type) {
-        if (type == SMINI) {
+
+/*        if (type == SMINI) {
             nodeType = type;
             bitsPerCard = 24;
             // set cardTypeLocation for SMINI
@@ -296,6 +395,67 @@ public class SerialNode extends AbstractNode {
         else {
             log.error("Bad node type - " + Integer.toString(type));
         }
+*/
+        switch(type)  //c2
+        {
+          case SMINI: 
+            nodeType = type;
+            bitsPerCard = 24;
+            // set cardTypeLocation for SMINI
+            cardTypeLocation[0] = OUTPUT_CARD;
+            cardTypeLocation[1] = OUTPUT_CARD;
+            cardTypeLocation[2] = INPUT_CARD;
+            for (int i=3;i<MAXCARDLOCATIONBYTES;i++)
+            {
+             cardTypeLocation[i] = NO_CARD;
+            }
+          break;
+          case USIC_SUSIC:
+            nodeType = type;
+            // clear cardTypeLocations
+            for (int i=0;i<MAXCARDLOCATIONBYTES;i++)
+            {
+             cardTypeLocation[i] = NO_CARD;
+            }
+          break;
+          case CPNODE:  //c2
+            nodeType = type;
+            bitsPerCard = 8;
+            
+            // set cardTypeLocation for CPNODE.  First four bytes are onboard
+            cardTypeLocation[0] = INPUT_CARD;
+            cardTypeLocation[1] = INPUT_CARD;
+            cardTypeLocation[2] = OUTPUT_CARD;
+            cardTypeLocation[3] = OUTPUT_CARD;
+            for (int i=4;i<MAXCARDLOCATIONBYTES;i++) 
+            {
+             cardTypeLocation[i] = NO_CARD;
+            }
+          break;
+            
+          case CPMEGA:  //c2
+            nodeType = type;
+            bitsPerCard = 8;
+            
+            // set cardTypeLocation for CPMEGA.  First eight bytes are onboard
+            cardTypeLocation[0] = INPUT_CARD;
+            cardTypeLocation[1] = NO_CARD;
+            cardTypeLocation[2] = NO_CARD;
+            cardTypeLocation[3] = NO_CARD;
+            cardTypeLocation[4] = NO_CARD;
+            cardTypeLocation[5] = NO_CARD;
+            cardTypeLocation[6] = NO_CARD;
+            cardTypeLocation[7] = NO_CARD;
+            for (int i=8;i<MAXCARDLOCATIONBYTES;i++) 
+            {
+             cardTypeLocation[i] = NO_CARD;
+            }
+          break;
+            
+// here recognize other node types
+          default: log.error("Bad node type - "+Integer.toString(type) );
+        }
+
     }
 
     /**
@@ -309,7 +469,7 @@ public class SerialNode extends AbstractNode {
      * Set number of bits per card.
      */
     public void setNumBitsPerCard(int bits) {
-        if ((bits == 24) || (bits == 32) || (bits == 16)) {
+        if ((bits == 24) || (bits == 32) || (bits == 16) || (bits == 8)) {
             bitsPerCard = bits;
         } else {
             log.warn("unexpected number of bits per card: " + Integer.toString(bits));
@@ -317,7 +477,118 @@ public class SerialNode extends AbstractNode {
         }
     }
 
+     /**  
+     * return CMRInet options.  
+     */
+    public int getCMRInetOpts(int optionbit) { return (cmrinetOptions[optionbit]); }
+    public void setCMRInetOpts(int optionbit,int val) { cmrinetOptions[optionbit] = (byte)val; }
+    public boolean isCMRInetBit(int optionbit) { return (cmrinetOptions[optionbit] == 1); }
+
+    /** 
+     * return cpNode Initialization options.  
+     */
+    public int getcpnodeOpts(int optionbit) { return (cpnodeOptions[optionbit]); }
+    public void setcpnodeOpts(int optionbit,int val) { cpnodeOptions[optionbit] = (byte)val; }
+    public boolean iscpnodeBit(int optionbit) { return (cpnodeOptions[optionbit] == 1); }
+
     /**
+     * get and set specific option bits.
+     * 
+     */
+    
+   /**
+     * Network Option Bits
+     * 
+     */
+    public boolean getOptNet_AUTOPOLL() { return (cmrinetOptions[optbitNet_AUTOPOLL] == 1); }
+    public boolean getOptNet_USECMRIX() { return (cmrinetOptions[optbitNet_USECMRIX] == 1); }
+    public boolean getOptNet_USEBCC()     { return (cmrinetOptions[optbitNet_USEBCC] == 1); }
+    public boolean getOptNet_BIT8()     { return (cmrinetOptions[optbitNet_BIT8] == 1); }
+    public boolean getOptNet_BIT15()    { return (cmrinetOptions[optbitNet_BIT15] == 1); }
+
+    public void setOptNet_AUTOPOLL(int val) { cmrinetOptions[optbitNet_AUTOPOLL] = (byte)val; }
+    public void setOptNet_USECMRIX(int val) { cmrinetOptions[optbitNet_USECMRIX] = (byte)val; }
+    public void setOptNet_USEBCC(int val)     { cmrinetOptions[optbitNet_USEBCC] = (byte)val; }
+    public void setOptNet_BIT8(int val)     { cmrinetOptions[optbitNet_BIT8] = (byte)val; }
+    public void setOptNet_BIT15(int val)    { cmrinetOptions[optbitNet_BIT15] = (byte)val; }
+    
+    public int getOptNet_byte0() {return cmrinetOptions[0];}
+    public int getOptNet_byte1() {return cmrinetOptions[1];}
+
+    /**
+     * Node Option Bits  
+     * 
+     */
+    public boolean getOptNode_SENDEOT()  { return (cpnodeOptions[optbitNode_SENDEOT] == 1); }
+    public boolean getOptNode_USECMRIX() { return (cpnodeOptions[optbitNode_USECMRIX] == 1); }
+    public boolean getOptNode_USEBCC()   { return (cpnodeOptions[optbitNode_USEBCC] == 1); }
+    public boolean getOptNode_BIT8()     { return (cpnodeOptions[optbitNode_BIT8] == 1); }
+    public boolean getOptNode_BIT15()    { return (cpnodeOptions[optbitNode_BIT15] == 1); }
+
+    public void setOptNode_SENDEOT(int val)  { cpnodeOptions[optbitNode_SENDEOT] = (byte)val; }
+    public void setOptNode_USECMRIX(int val) { cpnodeOptions[optbitNode_USECMRIX] = (byte)val; }
+    public void setOptNode_USEBCC(int val)   { cpnodeOptions[optbitNode_USEBCC] = (byte)val; }
+    public void setOptNode_BIT8(int val)     { cpnodeOptions[optbitNode_BIT8] = (byte)val; }
+    public void setOptNode_BIT15(int val)    { cpnodeOptions[optbitNode_BIT15] = (byte)val; }
+    
+    public int getOptNode_byte0() {return cpnodeOptions[0];}
+    public int getOptNode_byte1() {return cpnodeOptions[1];}
+    
+    /**
+     * node description 
+     * 
+     */
+    public String getcmriNodeDesc() { return cmriNodeDesc; }
+    public void setcmriNodeDesc(String nodeDesc) { cmriNodeDesc = nodeDesc; }
+    
+    /**
+     * cpNode poll list position
+     * 
+     */
+    public int getPollListPosition() { return pollListPosition; }
+    public void setPollListPosition(int pos)  { pollListPosition = pos; }
+
+    /**
+     * cpNode polling status
+     * 
+     */
+    public int getPollStatus() { return pollStatus; }
+    public void setPollStatus(int status) { pollStatus = status; }
+
+    /**
+     * checking cpNode polling enabled state
+     * 
+     */
+    public boolean getPollingEnabled() { return (cmrinetOptions[optbitNet_AUTOPOLL] == 1); }
+    public void setPollingEnabled(boolean isEnabled)
+    {  
+      if(isEnabled)
+        cmrinetOptions[optbitNet_AUTOPOLL] = 1;
+      else
+        cmrinetOptions[optbitNet_AUTOPOLL] = 0;
+    }
+   
+   /**
+    * 
+    * Set/Get packet monitoring for the node 
+    */
+   public boolean getMonitorNodePackets()  { return monitorNodePackets; }
+   public void setMonitorNodePackets(boolean onoff) { monitorNodePackets = onoff; }
+   
+   /**
+    * Set/Get the specific packet monitoring enable bit
+   */
+   public void setMonitorPacketBit(int pktTypeBit, boolean onoff)
+   { 
+       monitorPacketBits[pktTypeBit] = onoff; 
+   }
+   
+   public boolean getMonitorPacketBit(int pktTypeBit)
+   { 
+       return monitorPacketBits[pktTypeBit]; 
+   }
+   
+        /**
      * Check valid node address, must match value in dip switches (0 - 127)
      */
     @Override
@@ -596,6 +867,7 @@ public class SerialNode extends AbstractNode {
         byte[] initBytes = new byte[20];
         int code = 0;
         // set node definition parameter
+/*        
         if (nodeType == SMINI) {
             initBytes[0] = 77;  // 'M'
         } else if (nodeType == USIC_SUSIC) {
@@ -605,6 +877,24 @@ public class SerialNode extends AbstractNode {
                 initBytes[0] = 88;  // 'X'
             }
         }
+*/
+        switch(nodeType)  //c2
+        {
+            case SMINI:       initBytes[0] = NDP_SMINI;  // 'M'
+            break;
+         
+            case USIC_SUSIC:  if (bitsPerCard==24) initBytes[0] = NDP_USICSUSIC24;   // 'N'
+                               else 
+                                if (bitsPerCard==32) initBytes[0] = NDP_USICSUSIC32; // 'X'
+            break;
+            case CPNODE:      initBytes[0] = NDP_CPNODE;  // 'C'   c2
+            break;
+            case CPMEGA:      initBytes[0] = NDP_CPMEGA;  // 'O'   c2
+            break;
+            
+            default: 
+        }
+
 // Here add code for other type of card
         // add Transmission Delay bytes (same for SMINI and USIC/SUSIC)
         int firstByte = transmissionDelay / 256;
@@ -614,7 +904,7 @@ public class SerialNode extends AbstractNode {
         }
         initBytes[1] = (byte) firstByte;
         initBytes[2] = (byte) secondByte;
-
+/*
         // SMINI specific part of initialization byte array
         if (nodeType == SMINI) {
             initBytes[3] = (byte) num2LSearchLights;
@@ -650,6 +940,134 @@ public class SerialNode extends AbstractNode {
                 nInitBytes++;
             }
         }
+*/
+        // SMINI specific part of initialization byte array
+        switch (nodeType)  //c2
+        {
+            case SMINI:
+                        initBytes[3] = (byte)num2LSearchLights;
+                        if (num2LSearchLights>0)
+                        {
+                        // Set up searchlight LED bit codes
+                            for (int i=0,j=0;i<6;i++,j+=8)
+                            {
+                              code = locSearchLightBits[j];
+                              code = code + (locSearchLightBits[j+1]*2);
+                              code = code + (locSearchLightBits[j+2]*4);
+                              code = code + (locSearchLightBits[j+3]*8);
+                              code = code + (locSearchLightBits[j+4]*16);
+                              code = code + (locSearchLightBits[j+5]*32);
+                              code = code + (locSearchLightBits[j+6]*64);
+                              code = code + (locSearchLightBits[j+7]*128);
+                              initBytes[nInitBytes] = (byte)code;
+                              nInitBytes ++;
+                            }
+                        }
+            break;
+        
+        // USIC/SUSIC specific part of initialization byte array
+            case USIC_SUSIC:        
+                            int numCards = numInputCards() + numOutputCards();
+                            int numFours = numCards/4;
+                            if ( (numCards-(numFours*4)) > 0) numFours ++;  // Round up if not even multiple
+                            initBytes[3] = (byte)numFours;
+                            for (int i=0,j=0;i<numFours;i++,j+=4)
+                            {
+                              code = cardTypeLocation[j];
+                              code = code + (cardTypeLocation[j+1] * 4);
+                              code = code + (cardTypeLocation[j+2] * 16);
+                              code = code + (cardTypeLocation[j+3] * 64);
+                              initBytes[nInitBytes] = (byte)code;
+                              nInitBytes ++;
+                            }
+            break;
+                
+        /* CPNODE specific part of initialization byte array
+         * The I message has the node configuration options following the
+         * DL bytes, followed by the defined number of I/O cards.
+         *    0   1   2    3        4        5     6     7 - 12
+         *  <NDP><dH><dL><cpOPTS1><cpOPTS2><cpNI><cpNO> <rfe 8>
+         */
+            case CPNODE:
+                          nInitBytes = 3;
+                           // ------------------------- 
+                           // Pack the two option bytes 
+                           // ------------------------- 
+                           for (int i=0,j=0;i<2;i++,j+=8)
+                           {
+                              code = cpnodeOptions[j];
+                              code = code + (cpnodeOptions[j+1]*2);   
+                              code = code + (cpnodeOptions[j+2]*4);  
+                              code = code + (cpnodeOptions[j+3]*8);  
+                              code = code + (cpnodeOptions[j+4]*16);   
+                              code = code + (cpnodeOptions[j+5]*32);  
+                              code = code + (cpnodeOptions[j+6]*64);  
+                              code = code + (cpnodeOptions[j+7]*128); 
+                              initBytes[nInitBytes] = (byte)code;
+                              nInitBytes++;
+                           }
+                           // ------------------------------------- 
+                           // Configured input and output byte count
+                           // ------------------------------------- 
+                           initBytes[nInitBytes++] = (byte)numInputCards();
+                           initBytes[nInitBytes++] = (byte)numOutputCards();
+                         
+                           // --------------------------
+                           // future to be defined bytes
+                           // --------------------------
+                           for (int i=nInitBytes; i<INITMSGLEN+1; i++)
+                           {
+                            initBytes[i] = (byte)0xFF;
+                            nInitBytes++;
+                           }
+
+            break;
+            
+         /* CPMEGA specific part of initialization byte array
+         * The I message has the node configuration options following the
+         * DL bytes, followed by the defined number of I/O cards.
+         *    0   1   2    3        4        5     6     7 - 12
+         *  <NDP><dH><dL><cpOPTS1><cpOPTS2><cpNI><cpNO> <rfe 8>
+         */
+           case CPMEGA:
+                          nInitBytes = 3;
+                           // ------------------------- 
+                           // Pack the two option bytes 
+                           // ------------------------- 
+                           for (int i=0,j=0;i<2;i++,j+=8)
+                           {
+                              code = cpnodeOptions[j];
+                              code = code + (cpnodeOptions[j+1]*2);   
+                              code = code + (cpnodeOptions[j+2]*4);  
+                              code = code + (cpnodeOptions[j+3]*8);  
+                              code = code + (cpnodeOptions[j+4]*16);   
+                              code = code + (cpnodeOptions[j+5]*32);  
+                              code = code + (cpnodeOptions[j+6]*64);  
+                              code = code + (cpnodeOptions[j+7]*128); 
+                              initBytes[nInitBytes] = (byte)code;
+                              nInitBytes++;
+                           }
+                           // ------------------------------------- 
+                           // Configured input and output byte count
+                           // ------------------------------------- 
+                           initBytes[nInitBytes++] = (byte)numInputCards();
+                           initBytes[nInitBytes++] = (byte)numOutputCards();
+                         
+                           // --------------------------
+                           // future to be defined bytes
+                           // --------------------------
+                           for (int i=nInitBytes; i<INITMSGLEN+1; i++)
+                           {
+                            initBytes[i] = (byte)0xFF;
+                            nInitBytes++;
+                           }
+
+            break;
+            
+            default:  log.error("Invalid node type ("+nodeType+") in SerialNode Init Message");
+                
+        }            
+        
 // here add specific initialization for other type of card
 
         // count the number of DLE's to be inserted
@@ -793,7 +1211,7 @@ public class SerialNode extends AbstractNode {
         } else {
             // multiple registration of the same sensor
             log.warn("multiple registration of same sensor: CS"
-                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERUA) + i + 1));
+                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERUA) + i + 1)); // TODO multichar prefix
         }
     }
 
@@ -856,5 +1274,5 @@ public class SerialNode extends AbstractNode {
         timeout = 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
 }

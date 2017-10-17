@@ -2,6 +2,7 @@ package jmri.web.servlet.simple;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
@@ -26,6 +27,7 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "SimpleServlet",
         urlPatterns = {"/simple"})
+@ServiceProvider(service = HttpServlet.class)
 public class SimpleServlet extends WebSocketServlet {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);
@@ -53,12 +56,12 @@ public class SimpleServlet extends WebSocketServlet {
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Simple.html"))),
                 String.format(request.getLocale(),
                         Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                        ServletUtil.getInstance().getRailroadName(false),
+                        InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                         Bundle.getMessage(request.getLocale(), "SimpleTitle")
                 ),
-                ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                ServletUtil.getInstance().getRailroadName(false),
-                ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath())
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath())
         ));
     }
 
@@ -98,7 +101,7 @@ public class SimpleServlet extends WebSocketServlet {
             this.turnoutServer = new SimpleTurnoutServer(this.connection);
             try {
                 this.connection.sendMessage("JMRI " + jmri.Version.name() + " \n");
-                this.connection.sendMessage("RAILROAD " + WebServerPreferences.getDefault().getRailRoadName() + " \n");
+                this.connection.sendMessage("RAILROAD " + InstanceManager.getDefault(WebServerPreferences.class).getRailroadName() + " \n");
                 this.connection.sendMessage("NODE " + NodeIdentity.identity() + " \n");
             } catch (IOException e) {
                 log.warn(e.getMessage(), e);

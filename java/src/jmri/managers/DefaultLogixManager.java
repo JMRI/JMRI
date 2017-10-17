@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
-public class DefaultLogixManager extends AbstractManager
+public class DefaultLogixManager extends AbstractManager<Logix>
         implements LogixManager, java.beans.PropertyChangeListener {
 
     public DefaultLogixManager() {
@@ -57,7 +56,9 @@ public class DefaultLogixManager extends AbstractManager
     }
 
     /**
-     * Method to create a new Logix if the Logix does not exist Returns null if
+     * Method to create a new Logix if the Logix does not exist.
+     * <p>
+     * Returns null if
      * a Logix with the same systemName or userName already exists, or if there
      * is trouble creating a new Logix.
      */
@@ -83,8 +84,8 @@ public class DefaultLogixManager extends AbstractManager
         // save in the maps
         register(x);
 
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
+        /*The following keeps track of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IX:AUTO:")) {
             try {
@@ -118,17 +119,7 @@ public class DefaultLogixManager extends AbstractManager
      */
     @Override
     public void deleteLogix(Logix x) {
-        // delete conditionals if there are any
-        int numConditionals = x.getNumConditionals();
-        if (numConditionals > 0) {
-            Conditional c = null;
-            for (int i = 0; i < numConditionals; i++) {
-                c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(
-                        x.getConditionalByNumberOrder(i));
-                InstanceManager.getDefault(jmri.ConditionalManager.class).deleteConditional(c);
-            }
-        }
-        // delete the Logix				
+        // delete the Logix
         deregister(x);
         x.dispose();
     }
@@ -143,6 +134,7 @@ public class DefaultLogixManager extends AbstractManager
         Logix x = getBySystemName(LRouteTableAction.LOGIX_INITIALIZER);
         if (x != null) {
             x.activateLogix();
+            x.setGuiNames();
         }
         // iterate thru all Logixs that exist
         java.util.Iterator<String> iter
@@ -171,6 +163,7 @@ public class DefaultLogixManager extends AbstractManager
                 //System.out.println("logix set enabled");
                 x.activateLogix();
             }
+            x.setGuiNames();
         }
         // reset the load switch
         loadDisabled = false;
@@ -192,12 +185,12 @@ public class DefaultLogixManager extends AbstractManager
 
     @Override
     public Logix getBySystemName(String name) {
-        return (Logix) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Logix getByUserName(String key) {
-        return (Logix) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -224,5 +217,5 @@ public class DefaultLogixManager extends AbstractManager
         return Bundle.getMessage("BeanNameLogix");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
 }

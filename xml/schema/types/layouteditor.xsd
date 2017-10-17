@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -43,6 +41,7 @@
 
         <xs:element name="positionablelabel"  type="EditorPositionableLabelType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionablepoint"  type="EditorPositionablePointType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="trainicon"          type="EditorTrainIconType"         minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="turnouticon"        type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensoricon"         type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryicon"         type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
@@ -70,7 +69,7 @@
       <xs:attribute name="windowheight" type="xs:integer" use="required" />
       <xs:attribute name="windowwidth" type="xs:integer" use="required" />
       <xs:attribute name="panelheight" type="xs:integer"/>
-      <xs:attribute name="panelwidth" type="xs:integer" use="required" />
+      <xs:attribute name="panelwidth" type="xs:integer" />
       <xs:attribute name="height" type="xs:integer" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.2</xs:documentation></xs:annotation>
       </xs:attribute>
@@ -113,6 +112,7 @@
       <xs:attribute name="blueBackground" type="xs:integer"/>
       <xs:attribute name="autoblkgenerate" type="yesNoType" default="yes"/>
       <xs:attribute name="gridSize" type="xs:integer"/>
+      <xs:attribute name="gridSize2nd" type="xs:integer"/>
       <xs:attribute name="openDispatcher" type="yesNoType" default="no"/>
       <xs:attribute name="useDirectTurnoutControl" type="yesNoType" default="no"/>
       <xs:attribute name="zoom" type="xs:float" default="1.0"/>

@@ -18,7 +18,7 @@ import jmri.TurnoutManager;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author	Bob Jacobsen Copyright (C) 2008
   */
 public class TurnoutManagerScaffold implements TurnoutManager {
@@ -54,7 +54,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public java.util.List<NamedBean> getNamedBeanList() {
+    public java.util.List<Turnout> getNamedBeanList() {
         return null;
     }
 
@@ -113,7 +113,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public void deleteBean(NamedBean bean, String s) {
+    public void deleteBean(Turnout bean, String s) {
     }
 
     @Override
@@ -133,11 +133,16 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public void register(NamedBean n) {
+    public void register(Turnout n) {
     }
 
     @Override
-    public void deregister(NamedBean n) {
+    public void deregister(Turnout n) {
+    }
+
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
     }
 
     @Override
@@ -184,17 +189,17 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public NamedBean getBeanBySystemName(String systemName) {
+    public Turnout getBeanBySystemName(String systemName) {
         return null;
     }
 
     @Override
-    public NamedBean getBeanByUserName(String userName) {
+    public Turnout getBeanByUserName(String userName) {
         return null;
     }
 
     @Override
-    public NamedBean getNamedBean(String name) {
+    public Turnout getNamedBean(String name) {
         return null;
     }
 
@@ -208,7 +213,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return "Turnout";
     }
 
+    @Override
+    public String getEntryToolTip() { return "No Help"; }
+
 }
-
-
-

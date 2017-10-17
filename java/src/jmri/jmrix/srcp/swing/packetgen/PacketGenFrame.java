@@ -4,8 +4,8 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
-import jmri.jmrix.srcp.SRCPTrafficController;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
+import jmri.jmrix.srcp.SRCPTrafficController;
 
 /**
  * Description:	Frame for user input of SRCP messages
@@ -28,8 +28,11 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         tc = memo.getTrafficController();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");

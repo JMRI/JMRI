@@ -19,10 +19,11 @@ import org.junit.runners.Suite;
    JythonAutomatonTest.class,
    JythonAutomatonActionTest.class,
    JythonSigletTest.class,
-   JythonSigletActionTest.class
+   JythonSigletActionTest.class,
+   AutomatSummaryTest.class
 })
 /**
- * Tests for the jmri.jmrit.automat.monitor package
+ * Tests for the jmri.jmrit.automat package
  *
  * @author      Paul Bender Copyright (C) 2017
  */

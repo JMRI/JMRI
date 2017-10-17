@@ -116,9 +116,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                         + programmer.decodeErrorCode(status));
                 state--;
                 retry++;
-            } else if (programmer.getMode() != DefaultProgrammerManager.PAGEMODE
-                    && programmer.getSupportedModes().contains(DefaultProgrammerManager.PAGEMODE)) {
-                programmer.setMode(DefaultProgrammerManager.PAGEMODE);
+            } else if (programmer.getMode() != ProgrammingMode.PAGEMODE
+                    && programmer.getSupportedModes().contains(ProgrammingMode.PAGEMODE)) {
+                programmer.setMode(ProgrammingMode.PAGEMODE);
                 retry = 0;
                 state--;
                 log.warn(programmer.decodeErrorCode(status)
@@ -232,7 +232,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      *
      * @param cv the CV to read
      */
-    protected void readCV(int cv) {
+    protected void readCV(String cv) {
         if (programmer == null) {
             statusUpdate("No programmer connected");
         } else {
@@ -244,7 +244,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         }
     }
 
-    protected void writeCV(int cv, int value) {
+    protected void writeCV(String cv, int value) {
         if (programmer == null) {
             statusUpdate("No programmer connected");
         } else {
@@ -257,6 +257,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class);
 
 }

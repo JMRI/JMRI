@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,10 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -28,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2016
  */
-public class RollingStockLogger extends XmlFile implements java.beans.PropertyChangeListener {
+public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     private boolean engLog = false; // when true logging engine movements
     private boolean carLog = false; // when true logging car movements
@@ -39,20 +43,15 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private static RollingStockLogger _instance = null;
-
+    @Deprecated
     public static synchronized RollingStockLogger instance() {
-        if (_instance == null) {
-            log.debug("RollingStockLogger creating instance");
-            // create and load
-            _instance = new RollingStockLogger();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("RollingStockLogger returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(RollingStockLogger.class);
     }
 
     public void enableCarLogging(boolean enable) {
@@ -141,7 +140,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
                 getTime();
 
         fileOut(line); // append line to common file
-        fileOut(line, rs); // append line to individual file  
+        fileOut(line, rs); // append line to individual file
     }
 
     /*
@@ -165,7 +164,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true),
                     "UTF-8")), true); // NOI18N
         } catch (IOException e) {
-            log.error("Exception while opening log file: " + e.getLocalizedMessage());
+            log.error("Exception while opening log file: {}", e.getMessage());
             return;
         }
 
@@ -200,8 +199,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
                 } else {
                     fileLogger = new java.io.File(getFullLoggerFileName());
                 }
-            } catch (Exception e) {
-                log.error("Exception while making logging directory: " + e);
+            } catch (IOException e) {
+                log.error("Exception while making logging directory: {}", e.getMessage());
             }
         }
         return fileLogger;
@@ -257,8 +256,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
                 } else {
                     file = new java.io.File(getFullLoggerFileName(rs));
                 }
-            } catch (Exception e) {
-                log.error("Exception while making logging directory: " + e);
+            } catch (IOException e) {
+                log.error("Exception while making logging directory: {}", e.getMessage());
             }
         }
         return file;
@@ -300,7 +299,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
      */
     public String getFullLoggerFileName(RollingStock rs) {
         if (!OperationsXml.checkFileName(rs.toString())) { // NOI18N
-            log.error("Rolling stock name ({}) must not contain reserved characters", rs.toString());
+            log.error("Rolling stock name ({}) must not contain reserved characters", rs);
             return loggingDirectory + File.separator + "rollingStock" + File.separator + "ERROR" + ".csv"; // NOI18N
         }
         return loggingDirectory + File.separator + "rollingStock" + File.separator + rs.toString() + ".csv"; // NOI18N
@@ -332,12 +331,12 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
         if (Setup.isCarLoggerEnabled() && !carLog) {
             log.debug("Rolling Stock Logger adding car listerners");
             carLog = true;
-            List<RollingStock> cars = CarManager.instance().getList();
-            for (RollingStock car : cars) {
+            List<Car> cars = InstanceManager.getDefault(CarManager.class).getList();
+            for (Car car : cars) {
                 car.addPropertyChangeListener(this);
             }
             // listen for new rolling stock being added
-            CarManager.instance().addPropertyChangeListener(this);
+            InstanceManager.getDefault(CarManager.class).addPropertyChangeListener(this);
         }
     }
 
@@ -345,23 +344,23 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
         if (Setup.isEngineLoggerEnabled() && !engLog) {
             engLog = true;
             log.debug("Rolling Stock Logger adding engine listerners");
-            List<RollingStock> engines = EngineManager.instance().getList();
-            for (RollingStock engine : engines) {
+            List<Engine> engines = InstanceManager.getDefault(EngineManager.class).getList();
+            for (Engine engine : engines) {
                 engine.addPropertyChangeListener(this);
             }
             // listen for new rolling stock being added
-            EngineManager.instance().addPropertyChangeListener(this);
+            InstanceManager.getDefault(EngineManager.class).addPropertyChangeListener(this);
         }
     }
 
     private void removeCarListeners() {
         if (carLog) {
             log.debug("Rolling Stock Logger removing car listerners");
-            List<RollingStock> cars = CarManager.instance().getList();
-            for (RollingStock car : cars) {
+            List<Car> cars = InstanceManager.getDefault(CarManager.class).getList();
+            for (Car car : cars) {
                 car.removePropertyChangeListener(this);
             }
-            CarManager.instance().removePropertyChangeListener(this);
+            InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(this);
         }
         carLog = false;
     }
@@ -369,11 +368,11 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     private void removeEngineListeners() {
         if (engLog) {
             log.debug("Rolling Stock Logger removing engine listerners");
-            List<RollingStock> engines = EngineManager.instance().getList();
-            for (RollingStock engine : engines) {
+            List<Engine> engines = InstanceManager.getDefault(EngineManager.class).getList();
+            for (Engine engine : engines) {
                 engine.removePropertyChangeListener(this);
             }
-            EngineManager.instance().removePropertyChangeListener(this);
+            InstanceManager.getDefault(EngineManager.class).removePropertyChangeListener(this);
         }
         engLog = false;
     }
@@ -405,5 +404,5 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockLogger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockLogger.class);
 }

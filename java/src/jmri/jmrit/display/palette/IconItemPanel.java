@@ -26,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -54,6 +55,9 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
     /**
      * Constructor for plain icons and backgrounds
+     * @param type type
+     * @param parentFrame parentFrame
+     * @param editor editor
      */
     public IconItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
@@ -130,21 +134,28 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
     /**
      * Add icons to panel.
-     * 
+     *
      * @param iconMap set of icons to add to panel
      */
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
+        Color bkgrdColor = _editor.getTargetPanel().getBackground();
         _iconPanel = new JPanel();
+        _iconPanel.setBackground(bkgrdColor);
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
+        JPanel iPanel = new JPanel();
+        iPanel.setBackground(bkgrdColor);
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
             JPanel panel = new JPanel();
+            panel.setBackground(bkgrdColor);
             String borderName = ItemPalette.convertText(entry.getKey());
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     borderName));
             try {
                 JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), _level);
+                label.setBackground(bkgrdColor);
                 label.setName(borderName);
                 label.setToolTipText(icon.getName());
                 panel.add(label);
@@ -160,14 +171,25 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             } catch (java.lang.ClassNotFoundException cnfe) {
                 cnfe.printStackTrace();
             }
-            _iconPanel.add(panel);
+            iPanel.add(panel);
         }
+        _iconPanel.add(iPanel);
         add(_iconPanel, 1);
         _iconPanel.addMouseListener(this);
     }
 
-    /* 
-     *  for plain icons and backgrounds, families panel is the icon panel of the one family
+    @Override
+    protected void setEditor(Editor ed) {
+        super.setEditor(ed);
+        if (_initialized) {
+            removeIconFamiliesPanel();
+            addIconsToPanel(_iconMap);
+        }
+    }
+
+
+    /*
+     *  for plain icons and backgrounds, families panel is the icon panel of just one family
      */
     protected void removeIconFamiliesPanel() {
         if (_iconPanel != null) {
@@ -377,7 +399,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             level = zLevel;
 
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");            
+            //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
         }
 
         @Override
@@ -484,7 +506,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             }
             _iconMap.put(label.getName(), newIcon);
             if (!_update) {  // only prompt for save from palette
-                ImageIndexEditor.indexChanged(true);
+                InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
             }
             removeIconFamiliesPanel();
             addIconsToPanel(_iconMap);
@@ -496,5 +518,5 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IconItemPanel.class);
 }

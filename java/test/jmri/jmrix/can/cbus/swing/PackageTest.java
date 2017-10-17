@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.can.cbus.swing.eventtable.PackageTest.class,
     jmri.jmrix.can.cbus.swing.nodeconfig.PackageTest.class,
     jmri.jmrix.can.cbus.swing.console.PackageTest.class,
-    jmri.jmrix.can.cbus.swing.configtool.PackageTest.class
+    jmri.jmrix.can.cbus.swing.configtool.PackageTest.class,
+    BundleTest.class
 })
 
 /**
@@ -35,6 +36,6 @@ public class PackageTest{
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

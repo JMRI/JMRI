@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -59,8 +60,8 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
     // radio buttons
     // text field
     // combo boxes
-    JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
-    JComboBox<String> loadComboBox = CarLoads.instance().getComboBox(null);
+    JComboBox<String> typeComboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
+    JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
 
     // selected location
     Location _location;
@@ -78,7 +79,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
     public void initComponents() {
 
         // load managers
-        locationManager = LocationManager.instance();
+        locationManager = InstanceManager.getDefault(LocationManager.class);
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -130,8 +131,8 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
         addCheckBoxAction(loadAndTypeCheckBox);
 
         locationManager.addPropertyChangeListener(this);
-        CarTypes.instance().addPropertyChangeListener(this);
-        CarLoads.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -268,7 +269,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 
     private void updateTypeComboBox() {
         log.debug("update type combobox");
-        CarTypes.instance().updateComboBox(typeComboBox);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(typeComboBox);
     }
 
     private void updateLoadComboBox() {
@@ -277,7 +278,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
             String type = (String) typeComboBox.getSelectedItem();
             String load = (String) loadComboBox.getSelectedItem();
             log.debug("Selected car type : ({}) load ({})", type, load);
-            CarLoads.instance().updateComboBox(type, loadComboBox);
+            InstanceManager.getDefault(CarLoads.class).updateComboBox(type, loadComboBox);
             loadComboBox.setEnabled(false); // used as a flag to prevent updateLocations()
             if (load != null) {
                 loadComboBox.setSelectedItem(load);
@@ -443,8 +444,8 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
     @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
-        CarTypes.instance().removePropertyChangeListener(this);
-        CarLoads.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
         removePropertyChangeLocations();
         super.dispose();
     }
@@ -470,5 +471,5 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationsByCarLoadFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationsByCarLoadFrame.class);
 }

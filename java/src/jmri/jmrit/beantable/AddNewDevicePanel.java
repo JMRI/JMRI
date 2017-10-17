@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,8 +73,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
             @Override
             public void keyReleased(KeyEvent a) {
                 if (sysName.getText().length() > 0) {
-                    ok.setEnabled(true);
-                    ok.setToolTipText(null);
+                    setOK();
                 }
             }
         });
@@ -82,6 +82,23 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     void reset() {
         ok.setEnabled(false);
         ok.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
+    }
+
+    /**
+     * Activate the OK button without user key activity.
+     */
+    public void setOK() {
+        ok.setEnabled(true);
+        ok.setToolTipText(null);
+    }
+
+    /**
+     * Lock the System Name JTextField.
+     */
+    public void setSystemNameFieldIneditable() {
+        sysName.setEditable(false);
+        sysName.setBorder(null);
+        sysName.setDisabledTextColor(Color.black);
     }
 
     public void addLabels(String labelSystemName, String labelUserName) {
@@ -94,4 +111,5 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     JTextField sysName;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+
 }

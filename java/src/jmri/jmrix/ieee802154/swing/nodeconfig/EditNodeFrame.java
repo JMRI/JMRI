@@ -29,12 +29,15 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
 
     protected IEEE802154Node curNode = null;    // IEEE802154 Node being editted
 
+    @SuppressWarnings("unused")
     private IEEE802154TrafficController itc = null;
 
     /**
      * Constructor method
+     * @param tc traffic controller
+     * @param node node to edit
      */
-    public EditNodeFrame(IEEE802154TrafficController tc,IEEE802154Node node) {
+    public EditNodeFrame(IEEE802154TrafficController tc, IEEE802154Node node) {
         super();
         addHelpMenu("package.jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame", true);
         itc = tc;
@@ -122,6 +125,7 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
         nodeAddr64Field.setText(jmri.util.StringUtil.hexStringFromBytes(curNode.getGlobalAddress()));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class.getName());
+    @SuppressWarnings("unused")
+    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class);
 
 }

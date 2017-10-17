@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21.simulator;
 
+import jmri.util.JUnitUtil;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -9,14 +10,14 @@ import org.junit.Test;
 
 /**
  * Z21SimulatorTest.java
- * 
+ *
  * Description:	tests that determine if the Roco z21 Simulator is functional
  * after configuration.
  *
  * @author	Paul Bender Copyright (C) 2016
  */
 public class Z21SimulatorTest {
-        
+
     private static  java.net.InetAddress host;
     private static int port = 21105; // default port for Z21 connections.
     private static Z21SimulatorAdapter a = null;
@@ -25,8 +26,8 @@ public class Z21SimulatorTest {
     // verify there is a railComm manager
     @Test
     @Ignore("tests before this class are leaving the port open, need to close first")
-    public void testProgrammerManager() {
-        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.ProgrammerManager.class));
+    public void testAddressedProgrammerManager() {
+        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.AddressedProgrammerManager.class));
     }
 
     // verify there is a Reporter manager
@@ -41,14 +42,13 @@ public class Z21SimulatorTest {
     // one time configuration of the simulator.
     @BeforeClass
     static public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initConfigureManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initConfigureManager();
         try {
            host = java.net.InetAddress.getLocalHost();
         } catch(java.net.UnknownHostException uhe){
             Assert.fail("Unable to create host localhost");
-        } 
+        }
         // create a new simulator.
         a = new Z21SimulatorAdapter();
         // connect the port
@@ -66,8 +66,7 @@ public class Z21SimulatorTest {
     @AfterClass
     static public void tearDown() {
         a.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

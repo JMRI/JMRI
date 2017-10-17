@@ -32,7 +32,8 @@
       Table pane to create a new Route.</p>
 
       <h2>Route Table Columns</h2>
-
+      (You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to a column title)
       <dl>
         <dt>System Name</dt>
 

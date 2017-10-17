@@ -27,7 +27,7 @@
       <h1>The Panel</h1>
 
       <p>A Panel is a set of icons representing various components
-      of a layout. Some of the icons available in JMRI&reg; include
+      of a layout. Some of the icons available in JMRI&copy; include
       Turnouts, Sensors and Signals Masts. You can also include a
       background icon to represent your layout on your Panel.</p>
 
@@ -134,8 +134,8 @@
 
       <p>If you want to keep your Markers between operating
       sessions, you can save the Panel and the Markers will be
-      saved to your Panel xml file. 
-      <!--#include virtual="/Footer" --></p>
+      saved to your Panel xml file.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -1,17 +1,16 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the types of engines a railroad can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  */
-public class EngineTypes extends RollingStockAttribute {
+public class EngineTypes extends RollingStockAttribute implements InstanceManagerAutoDefault {
 
     private static final String TYPES = Bundle.getMessage("engineDefaultTypes");
 
@@ -23,20 +22,15 @@ public class EngineTypes extends RollingStockAttribute {
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private static EngineTypes _instance = null;
-
+    @Deprecated
     public static synchronized EngineTypes instance() {
-        if (_instance == null) {
-            log.debug("EngineTypes creating instance");
-            // create and load
-            _instance = new EngineTypes();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("EngineTypes returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(EngineTypes.class);
     }
 
     @Override
@@ -79,10 +73,10 @@ public class EngineTypes extends RollingStockAttribute {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        EngineManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(EngineManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineTypes.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(EngineTypes.class);
 
 }

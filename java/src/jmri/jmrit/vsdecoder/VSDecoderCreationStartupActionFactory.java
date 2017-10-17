@@ -1,9 +1,9 @@
 package jmri.jmrit.vsdecoder;
 
 import apps.startup.AbstractStartupActionFactory;
+import apps.startup.StartupActionFactory;
 import java.util.Locale;
-import jmri.jmrit.vsdecoder.VSDecoderCreationAction;
-import jmri.jmrit.vsdecoder.Bundle;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * {@link apps.startup.StartupActionFactory} for the
@@ -11,6 +11,7 @@ import jmri.jmrit.vsdecoder.Bundle;
  *
  * @author Randall Wood Copyright (C) 2016
  */
+@ServiceProvider(service = StartupActionFactory.class)
 public class VSDecoderCreationStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override

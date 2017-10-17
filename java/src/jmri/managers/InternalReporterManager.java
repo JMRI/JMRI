@@ -41,8 +41,13 @@ public class InternalReporterManager extends AbstractReporterManager {
     }
 
     @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
+    }
+
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
-}
 
+}

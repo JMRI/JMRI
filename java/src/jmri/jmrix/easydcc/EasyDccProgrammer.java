@@ -27,8 +27,8 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
 
@@ -115,14 +115,14 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 return EasyDccMessage.getReadPagedCV(cvnum);
             } else {
                 return EasyDccMessage.getReadRegister(registerFromCV(cvnum));
             }
         } else {
             // write
-            if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 return EasyDccMessage.getWritePagedCV(cvnum, val);
             } else {
                 return EasyDccMessage.getWriteRegister(registerFromCV(cvnum), val);
@@ -218,6 +218,6 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammer.class);
 
 }

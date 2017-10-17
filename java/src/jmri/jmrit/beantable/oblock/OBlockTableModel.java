@@ -87,7 +87,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         tempRow[CURVECOL] = noneText;
         tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Current");
         tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
-        tempRow[SPEEDCOL] = "";         // Bundle.getMessage("Normal");
+        tempRow[SPEEDCOL] = "";
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
@@ -128,7 +128,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         while (iter.hasNext()) {
             ts.add(getBySystemName(iter.next()));
         }
-        ArrayList<NamedBean> list = new ArrayList<NamedBean>(sysNameList.size());
+        ArrayList<NamedBean> list = new ArrayList<>(sysNameList.size());
 
         Iterator<NamedBean> it = ts.iterator();
         while (it.hasNext()) {
@@ -340,6 +340,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     return Bundle.getMessage("ButtonDelete");
                 }
                 return Bundle.getMessage("ButtonClear");
+            default:
+                // fall through
+                break;
         }
         return super.getValueAt(row, col);
     }
@@ -468,6 +471,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         tempRow[PERMISSIONCOL] = Bundle.getMessage("Absolute");
                     }
                     return;
+                default:
+                    // fall though
+                    break;
             }
             tempRow[col] = (String) value;
             return;
@@ -587,6 +593,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 deleteBean(block);
                 block = null;
                 return;
+            default:
+                // fall through
+                break;
         }
         super.setValueAt(value, row, col);
     }
@@ -628,6 +637,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return Bundle.getMessage("ButtonEditPath");
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            default:
+                // fall through
+                break;
         }
         return super.getColumnName(col);
     }
@@ -689,6 +701,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case REPORT_CURRENTCOL:
             case PERMISSIONCOL:
                 return Boolean.class;
+            default:
+                // fall through
+                break;
         }
         return String.class;
     }
@@ -726,6 +741,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return new JButton("DELETE").getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }
@@ -755,5 +773,5 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class);
 }

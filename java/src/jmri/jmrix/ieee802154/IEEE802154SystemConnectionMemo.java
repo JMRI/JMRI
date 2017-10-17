@@ -2,7 +2,6 @@ package jmri.jmrix.ieee802154;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -31,7 +30,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
     /*
-     * Override the init function for any subtype specific 
+     * Override the init function for any subtype specific
      * registration into init.  init is called by the generic contstructor.
      */
     protected void init() {
@@ -45,6 +44,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
     /**
      * Traffic Controller for this instance.
+     * @param newtc tc to save for connection
      */
     public void setTrafficController(IEEE802154TrafficController newtc) {
         _tc = newtc;
@@ -54,20 +54,6 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         return _tc;
     }
     private IEEE802154TrafficController _tc = null;
-
-    /**
-     * Always null as ieee802154 doesn't have a programmer
-     */
-    @SuppressWarnings("deprecation")
-    public ProgrammerManager getProgrammerManager() {
-        //Do not want to return a programmer ever
-        return null;
-    }
-
-    @SuppressWarnings("deprecation")
-    public void setProgrammerManager(ProgrammerManager p) {
-        // no programmer supported, should I throw an Exception??
-    }
 
     /**
      * Tells which managers this provides by class
@@ -111,6 +97,3 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
 }
-
-
-

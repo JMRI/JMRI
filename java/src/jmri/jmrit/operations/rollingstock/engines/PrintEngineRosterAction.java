@@ -1,12 +1,11 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.AbstractAction;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -29,7 +28,7 @@ public class PrintEngineRosterAction extends AbstractAction {
     private int numberCharPerLine = 90;
     final int ownerMaxLen = 5; // Only show the first 5 characters of the owner's name
 
-    EngineManager manager = EngineManager.instance();
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
     public PrintEngineRosterAction(String actionName, Frame frame, boolean preview, EnginesTableFrame pWho) {
         super(actionName);
@@ -52,7 +51,6 @@ public class PrintEngineRosterAction extends AbstractAction {
     static final String TAB = "\t"; // NOI18N
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
@@ -63,7 +61,7 @@ public class PrintEngineRosterAction extends AbstractAction {
             log.debug("Print cancelled");
             return;
         }
-        
+
         numberCharPerLine = writer.getCharactersPerLine();
 
         // Loop through the Roster, printing as needed
@@ -79,13 +77,13 @@ public class PrintEngineRosterAction extends AbstractAction {
         String rfid = "";
         String location;
 
-        List<RollingStock> engines = panel.getSortByList();
+        List<Engine> engines = panel.getSortByList();
         try {
             // header
             String header = padAttribute(Bundle.getMessage("Number"), Control.max_len_string_print_road_number)
-                    + padAttribute(Bundle.getMessage("Road"), CarRoads.instance().getMaxNameLength())
-                    + padAttribute(Bundle.getMessage("Model"), EngineModels.instance().getMaxNameLength())
-                    + padAttribute(Bundle.getMessage("Type"), EngineTypes.instance().getMaxNameLength())
+                    + padAttribute(Bundle.getMessage("Road"), InstanceManager.getDefault(CarRoads.class).getMaxNameLength())
+                    + padAttribute(Bundle.getMessage("Model"), InstanceManager.getDefault(EngineModels.class).getMaxNameLength())
+                    + padAttribute(Bundle.getMessage("Type"), InstanceManager.getDefault(EngineTypes.class).getMaxNameLength())
                     + padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name)
                     + (panel.sortByConsist.isSelected() ? padAttribute(Bundle.getMessage("Consist"),
                                     Control.max_len_string_attibute) : padAttribute(Bundle.getMessage("Owner"), ownerMaxLen))
@@ -97,14 +95,13 @@ public class PrintEngineRosterAction extends AbstractAction {
                                     .getMessage("Built"), Control.max_len_string_built_name) : "")
                     + Bundle.getMessage("Location") + NEW_LINE;
             writer.write(header);
-            for (RollingStock rs : engines) {
-                Engine engine = (Engine) rs;
+            for (Engine engine : engines) {
 
                 // loco number
                 number = padAttribute(engine.getNumber(), Control.max_len_string_print_road_number);
-                road = padAttribute(engine.getRoadName(), CarRoads.instance().getMaxNameLength());
-                model = padAttribute(engine.getModel(), EngineModels.instance().getMaxNameLength());
-                type = padAttribute(engine.getTypeName(), EngineTypes.instance().getMaxNameLength());
+                road = padAttribute(engine.getRoadName(), InstanceManager.getDefault(CarRoads.class).getMaxNameLength());
+                model = padAttribute(engine.getModel(), InstanceManager.getDefault(EngineModels.class).getMaxNameLength());
+                type = padAttribute(engine.getTypeName(), InstanceManager.getDefault(EngineTypes.class).getMaxNameLength());
                 length = padAttribute(engine.getLength(), Control.max_len_string_length_name);
 
                 if (panel.sortByConsist.isSelected()) {
@@ -151,5 +148,5 @@ public class PrintEngineRosterAction extends AbstractAction {
         return buf.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterAction.class);
 }

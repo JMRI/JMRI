@@ -75,7 +75,7 @@
 
   <indexitem text="DS54 " target="html.hardware.loconet.DS54"/>
 
-  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"/>
 
   <indexitem text="LocoNet ID " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
@@ -200,6 +200,8 @@
 
  <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
+ <indexitem text="Switchboard Editor " target="package.jmri.jmrit.display.SwitchboardEditor"/>
+
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
 
  <indexitem text="Lights " target="html.tools.Lights">
@@ -211,17 +213,35 @@
 
  </indexitem>
  <indexitem text="LocoNet ">
+  <indexitem text="BDL16/BDL162/BDL168 " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
+
   <indexitem text="Command Station Configuration Tool " target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
 
   <indexitem text="DS54 " target="html.hardware.loconet.DS54"/>
 
-  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"/>
+
+  <indexitem text="Duplex Group " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
 
   <indexitem text="Fast Clock " target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame"/>
+
+  <indexitem text="Firmware Downloader " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
+
+  <indexitem text="LocoBuffer " target="html.hardware.loconet.LocoBuffer"/>
+
+  <indexitem text="LocoBuffer-II " target="html.hardware.loconet.LocoBufferII"/>
+
+  <indexitem text="LocoBuffer-USB " target="html.hardware.loconet.LocoBufferUSB"/>
 
   <indexitem text="LocoIO " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
 
   <indexitem text="LocoNet Addressing " target="html.hardware.loconet.Addressing"/>
+
+  <indexitem text="LocoNet Monitor " target="package.jmri.jmrix.loconet.locomon.LocoMonFrame"/>
+
+  <indexitem text="LocoNet Status " target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame"/>
+
+  <indexitem text="Packet sender " target="package.jmri.jmrix.loconet.locogen.LocoGenFrame"/>
 
   <indexitem text="PM4 " target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
 
@@ -233,11 +253,17 @@
 
   <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
 
+  <indexitem text="Standalone LocoNet " target="html.hardware.loconet.StandaloneLocoNet"/>
+
  </indexitem>
  <indexitem text="Logix ">
   <indexitem text="Add Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
-  <indexitem text="Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
+  <indexitem text="Add/Edit Conditionals using the List Editor " target="package.jmri.jmrit.conditional.ConditionalListEditor"/>
+
+  <indexitem text="Add/Edit Conditionals using the Tree Editor " target="package.jmri.jmrit.conditional.ConditionalTreeEditor"/>
+
+  <indexitem text="Conditional State Variable and Action List " target="package.jmri.jmrit.conditional.StateVariableActionList"/>
 
   <indexitem text="Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
@@ -307,6 +333,8 @@
  <indexitem text="PanelPro " target="html.apps.PanelPro.Panels">
   <indexitem text="Display Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
+  <indexitem text="Handling Errors " target="package.jmri.configurexml.ErrorHandler"/>
+
   <indexitem text="Intro " target="html.apps.PanelPro.Panels"/>
 
   <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
@@ -314,8 +342,6 @@
   <indexitem text="Panel Controls " target="package.jmri.jmrit.display.PanelTarget"/>
 
   <indexitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
-
-  <indexitem text="Handling Errors " target="package.jmri.configurexml.ErrorHander"/>
 
  </indexitem>
  <indexitem text="Panels Menu " target="package.jmri.jmrit.display.PanelMenuHelp"/>
@@ -525,15 +551,9 @@
  <indexitem text="USB-to-Serial Adapter " target="html.hardware.USBtoSerial"/>
 
  <indexitem text="USS CTC Tools " target="html.tools.uss.index">
-  <indexitem text="Code  Button " target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
-
   <indexitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
 
   <indexitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
-
-  <indexitem text="Signal Lever " target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
-
-  <indexitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
 
  </indexitem>
  <indexitem text="Wangrow " target="html.hardware.nce.Wangrow"/>

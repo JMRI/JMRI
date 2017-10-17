@@ -26,9 +26,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.SwingSettings;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure Swing GUI LAF defaults
@@ -43,7 +45,8 @@ import jmri.util.swing.SwingSettings;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  * @since 2.9.5 (Previously in jmri package)
  */
-public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
+@ServiceProvider(service = PreferencesPanel.class)
+public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     public static final int MAX_TOOLTIP_TIME = 3600;
     public static final int MIN_TOOLTIP_TIME = 1;
@@ -68,6 +71,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     private final ButtonGroup LAFGroup = new ButtonGroup();
     public JCheckBox mouseEvent;
     private JComboBox<Integer> fontSizeComboBox;
+    public JCheckBox graphicStateDisplay;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -77,6 +81,8 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doFontSize(p = new JPanel());
         add(p);
         doClickSelection(p = new JPanel());
+        add(p);
+        doGraphicState(p = new JPanel());
         add(p);
         doToolTipDismissDelay(p = new JPanel());
         add(p);
@@ -90,6 +96,16 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
         });
         panel.add(mouseEvent);
+    }
+
+    void doGraphicState(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        graphicStateDisplay = new JCheckBox(ConfigBundle.getMessage("GUIGraphicTableState"));
+        graphicStateDisplay.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState());
+        graphicStateDisplay.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicStateDisplay.isSelected());
+        });
+        panel.add(graphicStateDisplay);
     }
 
     void doLAF(JPanel panel) {
@@ -257,7 +273,10 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        if (profile != null) {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(profile);
+        }
     }
 
     @Override

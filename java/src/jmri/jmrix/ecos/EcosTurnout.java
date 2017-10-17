@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
-  */
+ */
 public class EcosTurnout extends AbstractTurnout
         implements EcosListener {
 
@@ -27,7 +27,7 @@ public class EcosTurnout extends AbstractTurnout
     int extended = 0;
 
     /**
-     * Ecos turnouts use the NMRA number (0-2044) as their numerical
+     * ECoS turnouts use the NMRA number (0-2044) as their numerical
      * identification in the system name.
      *
      * @param number DCC address of the turnout
@@ -181,7 +181,7 @@ public class EcosTurnout extends AbstractTurnout
      * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
-     * <P>
+     *
      * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {
@@ -197,7 +197,7 @@ public class EcosTurnout extends AbstractTurnout
     }
 
     /**
-     * ECOS turnouts can be inverted
+     * @return ECoS turnouts can be inverted
      */
     @Override
     public boolean canInvert() {
@@ -394,5 +394,6 @@ public class EcosTurnout extends AbstractTurnout
         // messages are ignored
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnout.class);
+
 }

@@ -7,10 +7,11 @@
 import jmri
 
 # get the nodes in the system
-node0 = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName("CS1")
-node1 = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName("CS1001")
-node2 = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName("CS2001")
-node3 = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName("CS3001")
+memo = jmri.InstanceManager.getList(jmri.jmrix.cmri.CMRISystemConnectionMemo).get(0)
+node0 = memo.getNodeFromSystemName("CS1", memo.getTrafficController())
+node1 = memo.getNodeFromSystemName("CS1001", memo.getTrafficController())
+node2 = memo.getNodeFromSystemName("CS2001", memo.getTrafficController())
+node3 = memo.getNodeFromSystemName("CS3001", memo.getTrafficController())
 
 # display current status
 print "was node0: ", node0.getSensorsActive()

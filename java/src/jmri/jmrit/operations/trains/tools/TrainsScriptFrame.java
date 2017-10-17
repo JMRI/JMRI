@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
@@ -29,7 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsScriptFrame extends OperationsFrame {
 
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     // script panels
     JPanel pStartUpScript = new JPanel();

@@ -1,6 +1,7 @@
 package jmri.jmrix.tams;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,26 +18,21 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     private TamsInterfaceScaffold nis = null;
     private TamsSystemConnectionMemo tm = null;
-    
+
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override
     @Before
-    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         // prepare an interface, register
         nis = new TamsInterfaceScaffold();
-        tm = new TamsSystemConnectionMemo(nis){
-            {
-                userNames.clear();
-                sysPrefixes.clear();
-            }
-        };
+        tm = new TamsSystemConnectionMemo(nis);
         // create and register the manager object
         l = new TamsTurnoutManager(tm);
         jmri.InstanceManager.setTurnoutManager(l);
@@ -47,7 +43,7 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         return "TMT" + n;
     }
 
-    @Test 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("TMT21", "my name");
@@ -70,6 +66,6 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerTest.class);
 
 }

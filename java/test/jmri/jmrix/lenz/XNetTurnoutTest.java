@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,14 +27,12 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "52 05 88 DF",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "52 05 89 DE",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     @Test
@@ -72,7 +71,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         }
 
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
- 
+
         Assert.assertEquals("on message sent", "52 05 88 DF",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
@@ -88,7 +87,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
 
         while (n == lnis.outbound.size()) {
-        } // busy loop.  Wait for 
+        } // busy loop.  Wait for
         // outbound size to change.
         Assert.assertEquals("off message sent", "52 05 80 D7",
                 lnis.outbound.elementAt(n).toString());
@@ -104,7 +103,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
 
         while (n == lnis.outbound.size()) {
-        } // busy loop.  Wait for 
+        } // busy loop.  Wait for
         // outbound size to change.
 
         Assert.assertEquals("off message sent", "52 05 80 D7",
@@ -117,13 +116,13 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
         ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
 
-        // no wait here.  The last reply should cause the turnout to 
+        // no wait here.  The last reply should cause the turnout to
         // set it's state, but it will not cause another reply.
         Assert.assertTrue(t.getKnownState() == jmri.Turnout.CLOSED);
     }
 
     // Test that property change events are properly sent from the parent
-    // to the propertyChange listener (this handles events for one sensor 
+    // to the propertyChange listener (this handles events for one sensor
     // and twosensor feedback).
     @Test
     public void testXNetTurnoutPropertyChange() {
@@ -149,7 +148,9 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
             log.error("TO exception: " + x);
         }
         // check to see if the turnout state changes.
-        jmri.util.JUnitUtil.waitFor(()->{return t.getKnownState() == jmri.Turnout.THROWN;}, "Turnout goes THROWN");
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return t.getKnownState() == jmri.Turnout.THROWN;
+        }, "Turnout goes THROWN");
     }
 
     @Override
@@ -180,10 +181,9 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     @After
     public void tearDown() {
         t = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutTest.class);
 
 }

@@ -2,14 +2,17 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowListener;
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
  * MemorySpinnerIconTest.java
- *
+ * <p>
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
@@ -41,7 +44,8 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
         toi2 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(toi2);
 
-        jmri.util.JUnitUtil.resetInstanceManager();
+        InstanceManager.getDefault().clearAll();
+        JUnitUtil.initDefaultUserMessagePreferences();
 
         tos1.setMemory("IM1");
         tos2.setMemory("IM1");
@@ -69,8 +73,8 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
         if (!System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
+            jf.dispose();
         }
-
     }
 
     // from here down is testing infrastructure
@@ -93,7 +97,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
@@ -108,10 +112,13 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            ThreadingUtil.runOnGUI(() -> {
+                panel.getTargetFrame().dispose();
+                JUnitUtil.dispose(panel);
+            });
         }
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
 }

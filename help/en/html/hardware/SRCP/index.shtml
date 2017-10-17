@@ -86,7 +86,14 @@
       <p>There's a lot of good information on SRCP and how it fits
       into an overall model-railroad system on <a href=
       "http://www.der-moba.de/index.php/Digitalprojekt">der-moba.de
-      (in German)</a>. <!--#include virtual="/Footer" --></p>
+      (in German)</a>. 
+      There's an English 
+      <a href="http://srcpd.sourceforge.net/srcp/">overview</a> and 
+      <a href="http://srcpd.sourceforge.net/srcp/srcp-084.html">document for
+      version 0.8.4 of the protocol</a>. The overview page has links to
+      some sample implementations.
+      
+        <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

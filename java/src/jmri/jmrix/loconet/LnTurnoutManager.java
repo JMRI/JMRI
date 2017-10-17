@@ -5,8 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnTurnoutManager implements the TurnoutManager.
- * <P>
+ * Manage the LocoNet-specific Turnout implementation.
  * System names are "LTnnn", where nnn is the turnout number without padding.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -31,10 +30,8 @@ import org.slf4j.LoggerFactory;
  * bandwidth.
  * </UL>
  * In the end, this implementation is OK, but not great. An improvement would be
- * to control JMRI turnout operations centrally, so that retransmissions can
+ * to control JMRI turnout operations centrally, so that retransmissions can be
  * controlled.
- * <P>
- * Description: Implement turnout manager for loconet
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
@@ -179,5 +176,60 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class.getName());
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * Get the bit address from the system name.
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "T"))) {
+            // here if an illegal loconet turnout system name
+            log.error("invalid character in header field of loconet turnout system name: {}", systemName);
+            return (0);
+        }
+        // name must be in the LTnnnnn format (L is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())
+            ).intValue();
+        } catch (Exception e) {
+            log.debug("invalid character in number field of system name: {}", systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.debug("invalid loconet turnout system name: {}", systemName);
+            return (0);
+        } else if (num > 4096) {
+            log.debug("bit number out of range in loconet turnout system name: {}", systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);
+
 }

@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.sdfeditor.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.soundloader.PackageTest.suite());
-        suite.addTest(jmri.jmrix.loconet.spjfile.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.spjfile.PackageTest.class));
         suite.addTest(new TestSuite(SlotManagerTest.class));
         suite.addTest(new TestSuite(LocoNetSlotTest.class));
         suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));
@@ -40,7 +40,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(LnTrafficControllerTest.class));
         suite.addTest(new TestSuite(LnTrafficRouterTest.class));
         suite.addTest(new TestSuite(LnPacketizerTest.class));
-        suite.addTest(new TestSuite(LocoNetThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoNetThrottleTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetConsistTest.class));
         suite.addTest(new JUnit4TestAdapter(LnPowerManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(LnTurnoutTest.class));
@@ -86,6 +86,23 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LocoNetMessageExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(LnConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(LnConstantsTest.class));
+        suite.addTest(new JUnit4TestAdapter(Ib1ThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(Ib1ThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(Ib2ThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(Ib2ThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(LNCPSignalMastTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnLightManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnLightTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnMessageManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnPr2ThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(Pr2ThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnClockControlTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnProgrammerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoNetConsistManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SE8cSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotTest.class));
         return suite;
     }
 

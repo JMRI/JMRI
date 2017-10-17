@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelectionListener {
 
-    public SignalHeadItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public SignalHeadItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -67,9 +69,10 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
 
     @Override
     protected void showIcons() {
-        //updateFamiliesPanel();
         _iconFamilyPanel.remove(_iconPanel);
         _iconPanel = new JPanel();
+        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
         _iconFamilyPanel.add(_iconPanel, 0);
         addIconsToPanel(_currentIconMap);
         _iconPanel.setVisible(true);
@@ -224,5 +227,5 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class);
 }

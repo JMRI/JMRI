@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides an Ops mode programing interface for XPressNet Currently only Byte
- * mode is implemented, though XPressNet also supports bit mode writes for POM
+ * Provides an Ops mode programing interface for XpressNet Currently only Byte
+ * mode is implemented, though XpressNet also supports bit mode writes for POM
  *
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2003-2010
@@ -45,14 +45,14 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
     /**
-     * Send an ops-mode write request to the XPressnet.
+     * Send an ops-mode write request to the Xpressnet.
      */
     @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
         /* we need to save the programer and value so we can send messages 
-         back to the screen when the programing screen when we recieve 
+         back to the screen when the programing screen when we receive
          something from the command station */
         progListener = p;
         value = val;
@@ -65,7 +65,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XPressNet */
+         currently sent back to us via the XpressNet */
         p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
     }
 
@@ -75,7 +75,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XPressNet */
+         currently sent back to us via the XpressNet */
         p.programmingOpReply(val, jmri.ProgListener.NotImplemented);
     }
 
@@ -85,7 +85,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -93,6 +93,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
      * Can this ops-mode programmer read back values?
      * Indirectly we can, though this requires an external display 
      * (a Lenz LRC120) and enabling railcom.
+     *
      * @return true to allow us to trigger an ops mode read
      */
     @Override
@@ -168,7 +169,9 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     public synchronized void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -184,6 +187,6 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XNetOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetOpsModeProgrammer.class);
 
 }

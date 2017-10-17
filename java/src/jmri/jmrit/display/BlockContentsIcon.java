@@ -27,6 +27,9 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Block> namedBlock;
 
+    /**
+     * {@inheritDoc}
+     */
     public BlockContentsIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();
@@ -161,7 +164,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
             popup.add(new AbstractAction("Open Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.toFront();
                     tf.getAddressPanel().setRosterEntry(re);
                 }
@@ -180,7 +183,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                     popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            //Just brings up the standard allocate extra frame, this could be expanded in the future 
+                            //Just brings up the standard allocate extra frame, this could be expanded in the future
                             //As a point and click operation.
                             df.allocateExtraSection(e, at);
                         }
@@ -312,7 +315,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         int retval = JOptionPane.showOptionDialog(this,
                 Bundle.getMessage("EditCurrentBlockValue"), namedBlock.getName(),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                options, options[2]);
+                options, options[1]);
 
         if (retval != 1) {
             return;
@@ -334,5 +337,5 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         getBlock().setValue(val);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class);
 }

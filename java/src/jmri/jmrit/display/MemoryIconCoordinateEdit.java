@@ -44,12 +44,12 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
     }
 
     public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
-        return new AbstractAction(Bundle.getMessage("SetXY")) {
+        return new AbstractAction(Bundle.getMessage("SetXY", "")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MemoryIconCoordinateEdit f = new MemoryIconCoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetXY"), pos, true);
+                f.init(Bundle.getMessage("SetXY", ""), pos, true);
                 f.initSetXY();
                 f.setVisible(true);
                 f.setLocationRelativeTo(pos);
@@ -109,6 +109,8 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
+
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {

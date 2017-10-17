@@ -1,6 +1,8 @@
 package jmri.jmrix;
 
+import java.util.Vector;
 import org.slf4j.Logger;
+import purejavacomm.PortInUseException;
 
 /**
  * Enables basic setup of a serial interface for a jmrix implementation.
@@ -14,7 +16,7 @@ public interface SerialPortAdapter extends PortAdapter {
     /**
      * Provide a vector of valid port names, each a String.
      */
-    public java.util.Vector<String> getPortNames();
+    public Vector<String> getPortNames();
 
     /**
      * Open a specified port. The appname argument is to be provided to the
@@ -90,7 +92,7 @@ public interface SerialPortAdapter extends PortAdapter {
      *
      * @see jmri.jmrix.AbstractSerialPortController
      */
-    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log);
+    public String handlePortBusy(PortInUseException p, String portName, Logger log);
 
     /**
      * Return the System Manufacturers Name

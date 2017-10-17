@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
+import javax.servlet.http.HttpServletResponse;
 import jmri.JmriException;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class JsonClientHandler {
 
     /**
      * Process a JSON string and handle appropriately.
-     *
+     * <p>
      * Currently JSON strings in four different forms are handled by this
      * method:<ul> <li>list requests in the form:
      * <code>{"type":"list","list":"trains"}</code> or
@@ -100,7 +101,7 @@ public class JsonClientHandler {
 
     /**
      * Process a JSON node and handle appropriately.
-     *
+     * <p>
      * See {@link #onMessage(java.lang.String)} for expected JSON objects.
      *
      * @param root the JSON node.
@@ -114,17 +115,26 @@ public class JsonClientHandler {
                 type = LIST;
             }
             JsonNode data = root.path(DATA);
-            if (data.path(METHOD).isMissingNode() && root.path(METHOD).isValueNode()) {
-                ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
-            }
-            log.debug("Processing {} with {}", type, data);
-            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
+            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE) || type.equals(LIST))
                     && data.isMissingNode()) {
                 // these messages are not required to have a data payload,
                 // so create one if the message did not contain one to avoid
                 // special casing later
                 data = this.connection.getObjectMapper().createObjectNode();
             }
+            if (data.isMissingNode() && root.path(METHOD).isValueNode()
+                    && JSON.GET.equals(root.path(METHOD).asText())) {
+                // create an empty data node for get requests, if only to contain the method
+                data = this.connection.getObjectMapper().createObjectNode();
+            }
+            if (data.isMissingNode()) {
+                this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
+                return;
+            }
+            if (root.path(METHOD).isValueNode() && data.path(METHOD).isMissingNode()) {
+                ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
+            }
+            log.debug("Processing {} with {}", type, data);
             if (type.equals(LIST)) {
                 String list = root.path(LIST).asText();
                 if (this.services.get(list) != null) {
@@ -138,23 +148,19 @@ public class JsonClientHandler {
                     return;
                 }
             } else if (!data.isMissingNode()) {
-                switch (type) {
-                    case HELLO:
-                    case LOCALE:
-                        if (!data.path(LOCALE).isMissingNode()) {
-                            this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
-                        }
-                    //$FALL-THROUGH$ to default action
-                    default:
-                        if (this.services.get(type) != null) {
-                            for (JsonSocketService service : this.services.get(type)) {
-                                service.onMessage(type, data, this.connection.getLocale());
-                            }
-                        } else {
-                            log.warn("Requested type '{}' unknown.", type);
-                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
-                        }
-                        break;
+                if (type.equals(HELLO) || type.equals(LOCALE) && !data.path(LOCALE).isMissingNode()) {
+                    String locale = data.path(LOCALE).asText();
+                    if (!locale.isEmpty()) {
+                        this.connection.setLocale(Locale.forLanguageTag(locale));
+                    }
+                }
+                if (this.services.get(type) != null) {
+                    for (JsonSocketService service : this.services.get(type)) {
+                        service.onMessage(type, data, this.connection.getLocale());
+                    }
+                } else {
+                    log.warn("Requested type '{}' unknown.", type);
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
                 this.sendErrorMessage(400, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));

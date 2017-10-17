@@ -1,9 +1,11 @@
 package jmri.jmrit.operations.locations;
 
 import java.io.File;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
@@ -15,28 +17,21 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008 2009 2010
  */
-public class LocationManagerXml extends OperationsXml {
+public class LocationManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public LocationManagerXml() {
     }
 
     /**
-     * record the single instance 
-     * @return instance
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static synchronized LocationManagerXml instance() {
-        LocationManagerXml instance = jmri.InstanceManager.getNullableDefault(LocationManagerXml.class);
-        if (instance == null) {
-            log.debug("LocationManagerXml creating instance");
-            // create and load
-            instance = new LocationManagerXml();
-            jmri.InstanceManager.setDefault(LocationManagerXml.class,instance);
-            instance.load();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("LocationManagerXml returns instance {}", instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(LocationManagerXml.class);
     }
 
     @Override
@@ -58,8 +53,8 @@ public class LocationManagerXml extends OperationsXml {
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
-        LocationManager.instance().store(root);
-        ScheduleManager.instance().store(root);
+        InstanceManager.getDefault(LocationManager.class).store(root);
+        InstanceManager.getDefault(ScheduleManager.class).store(root);
 
         writeXML(file, doc);
 
@@ -85,8 +80,8 @@ public class LocationManagerXml extends OperationsXml {
             return;
         }
 
-        LocationManager.instance().load(root);
-        ScheduleManager.instance().load(root);
+        InstanceManager.getDefault(LocationManager.class).load(root);
+        InstanceManager.getDefault(ScheduleManager.class).load(root);
 
         setDirty(false);
         log.debug("Locations have been loaded!");
@@ -107,6 +102,11 @@ public class LocationManagerXml extends OperationsXml {
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class);
+
+    @Override
+    public void initialize() {
+        this.load();
+    }
 
 }

@@ -3,7 +3,7 @@ package jmri.jmrix.lenz.liusb;
 import jmri.util.SystemType;
 
 /**
- * Handle configuring an XPressNet layout connection via a Lenz LIUSBadapter.
+ * Handle configuring an XpressNet layout connection via a Lenz LIUSBadapter.
  * <P>
  * This uses the {@link LIUSBAdapter} class to do the actual connection.
  *
@@ -14,15 +14,15 @@ import jmri.util.SystemType;
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Ctor for an object being created during load process.
+     * Swing init is deferred.
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -31,12 +31,12 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
     @Override
     public String name() {
         return "Lenz LIUSB";
-    }
+    } // NOI18N
 
     @Override
     protected String[] getPortFriendlyNames() {
         if (SystemType.isWindows()) {
-            return new String[]{"LI-USB Serial Port", "LI-USB"};
+            return new String[]{Bundle.getMessage("LIUSBSerialPortOption"), "LI-USB"};
         }
         return new String[]{};
     }

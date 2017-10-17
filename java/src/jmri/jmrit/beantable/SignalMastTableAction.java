@@ -152,9 +152,9 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     @Override
     public String getClassDescription() {
-        return Bundle.getMessage("TitleSignalGroupTable");
+        return Bundle.getMessage("TitleSignalMastTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(SignalMastTableAction.class);
 
+}

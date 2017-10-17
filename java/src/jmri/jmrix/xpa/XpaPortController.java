@@ -15,6 +15,3 @@ public abstract class XpaPortController extends jmri.jmrix.AbstractSerialPortCon
         super(connectionMemo);
     }
 }
-
-
-

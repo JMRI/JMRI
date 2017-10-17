@@ -238,6 +238,9 @@ public class RailComTableAction extends AbstractTableAction {
                         return t.getRoutingNo();
                     case DELETECOL:  //
                         return Bundle.getMessage("ButtonDelete");
+                    default:
+                        // fall through
+                        break;
                 }
                 return null;
             }
@@ -320,5 +323,5 @@ public class RailComTableAction extends AbstractTableAction {
     protected String getClassName() {
         return RailComTableAction.class.getName();
     }
-    private static final Logger log = LoggerFactory.getLogger(RailComTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RailComTableAction.class);
 }

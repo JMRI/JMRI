@@ -67,11 +67,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     public static final String RESET = Bundle.getMessage("Reset");
     public static final String CONDUCTOR = Bundle.getMessage("Conductor");
 
-    CarManagerXml carManagerXml = CarManagerXml.instance(); // load cars
-    EngineManagerXml engineManagerXml = EngineManagerXml.instance(); // load engines
-    TrainManager trainManager = TrainManager.instance();
-    TrainManagerXml trainManagerXml = TrainManagerXml.instance();
-    LocationManager locationManager = LocationManager.instance();
+    CarManagerXml carManagerXml = InstanceManager.getDefault(CarManagerXml.class); // load cars
+    EngineManagerXml engineManagerXml = InstanceManager.getDefault(EngineManagerXml.class); // load engines
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+    TrainManagerXml trainManagerXml = InstanceManager.getDefault(TrainManagerXml.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     TrainsTableModel trainsModel;
     JTable trainsTable;
@@ -308,7 +308,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         addPropertyChangeLocations();
 
         // auto save
-        new AutoSave();
+        new AutoSave().start();
     }
 
     @Override
@@ -370,12 +370,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!TrainCustomManifest.instance().excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.instance().getDirectoryName()
-                        + ", file name: " + TrainCustomManifest.instance().getFileName()); // NOI18N
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: " + InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()
+                        + ", file name: " + InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                    TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
+                    InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()}), Bundle
                         .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -391,13 +391,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
-                        TrainCustomManifest.instance().addCVSFile(csvFile);
+                        InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(csvFile);
                     }
                 }
             }
 
             // Now run the user specified custom Manifest processor program
-            TrainCustomManifest.instance().process();
+            InstanceManager.getDefault(TrainCustomManifest.class).process();
         }
         if (ae.getSource() == switchListsButton) {
             if (tslef != null) {
@@ -506,7 +506,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
     private void updateTitle() {
         String title = Bundle.getMessage("TitleTrainsTable");
-        TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(trainManager.getTrainScheduleActiveId());
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(trainManager.getTrainScheduleActiveId());
         if (sch != null) {
             title = title + " (" + sch.getName() + ")";
         }
@@ -611,5 +611,5 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class);
 }

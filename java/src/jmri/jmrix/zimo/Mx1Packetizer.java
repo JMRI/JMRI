@@ -207,7 +207,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a gnu.io port is set to have a receive timeout (via the
+     * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
@@ -322,16 +322,12 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         log.debug("schedule notify of incoming packet");
                         javax.swing.SwingUtilities.invokeLater(r);
 
-                    } // done with this one // done with this one
-                    /*catch (java.io.EOFException e) {
-                     // posted from idle port when enableReceiveTimeout used
-                     log.debug("EOFException, is serial I/O using timeouts?");
-                     }*/ catch (java.io.IOException e) {
+                    } catch (java.io.IOException e) {
                         // fired when write-end of HexFile reaches end
                         log.debug("IOException, should only happen with HexFIle", e);
                         disconnectPort(controller);
                         return;
-                    } catch (Exception e) {
+                    } catch (RuntimeException e) {
                         log.warn("run: unexpected exception:", e);
                     }
                 }
@@ -379,8 +375,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             log.debug("schedule notify of incoming packet");
                             javax.swing.SwingUtilities.invokeLater(r);
                         }
-                    } // done with this one // done with this one
-                    catch (java.io.EOFException e) {
+                    } catch (java.io.EOFException e) {
                         // posted from idle port when enableReceiveTimeout used
                         log.debug("EOFException, is serial I/O using timeouts?");
                     } catch (java.io.IOException e) {
@@ -388,7 +383,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         log.debug("IOException, should only happen with HexFIle: " + e);
                         disconnectPort(controller);
                         return;
-                    } catch (Exception e) {
+                    } catch (RuntimeException e) {
                         log.warn("run: unexpected exception: " + e);
                     }
                 } // end of permanent loop
@@ -699,5 +694,5 @@ public class Mx1Packetizer extends Mx1TrafficController {
         0x74, 0x2a, 0xc8, 0x96, 0x15, 0x4b, 0xa9, 0xf7, 0xb6, 0xe8, 0x0a, 0x54, 0xd7, 0x89, 0x6b, 0x35
     };
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class);
 }

@@ -2,10 +2,12 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.FileUtil;
@@ -21,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2015
  */
-public class TrainManagerXml extends OperationsXml {
+public class TrainManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     private boolean fileLoaded = false;
     private String operationsFileName = "OperationsTrainRoster.xml";// NOI18N
@@ -40,27 +42,21 @@ public class TrainManagerXml extends OperationsXml {
     static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
     static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
     static final String MANIFESTS_BACKUPS = "manifestsBackups"; // NOI18N
+    static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
 
     public TrainManagerXml() {
     }
 
     /**
-     * record the single instance 
-     * @return instance
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static synchronized TrainManagerXml instance() {
-        TrainManagerXml instance = jmri.InstanceManager.getNullableDefault(TrainManagerXml.class);
-        if (instance == null) {
-            log.debug("TrainManagerXml creating instance");
-            // create and load
-            instance = new TrainManagerXml();
-            jmri.InstanceManager.setDefault(TrainManagerXml.class,instance);
-            instance.load();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManagerXml returns instance " + instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(TrainManagerXml.class);
     }
 
     @Override
@@ -82,9 +78,9 @@ public class TrainManagerXml extends OperationsXml {
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
-        TrainManager.instance().store(root);
-        TrainScheduleManager.instance().store(root);
-        AutomationManager.instance().store(root);
+        InstanceManager.getDefault(TrainManager.class).store(root);
+        InstanceManager.getDefault(TrainScheduleManager.class).store(root);
+        InstanceManager.getDefault(AutomationManager.class).store(root);
 
         writeXML(file, doc);
 
@@ -112,20 +108,20 @@ public class TrainManagerXml extends OperationsXml {
             return;
         }
 
-        TrainManager.instance().load(root);
-        TrainScheduleManager.instance().load(root);
+        InstanceManager.getDefault(TrainManager.class).load(root);
+        InstanceManager.getDefault(TrainScheduleManager.class).load(root);
 
         fileLoaded = true; // set flag trains are loaded
-        AutomationManager.instance().load(root);
+        InstanceManager.getDefault(AutomationManager.class).load(root);
 
         // now load train icons on panels
-        TrainManager.instance().loadTrainIcons();
+        InstanceManager.getDefault(TrainManager.class).loadTrainIcons();
 
         // loading complete run startup scripts
-        TrainManager.instance().runStartUpScripts();
+        InstanceManager.getDefault(TrainManager.class).runStartUpScripts();
 
         log.debug("Trains have been loaded!");
-        TrainLogger.instance().enableTrainLogging(Setup.isTrainLoggerEnabled());
+        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
         setDirty(false); // clear dirty flag
     }
 
@@ -135,94 +131,119 @@ public class TrainManagerXml extends OperationsXml {
 
     /**
      * Store the train's build report
+     *
      * @param name Full path name for train build report
      * @return Build report File.
      */
     public File createTrainBuildReportFile(String name) {
-        return createFile(defaultBuildReportFilename(name), false); // don't backup
+        return createFile(defaultBuildReportFileName(name), false); // don't backup
     }
 
     public File getTrainBuildReportFile(String name) {
-        File file = new File(defaultBuildReportFilename(name));
+        File file = new File(defaultBuildReportFileName(name));
         return file;
     }
 
-    public String defaultBuildReportFilename(String name) {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                BUILD_STATUS +
-                File.separator +
-                BUILD_REPORT_FILE_NAME +
-                name +
-                FILE_TYPE_TXT; // NOI18N
+    public String defaultBuildReportFileName(String name) {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + BUILD_STATUS
+                + File.separator
+                + BUILD_REPORT_FILE_NAME
+                + name
+                + FILE_TYPE_TXT; // NOI18N
     }
 
     /**
      * Creates the train's manifest file.
+     *
      * @param name Full path name for manifest file.
      * @return Manifest File.
      */
     public File createTrainManifestFile(String name) {
         savePreviousManifestFile(name);
-        return createFile(getDefaultManifestFilename(name), false); // don't backup
+        return createFile(getDefaultManifestFileName(name), false); // don't backup
     }
 
     public File getTrainManifestFile(String name) {
-        File file = new File(getDefaultManifestFilename(name));
+        File file = new File(getDefaultManifestFileName(name));
         return file;
     }
 
-    public String getDefaultManifestFilename(String name) {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                MANIFESTS +
-                File.separator +
-                MANIFEST_FILE_NAME +
-                name +
-                FILE_TYPE_TXT;// NOI18N
+    public String getDefaultManifestFileName(String name) {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + MANIFESTS
+                + File.separator
+                + MANIFEST_FILE_NAME
+                + name
+                + FILE_TYPE_TXT;// NOI18N
     }
 
-    public String getBackupManifestFilename(String name, String lastModified) {
-        return getBackupManifestDirectory() +
-                File.separator +
-                name +
-                File.separator +
-                MANIFEST_FILE_NAME +
-                name +
-                ") " +
-                lastModified +
-                ".txt";// NOI18N
+    public String getBackupManifestFileName(String name, String lastModified) {
+        return getBackupManifestDirectoryName()
+                + name
+                + File.separator
+                + MANIFEST_FILE_NAME
+                + name
+                + ") "
+                + lastModified
+                + ".txt";// NOI18N
     }
 
-    public String getBackupManifestDirectory() {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                MANIFESTS_BACKUPS +
-                File.separator;
+    public String getBackupManifestDirectoryName() {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + MANIFESTS_BACKUPS
+                + File.separator;
     }
 
-    public String getBackupManifestDirectory(String name) {
-        return getBackupManifestDirectory() + File.separator + name + File.separator;
+    public String getBackupManifestDirectoryName(String name) {
+        return getBackupManifestDirectoryName() + File.separator + name + File.separator;
+    }
+
+    public String getBackupSwitchListFileName(String name, String lastModified) {
+        return getBackupSwitchListDirectoryName()
+                + name
+                + File.separator
+                + SWITCH_LIST_FILE_NAME
+                + name
+                + ") "
+                + lastModified
+                + ".txt";// NOI18N
+    }
+
+    public String getBackupSwitchListDirectoryName() {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + SWITCH_LISTS_BACKUPS
+                + File.separator;
+    }
+
+    public String getBackupSwitchListDirectoryName(String name) {
+        return getBackupSwitchListDirectoryName() + File.separator + name + File.separator;
     }
 
     /**
      * Store the CSV train manifest
+     *
      * @param name Full path name to CSV train manifest file.
      * @return Train CSV manifest File.
      */
     public File createTrainCsvManifestFile(String name) {
-        return createFile(getDefaultCsvManifestFilename(name), false); // don't backup
+        return createFile(getDefaultCsvManifestFileName(name), false); // don't backup
     }
 
     public File getTrainCsvManifestFile(String name) {
-        File file = new File(getDefaultCsvManifestFilename(name));
+        File file = new File(getDefaultCsvManifestFileName(name));
         return file;
     }
 
-    public String getDefaultCsvManifestFilename(String name) {
+    public String getDefaultCsvManifestFileName(String name) {
         return getDefaultCsvManifestDirectory() + MANIFEST_FILE_NAME + name + FILE_TYPE_CSV;
     }
 
@@ -240,28 +261,31 @@ public class TrainManagerXml extends OperationsXml {
 
     /**
      * Store the Json manifest for a train
+     *
      * @param name file name
-     * @param ext file extension to use
+     * @param ext  file extension to use
      * @return Json manifest File
      */
     public File createManifestFile(String name, String ext) {
-        return createFile(getDefaultManifestFilename(name, ext), false); // don't backup
+        return createFile(getDefaultManifestFileName(name, ext), false); // don't backup
     }
 
     public File getManifestFile(String name, String ext) {
-        return new File(getDefaultManifestFilename(name, ext));
+        return new File(getDefaultManifestFileName(name, ext));
     }
 
-    private String getDefaultManifestFilename(String name, String ext) {
+    private String getDefaultManifestFileName(String name, String ext) {
         return OperationsManager.getInstance().getPath(JSON_MANIFESTS) + File.separator + "train-" + name + "." + ext; // NOI18N
     }
 
     /**
      * Store the switch list for a location
+     *
      * @param name The location's name, to become file name.
      * @return Switch list File.
      */
     public File createSwitchListFile(String name) {
+        savePreviousSwitchListFile(name);
         return createFile(getDefaultSwitchListName(name), false); // don't backup
     }
 
@@ -271,35 +295,36 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public String getDefaultSwitchListName(String name) {
-        return OperationsXml.getFileLocation() +
-                OperationsXml.getOperationsDirectoryName() +
-                File.separator +
-                SWITCH_LISTS +
-                File.separator +
-                SWITCH_LIST_FILE_NAME +
-                name +
-                FILE_TYPE_TXT; // NOI18N
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + SWITCH_LISTS
+                + File.separator
+                + SWITCH_LIST_FILE_NAME
+                + name
+                + FILE_TYPE_TXT; // NOI18N
     }
 
     /**
      * Store the CSV switch list for a location
+     *
      * @param name Location's name, to become file name.
      * @return CSV switch list File.
      */
     public File createCsvSwitchListFile(String name) {
-        return createFile(getDefaultCsvSwitchListName(name), false); // don't backup
+        return createFile(getDefaultCsvSwitchListFileName(name), false); // don't backup
     }
 
     public File getCsvSwitchListFile(String name) {
-        File file = new File(getDefaultCsvSwitchListName(name));
+        File file = new File(getDefaultCsvSwitchListFileName(name));
         return file;
     }
 
-    public String getDefaultCsvSwitchListName(String name) {
-        return getDefaultCsvSwitchListDirectory() + SWITCH_LIST_FILE_NAME + name + FILE_TYPE_CSV;
+    public String getDefaultCsvSwitchListFileName(String name) {
+        return getDefaultCsvSwitchListDirectoryName() + SWITCH_LIST_FILE_NAME + name + FILE_TYPE_CSV;
     }
 
-    private String getDefaultCsvSwitchListDirectory() {
+    private String getDefaultCsvSwitchListDirectoryName() {
         return OperationsXml.getFileLocation()
                 + OperationsXml.getOperationsDirectoryName()
                 + File.separator
@@ -308,7 +333,7 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public void createDefaultCsvSwitchListDirectory() {
-        FileUtil.createDirectory(getDefaultCsvSwitchListDirectory());
+        FileUtil.createDirectory(getDefaultCsvSwitchListDirectoryName());
     }
 
     @Override
@@ -329,16 +354,16 @@ public class TrainManagerXml extends OperationsXml {
     private void savePreviousManifestFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {
             // create the manifest backup directory
-            createFile(getBackupManifestDirectory() + " ", false); // no backup
+            createFile(getBackupManifestDirectoryName() + " ", false); // no backup
             // now create unique backup directory for each train manifest
-            createFile(getBackupManifestDirectory(name) + " ", false); // no backup
+            createFile(getBackupManifestDirectoryName(name) + " ", false); // no backup
             // get old manifest file
-            File file = findFile(getDefaultManifestFilename(name));
+            File file = findFile(getDefaultManifestFileName(name));
             if (file == null) {
-                log.debug("No {} manifest file to backup", name);
+                log.debug("No ({}) manifest file to backup", name);
             } else if (file.canWrite()) {
                 String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
-                String backupName = getBackupManifestFilename(name, lastModified); // NOI18N
+                String backupName = getBackupManifestFileName(name, lastModified); // NOI18N
                 if (file.renameTo(new File(backupName))) {
                     log.debug("created new manifest backup file {}", backupName);
                 } else {
@@ -348,9 +373,41 @@ public class TrainManagerXml extends OperationsXml {
         }
     }
 
+    /**
+     * Save previous switch list file in a separate directory called
+     * switchListBackups. Each switch list is saved in a unique directory using
+     * the location's name.
+     */
+    private void savePreviousSwitchListFile(String name) {
+        if (Setup.isSaveTrainManifestsEnabled()) {
+            // create the switch list backup directory
+            createFile(getBackupSwitchListDirectoryName() + " ", false); // no backup
+            // now create unique backup directory for each train manifest
+            createFile(getBackupSwitchListDirectoryName(name) + " ", false); // no backup
+            // get old switch list file
+            File file = findFile(getDefaultSwitchListName(name));
+            if (file == null) {
+                log.debug("No ({}) switch list file to backup", name);
+            } else if (file.canWrite()) {
+                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
+                String backupName = getBackupSwitchListFileName(name, lastModified); // NOI18N
+                if (file.renameTo(new File(backupName))) {
+                    log.debug("created new switch list backup file {}", backupName);
+                } else {
+                    log.error("could not create switch list backup file {}", backupName);
+                }
+            }
+        }
+    }
+
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class);
+
+    @Override
+    public void initialize() {
+        load();
+    }
 
 }

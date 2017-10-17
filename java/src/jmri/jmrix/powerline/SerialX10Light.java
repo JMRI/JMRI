@@ -44,6 +44,8 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName system name
+     * @param tc traffic controller
      */
     public SerialX10Light(String systemName, SerialTrafficController tc) {
         super(systemName, tc);
@@ -55,6 +57,9 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName system name
+     * @param tc traffic controller
+     * @param userName user name
      */
     public SerialX10Light(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, tc, userName);
@@ -208,7 +213,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialX10Light.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialX10Light.class);
 }
 
 

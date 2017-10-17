@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * System names are "VSnnnn", where nnnn is the sensor number without padding.
  * <P>
  * Sensors are numbered from 1.
- * <P>
+ *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
   */
@@ -99,6 +99,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
+     * Public method to validate system name format.
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'S'));
+    }
+
+    /**
      * Dummy routine
      */
     @Override
@@ -119,7 +128,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Method to register any orphan Sensors when a new Serial Node is created
+     * Register any orphan Sensors when a new Serial Node is created.
      */
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
@@ -133,7 +142,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("System name null during register Sensor");
             } else {
                 log.debug("system name is " + sName);
-                if ((sName.charAt(0) == 'V') && (sName.charAt(1) == 'S')) {
+                if ((sName.charAt(0) == 'V') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
                     // This is a Sensor
                     tNode = SerialAddress.getNodeFromSystemName(sName);
                     if (tNode == node) {
@@ -147,7 +156,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * static function returning the SerialSensorManager instance to use.
+     * Static function returning the SerialSensorManager instance to use.
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
@@ -161,7 +170,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     static SerialSensorManager _instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+
 }
-
-

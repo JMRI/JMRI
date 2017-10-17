@@ -1,6 +1,5 @@
 package jmri.jmrix.maple.assignment;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -25,6 +24,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import jmri.jmrix.maple.InputBits;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialAddress;
 import jmri.jmrix.maple.SerialNode;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Frame for running assignment list.
  *
  * @author Dave Duchamp Copyright (C) 2006
-  */
+ */
 public class ListFrame extends jmri.util.JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.assignment.ListBundle");
@@ -78,13 +78,19 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
     ListFrame curFrame;
 
-    public ListFrame() {
+    private MapleSystemConnectionMemo _memo = null;
+
+    public ListFrame(MapleSystemConnectionMemo memo) {
         super();
         curFrame = this;
+        _memo = memo;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(rb.getString("WindowTitle"));
@@ -320,31 +326,49 @@ public class ListFrame extends jmri.util.JmriJFrame {
         private int curRow = -1;
         private String curRowSysName = "";
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public String getColumnName(int c) {
             return assignmentTableColumnNames[c];
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public boolean isCellEditable(int r, int c) {
             return false;
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public int getColumnCount() {
             return 4;
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public int getRowCount() {
             return numBits;
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
@@ -359,9 +383,9 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 String sName = null;
                 if (curRow != r) {
                     if (inputSelected) {
-                        sName = SerialAddress.isInputBitFree((r + 1));
+                        sName = SerialAddress.isInputBitFree((r + 1), _memo.getSystemPrefix());
                     } else {
-                        sName = SerialAddress.isOutputBitFree((r + 1));
+                        sName = SerialAddress.isOutputBitFree((r + 1), _memo.getSystemPrefix());
                     }
                     curRow = r;
                     curRowSysName = sName;
@@ -377,9 +401,9 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 String sName = null;
                 if (curRow != r) {
                     if (inputSelected) {
-                        sName = SerialAddress.isInputBitFree((r + 1));
+                        sName = SerialAddress.isInputBitFree((r + 1), _memo.getSystemPrefix());
                     } else {
-                        sName = SerialAddress.isOutputBitFree((r + 1));
+                        sName = SerialAddress.isOutputBitFree((r + 1), _memo.getSystemPrefix());
                     }
                     curRow = r;
                     curRowSysName = sName;
@@ -389,7 +413,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 if (sName == null) {
                     return ("");
                 } else {
-                    return (SerialAddress.getUserNameFromSystemName(sName));
+                    return (SerialAddress.getUserNameFromSystemName(sName, _memo.getSystemPrefix()));
                 }
             }
             return "";
@@ -470,18 +494,15 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-        // Only used occasionally, so inefficient String processing not really a problem
-        // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
-            String lineString = "";
-            String[] spaces = new String[4];
+            StringBuilder lineString = new StringBuilder("");
+            StringBuilder[] spaces = new StringBuilder[4];
             // create base strings the width of each of the columns
             for (int k = 0; k < 4; k++) {
-                spaces[k] = "";
+                spaces[k] = new StringBuilder("");
                 for (int i = 0; i < columnSize[k]; i++) {
-                    spaces[k] = spaces[k] + " ";
+                    spaces[k].append(" ");
                 }
             }
             // loop through each column
@@ -518,10 +539,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
                         columnString = columnStrings[i] + spaces[i].substring(columnStrings[i].length());
                         columnStrings[i] = "";
                     }
-                    lineString = lineString + columnString + " ";
+                    lineString.append(columnString).append(" ");
                 }
                 try {
-                    w.write(lineString);
+                    w.write(lineString.toString());
                     //write vertical dividing lines
                     int iLine = w.getCurrentLineNumber();
                     for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) {
@@ -532,20 +553,19 @@ public class ListFrame extends jmri.util.JmriJFrame {
                             i = w.getCharactersPerLine();
                         }
                     }
-                    lineString = "\n";
-                    w.write(lineString);
-                    lineString = "";
+                    w.write("\n"); // NOI18N
+                    lineString = new StringBuilder("");
                 } catch (IOException e) {
-                    log.warn("error during printing: " + e);
+                    log.warn("error during printing:", e);
                 }
             }
         }
     }
-    private String[] assignmentTableColumnNames = {rb.getString("HeadingBit"),
+    private final String[] assignmentTableColumnNames = {rb.getString("HeadingBit"),
         rb.getString("HeadingAddress"),
         rb.getString("HeadingSystemName"),
         rb.getString("HeadingUserName")};
 
-    private final static Logger log = LoggerFactory.getLogger(ListFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListFrame.class);
 
 }

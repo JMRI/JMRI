@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -28,7 +29,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ImportCars extends ImportRollingStock {
 
-    CarManager manager = CarManager.instance();
+    CarManager manager = InstanceManager.getDefault(CarManager.class);
 
     private int weightResults = JOptionPane.NO_OPTION; // Automatically calculate weight for car if weight entry is not
     // found
@@ -184,7 +185,7 @@ public class ImportCars extends ImportRollingStock {
                 carBuilt = "";
                 carLocation = "";
                 carTrack = "";
-                carLoad = CarLoads.instance().getDefaultEmptyName();
+                carLoad = InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName();
                 carKernel = "";
                 carMoves = 0;
                 carValue = "";
@@ -220,10 +221,10 @@ public class ImportCars extends ImportRollingStock {
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (!CarTypes.instance().containsName(carType)) {
+                if (!InstanceManager.getDefault(CarTypes.class).containsName(carType)) {
                     if (autoCreateTypes) {
                         log.debug("Adding car type ({})", carType);
-                        CarTypes.instance().addName(carType);
+                        InstanceManager.getDefault(CarTypes.class).addName(carType);
                     } else {
                         int results = JOptionPane.showConfirmDialog(null, Bundle.getMessage("Car") +
                                 " (" +
@@ -237,7 +238,7 @@ public class ImportCars extends ImportRollingStock {
                                 Bundle.getMessage("carAddType"),
                                 JOptionPane.YES_NO_CANCEL_OPTION);
                         if (results == JOptionPane.YES_OPTION) {
-                            CarTypes.instance().addName(carType);
+                            InstanceManager.getDefault(CarTypes.class).addName(carType);
                             if (askAutoCreateTypes) {
                                 results = JOptionPane.showConfirmDialog(null, Bundle
                                         .getMessage("DoYouWantToAutoAddCarTypes"), Bundle.getMessage("OnlyAskedOnce"),
@@ -410,12 +411,12 @@ public class ImportCars extends ImportRollingStock {
                                 JOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                    Location location = LocationManager.instance().getLocationByName(carLocation);
+                    Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName(carLocation);
                     Track track = null;
                     if (location == null && !carLocation.equals("")) {
                         if (autoCreateLocations) {
                             log.debug("Create location ({})", carLocation);
-                            location = LocationManager.instance().newLocation(carLocation);
+                            location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocation);
                         } else {
                             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                     .getMessage("CarLocationDoesNotExist"), new Object[]{(carRoad + " " + carNumber),
@@ -427,7 +428,7 @@ public class ImportCars extends ImportRollingStock {
                                     JOptionPane.YES_NO_OPTION);
                             if (results == JOptionPane.YES_OPTION) {
                                 log.debug("Create location ({})", carLocation);
-                                location = LocationManager.instance().newLocation(carLocation);
+                                location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocation);
                                 if (askAutoCreateLocations) {
                                     results = JOptionPane.showConfirmDialog(null, Bundle
                                             .getMessage("DoYouWantToAutoCreateLoc"),
@@ -533,34 +534,34 @@ public class ImportCars extends ImportRollingStock {
                     }
 
                     // add new roads
-                    if (!CarRoads.instance().containsName(carRoad)) {
+                    if (!InstanceManager.getDefault(CarRoads.class).containsName(carRoad)) {
                         if (autoCreateRoads) {
                             log.debug("add car road {}", carRoad);
-                            CarRoads.instance().addName(carRoad);
+                            InstanceManager.getDefault(CarRoads.class).addName(carRoad);
                         }
                     }
 
                     // add new lengths
-                    if (!CarLengths.instance().containsName(carLength)) {
+                    if (!InstanceManager.getDefault(CarLengths.class).containsName(carLength)) {
                         if (autoCreateLengths) {
                             log.debug("add car length {}", carLength);
-                            CarLengths.instance().addName(carLength);
+                            InstanceManager.getDefault(CarLengths.class).addName(carLength);
                         }
                     }
 
                     // add new colors
-                    if (!CarColors.instance().containsName(carColor)) {
+                    if (!InstanceManager.getDefault(CarColors.class).containsName(carColor)) {
                         if (autoCreateColors) {
                             log.debug("add car color {}", carColor);
-                            CarColors.instance().addName(carColor);
+                            InstanceManager.getDefault(CarColors.class).addName(carColor);
                         }
                     }
 
                     // add new owners
-                    if (!CarOwners.instance().containsName(carOwner)) {
+                    if (!InstanceManager.getDefault(CarOwners.class).containsName(carOwner)) {
                         if (autoCreateOwners) {
                             log.debug("add car owner {}", carOwner);
-                            CarOwners.instance().addName(carOwner);
+                            InstanceManager.getDefault(CarOwners.class).addName(carOwner);
                         }
                     }
 
@@ -757,5 +758,5 @@ public class ImportCars extends ImportRollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportCars.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImportCars.class);
 }

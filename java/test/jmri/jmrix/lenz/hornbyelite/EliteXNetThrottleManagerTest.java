@@ -1,13 +1,13 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
 /**
  * EliteXNetThrottleManagerTest.java
- *
+ * <p>
  * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottleManager class
  *
  * @author	Paul Bender
@@ -18,17 +18,15 @@ public class EliteXNetThrottleManagerTest extends jmri.jmrix.lenz.XNetThrottleMa
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        tm = new EliteXNetThrottleManager(new XNetSystemConnectionMemo(tc));
+        tm = new EliteXNetThrottleManager(new EliteXNetSystemConnectionMemo(tc));
     }
 
     @After
     @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

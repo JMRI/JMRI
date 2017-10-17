@@ -35,24 +35,24 @@
             <eventid />
             <eventid />
         </group>
-        <bit>
+        <int size="1">
             <name>Regular bit variable</name>
             <description>Demonstrate how a standard bit (boolean) variable can be shown</description>
-        </bit>
-        <bit>
+        </int>
+        <int size="1">
             <name>Bit variable with named states</name>
             <description>Demonstrate how a map relabels the states of a bit (boolean) variable</description>
             <map>
                 <relation>
-                    <property>true</property>
+                    <property>1</property>
                     <value>Lit</value>
                 </relation>
                 <relation>
-                    <property>false</property>
+                    <property>0</property>
                     <value>Not Lit</value>
                 </relation>
             </map>
-        </bit>
+        </int>
     </segment>
     <segment space="1" origin="128">
         <name>Resets</name>

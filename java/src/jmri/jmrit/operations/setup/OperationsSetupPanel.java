@@ -19,6 +19,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -39,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     // labels
     private JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
@@ -112,7 +113,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
         // the following code sets the frame's initial state
         // create manager to load operation settings
-        OperationsSetupXml.instance();
+        InstanceManager.getDefault(OperationsSetupXml.class);
 
         // load fields
         maxLengthTextField.setText(Integer.toString(Setup.getMaxTrainLength()));
@@ -384,7 +385,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
         // now provide the railroad name
         railroadNameTextField.setText(Setup.getRailroadName());
-        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
+        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
             railroadNameTextField.setEnabled(false);
         }
         createShutDownTask();
@@ -483,10 +484,10 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
             }
 
             if (typeDesc.isSelected()) {
-                CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
+                InstanceManager.getDefault(CarTypes.class).changeDefaultNames(Setup.DESCRIPTIVE);
                 Setup.setCarTypes(Setup.DESCRIPTIVE);
             } else {
-                CarTypes.instance().changeDefaultNames(Setup.AAR);
+                InstanceManager.getDefault(CarTypes.class).changeDefaultNames(Setup.AAR);
                 Setup.setCarTypes(Setup.AAR);
             }
 
@@ -562,14 +563,14 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         if (scaleG.isSelected()) {
             Setup.setScale(Setup.G_SCALE);
         }
-        if (!Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
+        if (!Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
             Setup.setRailroadName(railroadNameTextField.getText());
             int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("ChangeRailroadName"), new Object[]{
-                WebServerPreferences.getDefault().getRailRoadName(), Setup.getRailroadName()}), Bundle
+                WebServerPreferences.getDefault().getRailroadName(), Setup.getRailroadName()}), Bundle
                     .getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
             if (results == JOptionPane.OK_OPTION) {
-                WebServerPreferences.getDefault().setRailRoadName(Setup.getRailroadName());
+                WebServerPreferences.getDefault().setRailroadName(Setup.getRailroadName());
                 WebServerPreferences.getDefault().save();
             }
         }
@@ -594,7 +595,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         Setup.setMaxTrainLength(Integer.parseInt(maxLengthTextField.getText()));
         Setup.setComment(commentTextArea.getText());
 
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
         if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof OperationsSetupFrame) {
             ((OperationsSetupFrame) this.getTopLevelAncestor()).dispose();
         }
@@ -611,7 +612,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         }
         if (maxLength < Setup.getMaxTrainLength()) {
             StringBuilder sb = new StringBuilder();
-            List<Route> routes = RouteManager.instance().getRoutesByNameList();
+            List<Route> routes = InstanceManager.getDefault(RouteManager.class).getRoutesByNameList();
             int count = 0;
             for (Route route : routes) {
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
@@ -649,7 +650,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
                                 });
                             });
                     // save the route changes
-                    RouteManagerXml.instance().writeOperationsFile();
+                    InstanceManager.getDefault(RouteManagerXml.class).writeOperationsFile();
                 }
             }
         }

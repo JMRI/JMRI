@@ -2,6 +2,7 @@ package jmri.jmrix.acela;
 
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     public void testConstructor() {
         // create and register the manager object
         AcelaTurnoutManager atm = new AcelaTurnoutManager(new AcelaSystemConnectionMemo(tcis) );
-        Assert.assertNotNull("Acela Turnout Manager creation",atm);
+        Assert.assertNotNull("Acela Turnout Manager creation", atm);
     }
 
     @Test
@@ -63,8 +64,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
  
         tcis = new AcelaTrafficControlScaffold();
         memo = new AcelaSystemConnectionMemo(tcis);
@@ -107,10 +107,9 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class);
 
 }

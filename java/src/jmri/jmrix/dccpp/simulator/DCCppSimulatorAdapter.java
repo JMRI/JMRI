@@ -43,9 +43,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     final static int SENSOR_MSG_RATE = 10;
 
-    private boolean OutputBufferEmpty = true;
-    private boolean CheckBuffer = true;
-    private boolean TrackPowerState = false;
+    private boolean outputBufferEmpty = true;
+    private boolean checkBuffer = true;
+    private boolean trackPowerState = false;
     // One extra array element so that i can index directly from the
     // CV value, ignoring CVs[0].
     private int[] CVs = new int[DCCppConstants.MAX_DIRECT_CV + 1];
@@ -75,7 +75,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         setPort(portName);
         return null; // normal operation
     }
@@ -88,7 +88,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      */
     @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
-        OutputBufferEmpty = s;
+        outputBufferEmpty = s;
     }
 
     /**
@@ -101,11 +101,11 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      */
     @Override
     public boolean okToSend() {
-        if (CheckBuffer) {
+        if (checkBuffer) {
             if (log.isDebugEnabled()) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
+                log.debug("Buffer Empty: " + outputBufferEmpty);
             }
-            return (OutputBufferEmpty);
+            return (outputBufferEmpty);
         } else {
             if (log.isDebugEnabled()) {
                 log.debug("No Flow Control or Buffer Check");
@@ -226,7 +226,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return (msg);
     }
 
-    // generateReply is the heart of the simulation.  It translates an 
+    // generateReply is the heart of the simulation.  It translates an
     // incoming DCCppMessage into an outgoing DCCppReply.
     @SuppressWarnings("fallthrough")
     private DCCppReply generateReply(DCCppMessage msg) {
@@ -404,12 +404,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     int cvVal = 0; // Default to 0 if they're reading out of bounds.
                     if (cv < CVs.length) {
                         cvVal = CVs[Integer.parseInt(m.group(1))];
-                    } 
+                    }
                     // CMD: <R CV CALLBACKNUM CALLBACKSUB>
                     // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
                     r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
                             + Integer.toString(cvVal);
-                            
+
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
@@ -426,14 +426,14 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
             case DCCppConstants.TRACK_POWER_ON:
                 log.debug("TRACK_POWER_ON detected");
-                TrackPowerState = true;
+                trackPowerState = true;
                 reply = DCCppReply.parseDCCppReply("p1");
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
             case DCCppConstants.TRACK_POWER_OFF:
                 log.debug("TRACK_POWER_OFF detected");
-                TrackPowerState = false;
+                trackPowerState = false;
                 reply = DCCppReply.parseDCCppReply("p0");
                 log.debug("Reply generated = {}", reply.toString());
                 break;
@@ -441,7 +441,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.READ_TRACK_CURRENT:
                 log.debug("READ_TRACK_CURRENT detected");
                 int randint = 480 + rgen.nextInt(64);
-                reply = DCCppReply.parseDCCppReply("a " + (TrackPowerState ? Integer.toString(randint) : "0"));
+                reply = DCCppReply.parseDCCppReply("a " + (trackPowerState ? Integer.toString(randint) : "0"));
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
@@ -468,13 +468,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private void generateReadCSStatusReply() {
         /*
- String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
- DCCppReply r = new DCCppReply(s);
- writeReply(r);
- if (log.isDebugEnabled()) {
-     log.debug("Simulator Thread sent Reply" + r.toString());
- }
-         */
+          String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
+          DCCppReply r = new DCCppReply(s);
+          writeReply(r);
+          if (log.isDebugEnabled()) {
+          log.debug("Simulator Thread sent Reply" + r.toString());
+          }
+        */
 
         DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         writeReply(r);
@@ -574,7 +574,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a gnu.io port is set to have a receive timeout (via the
+     * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
@@ -593,12 +593,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     volatile static DCCppSimulatorAdapter mInstance = null;
     private DataOutputStream pout = null; // for output to other classes
-    private DataInputStream pin = null; // for input from other classes    
+    private DataInputStream pin = null; // for input from other classes
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapter.class);
 
 }

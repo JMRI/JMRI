@@ -39,13 +39,16 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     boolean mTurnoutExtraSpace;
 
     /**
-     * Cease operation, no more messages can be sent
+     * Request that server thread cease operation, no more messages can be sent.
+     * Note that this returns before the thread is known to be done if it still
+     * has work pending.  If you need to be sure it's done, check and wait on 
+     * !running.
      */
     public void dispose() {
         disposed = true;
 
         // put a shutdown request on the queue after any existing
-        Memo m = new Memo(null, calcSendTimeMSec(), TimeUnit.MILLISECONDS) {
+        Memo m = new Memo(null, nowMSec(), TimeUnit.MILLISECONDS) {
             @Override
             boolean requestsShutDown() {
                 return true;
@@ -54,8 +57,8 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         queue.add(m);
     }
 
-    boolean disposed = false;
-    boolean running = false;
+    volatile boolean disposed = false;
+    volatile boolean running = false;
 
     // interface being shadowed
     LocoNetInterface controller;
@@ -148,11 +151,11 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     }
 
     // a separate method to ease testing by stopping clock
-    long nowMSec() {
+    static long nowMSec() {
         return System.currentTimeMillis();
     }
 
-    class Memo implements Delayed {
+    static class Memo implements Delayed {
 
         public Memo(LocoNetMessage msg, long endTime, TimeUnit unit) {
             this.msg = msg;
@@ -209,6 +212,6 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottledTransmitter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottledTransmitter.class);
 
 }

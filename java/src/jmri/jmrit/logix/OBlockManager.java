@@ -1,8 +1,7 @@
 package jmri.jmrit.logix;
 
-import jmri.managers.AbstractManager;
-
 import javax.annotation.Nonnull;
+import jmri.managers.AbstractManager;
 
 /**
  * Basic Implementation of a OBlockManager.
@@ -29,7 +28,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2006
  * @author Pete Cressman Copyright (C) 2009
  */
-public class OBlockManager extends AbstractManager
+public class OBlockManager extends AbstractManager<OBlock>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
     public OBlockManager() {
@@ -67,7 +66,7 @@ public class OBlockManager extends AbstractManager
         }
         String sName = systemName.toUpperCase();
         if (!sName.startsWith("OB")) {
-            sName = "OB" + sName;
+            return null;
         }
         if (sName.length() < 3) {
             return null;
@@ -101,14 +100,14 @@ public class OBlockManager extends AbstractManager
             return null;
         }
         String key = name.toUpperCase();
-        return (OBlock) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public OBlock getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (OBlock) _tuser.get(key);
+        return  _tuser.get(key);
     }
 
     @Nonnull public OBlock provideOBlock(String name) throws IllegalArgumentException {
@@ -125,15 +124,6 @@ public class OBlockManager extends AbstractManager
             register(ob);
         }
         return ob;
-    }
-
-    static OBlockManager _instance = null;
-
-    static public OBlockManager instance() {
-        if (_instance == null) {
-            _instance = new OBlockManager();
-        }
-        return (_instance);
     }
 
     @Override

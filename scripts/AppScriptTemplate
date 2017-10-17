@@ -75,7 +75,7 @@ function parse_args() {
             continue
         fi
         # note: set DEBUG=yes in environment to see at this point
-        [ -n "${DEBUG}" ] && echo "Parsing Arg: '${1}'"
+        [ -n "${DEBUG}" ] && echo "Parsing Arg: '${1}'" | tee -a ${launcher_log}
         case "${1}" in
             # append to classpath
             --cp:a) post_classpath="${post_classpath}:${2}" ; shift ;;
@@ -109,6 +109,8 @@ function parse_args() {
             # ignore and do not pass the settingsdir argument
             --settingsdir) shift ;;
             --settingsdir=*) ;;
+            # ignore and do not pass a ProcessSerialNumber argument (from the open command on macOS)
+            -psn_*) ;;
             # everything after this is to be passed to JMRI
             --) ARGS="${ARGS} $@" ; break ;;
             # pass anything else on to JMRI
@@ -129,7 +131,7 @@ function heap_size() {
     heap=$( "${JAVACMD}" -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
     heap=$( expr ${heap} / 1048576 ) # bytes to MB
     # Java heap defaults to 1/4 total memory size
-    # if <= 768MB (1/4 of 3MB), set it ourselves
+    # if <= 768MB (1/4 of 3GB), set it ourselves
     if [ ${heap} -le 768 ] ; then
         case "$( uname )" in
             Linux*)
@@ -155,7 +157,7 @@ function heap_size() {
           heap=$( expr $mem \* 1 / 2 )
         fi
         if [ $heap -lt 192 ] ; then
-            heap=192
+            heap=192 # 3/4 of 256MB
         fi
     fi
     echo $heap
@@ -241,6 +243,11 @@ for opt in "$@"; do
     fi
 done
 
+# log to $settingsdir/log/launcher.log for debugging purposes
+launcher_log=${settingsdir}/log/launcher.log
+mkdir -p ${settingsdir}/log
+[ -f ${launcher_log} ] && rm -f ${launcher_log}
+
 # process arguments, stored arguments first, so CLI arguments can override
 
 # process default_options from the launcher configuration file
@@ -295,8 +302,9 @@ if [ -z "${JAVA_HOME}" ] ; then
         JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
-            # Test if java is present and version 1.8 or 1.9
-            if [[ ! "$( "${JAVACMD}" -version 2>&1 )" =~ 1.[89] ]] ; then
+            # Test if java is present and version 1.8 or 9
+            java_version="$( "${JAVACMD}" -version 2>&1 | grep version )"
+            if [[ ! "${java_version}" =~ \"1.8 && ! "${java_version}" =~ \"9 ]] ; then
                 JAVA_HOME=""
             fi
         else
@@ -330,13 +338,13 @@ EOT
         JAVACMD=$( which java )
         JAVA_HOME="$( dirname ${JAVACMD} )/.."
     else
-        echo "Please install Java 1.8 per your operating system vendor's instructions."
+        echo "Please install Java 1.8 per your operating system vendor's instructions." | tee -a ${launcher_log}
         exit 1
     fi
 else
     JAVACMD="${JAVA_HOME}/bin/java"
     if [ ! -x "${JAVACMD}" ] ; then
-        echo "Unable to execute java using JAVA_HOME=\"${JAVA_HOME}\"."
+        echo "Unable to execute java using JAVA_HOME=\"${JAVA_HOME}\"." | tee -a ${launcher_log}
         exit 1
     fi
 fi
@@ -351,6 +359,11 @@ fi
 if [ -z "${jmri_xms:-}" ] ; then
     # initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
     jmri_xms="-Xms96m"
+fi
+
+# permit Java 9 illegal access
+if [[ $( "${JAVACMD}" -version 2>&1 | grep version ) =~ \"9 ]] ; then
+    jmri_options="${jmri_options} --illegal-access=warn"
 fi
 
 # define JMRI_HOME if it is not defined
@@ -369,7 +382,7 @@ if [ -z "${JMRI_HOME}" ] ; then
 fi
 
 cd "${JMRI_HOME}"
-[ -n "${DEBUG}" ] && echo "PWD: '${PWD}'"
+[ -n "${DEBUG}" ] && echo "PWD: '${PWD}'" | tee -a ${launcher_log}
 
 
 # build library path
@@ -455,9 +468,9 @@ fi
 # remove any "\ " escaped spaces, since these are needed for bash, but not java
 CP="${CP//\\ / }"
 
-[ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
+[ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'" | tee -a ${launcher_log}
 
-[ -n "${DEBUG}" ] && echo "Java CMD: '${JAVACMD[@]}'"
+[ -n "${DEBUG}" ] && echo "Java CMD: '${JAVACMD[@]}'" | tee -a ${launcher_log}
 
 # configuration file name is 1st argument.
 # If not provided, build config file name dynamically
@@ -468,7 +481,7 @@ else
     APPNAME=$( basename "$0" )
 fi
 
-[ -n "${DEBUG}" ] && echo "APPNAME: '${APPNAME}'"
+[ -n "${DEBUG}" ] && echo "APPNAME: '${APPNAME}'" | tee -a ${launcher_log}
 
 # Process a config file name if passed as an option or when the application is
 # NOT the default one this script was built for and pass it as a Java property
@@ -478,7 +491,7 @@ if [ "$APPNAME" != "$DEFAULT_APP_NAME" -o -n "${CONFIGNAME}" ] ; then
         CONFIGNAME=$( echo $APPNAME | tr -d '[:space:]' | tr -d '=' )
     fi
     CONFIGFILE="-Dorg.jmri.Apps.configFilename=${CONFIGNAME}Config.xml"
-    [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'"
+    [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'" | tee -a ${launcher_log}
 fi
 
 # create the option string
@@ -505,31 +518,20 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits
 OPTIONS="${OPTIONS} ${OS_OPTIONS-} ${jmri_xms} ${jmri_xmx}"
+[ -n "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'" | tee -a ${launcher_log}
 
-# RXTX options (only works in some versions)
-OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
-[ -n "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'"
-
-if [ -n "$JMRI_SERIAL_PORTS" ] ; then
-    JMRI_SERIAL_PORTS="$JMRI_SERIAL_PORTS,"
-fi
-
-if [ "$OS" = "macosx" ] ; then
-    ALTPORTS=
-else
-    # locate alternate serial ports
-    ALTPORTS=$( echo "$JMRI_SERIAL_PORTS $( ls -fm /dev/ttyS* /dev/ttyUSB* /dev/ttyACM* /dev/ttyAMA* 2>/dev/null )" | tr -d " \n" | tr "," ":" )
-    if [ "${ALTPORTS}" ] ; then
-        ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
-    fi
-    [ -n "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
+# handle ports in --settings argument or JMRI_SERIAL_PORTS environment variable
+# but not if already in OPTIONS
+ALTPORTS=
+if [[ -n "${JMRI_SERIAL_PORTS}" && ! ${OPTIONS} =~ "-Dpurejavacomm.portnamepattern=" ]] ; then
+    ALTPORTS="-Dpurejavacomm.portnamepattern=${JMRI_SERIAL_PORTS}"
 fi
 
 declare -a DOCK_OPTIONS
 # Apple dock extensions to java get mangled by bash if included in ${OPTIONS}
 if [ "$OS" = "macosx" ] ; then
     DOCK_OPTIONS=(-Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}")
-    [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'"
+    [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'" | tee -a ${launcher_log}
 fi
 
 
@@ -544,7 +546,7 @@ while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
     fi
 
     EXIT_STATUS=$?
-    [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
+    [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}" | tee -a ${launcher_log}
 done
 
 exit $EXIT_STATUS

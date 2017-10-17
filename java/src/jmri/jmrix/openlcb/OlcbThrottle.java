@@ -21,6 +21,9 @@ public class OlcbThrottle extends AbstractThrottle {
 
     /**
      * Constructor
+     * @param address Dcc loco address
+     * @param memo system connection memo
+     * @param mgr config manager
      */
     public OlcbThrottle(DccLocoAddress address, SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
         super(memo);
@@ -344,6 +347,6 @@ public class OlcbThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(OlcbThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbThrottle.class);
 
 }

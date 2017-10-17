@@ -146,7 +146,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
             return MIN_CHECKBOXES; // default is 6 checkboxes per row
         }
         StringBuilder padding = new StringBuilder("X");
-        for (int i = 0; i < CarTypes.instance().getMaxFullNameLength(); i++) {
+        for (int i = 0; i < InstanceManager.getDefault(CarTypes.class).getMaxFullNameLength(); i++) {
             padding.append("X");
         }
 
@@ -389,5 +389,5 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class);
 }

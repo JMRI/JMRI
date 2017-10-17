@@ -77,7 +77,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -122,6 +122,6 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class);
 
 }

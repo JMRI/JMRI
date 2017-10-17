@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,29 +45,25 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable {
+public class NamedBeanHandleManager extends AbstractManager implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {
         super();
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    @CheckForNull
+    @Nonnull
     @CheckReturnValue
     public <T extends NamedBean> NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
         Objects.requireNonNull(bean, "bean must be nonnull");
         Objects.requireNonNull(name, "name must be nonnull");
         if (name.isEmpty()) {
-            return null;
+            throw new IllegalArgumentException("name cannot be empty in getNamedBeanHandle");
         }
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
 
-        for (NamedBeanHandle<T> h : namedBeanHandles) {
-            if (temp.equals(h)) {
-                return h;
-            }
-        }
-        namedBeanHandles.add(temp);
+        if (! namedBeanHandles.contains(temp)) namedBeanHandles.add(temp);
+
         return temp;
     }
 
@@ -86,7 +83,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
 
         /*Gather a list of the beans in the system with the oldName ref.
          Although when we get a new bean we always return the first one that exists
-         when a rename is performed it doesn't delete the bean with the old name 
+         when a rename is performed it doesn't delete the bean with the old name
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
@@ -96,7 +93,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
                 h.setName(newName);
             }
         }
-        updateListenerRef(oldName, newName, ((NamedBean) bean));
+        updateListenerRef(oldName, newName, bean);
     }
 
     /**
@@ -126,7 +123,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
                 h.setBean(newBean);
             }
         }
-        moveListener((NamedBean) oldBean, (NamedBean) newBean, name);
+        moveListener(oldBean, newBean, name);
     }
 
     public void updateBeanFromUserToSystem(@Nonnull NamedBean bean) {
@@ -154,12 +151,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     @CheckReturnValue
     public <T extends NamedBean> boolean inUse(@Nonnull String name, @Nonnull T bean) {
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
-        for (NamedBeanHandle<T> h : namedBeanHandles) {
-            if (temp.equals(h)) {
-                return true;
-            }
-        }
-        return false;
+        return namedBeanHandles.stream().anyMatch((h) -> (temp.equals(h)));
     }
 
     @CheckForNull
@@ -180,7 +172,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
 
     /**
      * Moves a propertyChangeListener from one bean to another, where the
-     * listerner reference matches the currentName.
+     * listener reference matches the currentName.
      */
     private void moveListener(@Nonnull NamedBean oldBean, @Nonnull NamedBean newBean, @Nonnull String currentName) {
         java.beans.PropertyChangeListener[] listeners = oldBean.getPropertyChangeListenersByReference(currentName);
@@ -274,5 +266,5 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         return Bundle.getMessage("BeanName");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
 }

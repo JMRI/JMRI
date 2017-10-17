@@ -417,5 +417,4 @@
 		<enumChoice choice="Windshield Wiper" value="1389"/>
 	</enumChoiceGroup>
 	<enumChoice choice="None " value="65535"/>
-	<enumChoice choice="None" value="1568"/>
 </enumVal>

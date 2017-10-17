@@ -13,4 +13,5 @@ public class XNetMessageException extends JmriException {
 
     public XNetMessageException() {
     }
+
 }

@@ -117,12 +117,16 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
             // fall through
             case 1:
                 b1 = getElement(0) & 0xff;
+                break;
+            default:
+                log.warn("Unhandled number of elements: {}", getNumDataElements());
+                break;
         }
 
         return SerialMessage.staticFormat(b1, b2, b3, b4);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialReply.class);
 
 }
 

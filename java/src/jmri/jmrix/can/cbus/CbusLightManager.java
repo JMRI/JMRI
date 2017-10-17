@@ -40,20 +40,47 @@ public class CbusLightManager extends AbstractLightManager {
     @Override
     protected Light createNewLight(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
+        // first, check validity
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e) {
+            log.error(e.toString());
+            throw e;
+        }
+        try {
+            if (Integer.valueOf(addr).intValue() > 0 && !addr.startsWith("+")) {
+                // accept unsigned positive integer, prefix "+"
+                addr = "+" + addr;
+            }
+        } catch (NumberFormatException ex) {
+            log.debug("Unable to convert " + addr + " into Cbus format +nn");
+        }
         Light l = new CbusLight(getSystemPrefix(), addr, memo.getTrafficController());
         l.setUserName(userName);
         return l;
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
     public String createSystemName(String curAddress, String prefix) throws JmriException {
+        // first, check validity
         try {
             validateSystemNameFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
+        }
+        // prefix + as service to user
+        int unsigned = 0;
+        try {
+            unsigned = Integer.valueOf(curAddress).intValue(); // accept unsigned integer, will add "+" next
+        } catch (NumberFormatException ex) {
+            // already warned
+        }
+        if (unsigned > 0) {
+            curAddress = "+" + curAddress;
         }
         return getSystemPrefix() + typeLetter() + curAddress;
     }
@@ -68,18 +95,43 @@ public class CbusLightManager extends AbstractLightManager {
         return curAddress;
     }
 
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        String addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e){
+            log.debug("Warning: " + e.getMessage());
+            return NameValidity.INVALID;
+        }
+        return NameValidity.VALID;
+    }
+
+    /**
+     * Work out the details for Cbus hardware address validation
+     * Logging of handled cases no higher than WARN.
+     *
+     * @param address the hardware address to check
+     * @throws IllegalArgumentException when delimiter is not found
+     */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         if (v == null) {
-            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Cbus light address");
+            throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus light address");
         }
         switch (v.length) {
             case 1:
-                if (address.startsWith("+") || address.startsWith("-")) {
+                int unsigned = 0;
+                try {
+                    unsigned = Integer.valueOf(address).intValue(); // on unsigned integer, will add "+" upon creation
+                } catch (NumberFormatException ex) {
+                    log.debug("Unable to convert " + address + " into Cbus format +nn");
+                }
+                if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
                 }
-                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
+                throw new IllegalArgumentException("can't make 2nd event from address " + address);
             case 2:
                 break;
             default:
@@ -88,29 +140,26 @@ public class CbusLightManager extends AbstractLightManager {
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
-        try {
-            validateSystemNameFormat(addr);
-        } catch (IllegalArgumentException e){
-            log.warn("Error: "+e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public boolean validSystemNameConfig(String systemName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
-            log.warn("Error: "+e.getMessage());
+            log.debug("Warning: " + e.getMessage());
             return false;
         }
         return true;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class.getName());
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class);
 
 }

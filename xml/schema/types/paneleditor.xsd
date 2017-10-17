@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
-<!-- $Id$ -->
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -31,7 +30,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        
+
         <xs:element name="icons" type="EditorIconsType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="positionablelabel" type="EditorPositionableLabelType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="linkinglabel" type="EditorLinkingLabelType" minOccurs="0" maxOccurs="unbounded"></xs:element>
@@ -50,6 +49,7 @@
         <xs:element name="signalmasticon" type="EditorSignalMastIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="reportericon" type="EditorReporterIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="layoutturnout" type="EditorLayoutTurnoutType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="layoutSlip" type="EditorLayoutSlipType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="multisensoricon" type="EditorMultiSensorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="fastclock" type="EditorFastClockIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="locoicon" type="EditorLocoIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
@@ -59,7 +59,7 @@
         <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="PortalIcon" type="EditorPortalIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-            
+
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="name" type="xs:string"></xs:attribute>

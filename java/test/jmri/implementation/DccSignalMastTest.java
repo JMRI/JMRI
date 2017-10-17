@@ -45,8 +45,7 @@ public class DccSignalMastTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
 
         CommandStation c = new CommandStation() {
@@ -75,7 +74,6 @@ public class DccSignalMastTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

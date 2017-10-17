@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri.serial.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +31,10 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
 
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        // create the master object
-        SerialSensorManager.instance();
         // load individual sensors
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManagerXml.class);
+
 }

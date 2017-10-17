@@ -283,6 +283,9 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
                 return progOnProgrammingTrackMessage(0x72, 0, cvnum); // read on PT in DirectByteMode
             case 0x13:
                 return progOnProgrammingTrackMessage(0x6C, 0, cvnum); // read on PT in RegisterMoode or AddressMode
+            default:
+                log.warn("Unhandled programming type: {}", pcmd);
+                break;
         }
         // We are probably being asked to read CV on main track, which is not suppoorted by IB. So get out of programming mode.
         return stopIBComPT();
@@ -342,6 +345,6 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlotManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlotManager.class);
 
 }

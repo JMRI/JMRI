@@ -1,12 +1,13 @@
 package jmri.jmrix.loconet.pr3;
 
-import gnu.io.SerialPort;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
@@ -20,14 +21,18 @@ public class PR3Adapter extends LocoBufferAdapter {
         super(new PR3SystemConnectionMemo());
 
         options.remove(option2Name);
-        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
     }
 
     /**
-     * Always use flow control, not considered a user-settable option
+     * Sets up the serial port characteristics.  Always uses flow control, which is
+     * not considered a user-settable option.  Sets the PR3 for the appropriate
+     * operating mode, based on the selected "command station type".
+     * 
+     * @param activeSerialPort - the port to be configured
      */
     @Override
-    protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validBaudNumber().length; i++) {
@@ -38,16 +43,13 @@ public class PR3Adapter extends LocoBufferAdapter {
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in Mac DIN8; on main connector, this is DTR
-
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = SerialPort.FLOWCONTROL_NONE;
         }
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+
         log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
                 + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
@@ -126,6 +128,8 @@ public class PR3Adapter extends LocoBufferAdapter {
 
     /**
      * Get an array of valid baud rates.
+     * 
+     * @return String[] containing the single valid baud rate, "57,600".
      */
     @Override
     public String[] validBaudRates() {
@@ -135,6 +139,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
+     * @return int[] containing the single valud baud rate, 57600.
      */
     @Override
     public int[] validBaudNumber() {
@@ -142,8 +147,14 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     // Option 1 does flow control, inherited from LocoBufferAdapter
+    
     /**
-     * The PR3 can be used in numerous modes, so handle that
+     * The PR3 can be used as a "Standalone Programmer", or with various LocoNet 
+     * command stations, or as an interface to a "Standalone LocoNet".  Provide those
+     * options.
+     * 
+     * @return an array of strings containing the various command station names and
+     *      name(s) of modes without command stations
      */
     public String[] commandStationOptions() {
         String[] retval = new String[commandStationNames.length + 2];
@@ -160,5 +171,5 @@ public class PR3Adapter extends LocoBufferAdapter {
         return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
 }

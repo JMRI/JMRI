@@ -99,7 +99,7 @@ public class PointDetails {
     };
 
     private void nxButtonStateChange(PropertyChangeEvent e) {
-        if (!e.getPropertyName().equals("KnownState")) {
+        if (!e.getPropertyName().equals("KnownState")) {  // NOI18N
             return;
         }
         int now = ((Integer) e.getNewValue()).intValue();
@@ -271,12 +271,10 @@ public class PointDetails {
         if (refLoc != null) {
             if (refLoc instanceof PositionablePoint) {
                 //((PositionablePoint)refLoc).addPropertyChangeListener(this);
-            } else if (refLoc instanceof LayoutTurnout) {
+            } else if (refLoc instanceof LayoutTurnout) {  //<== this includes LayoutSlips
                 //((LayoutTurnout)refLoc).addPropertyChangeListener(this);
             } else if (refLoc instanceof LevelXing) {
                 //((LevelXing)refLoc).addPropertyChangeListener(this);
-            } else if (refLoc instanceof LayoutSlip) {
-                //((Layoutslip)refLoc).addPropertyChangeListener(this);
             }
         }
         //With this set ref we can probably add a listener to it, so that we can detect when a change to the point details takes place
@@ -315,7 +313,7 @@ public class PointDetails {
         } else if (refObj instanceof SignalHead) {
             return ((SignalHead) refObj).getDisplayName();
         }
-        return "no display name";
+        return "no display name";  // NOI18N
     }
 
     transient Thread nxButtonTimeOutThr;
@@ -340,13 +338,13 @@ public class PointDetails {
                         Thread.sleep(60000);  //timeout after a minute waiting for the sml to set.
                     }
                 } catch (InterruptedException ex) {
-                    log.debug("Flash timer cancelled");
+                    log.debug("Flash timer cancelled");  // NOI18N
                 }
                 setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
             }
         }
         ButtonTimeOut t = new ButtonTimeOut();
-        nxButtonTimeOutThr = new Thread(t, "NX Button Timeout " + getSensor().getDisplayName());
+        nxButtonTimeOutThr = new Thread(t, "NX Button Timeout " + getSensor().getDisplayName());  // NOI18N
 
         nxButtonTimeOutThr.start();
     }
@@ -462,7 +460,34 @@ public class PointDetails {
                     foundSensor = p.getWestBoundSensor();
                 }
             }
-        } else if (objLoc instanceof LayoutTurnout) {
+        } else if (objLoc instanceof LayoutSlip) {
+            LayoutSlip sl = (LayoutSlip) objLoc;
+            if (mast != null) {
+                if (sl.getSignalAMast() == objRef) {
+                    foundSensor = sl.getSensorA();
+                } else if (sl.getSignalBMast() == objRef) {
+                    foundSensor = sl.getSensorB();
+                } else if (sl.getSignalCMast() == objRef) {
+                    foundSensor = sl.getSensorC();
+                } else if (sl.getSignalDMast() == objRef) {
+                    foundSensor = sl.getSensorD();
+                }
+            }
+            if (head != null) {
+                if ((sl.getSignalA1Name().equals(username)) || (sl.getSignalA1Name().equals(systemname))) {
+                    foundSensor = sm.getSensor(sl.getSensorAName());
+                } else if ((sl.getSignalB1Name().equals(username)) || (sl.getSignalB1Name().equals(systemname))) {
+                    foundSensor = sm.getSensor(sl.getSensorBName());
+                } else if ((sl.getSignalC1Name().equals(username)) || (sl.getSignalC1Name().equals(systemname))) {
+                    foundSensor = sm.getSensor(sl.getSensorCName());
+                } else if ((sl.getSignalD1Name().equals(username)) || (sl.getSignalD1Name().equals(systemname))) {
+                    foundSensor = sm.getSensor(sl.getSensorDName());
+                }
+            }
+        } else //note: you have to do this after LayoutSlip 
+        // because LayoutSlip extends LayoutTurnout
+        // (So a LayoutSlip would be an instance of LayoutTurnout.)
+        if (objLoc instanceof LayoutTurnout) {  //<== this includes LayoutSlips
             LayoutTurnout t = (LayoutTurnout) objLoc;
             if (mast != null) {
                 if (t.getSignalAMast() == objRef) {
@@ -520,30 +545,6 @@ public class PointDetails {
                     foundSensor = x.getSensorD();
                 }
             }
-        } else if (objLoc instanceof LayoutSlip) {
-            LayoutSlip sl = (LayoutSlip) objLoc;
-            if (mast != null) {
-                if (sl.getSignalAMast() == objRef) {
-                    foundSensor = sl.getSensorA();
-                } else if (sl.getSignalBMast() == objRef) {
-                    foundSensor = sl.getSensorB();
-                } else if (sl.getSignalCMast() == objRef) {
-                    foundSensor = sl.getSensorC();
-                } else if (sl.getSignalDMast() == objRef) {
-                    foundSensor = sl.getSensorD();
-                }
-            }
-            if (head != null) {
-                if ((sl.getSignalA1Name().equals(username)) || (sl.getSignalA1Name().equals(systemname))) {
-                    foundSensor = sm.getSensor(sl.getSensorAName());
-                } else if ((sl.getSignalB1Name().equals(username)) || (sl.getSignalB1Name().equals(systemname))) {
-                    foundSensor = sm.getSensor(sl.getSensorBName());
-                } else if ((sl.getSignalC1Name().equals(username)) || (sl.getSignalC1Name().equals(systemname))) {
-                    foundSensor = sm.getSensor(sl.getSensorCName());
-                } else if ((sl.getSignalD1Name().equals(username)) || (sl.getSignalD1Name().equals(systemname))) {
-                    foundSensor = sm.getSensor(sl.getSensorDName());
-                }
-            }
         }
         setSensor(foundSensor);
         return foundSensor;
@@ -560,7 +561,7 @@ public class PointDetails {
         NamedBean signal = null;
 
         if (getRefObject() == null) {
-            log.error("Signal not found at point");
+            log.error("Signal not found at point");  // NOI18N
             return null;
         } else if (getRefObject() instanceof SignalMast) {
             signal = getRefObject();
@@ -589,7 +590,37 @@ public class PointDetails {
                     signal = sh.getSignalHead(p.getWestBoundSignal());
                 }
             }
-        } else if (getRefLocation() instanceof LayoutTurnout) {
+        } else if (getRefLocation() instanceof LayoutSlip) {
+            LayoutSlip t = (LayoutSlip) getRefLocation();
+            if (t.getSensorA() == sen) {
+                if (t.getSignalAMast() != null) {
+                    signal = t.getSignalAMast();
+                } else if (!t.getSignalA1Name().equals("")) {
+                    signal = sh.getSignalHead(t.getSignalA1Name());
+                }
+            } else if (t.getSensorB() == sen) {
+                if (t.getSignalBMast() != null) {
+                    signal = t.getSignalBMast();
+                } else if (!t.getSignalB1Name().equals("")) {
+                    signal = sh.getSignalHead(t.getSignalB1Name());
+                }
+            } else if (t.getSensorC() == sen) {
+                if (t.getSignalCMast() != null) {
+                    signal = t.getSignalCMast();
+                } else if (!t.getSignalC1Name().equals("")) {
+                    signal = sh.getSignalHead(t.getSignalC1Name());
+                }
+            } else if (t.getSensorD() == sen) {
+                if (t.getSignalDMast() != null) {
+                    signal = t.getSignalDMast();
+                } else if (!t.getSignalD1Name().equals("")) {
+                    signal = sh.getSignalHead(t.getSignalD1Name());
+                }
+            }
+        } else //note: you have to do this after LayoutSlip 
+        // because LayoutSlip extends LayoutTurnout
+        // (So a LayoutSlip would be an instance of LayoutTurnout.)
+        if (getRefLocation() instanceof LayoutTurnout) {  //<== this includes LayoutSlips
             LayoutTurnout t = (LayoutTurnout) getRefLocation();
             if (t.getSensorA() == sen) {
                 if (t.getSignalAMast() != null) {
@@ -641,33 +672,6 @@ public class PointDetails {
                     signal = x.getSignalDMast();
                 } else if (!x.getSignalDName().equals("")) {
                     signal = sh.getSignalHead(x.getSignalDName());
-                }
-            }
-        } else if (getRefLocation() instanceof LayoutSlip) {
-            LayoutSlip t = (LayoutSlip) getRefLocation();
-            if (t.getSensorA() == sen) {
-                if (t.getSignalAMast() != null) {
-                    signal = t.getSignalAMast();
-                } else if (!t.getSignalA1Name().equals("")) {
-                    signal = sh.getSignalHead(t.getSignalA1Name());
-                }
-            } else if (t.getSensorB() == sen) {
-                if (t.getSignalBMast() != null) {
-                    signal = t.getSignalBMast();
-                } else if (!t.getSignalB1Name().equals("")) {
-                    signal = sh.getSignalHead(t.getSignalB1Name());
-                }
-            } else if (t.getSensorC() == sen) {
-                if (t.getSignalCMast() != null) {
-                    signal = t.getSignalCMast();
-                } else if (!t.getSignalC1Name().equals("")) {
-                    signal = sh.getSignalHead(t.getSignalC1Name());
-                }
-            } else if (t.getSensorD() == sen) {
-                if (t.getSignalDMast() != null) {
-                    signal = t.getSignalDMast();
-                } else if (!t.getSignalD1Name().equals("")) {
-                    signal = sh.getSignalHead(t.getSignalD1Name());
                 }
             }
         }
@@ -728,5 +732,5 @@ public class PointDetails {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PointDetails.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PointDetails.class);
 }

@@ -10,6 +10,7 @@ import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -135,17 +136,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     /*         Assert.assertTrue("must Send", g.mustSend() ); */
     /*         g.resetMustSend(); */
     /*         Assert.assertTrue("must Send off", !(g.mustSend()) ); */
-    /*         c.setSerialOutput("PL5B2",false); */
-    /*         c.setSerialOutput("PL5B1",false); */
-    /*         c.setSerialOutput("PL5B23",false); */
-    /*         c.setSerialOutput("PPL5B22",false); */
-    /*         c.setSerialOutput("PL5B21",false); */
-    /*         c.setSerialOutput("PL5B2",true); */
-    /*         c.setSerialOutput("PL5B19",false); */
-    /*         c.setSerialOutput("PL5B5",false); */
-    /*         c.setSerialOutput("PL5B20",false); */
-    /*         c.setSerialOutput("PL5B17",true); */
-    /*         Assert.assertTrue("must Send on", g.mustSend() ); */
+    /*         //c.setSerialOutput("PL5B2",false); // test and 12 year old method removed, called nowhere as of 4.9.4 */
     /*         SerialMessage m = g.createOutPacket(); */
     /*         Assert.assertEquals("packet size", 9, m.getNumDataElements() ); */
     /*         Assert.assertEquals("node address", 5, m.getElement(0) ); */
@@ -268,9 +259,9 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class);
 
 }

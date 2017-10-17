@@ -1,6 +1,3 @@
-/**
- * LI100XNetPacketizer.java
- */
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -16,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * mode in the AbstractMRTrafficController.
  *
  * @author Paul Bender Copyright (C) 2009
- *
  */
 public class LI100XNetPacketizer extends XNetPacketizer {
 
@@ -26,15 +22,13 @@ public class LI100XNetPacketizer extends XNetPacketizer {
     }
 
     /**
-     * enterNormalMode() returns null for LI100
+     * @return null for LI100
      */
     @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LI100XNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100XNetPacketizer.class);
 
 }
-
-

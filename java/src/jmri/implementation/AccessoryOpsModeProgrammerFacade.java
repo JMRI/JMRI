@@ -46,10 +46,11 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
      * Programmer facade for access to Accessory Decoder Ops Mode programming
      *
      * @param prog     The Ops Mode Programmer we are piggybacking on.
-     * @param addrType A string. "accessory" forces the current decoder address
-     *                 to be interpreted as a 14 bit accessory address.
-     *                 "decoder" current decoder address to be interpreted as a
-     *                 9 bit decoder address
+     * @param addrType A string. "accessory" or "output" causes the address to
+     *                 be interpreted as an 11 bit accessory output address.
+     *                 "decoder" causes the address to be interpreted as a 9 bit
+     *                 accessory decoder address "signal" causes the address to
+     *                 be interpreted as an 11 bit signal decoder address.
      */
     public AccessoryOpsModeProgrammerFacade(AddressedProgrammer prog, String addrType) {
         super(prog);
@@ -64,10 +65,10 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSACCBYTEMODE);
-        ret.add(DefaultProgrammerManager.OPSACCBITMODE);
-        ret.add(DefaultProgrammerManager.OPSACCEXTBYTEMODE);
-        ret.add(DefaultProgrammerManager.OPSACCEXTBITMODE);
+        ret.add(ProgrammingMode.OPSACCBYTEMODE);
+        ret.add(ProgrammingMode.OPSACCBITMODE);
+        ret.add(ProgrammingMode.OPSACCEXTBYTEMODE);
+        ret.add(ProgrammingMode.OPSACCEXTBITMODE);
         return ret;
     }
 
@@ -104,7 +105,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     // members for handling the programmer interface
     int _val;           // remember the value being read/written for confirmative reply
     String _cv;         // remember the cv number being read/written
-    String _addrType; // remember the address type: "decoder" or "accessory"
+    String _addrType;  // remember the address type: ("decoder" or null) or ("accessory" or "output")
 
     // programming interface
     @Override
@@ -116,26 +117,25 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
 
         // Send DCC commands to implement prog.writeCV(cv, val, this);
         if ((_addrType != null) && (_addrType.equalsIgnoreCase("accessory") || _addrType.equalsIgnoreCase("output"))) {  // interpret address as accessory address
-            // Send a basic ops mode accessory CV programming packet for newer decoders
+            log.debug("Sending a basic ops mode accessory CV programming packet to the accessory address");
             b = NmraPacket.accDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
             InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
+        } else if ((_addrType != null) && _addrType.equalsIgnoreCase("signal")) {  // interpret address as signal address
+            log.debug("Sending an extended ops mode accessory CV programming packet for signal decoders");
+            b = NmraPacket.accSignalDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+            InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
         } else {  // interpet address as decoder address
-            // Send a legacy ops mode accessory CV programming packet for compatibility with older decoders
+            log.debug("Sending a legacy ops mode accessory CV programming packet for compatibility with older decoders");
             // (Sending both packet types was also observed to benefit timing considerations - spacing effect)
             b = NmraPacket.accDecPktOpsModeLegacy(aprog.getAddressNumber(), Integer.parseInt(cv), val);
             InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
 
-            // Send a basic ops mode accessory CV programming packet for newer decoders
+            log.debug("Sending a basic ops mode accessory CV programming packet to the decoder address");
             b = NmraPacket.accDecPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
             InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
         }
         // and reply done
         this.programmingOpReply(val, ProgListener.OK);
-    }
-
-    @Override
-    synchronized public void confirmCV(String cv, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(cv, p);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
-        if (status != OK ) {
+        if (status != OK) {
             // pass abort up
             log.debug("Reset and pass abort up");
             jmri.ProgListener temp = _usingProgrammer;
@@ -184,7 +184,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
             temp.programmingOpReply(value, status);
             return;
         }
-        
+
         if (_usingProgrammer == null) {
             log.error("No listener to notify, reset and ignore");
             state = ProgState.NOTPROGRAMMING;
@@ -209,6 +209,6 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacade.class);
 
 }

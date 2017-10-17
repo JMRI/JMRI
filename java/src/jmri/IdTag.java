@@ -1,6 +1,8 @@
 package jmri;
 
 import java.util.Date;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import org.jdom2.Element;
 
 /**
@@ -53,6 +55,7 @@ public interface IdTag extends NamedBean {
      *
      * @return the tag ID
      */
+    @Nonnull
     public String getTagID();
 
     /**
@@ -71,6 +74,7 @@ public interface IdTag extends NamedBean {
      *
      * @return Reporter object where last seen, or null
      */
+    @CheckForNull
     public Reporter getWhereLastSeen();
 
     /**
@@ -78,6 +82,7 @@ public interface IdTag extends NamedBean {
      *
      * @return Date object when last seen, or null
      */
+    @CheckForNull
     public Date getWhenLastSeen();
 
     /**
@@ -93,6 +98,6 @@ public interface IdTag extends NamedBean {
      *
      * @param e Element containing IdTag details
      */
-    public void load(Element e);
+    public void load(@Nonnull Element e);
 
 }

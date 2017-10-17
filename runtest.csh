@@ -38,11 +38,6 @@
 # E.g.: 
 # setenv JMRI_OPTIONS -Djmri.skipschematests=true
 #
-# If your serial ports are not shown in the initial list, you 
-# can include them in the environment variable JMRI_SERIAL_PORTS
-# separated by commas:
-#    export JMRI_SERIAL_PORTS="/dev/locobuffer,/dev/cmri"
-#
 # You can run separate instances of the program with their
 # own preferences and setup if you provide the name of a configuration file 
 # as the 1st argument

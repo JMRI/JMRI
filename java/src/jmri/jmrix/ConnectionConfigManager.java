@@ -1,5 +1,7 @@
 package jmri.jmrix;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,13 +9,17 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.configurexml.ClassMigrationManager;
 import jmri.configurexml.ConfigXmlManager;
+import jmri.configurexml.ErrorHandler;
+import jmri.configurexml.ErrorMemo;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
@@ -24,6 +30,7 @@ import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,10 +39,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class ConnectionConfigManager extends AbstractPreferencesManager implements Iterable<ConnectionConfig> {
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
-    private final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
+    private final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
     public final static String CONNECTIONS = "connections"; // NOI18N
     public final static String CONNECTION = "connection"; // NOI18N
     public final static String CLASS = "class"; // NOI18N
@@ -50,6 +58,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             log.debug("Initializing...");
             Element sharedConnections = null;
             Element perNodeConnections = null;
+            this.setPortNamePattern();
             try {
                 sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
             } catch (NullPointerException ex) {
@@ -84,20 +93,31 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                             }
                         }
                     }
+                    String newClassName = InstanceManager.getDefault(ClassMigrationManager.class).getClassName(className);
+                    if (!className.equals(newClassName)) {
+                        log.info("Class {} will be used for connection {} instead of {} if preferences are saved", newClassName, userName, className);
+                        className = newClassName;
+                    }
                     try {
                         log.debug("Creating connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
-                        if (!((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode)) {
+                        XmlAdapter adapter = (XmlAdapter) Class.forName(className).newInstance();
+                        ConnectionConfigManagerErrorHandler handler = new ConnectionConfigManagerErrorHandler();
+                        adapter.setExceptionHandler(handler);
+                        if (!adapter.load(shared, perNode)) {
                             log.error("Unable to create {} for {}, load returned false", className, shared);
                             String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                             String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
                             this.addInitializationException(profile, new InitializationException(english, localized));
                         }
+                        handler.exceptions.forEach((exception) -> {
+                            this.addInitializationException(profile, exception);
+                        });
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                         String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
                         this.addInitializationException(profile, new InitializationException(english, localized, ex));
-                    } catch (Exception ex) {
+                    } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
                         log.error("Unable to load {} into {}", shared, className, ex);
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                         String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
@@ -372,5 +392,49 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             return manufacturers.toArray(new String[manufacturers.size()]);
         }
 
+    }
+
+    /**
+     * Override the default port name patterns unless the
+     * purejavacomm.portnamepattern property was set on the command line.
+     */
+    private void setPortNamePattern() {
+        final String pattern = "purejavacomm.portnamepattern";
+        Properties properties = System.getProperties();
+        if (properties.getProperty(pattern) == null) {
+            try (InputStream in = ConnectionConfigManager.class.getResourceAsStream("PortNamePatterns.properties")) { // NOI18N
+                properties.load(in);
+            } catch (IOException ex) {
+                log.error("Unable to read PortNamePatterns.properties", ex);
+            }
+        }
+    }
+
+    private static class ConnectionConfigManagerErrorHandler extends ErrorHandler {
+
+        ArrayList<InitializationException> exceptions = new ArrayList<>();
+
+        public ConnectionConfigManagerErrorHandler() {
+            super();
+        }
+
+        /**
+         * Capture ErrorMemos as initialization exceptions. {@inheritDoc}
+         */
+        @Override
+        // The memo has a generic message (since the real cause never makes it this far anyway)
+        // If the memo reliably had an exception, we could make a decision about
+        // how to handle that, but since it doesn't all we can do is log it
+        public void handle(ErrorMemo memo) {
+            if (memo.exception != null) {
+                this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description), memo.exception));
+            } else {
+                this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description) + memo.description));
+            }
+        }
+
+        public List<InitializationException> getExceptions() {
+            return this.exceptions;
+        }
     }
 }

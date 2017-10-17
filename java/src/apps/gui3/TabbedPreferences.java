@@ -18,16 +18,19 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
-import jmri.InstanceManager;
+import jmri.util.ThreadingUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +74,10 @@ public class TabbedPreferences extends AppConfigBase {
     ArrayList<Element> preferencesElements = new ArrayList<>();
 
     JPanel detailpanel = new JPanel();
+    { 
+        // The default panel needs to have a CardLayout
+        detailpanel.setLayout(new CardLayout());
+    }
 
     ArrayList<PreferencesCatItems> preferencesArray = new ArrayList<>();
     JPanel buttonpanel;
@@ -91,31 +98,31 @@ public class TabbedPreferences extends AppConfigBase {
          * third party code is added to the end
          */
         preferencesArray.add(new PreferencesCatItems("CONNECTIONS", rb
-                .getString("MenuConnections")));
+                .getString("MenuConnections"), 100));
 
         preferencesArray.add(new PreferencesCatItems("DEFAULTS", rb
-                .getString("MenuDefaults")));
+                .getString("MenuDefaults"), 200));
 
         preferencesArray.add(new PreferencesCatItems("FILELOCATIONS", rb
-                .getString("MenuFileLocation")));
+                .getString("MenuFileLocation"), 300));
 
         preferencesArray.add(new PreferencesCatItems("STARTUP", rb
-                .getString("MenuStartUp")));
+                .getString("MenuStartUp"), 400));
 
         preferencesArray.add(new PreferencesCatItems("DISPLAY", rb
-                .getString("MenuDisplay")));
+                .getString("MenuDisplay"), 500));
 
         preferencesArray.add(new PreferencesCatItems("MESSAGES", rb
-                .getString("MenuMessages")));
+                .getString("MenuMessages"), 600));
 
         preferencesArray.add(new PreferencesCatItems("ROSTER", rb
-                .getString("MenuRoster")));
+                .getString("MenuRoster"), 700));
 
         preferencesArray.add(new PreferencesCatItems("THROTTLE", rb
-                .getString("MenuThrottle")));
+                .getString("MenuThrottle"), 800));
 
         preferencesArray.add(new PreferencesCatItems("WITHROTTLE", rb
-                .getString("MenuWiThrottle")));
+                .getString("MenuWiThrottle"), 900));
     }
 
     /**
@@ -156,11 +163,10 @@ public class TabbedPreferences extends AppConfigBase {
         });
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
+        // panels that are dependent upon another panel being added first
         Set<PreferencesPanel> delayed = new HashSet<>();
 
         // add preference panels registered with the Instance Manager
-
         for (PreferencesPanel panel : InstanceManager.getList(jmri.swing.PreferencesPanel.class)) {
             if (panel instanceof PreferencesSubPanel) {
                 String parent = ((PreferencesSubPanel) panel).getParentClassName();
@@ -174,8 +180,6 @@ public class TabbedPreferences extends AppConfigBase {
                 this.addPreferencesPanel(panel);
             }
         }
-
-
 
         for (PreferencesPanel panel : ServiceLoader.load(PreferencesPanel.class)) {
             if (panel instanceof PreferencesSubPanel) {
@@ -203,6 +207,10 @@ public class TabbedPreferences extends AppConfigBase {
         }
         preferencesArray.stream().forEach((preferences) -> {
             detailpanel.add(preferences.getPanel(), preferences.getPrefItem());
+        });
+        preferencesArray.sort((PreferencesCatItems o1, PreferencesCatItems o2) -> {
+            int comparison = Integer.compare(o1.sortOrder, o2.sortOrder);
+            return (comparison != 0) ? comparison : o1.getPrefItem().compareTo(o2.getPrefItem());
         });
 
         updateJList();
@@ -232,7 +240,9 @@ public class TabbedPreferences extends AppConfigBase {
 
     // package only - for TabbedPreferencesFrame
     boolean isDirty() {
-        for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
+        // if not for the debug statements, this method could be the one line:
+        // return this.getPreferencesPanels().values.stream().anyMatch((panel) -> (panel.isDirty()));
+        return this.getPreferencesPanels().values().stream().map((panel) -> {
             // wrapped in isDebugEnabled test to prevent overhead of assembling message
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) is {}.",
@@ -240,11 +250,8 @@ public class TabbedPreferences extends AppConfigBase {
                         (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
                         (panel.isDirty()) ? "dirty" : "clean");
             }
-            if (panel.isDirty()) {
-                return true;
-            }
-        }
-        return false;
+            return panel;
+        }).anyMatch((panel) -> (panel.isDirty()));
     }
 
     // package only - for TabbedPreferencesFrame
@@ -285,21 +292,27 @@ public class TabbedPreferences extends AppConfigBase {
                 panel.getTabbedPreferencesTitle(),
                 panel.getLabelKey(),
                 panel,
-                panel.getPreferencesTooltip()
+                panel.getPreferencesTooltip(),
+                panel.getSortOrder()
         );
     }
 
-    private void addItem(String prefItem, String itemText, String tabtitle,
-            String labelKey, PreferencesPanel item, String tooltip) {
+    private void addItem(String prefItem, String itemText, String tabTitle,
+            String labelKey, PreferencesPanel item, String tooltip, int sortOrder) {
         PreferencesCatItems itemBeingAdded = null;
         for (PreferencesCatItems preferences : preferencesArray) {
             if (preferences.getPrefItem().equals(prefItem)) {
                 itemBeingAdded = preferences;
+                // the lowest sort order of any panel sets the sort order for
+                // the preferences category
+                if (sortOrder < preferences.sortOrder) {
+                    preferences.sortOrder = sortOrder;
+                }
                 break;
             }
         }
         if (itemBeingAdded == null) {
-            itemBeingAdded = new PreferencesCatItems(prefItem, itemText);
+            itemBeingAdded = new PreferencesCatItems(prefItem, itemText, sortOrder);
             preferencesArray.add(itemBeingAdded);
             // As this is a new item in the selection list, we need to update
             // the JList.
@@ -307,10 +320,10 @@ public class TabbedPreferences extends AppConfigBase {
                 updateJList();
             }
         }
-        if (tabtitle == null) {
-            tabtitle = itemText;
+        if (tabTitle == null) {
+            tabTitle = itemText;
         }
-        itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item.getPreferencesComponent(), tooltip);
+        itemBeingAdded.addPreferenceItem(tabTitle, labelKey, item.getPreferencesComponent(), tooltip, sortOrder);
     }
 
     /* Method allows for the preference to goto a specific list item */
@@ -391,6 +404,35 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel.add(save);
     }
 
+    public boolean isPreferencesValid() {
+        return this.getPreferencesPanels().values().stream().allMatch((panel) -> (panel.isPreferencesValid()));
+    }
+
+    @Override
+    public void savePressed(boolean restartRequired) {
+        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
+        if (!this.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+            for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
+                if (!panel.isPreferencesValid()) {
+                    switch (JOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
+                            Bundle.getMessage("InvalidPreferencesTitle"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.ERROR_MESSAGE)) {
+                        case JOptionPane.YES_OPTION:
+                            // abort save and return to broken preferences
+                            this.gotoPreferenceItem(panel.getPreferencesItem(), panel.getTabbedPreferencesTitle());
+                            return;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                }
+            }
+        }
+        super.savePressed(restartRequired);
+    }
+
     static class PreferencesCatItems implements java.io.Serializable {
 
         /*
@@ -399,36 +441,45 @@ public class TabbedPreferences extends AppConfigBase {
          */
         String itemText;
         String prefItem;
+        int sortOrder = Integer.MAX_VALUE;
         JTabbedPane tabbedPane = new JTabbedPane();
         ArrayList<String> disableItemsList = new ArrayList<>();
 
-        ArrayList<TabDetails> TabDetailsArray = new ArrayList<>();
+        private final ArrayList<TabDetails> tabDetailsArray = new ArrayList<>();
 
-        PreferencesCatItems(String pref, String title) {
+        PreferencesCatItems(String pref, String title, int sortOrder) {
             prefItem = pref;
             itemText = title;
+            this.sortOrder = sortOrder;
         }
 
         void addPreferenceItem(String title, String labelkey, JComponent item,
-                String tooltip) {
-            for (TabDetails tabDetails : TabDetailsArray) {
+                String tooltip, int sortOrder) {
+            for (TabDetails tabDetails : tabDetailsArray) {
                 if (tabDetails.getTitle().equals(title)) {
                     // If we have a match then we do not need to add it back in.
                     return;
                 }
             }
-            TabDetails tab = new TabDetails(labelkey, title, item, tooltip);
-            TabDetailsArray.add(tab);
+            TabDetails tab = new TabDetails(labelkey, title, item, tooltip, sortOrder);
+            tabDetailsArray.add(tab);
+            tabDetailsArray.sort((TabDetails o1, TabDetails o2) -> {
+                int comparison = Integer.compare(o1.sortOrder, o2.sortOrder);
+                return (comparison != 0) ? comparison : o1.tabTitle.compareTo(o2.tabTitle);
+            });
             JScrollPane scroller = new JScrollPane(tab.getPanel());
             scroller.setBorder(BorderFactory.createEmptyBorder());
-            tabbedPane.addTab(tab.getTitle(), null, scroller, tab.getToolTip());
+            ThreadingUtil.runOnGUI(() -> {
 
-            for (String disableItem : disableItemsList) {
-                if (item.getClass().getName().equals(disableItem)) {
-                    tabbedPane.setEnabledAt(tabbedPane.indexOfTab(tab.getTitle()), false);
-                    return;
+                tabbedPane.addTab(tab.getTitle(), null, scroller, tab.getToolTip());
+
+                for (String disableItem : disableItemsList) {
+                    if (item.getClass().getName().equals(disableItem)) {
+                        tabbedPane.setEnabledAt(tabbedPane.indexOfTab(tab.getTitle()), false);
+                        return;
+                    }
                 }
-            }
+            });
         }
 
         String getPrefItem() {
@@ -441,7 +492,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         ArrayList<String> getSubCategoriesList() {
             ArrayList<String> choices = new ArrayList<>();
-            for (TabDetails tabDetails : TabDetailsArray) {
+            for (TabDetails tabDetails : tabDetailsArray) {
                 choices.add(tabDetails.getTitle());
             }
             return choices;
@@ -452,19 +503,36 @@ public class TabbedPreferences extends AppConfigBase {
          * or it returns a JTabbedFrame if there are multiple managedPreferences for the menu
          */
         JComponent getPanel() {
-            if (TabDetailsArray.size() == 1) {
-                return TabDetailsArray.get(0).getPanel();
+            if (tabDetailsArray.size() == 1) {
+                return tabDetailsArray.get(0).getPanel();
             } else {
+                if (tabbedPane.getTabCount() == 0) {
+                    for (TabDetails tab : tabDetailsArray) {
+                        ThreadingUtil.runOnGUI(() -> {
+                            JScrollPane scroller = new JScrollPane(tab.getPanel());
+                            scroller.setBorder(BorderFactory.createEmptyBorder());
+
+                            tabbedPane.addTab(tab.getTitle(), null, scroller, tab.getToolTip());
+
+                            for (String disableItem : disableItemsList) {
+                                if (tab.getItem().getClass().getName().equals(disableItem)) {
+                                    tabbedPane.setEnabledAt(tabbedPane.indexOfTab(tab.getTitle()), false);
+                                    return;
+                                }
+                            }
+                        });
+                    }
+                }
                 return tabbedPane;
             }
         }
 
         void gotoSubCategory(String sub) {
-            if (TabDetailsArray.size() == 1) {
+            if (tabDetailsArray.size() == 1) {
                 return;
             }
-            for (int i = 0; i < TabDetailsArray.size(); i++) {
-                if (TabDetailsArray.get(i).getTitle().equals(sub)) {
+            for (int i = 0; i < tabDetailsArray.size(); i++) {
+                if (tabDetailsArray.get(i).getTitle().equals(sub)) {
                     tabbedPane.setSelectedIndex(i);
                     return;
                 }
@@ -472,15 +540,15 @@ public class TabbedPreferences extends AppConfigBase {
         }
 
         void disableSubCategory(String sub) {
-            if (TabDetailsArray.isEmpty()) {
+            if (tabDetailsArray.isEmpty()) {
                 // So the tab preferences might not have been initialised when
                 // the call to disable an item is called therefore store it for
                 // later on
                 disableItemsList.add(sub);
                 return;
             }
-            for (int i = 0; i < TabDetailsArray.size(); i++) {
-                if ((TabDetailsArray.get(i).getItem()).getClass().getName()
+            for (int i = 0; i < tabDetailsArray.size(); i++) {
+                if ((tabDetailsArray.get(i).getItem()).getClass().getName()
                         .equals(sub)) {
                     tabbedPane.setEnabledAt(i, false);
                     return;
@@ -495,13 +563,14 @@ public class TabbedPreferences extends AppConfigBase {
             String tabTooltip;
             String tabTitle;
             JPanel tabPanel = new JPanel();
-            //boolean store;
+            private final int sortOrder;
 
             TabDetails(String labelkey, String tabTit, JComponent item,
-                    String tooltip) {
+                    String tooltip, int sortOrder) {
                 tabItem = item;
                 tabTitle = tabTit;
                 tabTooltip = tooltip;
+                this.sortOrder = sortOrder;
 
                 JComponent p = new JPanel();
                 p.setLayout(new BorderLayout());
@@ -520,8 +589,10 @@ public class TabbedPreferences extends AppConfigBase {
                     p.add(t, BorderLayout.NORTH);
                 }
                 p.add(item, BorderLayout.CENTER);
-                tabPanel.setLayout(new BorderLayout());
-                tabPanel.add(p, BorderLayout.CENTER);
+                ThreadingUtil.runOnGUI(() -> {
+                    tabPanel.setLayout(new BorderLayout());
+                    tabPanel.add(p, BorderLayout.CENTER);
+                });
             }
 
             String getToolTip() {
@@ -540,9 +611,12 @@ public class TabbedPreferences extends AppConfigBase {
                 return tabItem;
             }
 
+            int getSortOrder() {
+                return sortOrder;
+            }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TabbedPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferences.class);
 
 }

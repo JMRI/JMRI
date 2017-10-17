@@ -298,11 +298,6 @@
         change the basic address of the unit.
       </div>
 
-      <p style="margin-left: 40px;">At present, DS64 routes cannot
-      be programmed by this tool. It's possible, but nobody has
-      written the code for it yet because JMRI routes are more
-      powerful and easier to use.</p>
-
       <p style="margin-left: 40px;"><img src=
       "images/Main_Loconet07.png" alt="DS64 Programmer" border="4"
       height="624" width="466"></p>

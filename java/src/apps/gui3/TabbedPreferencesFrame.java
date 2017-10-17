@@ -4,49 +4,68 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.swing.PreferencesPanel;
 import jmri.util.JmriJFrame;
 
 /**
- * Provide access to the various tables via a listed pane.
- * <P>
+ * Provide a preferences window.
+ *
  * @author Kevin Dickerson Copyright 2010
  */
 public class TabbedPreferencesFrame extends JmriJFrame {
 
     @Override
     public String getTitle() {
-        return InstanceManager.getDefault(TabbedPreferences.class).getTitle();
-
+        return getTabbedPreferences().getTitle();
     }
 
     public boolean isMultipleInstances() {
         return true;
     }
 
-    static boolean init = false;
-    static int lastdivider;
-
     public TabbedPreferencesFrame() {
-        add(InstanceManager.getDefault(TabbedPreferences.class));
+        super();
+        add(getTabbedPreferences());
         addHelpMenu("package.apps.TabbedPreferences", true); // NOI18N
-        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     public void gotoPreferenceItem(String item, String sub) {
-        InstanceManager.getDefault(TabbedPreferences.class).gotoPreferenceItem(item, sub);
+        getTabbedPreferences().gotoPreferenceItem(item, sub);
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if (InstanceManager.getDefault(TabbedPreferences.class).isDirty()) {
+        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
+        if (!getTabbedPreferences().isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+            for (PreferencesPanel panel : getTabbedPreferences().getPreferencesPanels().values()) {
+                if (!panel.isPreferencesValid()) {
+                    switch (JOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
+                            Bundle.getMessage("InvalidPreferencesTitle"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.ERROR_MESSAGE)) {
+                        case JOptionPane.YES_OPTION:
+                            // abort window closing and return to broken preferences
+                            getTabbedPreferences().gotoPreferenceItem(panel.getPreferencesItem(), panel.getTabbedPreferencesTitle());
+                            return;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                }
+            }
+        }
+        if (getTabbedPreferences().isDirty()) {
             switch (JOptionPane.showConfirmDialog(this,
-                    Bundle.getMessage("UnsavedChangesMessage", InstanceManager.getDefault(TabbedPreferences.class).getTitle()), // NOI18N
+                    Bundle.getMessage("UnsavedChangesMessage", getTabbedPreferences().getTitle()), // NOI18N
                     Bundle.getMessage("UnsavedChangesTitle"), // NOI18N
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE)) {
                 case JOptionPane.YES_OPTION:
                     // save preferences
-                    InstanceManager.getDefault(TabbedPreferences.class).savePressed(InstanceManager.getDefault(TabbedPreferences.class).invokeSaveOptions());
+                    getTabbedPreferences().savePressed(getTabbedPreferences().invokeSaveOptions());
                     break;
                 case JOptionPane.NO_OPTION:
                     // do nothing
@@ -58,5 +77,16 @@ public class TabbedPreferencesFrame extends JmriJFrame {
             }
         }
         this.setVisible(false);
+    }
+
+    /**
+     * Ensure a TabbedPreferences instance is always available.
+     *
+     * @return the default TabbedPreferences instance, creating it if needed
+     */
+    private TabbedPreferences getTabbedPreferences() {
+        return InstanceManager.getOptionalDefault(TabbedPreferences.class).orElseGet(() -> {
+            return InstanceManager.setDefault(TabbedPreferences.class, new TabbedPreferences());
+        });
     }
 }

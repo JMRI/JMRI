@@ -1,6 +1,5 @@
 package jmri.jmrix.rfid.swing.serialmon;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,23 +13,17 @@ import org.junit.Test;
  */
 public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-    @Test
-    public void testMemoCtor() {
-        Assert.assertNotNull("exists", pane);
-    }
 
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
-        pane = new SerialMonPane();
+        JUnitUtil.setUp();
+        // panel is for the AbstractMonPaneTestBase, pane is for it's parent (JmriPanelTest )
+        panel = pane = new SerialMonPane();
+        title="RFID Device Command Monitor";
     }
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

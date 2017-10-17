@@ -8,7 +8,7 @@ import java.util.Comparator;
  *
  * @author	Bob Jacobsen Copyright (C) 2013
  */
-public class PreferNumericComparator implements Comparator<Object>, java.io.Serializable {
+public class PreferNumericComparator implements Comparator<Object> {
 
     public PreferNumericComparator() {
     }

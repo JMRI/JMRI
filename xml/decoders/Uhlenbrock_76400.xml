@@ -13,8 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Alain Carasso" version="3" lastUpdated="20170419"/>
     <version author="Alain Le Marchand" version="2" lastUpdated="20140510"/>
     <version author="Simon Ginsburg" version="1" lastUpdated="20060722"/>
+	<!-- Version 3 (Alain Carasso) Updated highVersionID to 40 -->
 	<!-- Version 2 (Alain Le Marchand) Updated function mapping to use "fnmapping" element on the regular function map pane
 					and created a fragment file for this function mapping. Refactored several variables,
 					and used generic items on standard panes (motor, lights, analog) as much as possible
@@ -23,7 +25,7 @@
   <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
     <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order">
-      <model model="76200" highVersionID="20" numOuts="4" numFns="8" maxMotorCurrent="1.2A" formFactor="HO" productID="76200" comment="HO-Scale, wired, for universal (Märklin) motors">
+      <model model="76200" highVersionID="40" numOuts="4" numFns="8" maxMotorCurrent="1.2A" formFactor="HO" productID="76200" comment="HO-Scale, wired, for universal (Märklin) motors">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
         <output name="3" label=". A1 ." connection="solder"/>
@@ -32,7 +34,7 @@
         <output name="Start/brake" label="inertia"/>
         <size length="33.5" width="19" height="5.5" units="mm"/>
       </model>
-      <model model="76400" highVersionID="20" numOuts="4" numFns="8" maxMotorCurrent="1.0A" formFactor="HO" productID="76400" comment="HO-Scale, wired">
+      <model model="76400" highVersionID="40" numOuts="4" numFns="8" maxMotorCurrent="1.0A" formFactor="HO" productID="76400" comment="HO-Scale, wired">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
         <output name="3" label=". A1 ." connection="solder"/>
@@ -41,7 +43,7 @@
         <output name="Start/brake" label="inertia"/>
         <size length="22" width="12.5" height="5.5" units="mm"/>		
       </model>
-      <model model="76420" highVersionID="20" numOuts="4" numFns="10" maxMotorCurrent="1.0A" formFactor="HO" connector="NEM652" productID="76420" comment="HO-Scale, IntelliDrive Deluxe with NEM 652 plug">
+      <model model="76420" highVersionID="40" numOuts="4" numFns="10" maxMotorCurrent="1.0A" formFactor="HO" connector="NEM652" productID="76420" comment="HO-Scale, IntelliDrive Deluxe with NEM 652 plug">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
         <output name="3" label=". A1 ." connection="plug"/>

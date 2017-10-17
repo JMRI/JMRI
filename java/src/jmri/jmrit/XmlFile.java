@@ -625,8 +625,7 @@ public abstract class XmlFile {
      */
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version " + jmri.Version.name()
-                + " on " + (new Date()).toString()
-                + " $Id$";
+                + " on " + (new Date()).toString();
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -795,5 +794,5 @@ public abstract class XmlFile {
         return builder;
     }
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(XmlFile.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(XmlFile.class);
 }

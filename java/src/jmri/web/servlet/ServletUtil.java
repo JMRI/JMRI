@@ -3,10 +3,12 @@ package jmri.web.servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServerPreferences;
 
@@ -15,14 +17,16 @@ import jmri.web.server.WebServerPreferences;
  *
  * @author Randall Wood
  */
-public class ServletUtil {
+public class ServletUtil implements InstanceManagerAutoDefault {
 
-    public static final String UTF8 = "UTF-8"; // NOI18N
+    public static final String UTF8 = StandardCharsets.UTF_8.toString(); // NOI18N
     // media types
+    public static final String APPLICATION_JAVASCRIPT = "application/javascript"; // NOI18N
     public static final String APPLICATION_JSON = "application/json"; // NOI18N
     public static final String APPLICATION_XML = "application/xml"; // NOI18N
     public static final String IMAGE_PNG = "image/png"; // NOI18N
     public static final String TEXT_HTML = "text/html"; // NOI18N
+    public static final String UTF8_APPLICATION_JAVASCRIPT = APPLICATION_JAVASCRIPT + "; charset=utf-8"; // NOI18N
     public static final String UTF8_APPLICATION_JSON = APPLICATION_JSON + "; charset=utf-8"; // NOI18N
     public static final String UTF8_APPLICATION_XML = APPLICATION_XML + "; charset=utf-8"; // NOI18N
     public static final String UTF8_TEXT_HTML = TEXT_HTML + "; charset=utf-8"; // NOI18N
@@ -36,9 +40,9 @@ public class ServletUtil {
      */
     public String getRailroadName(boolean inComments) {
         if (inComments) {
-            return "-->" + WebServerPreferences.getDefault().getRailRoadName() + "<!--"; // NOI18N
+            return "-->" + InstanceManager.getDefault(WebServerPreferences.class).getRailroadName() + "<!--"; // NOI18N
         }
-        return WebServerPreferences.getDefault().getRailRoadName();
+        return InstanceManager.getDefault(WebServerPreferences.class).getRailroadName();
     }
 
     /**
@@ -88,40 +92,57 @@ public class ServletUtil {
         navBar = navBar.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
         // replace class "context-<this-context>" with class "active"
         navBar = navBar.replace(clazz, "active"); // NOI18N
-        if (WebServerPreferences.getDefault().allowRemoteConfig()) {
+        if (InstanceManager.getDefault(WebServerPreferences.class).allowRemoteConfig()) {
             navBar = navBar.replace("config-enabled-only", "show"); // NOI18N
             navBar = navBar.replace("config-disabled-only", "hidden"); // NOI18N
         } else {
             navBar = navBar.replace("config-enabled-only", "hidden"); // NOI18N
             navBar = navBar.replace("config-disabled-only", "show"); // NOI18N
         }
-        if (!WebServerPreferences.getDefault().isReadonlyPower()) {
+        if (!InstanceManager.getDefault(WebServerPreferences.class).isReadonlyPower()) {
             navBar = navBar.replace("data-power=\"readonly\"", "data-power=\"readwrite\""); // NOI18N
         }
         return navBar;
     }
 
+    /**
+     * Get the default ServletUtil instance.
+     *
+     * @return the default instance of ServletUtil
+     * @deprecated since 4.7.4; use {@link #getDefault() } instead
+     */
+    @Deprecated
     public static ServletUtil getInstance() {
-        ServletUtil instance = InstanceManager.getNullableDefault(ServletUtil.class);
-        if (instance == null) {
-            instance = new ServletUtil();
-            InstanceManager.setDefault(ServletUtil.class, instance);
-        }
-        return instance;
+        return getDefault();
+    }
+
+    /**
+     * Get the default ServletUtil instance.
+     *
+     * @return the default instance of ServletUtil
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with the
+     * argument {@code ServletUtil.class} instead
+     */
+    @Deprecated
+    public static ServletUtil getDefault() {
+        return InstanceManager.getDefault(ServletUtil.class);
     }
 
     /**
      * Set HTTP headers to prevent caching.
      *
      * @param response the response to set headers in
+     * @return the date used for headers setting expiration and modification times
      */
-    public void setNonCachingHeaders(HttpServletResponse response) {
+    public Date setNonCachingHeaders(HttpServletResponse response) {
         Date now = new Date();
         response.setDateHeader("Date", now.getTime()); // NOI18N
         response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
         response.setDateHeader("Expires", now.getTime()); // NOI18N
         response.setHeader("Cache-control", "no-cache, no-store"); // NOI18N
         response.setHeader("Pragma", "no-cache"); // NOI18N
+        return now;
     }
 
     /**

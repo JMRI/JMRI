@@ -11,7 +11,7 @@ import jmri.InstanceManager;
  * memo is generic for all adapters, it then uses a ConfigurationManager for
  * each of the CAN Bus systems. Any requests for provision or configuration is
  * passed on to the relevant ConfigurationManager to handle.
- * <p>
+ *
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -37,7 +37,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private jmri.jmrix.can.ConfigurationManager manager;
 
     /**
-     * Tells which managers this provides by class
+     * {@inheritDoc }
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -47,11 +47,15 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (manager == null) {
             return false;
         }
-        if (type.equals(jmri.GlobalProgrammerManager.class) && provides(jmri.ProgrammerManager.class)) {
-            return ((jmri.ProgrammerManager) get(jmri.ProgrammerManager.class)).isGlobalProgrammerAvailable();
+        if (type.equals(jmri.GlobalProgrammerManager.class)) {
+            jmri.GlobalProgrammerManager mgr = ((jmri.GlobalProgrammerManager) get(jmri.GlobalProgrammerManager.class));
+            if (mgr == null) return false;
+            return mgr.isGlobalProgrammerAvailable();
         }
-        if (type.equals(jmri.AddressedProgrammerManager.class) && provides(jmri.ProgrammerManager.class)) {
-            return ((jmri.ProgrammerManager) get(jmri.ProgrammerManager.class)).isAddressedModePossible();
+        if (type.equals(jmri.AddressedProgrammerManager.class)) {
+            jmri.AddressedProgrammerManager mgr =((jmri.AddressedProgrammerManager) get(jmri.AddressedProgrammerManager.class));
+            if (mgr == null) return false;
+            return mgr.isAddressedModePossible();
         }
         return manager.provides(type);
     }
@@ -59,30 +63,30 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (manager != null) {
-            if (T.equals(jmri.GlobalProgrammerManager.class)) {
-                return (T) get(jmri.ProgrammerManager.class);
-            }
-            if (T.equals(jmri.AddressedProgrammerManager.class)) {
-                return (T) get(jmri.ProgrammerManager.class);
-            }
+        if (manager != null && !getDisabled()) {
             return (T) manager.get(T);
         }
         return null; // nothing, by default
     }
 
     public void setProtocol(String protocol) {
-        if (ConfigurationManager.MERGCBUS.equals(protocol)) {
-            manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
-        } else if (ConfigurationManager.OPENLCB.equals(protocol)) {
-            manager = new jmri.jmrix.openlcb.OlcbConfigurationManager(this);
-        } else if (ConfigurationManager.RAWCAN.equals(protocol)) {
-            manager = new jmri.jmrix.can.CanConfigurationManager(this);
-        } else if (ConfigurationManager.TEST.equals(protocol)) {
-            manager = new jmri.jmrix.can.nmranet.NmraConfigurationManager(this);
+        if (null != protocol) {
+            switch (protocol) {
+                case ConfigurationManager.MERGCBUS:
+                    manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
+                    break;
+                case ConfigurationManager.OPENLCB:
+                    manager = new jmri.jmrix.openlcb.OlcbConfigurationManager(this);
+                    break;
+                case ConfigurationManager.RAWCAN:
+                    manager = new jmri.jmrix.can.CanConfigurationManager(this);
+                    break;
+                case ConfigurationManager.TEST:
+                    manager = new jmri.jmrix.can.nmranet.NmraConfigurationManager(this);
+                    break;
+                default:
+                    break;
+            }
         }
         // make sure appropriate actions in preferences
         addToActionList();
@@ -113,6 +117,6 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         tm = null;
         super.dispose();
-
     }
+
 }

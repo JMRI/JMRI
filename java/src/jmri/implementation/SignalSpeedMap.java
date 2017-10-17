@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.beans.Bean;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2010
  */
-public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault // auto-initialize in InstanceManager
+public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize // auto-initialize in InstanceManager
 {
 
     private final HashMap<String, Float> _table = new LinkedHashMap<>();
@@ -76,6 +77,9 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 // ignore other properties
             }
         };
+    }
+
+    public void initialize() {
         InstanceManager.getOptionalDefault(WarrantPreferences.class).ifPresent((wp) -> {
             wp.addPropertyChangeListener(this.warrantPreferencesListener);
         });
@@ -104,12 +108,15 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
         try {
             Element e = root.getChild("interpretation");
             String sval = e.getText().toUpperCase();
-            if (sval.equals("PERCENTNORMAL")) {
-                _interpretation = PERCENT_NORMAL;
-            } else if (sval.equals("PERCENTTHROTTLE")) {
-                _interpretation = PERCENT_THROTTLE;
-            } else {
-                throw new JDOMException("invalid content for interpretation: " + sval);
+            switch (sval) {
+                case "PERCENTNORMAL":
+                    _interpretation = PERCENT_NORMAL;
+                    break;
+                case "PERCENTTHROTTLE":
+                    _interpretation = PERCENT_THROTTLE;
+                    break;
+                default:
+                    throw new JDOMException("invalid content for interpretation: " + sval);
             }
             log.debug("_interpretation= {}", _interpretation);
 
@@ -151,13 +158,15 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 _table.put(name, speed);
             }
 
-            _headTable.clear();
-            List<Element> l = root.getChild("appearanceSpeeds").getChildren();
-            for (int i = 0; i < l.size(); i++) {
-                String name = l.get(i).getName();
-                String speed = l.get(i).getText();
-                _headTable.put(Bundle.getMessage(name), speed);
-                log.debug("Add {}={}, {} to AppearanceSpeed Table", name, Bundle.getMessage(name), speed);
+            synchronized (this._headTable) {
+                _headTable.clear();
+                List<Element> l = root.getChild("appearanceSpeeds").getChildren();
+                for (int i = 0; i < l.size(); i++) {
+                    String name = l.get(i).getName();
+                    String speed = l.get(i).getText();
+                    _headTable.put(Bundle.getMessage(name), speed);
+                    log.debug("Add {}={}, {} to AppearanceSpeed Table", name, Bundle.getMessage(name), speed);
+                }
             }
         } catch (org.jdom2.JDOMException e) {
             log.error("error reading speed map elements due to: {}", e);
@@ -214,15 +223,10 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     }
 
     public Vector<String> getValidSpeedNames() {
-        Enumeration<String> e = this.getSpeedIterator();
-        Vector<String> v = new Vector<>();
-        while (e.hasMoreElements()) {
-            v.add(e.nextElement());
-        }
-        return v;
+        return new Vector<>(this._table.keySet());
     }
 
-    public float getSpeed(@Nonnull String name) {
+    public float getSpeed(@Nonnull String name) throws IllegalArgumentException {
         if (!checkSpeed(name)) {
             // not a valid aspect
             log.warn("attempting to get speed for invalid name: '{}'", name);
@@ -293,19 +297,23 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     }
 
     public void setAppearances(@Nonnull HashMap<String, String> map) {
-        HashMap<String, String> old = new HashMap<>(_headTable);
-        _headTable.clear();
-        _headTable.putAll(map);
-        if (!map.equals(old)) {
-            this.firePropertyChange("Appearances", old, new HashMap<>(_headTable));
+        synchronized (this._headTable) {
+            HashMap<String, String> old = new HashMap<>(_headTable);
+            _headTable.clear();
+            _headTable.putAll(map);
+            if (!map.equals(old)) {
+                this.firePropertyChange("Appearances", old, new HashMap<>(_headTable));
+            }
         }
     }
 
     public void setAppearanceTable(@Nonnull Iterator<Entry<String, String>> iter) {
-        _headTable.clear();
-        while (iter.hasNext()) {
-            Entry<String, String> ent = iter.next();
-            _headTable.put(ent.getKey(), ent.getValue());
+        synchronized (this._headTable) {
+            _headTable.clear();
+            while (iter.hasNext()) {
+                Entry<String, String> ent = iter.next();
+                _headTable.put(ent.getKey(), ent.getValue());
+            }
         }
     }
 
@@ -330,5 +338,5 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
         return _scale;
     }
 
-    static private final Logger log = LoggerFactory.getLogger(SignalSpeedMap.class.getName());
+    static private final Logger log = LoggerFactory.getLogger(SignalSpeedMap.class);
 }

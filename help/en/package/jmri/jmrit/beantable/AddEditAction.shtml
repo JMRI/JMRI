@@ -24,21 +24,25 @@
 
       <h2>The Add/Edit Action Window</h2>
 
-      <p><b><a href="ViewSpecialActions.shtml">Actions</a></b> are
-      tasks that can be initiated automatically as a train running
-      in automatic mode traverses the layout. The Add/Edit Action
-      window (see below for "Add" version) provides for creating
-      new Actions and for editing current Actions. The "Edit"
-      version of this window is the same as the one shown below,
-      except the <b>Create New Action</b> button is replaced by an
-      <b>Update Action</b> button and the selections and data are
-      filled in to current values of the Action being
-      edited.</p><img src="AddEditAction.jpg" height="236" width=
-      "307">
+      <p>Special <b><a href="ViewSpecialActions.shtml">Actions</a></b>
+      are tasks that can be initiated automatically as a train running
+      in automatic mode traverses the layout.<br>
+      The Add Action pane provides for creating
+      new Actions:</p>
+      <img src="images/AddEditAction.png" height="309" width="460">
+      <p>The "Edit" version of this window is the same as the one
+      shown above, except the <b>Create New Action</b> button is
+      replaced by an <b>Update Action</b> button and the selections
+      and data are filled in to current values of the Action being
+      edited.</p>
+      <p>An Action is defined in two steps:</p>
+      <ol>
+        <li>specifying <b>When</b> an action should be initiated</li>
+        <li>specifying <b>What</b> action is to be executed</li>
+      </ol>
 
-      <p>An Action is defined by specifying <b>What</b> action is
-      requested and <b>When</b> that action should be
-      initiated.</p>
+      <a id="when" name="when"></a>
+      <h3>When to act</h3>
 
       <p>To specify the <b>When</b> part, select an option in the
       <b>When</b> popup menu, and fill in any data that might be
@@ -47,7 +51,7 @@
       text description (tooltip) that may be summoned by hovering
       the cursor over the item. Each <b>When</b> option is
       described in more detail in <b><a href=
-      "ViewSpecialActions.shtml">Actions</a></b>.</p>
+      "ViewSpecialActions.shtml#when">Actions</a></b>.</p>
 
       <p>An optional delay, specified in milliseconds, is available
       for each <b>When</b> option. No delay is the default. If an
@@ -58,13 +62,85 @@
       <i>when</i> event occurs before initiating the action.</p>
 
       <p>To specify <b>What</b> action is requested, select an
-      option in the <b>What</b> popup menu, and fill in any data
-      that might be required. Data item fields will appear when the
+      option in the <b>What:</b> popup menu, and fill in any data
+      that might be required. Entry fields will appear when the
       item needing them is selected. Each data item is supplied
       with a text description (tooltip) that may be summoned by
-      hovering the cursor over the item. Each <b>What</b> action is
-      described in more detail in <b><a href=
-      "ViewSpecialActions.shtml">Actions</a></b>.</p>
+      hovering the cursor over the item.<br>
+      From the drop down box choose one of:</p>
+      <ul>
+        <li><b>On Section Entry</b> - When the automatic train
+          enters the current Section (see above image).</li>
+
+        <li><b>On Section Exit</b> - When the automatic train exits
+          the current Section. This means when the last detectable
+          car leaves the Section, and the Section is unoccupied.</li>
+
+        <li><b>On Block Entry</b> - When the automatic train enters
+          a specified Block in the Section. For Sections with only
+          one Block, this is equivalent to <b>On Section
+          Entry</b>.<br>
+        <img src="images/AddEditWhenBlock.png" height="110" width="461">
+        </li>
+
+        <li><b>On Block Exit</b> - When the automatic train exits a
+          specified Block in the Section. This means when the last
+          detectable car leaves the specified Block, and the Block is
+          unoccupied. For Sections with only one Block, this is
+          equivalent to <b>On Section Exit</b>.</li>
+
+        <li><b>On Train Stop</b> - When the automatic train stops.
+          This may be used, for example, for stopping the bell in a
+          sound decoder or initiating other actions when the train
+          stops at a station.<br>
+          <img src="images/AddEditWhenStop.png" height="116" width="460">
+        </li>
+
+        <li><b>On Train Start</b> - When the automatic trains
+          starts up after having been stopped. This may be used, for
+          example, to initiate actions when a train starts up after a
+          station stop.</li>
+
+        <li><b>On Sensor ACTIVE</b> - When the specified Sensor
+          moves to the Active state. The specified Sensor may be
+          either internal or hardware, and must be in the Sensor
+          Table. This might be used, for example, with a hardware
+          Sensor connected to a fascia push button to trigger an
+          action. It could also be used to trigger actions using
+          hardware position sensors on the layout. With internal
+          sensors it can provide a link to Logix.<br>
+          <img src="images/AddEditWhenSensor.png" height="117" width="461">
+        </li>
+
+        <li><b>On Sensor INACTIVE</b> - When the specified Sensor
+          moves to the Inactive state. This is the same as above, but
+          with the opposite Sensor state. Use the one that best fits
+          your hardware or Logix.</li>
+      </ul>
+
+      <h3>What to do</h3>
+      <p>After making a <b>When</b> choice, continue by choosing one
+      of the following <b><a href=
+      "ViewSpecialActions.shtml#what">What</a></b> actions and fill
+      in the settings:</p>
+
+      <ul>
+        <li><b>Pause Train</b></li>
+        <li><b>Set Maximum Speed</b></li>
+        <li><b>Set Train Speed</b></li>
+        <li><b>Ramp Train Speed</b></li>
+        <li><b>Go to Manual Mode</b></li>
+        <li><b>Set Locomotive Light</b></li>
+        <li><b>Start Bell</b></li>
+        <li><b>Stop Bell</b></li>
+        <li><b>Sound Horn</b></li>
+        <li><b>Pattern Sound Horn</b></li>
+        <li><b>Set Decoder Function</b></li>
+        <li><b>Set Sensor ACTIVE</b></li>
+        <li><b>Set Sensor INACTIVE</b></li>
+        <li><b>Hold Signal</b></li>
+        <li><b>Release Signal</b></li>
+      </ul>
 
       <p>When the Action is completely defined, click the <b>Create
       New Action</b> button (or the <b>Update Action</b> button if
@@ -79,7 +155,10 @@
       Action window without creating a new Action or completing the
       edit of an existing Action. Closing the Add/Edit Action
       window is equivalent to clicking the <b>Cancel</b>
-      button.</p><!--#include virtual="/Footer" -->
+      button.</p>
+
+      <p>Back to the <a href="ViewSpecialActions.shtml">Special
+      Actions help</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

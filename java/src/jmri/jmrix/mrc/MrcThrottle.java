@@ -25,7 +25,9 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     private MrcTrafficController tc = null;
 
     /**
-     * Constructor.
+     * Throttle Constructor.
+     * @param memo system connection memo
+     * @param address DCC loco address for throttle
      */
     public MrcThrottle(MrcSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
@@ -626,6 +628,6 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     public void notifyFailedXmit(Date timestamp, MrcMessage m) { /*message(m);*/ }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MrcThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcThrottle.class);
 
 }

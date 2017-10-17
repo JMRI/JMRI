@@ -81,6 +81,9 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 return Bundle.getMessage("LabelItemName");
             case SETTINGCOLUMN:
                 return Bundle.getMessage("ColumnSetting");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -116,6 +119,9 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 }
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -140,6 +146,9 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                     initTempRow();
                     fireTableRowsUpdated(row, row);
                     return;
+                default:
+                    // fall through
+                    break;
             }
             Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(tempRow[TURNOUT_NAME_COL]);
             if (t != null) {
@@ -205,6 +214,10 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                     _path.removeSetting(bs);
                     fireTableDataChanged();
                 }
+                break;
+            default:
+                log.warn("Unhandled col: {}", col);
+                break;
         }
     }
 
@@ -231,6 +244,9 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 return new JTextField(10).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }
@@ -241,5 +257,5 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModel.class);
 }

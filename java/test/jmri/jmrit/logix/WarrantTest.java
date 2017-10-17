@@ -13,10 +13,10 @@ import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Warrant creation
@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
  * 
  * todo - test error conditions
  */
-public class WarrantTest extends TestCase {
+public class WarrantTest {
 
     OBlockManager _OBlockMgr;
     PortalManager _portalMgr;
@@ -33,11 +33,12 @@ public class WarrantTest extends TestCase {
     TurnoutManager _turnoutMgr;
     
     /**
-     * It's considered bad form to write tests that depend on the order of execution.
+     * tests depend on the order of execution.
      * So this will be one large test.
      */
 
-    public void testWarrant() throws Exception {
+    @Test
+    public void testWarrant() {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         OBlock bWest = _OBlockMgr.createNewOBlock("OB1", "West");
         OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
@@ -163,7 +164,7 @@ public class WarrantTest extends TestCase {
         
         warrant.setThrottleCommands(new ArrayList<ThrottleSetting>());
         warrant.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", "North"));
-        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.4", "North"));
+        warrant.addThrottleCommand(new ThrottleSetting(10, "Speed", "0.4", "North"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "West"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.5", "West"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "South"));
@@ -174,13 +175,16 @@ public class WarrantTest extends TestCase {
         
 //        DccLocoAddress dccAddress = new DccLocoAddress(999, true);
 //        Assert.assertNotNull("dccAddress", dccAddress);
-        warrant.setDccAddress("999(L)");
+        warrant.getSpeedUtil().setDccAddress("999(L)");
         msg = warrant.setRoute(0, orders);
         Assert.assertNull("setRoute - "+msg, msg);
         msg =  warrant.checkStartBlock(Warrant.MODE_RUN);
         Assert.assertNull("checkStartBlock - "+msg, msg);
         msg = warrant.checkRoute();
         Assert.assertNull("checkRoute - "+msg, msg);
+        SpeedUtil su = warrant.getSpeedUtil();
+        Assert.assertNotNull("SpeedUtil null", su);
+        su.setOrders(orders);
         
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
@@ -190,31 +194,31 @@ public class WarrantTest extends TestCase {
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
 
-        // run the train
-        jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  warrant.getRunningMessage();
+            return m.endsWith("Cmd #2.");
+        }, "Train starts to move after 2nd command");
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
                 sWest.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
-        jmri.util.JUnitUtil.releaseThread(this);
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
                 sSouth.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
-        jmri.util.JUnitUtil.releaseThread(this);
-
-        // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+        jmri.util.JUnitUtil.releaseThread(this, 100);
 
         // wait for done
-        jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");
-
-        msg = warrant.getRunningMessage();
-        Assert.assertEquals("getRunningMessage", "Idle", msg);
+        jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunningMessage().equals("Idle");}, "warrant not done");
+        
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("Block West does not have a length for path SouthToNorth");
     }
     
     
@@ -244,46 +248,21 @@ public class WarrantTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public WarrantTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", WarrantTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        return new TestSuite(WarrantTest.class);
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initMemoryManager();
-        JUnitUtil.initOBlockManager();
-        JUnitUtil.initLogixManager();
-        JUnitUtil.initConditionalManager();
-        JUnitUtil.initWarrantManager();
+        JUnitUtil.initShutDownManager();
+//        JUnitUtil.initWarrantManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

@@ -479,7 +479,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void openCdiPane() {
-        actions.openCdiWindow(destNodeID());
+        actions.openCdiWindow(destNodeID(), destNodeID().toString());
     }
 
     // control sequence operation
@@ -488,6 +488,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts
+     * @param delay milliseconds to delay
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -513,6 +514,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     /**
      * Run button pressed down, start the sequence operation
+     * @param e event from GUI
      *
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -579,7 +581,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     /**
      * Create a well-formed message from a String String is expected to be space
      * seperated hex bytes or CbusAddress, e.g.: 12 34 56 +n4e1
-     *
+     * @param s string of spaced hex byte codes
      * @return The packet, with contents filled-in
      */
     CanMessage createPacket(String s) {
@@ -651,6 +653,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     // private data
     private TrafficController tc = null; //was CanInterface
-    private final static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class);
 
 }

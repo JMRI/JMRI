@@ -10,7 +10,7 @@ import jmri.util.FileUtil;
 
 /**
  * Base implementation for the load and store actions.
- * <P>
+ * 
  * Primarily provides file checking services to the specific subclasses that
  * load/store particular types of data.
  * <P>
@@ -62,11 +62,12 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
         return configFileChooser;
     }
 
-    static protected JFileChooser getUserFileChooser() {
+    // Made public so JmriConfigurationManager.java can set the
+    // "Save Panels..." default file (to the panel file being loaded)
+    static public JFileChooser getUserFileChooser() {
         if (userFileChooser == null) {
             userFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
         }
         return userFileChooser;
     }
-
 }

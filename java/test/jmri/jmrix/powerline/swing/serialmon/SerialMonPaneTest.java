@@ -1,8 +1,7 @@
 package jmri.jmrix.powerline.swing.serialmon;
 
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
 import jmri.jmrix.powerline.SerialTrafficControlScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,25 +17,18 @@ public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     private SerialTrafficControlScaffold tc = null;
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists",pane);
-    }
-
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new SerialTrafficControlScaffold();
-        pane = new SerialMonPane();
+        // pane for AbstractMonPaneTestBase, panel for JmriPanel
+        panel = pane = new SerialMonPane();
+        title="Powerline_: Communication Monitor";
     }
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-        tc = null;
+    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
     }
 }

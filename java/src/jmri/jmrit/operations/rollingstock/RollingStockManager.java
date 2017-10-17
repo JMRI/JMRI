@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -15,13 +14,14 @@ import org.slf4j.LoggerFactory;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @param <T> the type of RollingStock managed by this manager
  */
-public class RollingStockManager {
+public class RollingStockManager<T extends RollingStock> {
 
     public static final String NONE = "";
 
     // RollingStock
-    protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>();
+    protected Hashtable<String, T> _hashTable = new Hashtable<>();
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
 
@@ -43,22 +43,23 @@ public class RollingStockManager {
 
     /**
      * Get rolling stock by id
+     *
      * @param id The string id.
      *
      * @return requested RollingStock object or null if none exists
      */
-    public RollingStock getById(String id) {
+    public T getById(String id) {
         return _hashTable.get(id);
     }
 
     /**
      * Get rolling stock by road and number
      *
-     * @param road RollingStock road
+     * @param road   RollingStock road
      * @param number RollingStock number
      * @return requested RollingStock object or null if none exists
      */
-    public RollingStock getByRoadAndNumber(String road, String number) {
+    public T getByRoadAndNumber(String road, String number) {
         String id = RollingStock.createId(road, number);
         return getById(id);
     }
@@ -71,10 +72,10 @@ public class RollingStockManager {
      * @param road RollingStock road.
      * @return the first RollingStock found with the specified type and road.
      */
-    public RollingStock getByTypeAndRoad(String type, String road) {
+    public T getByTypeAndRoad(String type, String road) {
         Enumeration<String> en = _hashTable.keys();
         while (en.hasMoreElements()) {
-            RollingStock rs = getById(en.nextElement());
+            T rs = getById(en.nextElement());
             if (rs.getTypeName().equals(type) && rs.getRoadName().equals(road)) {
                 return rs;
             }
@@ -88,10 +89,10 @@ public class RollingStockManager {
      * @param rfid RollingStock's RFID.
      * @return the RollingStock with the specific RFID, or null if not found
      */
-    public RollingStock getByRfid(String rfid) {
+    public T getByRfid(String rfid) {
         Enumeration<String> en = _hashTable.keys();
         while (en.hasMoreElements()) {
-            RollingStock rs = getById(en.nextElement());
+            T rs = getById(en.nextElement());
             if (rs.getRfid().equals(rfid)) {
                 return rs;
             }
@@ -101,26 +102,28 @@ public class RollingStockManager {
 
     /**
      * Load RollingStock.
+     *
      * @param rs The RollingStock to load.
      */
-    public void register(RollingStock rs) {
-        Integer oldSize = Integer.valueOf(_hashTable.size());
+    public void register(T rs) {
+        int oldSize = _hashTable.size();
         _hashTable.put(rs.getId(), rs);
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _hashTable.size());
     }
 
     /**
      * Unload RollingStock.
+     *
      * @param rs The RollingStock to delete.
      */
-    public void deregister(RollingStock rs) {
+    public void deregister(T rs) {
         rs.dispose();
-        Integer oldSize = Integer.valueOf(_hashTable.size());
+        int oldSize = _hashTable.size();
         _hashTable.remove(rs.getId());
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _hashTable.size());
     }
 
-    public void changeId(RollingStock rs, String road, String number) {
+    public void changeId(T rs, String road, String number) {
         _hashTable.remove(rs.getId());
         rs._id = RollingStock.createId(road, number);
         register(rs);
@@ -130,20 +133,20 @@ public class RollingStockManager {
      * Remove all RollingStock from roster
      */
     public void deleteAll() {
-        Integer oldSize = Integer.valueOf(_hashTable.size());
+        int oldSize = _hashTable.size();
         Enumeration<String> en = _hashTable.keys();
         while (en.hasMoreElements()) {
-            RollingStock rs = getById(en.nextElement());
+            T rs = getById(en.nextElement());
             rs.dispose();
             _hashTable.remove(rs.getId());
         }
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _hashTable.size());
     }
 
     public void resetMoves() {
         Enumeration<String> en = _hashTable.keys();
         while (en.hasMoreElements()) {
-            RollingStock rs = getById(en.nextElement());
+            T rs = getById(en.nextElement());
             rs.setMoves(0);
         }
     }
@@ -153,13 +156,8 @@ public class RollingStockManager {
      *
      * @return list of RollingStock
      */
-    public List<RollingStock> getList() {
-        Enumeration<RollingStock> en = _hashTable.elements();
-        List<RollingStock> out = new ArrayList<RollingStock>();
-        while (en.hasMoreElements()) {
-            out.add(en.nextElement());
-        }
-        return out;
+    public List<T> getList() {
+        return new ArrayList<>(_hashTable.values());
     }
 
     /**
@@ -167,10 +165,10 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by id
      */
-    public List<RollingStock> getByIdList() {
+    public List<T> getByIdList() {
         Enumeration<String> en = _hashTable.keys();
         String[] arr = new String[_hashTable.size()];
-        List<RollingStock> out = new ArrayList<RollingStock>();
+        List<T> out = new ArrayList<>();
         int i = 0;
         while (en.hasMoreElements()) {
             arr[i] = en.nextElement();
@@ -188,7 +186,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by road name
      */
-    public List<RollingStock> getByRoadNameList() {
+    public List<T> getByRoadNameList() {
         return getByList(getByIdList(), BY_ROAD);
     }
 
@@ -202,15 +200,15 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by number
      */
-    public List<RollingStock> getByNumberList() {
+    public List<T> getByNumberList() {
         // first get by road list
-        List<RollingStock> sortIn = getByRoadNameList();
+        List<T> sortIn = getByRoadNameList();
         // now re-sort
-        List<RollingStock> out = new ArrayList<RollingStock>();
+        List<T> out = new ArrayList<>();
         int rsNumber = 0;
         int outRsNumber = 0;
 
-        for (RollingStock rs : sortIn) {
+        for (T rs : sortIn) {
             boolean rsAdded = false;
             try {
                 rsNumber = Integer.parseInt(rs.getNumber());
@@ -297,7 +295,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by RollingStock type
      */
-    public List<RollingStock> getByTypeList() {
+    public List<T> getByTypeList() {
         return getByList(getByRoadNameList(), BY_TYPE);
     }
 
@@ -307,10 +305,10 @@ public class RollingStockManager {
      * @param type type of rolling stock
      * @return list of RollingStock that are specific type
      */
-    public List<RollingStock> getByTypeList(String type) {
-        List<RollingStock> typeList = getByTypeList();
-        List<RollingStock> out = new ArrayList<RollingStock>();
-        for (RollingStock rs : typeList) {
+    public List<T> getByTypeList(String type) {
+        List<T> typeList = getByTypeList();
+        List<T> out = new ArrayList<>();
+        for (T rs : typeList) {
             if (rs.getTypeName().equals(type)) {
                 out.add(rs);
             }
@@ -323,7 +321,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by RollingStock color
      */
-    public List<RollingStock> getByColorList() {
+    public List<T> getByColorList() {
         return getByList(getByTypeList(), BY_COLOR);
     }
 
@@ -332,7 +330,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by RollingStock location
      */
-    public List<RollingStock> getByLocationList() {
+    public List<T> getByLocationList() {
         return getByList(getList(), BY_LOCATION);
     }
 
@@ -341,7 +339,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by RollingStock destination
      */
-    public List<RollingStock> getByDestinationList() {
+    public List<T> getByDestinationList() {
         return getByList(getByLocationList(), BY_DESTINATION);
     }
 
@@ -350,9 +348,9 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by trains
      */
-    public List<RollingStock> getByTrainList() {
-        List<RollingStock> byDest = getByList(getByIdList(), BY_DESTINATION);
-        List<RollingStock> byLoc = getByList(byDest, BY_LOCATION);
+    public List<T> getByTrainList() {
+        List<T> byDest = getByList(getByIdList(), BY_DESTINATION);
+        List<T> byLoc = getByList(byDest, BY_LOCATION);
         return getByList(byLoc, BY_TRAIN);
     }
 
@@ -361,7 +359,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by RollingStock moves
      */
-    public List<RollingStock> getByMovesList() {
+    public List<T> getByMovesList() {
         return getByList(getList(), BY_MOVES);
     }
 
@@ -370,7 +368,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by RollingStock built date
      */
-    public List<RollingStock> getByBuiltList() {
+    public List<T> getByBuiltList() {
         return getByList(getByIdList(), BY_BUILT);
     }
 
@@ -379,7 +377,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by RollingStock owner
      */
-    public List<RollingStock> getByOwnerList() {
+    public List<T> getByOwnerList() {
         return getByList(getByIdList(), BY_OWNER);
     }
 
@@ -388,7 +386,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by value
      */
-    public List<RollingStock> getByValueList() {
+    public List<T> getByValueList() {
         return getByList(getByIdList(), BY_VALUE);
     }
 
@@ -397,7 +395,7 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by RFIDs
      */
-    public List<RollingStock> getByRfidList() {
+    public List<T> getByRfidList() {
         return getByList(getByIdList(), BY_RFID);
     }
 
@@ -406,24 +404,23 @@ public class RollingStockManager {
      *
      * @return list of RollingStock ordered by last date
      */
-    public List<RollingStock> getByLastDateList() {
+    public List<T> getByLastDateList() {
         return getByList(getByIdList(), BY_LAST);
     }
 
     /**
      * Sort a specific list of rolling stock last date used
-     * 
+     *
      * @param inList list of rolling stock to sort.
      * @return list of RollingStock ordered by last date
      */
-    public List<RollingStock> getByLastDateList(List<RollingStock> inList) {
+    public List<T> getByLastDateList(List<T> inList) {
         return getByList(inList, BY_LAST);
     }
 
-    protected List<RollingStock> getByList(List<RollingStock> sortIn, int attribute) {
-        List<RollingStock> out = new ArrayList<RollingStock>();
-        sortIn.forEach(n -> out.add(n));
-        Collections.sort(out, getComparator(attribute));
+    protected List<T> getByList(List<T> sortIn, int attribute) {
+        List<T> out = new ArrayList<>(sortIn);
+        out.sort(getComparator(attribute));
         return out;
     }
 
@@ -433,9 +430,9 @@ public class RollingStockManager {
     protected static final int BY_ROAD = 1;
     protected static final int BY_TYPE = 2;
     protected static final int BY_COLOR = 3;
-    // BY_LOAD = 4 
+    // BY_LOAD = 4
     // BY_MODEL = 4
-    // BY_KERNEL = 5 
+    // BY_KERNEL = 5
     // BY_CONSIST = 5
     protected static final int BY_LOCATION = 6;
     protected static final int BY_DESTINATION = 7;
@@ -455,7 +452,7 @@ public class RollingStockManager {
     // BY_B_UNIT = 20
     // BY_HAZARD = 21
 
-    protected java.util.Comparator<RollingStock> getComparator(int attribute) {
+    protected java.util.Comparator<T> getComparator(int attribute) {
         switch (attribute) {
             case BY_NUMBER:
                 return (r1, r2) -> (r1.getNumber().compareToIgnoreCase(r2.getNumber()));
@@ -467,13 +464,13 @@ public class RollingStockManager {
                 return (r1, r2) -> (r1.getColor().compareToIgnoreCase(r2.getColor()));
             case BY_LOCATION:
                 return (r1, r2) -> (r1.getStatus() + r1.getLocationName() + r1.getTrackName())
-                        .compareToIgnoreCase(r2.getStatus() +
-                                r2.getLocationName() +
-                                r2.getTrackName());
+                        .compareToIgnoreCase(r2.getStatus()
+                                + r2.getLocationName()
+                                + r2.getTrackName());
             case BY_DESTINATION:
                 return (r1, r2) -> (r1.getDestinationName() + r1.getDestinationTrackName())
-                        .compareToIgnoreCase(r2.getDestinationName() +
-                                r2.getDestinationTrackName());
+                        .compareToIgnoreCase(r2.getDestinationName()
+                                + r2.getDestinationTrackName());
             case BY_TRAIN:
                 return (r1, r2) -> (r1.getTrainName().compareToIgnoreCase(r2.getTrainName()));
             case BY_MOVES:
@@ -492,8 +489,8 @@ public class RollingStockManager {
             case BY_BLOCKING:
                 return (r1, r2) -> (r1.getBlocking() - r2.getBlocking());
             default:
-                return (r1, r2) -> ((r1.getRoadName() + r1.getNumber()).compareToIgnoreCase(r2.getRoadName() +
-                        r2.getNumber()));
+                return (r1, r2) -> ((r1.getRoadName() + r1.getNumber()).compareToIgnoreCase(r2.getRoadName()
+                        + r2.getNumber()));
         }
     }
 
@@ -525,57 +522,60 @@ public class RollingStockManager {
 
     /**
      * Get a list of rolling stocks assigned to a train ordered by location
+     *
      * @param train The Train.
      *
      * @return List of RollingStock assigned to the train ordered by location
      */
-    public List<RollingStock> getByTrainList(Train train) {
-        // List<RollingStock> shuffle = shuffle(getList(train));
-        List<RollingStock> out = getByList(getList(train), BY_LOCATION);
-        return out;
+    public List<T> getByTrainList(Train train) {
+        return getByList(getList(train), BY_LOCATION);
     }
 
     /**
      * Returns a list (no order) of RollingStock in a train.
+     *
      * @param train The Train.
      *
      * @return list of RollingStock
      */
-    public List<RollingStock> getList(Train train) {
-        List<RollingStock> out = new ArrayList<RollingStock>();
-        _hashTable.forEach((key, rs) -> {
-            if (rs.getTrain() == train)
-                out.add(rs);
+    public List<T> getList(Train train) {
+        List<T> out = new ArrayList<>();
+        _hashTable.values().stream().filter((rs) -> {
+            return rs.getTrain() == train;
+        }).forEachOrdered((rs) -> {
+            out.add(rs);
         });
         return out;
     }
 
     /**
      * Returns a list (no order) of RollingStock at a location.
-     * 
+     *
      * @param location location to search for.
      * @return list of RollingStock
      */
-    public List<RollingStock> getList(Location location) {
-        List<RollingStock> out = new ArrayList<RollingStock>();
-        _hashTable.forEach((key, rs) -> {
-            if (rs.getLocation() == location)
-                out.add(rs);
+    public List<T> getList(Location location) {
+        List<T> out = new ArrayList<>();
+        _hashTable.values().stream().filter((rs) -> {
+            return rs.getLocation() == location;
+        }).forEachOrdered((rs) -> {
+            out.add(rs);
         });
         return out;
     }
 
     /**
      * Returns a list (no order) of RollingStock on a track.
-     * 
+     *
      * @param track Track to search for.
      * @return list of RollingStock
      */
-    public List<RollingStock> getList(Track track) {
-        List<RollingStock> out = new ArrayList<RollingStock>();
-        _hashTable.forEach((key, rs) -> {
-            if (rs.getTrack() == track)
-                out.add(rs);
+    public List<T> getList(Track track) {
+        List<T> out = new ArrayList<>();
+        _hashTable.values().stream().filter((rs) -> {
+            return rs.getTrack() == track;
+        }).forEachOrdered((rs) -> {
+            out.add(rs);
         });
         return out;
     }
@@ -594,6 +594,6 @@ public class RollingStockManager {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockManager.class);
 
 }

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for loconet systems
+ * Implement light manager for LocoNet systems
  * <P>
  * System names are "LLnnnnn", where nnnnn is the bit number without padding.
  * <P>
@@ -59,24 +59,24 @@ public class LnLightManager extends AbstractLightManager {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "L"))) {
             // here if an illegal loconet light system name 
-            log.error("illegal character in header field of loconet light system name: " + systemName);
+            log.error("invalid character in header field of loconet light system name: " + systemName);
             return (0);
         }
-        // name must be in the LLnnnnn format
+        // name must be in the LLnnnnn format (first L (system prefix) is user configurable)
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.warn("invalid character in number field of system name: " + systemName);
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid loconet light system name: " + systemName);
+            log.warn("invalid loconet light system name: " + systemName);
             return (0);
         } else if (num > 4096) {
-            log.error("bit number out of range in loconet light system name: " + systemName);
+            log.warn("bit number out of range in loconet light system name: " + systemName);
             return (0);
         }
         return (num);
@@ -87,8 +87,8 @@ public class LnLightManager extends AbstractLightManager {
      * name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
@@ -105,14 +105,22 @@ public class LnLightManager extends AbstractLightManager {
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
-     *
+     * range box in the add Light window.
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnLightManager.class.getName());
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LnLightManager.class);
 
 }

@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -65,7 +66,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTable stagingTable = new JTable(stagingModel);
     JScrollPane stagingPane;
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public Location _location = null;
     ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
@@ -299,8 +300,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addCheckBoxTrainAction(westCheckBox);
 
         // add property listeners
-        CarTypes.instance().addPropertyChangeListener(this);
-        EngineTypes.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(EngineTypes.class).addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -626,8 +627,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         y = 0;
         checkBoxes.clear();
         panelCheckBoxes.removeAll();
-        loadTypes(CarTypes.instance().getNames());
-        loadTypes(EngineTypes.instance().getNames());
+        loadTypes(InstanceManager.getDefault(CarTypes.class).getNames());
+        loadTypes(InstanceManager.getDefault(EngineTypes.class).getNames());
         JPanel p = new JPanel();
         p.add(clearButton);
         p.add(setButton);
@@ -700,7 +701,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (b.isSelected()) {
             _location.addTypeName(b.getText());
             // show which tracks will service this car type
-            if (CarTypes.instance().containsName(b.getText())) {
+            if (InstanceManager.getDefault(CarTypes.class).containsName(b.getText())) {
                 if (lctf != null) {
                     lctf.dispose();
                 }
@@ -761,8 +762,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (_location != null) {
             _location.removePropertyChangeListener(this);
         }
-        CarTypes.instance().removePropertyChangeListener(this);
-        EngineTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(EngineTypes.class).removePropertyChangeListener(this);
         yardModel.dispose();
         spurModel.dispose();
         interchangeModel.dispose();
@@ -786,5 +787,5 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationEditFrame.class);
 }

@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a dummy Adapter to allow the system connection memo and multiple
  * Internal managers to be handled.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
-  */
+ */
 public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
         implements jmri.jmrix.PortAdapter {
 
@@ -77,6 +77,6 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(InternalAdapter.class.getName());
+            .getLogger(InternalAdapter.class);
 
 }

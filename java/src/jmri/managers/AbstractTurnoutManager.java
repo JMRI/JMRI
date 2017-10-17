@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  */
-public abstract class AbstractTurnoutManager extends AbstractManager
+public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         implements TurnoutManager, java.beans.VetoableChangeListener {
 
     public AbstractTurnoutManager() {
@@ -36,46 +36,46 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
     @Override
     public Turnout provideTurnout(String name) {
-        Turnout t = getTurnout(name);
-        if (t != null) {
-            return t;
+        Turnout result = getTurnout(name);
+        if (result == null) {
+            if (name.startsWith(getSystemPrefix() + typeLetter())) {
+                result = newTurnout(name, null);
+            } else {
+                result = newTurnout(makeSystemName(name), null);
+            }
         }
-        if (name.startsWith(getSystemPrefix() + typeLetter())) {
-            return newTurnout(name, null);
-        } else {
-            return newTurnout(makeSystemName(name), null);
-        }
+        return result;
     }
 
     @Override
     public Turnout getTurnout(String name) {
-        Turnout t = getByUserName(name);
-        if (t != null) {
-            return t;
+        Turnout result = getByUserName(name);
+        if (result == null) {
+            result = getBySystemName(name);
         }
-
-        return getBySystemName(name);
+        return result;
     }
 
     @Override
     public Turnout getBySystemName(String name) {
-        return (Turnout) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Turnout getByUserName(String key) {
-        return (Turnout) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
     public Turnout newTurnout(String systemName, String userName) {
+        // add normalize? see AbstractSensor
         if (log.isDebugEnabled()) {
             log.debug("newTurnout:"
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.error("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
@@ -105,7 +105,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         // doesn't exist, make a new one
         s = createNewTurnout(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("Unable to create turnout from " + systemName);
         }
@@ -217,12 +217,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
     /**
      * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg 10 to 30
+     * turnouts in numerical order eg 10 to 30.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
-        return true;
+        return false;
     }
 
     @Override
@@ -230,7 +232,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         try {
             Integer.parseInt(curAddress);
         } catch (java.lang.NumberFormatException ex) {
-            log.error("Hardware Address passed should be a number", ex);
+            log.warn("Hardware Address passed should be a number, was {}", curAddress);
             throw new JmriException("Hardware Address passed should be a number");
         }
         return prefix + typeLetter() + curAddress;
@@ -238,14 +240,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
-        //If the hardware address past does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         String tmpSName = "";
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
             return null;
         }
 
@@ -261,14 +263,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
             return null;
         }
-        //The Number of Output Bits of the previous turnout will help determine the next
-        //valid address.
+        // The Number of Output Bits of the previous turnout will help determine the next
+        // valid address.
         iName = iName + t.getNumberOutputBits();
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use;
+        // return null if it is, otherwise return the next valid address.
         t = getBySystemName(prefix + typeLetter() + iName);
         if (t != null) {
             for (int x = 1; x < 10; x++) {
@@ -357,5 +359,15 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return defaultClosedSpeed;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+    /**
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
+
 }

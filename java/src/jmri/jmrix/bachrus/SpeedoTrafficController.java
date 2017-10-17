@@ -1,12 +1,12 @@
 package jmri.jmrix.bachrus;
 
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
 
 /**
  * Converts Stream-based I/O to/from speedo messages. The "SpeedoInterface" side
@@ -88,6 +88,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController
+
     private SpeedoPortController controller = null;
 
     /**
@@ -116,7 +117,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     /**
-     * static function returning the SpeedoTrafficController instance to use.
+     * Get the SpeedoTrafficController instance to use.
      *
      * @return The registered SpeedoTrafficController instance for general use,
      *         if need be creating one.
@@ -131,7 +132,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
-
 
     /*
      * Speedo replies end with ";"
@@ -149,12 +149,12 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     private boolean unsolicited;
-    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class.getName());
 
     /**
-     * serialEvent - respond to an event triggered by RXTX. In this case we are
+     * Respond to an event triggered by RXTX. In this case we are
      * only dealing with DATA_AVAILABLE but the other events are left here for
-     * reference. AJB Jan 2010
+     * reference.
+     * @author AJB Jan 2010
      */
     @Override
     public void serialEvent(SerialPortEvent event) {
@@ -192,11 +192,14 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                 }
 
                 break;
+            default:
+                log.warn("Unhandled event type: {}", event.getEventType());
+                break;
         }
     }
 
     /**
-     * Send the current reply - built using data from seriaEvent
+     * Send the current reply - built using data from seriaEvent.
      */
     private void sendreply() {
         //send the reply
@@ -222,4 +225,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         //Create a new reply, ready to be filled
         this.reply = new SpeedoReply();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class);
+
 }

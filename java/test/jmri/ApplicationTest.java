@@ -1,9 +1,9 @@
 package jmri;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +68,6 @@ public class ApplicationTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 
 }

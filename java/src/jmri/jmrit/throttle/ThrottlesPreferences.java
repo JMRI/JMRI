@@ -196,7 +196,7 @@ public class ThrottlesPreferences {
              doc.addContent(0,p);*/
             root.setContent(store());
             xf.writeXML(file, doc);
-        } catch (Exception ex) {
+        } catch (java.io.IOException ex) {
             log.warn("Exception in storing throttles preferences xml: " + ex);
         }
         this.dirty = false;
@@ -328,5 +328,5 @@ public class ThrottlesPreferences {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);
 }

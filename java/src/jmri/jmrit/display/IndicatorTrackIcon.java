@@ -157,7 +157,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             block.addPropertyChangeListener(this, namedOccBlock.getName(), "Indicator Track");
             setStatus(block, block.getState());
             displayState(_status);
-            setTooltip(new ToolTip(block.getDescription(), 0, 0));
+            setToolTip(new ToolTip(block.getDescription(), 0, 0));
         }
     }
 
@@ -400,7 +400,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _trackPanel.dispose();
@@ -432,5 +432,5 @@ public class IndicatorTrackIcon extends PositionableIcon
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class);
 }

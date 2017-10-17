@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ScheduleCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    ScheduleManager scheduleManager = ScheduleManager.instance();
+    ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
 
     // text field
     JTextField scheduleNameTextField = new javax.swing.JTextField(Control.max_len_string_location_name);
@@ -146,5 +147,5 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleCopyFrame.class);
 }

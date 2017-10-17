@@ -105,7 +105,7 @@ public class SpecificTrafficController extends SerialTrafficController {
              try {
              wait(250);
              } catch (InterruptedException ex) {
-             LoggerFactory.getLogger(SpecificTrafficController.class.getName()).log(Level.SEVERE, null, ex);
+             log.error("", ex);
              }
              */
         }
@@ -180,6 +180,8 @@ public class SpecificTrafficController extends SerialTrafficController {
                     if ((cmd == Constants.FUNCTION_REQ_STD) && ((msg.getElement(5) & Constants.FLAG_BIT_STDEXT) == Constants.FLAG_EXT)) {
                         return true;
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -269,5 +271,5 @@ public class SpecificTrafficController extends SerialTrafficController {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class);
 }

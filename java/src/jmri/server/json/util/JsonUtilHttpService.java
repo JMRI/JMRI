@@ -5,6 +5,7 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LAYOUT_PANEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PANEL;
+import static jmri.server.json.JSON.SWITCHBOARD_PANEL;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.URL;
 import static jmri.server.json.JSON.USERNAME;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -26,6 +28,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
@@ -82,7 +85,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         switch (type) {
             case JSON.METADATA:
                 return this.getMetadata(locale);
@@ -93,12 +96,20 @@ public class JsonUtilHttpService extends JsonHttpService {
             case JSON.CONFIG_PROFILES:
                 return this.getConfigProfiles(locale);
             default:
-                return this.doGet(type, null, locale);
+                ArrayNode array = this.mapper.createArrayNode();
+                JsonNode node = this.doGet(type, null, locale);
+                if (node.isArray()) {
+                    array.addAll((ArrayNode) node);
+                } else {
+                    array.add(node);
+                }
+                return array;
         }
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    public JsonNode doPost(String type, String name,
+            JsonNode data, Locale locale) throws JsonException {
         return this.doGet(type, name, locale);
     }
 
@@ -117,9 +128,9 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.JMRI, jmri.Version.name());
         data.put(JSON.JSON, JSON.JSON_PROTOCOL_VERSION);
         data.put(JSON.HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(JSON.RAILROAD, WebServerPreferences.getDefault().getRailRoadName());
+        data.put(JSON.RAILROAD, WebServerPreferences.getDefault().getRailroadName());
         data.put(JSON.NODE, NodeIdentity.identity());
-        data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfile().getName());
+        data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfileName());
         return root;
     }
 
@@ -155,7 +166,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @throws JsonException if thrown by
      *                       {@link #getMetadata(java.util.Locale, java.lang.String)}.
      */
-    public JsonNode getMetadata(Locale locale) throws JsonException {
+    public ArrayNode getMetadata(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : Metadata.getSystemNameList()) {
             root.add(getMetadata(locale, name));
@@ -201,7 +212,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param locale the client's Locale.
      * @return the JSON networkServices message.
      */
-    public JsonNode getNetworkServices(Locale locale) {
+    public ArrayNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         ZeroConfService.allServices().stream().forEach((service) -> {
             root.add(this.getNetworkService(service));
@@ -232,25 +243,31 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     public ObjectNode getPanel(Locale locale, Editor editor, String format) {
         if (editor.getAllowInFrameServlet()) {
-            String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
-            if (!title.isEmpty() && !Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames()).contains(title)) {
-                String type = PANEL;
-                String name = "Panel";
-                if (editor instanceof ControlPanelEditor) {
-                    type = CONTROL_PANEL;
-                    name = "ControlPanel";
-                } else if (editor instanceof LayoutEditor) {
-                    type = LAYOUT_PANEL;
-                    name = "Layout";
+            Container container = editor.getTargetPanel().getTopLevelAncestor();
+            if (container instanceof JmriJFrame) {
+                String title = ((JmriJFrame) container).getTitle();
+                if (!title.isEmpty() && !Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames()).contains(title)) {
+                    String type = PANEL;
+                    String name = "Panel";
+                    if (editor instanceof ControlPanelEditor) {
+                        type = CONTROL_PANEL;
+                        name = "ControlPanel";
+                    } else if (editor instanceof LayoutEditor) {
+                        type = LAYOUT_PANEL;
+                        name = "Layout";
+                    } else if (editor instanceof SwitchboardEditor) {
+                        type = SWITCHBOARD_PANEL;
+                        name = "Switchboard";
+                    }
+                    ObjectNode root = this.mapper.createObjectNode();
+                    root.put(TYPE, PANEL);
+                    ObjectNode data = root.putObject(DATA);
+                    data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
+                    data.put(USERNAME, title);
+                    data.put(TYPE, type);
+                    return root;
                 }
-                ObjectNode root = this.mapper.createObjectNode();
-                root.put(TYPE, PANEL);
-                ObjectNode data = root.putObject(DATA);
-                data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
-                data.put(USERNAME, title);
-                data.put(TYPE, type);
-                return root;
             }
         }
         return null;
@@ -258,7 +275,7 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     public JsonNode getPanels(Locale locale, String format) {
         ArrayNode root = mapper.createArrayNode();
-        // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
+        // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor, SwitchboardEditor)
         // list ControlPanelEditors
         Editor.getEditors(ControlPanelEditor.class).stream()
                 .map((editor) -> this.getPanel(locale, editor, format))
@@ -267,6 +284,12 @@ public class JsonUtilHttpService extends JsonHttpService {
         });
         // list LayoutEditors and PanelEditors
         Editor.getEditors(PanelEditor.class).stream()
+                .map((editor) -> this.getPanel(locale, editor, format))
+                .filter((panel) -> (panel != null)).forEach((panel) -> {
+            root.add(panel);
+        });
+        // list SwitchboardEditors
+        Editor.getEditors(SwitchboardEditor.class).stream()
                 .map((editor) -> this.getPanel(locale, editor, format))
                 .filter((panel) -> (panel != null)).forEach((panel) -> {
             root.add(panel);
@@ -289,7 +312,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, JSON.RAILROAD);
         ObjectNode data = root.putObject(JSON.DATA);
-        data.put(JSON.NAME, WebServerPreferences.getDefault().getRailRoadName());
+        data.put(JSON.NAME, WebServerPreferences.getDefault().getRailroadName());
         return root;
     }
 
@@ -298,7 +321,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param locale the client's Locale.
      * @return the JSON systemConnections message.
      */
-    public JsonNode getSystemConnections(Locale locale) {
+    public ArrayNode getSystemConnections(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         ArrayList<String> prefixes = new ArrayList<>();
         for (ConnectionConfig config : InstanceManager.getDefault(ConnectionConfigManager.class)) {
@@ -341,34 +364,34 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     /**
-    *
-    * @param locale the client's Locale.
-    * @return the JSON configProfiles message.
-    */
-   public JsonNode getConfigProfiles(Locale locale) {
-       ArrayNode root = mapper.createArrayNode();
+     *
+     * @param locale the client's Locale.
+     * @return the JSON configProfiles message.
+     */
+    public ArrayNode getConfigProfiles(Locale locale) {
+        ArrayNode root = mapper.createArrayNode();
 
-       for (Profile p : ProfileManager.getDefault().getProfiles()) {
-           boolean isActiveProfile = (p == ProfileManager.getDefault().getActiveProfile());
-           boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile 
-           ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.CONFIG_PROFILES);
-           ObjectNode data = connection.putObject(JSON.DATA);
-           data.put(JSON.NAME, p.getName());
-           data.put(JSON.UNIQUE_ID, p.getUniqueId());
-           data.put(JSON.ID, p.getId());
-           data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
-           data.put(JSON.IS_AUTO_START, isAutoStart);
-           root.add(connection);
-       }
-       return root;
-   }
+        for (Profile p : ProfileManager.getDefault().getProfiles()) {
+            boolean isActiveProfile = (p == ProfileManager.getDefault().getActiveProfile());
+            boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile
+            ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.CONFIG_PROFILE);
+            ObjectNode data = connection.putObject(JSON.DATA);
+            data.put(JSON.NAME, p.getName());
+            data.put(JSON.UNIQUE_ID, p.getUniqueId());
+            data.put(JSON.ID, p.getId());
+            data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
+            data.put(JSON.IS_AUTO_START, isAutoStart);
+            root.add(connection);
+        }
+        return root;
+    }
 
     /**
      * Gets the {@link jmri.DccLocoAddress} for a String in the form
      * {@code number(type)} or {@code number}.
-     *
-     * Type may be {@code L} for long or {@code S} for short. If the
-     * type is not specified, type is assumed to be short.
+     * <p>
+     * Type may be {@code L} for long or {@code S} for short. If the type is not
+     * specified, type is assumed to be short.
      *
      * @param address the address
      * @return The DccLocoAddress for address

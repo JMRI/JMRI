@@ -1,0 +1,24 @@
+{
+  "name": "jmri",
+  "version": "1.0.0",
+  "description": "Angular JMRI Web Application",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JMRI Community",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "angular": "1.6.6",
+    "angular-patternfly": "^4.11.1",
+    "angular-resource": "1.6.6",
+    "angular-route": "1.6.6",
+    "angular-translate": "2.15.2",
+    "angular-translate-handler-log": "2.15.2",
+    "angular-translate-loader-partial": "2.15.2",
+    "angular-websocket": "2.0.1",
+    "angularjs-datatables": "^0.5.9",
+    "lodash": "4.17.4",
+    "moment": "2.18.1"
+  }
+}

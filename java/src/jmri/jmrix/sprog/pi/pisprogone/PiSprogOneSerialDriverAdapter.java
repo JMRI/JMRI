@@ -20,7 +20,7 @@ public class PiSprogOneSerialDriverAdapter
 
     public PiSprogOneSerialDriverAdapter() {
         super(SprogMode.SERVICE, 115200, new SprogType(SprogType.PISPROGONE));
-        this.getSystemConnectionMemo().setUserName("Pi-SPROG One Programmer");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("PiSprog1ProgrammerTitle"));
     }
 
     /**
@@ -38,7 +38,6 @@ public class PiSprogOneSerialDriverAdapter
     static public PiSprogOneSerialDriverAdapter instance() {
         return null;
     }
-
-    static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class);
 
 }

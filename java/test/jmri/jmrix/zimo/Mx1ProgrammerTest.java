@@ -1,12 +1,10 @@
 package jmri.jmrix.zimo;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,8 +22,7 @@ public class Mx1ProgrammerTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         Mx1TrafficController tc = new Mx1TrafficController(){
            @Override
            public boolean status(){
@@ -40,10 +37,9 @@ public class Mx1ProgrammerTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1ProgrammerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1ProgrammerTest.class);
 
 }

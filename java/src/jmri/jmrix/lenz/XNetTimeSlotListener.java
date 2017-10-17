@@ -4,9 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
  * The XNetTimeSlotListener listens for two messages from the computer interface:
- * </p>
  * <ol>
  * <li>"Command Station No Longer Providing a timeslot for communications" (01 05 04)</li>
  * <li>"Command Station is providing a timeslot for communications again." (01 07 06)</li>
@@ -15,10 +13,9 @@ import org.slf4j.LoggerFactory;
  * when the first message is received, the associated port controller's 
  * setTimeSlot methodis called with a "false" parameter.  When the second 
  * is true, it is called with a "true paramter.
- * </p>
  *
  * @author Paul Bender Copyright (C) 2017
-  */
+ */
 public class XNetTimeSlotListener implements XNetListener {
 
     private XNetPortController port = null;
@@ -66,8 +63,8 @@ public class XNetTimeSlotListener implements XNetListener {
     }
 
     /**
-     * Member function invoked by an XNetInterface implementation to notify * a
-     * sender that an outgoing message timed out and was dropped from the *
+     * Member function invoked by an XNetInterface implementation to notify a
+     * sender that an outgoing message timed out and was dropped from the
      * queue.
      */
     @Override
@@ -75,6 +72,6 @@ public class XNetTimeSlotListener implements XNetListener {
        // do nothing
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTimeSlotListener.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTimeSlotListener.class);
 
 }

@@ -5,8 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import org.slf4j.Logger;
@@ -26,14 +26,13 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JButton addButton = new javax.swing.JButton(Bundle.getMessage("ButtonAdd"));
     protected javax.swing.JButton cancelButton = new javax.swing.JButton(Bundle.getMessage("ButtonCancel"));
 
-    protected javax.swing.JPanel panel = new JPanel();
-
     protected IEEE802154Node curNode = null;    // IEEE802154 Node being editted
 
     private IEEE802154TrafficController itc = null;
 
     /**
      * Constructor method
+     * @param tc tc for connection for node
      */
     public AddNodeFrame(IEEE802154TrafficController tc) {
         super();
@@ -81,11 +80,8 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
         addButton.setText(Bundle.getMessage("ButtonAdd"));
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                addButtonActionPerformed();
-            }
+        addButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            addButtonActionPerformed();
         });
         panel4.add(addButton);
         panel4.add(cancelButton);
@@ -93,11 +89,8 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                cancelButtonActionPerformed();
-            }
+        cancelButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            cancelButtonActionPerformed();
         });
         contentPane.add(panel4);
 
@@ -106,7 +99,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle add button
+     * Method to handle Add button
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
@@ -137,7 +130,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
      * Method to handle cancel button
      */
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         curNode = null;
         // Switch buttons
         addButton.setVisible(true);
@@ -146,16 +139,15 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read node address from the nodeAddressField or nodeAddr64Field 
-     * as appropriate and return as a string.  
+     * Read node address from the nodeAddressField or nodeAddr64Field
+     * as appropriate and return as a string.
      *
      * @return String containing the short (two byte) address of the node.
      *         if the two byte node address is either "FF FF" or "FF FE",
      *         returns the long (64 bit) address.
      */
     private String readNodeAddress() {
-        String addr = "";
-        addr = nodeAddrField.getText();
+        String addr = nodeAddrField.getText();
         if (addr.equals("FF FF ") || addr.equals("FF FE ") || addr.equals("")) {
             addr = nodeAddr64Field.getText();
         }
@@ -168,6 +160,6 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
         nodeAddr64Field.setText("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class);
 
 }

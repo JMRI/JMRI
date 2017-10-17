@@ -6,10 +6,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.util.StringUtil;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 
 /**
@@ -24,7 +24,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
+    javax.swing.JButton pollButton = new javax.swing.JButton();
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
     private CMRISystemConnectionMemo _memo = null;
@@ -34,26 +34,29 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         _memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
-        jLabel1.setText("Command:");
+        jLabel1.setText(Bundle.getMessage("CommandLabel"));
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");
+        sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
+        sendButton.setToolTipText(Bundle.getMessage("SendPacketTitle"));
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command as hexadecimal bytes separated by a space");
+        packetTextField.setToolTipText(Bundle.getMessage("EnterHexBytesToolTip"));
         packetTextField.setMaximumSize(
                 new Dimension(packetTextField.getMaximumSize().width,
                         packetTextField.getPreferredSize().height
                 )
         );
 
-        setTitle("Send CMRI serial command");
+        setTitle(Bundle.getMessage("SendSerialCommandTitle"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(jLabel1);
@@ -72,11 +75,12 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         // add poll message buttons
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
-        pane3.add(new JLabel("UA:"));
+        pane3.add(new JLabel(Bundle.getMessage("UALabel")));
         pane3.add(uaAddrField);
+        pollButton.setText(Bundle.getMessage("LabelPoll"));
         pane3.add(pollButton);
-        uaAddrField.setText("0");
-        uaAddrField.setToolTipText("Enter node address (decimal integer)");
+        uaAddrField.setText("0"); // NOI18N
+        uaAddrField.setToolTipText(Bundle.getMessage("EnterNodeAddressToolTip"));
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
@@ -85,7 +89,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
                 pollButtonActionPerformed(e);
             }
         });
-        pollButton.setToolTipText("Send poll request");
+        pollButton.setToolTipText(Bundle.getMessage("PollToolTip"));
 
         // pack for display
         pack();
@@ -113,11 +117,18 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(SerialMessage m) {
     }  // ignore replies
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(SerialReply r) {
     } // ignore replies
+
 }

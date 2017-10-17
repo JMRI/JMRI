@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="1" author="Ronald Kuhn ronald@wirkuhns.de" lastUpdated="20170716"/>
+  <!-- 1 2017/07/16 Creation 
+        First decoder template for the Rautenhaus decoder range.
+        Based on D&H DHP250-file created by Pierre Billon, pierre.bln@me.com
+  -->
+  <decoder>
+    <family name="Train Decoders v11" mfg="Rautenhaus Digital Vertrieb">
+      <model model="RMX992/993" lowVersionID="11" highVersionID="11" numOuts="6" numFns="16" productID="RMX992" comment="RMX992/993" maxInputVolts="25V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM652">
+        <output name="1" label="Front|Light" maxcurrent="300mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="300mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="1.0A"/>
+        <output name="5" label="AUX|3" maxcurrent="1.0A"/>
+        <output name="6" label="AUX|4" maxcurrent="1.0A"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="24.7" width="12.9" height="3.9" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Common Rautenhaus variable files -->
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/Vars_common.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/Vars_common_pwr_normal.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv27brakemode_bit4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv27brakemode_bit5.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv57locochar.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv58trackchar.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv59contint.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv60_64locochar.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv96shortfuse.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv112-115function.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv116function.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/rautenhaus/cv122-123trackchar.xml"/>
+    </variables>
+    <resets>
+        <factReset label="Reset All CVs" CV="8" default="8">
+            <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+            <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+            <label xml:lang="de">Alle CV auf Standardwerte setzen</label>
+        </factReset>
+    </resets>
+  </decoder>
+  <!-- Common pane(s) for all Rautenhaus decoders  -->
+  <xi:include href="http://jmri.org/xml/decoders/rautenhaus/Pane_AltFunctionMap.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rautenhaus/Pane_StartBrakeShunt.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rautenhaus/Pane_common.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rautenhaus/Pane_special.xml"/>
+</decoder-config>

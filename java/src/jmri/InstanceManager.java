@@ -1,20 +1,17 @@
 package jmri;
 
-import apps.gui3.TabbedPreferences;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.ServiceLoader;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
-import jmri.jmrit.roster.RosterIconFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,21 +32,26 @@ import org.slf4j.LoggerFactory;
  * {@link InstanceManager#getNullableDefault} method instead.
  * <p>
  * Multiple items can be held, and are retrieved as a list with
- * {@link    InstanceManager#getList}.
+ * {@link InstanceManager#getList}.
  * <p>
  * If a specific item is needed, e.g. one that has been constructed via a
  * complex process during startup, it should be installed with
  * {@link InstanceManager#store}.
  * <p>
- * If it's OK for the InstanceManager to create an object on first request, have
- * that object's class implement the {@link InstanceManagerAutoDefault} flag
- * interface. The InstanceManager will then construct a default object via the
- * no-argument constructor when one is first requested.
+ * If it is desirable for the InstanceManager to create an object on first
+ * request, have that object's class implement the
+ * {@link InstanceManagerAutoDefault} flag interface. The InstanceManager will
+ * then construct a default object via the no-argument constructor when one is
+ * first requested.
  * <p>
  * For initialization of more complex default objects, see the
  * {@link InstanceInitializer} mechanism and its default implementation in
  * {@link jmri.managers.DefaultInstanceInitializer}.
- *
+ * <p>
+ * Implement the {@link InstanceManagerAutoInitialize} interface when default
+ * objects need to be initialized after the default instance has been
+ * constructed and registered with the InstanceManager. This will allow
+ * references to the default instance during initialization to work as expected.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -64,12 +66,16 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
  * @author Matthew Harris copyright (c) 2009
  */
-public class InstanceManager {
+public final class InstanceManager {
 
-    protected static final HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
-    private static final InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
+    // the default instance of the InstanceManager
+    private static volatile InstanceManager defaultInstanceManager = null;
     // data members to hold contact with the property listeners
-    private static final HashSet<PropertyChangeListener> listeners = new HashSet<>();
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final HashMap<Class<?>, List<Object>> managerLists = new HashMap<>();
+    private final HashMap<Class<?>, InstanceInitializer> initializers = new HashMap<>();
+    private final HashMap<Class<?>, StateHolder> initState = new HashMap<>();
+
 
     /* properties */
     /**
@@ -80,14 +86,6 @@ public class InstanceManager {
      */
     @Deprecated
     public static final String CONSIST_MANAGER = "consistmanager"; // NOI18N
-    /**
-     *
-     * @deprecated since 4.5.4 use
-     * {@code InstanceManager.getDefaultsPropertyName(ProgrammerManager.class)}
-     * instead.
-     */
-    @Deprecated
-    public static final String PROGRAMMER_MANAGER = "programmermanager"; // NOI18N
 
     /**
      * Store an object of a particular type for later retrieval via
@@ -105,8 +103,9 @@ public class InstanceManager {
             log.error("Should not store null value of type {}", type.getName());
             throw npe;
         }
-        ArrayList<T> l = (ArrayList<T>) getList(type);
+        List<T> l = getList(type);
         l.add(item);
+        getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), l.indexOf(item), null, item);
     }
 
     /**
@@ -118,14 +117,9 @@ public class InstanceManager {
      * @return A list of type Objects registered with the manager or an empty
      *         list.
      */
-    @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     @Nonnull
     static public <T> List<T> getList(@Nonnull Class<T> type) {
-        log.debug("Get list of type {}", type.getName());
-        if (managerLists.get(type) == null) {
-            managerLists.put(type, new ArrayList<>());
-        }
-        return (List<T>) managerLists.get(type);
+        return getDefault().getInstances(type);
     }
 
     /**
@@ -135,22 +129,34 @@ public class InstanceManager {
      * @param type The class Object for the items to be removed.
      */
     static public <T> void reset(@Nonnull Class<T> type) {
-        log.debug("Reset type {}", type.getName());
-        managerLists.put(type, new ArrayList<>());
+        getDefault().clear(type);
     }
 
     /**
      * Remove an object of a particular type that had earlier been registered
-     * with {@link #store}.
+     * with {@link #store}. If item was previously registered, this will remove
+     * item and fire an indexed property change event for the property matching
+     * the output of {@link #getListPropertyName(java.lang.Class)} for type.
      *
      * @param <T>  The type of the class
      * @param item The object of type T to be deregistered
-     * @param type The class Object for the item's type.
+     * @param type The class Object for the item's type
      */
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
-        ArrayList<T> l = (ArrayList<T>) getList(type);
-        l.remove(item);
+        List<T> l = getList(type);
+        int index = l.indexOf(item);
+        if (index != -1) { // -1 means items was not in list, and therefor, not registered
+            l.remove(item);
+            if (item instanceof Disposable) {
+                getDefault().dispose((Disposable) item);
+            }
+            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
+        }
+        // if removing last, will have to initialize laster
+        if (l.isEmpty()) {
+            getDefault().setInitializationState(type, InitializationState.NOTSET);
+        }
     }
 
     /**
@@ -179,8 +185,11 @@ public class InstanceManager {
     @Nonnull
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
-        return Objects.requireNonNull(InstanceManager.getNullableDefault(type),
-                "Required nonnull default for " + type.getName() + " does not exist.");
+        T object = InstanceManager.getNullableDefault(type);
+        if (object == null) {
+            throw new NullPointerException("Required nonnull default for " + type.getName() + " does not exist.");
+        }
+        return object;
     }
 
     /**
@@ -206,31 +215,88 @@ public class InstanceManager {
     @CheckForNull
     static public <T> T getNullableDefault(@Nonnull Class<T> type) {
         log.trace("getOptionalDefault of type {}", type.getName());
-        ArrayList<T> l = (ArrayList<T>) getList(type);
+        List<T> l = getList(type);
         if (l.isEmpty()) {
+
+            // example of tracing where something is being initialized
+            //if (type == jmri.implementation.SignalSpeedMap.class) new Exception("jmri.implementation.SignalSpeedMap init").printStackTrace();
+            if (traceFileActive) {
+                traceFilePrint("Start initialization: " + type.toString());
+                traceFileIndent++;
+            }
+
+            // check whether already working on this type
+            InitializationState working = getDefault().getInitializationState(type);
+            Exception except = getDefault().getInitializationException(type);
+            getDefault().setInitializationState(type, InitializationState.STARTED);
+            if (working == InitializationState.STARTED) {
+                log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
+                log.error("    Prior initialization:", except);
+                if (traceFileActive) {
+                    traceFilePrint("*** Already in process ***");
+                }
+            } else if (working == InitializationState.DONE) {
+                log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
+            }
+
             // see if can autocreate
             log.debug("    attempt auto-create of {}", type.getName());
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
                 try {
-                    l.add(type.getConstructor((Class[]) null).newInstance((Object[]) null));
+                    T obj = type.getConstructor((Class[]) null).newInstance((Object[]) null);
+                    l.add(obj);
+                    // obj has been added, now initialize it if needed
+                    if (obj instanceof InstanceManagerAutoInitialize) {
+                        ((InstanceManagerAutoInitialize) obj).initialize();
+                    }
                     log.debug("      auto-created default of {}", type.getName());
                 } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    log.error("Exception creating auto-default object", e); // unexpected
+                    log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
+                    getDefault().setInitializationState(type, InitializationState.FAILED);
+                    if (traceFileActive) {
+                        traceFileIndent--;
+                        traceFilePrint("End initialization (no object) A: " + type.toString());
+                    }
                     return null;
+                }
+                getDefault().setInitializationState(type, InitializationState.DONE);
+                if (traceFileActive) {
+                    traceFileIndent--;
+                    traceFilePrint("End initialization A: " + type.toString());
                 }
                 return l.get(l.size() - 1);
             }
             // see if initializer can handle
             log.debug("    attempt initializer create of {}", type.getName());
-            @SuppressWarnings("unchecked")
-            T obj = (T) initializer.getDefault(type);
-            if (obj != null) {
-                log.debug("      initializer created default of {}", type.getName());
-                l.add(obj);
-                return l.get(l.size() - 1);
+            if (getDefault().initializers.containsKey(type)) {
+                try {
+                    @SuppressWarnings("unchecked")
+                    T obj = (T) getDefault().initializers.get(type).getDefault(type);
+                    log.debug("      initializer created default of {}", type.getName());
+                    l.add(obj);
+                    // obj has been added, now initialize it if needed
+                    if (obj instanceof InstanceManagerAutoInitialize) {
+                        ((InstanceManagerAutoInitialize) obj).initialize();
+                    }
+                    getDefault().setInitializationState(type, InitializationState.DONE);
+                    if (traceFileActive) {
+                        traceFileIndent--;
+                        traceFilePrint("End initialization I: " + type.toString());
+                    }
+                    return l.get(l.size() - 1);
+                } catch (IllegalArgumentException ex) {
+                    log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
+                }
+            } else {
+                log.debug("        no initializer registered for {}", type.getName());
             }
 
             // don't have, can't make
+            getDefault().setInitializationState(type, InitializationState.FAILED);
+            if (traceFileActive) {
+                traceFileIndent--;
+                traceFilePrint("End initialization (no object) E: " + type.toString());
+            }
             return null;
         }
         return l.get(l.size() - 1);
@@ -259,7 +325,7 @@ public class InstanceManager {
      * @see #getNullableDefault(java.lang.Class)
      */
     @Nonnull
-    static public <T> Optional<T> getOptionalDefault(@Nonnull Class<T> type) {
+    static public <T> Optional<T> getOptionalDefault(@Nonnull Class< T> type) {
         return Optional.ofNullable(InstanceManager.getNullableDefault(type));
     }
 
@@ -277,21 +343,34 @@ public class InstanceManager {
      * @return The default for type (normally this is the item passed in)
      */
     @Nonnull
-    static public <T> T setDefault(@Nonnull Class<T> type, @Nonnull T item) {
+    static public <T> T setDefault(@Nonnull Class< T> type, @Nonnull T item) {
         log.trace("setDefault for type {}", type.getName());
         if (item == null) {
             NullPointerException npe = new NullPointerException();
             log.error("Should not set default of type {} to null value", type.getName());
             throw npe;
         }
-        Object oldDefault = getNullableDefault(type);
+        Object oldDefault = containsDefault(type) ? getNullableDefault(type) : null;
         List<T> l = getList(type);
         l.remove(item);
         l.add(item);
         if (oldDefault == null || !oldDefault.equals(item)) {
-            notifyPropertyChangeListener(getDefaultsPropertyName(type), oldDefault, item);
+            getDefault().pcs.firePropertyChange(getDefaultsPropertyName(type), oldDefault, item);
         }
         return getDefault(type);
+    }
+
+    /**
+     * Check if a default has been set for the given type.
+     *
+     * @param <T>  The type of the class
+     * @param type The class type
+     * @return true if an item is available as a default for the given type;
+     *         false otherwise
+     */
+    static public <T> boolean containsDefault(@Nonnull Class<T> type) {
+        List<T> l = getList(type);
+        return !l.isEmpty();
     }
 
     /**
@@ -303,54 +382,57 @@ public class InstanceManager {
     static public String contentsToString() {
 
         StringBuilder retval = new StringBuilder();
-        for (Class<?> c : managerLists.keySet()) {
+        getDefault().managerLists.keySet().stream().forEachOrdered((c) -> {
             retval.append("List of ");
             retval.append(c);
             retval.append(" with ");
             retval.append(Integer.toString(getList(c).size()));
             retval.append(" objects\n");
-            for (Object o : getList(c)) {
+            getList(c).stream().forEachOrdered((o) -> {
                 retval.append("    ");
                 retval.append(o.getClass().toString());
                 retval.append("\n");
-            }
-        }
+            });
+        });
         return retval.toString();
     }
 
     /**
-     * Remove notification on changes to specific types
+     * Remove notification on changes to specific types.
      *
-     * @param l The listener to remove.
+     * @param l The listener to remove
      */
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        getDefault().pcs.removePropertyChangeListener(l);
+    }
+
+    /**
+     * Remove notification on changes to specific types.
+     *
+     * @param propertyName the property being listened for
+     * @param l            The listener to remove
+     */
+    public static synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        getDefault().pcs.removePropertyChangeListener(propertyName, l);
+    }
+
+    /**
+     * Register for notification on changes to specific types.
+     *
+     * @param l The listener to add
+     */
+    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        getDefault().pcs.addPropertyChangeListener(l);
     }
 
     /**
      * Register for notification on changes to specific types
      *
-     * @param l The listener to add.
+     * @param propertyName the property being listened for
+     * @param l            The listener to add
      */
-    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        // add only if not already registered
-        if (!listeners.contains(l)) {
-            listeners.add(l);
-        }
-    }
-
-    protected static void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        HashSet<PropertyChangeListener> set;
-        synchronized (InstanceManager.class) {
-            set = new HashSet<>(listeners);
-        }
-        // forward to all listeners
-        set.stream().forEach((listener) -> {
-            listener.propertyChange(new PropertyChangeEvent(InstanceManager.class, property, oldValue, newValue));
-        });
+    public static synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        getDefault().pcs.addPropertyChangeListener(propertyName, l);
     }
 
     /**
@@ -365,11 +447,23 @@ public class InstanceManager {
         return "default-" + clazz.getName();
     }
 
+    /**
+     * Get the property name included in the
+     * {@link java.beans.PropertyChangeEvent} thrown when the list for a
+     * specific class is changed.
+     *
+     * @param clazz the class being listened for
+     * @return the property name
+     */
+    public static String getListPropertyName(Class<?> clazz) {
+        return "list-" + clazz.getName();
+    }
+
     /* ****************************************************************************
      *                   Primary Accessors - Left (for now)
      *
      *          These are so extensively used that we're leaving for later
-     *                      Please don't create any more of these 
+     *                      Please don't create any more of these
      * ****************************************************************************/
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
@@ -419,27 +513,17 @@ public class InstanceManager {
     /* ****************************************************************************
      *                   Primary Accessors - Deprecated for removal
      *
-     *                      Please don't create any more of these 
+     *                      Please don't create any more of these
      * ****************************************************************************/
     // Simplification order - for each type, starting with those not in the jmri package:
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
     //   2) Remove the setter from here, get tests to build & run
     //   3) Remove the accessor from here, get tests to build & run
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default audio manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public AudioManager audioManagerInstance() {
-        return getDefault(AudioManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default block manager. May not be the only instance.
+     * @return the default block manager. May not be the only instance. In use
+     *         by scripts.
      * @deprecated 4.5.1
      */
     @Deprecated
@@ -448,40 +532,7 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default clock control instance. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ClockControl clockControlInstance() {
-        return getDefault(ClockControl.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default conditional manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ConditionalManager conditionalManagerInstance() {
-        return getDefault(ConditionalManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default logix manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public LogixManager logixManagerInstance() {
-        return getDefault(LogixManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly. In use by scripts.
      *
      * @return the default power manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -492,18 +543,7 @@ public class InstanceManager {
     }
 
     /**
-     * @return the default programmer manager. May not be the only instance.
-     * @deprecated Since 3.11.1, use @{link #getDefault} for either
-     * GlobalProgrammerManager or AddressedProgrammerManager directly
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ProgrammerManager programmerManagerInstance() {
-        return getDefault(ProgrammerManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default reporter manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -514,18 +554,7 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default roster icon factory. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public RosterIconFactory rosterIconFactoryInstance() {
-        return getDefault(RosterIconFactory.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default route manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -536,7 +565,7 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default section manager. May not be the only instance.
      * @deprecated 4.5.1
@@ -544,84 +573,6 @@ public class InstanceManager {
     @Deprecated
     static public SectionManager sectionManagerInstance() {
         return getDefault(SectionManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal group manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalGroupManager signalGroupManagerInstance() {
-        return getDefault(SignalGroupManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal head manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalHeadManager signalHeadManagerInstance() {
-        return getDefault(SignalHeadManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal mast manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalMastManager signalMastManagerInstance() {
-        return getDefault(SignalMastManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal system manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalSystemManager signalSystemManagerInstance() {
-        return getDefault(SignalSystemManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default signal mast logic manager. May not be the only
-     *         instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public SignalMastLogicManager signalMastLogicManagerInstance() {
-        return getDefault(SignalMastLogicManager.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default preferences panel. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public TabbedPreferences tabbedPreferencesInstance() {
-        return getDefault(TabbedPreferences.class);
-    }
-
-    /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default transit manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public TransitManager transitManagerInstance() {
-        return getDefault(TransitManager.class);
     }
 
     /* ****************************************************************************
@@ -644,45 +595,12 @@ public class InstanceManager {
     /**
      * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default command station. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public CommandStation commandStationInstance() {
-        return getDefault(CommandStation.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
      * @return the default configure manager. May not be the only instance.
      * @deprecated 4.5.1
      */
     @Deprecated
     static public ConfigureManager configureManagerInstance() {
         return getDefault(ConfigureManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default shutdown manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ShutDownManager shutDownManagerInstance() {
-        return getDefault(ShutDownManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default catalog tree manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public CatalogTreeManager catalogTreeManagerInstance() {
-        return getDefault(CatalogTreeManager.class);
     }
 
     /**
@@ -716,21 +634,15 @@ public class InstanceManager {
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
     // store(p, TurnoutManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setTurnoutManager(TurnoutManager p) {
         log.debug(" setTurnoutManager");
-        ((jmri.managers.AbstractProxyManager) getDefault(TurnoutManager.class)).addManager(p);
-        //store(p, TurnoutManager.class);
-    }
-
-    /**
-     * @param p shutdown manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setShutDownManager(ShutDownManager p) {
-        store(p, ShutDownManager.class);
-        setDefault(ShutDownManager.class, p);
+        TurnoutManager apm = getDefault(TurnoutManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<Turnout>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: TurnoutManager default isn't an AbstractProxyManager<Turnout>");
+        }
     }
 
     static public void setThrottleManager(ThrottleManager p) {
@@ -750,7 +662,7 @@ public class InstanceManager {
 
     //
     // This updates the consist manager, which must be
-    // either built into instances of calling code or a 
+    // either built into instances of calling code or a
     // new service, before this can be deprecated.
     //
     static public void setCommandStation(CommandStation p) {
@@ -778,111 +690,260 @@ public class InstanceManager {
     }
 
     //
-    // This provides notification services, which 
-    // must be migrated before this method can be 
+    // This provides notification services, which
+    // must be migrated before this method can be
     // deprecated.
     //
     static public void setConsistManager(ConsistManager p) {
         store(p, ConsistManager.class);
-        notifyPropertyChangeListener(CONSIST_MANAGER, null, null);
+        getDefault().pcs.firePropertyChange(CONSIST_MANAGER, null, null);
     }
 
     // Needs to have proxy manager converted to work
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
     // store(p, TurnoutManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setLightManager(LightManager p) {
         log.debug(" setLightManager");
-        ((jmri.managers.AbstractProxyManager) getDefault(LightManager.class)).addManager(p);
-        //store(p, LightManager.class);
+        LightManager apm = getDefault(LightManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<Light>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: LightManager default isn't an AbstractProxyManager<Light>");
+        }
     }
 
     //
     // Note: Also provides consist manager services on store operation.
     // Do we need a new mechanism for this? Or just move this code to
-    // the 30+ classes that reference it? Or maybe have a default of the 
+    // the 30+ classes that reference it? Or maybe have a default of the
     // DccConsistManager that's smarter?
     //
-    //
-    // This provides notification services, which 
-    // must be migrated before this method can be 
-    // deprecated.
-    //
-    static public void setProgrammerManager(ProgrammerManager p) {
-        if (p.isAddressedModePossible()) {
-            store(p, AddressedProgrammerManager.class);
-        }
-        if (p.isGlobalProgrammerAvailable()) {
-            store(p, GlobalProgrammerManager.class);
-        }
+    static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
+        store(p, AddressedProgrammerManager.class);
 
         // Now that we have a programmer manager, install the default
         // Consist manager if Ops mode is possible, and there isn't a
         // consist manager already.
-        if (programmerManagerInstance().isAddressedModePossible()
+        if (getDefault(AddressedProgrammerManager.class).isAddressedModePossible()
                 && getNullableDefault(ConsistManager.class) == null) {
             setConsistManager(new DccConsistManager());
         }
-        notifyPropertyChangeListener(PROGRAMMER_MANAGER, null, null);
     }
 
     // Needs to have proxy manager converted to work
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
     // store(p, ReporterManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setReporterManager(ReporterManager p) {
         log.debug(" setReporterManager");
-        ((jmri.managers.AbstractProxyManager) getDefault(ReporterManager.class)).addManager(p);
-        //store(p, ReporterManager.class);
+        ReporterManager apm = getDefault(ReporterManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<Reporter>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: ReporterManager default isn't an AbstractProxyManager<Reporter>");
+        }
     }
 
     // Needs to have proxy manager converted to work
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
     // store(p, SensorManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setSensorManager(SensorManager p) {
         log.debug(" setSensorManager");
-        ((jmri.managers.AbstractProxyManager) getDefault(SensorManager.class)).addManager(p);
-        //store(p, SensorManager.class);
+        SensorManager apm = getDefault(SensorManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<Sensor>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: SensorManager default isn't an AbstractProxyManager<Sensor>");
+        }
     }
 
-    /* ****************************************************************************
-     *                   Old Style Setters - Deprecated and migrated, 
-     *                                       just here for other users
-     *
-     *                     Check Jython scripts before removing
-     * ****************************************************************************/
-    ///**
-    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault} directly.
-    // */
-    //@Deprecated
-    //static public void setConditionalManager(ConditionalManager p) {
-    //    store(p, ConditionalManager.class);
-    //    setDefault(ConditionalManager.class, p);
-    //}
-    ///**
-    // * @deprecated Since 3.7.4, use @{link #store} directly.
-    // */
-    //@Deprecated
-    //static public void setLogixManager(LogixManager p) {
-    //    store(p, LogixManager.class);
-    //}
-    ///**
-    // * @deprecated Since 3.7.4, use @{link #store} directly.
-    // */
-    //@Deprecated
-    //static public void setTabbedPreferences(TabbedPreferences p) {
-    //    store(p, TabbedPreferences.class);
-    //}
-    ///**
-    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
-    // * directly.
-    // */
-    // @Deprecated
-    // static public void setPowerManager(PowerManager p) {
-    //     store(p, PowerManager.class);
-    // }
-
     /* *************************************************************************** */
-    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
+    /**
+     * Default constructor for the InstanceManager.
+     */
+    public InstanceManager() {
+        ServiceLoader.load(InstanceInitializer.class).forEach((provider) -> {
+            provider.getInitalizes().forEach((cls) -> {
+                this.initializers.put(cls, provider);
+                log.debug("Using {} to provide default instance of {}", provider.getClass().getName(), cls.getName());
+            });
+        });
+    }
+
+    /**
+     * Get a list of all registered objects of type T.
+     *
+     * @param <T>  type of the class
+     * @param type class Object for type T
+     * @return a list of registered T instances with the manager or an empty
+     *         list
+     */
+    @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
+    @Nonnull
+    public <T> List<T> getInstances(@Nonnull Class<T> type) {
+        log.trace("Get list of type {}", type.getName());
+        if (managerLists.get(type) == null) {
+            managerLists.put(type, new ArrayList<>());
+            pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
+        }
+        return (List<T>) managerLists.get(type);
+    }
+
+    /**
+     * Call {@link jmri.Disposable#dispose()} on the passed in Object if and
+     * only if the passed in Object is not held in any lists.
+     *
+     * @param disposable the Object to dispose of
+     */
+    private void dispose(@Nonnull Disposable disposable) {
+        boolean canDispose = true;
+        for (List<?> list : this.managerLists.values()) {
+            if (list.contains(disposable)) {
+                canDispose = false;
+                break;
+            }
+        }
+        if (canDispose) {
+            disposable.dispose();
+        }
+    }
+
+    /**
+     * Clear all managed instances from this InstanceManager.
+     * <p>
+     * Realistically, JMRI can't ensure that all objects and combination of
+     * objects held by the InstanceManager are threadsafe. This call therefore
+     * defers to the GUI thread to become atomic and reduce risk.
+     */
+    public void clearAll() {
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            log.debug("Clearing InstanceManager");
+            managerLists.keySet().forEach((type) -> {
+                clear(type);
+            });
+        });
+        if (traceFileActive) {
+            traceFileWriter.println(""); // marks new InstanceManager
+            traceFileWriter.flush();
+        }
+    }
+
+    /**
+     * Clear all managed instances of a particular type from this
+     * InstanceManager.
+     * <p>
+     * Realistically, JMRI can't ensure that all objects and combination of
+     * objects held by the InstanceManager are threadsafe. This call therefore
+     * defers to the GUI thread to become atomic and reduce risk.
+     *
+     * @param type the type to clear
+     */
+    public void clear(@Nonnull Class<?> type) {
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            log.trace("Clearing managers of {}", type.getName());
+            getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
+                dispose((Disposable) o);
+            });
+            // Should this be sending notifications of removed instances to listeners?
+            setInitializationState(type, InitializationState.NOTSET); // initialization will have to be redone
+            managerLists.put(type, new ArrayList<>());
+        });
+    }
+
+    /**
+     * Get the default instance of the InstanceManager. This is used for
+     * verifying the source of events fired by the InstanceManager.
+     *
+     * @return the default instance of the InstanceManager, creating it if
+     *         needed
+     */
+    @Nonnull
+    public static synchronized InstanceManager getDefault() {
+        if (defaultInstanceManager == null) {
+            defaultInstanceManager = new InstanceManager();
+        }
+        return defaultInstanceManager;
+    }
+
+    // support checking for overlapping intialization
+    private enum InitializationState {
+        NOTSET, // synonymous with no value for this stored
+        NOTSTARTED,
+        STARTED,
+        FAILED,
+        DONE
+    }
+
+    static private final class StateHolder {
+
+        InitializationState state;
+        Exception exception;
+
+        StateHolder(InitializationState state, Exception exception) {
+            this.state = state;
+            this.exception = exception;
+        }
+    }
+
+    private void setInitializationState(Class<?> type, InitializationState state) {
+        log.trace("set state {} for {}", type, state);
+        if (state == InitializationState.STARTED) {
+            initState.put(type, new StateHolder(state, new Exception("Thread " + Thread.currentThread().getName())));
+        } else {
+            initState.put(type, new StateHolder(state, null));
+        }
+    }
+
+    private InitializationState getInitializationState(Class<?> type) {
+        StateHolder holder = initState.get(type);
+        if (holder == null) {
+            return InitializationState.NOTSET;
+        }
+        return holder.state;
+    }
+
+    private Exception getInitializationException(Class<?> type) {
+        StateHolder holder = initState.get(type);
+        if (holder == null) {
+            return null;
+        }
+        return holder.exception;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class);
+
+    // support creating a file with initialization summary information
+    private static final boolean traceFileActive = log.isTraceEnabled(); // or manually force true
+    private static final boolean traceFileAppend = false; // append from run to run
+    private static int traceFileIndent = 1; // used to track overlap, but note that threads are parallel
+    private static final String traceFileName = "instanceManagerSequence.txt";  // use a standalone name
+    private static java.io.PrintWriter traceFileWriter;
+
+    static {
+        java.io.PrintWriter tempWriter = null;
+        try {
+            tempWriter = (traceFileActive
+                    ? new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(traceFileName, traceFileAppend)))
+                    : null);
+        } catch (java.io.IOException e) {
+            log.error("failed to open log file", e);
+        } finally {
+            traceFileWriter = tempWriter;
+        }
+    }
+
+    static private void traceFilePrint(String msg) {
+        String pad = org.apache.commons.lang3.StringUtils.repeat(' ', traceFileIndent * 2);
+        String threadName = "[" + Thread.currentThread().getName() + "]";
+        String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', Math.max(25 - threadName.length(), 0));
+        String text = threadName + threadNamePad + "|" + pad + msg;
+        traceFileWriter.println(text);
+        traceFileWriter.flush();
+        log.trace(text);
+    }
 }

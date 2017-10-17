@@ -43,8 +43,8 @@ public class ConditionalVariable {
 
     private boolean _not = false;
     // Not a variable attribute, but retained as an artifact of previous releases.  This will be used
-    // as the default operator immediately to the left of this variable in the antecedent statement. 
-    // It may be over written by the antecedent statement in the Conditional to which this variable 
+    // as the default operator immediately to the left of this variable in the antecedent statement.
+    // It may be over written by the antecedent statement in the Conditional to which this variable
     // belongs.
     private int _opern = Conditional.OPERATOR_NONE;
     private int _type = Conditional.TYPE_NONE;
@@ -52,12 +52,13 @@ public class ConditionalVariable {
     private String _dataString = "";
     private int _num1 = 0;
     private int _num2 = 0;
+    private String _guiName = "";       // Contains the user name of the referenced conditional
     private NamedBeanHandle<?> _namedBean = null;
     //private NamedBeanHandle<Sensor> _namedSensorBean = null;
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     // Name clarification: Formerly was named '_triggersCalculation' because it controlled whether
     // a listener was installed for this device and thus trigger calcuation of the Conditional.
-    // Now named '_triggersActions' because listeners are always installed for activated Logix 
+    // Now named '_triggersActions' because listeners are always installed for activated Logix
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.
     private boolean _triggersActions = true;
@@ -72,6 +73,7 @@ public class ConditionalVariable {
         _type = type;
         _name = name;
         _triggersActions = trigger;
+        _guiName = "";
         try {
             int itemType = Conditional.TEST_TO_ITEM[_type];
             switch (itemType) {
@@ -277,11 +279,11 @@ public class ConditionalVariable {
 
     public NamedBean getBean() {
         if (_namedBean != null) {
-            return (NamedBean) _namedBean.getBean();
+            return _namedBean.getBean();
         }
         setName(_name); //ReApply name as that will create namedBean, save replicating it here
         if (_namedBean != null) {
-            return (NamedBean) _namedBean.getBean();
+            return _namedBean.getBean();
         }
         return null;
     }
@@ -297,12 +299,9 @@ public class ConditionalVariable {
     public void setDataString(String data) {
         _dataString = data;
         if (data != null && !data.equals("") && Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY) {
-            try {
-                NamedBean bean = InstanceManager.memoryManagerInstance().provideMemory(data);
+            NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
+            if (bean != null) {
                 _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
-            } catch (IllegalArgumentException ex) {
-                log.warn("Failed to provide memory \"{}\" in setDataString", data);
-                _namedBeanData = null;
             }
         }
     }
@@ -311,7 +310,7 @@ public class ConditionalVariable {
 
     public NamedBean getNamedBeanData() {
         if (_namedBeanData != null) {
-            return (NamedBean) _namedBeanData.getBean();
+            return _namedBeanData.getBean();
         }
         return null;
     }
@@ -331,6 +330,24 @@ public class ConditionalVariable {
     public void setNum2(int num) {
         _num2 = num;
     }
+
+     /**
+     * @since 4.7.4
+     * @return the GUI name for the referenced conditional.
+     */
+    public String getGuiName() {
+        return _guiName;
+    }
+
+    /**
+     * Set the GUI name for the conditional state variable.
+     * @since 4.7.4
+     * @param guiName The referenced Conditional user name.
+     */
+    public void setGuiName(String guiName) {
+        _guiName = guiName;
+    }
+
 
     /**
      * If change of state of this object causes a change of state of the
@@ -666,11 +683,13 @@ public class ConditionalVariable {
                         return (n1 >= n2);
                     case GREATER_THAN:
                         return (n1 > n2);
+                    default:
+                        log.error("Compare numbers: invalid compare case: {}", _num1);
+                        return false;
                 }
             } catch (NumberFormatException nfe) {
                 return false;   // n1 is a number, n2 is not
             }
-            log.error("Compare 'numbers': value1= " + value1 + ", to value2= " + value2);
         } catch (NumberFormatException nfe) {
             try {
                 Integer.parseInt(value2);
@@ -688,7 +707,7 @@ public class ConditionalVariable {
         if (_num1 == 0) { // for former code
             return compare == 0;
         }
-        switch (_num1) {   // fall through
+        switch (_num1) {
             case LESS_THAN:
                 if (compare < 0) {
                     return true;
@@ -713,6 +732,9 @@ public class ConditionalVariable {
                 if (compare > 0) {
                     return true;
                 }
+                break;
+            default:
+                // fall through
                 break;
         }
         return false;
@@ -755,8 +777,9 @@ public class ConditionalVariable {
                 return Bundle.getMessage("BeanNameOBlock"); // NOI18N
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 return Bundle.getMessage("EntryExit"); // NOI18N
+            default:
+                return "";
         }
-        return "";
     }
 
     /**
@@ -839,8 +862,10 @@ public class ConditionalVariable {
                 return Bundle.getMessage("SensorStateActive"); // NOI18N
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
+            default:
+                log.warn("Unhandled condition type: {}", t); // NOI18N
+                return "<none>";
         }
-        return "<none>";
     }
 
     /**
@@ -923,6 +948,9 @@ public class ConditionalVariable {
                 return rbx.getString("TypeEntryExitActive"); // NOI18N
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return rbx.getString("TypeEntryExitInactive"); // NOI18N
+            default:
+                // fall though
+                break;
         }
         return Bundle.getMessage("NONE");
     }
@@ -940,6 +968,9 @@ public class ConditionalVariable {
                 return rbx.getString("GreaterOrEqual"); // NOI18N
             case GREATER_THAN:
                 return rbx.getString("GreaterThan"); // NOI18N
+            default:
+                // fall through
+                break;
         }
         return ""; // NOI18N
     }
@@ -957,6 +988,8 @@ public class ConditionalVariable {
                 return ">="; // NOI18N
             case GREATER_THAN:
                 return ">"; // NOI18N
+            default:
+                break;
         }
         return ""; // NOI18N
     }
@@ -1040,7 +1073,7 @@ public class ConditionalVariable {
                 }
             case Conditional.ITEM_TYPE_CONDITIONAL:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("BeanNameConditional"), getName(), type}); // NOI18N
+                        new Object[]{Bundle.getMessage("BeanNameConditional"), getGuiName(), type}); // NOI18N
             case Conditional.ITEM_TYPE_WARRANT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{rbx.getString("WarrantRoute"), getName(), type});
@@ -1057,9 +1090,12 @@ public class ConditionalVariable {
                         new Object[]{Bundle.getMessage("EntryExit"), getBean().getUserName(), type}); // NOI18N
             case Conditional.TYPE_NONE:
                 return getName() + " type " + type;
+            default:
+                // fall through
+                break;
         }
         return super.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalVariable.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalVariable.class);
 }

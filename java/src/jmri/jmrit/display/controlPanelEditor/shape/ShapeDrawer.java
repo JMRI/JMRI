@@ -2,25 +2,22 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2012
- *
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class ShapeDrawer {
 
-    protected ControlPanelEditor _editor;
+    private Editor _editor;
     private DrawFrame _drawFrame;
     private PositionableShape _currentSelection;
 
-    public ShapeDrawer(ControlPanelEditor ed) {
+    public ShapeDrawer(Editor ed) {
         _editor = ed;
     }
 
@@ -29,101 +26,82 @@ public class ShapeDrawer {
 
         JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Rectangle")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newRectangle();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newRectangle();
         });
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("roundRect")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newRoundRectangle();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newRoundRectangle();
         });
 
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Polygon")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newPolygon();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newPolygon();
         });
 
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Circle")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newCircle();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newCircle();
         });
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Ellipse")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                newEllipse();
-            }
+        shapeItem.addActionListener((ActionEvent event) -> {
+            newEllipse();
         });
 
         return drawMenu;
     }
 
     private void newRectangle() {
-        if (_drawFrame == null) {
-            _drawFrame = new DrawRectangle("newShape", "Rectangle", this);
-        } else {
-            _drawFrame.toFront();
+        if (makeNewShape()) {
+            _drawFrame = new DrawRectangle("newShape", "Rectangle", null);
         }
     }
 
     private void newRoundRectangle() {
-        if (_drawFrame == null) {
-            _drawFrame = new DrawRoundRect("newShape", "roundRect", this);
-        } else {
-            _drawFrame.toFront();
+        if (makeNewShape()) {
+            _drawFrame = new DrawRoundRect("newShape", "roundRect", null);
         }
     }
 
     private void newPolygon() {
-        if (_drawFrame == null) {
-            _drawFrame = new DrawPolygon("newShape", "Polygon", this);
-        } else {
-            _drawFrame.toFront();
+        if (makeNewShape()) {
+            _drawFrame = new DrawPolygon("newShape", "Polygon", null);
         }
     }
 
     private void newCircle() {
-        if (_drawFrame == null) {
-            _drawFrame = new DrawCircle("newShape", "Circle", this);
-        } else {
-            _drawFrame.toFront();
+        if (makeNewShape()) {
+            _drawFrame = new DrawCircle("newShape", "Circle", null);
         }
     }
 
     private void newEllipse() {
-        if (_drawFrame == null) {
-            _drawFrame = new DrawEllipse("newShape", "Ellipse", this);
-        } else {
-            _drawFrame.toFront();
+        if (makeNewShape()) {
+            _drawFrame = new DrawEllipse("newShape", "Ellipse", null);
         }
     }
-
-    protected void setDrawFrame(DrawFrame f) {
-        _drawFrame = f;
+    
+    private boolean makeNewShape() {
+        if (_drawFrame != null) {
+            if (_drawFrame._shape == null) {
+                _drawFrame.dispose();
+                return true;
+            } else {
+                _drawFrame.toFront();
+                _drawFrame.setVisible(true);
+                return false;
+            }
+        } else {
+            return true;
+        }
     }
-
-    protected void closeDrawFrame(DrawFrame f) {
+    
+    protected void closeDrawFrame() {
         _drawFrame = null;
-        _editor.resetEditor();
-    }
-
-    protected ControlPanelEditor getEditor() {
-        return _editor;
     }
 
     public void paint(Graphics g) {
@@ -132,47 +110,49 @@ public class ShapeDrawer {
         }
     }
 
+    ///////////////////////////// Mouse /////////////////////////////
     /**
-     * ************************** Mouse ************************
-     */
-    /**
-     * *** return true if creating or editing **
+     * @param event the event to process
+     * @param pos   the item to check
+     * @return true if creating or editing; false otherwise
      */
     public boolean doMousePressed(MouseEvent event, Positionable pos) {
         if (_drawFrame instanceof DrawPolygon) {
-            ((DrawPolygon)_drawFrame).anchorPoint(event.getX(), event.getY());
+            ((DrawPolygon) _drawFrame).anchorPoint(event.getX(), event.getY());
         }
         if (pos instanceof PositionableShape && _editor.isEditable()) {
             if (!pos.equals(_currentSelection)) {
                 if (_currentSelection != null) {
-                    _currentSelection.removeHandles();
+                    _currentSelection.removeHandles();                        
+                }
+                if (_drawFrame != null && _drawFrame._shape == null) {
+                    // creation of a shape is in progress.  Don't change _drawFrame
+                    return false;
                 }
                 _currentSelection = (PositionableShape) pos;
+                _drawFrame = _currentSelection._editFrame;
                 _currentSelection.drawHandles();
             }
             return true;
         }
         if (_currentSelection != null) {
-            _currentSelection.removeHandles();
+            _currentSelection.removeHandles();                        
             _currentSelection = null;
         }
         return false;
     }
 
-    public boolean doMouseReleased(Positionable selection, MouseEvent event) {
-        if (_drawFrame != null && _drawFrame._shape == null) {
-            if (_drawFrame.makeFigure(event)) {
-                _editor.resetEditor();
-            }
-            return true;
+    public boolean doMouseReleased(Positionable selection, MouseEvent event, Editor ed) {
+        if (_drawFrame != null) {
+            _drawFrame.makeFigure(event, ed);
         }
         return false;
     }
 
-    public boolean doMouseClicked(MouseEvent event) {
+    public boolean doMouseClicked(MouseEvent event, Editor ed) {
         if (_drawFrame != null) {
-            if (_drawFrame instanceof DrawPolygon && event.getClickCount()>1) {
-                ((DrawPolygon)_drawFrame).setEditing(true);
+            if (_drawFrame instanceof DrawPolygon && event.getClickCount() > 1) {
+                ((DrawPolygon) _drawFrame).makeShape(event, ed);
             }
             return true;
         }

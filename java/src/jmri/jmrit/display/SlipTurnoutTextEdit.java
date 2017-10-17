@@ -56,7 +56,7 @@ public class SlipTurnoutTextEdit extends JmriJFrame {
         super.windowClosed(e);
     }
 
-    public void initComponents(SlipTurnoutIcon l, String name) throws Exception {
+    public void initComponents(SlipTurnoutIcon l, String name) {
         pl = l;
 
         // the following code sets the frame's initial state

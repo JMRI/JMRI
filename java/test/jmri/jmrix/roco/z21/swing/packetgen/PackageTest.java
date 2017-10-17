@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    PacketGenActionTest.class,
-   PacketGenFrameTest.class
+   PacketGenFrameTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.roco.z21.swing.packetgen package.
@@ -31,6 +32,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

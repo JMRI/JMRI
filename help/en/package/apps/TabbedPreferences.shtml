@@ -24,7 +24,7 @@
   <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
+    <p id="mainContent">
       <h1>JMRI: Preferences Pane</h1>The Preferences pane is where
       you configure the basic operation of your JMRI application.
 
@@ -70,9 +70,10 @@
       <h2>Connections</h2>You can select any of the various JMRI
       layout Connections here.
 
-      <p><a href="images/Ops_SetConnection214.png"><img src=
-      "images/Ops_SetConnection214.png" height="222" width="423"
-      align="right" alt="JMRI v2.14 Connection Prefs tab"></a> Each
+      <p><a href="../../html/setup/images/PrefsConnections_en.png"><img src=
+      "../../html/setup/images/PrefsConnections_en.png" height="195" width="425"
+      align="right" alt="JMRI v4 Connection Prefs tab"></a>
+      Each
       connection has its own unique tab. To get started, first
       select your DCC System Manufacturer, followed by the type of
       Connection that you are using. You will then be presented
@@ -95,20 +96,25 @@
       "../../html/hardware/index.shtml">Hardware Help
       pages</a>.</p>
 
-      <p>Remember to press <strong>Save</strong>! <a href=
-      "images/JMRI_PrefsDefaults.png"><img src=
-      "images/JMRI_PrefsDefaults.png" height="222" width="419"
-      align="right" alt="JMRI v2.14 Defaults Prefs tab"></a>
-      <a name="Defaults" id="Defaults"></a></p>
+      <p>Remember to press <strong>Save</strong>!</p>
 
-      <h2>Defaults</h2>If you are using multiple connections, e.g.
-      a LocoNet Connection and a MERG Connection, the Defaults pane
-      lets you select which one is connected to e.g. the CV
-      programmer and the Command Station you want to use. A second
-      Connection of the same type will have the number (2) added in
-      its name and its System-specific menu. <a name=
-      "FileLocations" id="FileLocations"></a>
+      <a name="Defaults" id="Defaults"></a>
+      <h2 style="float:clear">Defaults</h2>
+      <a href="images/JMRI_PrefsDefaults.png">
+          <img src="images/JMRI_PrefsDefaults.png" height="222" width="419"
+               align="right" alt="JMRI v2.14 Defaults Prefs tab">
+      </a>
+      <p>If you are using multiple connections, e.g. a LocoNet Connection and a
+          MERG Connection, the Defaults pane lets you select which connection
+          you want to use for a particular purpose.</p>
+      <p>The Internal connection is the default connection, however, since this
+          is almost always undesirable, JMRI applications will notify you if the
+          Internal connection is the default for every purpose. To silence this
+          notification, edit the profile properties, setting the property
+          <code>jmri-managers.allInternalDefaults</code> to <em>true</em>.</p>
 
+
+      <a name="FileLocations" id="FileLocations"></a>
       <h2>File Locations</h2>These allow you to set the default
       location for where scripts and user files are loaded and
       saved to.
@@ -191,7 +197,7 @@
         <dt>GUI</dt>
 
         <dd>
-          These radio boxes allow you to select how the program
+          A row of radio boxes allow you to select how the program
           looks. The available choices depend on what kind of
           computer you have, and not all of the following may be
           available:
@@ -209,7 +215,18 @@
             possible like a regular Windows application.</li>
 
             <li>Mac OS X - only available on MacOS, this makes the
-            program look like a Macintosh application</li>
+            program look like a Macintosh application.</li>
+          </ul>
+
+          <br>
+
+          In addition, this tab lets you set:
+          <ul>
+          <li>The font size of the GUI.</li>
+          <li>Whether you want to use graphics to show the state of turnouts,
+          lights, sensors and blocks in the state column of their tables.
+          <span class="since">since 4.7.4</span></li>
+          <li>How long tooltips (where available) should be shown.</li>
           </ul>
         </dd>
 
@@ -245,11 +262,11 @@
       <h2>Messages</h2>This allows you to change the way that
       information and warning messages are displayed in JMRI.<br>
       It will also allow you to configure a default responses and
-      the question being displayed. <a name="Roster" id=
-      "Roster"></a>
+      the question being displayed.
 
+      <a name="Roster" id="Roster"></a>
       <h2>Roster</h2>
-      
+
       <a href="images/PrefsRoster47.png"><img src=
       "images/PrefsRoster47.png" height="184" width="416" align=
       "right" alt="JMRI v4.7 Roster Prefs tab"></a>
@@ -276,48 +293,48 @@
               they're empty; some people would prefer not to see them,
               so they don't keep trying to open and look at them. We provide
               this preference so you can choose.
-              
+
           <li>"Show CV numbers in tool tips": If you allow the mouse
                 cursor to "hover" over a value in DecoderPro, a tool tip
                 pops up with more information.  Checking this box
                 includes the CV number in that tool tip.  Some people
                 want to know the CV number, other people want DecoderPro
-                to handle CVs entirely invisibly, 
+                to handle CVs entirely invisibly,
                 so we provide an option to let you choose.
-                
-          <li>"Allow caching when writing index CVs for read or write 
+
+          <li>"Allow caching when writing index CVs for read or write
                 operations": Some decoders require that specific values
-                be written to "index" CVs before certain other locations can be 
+                be written to "index" CVs before certain other locations can be
                 read or written. QSI and ESU decoders use this extensively.
                 When doing a lot of reads or writes, for example an entire
                 decoder, the index CVs can end up being written with the
-                same value many times in a row.  When selected, this 
-                option allows DecoderPro to skip (save time on) writes 
-                of the same index value that are otherwise redundant.  
+                same value many times in a row.  When selected, this
+                option allows DecoderPro to skip (save time on) writes
+                of the same index value that are otherwise redundant.
                 Don't use this (or use it only in combination with the
                 following operation) if you have reliability problems
                 writing decoders, as proper operation of this option depends on reliable writes.
                 <p>
                 More detail:  A single bad write with this option off trashes
-                one CV; writing a bad index with this option off trashes the CV that was supposed 
+                one CV; writing a bad index with this option off trashes the CV that was supposed
                 to be written and the wrong one addressed by the bad write,
-                but the write to the next CV in the sequence is OK due to the 
+                but the write to the next CV in the sequence is OK due to the
                 redundant next write of the index; writing a bad
-                index with this option on leaves that badly-written index value in place, so writes a sequence 
+                index with this option on leaves that badly-written index value in place, so writes a sequence
                 of bad CV values. Bottom line:  If working with a complicated
                 decoder with lots of CVs, you need a reliable programming connection, see next option.
-                
-          <li>"When possible, confirm CV writes by following this with a read": 
+
+          <li>"When possible, confirm CV writes by following this with a read":
                When selected, DecoderPro will read each CV after writing it.
                If the value doesn't match, it marks the write as failed.
-               <p>If you're having intermittent trouble writing to a decoder, this 
-               may improve reliability. If DecoderPro is never able to properly write, 
+               <p>If you're having intermittent trouble writing to a decoder, this
+               may improve reliability. If DecoderPro is never able to properly write,
                this won't help; it only helps if the problem is occasional,
                and retrying will get it right more often than not.
                <p>Some DCC systems will check for a "write acknowledge pulse"
-               from the decoder before declaring the write a success.  
-               Those are almost as reliable as this, and much faster.  
-               So if you're using one of those DCC systems, this might 
+               from the decoder before declaring the write a success.
+               Those are almost as reliable as this, and much faster.
+               So if you're using one of those DCC systems, this might
                not be needed.
                On the other hand, if you're using a DCC system that
                "writes blind", with no check, this might be really useful.
@@ -325,9 +342,9 @@
                the locomotive off the track.  If DecoderPro thinks the write
                succeeded, then the DCC system is writing blindly, without checking.
                <p>This doesn't help (but doesn't hurt) if you can't read back
-               the decoder. Most DCC systems can't read during ops mode 
+               the decoder. Most DCC systems can't read during ops mode
                programming, for example. Some command stations (Digitrax DB150)
-               can't read from the decoder. In those cases, this option 
+               can't read from the decoder. In those cases, this option
                just asks the command station to write without reading back.
           </ul>
           These options are stored with the preferences for future use.  A new DecoderPro Roster window
@@ -360,11 +377,12 @@
         </dd>
       </dl><a name="Throttle" id="Throttle"></a>
 
-      <h2>Throttle</h2>This Preference pane tab lets you select
+      <h2>Throttle</h2>
+      <p>This Preference pane tab lets you select
       whether the extended Throttle features are available, and
-      which ones can be used. <a name="WiThrottle" id=
-      "WiThrottle"></a>
+      which ones can be used.</p>
 
+      <a name="WiThrottle" id="WiThrottle"></a>
       <h2>WiThrottle</h2>
 
       <dl>
@@ -429,20 +447,15 @@
       then restart WiThrottle) as instructed by the dialog.
       <a name="Profiles" id="Profiles"></a>
 
-      <h2>Config Profiles</h2>JMRI Configuration Profiles make it
+      <h2>Config Profiles</h2>
+      <p>JMRI Configuration Profiles make it
       easy to set up your JMRI applications to work with different
       setups. Each profile specifies one set of Preferences. You
-      can then select which one to use.
+      can then select which one to use.</p>
 
       <p>For more information, see the <a href=
       "../../html/setup/profiles.shtml">Configuration Profiles</a>
       help page. <a name="RailroadName" id="RailroadName"></a></p>
-
-      <h2>Railroad Name</h2>
-
-      <p>The Railroad Name tab lets you specify the name of your
-      model railroad (module), as it is used by several server
-      protocols.</p><a name="JSONServer" id="JSONServer"></a>
 
       <h2>JSON Server</h2>
 
@@ -456,9 +469,16 @@
       whether the connection has failed via a heartbeat
       message.</p><a name="WebServer" id="WebServer"></a>
 
-      <h2>Web Server</h2>The JMRI Web Server lets you connect to
+      <h2>Railroad Name</h2>
+
+      <p>The Railroad Name tab lets you specify the name of your
+      model railroad (module), as it is used by several server
+      protocols.</p><a name="JSONServer" id="JSONServer"></a>
+
+      <h2>Web Server</h2>
+      <p>The JMRI Web Server lets you connect to
       JMRI from a web browser on your computer, tablet or phone and
-      work with your railroad.
+      work with your railroad.</p>
 
       <p>This tab lets you control what the web server provides.
       For more information, see the <a href=
@@ -486,60 +506,126 @@
       (usually left at default).</p><a name="Warrants" id=
       "Warrants"></a>
 
-      <h2>Warrants</h2>This tab sets parameters used in computing
-      routes for <a href=
+      <h2>Warrants</h2>
+      <p>This tab sets parameters used in computing
+      routes and speed changes for <a href=
       "../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>
       and for controlling the events that warranted trains may
-      encounter.
+      encounter.</p>
 
-      <h3>Speed Map</h3>
-
+      <h3>Speed Name Tables</h3>
       <p>When an automatically running train encounters a Signal
-      that calls for a speed change, or progress is blocked by
-      occupancy ahead, the speed map table is used to make the
-      necessary speed change. Other parameters control the way the
-      speed change is ramped.</p>
+      aspect that calls for a speed change, the speed map table 
+      provides the information of what the speed change should
+      be. Other parameters control the way the
+      speed change is made.</p>
 
-      <p>The Speed Map maps the speed names found in the aspects
+      <h2>Aspect Speed Name Table</h2>
+      <p>The Aspect Speed Name Table maps the speed names found in the aspects
       definition of a signal system to a value. It is important
       that all the speed names used in your signal system be listed
-      in the Speed Map Table. The value associated with a speed
-      name can be interpreted in four different ways: As a
+      in the Speed Map Table.  Rows can be added or deleted to conform
+      to the Signal System aspects.</p>
+      
+      <p>The value associated with a speed
+      name can be interpreted in four different ways and there are 
+      four radio buttons for you to choose the meaning
+      of the value.</p>
+      <ul>
+        <li><b>Percent Normal</b> - the value is a
       percentage of the current throttle setting as recorded or set
-      by an NXWarrant ("PercentNormal"), or as a percentage of the
-      full throttle setting ("PercentFullThrottle"). The last two
-      ways interpret the value as a scale track speed; Miles per
-      Hour or Kilometers per Hour. Use the radio buttons to select
-      how the code should interpret the Speed Map.</p>
+      by an NXWarrant.  That is a percentage of the "Normal" speed.</li>
+        <li><b>Percent Throttle</b> - the value is a percentage of the
+        full throttle setting.</li>
+        <li><b>Miles per hour</b> - the value is an absolute
+        scale speed in miles per hour.</li>
+        <li><b>Kilometers per hour</b> - the value is an absolute
+        scale speed in kilometers per hour.</li>
+      </ul>
+      <p>Choosing the interpretation is a matter of what you want to
+      happen when a warranted train reaches a signal or block aspect.
+      Percent Normal will always make the train change speed and
+      Percent Throttle most likely will also.  The last two choices
+      are the most prototypical, but if the train is already within
+      the speed limit called for, no speed change will occur.</p>
 
-      <p>The Head Appearance Map is used when Signal Heads are used
-      as signals. It maps the appearance to a speed name which in
-      turn is mapped by the Speed Map table.</p>
+      <h2>Head Appearance Name Table</h2>
+      <p>The <b>Head Appearance Table</b> is used when Signal Heads
+      are used as signals. It maps signal head appearance names 
+      to aspect speed name which in turn are mapped by the Aspect
+      Speed Name table to values that interpret speed limits.</p>
 
-      <p>It is important that the correct scale is chosen and that
-      the value of "Throttle Setting/Speed Factor" is reasonable
-      for engine addresses that run on warrants. The factor adjusts
-      the throttle setting to be scale track speed. The Throttle
-      Factor set here is the global default, but factors for
-      individual engine address can be determined with
-      NXWarrants.</p>
-
-      <p>The "Max Number of Blocks in Route" is the depth to which
+      <h3>Layout Scale and Search Depth</h3>
+      <p>It is important that the correct <b>Layout Scale</b> is
+      chosen since it is needed to convert throttle settings 
+      and track speeds to and from scale speeds.<br>
+      The <b>Max Number of Blocks in Route</b> is the depth to which
       JMRI will search for a route when defining a warrant. This is
       a global value that can be overridden when creating a
       warrant.</p>
 
-      <p>The remaining items on the panel are used when JMRI makes
-      a speed change due to a signal aspect or occupancy ahead. The
-      speed change is made with a series of incremental throttle
-      settings. "Ramp Step Time" is the duration of each step and
-      "Ramp Step Throttle Increment" is the amount of throttle
-      setting change.</p>
+      <h3>Ramping Speed changes</h3>
+      The smoothness for slow down and
+      speed up are done by stepping up and down with two "ramp"
+      parameters; the throttle increment per step and the time
+        interval of each step.  These two parameters are paired to
+        make a "stair step" pattern for changing speed.  
+        Generally, they are paired in that a small throttle increment
+        should be done in a short time interval and a large increment
+        in a longer time. When setting them, the time interval should
+        be long enough for the speed increment to complete given the 
+        momentum you have programmed into your decoders.
+	  <ul>
+        <li><b>Ramp Step throttle Increment</b>  This value is
+        a ratio of full throttle. Seven or eight speed steps of a
+        128 step throttle is an appropriate increment for a
+        locomotive with modest momentum. A value of 0.008 to 0.04 is
+        recommended. (0.0079 would be 1 step of a 128 step throttle)</li>
 
-      <p>For more information on Warrant preferences, see <a href=
-      "../jmri/jmrit/logix/Warrant.shtml#SpeedMap">About
-      Warrants</a> and follow its links. 
-      <!--#include virtual="/Footer" --></p>
+        <li><b>Ramp Step time</b> Depending how you have
+        configured momentum on your
+        locomotives, adjust this value so the speed change is 
+        completed within this period of time. Typically
+        corresponding to the above, 
+        300 to 1000 milliseconds would be appropriate.</li>
+      </ul>
+      <p>You should experiment by watching how NXWarrants start and end
+       or by issuing "Stop" and "Resume" commands to a recorded
+      warrant.</p>
+       
+      <h3>Throttle Factor</h3>
+      <p>The value of <b>Throttle Setting/Speed Factor</b>
+      along with <b>Layout Scale</b>
+      adjusts a throttle setting to be a layout track speed. 
+      The Throttle Factor set here is a global default.</p>
+       
+      <p>For more information on Warrant speed parameters, see
+      <a href="../jmri/jmrit/logix/speedChanges.shtml">Modifying
+      Warrant Speeds</a> and follow its links.</p>
+      
+      <h2>Merging Speed Profiles</h2>
+      <p>In Release 4.9.2 Warrant compute a track speed when traversing
+      a path with known length and known throttle setting.  These 
+      measurements are made for each address that is rub under a
+      warrant and are kept for the entire layout session.  When
+      JMRI is quit, at shutdown. These Session Speed Profiles can
+      be merged into their Roster Speed Profiles.  The following
+      choices are available at shutdown.</p>
+      <ul>
+        <li><b>Don't Merge</b> - Do not prompt and 
+        discard the Session Profiles and
+        leave the Roster Speed Profiles unchanged. </li>
+        <li><b>Prompt Merges</b> - At shutdown at dialog is presented
+        where you may choose which speed profiles shoud be merged and
+        which discarded.  The dialog allows you to view the profiles
+        for each address.  Displayed are: the current <b>Roster Speed
+        Profile</b>, the potential <b>Merged Speed Profile</b> and the
+        <b>Session Speed Profile</b>. (default)</li>
+        <li><b>Merge All</b> - Do not prompt and always merge all
+        Session Speed Profiles into the Roster Speed Profiles.</li>
+      </ul>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -17,6 +17,10 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
+     * @param s Human readable panel name
+     * @param wi window to place the new panel
+     * @param paneClass name of panel class, should be subclass of JmriPanel
+     * @param memo system connection memo
      */
     public NceNamedPaneAction(String s, WindowInterface wi, String paneClass, NceSystemConnectionMemo memo) {
         super(s, wi, paneClass);
@@ -48,5 +52,5 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceNamedPaneAction.class);
 }

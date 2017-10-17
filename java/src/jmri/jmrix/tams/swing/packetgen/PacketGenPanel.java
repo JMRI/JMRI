@@ -28,8 +28,11 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
         super();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
         {

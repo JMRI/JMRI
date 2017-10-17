@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,10 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame displaying the LIUSB configuration utility
- *
+ * Frame displaying the LIUSB configuration utility.
+ * <p>
  * This is a configuration utility for the LIUSB. It allows the user to set the
- * XPressNet Address and the port speed used to communicate with the LIUSB.
+ * XpressNet Address and the port speed used to communicate with the LIUSB.
  *
  * @author Paul Bender Copyright (C) 2009-2010
   */
@@ -29,13 +30,13 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
     protected XNetTrafficController tc = null;
 
     public LIUSBConfigFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super("LIUSB Configuration Utility");
+        super(Bundle.getMessage("MenuItemLIUSBConfigurationManager"));
         tc = memo.getXNetTrafficController();
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("Xpressnet address: "));
+        pane0.add(new JLabel(Bundle.getMessage("XNetAddressLabel")));
         pane0.add(addrBox);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
@@ -44,22 +45,23 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         pane2.add(readSettingsButton);
         pane2.add(writeSettingsButton);
         pane2.add(resetButton);
+        resetButton.setToolTipText(Bundle.getMessage("ResetDefaultsToolTip"));
         pane2.add(closeButton);
         getContentPane().add(pane2);
 
         // Initilize the Combo Boxes
         addrBox.setVisible(true);
-        addrBox.setToolTipText("Select the XpressNet address");
+        addrBox.setToolTipText(Bundle.getMessage("XNetAddressToolTip"));
         for (int i = 0; i < validXNetAddresses.length; i++) {
             addrBox.addItem(validXNetAddresses[i]);
         }
         addrBox.setSelectedIndex(32);
 
-        // and prep for display
-        pack();
-
         status.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(status);
+
+        // and prep for display
+        pack();
 
         // install read settings, write settings button handlers
         readSettingsButton.addActionListener(new ActionListener() {
@@ -93,36 +95,35 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
             @Override
             public void actionPerformed(ActionEvent a) {
                 resetLIUSBSettings();
-
             }
         }
         );
-
-        // add status
-        getContentPane().add(status);
 
         if (tc != null) {
             tc.addXNetListener(~0, this);
         } else {
             log.warn("No XpressNet connection, so panel won't function");
         }
-
     }
 
     boolean read = false;
 
     JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
 
-    JLabel status = new JLabel("");
+    JLabel status = new JLabel("    ");
 
-    JToggleButton readSettingsButton = new JToggleButton("Read from LIUSB");
-    JToggleButton writeSettingsButton = new JToggleButton("Write to LIUSB");
-    JToggleButton closeButton = new JToggleButton("Close");
-    JToggleButton resetButton = new JToggleButton("Reset to Factory Defaults");
+    JToggleButton readSettingsButton = new JToggleButton(Bundle.getMessage("LIUSBReadButton"));
+    JToggleButton writeSettingsButton = new JToggleButton(Bundle.getMessage("LIUSBWriteButton"));
+    JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+    JButton resetButton = new JButton(Bundle.getMessage("ButtonResetDefaults"));
 
-    protected String[] validXNetAddresses = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", ""};
+    protected String[] validXNetAddresses = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8",
+            "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23",
+            "24", "25", "26", "27", "28", "29", "30", "31", ""};
 
-    //Send new address to LIUSB
+    /**
+     * Send new address to LIUSB.
+     */
     void writeLIUSBSettings() {
         if (!(((String) addrBox.getSelectedItem()).equals(""))
                 && (String) addrBox.getSelectedItem() != null) {
@@ -134,7 +135,9 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         }
     }
 
-    //Send Information request to LIUSB
+    /**
+     * Send Information request to LI-USB.
+     */
     void readLIUSBSettings() {
         /* we request setting an out of range address 
          to get the current value. */
@@ -143,7 +146,9 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         tc.sendXNetMessage(msg, this);
     }
 
-    // listen for responces from the LI101
+    /**
+     * Listen for responces from the LI-USB.
+     */
     @Override
     public void message(XNetReply l) {
         // Check to see if this is an LI101 info request messgage, if it
@@ -153,26 +158,30 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
             if (l.getElement(1) == XNetConstants.LI101_REQUEST_ADDRESS) {
                 // The third element is the address
                 addrBox.setSelectedIndex(l.getElement(2));
-                status.setText("Address" + l.getElement(2) + "recieved from LIUSB");
+                status.setText(Bundle.getMessage("LIUSBReceivedStatus", l.getElement(2)));
             }
         }
     }
 
-    // listen for the messages to the LIUSB
+    /**
+     * Listen for the messages to the LI-USB.
+     */
     @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+        log.debug("Notified of timeout on message {}", msg.toString());
     }
 
-    // For now, reset just resets the screen to factory defaults
-    // default values is 30 for the address
+    /**
+     * For now, reset just reset the screen to factory defaults.
+     * Default values is 30 for the address
+     */
     void resetLIUSBSettings() {
         addrBox.setSelectedIndex(30);
     }
@@ -183,6 +192,6 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBConfigFrame.class);
 
 }

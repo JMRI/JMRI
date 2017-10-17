@@ -137,6 +137,7 @@ public abstract class MrcTrafficController implements MrcInterface {
     /**
      * Monitor the number of MRC messaages received across the interface. This
      * includes the messages this client has sent.
+     * @return count of messages received
      */
     public int getReceivedMsgCount() {
         return receivedMsgCount;
@@ -146,6 +147,7 @@ public abstract class MrcTrafficController implements MrcInterface {
     /**
      * Monitor the number of bytes in MRC messaages received across the
      * interface. This includes the messages this client has sent.
+     * @return count of bytes in received messages
      */
     public int getReceivedByteCount() {
         return receivedByteCount;
@@ -154,6 +156,7 @@ public abstract class MrcTrafficController implements MrcInterface {
 
     /**
      * Monitor the number of MRC messaages transmitted across the interface.
+     * @return count of messages sent
      */
     public int getTransmittedMsgCount() {
         return transmittedMsgCount;
@@ -180,7 +183,7 @@ public abstract class MrcTrafficController implements MrcInterface {
         return adaptermemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcTrafficController.class);
 }
 
 

@@ -55,6 +55,9 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     *
+     * @param length length for new message
+     * @return null since this method should be over-ridden
      */
     public IEEE802154Message getIEEE802154Message(int length) {
         return null;
@@ -204,7 +207,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      */
     //protected AbstractMRReply newReply() {return new IEEE802154Reply();}
 
-    /*
+    /**
      * Build a new IEEE802154 Node.
      * Must be implemented by derived classes
      * @return new IEEE802154Node.
@@ -215,6 +218,8 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      * Public method to identify a SerialNode from its node address Note: 'addr'
      * is the node address, numbered from 0. Returns 'null' if a SerialNode with
      * the specified address was not found
+     * @param addr hex string for address
+     * @return null if not found, else serial node id
      */
     synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(String addr) {
         log.debug("String getNodeFromAddress called with " + addr);
@@ -225,7 +230,10 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Public method to identify a SerialNode from its node address Note: 'addr'
      * is the node address, numbered from 0. Returns 'null' if a SerialNode with
-     * the specified address was not found
+     * the specified address was not found.
+     *
+     * @param ia int array of node address
+     * @return null if not found, otherwise serial address
      */
     synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(int ia[]) {
         if(logDebug) {
@@ -245,7 +253,10 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Public method to identify a SerialNode from its node address Note: 'addr'
      * is the node address, numbered from 0. Returns 'null' if a SerialNode with
-     * the specified address was not found
+     * the specified address was not found.
+     *
+     * @param ba array of bytes in hex address
+     * @return null if not found, otherwise serial node id
      */
     synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(byte ba[]) {
         if(logDebug) {
@@ -283,6 +294,8 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Public method to delete a node by the string representation of it's
      * address.
+     *
+     * @param nodeAddress text of hex node address
      */
     public synchronized void deleteNode(String nodeAddress) {
         // find the serial node

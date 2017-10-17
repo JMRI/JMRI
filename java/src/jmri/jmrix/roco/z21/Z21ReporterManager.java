@@ -1,9 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.Reporter;
 import jmri.InstanceManager;
 import jmri.RailComManager;
+import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,6 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
      * Create a new Z21ReporterManager
      * @param memo an instance of Z21SystemConnectionMemo this manager 
      *             is associated with.
-     *
      */
 @SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE",
             justification = "False positive from findbugs.  The Value may not be null if there is another railcom manager installed")
@@ -65,6 +64,6 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
         super.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class);
 
 }

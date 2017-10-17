@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from XNet messages. The "XNetInterface" side
  * sends/receives XNetMessage objects. The connection to a XNetPortController is
- * via a pair of *Streams, which then carry sequences of characters for
+ * via a pair of Streams, which then carry sequences of characters for
  * transmission.
  * <P>
  * Messages come to this via the main GUI thread, and are forwarded back to
@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author Bob Jacobsen Copyright (C) 2001
- *
  */
 public class XNetPacketizer extends XNetTrafficController {
 
@@ -34,9 +33,10 @@ public class XNetPacketizer extends XNetTrafficController {
     }
 
 // The methods to implement the XNetInterface
+
     /**
      * Forward a preformatted XNetMessage to the actual interface.
-     *
+     * <p>
      * Checksum is computed and overwritten here, then the message is converted
      * to a byte array and queue for transmission
      *
@@ -67,11 +67,10 @@ public class XNetPacketizer extends XNetTrafficController {
     }
 
     /**
-     * Check to see if PortController object can be sent to. returns true if
-     * ready, false otherwise May throw an Exception.
+     * {@inheritDoc}
      */
     @Override
-    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
+    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) {
         if( !(p instanceof XNetPortController)) {
             return false;
         }
@@ -79,12 +78,11 @@ public class XNetPacketizer extends XNetTrafficController {
             ((XNetPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("XPressNet port not ready to receive");
-            }
+            log.debug("XpressNet port not ready to receive");
             return false;
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetPacketizer.class);
+
 }

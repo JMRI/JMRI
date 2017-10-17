@@ -63,7 +63,32 @@
           <li>Choose "DIRECT" in the Feedback Mode chooser</li>
           <li>Click "OK"</li>
       </ol>
-      
+
+        <table>
+            <tbody><tr>
+                <th>Entry</th>
+                <th>Meaning</th>
+                <th>makes System Name</th>
+                <th>Mask</th>
+                <th>Equivalent</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>ID in internal DCC++ table</td>
+                <td>DCCPP12</td>
+                <td>integer</td>
+                <td> </td>
+                <td>0</td>
+                <td>32767</td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+        based on information from the Hardware help pages
+        by Egbert Broerse @silverailscolo July 2017 -->
+
       <h3>3: Configure the Base Station</h3>
       
       <p>For Direct mode control, there is no Base Station configuration needed.</p>

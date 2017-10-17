@@ -27,7 +27,7 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
         if (memo != null) {
             return memo.getUserName() + " Command Monitor";
         }
-        return "ECOS Command Monitor";
+        return "ECoS Command Monitor";
     }
 
     @Override
@@ -90,7 +90,7 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
     static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
 
         public Default() {
-            super("ECOS Command Monitor",
+            super("ECoS Command Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     EcosMonPane.class.getName(),
                     jmri.InstanceManager.getDefault(EcosSystemConnectionMemo.class));

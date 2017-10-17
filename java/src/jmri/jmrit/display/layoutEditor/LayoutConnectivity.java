@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panel. Allowed values (using Path object definitions) are:
  * Path.NORTH (up on panel) Path.SOUTH (down on panel) Path.EAST (right on
  * panel) Path.WEST (left on panel) and points in between: Path.NORTH +
- * Path.EAST Path.NORTH + Path.WEST Path.SOUTH + Path.EAST Path.SOUTH +
+ * Path.EAST Path.NORTH_WEST, Path.SOUTH_EAST Path.SOUTH +
  * Path.WEST
  * <P>
  * The connected object in the first block is usually a track segment. This
@@ -65,22 +65,37 @@ public class LayoutConnectivity {
     final public static int XOVER_BOUNDARY_CD = 2;  // continuing
     final public static int XOVER_BOUNDARY_AC = 3;  // xed over
     final public static int XOVER_BOUNDARY_BD = 4;  // xed over
+    final public static int XOVER_BOUNDARY_AD = 1;  // continuing (slips)
+    final public static int XOVER_BOUNDARY_BC = 2;  // continuing (slips)
 
     // instance variables
-    LayoutBlock block1 = null;
-    LayoutBlock block2 = null;
-    int direction = Path.NONE;
-    TrackSegment track1 = null;
-    Object connect2 = null;
-    int typeConnect2 = 0;
-    LayoutTurnout xover = null;
-    int xoverBoundaryType = NONE;
-    PositionablePoint anchor = null;
+    private LayoutBlock block1 = null;
+    private LayoutBlock block2 = null;
 
-    // this should only be used for debugging…
+    private int direction = Path.NONE;
+    private TrackSegment track1 = null;
+
+    private LayoutTrack connect2 = null;
+    private int typeConnect2 = 0;
+
+    private LayoutTurnout xover = null;
+    private int xoverBoundaryType = NONE;
+
+    private PositionablePoint anchor = null;
+
+    // this should only be used for debugging...
     public String toString() {
-        return "between " + block1 + " and "
-                + block2 + " in direction " + Path.decodeDirection(direction);
+        String result = "between " + block1 + " and " + block2 + " in direction " + Path.decodeDirection(direction);
+        if (track1 != null) {
+            result = result + ", track: " + track1.getId();
+        }
+        if (connect2 != null) {
+            result = result + ", connect2: " + connect2.getId() + ", type2: " + typeConnect2;
+        }
+        if (xover != null) {
+            result = result + ", xover: " + xover.getId() + ", xoverBoundaryType: " + xoverBoundaryType;
+        }
+        return result;
     }
 
     /**
@@ -99,38 +114,14 @@ public class LayoutConnectivity {
     }
 
     public int getReverseDirection() {
-        if (direction == Path.NORTH) {
-            return (Path.SOUTH);
-        }
-        if (direction == Path.SOUTH) {
-            return (Path.NORTH);
-        }
-        if (direction == Path.EAST) {
-            return (Path.WEST);
-        }
-        if (direction == Path.WEST) {
-            return (Path.EAST);
-        }
-        if (direction == (Path.NORTH + Path.WEST)) {
-            return (Path.SOUTH + Path.EAST);
-        }
-        if (direction == (Path.NORTH + Path.EAST)) {
-            return (Path.SOUTH + Path.WEST);
-        }
-        if (direction == (Path.SOUTH + Path.WEST)) {
-            return (Path.NORTH + Path.EAST);
-        }
-        if (direction == (Path.SOUTH + Path.EAST)) {
-            return (Path.NORTH + Path.WEST);
-        }
-        return (Path.NONE);
+        return Path.reverseDirection(direction);
     }
 
     public boolean setDirection(int dir) {
         if ((dir == Path.NORTH) || (dir == Path.SOUTH)
                 || (dir == Path.EAST) || (dir == Path.WEST)
-                || (dir == (Path.NORTH + Path.WEST)) || (dir == (Path.NORTH + Path.EAST))
-                || (dir == (Path.SOUTH + Path.WEST)) || (dir == (Path.SOUTH + Path.EAST))) {
+                || (dir == Path.NORTH_WEST) || (dir == (Path.NORTH_EAST))
+                || (dir == (Path.SOUTH_WEST)) || (dir == (Path.SOUTH_EAST))) {
             direction = dir;
             return (true);
         }
@@ -139,14 +130,14 @@ public class LayoutConnectivity {
         return (false);
     }
 
-    public void setConnections(TrackSegment t, Object o, int type, PositionablePoint p) {
+    public void setConnections(TrackSegment t, LayoutTrack o, int type, PositionablePoint p) {
         track1 = t;
         if (t == null) {
             log.error("null track1 when setting up LayoutConnectivity");
         }
         connect2 = o;
         if (o == null) {
-            log.error("null connect object when setting up LayoutConnectivity");
+            log.error("null connect track when setting up LayoutConnectivity");
         }
         typeConnect2 = type;
         anchor = p;
@@ -164,7 +155,7 @@ public class LayoutConnectivity {
         return track1;
     }
 
-    public Object getConnectedObject() {
+    public LayoutTrack getConnectedObject() {
         return connect2;
     }
 
@@ -184,6 +175,61 @@ public class LayoutConnectivity {
         return anchor;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
+    @Override
+    public boolean equals(Object o) {
+        boolean result = false; // assume failure (pessimist!)
+        if ((o != null) && o instanceof LayoutConnectivity) {
+            LayoutConnectivity lc = (LayoutConnectivity) o;
+            do {    // poor mans throw block
+                if (((block1 == null) != (lc.getBlock1() == null))
+                        || ((block1 != null) && !block1.equals(lc.getBlock1()))) {
+                    break;
+                }
+                if (((block2 == null) != (lc.getBlock2() == null))
+                        || ((block2 != null) && !block2.equals(lc.getBlock2()))) {
+                    break;
+                }
+                if (direction != lc.getDirection()) {
+                    break;
+                }
+                if (((track1 == null) != (lc.getTrackSegment() == null))
+                        || ((track1 != null) && !track1.equals(lc.getTrackSegment()))) {
+                    break;
+                }
+                if (((connect2 == null) != (lc.getConnectedObject() == null))
+                        || ((connect2 != null) && !connect2.equals(lc.getConnectedObject()))) {
+                    break;
+                }
+                if (typeConnect2 != lc.getConnectedType()) {
+                    break;
+                }
+                if (((xover == null) != (lc.getXover() == null))
+                        || ((xover != null) && !xover.equals(lc.getXover()))) {
+                    break;
+                }
+                if (((anchor == null) != (lc.getAnchor() == null))
+                        || ((anchor != null) && !anchor.equals(lc.getAnchor()))) {
+                    break;
+                }
+                result = true;
+            } while (false);
+        }
+        return result;
+    }
 
-}
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + (this.block1 != null ? this.block1.hashCode() : 0);
+        hash = 37 * hash + (this.block2 != null ? this.block2.hashCode() : 0);
+        hash = 37 * hash + direction;
+        hash = 37 * hash + (this.track1 != null ? this.track1.hashCode() : 0);
+        hash = 37 * hash + (this.connect2 != null ? this.connect2.hashCode() : 0);
+        hash = 37 * hash + typeConnect2;
+        hash = 37 * hash + (this.xover != null ? this.xover.hashCode() : 0);
+        hash = 37 * hash + (this.anchor != null ? this.anchor.hashCode() : 0);
+        return hash;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class);
+}   // class LayoutConnectivity

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Class to hold SPROG type
  *
  * @author	Andrew crosland Copyright (C) 2012
- * 
  */
 public class SprogType {
 
@@ -33,7 +32,7 @@ public class SprogType {
     public int sprogType = UNKNOWN;
 
     /**
-     * Construct a new SPROG type of a given type
+     * Construct a new SPROG type of a given type.
      *
      * @param type int, one of SprogType.xxx constants
      */
@@ -68,12 +67,12 @@ public class SprogType {
         return false;
     }
 
-/**
- * Return the multiplier for scaling the current limit from hardware units
- * to physical units (mA).
- * 
- * @return the multiplier for the current limit
- */
+    /**
+     * Return the multiplier for scaling the current limit from hardware units
+     * to physical units (mA).
+     *
+     * @return the multiplier for the current limit
+     */
     public double getCurrentMultiplier() {
         switch (sprogType) {
             case PISPROGONE:
@@ -89,7 +88,7 @@ public class SprogType {
     }
     
     /**
-     * Get the Flash memory block Length for bootloader
+     * Get the Flash memory block Length for bootloader.
      *
      * @return blocklen
      */
@@ -120,7 +119,7 @@ public class SprogType {
     }
 
     /**
-     * Get the Flash memory block Length for bootloader
+     * Get the Flash memory block Length for bootloader.
      *
      * @param bootVer the bootloader version
      * @return length in bytes
@@ -226,16 +225,16 @@ public class SprogType {
      * @return String representation of a SPROG type
      */
     public String toString(int t) {
-        //if (log.isDebugEnabled()) { log.debug("Integer " + t); }
+        //if (log.isDebugEnabled()) { log.debug("Integer {}", t); }
         switch (t) {
             case NO_PROMPT_FOUND:
-                return "No SPROG prompt found";
+                return Bundle.getMessage("TypeNoSprogPromptFound");
             case NOT_A_SPROG:
-                return "Not connected to a SPROG";
+                return Bundle.getMessage("TypeNotConnectedToSPROG");
             case NOT_RECOGNISED:
-                return "Unrecognised SPROG";
+                return Bundle.getMessage("TypeUnrecognisedSPROG");
             case TIMEOUT:
-                return "Timeout talking to SPROG";
+                return Bundle.getMessage("TypeTimeoutTalkingToSPROG");
             case SPROGV4:
                 return "SPROG ";
             case SPROGIIUSB:
@@ -251,7 +250,7 @@ public class SprogType {
             case SPROG5:
                 return "SPROG 5 ";
             case PISPROGONE:
-                return "Pi-SPROG One";
+                return "Pi-SPROG One ";
             case NANO:
                 return "SPROG Nano ";
             case PISPROGNANO:
@@ -259,11 +258,10 @@ public class SprogType {
             case SNIFFER:
                 return "SPROG Sniffer ";
             default:
-                return "Unknown Hardware";
+                return Bundle.getMessage("TypeUnknownHardware");
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogType.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogType.class);
+
 }
-
-

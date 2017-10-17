@@ -12,7 +12,7 @@ import jmri.Turnout;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
-        implements SignalHead, java.io.Serializable, java.beans.VetoableChangeListener {
+        implements SignalHead, java.beans.VetoableChangeListener {
 
     public AbstractSignalHead(String systemName, String userName) {
         super(systemName, userName);
@@ -44,6 +44,31 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     public int getAppearance() {
         return mAppearance;
     }
+
+    /**
+     * Determine whether this signal shows an aspect or appearance
+     * that allows travel past it, e.g. it's "been cleared".
+     * This might be a yellow or green appearance, or an Approach or Clear
+     * aspect
+     */
+    public boolean isCleared() { return !isAtStop() && !isShowingRestricting() && getAppearance()!=DARK; }
+
+    /**
+     * Determine whether this signal shows an aspect or appearance
+     * that allows travel past it only at restricted speed.
+     * This might be a flashing red appearance, or a 
+     * Restricting aspect.
+     */
+    public boolean isShowingRestricting() { return getAppearance() == FLASHRED || getAppearance() == LUNAR || getAppearance() == FLASHLUNAR; }
+    
+    /**
+     * Determine whether this signal shows an aspect or appearance
+     * that forbid travel past it.
+     * This might be a red appearance, or a 
+     * Stop aspect. Stop-and-Proceed or Restricting would return false here.
+     */
+    public boolean isAtStop()  { return getAppearance() == RED; }
+
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
@@ -185,5 +210,5 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return Bundle.getMessage("BeanNameSignalHead");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class);
 }

@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.ms100;
 
-import jmri.util.SystemType;
-
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
  * via an LocoNet MS100Adapter object.
@@ -32,12 +30,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      */
     @Override
     public String name() {
-        if (SystemType.isMacOSX()
-                || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) { // NOI18N
-            return "(LocoNet MS100 not available)";
-        } else {
-            return "LocoNet MS100"; // NOI18N
-        }
+        return "LocoNet MS100";
     }
 
     @Override

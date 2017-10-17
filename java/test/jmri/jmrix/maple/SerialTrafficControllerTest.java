@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	JUnit tests for the SerialTrafficController class
+ * JUnit tests for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
  */
@@ -81,8 +82,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             rcvdReply = r;
         }
     }
-    SerialReply rcvdReply;
-    SerialMessage rcvdMsg;
+    private SerialReply rcvdReply;
+    private SerialMessage rcvdMsg;
 
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
@@ -152,9 +153,11 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        rcvdReply = null;
+        rcvdMsg = null;
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

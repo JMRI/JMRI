@@ -15,8 +15,7 @@ public class QsiPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        QsiSystemConnectionMemo memo = new QsiSystemConnectionMemo();
        QsiTrafficController tc = new QsiTrafficControlScaffold();
        apc = new QsiPortController(memo){
@@ -59,8 +58,7 @@ public class QsiPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

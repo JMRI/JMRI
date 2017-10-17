@@ -1,12 +1,11 @@
 package jmri.jmrix.sprog;
 
 /**
- * SprogConstants.java
- *
- * Description:	Constants to represent values seen in SPROG traffic
+ * Constants to represent values seen in SPROG traffic.
  *
  * @author	Andrew Crosland Copyright (C) 2006 from LnConstants.java
  */
+
 public final class SprogConstants {
 
     /* SPROG mode */
@@ -79,5 +78,6 @@ public final class SprogConstants {
 
     public final static int DEFAULT_I = 996;            /* milliAmps */
 
-}
+    public final static int MAX_ACC_DECODER_JMRI_ADDR = 2044; // copied from DCCppConstants
 
+}

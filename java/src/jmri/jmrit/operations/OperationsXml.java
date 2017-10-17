@@ -3,6 +3,7 @@ package jmri.jmrit.operations;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -11,6 +12,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,15 +31,15 @@ public abstract class OperationsXml extends XmlFile {
         createFile(getDefaultOperationsFilename(), true); // make backup
         try {
             writeFile(getDefaultOperationsFilename());
-        } catch (Exception e) {
-            log.error("Exception while writing operation file, may not be complete: " + e);
+        } catch (IOException e) {
+            log.error("Exception while writing operation file, may not be complete: {}", e.getMessage());
         }
     }
 
     protected void load() {
         try {
             readFile(getDefaultOperationsFilename());
-        } catch (Exception e) {
+        } catch (IOException | JDOMException e) {
             log.error("Exception during operations file reading", e);
         }
     }
@@ -59,13 +61,13 @@ public abstract class OperationsXml extends XmlFile {
                     }
                 }
                 if (file.createNewFile()) {
-                    log.debug("File created " + fullPathName);
+                    log.debug("File created {}", fullPathName);
                 }
             } else {
                 file = new File(fullPathName);
             }
-        } catch (Exception e) {
-            log.error("Exception while creating operations file, may not be complete: " + e);
+        } catch (IOException e) {
+            log.error("Exception while creating operations file, may not be complete: {}", e.getMessage());
         }
         return file;
     }
@@ -77,7 +79,7 @@ public abstract class OperationsXml extends XmlFile {
     /**
      * @param filename The string file name.
      * @throws org.jdom2.JDOMException Due to XML parsing error
-     * @throws java.io.IOException Due to trouble accessing named file
+     * @throws java.io.IOException     Due to trouble accessing named file
      */
     abstract public void readFile(String filename) throws org.jdom2.JDOMException, java.io.IOException;
 
@@ -125,6 +127,7 @@ public abstract class OperationsXml extends XmlFile {
      * Absolute path to location of Operations files.
      * <P>
      * Default is in the user's files path, but can be set to anything.
+     *
      * @return The string path name.
      *
      * @see jmri.util.FileUtil#getUserFilesPath()
@@ -155,7 +158,7 @@ public abstract class OperationsXml extends XmlFile {
      */
     @Deprecated
     public static String convertToXmlComment(String comment) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int k = 0; k < comment.length(); k++) {
             if (comment.startsWith("\n", k)) { // NOI18N
                 buf.append("<?p?>"); // NOI18N
@@ -168,15 +171,15 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Convert xml string comment to standard string format one character at a
-     * time, except when {@literal <?p?>} is found. In that case, insert a \n and skip over
-     * those characters.
+     * time, except when {@literal <?p?>} is found. In that case, insert a \n
+     * and skip over those characters.
      *
      * @param comment input xml comment string
      * @return output string converted to standard format
      */
     @Deprecated
     public static String convertFromXmlComment(String comment) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int k = 0; k < comment.length(); k++) {
             if (comment.startsWith("<?p?>", k)) { // NOI18N
                 buf.append("\n"); // NOI18N
@@ -187,9 +190,10 @@ public abstract class OperationsXml extends XmlFile {
         }
         return buf.toString();
     }
-    
+
     /**
      * Checks name for the file control characters:
+     *
      * @param name The string to check for a valid file name.
      * @return true if name is okay, false if name contains a control character.
      */
@@ -207,12 +211,12 @@ public abstract class OperationsXml extends XmlFile {
      * Saves operation files that have been modified.
      */
     public static void save() {
-        OperationsSetupXml.instance().writeFileIfDirty();
-        LocationManagerXml.instance().writeFileIfDirty(); // Need to save "moves" for track location
-        RouteManagerXml.instance().writeFileIfDirty(); // Only if user used setX&Y
-        CarManagerXml.instance().writeFileIfDirty(); // save train assignments
-        EngineManagerXml.instance().writeFileIfDirty(); // save train assignments
-        TrainManagerXml.instance().writeFileIfDirty(); // save train changes
+        InstanceManager.getDefault(OperationsSetupXml.class).writeFileIfDirty();
+        InstanceManager.getDefault(LocationManagerXml.class).writeFileIfDirty(); // Need to save "moves" for track location
+        InstanceManager.getDefault(RouteManagerXml.class).writeFileIfDirty(); // Only if user used setX&Y
+        InstanceManager.getDefault(CarManagerXml.class).writeFileIfDirty(); // save train assignments
+        InstanceManager.getDefault(EngineManagerXml.class).writeFileIfDirty(); // save train assignments
+        InstanceManager.getDefault(TrainManagerXml.class).writeFileIfDirty(); // save train changes
     }
 
     /**
@@ -221,14 +225,14 @@ public abstract class OperationsXml extends XmlFile {
      * @return True if any operations parameters have been modified.
      */
     public static boolean areFilesDirty() {
-        if (OperationsSetupXml.instance().isDirty() || LocationManagerXml.instance().isDirty()
-                || RouteManagerXml.instance().isDirty() || CarManagerXml.instance().isDirty()
-                || EngineManagerXml.instance().isDirty() || TrainManagerXml.instance().isDirty()) {
-            return true;
-        }
-        return false;
+        return InstanceManager.getDefault(OperationsSetupXml.class).isDirty()
+                || InstanceManager.getDefault(LocationManagerXml.class).isDirty()
+                || InstanceManager.getDefault(RouteManagerXml.class).isDirty()
+                || InstanceManager.getDefault(CarManagerXml.class).isDirty()
+                || InstanceManager.getDefault(EngineManagerXml.class).isDirty()
+                || InstanceManager.getDefault(TrainManagerXml.class).isDirty();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsXml.class);
 
 }

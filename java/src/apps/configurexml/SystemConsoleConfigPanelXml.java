@@ -64,7 +64,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String value;
         SystemConsolePreferencesManager manager = InstanceManager.getDefault(SystemConsolePreferencesManager.class);
@@ -116,6 +116,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(SystemConsoleConfigPanelXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SystemConsoleConfigPanelXml.class);
 
 }

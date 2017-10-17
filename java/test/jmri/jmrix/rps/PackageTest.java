@@ -55,6 +55,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(RpsMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(RpsReporterManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(RpsSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(ReceiverTest.class));
+        suite.addTest(new JUnit4TestAdapter(TransmitterTest.class));
+        suite.addTest(new JUnit4TestAdapter(RpsBlockTest.class));
+        suite.addTest(new JUnit4TestAdapter(RpsReporterTest.class));
 
         return suite;
     }

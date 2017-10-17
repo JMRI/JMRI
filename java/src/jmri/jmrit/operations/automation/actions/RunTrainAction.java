@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -30,9 +31,9 @@ public class RunTrainAction extends Action {
                 finishAction(false);
                 return;
             }
-            if (!TrainCustomManifest.instance().excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomManifest.instance()
-                        .getDirectoryName(), TrainCustomManifest.instance().getFileName());
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", InstanceManager.getDefault(TrainCustomManifest.class)
+                        .getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName());
                 finishAction(false);
                 return;
             }
@@ -50,25 +51,25 @@ public class RunTrainAction extends Action {
             }
             setRunning(true);
             // this can wait thread
-            if (!TrainCustomSwitchList.instance().checkProcessReady()) {
+            if (!InstanceManager.getDefault(TrainCustomSwitchList.class).checkProcessReady()) {
                 log.warn(
                         "Timeout waiting for excel switch list program to complete previous opeation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
             }
             // this can wait thread
-            if (!TrainCustomManifest.instance().checkProcessReady()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).checkProcessReady()) {
                 log.warn(
                         "Timeout waiting for excel manifest program to complete previous opeation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
             }
-            if (TrainCustomManifest.instance().doesCommonFileExist()) {
+            if (InstanceManager.getDefault(TrainCustomManifest.class).doesCommonFileExist()) {
                 log.warn("Manifest CSV common file exists!");
             }
-            TrainCustomManifest.instance().addCVSFile(train.createCSVManifestFile());
-            boolean status = TrainCustomManifest.instance().process();
+            InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(train.createCSVManifestFile());
+            boolean status = InstanceManager.getDefault(TrainCustomManifest.class).process();
             if (status) {
                 try {
-                    status = TrainCustomManifest.instance().waitForProcessToComplete(); // wait for process to complete or timeout
+                    status = InstanceManager.getDefault(TrainCustomManifest.class).waitForProcessToComplete(); // wait for process to complete or timeout
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -86,5 +87,5 @@ public class RunTrainAction extends Action {
         // no cancel for this action     
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class);
 }

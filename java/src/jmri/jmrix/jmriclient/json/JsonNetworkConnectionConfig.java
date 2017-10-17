@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import javax.jmdns.ServiceInfo;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JViewport;
-import jmri.server.json.JSON;
 import jmri.jmrix.AbstractNetworkConnectionConfig;
 import jmri.jmrix.NetworkPortAdapter;
+import jmri.server.json.JSON;
 import jmri.util.zeroconf.ZeroConfClient;
 
 /**
@@ -120,10 +119,9 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
             this._details.add(nodeIdentityLabel);
             this._details.add(nodeIdentityField);
         }
-        if (this._details.getParent() != null && this._details.getParent() instanceof JViewport) {
-            JViewport vp = (JViewport) _details.getParent();
-            vp.revalidate();
-            vp.repaint();
+        if (this._details.getParent() != null) {
+            this._details.getParent().revalidate();
+            this._details.getParent().repaint();
         }
     }
 

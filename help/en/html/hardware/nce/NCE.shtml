@@ -22,9 +22,9 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody"></div>
+  <div class="nomenu" id="mBody">
 
-  <div id="mainContent"></div>
+  <div id="mainContent">
 
   <h1>Hardware Support: NCE</h1>
 
@@ -42,8 +42,9 @@
     <li><a href="#tools">JMRI NCE Tools</a></li>
 
     <li><a href="#documentation">Documentation</a></li>
-  </ul><a name="hardware" id="hardware"></a>
+  </ul>
 
+  <a name="hardware" id="hardware"></a>
   <h2>Supported Hardware</h2>
 
   <h3>Command Station</h3>
@@ -78,7 +79,8 @@
   <h3>Settings</h3><a name="AIU" id="AIU"></a> <a name="names" id=
   "names"></a>
 
-  <h4>AIU (Input) Numbering</h4>The NCE "AIU" device allows the NCE
+  <h4>AIU (Input) Numbering</h4>
+  The NCE "AIU" device allows the NCE
   command station to check the status of inputs from the layout.
   These are referenced in JMRI as "Sensors" with names like
   "NS785". "NS" means "NCE Sensor", and 785 is the number of a
@@ -103,13 +105,68 @@
   by a semicolon. So for a sensor on AIU cab address 50, pin 2 you
   would enter the following: <b>50:2</b></p>
 
-  <h4>Turnout Numbering</h4>JMRI can access accessory decoders as
+  <h4>Turnout Numbering</h4>
+  JMRI can access accessory decoders as
   NCE Turnouts and Lights. They are addressed using the same
   numbers that you would use on your NCE throttle to throw the
   accessory decoder. For example, if you can access turnout 21 from
   your throttle, JMRI would address it as "NT21" or just "21".
-  <a id="eeprom" name="eeprom"></a>
 
+  <h4>Adding an item to the table</h4>
+  <p>When you add an item to one of the tables, many times you only
+    have to fill in the numbers to have JMRI construct
+    the complete system name.<br>
+    Here's a summary, split up for
+    outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+
+  <table>
+    <tbody><tr>
+      <th>In/Out</th>
+      <th>Entry</th>
+      <th>Meaning</th>
+      <th>makes System Name</th>
+      <th>Mask</th>
+      <th>Equivalent</th>
+      <th>Minimum</th>
+      <th>Maximum</th>
+    </tr>
+    <tr>
+      <td>i</td>
+      <td>4:3</td>
+      <td>AIU Cab 4, pin 3</td>
+      <td>NS50</td>
+      <td> </td>
+      <td> </td>
+      <td>cab: 1; pin: 1</td>
+      <td>cab: 63; pin: 14</td>
+    </tr>
+    <tr>
+      <td>i</td>
+      <td>50</td>
+      <td>AIU Cab 4, pin 3</td>
+      <td>NS50</td>
+      <td> </td>
+      <td> </td>
+      <td>cab: 1; pin: 1</td>
+      <td>cab: 63; pin: 14</td>
+    </tr>
+    <tr>
+      <td>o</td>
+      <td>16</td>
+      <td>Output (Turnout) 16</td>
+      <td>NT16</td>
+      <td> </td>
+      <td> </td>
+      <td>1</td>
+      <td>2044</td>
+    </tr>
+    </tbody></table>
+  <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
+  based on information from the Hardware help pages
+  by Egbert Broerse @silverailscolo July 2017 -->
+
+
+  <a id="eeprom" name="eeprom"></a>
   <h4>EPROM Versions</h4>
 
   <p>The NCE Power Pro command station uses an "EPROM" to contain
@@ -615,8 +672,10 @@ limitation when connected to a Power Pro.</p> -->
   <h3>Third Party info</h3>
 
   <p><a href="http://www.ncedcc.com/">NCE Systems and Cabs
-  Catalog</a></p><!--#include virtual="/Footer" -->
-  <!-- closes #mainContent-->
-  <!-- closes #mBody-->
+  Catalog</a></p>
+
+  <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

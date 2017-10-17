@@ -35,8 +35,8 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
     public LocoNetBluetoothAdapter(LocoNetSystemConnectionMemo adapterMemo) {
         super(adapterMemo);
-        option1Name = "CommandStation";
-        option2Name = "TurnoutHandle";
+        option1Name = "CommandStation"; // NOI18N
+        option2Name = "TurnoutHandle"; // NOI18N
         options.put(option1Name, new Option("Command station type:", commandStationNames, false));
         options.put(option2Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
     }
@@ -166,6 +166,9 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             case DiscoveryListener.SERVICE_SEARCH_TERMINATED:
                 log.error("Service search on " + portName + " ended prematurely");
                 return "Search for " + portName + " ended unexpectedly";
+            default:
+                log.warn("Unhandled response code: {}", responseCode[0]);
+                break;
             }
             log.error("Unknown error when connecting to " + portName);
             return "Unknown error when connecting to " + portName;
@@ -225,7 +228,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
     private InputStream in = null;
     private OutputStream out = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
 
     @Override
     public String[] validBaudRates() {

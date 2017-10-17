@@ -66,7 +66,7 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
     }
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
         JPanel check = new JPanel();
         disablePollingCheckBox.setText("Disable Polling");

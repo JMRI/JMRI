@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements the jmri.Programmer interface via commands for the Ecos
+ * Implements the jmri.Programmer interface via commands for the ECoS
  * programmer. This provides a service mode programmer.
  *
  * @author Karl Johan Lisby Copyright (C) 2015
@@ -24,12 +24,12 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     EcosTrafficController tc; 
     
     /**
-     * Types implemented here.
+     * @return list of programming modes implemented for ECoS
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
         return ret;
     }
 
@@ -43,6 +43,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     int _cv; // remember the cv being read/written
 
     // programming interface
+
     @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
@@ -194,7 +195,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     @Override
     synchronized protected void timeout() {
@@ -212,7 +213,9 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
-    // internal method to notify of the final result
+    /**
+     * Internal method to notify of the final result.
+     */
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
@@ -228,8 +231,6 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosProgrammer.class);
 
 }
-
-

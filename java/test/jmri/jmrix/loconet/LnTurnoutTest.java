@@ -57,7 +57,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
                 "B0 14 30 00");  // CLOSED/ON loconet message
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
                 "B0 14 20 00");  // CLOSED/OFF loconet message
-        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
     }
 
     /**
@@ -76,7 +75,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
                 "B0 14 10 00");  // THROWN/ON loconet message
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
                 "B0 14 00 00");  // THROWN/OFF loconet message
-        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 
     @Test
@@ -278,6 +276,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class);
 
 }

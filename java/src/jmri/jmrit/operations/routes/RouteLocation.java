@@ -2,6 +2,7 @@ package jmri.jmrit.operations.routes;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Point;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -389,7 +390,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
      * Coordinates are dependent on the train's departure direction.
      */
     public void setTrainIconCoordinates() {
-        Location l = LocationManager.instance().getLocationByName(getName());
+        Location l = InstanceManager.getDefault(LocationManager.class).getLocationByName(getName());
         if ((getTrainDirection() & Location.EAST) == Location.EAST) {
             setTrainIconX(l.getTrainIconEast().x);
             setTrainIconY(l.getTrainIconEast().y);
@@ -434,18 +435,18 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         }
         if ((a = e.getAttribute(Xml.LOCATION_ID)) != null) {
             _locationId = a.getValue();
-            _location = LocationManager.instance().getLocationById(a.getValue());
+            _location = InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue());
             if (_location != null) {
                 _location.addPropertyChangeListener(this);
             }
         } // old way of storing a route location
         else if ((a = e.getAttribute(Xml.NAME)) != null) {
-            _location = LocationManager.instance().getLocationByName(a.getValue());
+            _location = InstanceManager.getDefault(LocationManager.class).getLocationByName(a.getValue());
             if (_location != null) {
                 _location.addPropertyChangeListener(this);
             }
             // force rewrite of route file
-            RouteManagerXml.instance().setDirty(true);
+            InstanceManager.getDefault(RouteManagerXml.class).setDirty(true);
         }
         if ((a = e.getAttribute(Xml.TRAIN_DIRECTION)) != null) {
             // early releases had text for train direction
@@ -587,10 +588,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        RouteManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(RouteManagerXml.class).setDirty(true);
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteLocation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteLocation.class);
 
 }

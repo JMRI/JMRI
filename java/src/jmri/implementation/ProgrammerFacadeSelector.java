@@ -15,10 +15,13 @@ import org.slf4j.LoggerFactory;
 public class ProgrammerFacadeSelector {
 
     /**
-     * Add facades specified in an XML decoder definition element to the front of a programmer.
-     * @param element Contains "capability" elements that define the Facades
+     * Add facades specified in an XML decoder definition element to the front
+     * of a programmer.
+     *
+     * @param element    Contains "capability" elements that define the Facades
      * @param programmer Programmer implementation to decorate
      * @param allowCache Passed to facades that optionally cache
+     * @return the programmer with added facades
      */
     public static Programmer loadFacadeElements(Element element, Programmer programmer, boolean allowCache) {
         // iterate over any facades and add them
@@ -107,7 +110,7 @@ public class ProgrammerFacadeSelector {
 
             } else if (fname.equals("Ops Mode Accessory Programming")) {
                 if (programmer instanceof AddressedProgrammer) {  // create if relevant to current mode, otherwise silently ignore
-                    String addrType="decoder";
+                    String addrType = "decoder";
                     if (!parameters.isEmpty()) {
                         addrType = parameters.get(0).getText();
                     }
@@ -127,5 +130,5 @@ public class ProgrammerFacadeSelector {
         return programmer;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgrammerFacadeSelector.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgrammerFacadeSelector.class);
 }

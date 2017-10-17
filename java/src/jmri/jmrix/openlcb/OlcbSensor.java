@@ -1,11 +1,13 @@
 package jmri.jmrix.openlcb;
 
 import java.util.Timer;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
-import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
+import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,8 @@ public class OlcbSensor extends AbstractSensor {
 
     VersionedValueListener<Boolean> sensorListener;
     BitProducerConsumer pc;
+    EventTable.EventTableEntryHolder activeEventTableEntryHolder = null;
+    EventTable.EventTableEntryHolder inactiveEventTableEntryHolder = null;
 
     public OlcbSensor(String prefix, String address, OlcbInterface iface) {
         super(prefix + "S" + address);
@@ -51,8 +55,7 @@ public class OlcbSensor extends AbstractSensor {
                 // momentary sensor
                 addrActive = v[0];
                 addrInactive = null;
-                pc = new BitProducerConsumer(iface, addrActive.toEventID(), new
-                        EventID("00.00.00.00.00.00.00.00"), false);
+                pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, false);
                 timer = new Timer(true);
                 sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
                     @Override
@@ -80,6 +83,39 @@ public class OlcbSensor extends AbstractSensor {
                 log.error("Can't parse OpenLCB Sensor system name: " + address);
                 return;
         }
+        activeEventTableEntryHolder = iface.getEventTable().addEvent(addrActive.toEventID(), getEventName(true));
+        if (addrInactive != null) {
+            inactiveEventTableEntryHolder = iface.getEventTable().addEvent(addrInactive.toEventID(), getEventName(false));
+        }
+    }
+
+    /**
+     * Computes the display name of a given event to be entered into the Event Table.
+     * @param isActive true for sensor active, false for inactive.
+     * @return user-visible string to represent this event.
+     */
+    private String getEventName(boolean isActive) {
+        String name = getUserName();
+        if (name == null) name = mSystemName;
+        String msgName = isActive ? "SensorActiveEventName": "SensorInactiveEventName";
+        return Bundle.getMessage(msgName, name);
+    }
+
+    /**
+     * Updates event table entries when the user name changes.
+     * @param s new user name
+     * @throws NamedBean.BadUserNameException see {@link NamedBean}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setUserName(String s) throws NamedBean.BadUserNameException {
+        super.setUserName(s);
+        if (activeEventTableEntryHolder != null) {
+            activeEventTableEntryHolder.getEntry().updateDescription(getEventName(true));
+        }
+        if (inactiveEventTableEntryHolder != null) {
+            inactiveEventTableEntryHolder.getEntry().updateDescription(getEventName(false));
+        }
     }
 
     /**
@@ -101,12 +137,12 @@ public class OlcbSensor extends AbstractSensor {
     public void setKnownState(int s) throws jmri.JmriException {
         setOwnState(s);
         if (s == Sensor.ACTIVE) {
-            sensorListener.setFromOwner(true);
+            sensorListener.setFromOwnerWithForceNotify(true);
             if (addrInactive == null) {
                 setTimeout();
             }
         } else if (s == Sensor.INACTIVE) {
-            sensorListener.setFromOwner(false);
+            sensorListener.setFromOwnerWithForceNotify(false);
         }
     }
 
@@ -126,7 +162,7 @@ public class OlcbSensor extends AbstractSensor {
             }
         }, ON_TIME);
     }
-    
+
     /*
      * since the events that drive a sensor can be whichever state a user
      * wants, the order of the event pair determines what is the 'active' state
@@ -143,6 +179,6 @@ public class OlcbSensor extends AbstractSensor {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class);
 
 }

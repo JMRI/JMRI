@@ -34,6 +34,7 @@ public class WebServerAction extends JmriAbstractAction {
         synchronized (this) {
             if (serverThread == null) {
                 serverThread = new ServerThread();
+                serverThread.setName("WebServerAction action");
                 serverThread.start();
             } else {
                 log.info("Web Server already running");
@@ -48,7 +49,11 @@ public class WebServerAction extends JmriAbstractAction {
 
         @Override
         public void run() {
-            WebServer.getDefault().start();
+            try {
+                WebServer.getDefault().start();
+            } catch (Exception ex) {
+                log.error("Unable to start web server.", ex);
+            }
         }
     }
 }

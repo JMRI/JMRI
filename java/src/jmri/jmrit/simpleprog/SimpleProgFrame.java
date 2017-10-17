@@ -8,9 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.ProgListener;
 import jmri.Programmer;
+import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 
 /**
  * Frame providing a simple command station programmer

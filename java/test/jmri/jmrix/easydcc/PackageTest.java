@@ -1,5 +1,6 @@
 package jmri.jmrix.easydcc;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -40,8 +41,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.easydcc.EasyDccMessageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccReplyTest.suite());
         suite.addTest(new JUnit4TestAdapter(EasyDccPowerManagerTest.class));
-        suite.addTest(jmri.jmrix.easydcc.EasyDccConsistManagerTest.suite());
         suite.addTest(new JUnit4TestAdapter(EasyDccConsistTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccConsistManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.serialdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.networkdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));
@@ -53,6 +54,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(EasyDccPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDCCMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccCommandStationTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccOpsModeProgrammerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccProgrammerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccThrottleTest.class));
 
         return suite;
     }
@@ -60,12 +66,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

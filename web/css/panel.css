@@ -1,4 +1,4 @@
-/* stylesheet for PanelServelet */
+/* stylesheet for PanelServlet */
 
 body {
     font-family: sans-serif;
@@ -40,9 +40,11 @@ body {
 
 .positionablelabel.text.hidden,
 .sensoricon.hidden,
-.signalheadicon.hidden {
+.signalheadicon.hidden,
+.beanswitch.hidden {
     display: none;
 }
+
 .locoicon, .trainicon {
     padding-left: 6px;
     min-width:  60px;
@@ -52,6 +54,24 @@ body {
     /* vertical-align: middle; */
     /* text-align: center; */
     line-height: 20px;
+}
+
+.beanswitch.text {
+    position: static;
+    float: left;
+    padding: 4px;
+    /* border: 5px; */
+    /* color: white; */
+    /* background: grey; */
+    margin: 6px;
+    text-align: center;
+    /* width: 20%; /* later changed by beanswitch using column count */
+    /* add more BeanSwitch stuff */
+}
+
+div.button {
+    float: left;
+    background: red;
 }
 
 #panel-area {

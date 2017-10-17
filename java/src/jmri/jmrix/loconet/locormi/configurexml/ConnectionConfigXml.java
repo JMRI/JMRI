@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of layout connections by persistening the RMI objects
+ * Handle XML persistence of layout connections by persisting the RMI objects
  * (and connections). Note this is named as the XML version of a
  * ConnectionConfig object, but it's actually persisting the RMI info.
  * <P>
@@ -27,8 +27,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        log.error("unexpected call to getInstance");
-        new Exception().printStackTrace();
+        log.error("unexpected call to getInstance", new Exception());
     }
 
     @Override
@@ -56,10 +55,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     /**
-     * Port name carries the hostname for the RMI connection
+     * {@inheritDoc}
      *
-     * @param shared Top level Element to unpack.
-     * @return true if successful
+     * Port name carries the hostname for the RMI connection.
      */
     @Override
     public boolean load(Element shared, Element perNode) {
@@ -112,7 +110,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 client.configureRemoteConnection(hostName, 500);
                 connected = true;   // exception during connect skips this
             } catch (jmri.jmrix.loconet.LocoNetException ex) {
-                log.error("Error opening connection to " + hostName + " was: " + ex); // NOI18N
+                log.error("Error opening connection to {} was: {}", hostName, ex); // NOI18N
                 f.setTitle("Server connection failed");
                 f.getContentPane().removeAll();
                 f.getContentPane().add(new JLabel("failed, error was " + ex));
@@ -140,15 +138,15 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void register() {
-        log.error("unexpected call to register()"); // NOI18N
-        new Exception().printStackTrace();
+        log.error("unexpected call to register()", new Exception()); // NOI18N
     }
 
-    protected void register(ConnectionConfig cc) {
+    @Override
+    protected void register(jmri.jmrix.ConnectionConfig cc) {
         super.register(cc);
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
 
 }

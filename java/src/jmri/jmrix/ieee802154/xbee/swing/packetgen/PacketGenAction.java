@@ -1,8 +1,5 @@
 /**
- * PacketGenAction.java
- *
- * Description: Swing action to create and register a IEEE802154 PacketGenFrame
- * object
+ * Swing action to create and register a IEEE802154 PacketGenFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
@@ -10,10 +7,10 @@ package jmri.jmrix.ieee802154.xbee.swing.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
+import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 
 public class PacketGenAction extends AbstractAction {
 
@@ -25,7 +22,7 @@ public class PacketGenAction extends AbstractAction {
     }
 
     public PacketGenAction(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo memo) {
-        this("Send IEEE 802.15.4 Message", memo);
+        this(Bundle.getMessage("SendCommandTitle"), memo);
     }
 
     public PacketGenAction(String s) {
@@ -37,7 +34,7 @@ public class PacketGenAction extends AbstractAction {
     }
 
     public PacketGenAction() {
-        this("Send XBee Message");
+        this(Bundle.getMessage("SendXbeeCommandTitle"));
     }
 
     @Override
@@ -54,8 +51,7 @@ public class PacketGenAction extends AbstractAction {
         // connect to the TrafficController
         f.connect((XBeeTrafficController) _memo.getTrafficController());
     }
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
+
 }
-
-
-

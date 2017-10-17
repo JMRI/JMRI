@@ -14,6 +14,7 @@ import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
 import jmri.util.swing.FontComboUtil;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class SystemConsolePreferencesManager extends Bean implements PreferencesManager {
 
     public static final String SCHEME = "scheme";

@@ -1,42 +1,38 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WarrantTableModelTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WarrantTableFrame f = WarrantTableFrame.getInstance();
+        WarrantTableFrame f = WarrantTableFrame.getDefault();
         WarrantTableModel t = new WarrantTableModel(f);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(f);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantTableModelTest.class.getName());
-
+    // private final static Logger log = LoggerFactory.getLogger(WarrantTableModelTest.class);
 }

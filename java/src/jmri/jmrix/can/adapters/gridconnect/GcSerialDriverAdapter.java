@@ -1,14 +1,17 @@
 package jmri.jmrix.can.adapters.gridconnect;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the GridConnect protocol.
@@ -23,7 +26,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
 
     public GcSerialDriverAdapter() {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
-        option1Name = "Protocol";
+        option1Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
     }
@@ -52,17 +55,13 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
                     }
                 }
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set RTS high, DTR high
-            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            configureLeadsAndFlowControl(activeSerialPort, 0);
             activeSerialPort.enableReceiveTimeout(50);  // 50 mSec timeout before sending chars
 
             // set timeout
@@ -90,9 +89,9 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (UnsupportedCommOperationException | IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -176,6 +175,6 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapter.class);
 
 }

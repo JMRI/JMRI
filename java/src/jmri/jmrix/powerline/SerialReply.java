@@ -36,6 +36,7 @@ abstract public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is reply to poll message
+     * @return value of poll message
      */
     public int getAddr() {
         log.error("getAddr should not be called");
@@ -51,7 +52,7 @@ abstract public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     abstract public String toMonitorString();
 
-    private final static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialReply.class);
 
 }
 

@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -36,7 +37,7 @@ public class TrainManifest extends TrainCommon {
 
     public TrainManifest(Train train) {
         // create manifest file
-        File file = TrainManagerXml.instance().createTrainManifestFile(train.getName());
+        File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainManifestFile(train.getName());
         PrintWriter fileOut;
 
         try {
@@ -49,8 +50,8 @@ public class TrainManifest extends TrainCommon {
 
         try {
             // build header
-            if (!train.getRailroadName().equals(Train.NONE)) {
-                newLine(fileOut, train.getRailroadName());
+            if (!train.getTrainRailroadName().equals(Train.NONE)) {
+                newLine(fileOut, train.getTrainRailroadName());
             } else {
                 newLine(fileOut, Setup.getRailroadName());
             }
@@ -62,8 +63,8 @@ public class TrainManifest extends TrainCommon {
                     new Object[]{getDate(true)});
 
             if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
-                        TrainManager.instance().getTrainScheduleActiveId());
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
+                        InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId());
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }
@@ -243,7 +244,7 @@ public class TrainManifest extends TrainCommon {
                         if (train.isShowArrivalAndDepartureTimesEnabled()) {
                             if (rl == train.getRoute().getDepartsRouteLocation()) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
-                                        .getStringDepartTime(), new Object[]{train.getDepartureTime()});
+                                        .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
                             } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringDepartTime(), new Object[]{rl.getFormatedDepartureTime()});

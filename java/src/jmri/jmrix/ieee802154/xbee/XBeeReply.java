@@ -1,7 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.packet.XBeePacket;
 import com.digi.xbee.api.packet.UnknownXBeePacket;
+import com.digi.xbee.api.packet.XBeePacket;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -27,7 +27,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         setBinary(true);
         byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
         for(int i=0;i<ba.length;i++) {
-           _dataChars[i] = (int) ba[i];
+           _dataChars[i] = ba[i];
         }
         _nDataChars=ba.length;
         xbresponse = UnknownXBeePacket.createPacket(ba);
@@ -38,7 +38,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         xbresponse = l.xbresponse;
         byte data[] = xbresponse.getPacketData();
         for(int i=0;i<data.length;i++) {
-           _dataChars[i] = (int) data[i];
+           _dataChars[i] = data[i];
         }
         _nDataChars=data.length;
         setBinary(true);
@@ -49,7 +49,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         xbresponse = xbr;
         byte data[] = xbr.getPacketData();
         for(int i=0;i<data.length;i++) {
-           _dataChars[i] = (int) data[i];
+           _dataChars[i] = data[i];
         }
         _nDataChars=data.length;
         setBinary(true);

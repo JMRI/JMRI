@@ -2,14 +2,14 @@ package jmri.jmrix.sprog.update;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to get SPROG firmware version
  *
- * @author	Andrew crosland Copyright (C) 2004
+ * @author	Andrew Crosland Copyright (C) 2004
  */
 public class SprogVersionAction extends AbstractAction {
 
@@ -32,9 +32,6 @@ public class SprogVersionAction extends AbstractAction {
 //        f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersionAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersionAction.class);
 
 }
-
-
-

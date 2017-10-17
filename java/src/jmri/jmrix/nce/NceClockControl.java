@@ -43,6 +43,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
 
     /**
      * Create a ClockControl object for a NCE clock
+     * @param tc traffic controller for connection
+     * @param prefix system connection prefix
      */
     public NceClockControl(NceTrafficController tc, String prefix) {
         super();
@@ -366,9 +368,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("startHardwareClock: " + now);
         }
-        if (!internalClock.getInternalMaster() && internalClock.getMasterName().equals(getHardwareClockName())) {
-
-        }
         issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
         issueClockStart();
     }
@@ -458,11 +457,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         int sc = r.getElement(CS_CLOCK_SCALE) & 0xFF;
         if (sc > 0) {
             nceLastRatio = 250 / sc;
-        }
-        if (r.getElement(CS_CLOCK_STATUS) == 1) {
-            //nceLastRunning = false;
-        } else {
-            //nceLastRunning = true;
         }
     }
 
@@ -562,7 +556,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return ((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceClockControl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceClockControl.class);
 }
 
 

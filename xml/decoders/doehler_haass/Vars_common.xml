@@ -31,8 +31,8 @@
       <authorinitials>PB</authorinitials>
       <revremark>
         This file containts only variables that are common to ALL D&amp;H decoders,
-		in ALL versions, and in ALL firmware versions from fw3.02 and up.
-	  </revremark>
+        in ALL versions, and in ALL firmware versions from fw3.02 and up.
+      </revremark>
     </revision>
     <revision>
       <revnumber>2</revnumber>
@@ -51,6 +51,12 @@
       <date>2015-03-05</date>
       <authorinitials>PB</authorinitials>
       <revremark>CV50-63 shouldn't be excluded for combo sound decoders. Spelling change to match new DH def pane for start and brake options</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2017-08-16</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>German translation extended</revremark>
     </revision>
   </revhistory>
   <!-- Calls to std NMRA templates   -->
@@ -858,71 +864,85 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F1</label>
     <label xml:lang="it">Indirizzo Consist attivo per F1</label>
+    <label xml:lang="de">Verbundadresse aktiv für F1</label>
   </variable>
   <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F2</label>
     <label xml:lang="it">Indirizzo Consist attivo per F2</label>
+    <label xml:lang="de">Verbundadresse aktiv für F2</label>
   </variable>
   <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F3</label>
     <label xml:lang="it">Indirizzo Consist attivo per F3</label>
+    <label xml:lang="de">Verbundadresse aktiv für F3</label>
   </variable>
   <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F4</label>
     <label xml:lang="it">Indirizzo Consist attivo per F4</label>
+    <label xml:lang="de">Verbundadresse aktiv für F4</label>
   </variable>
   <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F5</label>
     <label xml:lang="it">Indirizzo Consist attivo per F5</label>
+    <label xml:lang="de">Verbundadresse aktiv für F5</label>
   </variable>
   <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F6</label>
     <label xml:lang="it">Indirizzo Consist attivo per F6</label>
+    <label xml:lang="de">Verbundadresse aktiv für F6</label>
   </variable>
   <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F7</label>
     <label xml:lang="it">Indirizzo Consist attivo per F7</label>
+    <label xml:lang="de">Verbundadresse aktiv für F7</label>
   </variable>
   <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F8</label>
     <label xml:lang="it">Indirizzo Consist attivo per F8</label>
+    <label xml:lang="de">Verbundadresse aktiv für F8</label>
   </variable>
   <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For FL in Forward</label>
     <label xml:lang="it">Indirizzo Consist attivo per luci frontali in avanti</label>
+    <label xml:lang="de">Verbundadresse aktiv für Lvor in vorwärts</label>
   </variable>
   <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For FL in Reverse</label>
     <label xml:lang="it">Indirizzo Consist attivo per luci frontali in retro</label>
+    <label xml:lang="de">Verbundadresse aktiv für Lvor in rückwärts</label>
   </variable>
   <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F9</label>
     <label xml:lang="it">Indirizzo Consist attivo per F9</label>
+    <label xml:lang="de">Verbundadresse aktiv für F9</label>
   </variable>
   <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F10</label>
     <label xml:lang="it">Indirizzo Consist attivo per F10</label>
+    <label xml:lang="de">Verbundadresse aktiv für F10</label>
   </variable>
   <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F11</label>
     <label xml:lang="it">Indirizzo Consist attivo per F11</label>
+    <label xml:lang="de">Verbundadresse aktiv für F11</label>
   </variable>
   <variable item="Consist Address Active For F12" CV="22" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Consist Address Active For F12</label>
     <label xml:lang="it">Indirizzo Consist attivo per F12</label>
+    <label xml:lang="de">Verbundadresse aktiv für F12</label>
   </variable>
   <!-- Definitions for D&H Options -->
   <!-- Dimming -->

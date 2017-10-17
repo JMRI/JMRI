@@ -27,6 +27,9 @@ public class StagingTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("StagingName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }
@@ -71,5 +74,5 @@ public class StagingTableModel extends TrackTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StagingTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StagingTableModel.class);
 }

@@ -17,6 +17,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.logix.WarrantPreferencesPanel.DataPair;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
+import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
@@ -25,6 +26,7 @@ import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class WarrantPreferences extends AbstractPreferencesManager {
 
     public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N
@@ -49,6 +52,10 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public static final String INTERPRETATION = "interpretation"; // NOI18N
     public static final String APPEARANCE_PREFS = "appearancePrefs"; // NOI18N
     public static final String APPEARANCES = "appearances"; // NOI18N
+    public static final String SHUT_DOWN = "shutdown"; // NOI18N
+    public static final String NO_MERGE = "NO_MERGE";
+    public static final String PROMPT   = "PROMPT";
+    public static final String MERGE_ALL = "MERGE_ALL";
     /**
      * @deprecated since 4.7.1; use {@link #LAYOUT_PARAMS} instead
      */
@@ -113,14 +120,18 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     private String _fileName;
     private float _scale = 87.1f;
     private int _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
-    private float _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
+    private float _throttleScale = 0.90f;  // factor to approximate throttle setting to track speed
 
     private final LinkedHashMap<String, Float> _speedNames = new LinkedHashMap<>();
     private final LinkedHashMap<String, String> _headAppearances = new LinkedHashMap<>();
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
-    private int _msIncrTime = 1000;         // time in milliseconds between speed changes ramping up or down
-    private float _throttleIncr = 0.04f;    // throttle increment for each ramp speed change
+    private int _msIncrTime = 1000;          // time in milliseconds between speed changes ramping up or down
+    private float _throttleIncr = 0.0238f;  // throttle increment for each ramp speed change - 3 steps
+
+    public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
+    private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
+    private float _mf = 0.8f;    // momentum factor (guess) for speed change
 
     /**
      * Get the default instance.
@@ -154,7 +165,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             root = null;
         }
         if (root != null) {
-            log.info("Found Warrant preferences file: {}", _fileName);
+//            log.info("Found Warrant preferences file: {}", _fileName);
             loadLayoutParams(root.getChild(LAYOUT_PARAMS));
             if (!loadSpeedMap(root.getChild(SPEED_MAP_PARAMS))) {
                 loadSpeedMapFromOldXml();
@@ -165,12 +176,12 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         }
     }
 
-    public void loadLayoutParams(Element child) {
-        if (child == null) {
+    public void loadLayoutParams(Element layoutParm) {
+        if (layoutParm == null) {
             return;
         }
         Attribute a;
-        if ((a = child.getAttribute(LAYOUT_SCALE)) != null) {
+        if ((a = layoutParm.getAttribute(LAYOUT_SCALE)) != null) {
             try {
                 setScale(a.getFloatValue());
             } catch (DataConversionException ex) {
@@ -178,16 +189,28 @@ public class WarrantPreferences extends AbstractPreferencesManager {
                 log.error("Unable to read layout scale. Setting to default value.", ex);
             }
         }
-        if ((a = child.getAttribute(SEARCH_DEPTH)) != null) {
+        if ((a = layoutParm.getAttribute(SEARCH_DEPTH)) != null) {
             try {
-                setSearchDepth(a.getIntValue());
+                _searchDepth = a.getIntValue();
             } catch (DataConversionException ex) {
-                setSearchDepth(20);
+                _searchDepth = 20;
                 log.error("Unable to read route search depth. Setting to default value (20).", ex);
+            }
+        }
+        Element shutdown = layoutParm.getChild(SHUT_DOWN);
+        if (shutdown != null) {
+            String choice = shutdown.getText();
+            if (MERGE_ALL.equals(choice)) {
+                _shutdown = Shutdown.MERGE_ALL;
+            } else if (NO_MERGE.equals(choice)) {
+                _shutdown = Shutdown.NO_MERGE;
+            } else {
+                _shutdown = Shutdown.PROMPT;
             }
         }
     }
 
+    // Avoid firePropertyChange until SignalSpeedMap is completely loaded
     private void loadSpeedMapFromOldXml() {
         SignalSpeedMap map = jmri.InstanceManager.getNullableDefault(SignalSpeedMap.class);
         if (map == null) {
@@ -200,7 +223,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             String name = it.next();
             names.put(name, map.getSpeed(name));
         }
-        this.setSpeedNames(names);
+        this.setSpeedNames(names);  // OK, no firePropertyChange
 
         Enumeration<String> en = map.getAppearanceIterator();
         LinkedHashMap<String, String> heads = new LinkedHashMap<>();
@@ -208,12 +231,13 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             String name = en.nextElement();
             heads.put(name, map.getAppearanceSpeed(name));
         }
-        this.setAppearances(heads);
-        setTimeIncrement(map.getStepDelay());
-        setThrottleIncrement(map.getStepIncrement());
+        this.setAppearances(heads);  // no firePropertyChange
+        this._msIncrTime = map.getStepDelay();
+        this._throttleIncr = map.getStepIncrement();
     }
 
-    public boolean loadSpeedMap(Element child) {
+    // Avoid firePropertyChange until SignalSpeedMap is completely loaded
+    private boolean loadSpeedMap(Element child) {
         if (child == null) {
             return false;
         }
@@ -224,26 +248,26 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         Attribute a;
         if ((a = rampParms.getAttribute(TIME_INCREMENT)) != null) {
             try {
-                setTimeIncrement(a.getIntValue());
+                this._msIncrTime = a.getIntValue();
             } catch (DataConversionException ex) {
-                setTimeIncrement(750);
-                log.error("Unable to read ramp time increment. Setting to default value (750ms).", ex);
+                this._msIncrTime = 500;
+                log.error("Unable to read ramp time increment. Setting to default value (500ms).", ex);
             }
         }
         if ((a = rampParms.getAttribute(RAMP_INCREMENT)) != null) {
             try {
-                setThrottleIncrement(a.getFloatValue());
+                this._throttleIncr = a.getFloatValue();
             } catch (DataConversionException ex) {
-                setThrottleIncrement(0.05f);
-                log.error("Unable to read ramp throttle increment. Setting to default value (0.05).", ex);
+                this._throttleIncr = 0.03f;
+                log.error("Unable to read ramp throttle increment. Setting to default value (0.03).", ex);
             }
         }
         if ((a = rampParms.getAttribute(THROTTLE_SCALE)) != null) {
             try {
-                setThrottleScale(a.getFloatValue());
+                _throttleScale = a.getFloatValue();
             } catch (DataConversionException ex) {
-                setThrottleScale(0.70f);
-                log.error("Unable to read throttle scale. Setting to default value (0.70f).", ex);
+                _throttleScale = .90f;
+                log.error("Unable to read throttle scale. Setting to default value (0.90f).", ex);
             }
         }
 
@@ -253,16 +277,16 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         }
         if ((a = rampParms.getAttribute("percentNormal")) != null) {
             if (a.getValue().equals("yes")) {
-                setInterpretation(1);
+                _interpretation = 1;
             } else {
-                setInterpretation(2);
+                _interpretation = 2;
             }
         }
         if ((a = rampParms.getAttribute(INTERPRETATION)) != null) {
             try {
-                setInterpretation(a.getIntValue());
+                _interpretation = a.getIntValue();
             } catch (DataConversionException ex) {
-                setInterpretation(1);
+                _interpretation = 1;
                 log.error("Unable to read interpetation of Speed Map. Setting to default value % normal.", ex);
             }
         }
@@ -279,7 +303,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             log.debug("Add {}, {} to AspectSpeed Table", name, speed);
             map.put(name, speed);
         }
-        this.setSpeedNames(map);
+        this.setSpeedNames(map);    // no firePropertyChange
 
         rampParms = child.getChild(APPEARANCE_PREFS);
         if (rampParms == null) {
@@ -292,8 +316,15 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             String speed = list.get(i).getText();
             heads.put(name, speed);
         }
-        this.setAppearances(heads);
+        this.setAppearances(heads); // no firePropertyChange
 
+        // Now set SignalSpeedMap members.
+        SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+        speedMap.setRampParams(_throttleIncr, _msIncrTime);
+        speedMap.setDefaultThrottleFactor(_throttleScale);
+        speedMap.setLayoutScale(_scale);
+        speedMap.setAspects(new HashMap<>(this._speedNames), _interpretation);
+        speedMap.setAppearances(new HashMap<>(this._headAppearances));
         return true;
     }
 
@@ -338,6 +369,9 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         try {
             prefs.setAttribute(LAYOUT_SCALE, Float.toString(getLayoutScale()));
             prefs.setAttribute(SEARCH_DEPTH, Integer.toString(getSearchDepth()));
+            Element shutdownPref = new Element(SHUT_DOWN);
+            shutdownPref.setText(_shutdown.toString());
+            prefs.addContent(shutdownPref);
             root.addContent(prefs);
 
             prefs = new Element(SPEED_MAP_PARAMS);
@@ -385,7 +419,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingLunar")));
             rampPrefs.addContent(step);
             prefs.addContent(rampPrefs);
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             log.warn("Exception in storing warrant xml.", ex);
             return false;
         }
@@ -524,20 +558,22 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         return new HashMap<>(this._speedNames);
     }
 
-    public void setSpeedNames(@Nonnull HashMap<String, Float> map) {
-        LinkedHashMap<String, Float> old = new LinkedHashMap<>(_speedNames);
+    // Only called directly at load time
+    private void setSpeedNames(@Nonnull HashMap<String, Float> map) {
         _speedNames.clear();
         _speedNames.putAll(map);
-        this.firePropertyChange(SPEED_NAMES, old, new LinkedHashMap<>(_speedNames));
     }
 
-    void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
+    // Called when preferences is updated from panel
+    protected void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
         LinkedHashMap<String, Float> map = new LinkedHashMap<>();
         for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
             map.put(dp.getKey(), dp.getValue());
         }
+        LinkedHashMap<String, Float> old = new LinkedHashMap<>(_speedNames);
         this.setSpeedNames(map);
+        this.firePropertyChange(SPEED_NAMES, old, new LinkedHashMap<>(_speedNames));
     }
 
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
@@ -574,20 +610,22 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         return new HashMap<>(this._headAppearances);
     }
 
-    public void setAppearances(HashMap<String, String> map) {
-        LinkedHashMap<String, String> old = new LinkedHashMap<>(this._headAppearances);
+    // Only called directly at load time
+    private void setAppearances(HashMap<String, String> map) {
         this._headAppearances.clear();
         this._headAppearances.putAll(map);
-        this.firePropertyChange(APPEARANCES, old, new LinkedHashMap<>(this._headAppearances));
-    }
+     }
 
-    void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
+    // Called when preferences are updated
+    protected void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
         for (int i = 0; i < appearanceMap.size(); i++) {
             DataPair<String, String> dp = appearanceMap.get(i);
             map.put(dp.getKey(), dp.getValue());
         }
+        LinkedHashMap<String, String> old = new LinkedHashMap<>(this._headAppearances);
         this.setAppearances(map);
+        this.firePropertyChange(APPEARANCES, old, new LinkedHashMap<>(this._headAppearances));
     }
 
     public int getInterpretation() {
@@ -628,6 +666,22 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public float getThrottleIncrement() {
         return _throttleIncr;
     }
+    
+    /**
+     * Get momentum factor
+     */
+    public float getMomentumFactor() {
+//      _mf = 1f - 22167 / ((_intervalTime / _throttleIncr) + 21667); // .1->.3 2->.9 *
+//      _mf = 1f - 33833 / ((_intervalTime / _throttleIncr) + 38333); // .1->.3 3->.9
+//      _mf = 1f - 45500 / ((_intervalTime / _throttleIncr) + 55000); // .1->.3 4->.9 **
+//      _mf = 1f - 44571 / ((_intervalTime / _throttleIncr) + 45714); // .1->.2 4->.9
+//      _mf = 1f - 100000 / ((_msIncrTime / _throttleIncr) + 187409); // excel **
+      _mf = 1f - 56297 / ((_msIncrTime / _throttleIncr) + 100000); // excel
+      if (_mf < 0.45f) {
+          _mf = 0.45f;            
+      }
+       return _mf; 
+    }
 
     /**
      * Set the throttle increment.
@@ -648,6 +702,13 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             this.openFile(FileUtil.getUserFilesPath() + "signal" + File.separator + "WarrantPreferences.xml");
             this.setInitialized(profile, true);
         }
+    }
+
+    protected void setShutdown(Shutdown set) {
+        _shutdown = set;
+    }
+    public Shutdown getShutdown() {
+        return _shutdown;
     }
 
     @Override

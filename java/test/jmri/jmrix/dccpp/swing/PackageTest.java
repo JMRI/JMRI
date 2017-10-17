@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     BundleTest.class,
     jmri.jmrix.dccpp.swing.mon.PackageTest.class,
-    jmri.jmrix.dccpp.swing.packetgen.PackageTest.class
+    jmri.jmrix.dccpp.swing.packetgen.PackageTest.class,
+    ConfigBaseStationActionTest.class,
+    ConfigBaseStationFrameTest.class,
+    DCCppComponentFactoryTest.class
 })
 
 /**
@@ -33,6 +36,6 @@ public class PackageTest{
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

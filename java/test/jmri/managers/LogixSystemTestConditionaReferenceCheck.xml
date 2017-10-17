@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <!-- creates a sensor, which is watched by a Conditional in Logix 1, which in -->
+  <!-- turn is watched by two Conditionals in Logix 2 (once by system name and -->
+  <!-- once by user name, which in turn toggle two Turnouts on changes -->
+  <!-- For unit testing of the whole Logix mess. See jmri.managers.LogixSystemTest -->
+  <jmriversion>
+    <major>4</major>
+    <minor>7</minor>
+    <test>3</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="IS1" inverted="false" userName="Drives conditionals">
+      <systemName>IS1</systemName>
+      <userName>Drives conditionals</userName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="IT1" userName="Toggled by system name reference" feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+      <userName>Toggled by system name reference</userName>
+    </turnout>
+    <turnout systemName="IT2" userName="Toggled by user name reference" feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+      <userName>Toggled by user name reference</userName>
+    </turnout>
+  </turnouts>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix systemName="IX:AUTO:0001" userName="Conditional listens to IS1" enabled="yes">
+      <systemName>IX:AUTO:0001</systemName>
+      <userName>Conditional listens to IS1</userName>
+      <logixConditional systemName="IX:AUTO:0001C1" order="0" />
+    </logix>
+    <logix systemName="IX:AUTO:0002" userName="Listen to conditional, write turnouts" enabled="yes">
+      <systemName>IX:AUTO:0002</systemName>
+      <userName>Listen to conditional, write turnouts</userName>
+      <logixConditional systemName="IX:AUTO:0002C1" order="0" />
+      <logixConditional systemName="IX:AUTO:0002C2" order="1" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX:AUTO:0001C1" userName="User 1C1" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0001C1</systemName>
+      <userName>User 1C1</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0002C1" userName="Via System Name" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0002C1</systemName>
+      <userName>Via System Name</userName>
+      <conditionalStateVariable operator="4" negated="no" type="5" systemName="IX:AUTO:0001C1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="3" type="2" systemName="IT1" data="8" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0002C2" userName="Via User Name" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0002C2</systemName>
+      <userName>Via User Name</userName>
+      <conditionalStateVariable operator="4" negated="no" type="5" systemName="User 1C1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="3" type="2" systemName="IT2" data="8" delay="0" string="" />
+    </conditional>
+  </conditionals>
+  <!--Written by JMRI version 4.7.3ish+jake+20170401T1603Z+R61e8425 on Sat Apr 01 09:16:32 PDT 2017 $Id$-->
+</layout-config>
