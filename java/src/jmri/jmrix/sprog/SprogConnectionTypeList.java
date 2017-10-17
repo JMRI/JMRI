@@ -8,7 +8,6 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
-  *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class SprogConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

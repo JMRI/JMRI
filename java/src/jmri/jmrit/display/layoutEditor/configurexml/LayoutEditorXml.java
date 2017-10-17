@@ -503,7 +503,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.initView();
 
         // load the contents
-        List<Element> items = shared.getChildren();
         for (Element item : shared.getChildren()) {
             // get the class, hence the adapter object to do loading
             String adapterName = item.getAttribute("class").getValue();

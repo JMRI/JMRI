@@ -25,6 +25,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public SprogSystemConnectionMemo(SprogTrafficController st, SprogMode sm) {
         super(st.getController().getSystemConnectionMemo().getSystemPrefix(), SprogConnectionTypeList.SPROG);
+        if (log.isDebugEnabled()) {
+            log.debug("SprogSystemConnectionMemo, prefix='{}'", st.getController().getSystemConnectionMemo().getSystemPrefix());
+        }
         this.st = st;
         sprogMode = sm;  // static
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
@@ -209,7 +212,6 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-
         if (T.equals(jmri.PowerManager.class)) {
             return (T) getPowerManager();
         }

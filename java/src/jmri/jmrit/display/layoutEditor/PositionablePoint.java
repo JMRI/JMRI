@@ -12,7 +12,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -119,7 +122,7 @@ public class PositionablePoint extends LayoutTrack {
                 break;
             }
         }
-        return result + " '" + ident + "'";
+        return result + " '" + getName() + "'";
     }
 
     /**
@@ -168,7 +171,9 @@ public class PositionablePoint extends LayoutTrack {
      */
     public Rectangle2D getBounds() {
         Point2D c = getCoordsCenter();
-        return new Rectangle2D.Double(c.getX(), c.getY(), 0.0, 0.0);
+        //Note: empty bounds don't draw...
+        // so now I'm mading them 0.5 bigger in all directions (1 pixel total)
+        return new Rectangle2D.Double(c.getX() - 0.5, c.getY() - 0.5, 1.0, 1.0);
     }
 
     private PositionablePoint linkedPoint;
@@ -711,9 +716,11 @@ public class PositionablePoint extends LayoutTrack {
     private LayoutEditorTools tools = null;
 
     /**
-     * For editing: only provides remove
+     * {@inheritDoc}
      */
-    protected void showPopup(MouseEvent e) {
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -727,7 +734,7 @@ public class PositionablePoint extends LayoutTrack {
         JMenuItem jmi = null;
         switch (getType()) {
             case ANCHOR:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Anchor")) + ident);
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Anchor")) + getName());
                 jmi.setEnabled(false);
 
                 LayoutBlock block1 = null;
@@ -752,7 +759,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setEnabled(false);
                 break;
             case END_BUMPER:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EndBumper")) + ident);
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EndBumper")) + getName());
                 jmi.setEnabled(false);
 
                 LayoutBlock blockEnd = null;
@@ -766,7 +773,7 @@ public class PositionablePoint extends LayoutTrack {
                 endBumper = true;
                 break;
             case EDGE_CONNECTOR:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + ident);
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + getName());
                 jmi.setEnabled(false);
 
                 if (getLinkedEditor() != null) {
@@ -808,26 +815,28 @@ public class PositionablePoint extends LayoutTrack {
         if ((connect1 != null) || (connect2 != null)) {
             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
             if (connect1 != null) {
-                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName());
+                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + connect1.getName());
                 //jmi.setEnabled(false);
-                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName()) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + connect1.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connect1).getName());
+                        LayoutTrack lt = lf.findObjectByName(connect1.getName());
                         layoutEditor.setSelectionRect(lt.getBounds());
+                        lt.showPopup();
                     }
                 });
             }
             if (connect2 != null) {
-                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "2") + ((LayoutTrack) connect2).getName());
+                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "2") + connect2.getName());
                 //jmi.setEnabled(false);
-                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + ((LayoutTrack) connect2).getName()) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + connect2.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connect2).getName());
+                        LayoutTrack lt = lf.findObjectByName(connect2.getName());
                         layoutEditor.setSelectionRect(lt.getBounds());
+                        lt.showPopup();
                     }
                 });
             }
@@ -955,8 +964,10 @@ public class PositionablePoint extends LayoutTrack {
             });
         }
         layoutEditor.setShowAlignmentMenu(popup);
-        popup.show(e.getComponent(), e.getX(), e.getY());
-    }
+        popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+
+        return popup;
+    }   // showPopup
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
@@ -1242,8 +1253,6 @@ public class PositionablePoint extends LayoutTrack {
      */
     protected void draw(Graphics2D g2) {
         if (getType() != ANCHOR) {
-            Stroke originalStroke = g2.getStroke();
-
             Point2D pt = getCoordsCenter();
             boolean mainline = false;
             Point2D ep1 = pt, ep2 = pt;
@@ -1259,9 +1268,10 @@ public class PositionablePoint extends LayoutTrack {
                 }
             }
 
-            float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
-            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            double trackWidth = Math.min(layoutEditor.setTrackStrokeWidth(g2, mainline), 3.0);
+            Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            //Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            trackWidth *= 2.0;
 
             if (!ep1.equals(ep2)) {
                 setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
@@ -1277,23 +1287,27 @@ public class PositionablePoint extends LayoutTrack {
                     g2.setStroke(drawingStroke);
                     g2.draw(new Line2D.Double(p1, p2));
                 } else if (getType() == EDGE_CONNECTOR) {
-                    // draw an arrow
-                    p1 = new Point2D.Double(0.0, -trackWidth);
-                    p2 = new Point2D.Double(-trackWidth, 0.0);
-                    p3 = new Point2D.Double(0.0, +trackWidth);
-                    g2.setStroke(drawingStroke1);
+                    // draw an X
+                    p1 = new Point2D.Double(-trackWidth, -trackWidth);
+                    p2 = new Point2D.Double(-trackWidth, +trackWidth);
+                    p3 = new Point2D.Double(+trackWidth, +trackWidth);
+                    p4 = new Point2D.Double(+trackWidth, -trackWidth);
+
                     p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                     p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
                     p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
+                    p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
 
-                    g2.draw(new Line2D.Double(p1, p2));
-                    g2.draw(new Line2D.Double(p2, p3));
-                    g2.draw(new Line2D.Double(p3, p1));
+                    g2.setStroke(drawingStroke);
+                    g2.draw(new Line2D.Double(p1, p3));
+                    g2.draw(new Line2D.Double(p2, p4));
                 }
             }
-            g2.setStroke(originalStroke);
+            // this is to force setTrackStrokeWidth's mainline local to toggle
+            // so next time it's called it will "do the right thing"...
+            layoutEditor.setTrackStrokeWidth(g2, !mainline);
         }   // if (getType() != ANCHOR)
-    }
+    }   // draw
 
     /**
      * {@inheritDoc}
@@ -1337,7 +1351,7 @@ public class PositionablePoint extends LayoutTrack {
 
     protected void drawTurnoutControls(Graphics2D g2) {
         // PositionablePoints don't have turnout controls...
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1413,7 +1427,7 @@ public class PositionablePoint extends LayoutTrack {
                     }
                     lc.setDirection(Path.computeDirection(p1, p2));
                     // save Connections
-                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    lc.setConnections(ts1, ts2, TRACK, this);
                     results.add(lc);
                 }
             }
@@ -1441,7 +1455,7 @@ public class PositionablePoint extends LayoutTrack {
                     //In this instance work out the direction of the first track relative to the positionable poin.
                     lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
                     // save Connections
-                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    lc.setConnections(ts1, ts2, TRACK, this);
                     results.add(lc);
                 }
             }
@@ -1449,6 +1463,163 @@ public class PositionablePoint extends LayoutTrack {
         return results;
     }   // getLayoutConnectivity()
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> checkForFreeConnections() {
+        List<Integer> result = new ArrayList<>();
 
+        if ((getConnect1() == null)
+                || ((getType() == ANCHOR) && (getConnect2() == null))) {
+            result.add(Integer.valueOf(POS_POINT));
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForUnAssignedBlocks() {
+        // Positionable Points don't have blocks so…
+        // nothing to see here... move along...
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
+        /*
+         * For each (non-null) blocks of this track do:
+         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+         * #2) If this track is not in one of the TrackNameSets for this block
+         * #3) add a new set (with this block/track) to
+         *     blockNamesToTrackNameSetMap and
+         * #4) check all the connections in this
+         *     block (by calling the 2nd method below)
+         * <p>
+         *     Basically, we're maintaining contiguous track sets for each block found
+         *     (in blockNamesToTrackNameSetMap)
+         */
+        //check the 1st connection points block
+        TrackSegment ts1 = getConnect1();
+        String blk1 = null;
+        List<Set<String>> TrackNameSets = null;
+        Set<String> TrackNameSet = null;
+
+        // this should never be null... but just in case...
+        if (ts1 != null) {
+            blk1 = ts1.getBlockName();
+            if (blk1 != null) {
+                TrackNameSet = null;    // assume not found (pessimist!)
+                TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
+                if (TrackNameSets != null) { // (#1)
+                    for (Set<String> checkTrackNameSet : TrackNameSets) {
+                        if (checkTrackNameSet.contains(getName())) { // (#2)
+                            TrackNameSet = checkTrackNameSet;
+                            break;
+                        }
+                    }
+                } else {    // (#3)
+                    log.info("•New block ('{}') trackNameSets", blk1);
+                    TrackNameSets = new ArrayList<>();
+                    blockNamesToTrackNameSetsMap.put(blk1, TrackNameSets);
+                }
+                if (TrackNameSet == null) {
+                    TrackNameSet = new LinkedHashSet<>();
+                    log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
+                    TrackNameSet.add(getName());
+                    TrackNameSets.add(TrackNameSet);
+                }
+                if (connect1 != null) { // (#4)
+                    connect1.collectContiguousTracksNamesInBlockNamed(blk1, TrackNameSet);
+                }
+            }
+        }
+
+        if (getType() == ANCHOR) {
+            //check the 2nd connection points block
+            TrackSegment ts2 = getConnect2();
+            // this should never be null... but just in case...
+            if (ts2 != null) {
+                String blk2 = ts2.getBlockName();
+                if (blk2 != null) {
+                    TrackNameSet = null;    // assume not found (pessimist!)
+                    TrackNameSets = blockNamesToTrackNameSetsMap.get(blk2);
+                    if (TrackNameSets != null) { // (#1)
+                        for (Set<String> checkTrackNameSet : TrackNameSets) {
+                            if (checkTrackNameSet.contains(getName())) { // (#2)
+                                TrackNameSet = checkTrackNameSet;
+                                break;
+                            }
+                        }
+                    } else {    // (#3)
+                        log.info("•New block ('{}') trackNameSets", blk2);
+                        TrackNameSets = new ArrayList<>();
+                        blockNamesToTrackNameSetsMap.put(blk2, TrackNameSets);
+                    }
+                    if (TrackNameSet == null) {
+                        TrackNameSet = new LinkedHashSet<>();
+                        log.info("•    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
+                        TrackNameSets.add(TrackNameSet);
+                        TrackNameSet.add(getName());
+                    }
+                    if (connect2 != null) { // (#4)
+                        connect2.collectContiguousTracksNamesInBlockNamed(blk2, TrackNameSet);
+                    }
+                }
+            }
+        }
+    } // collectContiguousTracksNamesInBlockNamed
+
+    /**
+     * {@inheritDoc}
+     */
+    public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
+            @Nonnull Set<String> TrackNameSet) {
+        if (!TrackNameSet.contains(getName())) {
+            TrackSegment ts1 = getConnect1();
+            // this should never be null... but just in case...
+            if (ts1 != null) {
+                String blk1 = ts1.getBlockName();
+                // is this the blockName we're looking for?
+                if (blk1.equals(blockName)) {
+                    // if we are added to the TrackNameSet
+                    if (TrackNameSet.add(getName())) {
+                        log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    }
+                    // this should never be null... but just in case...
+                    if (connect1 != null) {
+                        connect1.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+                    }
+                }
+            }
+            if (getType() == ANCHOR) {
+                TrackSegment ts2 = getConnect2();
+                // this should never be null... but just in case...
+                if (ts2 != null) {
+                    String blk2 = ts2.getBlockName();
+                    // is this the blockName we're looking for?
+                    if (blk2.equals(blockName)) {
+                        // if we are added to the TrackNameSet
+                        if (TrackNameSet.add(getName())) {
+                            log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                        }
+                        // this should never be null... but just in case...
+                        if (connect2 != null) {
+                            // it's time to play... flood your neighbour!
+                            connect2.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class
+    );
 }
