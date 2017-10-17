@@ -748,7 +748,7 @@ public class TrackSegment extends LayoutTrack {
                 dispose();
             }
         });
-        popup.add(new AbstractAction(Bundle.getMessage("Split")) {
+        popup.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // create a new anchor

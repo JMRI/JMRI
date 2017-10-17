@@ -853,7 +853,7 @@ public class PositionablePoint extends LayoutTrack {
 
         if (getType() == ANCHOR) {
             final PositionablePoint finalThis = this;
-            popup.add(new AbstractAction(Bundle.getMessage("Join")) {
+            popup.add(new AbstractAction(Bundle.getMessage("MergeAdjacentTracks")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // if I'm fully connected...
