@@ -1620,6 +1620,14 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        // positionable points don't have blocks...
+        // nothing to see here, move along...
+    }
+
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class
     );
 }

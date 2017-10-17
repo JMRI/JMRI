@@ -1574,5 +1574,13 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        setLayoutBlockAC(layoutBlock);
+        setLayoutBlockBD(layoutBlock);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
 }

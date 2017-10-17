@@ -1741,6 +1741,13 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        setLayoutBlock(layoutBlock);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
     );
 }

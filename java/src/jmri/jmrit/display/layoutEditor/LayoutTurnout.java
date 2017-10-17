@@ -3934,6 +3934,22 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }   // collectContiguousTracksNamesInBlockNamed
 
+    /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        setLayoutBlock(layoutBlock);
+        if ((getTurnoutType() == DOUBLE_XOVER)
+                || (getTurnoutType() == LH_XOVER)
+                || (getTurnoutType() == RH_XOVER)
+                || (getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
+            setLayoutBlockB(layoutBlock);
+            setLayoutBlockC(layoutBlock);
+            setLayoutBlockD(layoutBlock);
+        }
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class
     );
 }

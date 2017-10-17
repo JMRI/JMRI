@@ -865,7 +865,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         // We're only using a map here because it's convient to
         // use it to pair up blocks and connections
-        Map<LayoutTrack, String > blocksAndTracksMap = new HashMap<>();
+        Map<LayoutTrack, String> blocksAndTracksMap = new HashMap<>();
         for (int k = 0; k < getNumberRays(); k++) {
             TrackSegment ts = getRayConnectOrdered(k);
             if (ts != null) {
@@ -934,6 +934,14 @@ public class LayoutTurntable extends LayoutTrack {
                 }
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        // turntables don't have blocks...
+        // nothing to see here, move along...
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class
