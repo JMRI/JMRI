@@ -240,7 +240,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     private int getIndex(int start, String roadNumber) {
         for (int index = start; index < sysList.size(); index++) {
-            Car c = (Car) sysList.get(index);
+            Car c = sysList.get(index);
             if (c != null) {
                 String[] number = c.getNumber().split("-");
                 // check for wild card '*'
@@ -270,7 +270,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public Car getCarAtIndex(int index) {
-        return (Car) sysList.get(index);
+        return sysList.get(index);
     }
 
     private void updateList() {
@@ -359,7 +359,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             return;
         }
         for (int i = 0; i < list.size(); i++) {
-            Car car = (Car) list.get(i);
+            Car car = list.get(i);
             if (car.getLocation() == null) {
                 list.remove(i--);
                 continue;
@@ -537,7 +537,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Car car = (Car) sysList.get(row);
+        Car car = sysList.get(row);
         if (car == null) {
             return "ERROR car unknown " + row; // NOI18N
         }
@@ -640,7 +640,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        Car car = (Car) sysList.get(row);
+        Car car = sysList.get(row);
         switch (col) {
             case SELECT_COLUMN:
                 car.setSelected(((Boolean) value).booleanValue());

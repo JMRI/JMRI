@@ -1645,7 +1645,7 @@ public class LayoutEditorTools {
                 } else {
                     signalName = to.getSignalB1Name();
                 }
-                if ((signalName == null) || signalName.isEmpty()) {
+                if (signalName.isEmpty()) {
                     if (!layoutEditor.isIncludedTurnoutSkipped()) {
                         return null;
                     }
