@@ -590,7 +590,7 @@ public class SpeedUtil {
         float momentumTime = getMomentumTime(increasing);
 
         if (increasing) {
-            while (fromSpeed <= toSpeed) {
+            while (fromSpeed < toSpeed) {
                 float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
                         + getTrackSpeed(fromSpeed + deltaThrottle, isForward) * (deltaTime - momentumTime);
                 if (dist <= 0.0f) {
@@ -600,7 +600,7 @@ public class SpeedUtil {
                 if (fromSpeed <= toSpeed) {
                     rampLength += dist;
                 } else {
-                    rampLength += (toSpeed - fromSpeed) * dist / deltaThrottle;
+                    rampLength += (fromSpeed - toSpeed) * dist / deltaThrottle;
                 }
                 deltaThrottle *= NXFrame.INCRE_RATE;
                 numSteps++;
@@ -613,16 +613,22 @@ public class SpeedUtil {
                 deltaThrottle *= NXFrame.INCRE_RATE;
             }
             while (fromSpeed >= toSpeed) {
+                float nextSpeed;
+                if (fromSpeed < deltaThrottle) {
+                    nextSpeed = deltaThrottle - fromSpeed;
+                } else {
+                    nextSpeed = fromSpeed - deltaThrottle;
+                }
                 float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
-                        + getTrackSpeed(fromSpeed - deltaThrottle, isForward) * (deltaTime - momentumTime);
+                        + getTrackSpeed(nextSpeed, isForward) * (deltaTime - momentumTime);
                 if (dist <= 0.0f) {
                     break;
                 }
                 fromSpeed -= deltaThrottle;
-                if (fromSpeed >= toSpeed) {
+                if (fromSpeed > toSpeed) {
                     rampLength += dist;
                 } else {
-                    rampLength += (fromSpeed - toSpeed) * dist / deltaThrottle;
+                    rampLength += (toSpeed - fromSpeed) * dist / deltaThrottle;
                 }
                 deltaThrottle /= NXFrame.INCRE_RATE;
                 numSteps++;
@@ -651,6 +657,9 @@ public class SpeedUtil {
     protected void enteredBlock(int lastIdx, int newIdx) {
         speedChange();
         if (lastIdx > 0) {   // Distance traveled in 1st block unknown 
+            if (!log.isDebugEnabled() && _numchanges > 1) {
+                return;
+            }
             float totalLength = 0.0f;
             boolean isForward = _throttle.getIsForward();
             boolean mergeOK = true;
@@ -669,19 +678,13 @@ public class SpeedUtil {
             }
             OBlock fromBlock = _orders.get(newIdx).getBlock();
             OBlock toBlock = _orders.get(lastIdx).getBlock();
-            if (!mergeOK || Math.abs(_distanceTravelled - totalLength) < 25.0f) {   // allow 1 inch
+            if (!mergeOK || (_numchanges > 1 && Math.abs(_distanceTravelled - totalLength) < 25.0f)) {   // allow 1 inch
                 clearStats();
                 if (log.isDebugEnabled())
                     log.debug("Speed data invalid between {} and {} (bad length data)", fromBlock.getDisplayName(), toBlock.getDisplayName());
                 return;
             }
             long elpsedTime = fromBlock._entryTime - toBlock._entryTime;
-            if (Math.abs(elpsedTime - _timeAtSpeed) < 20) { // allow 20ms
-                clearStats();
-                if (log.isDebugEnabled())
-                    log.debug("Speed data invalid between {} and {} (timing bad)", fromBlock.getDisplayName(), toBlock.getDisplayName());
-                return;
-            }
             float speed;
             float throttle;
             float aveSpeed = totalLength / elpsedTime;
@@ -689,6 +692,12 @@ public class SpeedUtil {
                 throttle = _throttle.getSpeedSetting();
                 speed = aveSpeed;
             } else {
+                if (Math.abs(elpsedTime - _timeAtSpeed) < 30) { // only allow 30ms
+                    clearStats();
+                    if (log.isDebugEnabled())
+                        log.debug("Speed data invalid between {} and {} (timing bad)", fromBlock.getDisplayName(), toBlock.getDisplayName());
+                    return;
+                }
                 speed = totalLength / _timeAtSpeed;
                 throttle = _settingsTravelled / _timeAtSpeed;
             }
@@ -738,6 +747,9 @@ public class SpeedUtil {
      */
     protected void speedChange() {
         _numchanges++;
+        if (!log.isDebugEnabled() && _numchanges > 1) {
+            return;
+        }
         long time = System.currentTimeMillis();
         float throttleSetting = _throttle.getSpeedSetting();
         long elapsedTime = time - _changetime;

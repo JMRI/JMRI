@@ -897,7 +897,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                                     idxBlockOrder < _orders.size() - 1) {
                                 // looking for signal or occupation
                                 dist += getPathLength(getBlockOrderAt(idxBlockOrder));
-                                speedType = getSpeedTypeForBlock(idxBlockOrder++);
+                                speedType = getSpeedTypeForBlock(++idxBlockOrder);
                             }
                             boolean isForward = _engineer.getIsForward();
                             // expected speed after ramp up -  could be less, depends on following script
@@ -1337,6 +1337,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         } else {
             if (!_waitForBlock && _engineer != null) {
                 _engineer.resumeSpeedFrom(STOP);
+                int runState = _engineer.getRunState();
+                if (runState == HALT || runState == RAMP_HALT) {
+                    _waitForBlock = true;                    
+                } else {
+                    _waitForBlock = false;
+                }
 //                firePropertyChange("SpeedChange", _idxCurrentOrder, _idxCurrentOrder);
             }
             _waitForSignal = false;
@@ -1374,9 +1380,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (msg == null) {
             _stoppingBlock.removePropertyChangeListener(this);
             _stoppingBlock = null;
-            _waitForBlock = false;
             if (!_waitForSignal && _engineer != null) {
                 _engineer.resumeSpeedFrom(STOP);
+                int runState = _engineer.getRunState();
+                if (runState == HALT || runState == RAMP_HALT) {
+                    _waitForBlock = true;                    
+                } else {
+                    _waitForBlock = false;
+                }
             }
             allocateFromIndex(_idxCurrentOrder + 1);
             return true;
