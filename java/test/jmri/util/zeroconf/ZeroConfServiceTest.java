@@ -50,13 +50,7 @@ public class ZeroConfServiceTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
        mockStatic(JmDNS.class);
-       java.net.InetAddress addr = java.net.Inet4Address.getLoopbackAddress();
 
-       JmDNSImpl jmdnsi = PowerMockito.spy(new JmDNSImpl(addr,"test"));
-
-       PowerMockito.doNothing().when(jmdnsi).send(any(DNSOutgoing.class));
-       PowerMockito.doNothing().when(jmdnsi).respondToQuery(any(DNSIncoming.class));
-       jmdns = jmdnsi;
        Mockito.when(JmDNS.create()).thenReturn(jmdns);
        Mockito.when(JmDNS.create(any(InetAddress.class))).thenReturn(jmdns);
        Mockito.when(JmDNS.create(any(InetAddress.class), anyString())).thenReturn(jmdns);
@@ -69,18 +63,24 @@ public class ZeroConfServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
+        //Log4JFixture.setUp(); // log4j is mocked.
         JUnitUtil.resetProfileManager();
+        java.net.InetAddress addr = java.net.Inet4Address.getLoopbackAddress();
+        JmDNSImpl jmdnsi = PowerMockito.spy(new JmDNSImpl(addr,"test"));
+
+        PowerMockito.doNothing().when(jmdnsi).send(any(DNSOutgoing.class));
+        PowerMockito.doNothing().when(jmdnsi).respondToQuery(any(DNSIncoming.class));
+        jmdns = jmdnsi;
     }
 
     @After
     public void tearDown() throws Exception {
         ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
+        /*JUnitUtil.waitFor(() -> {
             return (ZeroConfService.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
+        }, "Stopping all ZeroConf Services");*/
+        //Log4JFixture.tearDown(); // log4j is mocked
         jmdns = null;
-        Log4JFixture.tearDown();
     }
 
     /**
