@@ -31,19 +31,19 @@
       The Java Developer's Guide to Eclipse</a>).</p>
 
       <p>JMRI developers use Git for source control. Source control
-      using Git is including as part of the Eclipse "Luna"
+      using Git is including as part of the Eclipse "Oxygen"
       download. For more information or an alternate method for
       getting the JMRI source, see <a href="getgitcode.shtml">JMRI:
       Getting the Code</a>.</p>
 
       <p>These instructions were developed and tested using
-      "Eclipse IDE for Java Developers" version "Luna Service
-      Release 1a (4.4.1)".</p>
+      "Eclipse IDE for Java Developers" version "Oxygen
+      Release (4.7.0)".</p>
 
       <p>Also note that at the time of writing this help document
       that JMRI requires JAVA version 8. You must confirm that JRE
       8 is the default Java Runtime Environment. Eclipse recommends
-      installing release Luna for Java 8, but there are workarounds
+      installing release "Luna" or later for Java 8, but there are workarounds
       described online.</p><a name="getwgit" id="getwgit"></a>
 
       <h2>Getting the JMRI Source using Git</h2>To get the source
@@ -91,15 +91,19 @@
         acceptable to you.</li>
         
         <li>The download will now happen. It might take a while.</li>
+        
+        <li>Next select the "Wizard for project import", use "Import existing Eclipse project" then "Next"</li>
+        
+        <li>Select "Finish" to complete the import.</li>
       </ol>
 
-      <p>After the download is complete the Eclipse Package
+      <p>After the import is complete the Eclipse Package
       Explorer should look like this:</p><a href=
       "images/EclipsePackageExplorer.png"><img src=
       "images/EclipsePackageExplorer.png" width="350" height="312"
       alt="Eclipse Package Explorer pane"></a>
 
-      <p>After the download is complete, Eclipse may be reporting
+      <p>After the download is complete, Eclipse will be reporting
       an error: Project 'jmri' is missing required source folder:
       'java/tmp'. This will be fixed by running the ant build as
       described below.</p>
@@ -232,33 +236,12 @@ If you're using a Mac OS X (macOS) system add the library path:
         the "Run" menu. Once you've done that once, you can just
         click the "Run" icon on the toolbar to rerun the last
         program.</li>
-      </ol><a name="javacc" id="javacc"></a>
+        
+        </ol>
 
-      <h2>Installing JavaCC Plugin (alternative to Run As Ant Build
-      method above)</h2>Instead of using the ant build to populate
-      the "tmp" directory, you can install the JavaCC plugin.
-      Here's the steps:
-
-      <ol>
-        <li>Download the Eclipse JavaCC plugin following the
-        instructions found here: <a href=
-        "http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</a></li>
-
-        <li>After restarting Eclipse, right click on the java
-        directory in the Project Explorer or Navigator and select
-        JavaCC Options.</li>
-
-        <li>On the JavaCC Options tab, enter the output directory
-        to be java/tmp/jmri/jmris/srcp/parser</li>
-
-        <li>On the JJTree options page, enter the output directory
-        to be java/tmp/jmri/jmris/srcp/parser</li>
-
-        <li>Confirm that the "Java Build Path" includes the tmp
-        directory (see Project Properties).</li>
-      </ol><a name="push" id="push"></a>
-
-      <h2>Pushing changes to your GitHub branch</h2>The standard
+      <h2>Pushing changes to your GitHub branch</h2> 
+      
+      The standard
       practice for getting your changes included in main JMRI code
       repository is to commit them to your local repository
       periodically, then when ready to publish "push" an entire set
@@ -338,32 +321,10 @@ If you're using a Mac OS X (macOS) system add the library path:
         </li>
       </ul><a name="errors" id="errors"></a>
 
-      <h2>Compiler Errors and Warnings</h2>The default Eclipse
-      compiler configuration produces many unnecessary warnings.
-      You can adjust the warnings to match the screen shots as
-      shown below by going to Window -&gt; Preferences and
-      selecting "Java -&gt; Compiler -&gt; Errors/Warnings".
-
-      <p><a href="images/ErrorsWarningsCodeStyle.png"><img src=
-      "images/ErrorsWarningsCodeStyle.png" width="413" height="342"
-      alt="Eclipse Error pane"></a></p>
-
-      <p><a href="images/ErrorsWarningsPotential.png"><img src=
-      "images/ErrorsWarningsPotential.png" width="424" height="500"
-      alt="Eclipse Error pane"></a></p>
-
-      <p><a href="images/ErrorsWarningsName.png"><img src=
-      "images/ErrorsWarningsName.png" width="413" height="360" alt=
-      "Eclipse Error pane"></a></p>
-
-      <p><a href="images/ErrorsWarningsUnnecessary.png"><img src=
-      "images/ErrorsWarningsUnnecessary.png" width="413" height=
-      "502" alt="Eclipse Error pane"></a></p>
-
-      <p><a href="images/ErrorsWarningsAnnotations.png"><img src=
-      "images/ErrorsWarningsAnnotations.png" width="423" height=
-      "500" alt="Eclipse Error pane"></a></p>
-      <!-- not used images/EclipseCvsModules 2015/12, delete omg ? -->
+      <h2>Compiler Errors and Warnings</h2>
+      
+      As of 10/18/2017 there's roughly 4300 warnings being reported by the Eclipse. You can ignore these for now.
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
