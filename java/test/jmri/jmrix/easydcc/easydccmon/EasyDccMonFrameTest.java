@@ -6,6 +6,7 @@ import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -14,9 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * EasyDccMonFrameTest.java
- *
- * Description:	JUnit tests for the EasyDccProgrammer class
+ * JUnit tests for the EasyDccMonFrame class
  *
  * @author	Bob Jacobsen
  */
@@ -25,7 +24,7 @@ public class EasyDccMonFrameTest {
     @Test
     public void testCreate() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EasyDccMonFrame f = new EasyDccMonFrame();
+        EasyDccMonFrame f = new EasyDccMonFrame(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
         Assert.assertNotNull("exists", f);
     }
 
@@ -37,7 +36,7 @@ public class EasyDccMonFrameTest {
         m.setElement(1, '0');
         m.setElement(2, 'A');
 
-        EasyDccMonFrame f = new EasyDccMonFrame();
+        EasyDccMonFrame f = new EasyDccMonFrame(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
 
         f.message(m);
 
@@ -52,7 +51,7 @@ public class EasyDccMonFrameTest {
         m.setElement(1, 'o');
         m.setElement(2, ':');
 
-        EasyDccMonFrame f = new EasyDccMonFrame();
+        EasyDccMonFrame f = new EasyDccMonFrame(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
 
         f.reply(m);
 
@@ -73,6 +72,7 @@ public class EasyDccMonFrameTest {
     class EasyDccInterfaceScaffold extends EasyDccTrafficController {
 
         public EasyDccInterfaceScaffold() {
+            super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
         }
 
         // override some EasyDccInterfaceController methods for test purposes

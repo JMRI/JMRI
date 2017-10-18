@@ -35,7 +35,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Extracts Read-CV returned value from a message. Returns -1 if message
-     * can't be parsed. Expects a message of the formnat "CVnnnvv" where vv is
+     * can't be parsed. Expects a message of the format "CVnnnvv" where vv is
      * the hexadecimal value or "Vnvv" where vv is the hexadecimal value.
      */
     @Override

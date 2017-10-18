@@ -20,9 +20,10 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface
-        tcis = new EasyDccTrafficControlScaffold();
+        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
+        tcis = new EasyDccTrafficControlScaffold(memo);
 
-        t = new EasyDccTurnout(4, "E");
+        t = new EasyDccTurnout(4, memo);
     }
 
     @Override

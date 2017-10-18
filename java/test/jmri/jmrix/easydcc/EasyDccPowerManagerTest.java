@@ -63,8 +63,9 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        controller = new EasyDccTrafficControlScaffold();
-        p = new EasyDccPowerManager();
+        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
+        controller = new EasyDccTrafficControlScaffold(memo);
+        p = new EasyDccPowerManager(memo);
     }
 
     EasyDccTrafficControlScaffold controller;  // holds dummy EasyDccTrafficController for testing

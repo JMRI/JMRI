@@ -50,7 +50,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
 
     /**
      * Add a new EasyDccConsist with the given address to
-     * consistTable/consistList
+     * consistTable/consistList.
      */
     @Override
     public Consist addConsist(DccLocoAddress address) {
@@ -63,7 +63,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         return consist;
     }
 
-    /* request an update from the layout, loading
+    /* Request an update from the layout, loading
      * Consists from the command station.
      */
     @Override
@@ -78,7 +78,9 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         return (reader.currentState == EasyDccConsistReader.IDLE);
     }
 
-    // Internal class to read consists from the command station
+    /**
+     * Internal class to read consists from the command station.
+     */
     private class EasyDccConsistReader implements Runnable, EasyDccListener {
 
         // Storage for addresses
@@ -97,9 +99,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         }
 
         private void searchNext() {
-            if (log.isDebugEnabled()) {
-                log.debug("Sending request for next consist, _lastAddress is: {}", _lastAddress);
-            }
+            log.debug("Sending request for next consist, _lastAddress is: {}", _lastAddress);
             currentState = SEARCHREQUESTSENT;
             EasyDccMessage msg = EasyDccMessage.getDisplayConsist(++_lastAddress);
             _memo.getTrafficController().sendEasyDccMessage(msg, this);

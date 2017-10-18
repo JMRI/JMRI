@@ -25,7 +25,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the write
@@ -46,7 +46,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the write
@@ -63,7 +63,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
 
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -82,7 +82,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
 
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -101,7 +101,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
@@ -130,7 +130,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
@@ -159,7 +159,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
 
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -188,7 +188,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
 
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -223,7 +223,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
@@ -343,17 +343,21 @@ public class EasyDccProgrammerTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class);
+    private EasyDccSystemConnectionMemo memo;
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
     }
 
     @Override
     protected void tearDown() {
+        memo = null;
         JUnitUtil.tearDown();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class);
 
 }

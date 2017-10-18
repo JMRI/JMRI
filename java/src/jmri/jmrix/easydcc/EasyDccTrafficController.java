@@ -26,15 +26,25 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
 
     /**
      * Ctor
+     */
+//    public EasyDccTrafficController() {
+//        super();
+//        log.debug("creating a new EasyDccTrafficController object w/o memo");
+//    }
+
+    /**
+     * Ctor
+     *
      * @param adaptermemo associated SystemConnectionMemo
      */
     public EasyDccTrafficController(EasyDccSystemConnectionMemo adaptermemo) {
         super();
         mMemo = adaptermemo;
-        log.debug("creating a new EcosTrafficController object");
+        log.debug("creating a new EasyDccTrafficController object");
     }
 
     // The methods to implement the EasyDccInterface
+
     @Override
     public synchronized void addEasyDccListener(EasyDccListener l) {
         this.addListener(l);
@@ -79,6 +89,10 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
      */
     @Override
     public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener reply) {
+        if (m == null) {
+            log.debug("empty message");
+            return;
+        }
         sendMessage(m, reply);
     }
 
@@ -108,22 +122,22 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     static volatile protected EasyDccTrafficController self = null;
 
     /**
-     * Reference to the system connection memo
+     * Reference to the system connection memo.
      */
     EasyDccSystemConnectionMemo mMemo = null;
 
     /**
      * Get access to the system connection memo associated with this traffic
-     * controller
+     * controller.
      *
      * @return associated systemConnectionMemo object
      */
     public EasyDccSystemConnectionMemo getSystemConnectionMemo() {
-        return (mMemo);
+        return mMemo;
     }
 
     /**
-     * Set the system connection memo associated with this traffic controller
+     * Set the system connection memo associated with this traffic controller.
      *
      * @param m associated systemConnectionMemo object
      */
@@ -136,7 +150,9 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     @Override
     @Deprecated
     protected void setInstance() {
-        self = this;
+        // this is called from AbstractMRTrafficController, so suppress this
+        // error.
+        //log.error("Deprecated method setInstance called");
     }
 
     @Override

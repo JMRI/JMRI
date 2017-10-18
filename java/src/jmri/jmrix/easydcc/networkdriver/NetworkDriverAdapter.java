@@ -35,7 +35,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
         EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
         control.connectPort(this);
-        control.setAdapterMemo(this.getSystemConnectionMemo());
+        control.setSystemConnectionMemo(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setEasyDccTrafficController(control);
         // do the common manager config
         this.getSystemConnectionMemo().configureManagers();

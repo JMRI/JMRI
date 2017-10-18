@@ -30,13 +30,13 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     }
 
     @Test public void checkSizeLimitCS(){
-        EasyDccConsist c = new EasyDccConsist(5);
+        EasyDccConsist c = new EasyDccConsist(5, m);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("CS Consist Limit",8,c.sizeLimit());   
     } 
 
     @Test public void checkContainsCS(){
-        EasyDccConsist c = new EasyDccConsist(5);
+        EasyDccConsist c = new EasyDccConsist(5, m);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
@@ -55,31 +55,33 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     }
 
     @Test public void checkGetLocoDirectionCS(){
-        EasyDccConsist c = new EasyDccConsist(5);
+        EasyDccConsist c = new EasyDccConsist(5, m);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
-        c.restore(B,false); // revese direction.
+        c.restore(B,false); // reverse direction.
         Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));   
         Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));   
     }
 
+    private EasyDccSystemConnectionMemo m;
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        EasyDccSystemConnectionMemo m = new EasyDccSystemConnectionMemo(new EasyDccTrafficControlScaffold());
-        jmri.InstanceManager.setDefault(jmri.CommandStation.class,new EasyDccCommandStation(m));
-        c = new EasyDccConsist(5);
+        m = new EasyDccSystemConnectionMemo(new EasyDccTrafficControlScaffold());
+        jmri.InstanceManager.setDefault(jmri.CommandStation.class, new EasyDccCommandStation(m));
+        c = new EasyDccConsist(5, m);
     }
    
     @After
     @Override
     public void tearDown() {
+        m = null;
         JUnitUtil.tearDown();
         c = null;
     }

@@ -17,7 +17,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
     public void setUp(){
        JUnitUtil.setUp();
        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo();
-       EasyDccTrafficController tc = new EasyDccTrafficControlScaffold();
+       EasyDccTrafficController tc = new EasyDccTrafficControlScaffold(memo);
        apc = new EasyDccPortController(memo){
             @Override
             public boolean status(){
