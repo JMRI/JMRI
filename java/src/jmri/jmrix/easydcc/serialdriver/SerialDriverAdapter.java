@@ -16,9 +16,10 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Implements SerialPortAdapter for the EasyDCC system. This connects an EasyDCC
- * command station via a serial com port. Normally controlled by the
- * SerialDriverFrame class.
+ * Implements SerialPortAdapter for the EasyDCC system.
+ * <p>
+ * This connects an EasyDCC command station via a serial com port.
+ * Normally controlled by the SerialDriverFrame class.
  * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
@@ -137,7 +138,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps.
+     * Get an array of valid baud rates. This is currently only 9,600 bps.
      */
     @Override
     public String[] validBaudRates() {

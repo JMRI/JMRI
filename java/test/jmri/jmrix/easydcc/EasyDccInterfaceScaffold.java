@@ -1,7 +1,5 @@
 /**
- * EasyDccInterfaceScaffold.java
- *
- * Description:	Stands in for the EasyDccTrafficController class
+ * Stands in for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen
  */

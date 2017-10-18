@@ -58,7 +58,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
             return consistTable.get(address);
         }
         EasyDccConsist consist;
-        consist = new EasyDccConsist(address);
+        consist = new EasyDccConsist(address, _memo);
         consistTable.put(address, consist);
         return consist;
     }
@@ -111,7 +111,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
             if (currentState == SEARCHREQUESTSENT) {
                 // We sent a request for a consist address.
                 // We need to find out what type of message 
-                // was recived as a response.  If the message 
+                // was received as a response.  If the message
                 // has an opcode of 'G', then it is a response 
                 // to the Display Consist instruction we sent 
                 // previously.  If the message has any other
@@ -121,7 +121,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
                 }
                 if (r.getOpCode() == 'G') {
                     // This is the response we're looking for
-                    // The bytes 2 and 3 are the
+                    // The bytes 2 and 3 are the ...
 
                     int consistAddr;
                     Boolean newConsist = true;

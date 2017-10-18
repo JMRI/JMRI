@@ -27,7 +27,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
         super("E", EasyDccConnectionTypeList.EASYDCC);
         this.et = et;
-        this.et.setSystemConnectionMemo(this);
+//        this.et.setSystemConnectionMemo(this); // not in SprogMemo
         register();
         log.debug("EasyDCC SystemConnectionMemo with TC");
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
@@ -57,7 +57,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public EasyDccTrafficController getTrafficController() {
         if (et == null) {
-            setEasyDccTrafficController(new EasyDccTrafficController());
+            setEasyDccTrafficController(new EasyDccTrafficController(this));
             log.debug("Auto create of EasyDccTrafficController for initial configuration");
         }
         return et;
@@ -65,7 +65,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     public void setEasyDccTrafficController(EasyDccTrafficController et) {
         this.et = et;
-        // in addition to setting the traffic controller in this object,
+        // in addition to setting the TrafficController in this object,
         // set the systemConnectionMemo in the traffic controller
         et.setSystemConnectionMemo(this);
     }

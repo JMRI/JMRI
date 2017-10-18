@@ -15,10 +15,10 @@ import org.junit.Test;
  */
 public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
-        // this does nothing, as there is no unsolicited on
+        // this does nothing, as there is no unsollicited on
     }
 
     @Override

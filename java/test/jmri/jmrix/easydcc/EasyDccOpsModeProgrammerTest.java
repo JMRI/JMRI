@@ -14,14 +14,17 @@ public class EasyDccOpsModeProgrammerTest {
 
     @Test
     public void testCTor() {
-        EasyDccOpsModeProgrammer t = new EasyDccOpsModeProgrammer(100,false);
+        EasyDccOpsModeProgrammer t = new EasyDccOpsModeProgrammer(100, false, memo);
         Assert.assertNotNull("exists",t);
     }
+
+    private EasyDccSystemConnectionMemo memo = null;
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo();
     }
 
     @After

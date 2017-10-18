@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
+ * @author Bob Jacobsen Copyright (c) 2002
  */
 public class EasyDccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -36,4 +36,5 @@ public class EasyDccTurnoutManagerXml extends jmri.managers.configurexml.Abstrac
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerXml.class);
+
 }

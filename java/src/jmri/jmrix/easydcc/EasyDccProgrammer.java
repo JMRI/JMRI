@@ -135,7 +135,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 
     @Override
     public void message(EasyDccMessage m) {
-        log.error("message received unexpectedly: " + m.toString());
+        log.error("message received unexpectedly: {}", m.toString());
     }
 
     @Override
@@ -191,7 +191,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 
     /**
      * Internal method to send a cleanup message (if needed) on timeout.
-     * <P>
+     * <p>
      * Here, it sends a request to exit from programming mode. But subclasses,
      * e.g. ops mode, may redefine that.
      */

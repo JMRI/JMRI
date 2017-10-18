@@ -25,8 +25,9 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
 
     // Initialize a consist for the specific address.
     // The Default consist type is an advanced consist
-    public EasyDccConsist(DccLocoAddress address) {
+    public EasyDccConsist(DccLocoAddress address, EasyDccSystemConnectionMemo memo) {
         super(address);
+        _memo = memo;
     }
 
     // Clean Up local storage.
@@ -65,9 +66,10 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
 
     /**
      * Is there a size limit for this consist?
+     *
      * @return 8 for EasyDcc Standard Consist,
      * -1 for Decoder Assisted Consists (no limit),
-     * 0 for any other consist type.
+     * 0 for any other consist type
      */
     @Override
     public int sizeLimit() {

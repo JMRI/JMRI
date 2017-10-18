@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the EasyDCC system network connection.
+ * Implements NetworkDriverAdapter for the EasyDCC system connection.
  * <p>
  * This connects an EasyDCC command station via a telnet connection.
  * Normally controlled by the NetworkDriverFrame class.
@@ -22,7 +22,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Network")); // pass customized user name
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
         // create the traffic controller
-//        this.getSystemConnectionMemo().setEasyDccTrafficController(new EasyDccTrafficController(this.getSystemConnectionMemo()));
+        this.getSystemConnectionMemo().setEasyDccTrafficController(new EasyDccTrafficController(this.getSystemConnectionMemo()));
     }
 
     /**

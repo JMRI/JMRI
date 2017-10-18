@@ -270,6 +270,7 @@ public class EasyDccProgrammerTest extends TestCase {
     class EasyDccInterfaceScaffold extends EasyDccTrafficController {
 
         public EasyDccInterfaceScaffold() {
+            super(memo);
         }
 
         // override some EasyDccInterfaceController methods for test purposes
