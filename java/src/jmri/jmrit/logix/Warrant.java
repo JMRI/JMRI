@@ -907,10 +907,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             float rampLen = _speedUtil.rampLengthForSpeedChange(expectedSpeed, restrictSpeed, isForward);
                             if ((idxBlockOrder > _idxCurrentOrder+1) &&rampLen <= dist || _idxCurrentOrder == _orders.size() - 1) {
                                 // this and next block were clear
+                                // This is users decision to retest and override wait flags
                                 _engineer.resumeSpeedFrom(RESUME); // will ramp if needed and clear wait
-                                //ramp up will clear WAIT_FOR_CLEAR and HALT flags
-                                //_engineer.rampSpeedTo(_curSpeedType, 0);
-                                //ret = setMovement(MID);
                             } else {
                                 ret = false;
                             }
