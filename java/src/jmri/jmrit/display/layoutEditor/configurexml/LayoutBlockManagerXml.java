@@ -184,7 +184,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                 if (((layoutblockList.get(i))).getChild("metric") != null) {
                     String stMetric = ((layoutblockList.get(i))).getChild("metric").getText();
                     try {
-                        b.setBlockMetric(Integer.valueOf(stMetric));
+                        b.setBlockMetric(Integer.parseInt(stMetric));
                     } catch (java.lang.NumberFormatException e) {
                         log.error("failed to convert metric attribute for block " + b.getDisplayName());
                     }
