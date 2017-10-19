@@ -31,8 +31,6 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     public SerialDriverAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial")); // pass customized user name
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
-        // create the traffic controller
-        this.getSystemConnectionMemo().setEasyDccTrafficController(new EasyDccTrafficController(this.getSystemConnectionMemo()));
     }
 
     SerialPort activeSerialPort = null;
@@ -103,7 +101,10 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     @Override
     public void configure() {
         // connect to the traffic controller
-        this.getSystemConnectionMemo().getTrafficController().connectPort(this);
+        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
+        EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
+        control.connectPort(this);
+        getSystemConnectionMemo().setEasyDccTrafficController(control);
         // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
     }
@@ -155,8 +156,6 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     static public SerialDriverAdapter instance() {
         return null;
     }
-
-    public EasyDccSystemConnectionMemo getSystemConnectionMemo() { return super.getSystemConnectionMemo(); }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

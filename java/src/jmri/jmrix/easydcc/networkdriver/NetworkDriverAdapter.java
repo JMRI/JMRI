@@ -20,9 +20,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     public NetworkDriverAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Network")); // pass customized user name
-        setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
-        // create the traffic controller
-        this.getSystemConnectionMemo().setEasyDccTrafficController(new EasyDccTrafficController(this.getSystemConnectionMemo()));
     }
 
     /**
@@ -55,10 +52,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
     static public NetworkDriverAdapter instance() {
         log.error("Unexpected call to instance()");
         return null;
-    }
-
-    public EasyDccSystemConnectionMemo getSystemConnectionMemo() {
-        return super.getSystemConnectionMemo();
     }
 
     Socket socket;

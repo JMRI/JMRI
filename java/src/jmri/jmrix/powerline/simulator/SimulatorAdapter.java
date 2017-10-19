@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement simulator for powerline serial systems
+ * Implement simulator for Powerline serial systems
  * <P>
  * System names are "PLnnn", where nnn is the bit number without padding.
  * <P>
@@ -57,7 +57,7 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     /**
-     * set up all of the other objects to simulate operation with an command
+     * Set up all of the other objects to simulate operation with an command
      * station.
      */
     @Override

@@ -199,7 +199,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     /**
-     * Send the current reply - built using data from seriaEvent.
+     * Send the current reply - built using data from serialEvent.
      */
     private void sendreply() {
         //send the reply

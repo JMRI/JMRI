@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
  * <p>
- * This handles the state transistions, based on the necessary state in each
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -93,6 +93,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
             log.debug("empty message");
             return;
         }
+        log.debug("EdccTrafficController sendEdccMessage() {}", m.toString());
         sendMessage(m, reply);
     }
 

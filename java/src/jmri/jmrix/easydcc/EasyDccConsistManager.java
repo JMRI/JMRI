@@ -20,8 +20,9 @@ public class EasyDccConsistManager extends AbstractConsistManager {
     /**
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
-     * command station
+     * command station.
      *
+     * @param memo the associated connection memo
      */
     public EasyDccConsistManager(EasyDccSystemConnectionMemo memo) {
         super();
@@ -54,7 +55,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
      */
     @Override
     public Consist addConsist(DccLocoAddress address) {
-        if (consistTable.containsKey(address)) { // no duplicates allowed.
+        if (consistTable.containsKey(address)) { // no duplicates allowed across all connections
             return consistTable.get(address);
         }
         EasyDccConsist consist;

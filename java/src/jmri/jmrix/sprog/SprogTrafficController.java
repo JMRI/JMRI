@@ -188,8 +188,9 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Forward a preformatted message to the actual interface (by calling
-     * SendSprogMessage(SprogMessage) after notifying any listeners Notifies
-     * listeners.
+     * SendSprogMessage(SprogMessage) after notifying any listeners.
+     * <p>
+     * Notifies listeners.
      *
      * @param m         Message to send
      * @param replyTo   Who is sending the message
@@ -200,7 +201,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         if (waitingForReply) {
             try {
                 log.debug("Waiting for a reply");
-                wait(100);  //Will wait until notify()ed or 100ms timeout
+                wait(100); // Will wait until notify()ed or 100ms timeout
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
             }
@@ -217,7 +218,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         // notify all _other_ listeners
         notifyMessage(m, replyTo);
         this.sendSprogMessage(m);
-
     }
 
     // methods to connect/disconnect to a source of data in a SprogPortController
