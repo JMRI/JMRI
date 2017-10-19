@@ -25,14 +25,14 @@ public class ColorUtil {
     @Nonnull
     public static String colorToString(@Nullable Color color) {
         if (color == null) {
-            return "track";
+            return Bundle.getMessage("ColorTrack");
         }
         String colorName = colorToName(color);
         if (colorName != null) {
             return colorName;
         }
         log.error("unknown color sent to colorToString");
-        return "black";
+        return Bundle.getMessage("ColorBlack");
     }
 
     /**
@@ -54,37 +54,34 @@ public class ColorUtil {
     }
 
     public static Color stringToColor(String string) {
-        switch (string) {
-            case "black":
-                return Color.black;
-            case "darkGray":
-                return Color.darkGray;
-            case "gray":
-                return Color.gray;
-            case "lightGray":
-                return Color.lightGray;
-            case "white":
-                return Color.white;
-            case "red":
-                return Color.red;
-            case "pink":
-                return Color.pink;
-            case "orange":
-                return Color.orange;
-            case "yellow":
-                return Color.yellow;
-            case "green":
-                return Color.green;
-            case "blue":
-                return Color.blue;
-            case "magenta":
-                return Color.magenta;
-            case "cyan":
-                return Color.cyan;
-            case "track":
-                return null;
-            default:
-                break;
+        if(string == Bundle.getMessage("ColorBlack")) {
+            return Color.black;
+        } else if(string == Bundle.getMessage("ColorDarkGray")) {
+            return Color.darkGray;
+        } else if(string == Bundle.getMessage("ColorGray")) {
+            return Color.gray;
+        } else if(string == Bundle.getMessage("ColorLightGray")) {
+            return Color.lightGray;
+        } else if(string == Bundle.getMessage("ColorWhite")) {
+            return Color.white;
+        } else if(string == Bundle.getMessage("ColorRed")) {
+            return Color.red;
+        } else if(string == Bundle.getMessage("ColorPink")) {
+            return Color.pink;
+        } else if(string == Bundle.getMessage("ColorOrange")) {
+            return Color.orange;
+        } else if(string == Bundle.getMessage("ColorYellow")) {
+            return Color.yellow;
+        } else if(string == Bundle.getMessage("ColorGreen")) {
+            return Color.green;
+        } else if(string == Bundle.getMessage("ColorBlue")) {
+            return Color.blue;
+        } else if(string == Bundle.getMessage("ColorMagenta")) {
+            return Color.magenta;
+        } else if(string == Bundle.getMessage("ColorCyan")) {
+            return Color.cyan;
+        } else if(string == Bundle.getMessage("ColorTrack")){
+            return null;
         }
         log.error("unknown color text '" + string + "' sent to stringToColor");
         return Color.black;
@@ -117,31 +114,31 @@ public class ColorUtil {
             return null;
         }
         if (color.equals(Color.black)) {
-            return "black";
+            return Bundle.getMessage("ColorBlack");
         } else if (color.equals(Color.darkGray)) {
-            return "darkGray";
+            return Bundle.getMessage("ColorDarkGray");
         } else if (color.equals(Color.gray)) {
-            return "gray";
+            return Bundle.getMessage("ColorGray");
         } else if (color.equals(Color.lightGray)) {
-            return "lightGray";
+            return Bundle.getMessage("ColorLightGray");
         } else if (color.equals(Color.white)) {
-            return "white";
+            return Bundle.getMessage("ColorWhite");
         } else if (color.equals(Color.red)) {
-            return "red";
+            return Bundle.getMessage("ColorRed");
         } else if (color.equals(Color.pink)) {
-            return "pink";
+            return Bundle.getMessage("ColorPink");
         } else if (color.equals(Color.orange)) {
-            return "orange";
+            return Bundle.getMessage("ColorOrange");
         } else if (color.equals(Color.yellow)) {
-            return "yellow";
+            return Bundle.getMessage("ColorYellow");
         } else if (color.equals(Color.green)) {
-            return "green";
+            return Bundle.getMessage("ColorGreen");
         } else if (color.equals(Color.blue)) {
-            return "blue";
+            return Bundle.getMessage("ColorBlue");
         } else if (color.equals(Color.magenta)) {
-            return "magenta";
+            return Bundle.getMessage("ColorMagenta");
         } else if (color.equals(Color.cyan)) {
-            return "cyan";
+            return Bundle.getMessage("ColorCyan");
         }
         return null;
     }
