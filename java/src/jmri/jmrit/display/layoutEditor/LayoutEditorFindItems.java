@@ -504,7 +504,7 @@ public class LayoutEditorFindItems {
      * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
      */
     @Deprecated
-    public Object findObjectByTypeAndName(int type, String name) {
+    public LayoutTrack findObjectByTypeAndName(int type, String name) {
         if (name.isEmpty()) {
             return null;
         }
@@ -552,8 +552,8 @@ public class LayoutEditorFindItems {
     // move toward encapsulation this routine should see a lot more usage;
     // specifically, instead of a TON of "if (type == XXX) { findXXXByName(...)...}"
     // code you would just call this method instead.
-    public Object findObjectByName(String name) {
-        Object result = null;   // assume failure (pessimist!)
+    public LayoutTrack findObjectByName(String name) {
+        LayoutTrack result = null;   // assume failure (pessimist!)
         if ((name != null) && !name.isEmpty()) {
             if (name.startsWith("TO")) {
                 result = findLayoutTurnoutByName(name);
@@ -578,7 +578,7 @@ public class LayoutEditorFindItems {
         }
         return result;
     }
-    
+
    /**
      * Determine the first unused LayoutTrack object name...
      * @param inPrefix ...with this prefix...

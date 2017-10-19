@@ -182,9 +182,9 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             if (element.getAttribute("bezier").getBooleanValue()) {
                 // load control points
                 Element controlpointsElement = element.getChild("controlpoints");
-                if (null != controlpointsElement) {
+                if (controlpointsElement != null) {
                     List<Element> elementList = controlpointsElement.getChildren("controlpoint");
-                    if (null != elementList) {
+                    if (elementList != null) {
                         if (elementList.size() >= 2) {
                             for (int i = 0; i < elementList.size(); i++) {
                                 double x = 0.0;
