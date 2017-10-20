@@ -9323,7 +9323,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link jmri.jmrit.display.Editor#setDefaultBackgroundColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)} instead. 
      */
     @Deprecated
     public void setDefaultBackgroundColor(@Nonnull String colorName) {
