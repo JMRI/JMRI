@@ -54,33 +54,33 @@ public class ColorUtil {
     }
 
     public static Color stringToColor(String string) {
-        if(string == Bundle.getMessage("ColorBlack")) {
+        if(string.equals(Bundle.getMessage("ColorBlack"))) {
             return Color.black;
-        } else if(string == Bundle.getMessage("ColorDarkGray")) {
+        } else if(string.equals(Bundle.getMessage("ColorDarkGray"))) {
             return Color.darkGray;
-        } else if(string == Bundle.getMessage("ColorGray")) {
+        } else if(string.equals(Bundle.getMessage("ColorGray"))) {
             return Color.gray;
-        } else if(string == Bundle.getMessage("ColorLightGray")) {
+        } else if(string.equals(Bundle.getMessage("ColorLightGray"))) {
             return Color.lightGray;
-        } else if(string == Bundle.getMessage("ColorWhite")) {
+        } else if(string.equals(Bundle.getMessage("ColorWhite"))) {
             return Color.white;
-        } else if(string == Bundle.getMessage("ColorRed")) {
+        } else if(string.equals(Bundle.getMessage("ColorRed"))) {
             return Color.red;
-        } else if(string == Bundle.getMessage("ColorPink")) {
+        } else if(string.equals(Bundle.getMessage("ColorPink"))) {
             return Color.pink;
-        } else if(string == Bundle.getMessage("ColorOrange")) {
+        } else if(string.equals(Bundle.getMessage("ColorOrange"))) {
             return Color.orange;
-        } else if(string == Bundle.getMessage("ColorYellow")) {
+        } else if(string.equals(Bundle.getMessage("ColorYellow"))) {
             return Color.yellow;
-        } else if(string == Bundle.getMessage("ColorGreen")) {
+        } else if(string.equals(Bundle.getMessage("ColorGreen"))) {
             return Color.green;
-        } else if(string == Bundle.getMessage("ColorBlue")) {
+        } else if(string.equals(Bundle.getMessage("ColorBlue"))) {
             return Color.blue;
-        } else if(string == Bundle.getMessage("ColorMagenta")) {
+        } else if(string.equals(Bundle.getMessage("ColorMagenta"))) {
             return Color.magenta;
-        } else if(string == Bundle.getMessage("ColorCyan")) {
+        } else if(string.equals(Bundle.getMessage("ColorCyan"))) {
             return Color.cyan;
-        } else if(string == Bundle.getMessage("ColorTrack")){
+        } else if(string.equals(Bundle.getMessage("ColorTrack"))) {
             return null;
         }
         log.error("unknown color text '" + string + "' sent to stringToColor");
