@@ -269,8 +269,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             int n = JOptionPane.showConfirmDialog(frame,
-                    MessageFormat.format(Bundle.getMessage("DuplicatePanel"),
-                            new Object[]{name}),
+                    Bundle.getMessage("DuplicatePanel",name),
                     Bundle.getMessage("DuplicatePanelTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.NO_OPTION) {
