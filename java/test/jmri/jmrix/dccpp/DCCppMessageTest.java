@@ -327,6 +327,72 @@ public class DCCppMessageTest {
         Assert.assertEquals("Monitor string","Throttle Cmd: \n\tRegister: 5\n\tAddress: 24\n\tSpeed: 63\n\t:Direction: Reverse",m.toMonitorString());
     }
 
+    @Test
+    public void testgetWriteDCCPacketMainMsg() {
+        byte packet[]={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
+	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketMainMsg(0, 5, packet);
+	    log.debug("DCC packet main message = {}", m.toString());
+        Assert.assertEquals("length", 18, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 'M', m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '0', m.getElement(2) & 0xFF);
+        Assert.assertEquals("3st byte", ' ', m.getElement(3) & 0xFF);
+        Assert.assertEquals("4rd byte", 'C', m.getElement(4) & 0xFF);
+        Assert.assertEquals("5rd byte", '4', m.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', m.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", 'D', m.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '2', m.getElement(8) & 0xFF);
+        Assert.assertEquals("9th byte", ' ', m.getElement(9) & 0xFF);
+        Assert.assertEquals("10th byte", '1', m.getElement(10) & 0xFF);
+        Assert.assertEquals("11th byte", '2', m.getElement(11) & 0xFF);
+        Assert.assertEquals("12th byte", ' ', m.getElement(12) & 0xFF);
+        Assert.assertEquals("13th byte", '0', m.getElement(13) & 0xFF);
+        Assert.assertEquals("14th byte", 'C', m.getElement(14) & 0xFF);
+        Assert.assertEquals("15th byte", ' ', m.getElement(15) & 0xFF);
+        Assert.assertEquals("16th byte", '0', m.getElement(16) & 0xFF);
+        Assert.assertEquals("17th byte", '8', m.getElement(17) & 0xFF);
+    }
+
+    @Test
+    public void testMonitorStringWriteDccPacketMainMsg() {
+        byte packet[]={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
+	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketMainMsg(0, 5, packet);
+        Assert.assertEquals("Monitor string","Write DCC Packet Main Cmd: \n\tRegister: 0\n\tPacket: C4 D2 12 0C 08",m.toMonitorString());
+    }
+
+    @Test
+    public void testgetWriteDCCPacketProgMsg() {
+        byte packet[]={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
+	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketProgMsg(0, 5, packet);
+	    log.debug("DCC packet main message = {}", m.toString());
+        Assert.assertEquals("length", 18, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 'P', m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '0', m.getElement(2) & 0xFF);
+        Assert.assertEquals("3st byte", ' ', m.getElement(3) & 0xFF);
+        Assert.assertEquals("4rd byte", 'C', m.getElement(4) & 0xFF);
+        Assert.assertEquals("5rd byte", '4', m.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', m.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", 'D', m.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '2', m.getElement(8) & 0xFF);
+        Assert.assertEquals("9th byte", ' ', m.getElement(9) & 0xFF);
+        Assert.assertEquals("10th byte", '1', m.getElement(10) & 0xFF);
+        Assert.assertEquals("11th byte", '2', m.getElement(11) & 0xFF);
+        Assert.assertEquals("12th byte", ' ', m.getElement(12) & 0xFF);
+        Assert.assertEquals("13th byte", '0', m.getElement(13) & 0xFF);
+        Assert.assertEquals("14th byte", 'C', m.getElement(14) & 0xFF);
+        Assert.assertEquals("15th byte", ' ', m.getElement(15) & 0xFF);
+        Assert.assertEquals("16th byte", '0', m.getElement(16) & 0xFF);
+        Assert.assertEquals("17th byte", '8', m.getElement(17) & 0xFF);
+    }
+
+    @Test
+    public void testMonitorStringWriteDccPacketProgMsg() {
+        byte packet[]={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
+	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketProgMsg(0, 5, packet);
+        Assert.assertEquals("Monitor string","Write DCC Packet Prog Cmd: \n\tRegister: 0\n\tPacket: C4 D2 12 0C 08",m.toMonitorString());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
