@@ -4952,7 +4952,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                setTurnoutCircleColor(ColorUtil.colorToString(inColor));
+                setTurnoutCircleColor(inColor);
                 setDirty();
                 redrawPanel();
             } //actionPerformed
@@ -9217,26 +9217,74 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         sideTrackWidth = w;
     }
 
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultTrackColor(@Nonnull String colorName) {
-        defaultTrackColor = ColorUtil.stringToColor(colorName);
+        setDefaultTrackColor(ColorUtil.stringToColor(colorName));
+    }
+
+    /**
+     * @param color value to set the defalut track color to.
+     */
+    public void setDefaultTrackColor(@Nonnull Color color){
+        defaultTrackColor = color;
         setOptionMenuTrackColor();
     }
 
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultOccupiedTrackColor(@Nonnull String colorName) {
-        defaultOccupiedTrackColor = ColorUtil.stringToColor(colorName);
+        setDefaultOccupiedTrackColor(ColorUtil.stringToColor(colorName));
+    }
+
+    /**
+     * @param color value to set the defalut occupied track color to.
+     */
+    public void setDefaultOccupiedTrackColor(@Nonnull Color color){
+        defaultOccupiedTrackColor = color;
         setOptionMenuTrackColor();
     }
 
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultAlternativeTrackColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultAlternativeTrackColor(@Nonnull String colorName) {
-        defaultAlternativeTrackColor = ColorUtil.stringToColor(colorName);
+        setDefaultAlternativeTrackColor(ColorUtil.stringToColor(colorName));
+    }
+
+    /**
+     * @param color value to set the defalut alternate track color to.
+     */
+    public void setDefaultAlternativeTrackColor(@Nonnull Color color){
+        defaultAlternativeTrackColor = color;
         setOptionMenuTrackColor();
     }
 
+    /**
+     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)} instead. 
+     */
+    @Deprecated
     public void setTurnoutCircleColor(@Nonnull String colorName) {
         if (colorName.equals("track")) {
             colorName = getDefaultTrackColor();
         }
-        turnoutCircleColor = ColorUtil.stringToColor(colorName);
+        setTurnoutCircleColor(ColorUtil.stringToColor(colorName));
+    }
+
+    /**
+     * @param color new color for turnout circle.
+     */ 
+    public void setTurnoutCircleColor(Color color) {
+        if (color==null) {
+            turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
+        } else {
+            turnoutCircleColor = color;
+        }
         setOptionMenuTurnoutCircleColor();
     }
 
@@ -9258,13 +9306,24 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //setTurnoutDrawUnselectedLeg
 
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultTextColor(@Nonnull String colorName) {
-        defaultTextColor = ColorUtil.stringToColor(colorName);
+        setDefaultTextColor(ColorUtil.stringToColor(colorName));
+    }
+
+    /**
+     * @param color value to set the defalut text color to.
+     */
+    public void setDefaultTextColor(@Nonnull Color color){
+        defaultTextColor = color;
         setOptionMenuTextColor();
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link jmri.jmrit.display.Editor#setDefaultBackgroundColor(Color)} instead. 
      */
     @Deprecated
     public void setDefaultBackgroundColor(@Nonnull String colorName) {

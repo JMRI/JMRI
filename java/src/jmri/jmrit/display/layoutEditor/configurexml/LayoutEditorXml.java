@@ -22,6 +22,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
+import jmri.util.ColorUtil;
 import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -296,13 +297,13 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("defaulttextcolor")) != null) {
             defaultTextColor = a.getValue();
         }
-        panel.setDefaultTextColor(defaultTextColor);
+        panel.setDefaultTextColor(ColorUtil.stringToColor(defaultTextColor));
 
         String turnoutCircleColor = "track";  //default to using use default track color for circle color
         if ((a = shared.getAttribute("turnoutcirclecolor")) != null) {
             turnoutCircleColor = a.getValue();
         }
-        panel.setTurnoutCircleColor(turnoutCircleColor);
+        panel.setTurnoutCircleColor(ColorUtil.stringToColor(turnoutCircleColor));
 
         if ((a = shared.getAttribute("turnoutcirclesize")) != null) {
             try {
@@ -463,15 +464,15 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         // set default track color
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
-            panel.setDefaultTrackColor(a.getValue());
+            panel.setDefaultTrackColor(ColorUtil.stringToColor(a.getValue()));
         }
         // set default track color
         if ((a = shared.getAttribute("defaultoccupiedtrackcolor")) != null) {
-            panel.setDefaultOccupiedTrackColor(a.getValue());
+            panel.setDefaultOccupiedTrackColor(ColorUtil.stringToColor(a.getValue()));
         }
         // set default track color
         if ((a = shared.getAttribute("defaultalternativetrackcolor")) != null) {
-            panel.setDefaultAlternativeTrackColor(a.getValue());
+            panel.setDefaultAlternativeTrackColor(ColorUtil.stringToColor(a.getValue()));
         }
         try {
             int red = shared.getAttribute("redBackground").getIntValue();

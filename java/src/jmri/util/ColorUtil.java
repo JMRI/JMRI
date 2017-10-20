@@ -53,38 +53,46 @@ public class ColorUtil {
         return colorToHexString(color);
     }
 
+    /**
+     * @param string Either a hexidecimal representation of the rgb value of a 
+     * color or a color name defined in jmri.NamedBeanBundle.properties. 
+     */
     public static Color stringToColor(String string) {
-        if(string.equals(Bundle.getMessage("ColorBlack"))) {
+        try {
+            return Color.decode(string);
+        } catch(NumberFormatException nfe) {
+            if(string.equals(Bundle.getMessage("ColorBlack"))) {
+                return Color.black;
+            } else if(string.equals(Bundle.getMessage("ColorDarkGray"))) {
+                return Color.darkGray;
+            } else if(string.equals(Bundle.getMessage("ColorGray"))) {
+                return Color.gray;
+            } else if(string.equals(Bundle.getMessage("ColorLightGray"))) {
+                return Color.lightGray;
+            } else if(string.equals(Bundle.getMessage("ColorWhite"))) {
+                return Color.white;
+            } else if(string.equals(Bundle.getMessage("ColorRed"))) {
+                return Color.red;
+            } else if(string.equals(Bundle.getMessage("ColorPink"))) {
+                return Color.pink;
+            } else if(string.equals(Bundle.getMessage("ColorOrange"))) {
+                return Color.orange;
+            } else if(string.equals(Bundle.getMessage("ColorYellow"))) {
+                return Color.yellow;
+            } else if(string.equals(Bundle.getMessage("ColorGreen"))) {
+                return Color.green;
+            } else if(string.equals(Bundle.getMessage("ColorBlue"))) {
+                return Color.blue;
+            } else if(string.equals(Bundle.getMessage("ColorMagenta"))) {
+                return Color.magenta;
+            } else if(string.equals(Bundle.getMessage("ColorCyan"))) {
+                return Color.cyan;
+            } else if(string.equals(Bundle.getMessage("ColorTrack"))) {
+                return null;
+            }
+            log.error("unknown color text '" + string + "' sent to stringToColor");
             return Color.black;
-        } else if(string.equals(Bundle.getMessage("ColorDarkGray"))) {
-            return Color.darkGray;
-        } else if(string.equals(Bundle.getMessage("ColorGray"))) {
-            return Color.gray;
-        } else if(string.equals(Bundle.getMessage("ColorLightGray"))) {
-            return Color.lightGray;
-        } else if(string.equals(Bundle.getMessage("ColorWhite"))) {
-            return Color.white;
-        } else if(string.equals(Bundle.getMessage("ColorRed"))) {
-            return Color.red;
-        } else if(string.equals(Bundle.getMessage("ColorPink"))) {
-            return Color.pink;
-        } else if(string.equals(Bundle.getMessage("ColorOrange"))) {
-            return Color.orange;
-        } else if(string.equals(Bundle.getMessage("ColorYellow"))) {
-            return Color.yellow;
-        } else if(string.equals(Bundle.getMessage("ColorGreen"))) {
-            return Color.green;
-        } else if(string.equals(Bundle.getMessage("ColorBlue"))) {
-            return Color.blue;
-        } else if(string.equals(Bundle.getMessage("ColorMagenta"))) {
-            return Color.magenta;
-        } else if(string.equals(Bundle.getMessage("ColorCyan"))) {
-            return Color.cyan;
-        } else if(string.equals(Bundle.getMessage("ColorTrack"))) {
-            return null;
         }
-        log.error("unknown color text '" + string + "' sent to stringToColor");
-        return Color.black;
     }
 
     /**
