@@ -9263,8 +9263,19 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         setOptionMenuTextColor();
     }
 
+    /**
+     * @deprecated since 4.9.6 use {@link setDefaultBackgroundColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultBackgroundColor(@Nonnull String colorName) {
-        defaultBackgroundColor = ColorUtil.stringToColor(colorName);
+        setDefaultBackgroundColor(ColorUtil.stringToColor(colorName));
+    }
+
+    /**
+     * @param color java.awt.Color value to set the panel background to.
+     */
+    public void setDefaultBackgroundColor(@Nonnull Color color){
+        defaultBackgroundColor = color;
         setOptionMenuBackgroundColor();
     }
 

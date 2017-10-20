@@ -22,7 +22,6 @@ import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
-import jmri.util.ColorUtil;
 import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +37,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
     public LayoutEditorXml() {
     }
-
-    //TODO: Convert to use Bundle.getMessage(...) (and remove this line)
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     /**
      * Default implementation for storing the contents of a LayoutEditor
@@ -272,11 +268,10 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             JFrame frame = new JFrame("DialogDemo");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
-            //TODO: Convert to use Bundle.getMessage(...)
             int n = JOptionPane.showConfirmDialog(frame,
-                    MessageFormat.format(rb.getString("DuplicatePanel"),
+                    MessageFormat.format(Bundle.getMessage("DuplicatePanel"),
                             new Object[]{name}),
-                    rb.getString("DuplicatePanelTitle"),
+                    Bundle.getMessage("DuplicatePanelTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.NO_OPTION) {
                 return false;
@@ -484,7 +479,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             int blue = shared.getAttribute("blueBackground").getIntValue();
             int green = shared.getAttribute("greenBackground").getIntValue();
             Color backgroundColor = new Color(red, green, blue);
-            panel.setDefaultBackgroundColor(ColorUtil.colorToColorName(backgroundColor));
+            panel.setDefaultBackgroundColor(backgroundColor);
             panel.setBackgroundColor(backgroundColor);
         } catch (DataConversionException e) {
             log.warn("Could not parse color attributes!");
