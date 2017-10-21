@@ -126,24 +126,24 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 lastTimerTask = new TimerTask() {
                         public void run () { newKnownState(s); }
                     };
-                timer.schedule(lastTimerTask, DELAYED_FEEDBACK_INTERVAL );          
+                timer.schedule(lastTimerTask, DELAYED_FEEDBACK_INTERVAL );
             }
         } else {
             myOperator.start();
         }
     }
 
-    /** 
+    /**
      * Define duration of delay for DELAYED feedback mode.
      * <p>
      * Defined as "public non-final"
      * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
-    
+
     static Timer timer = null;
     TimerTask lastTimerTask = null;
-    
+
     @Override
     public int getCommandedState() {
         return _commandedState;
@@ -454,7 +454,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * This implementation by itself doesn't provide locking support.
-     * Override this in subclasses that do. 
+     * Override this in subclasses that do.
      *
      * @return One of 0 for none
      */
@@ -462,7 +462,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * This implementation by itself doesn't provide locking support.
-     * Override this in subclasses that do. 
+     * Override this in subclasses that do.
      *
      * @return false for not supported
      */
@@ -987,8 +987,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {
-            log.warn("No clean DoDelete worked for {}", getSystemName()); //NOI18N
         }
     }
 
