@@ -52,7 +52,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             element.addContent(new Element("dispatcherintegration").addContent("yes"));  // NOI18N
         }
         if (p.useDifferentColorWhenSetting()) {
-            element.addContent(new Element("colourwhilesetting").addContent(ColorUtil.colorToString(p.getSettingRouteColor())));  // NOI18N
+            element.addContent(new Element("colourwhilesetting").addContent(ColorUtil.colorToColorName(p.getSettingRouteColor())));  // NOI18N
             element.addContent(new Element("settingTimer").addContent("" + p.getSettingTimer()));  // NOI18N
         }
         for (int k = 0; k < editors.size(); k++) {
@@ -286,11 +286,11 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      *
      * @param color Integer value of a color to display on screen
      * @return lower case color name in English; None if color entered is null
-     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#colorToString(Color)} instead
+     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#colorToColorName(Color)} instead
      */
     @Deprecated
     public static String colorToString(Color color) {
-        return ColorUtil.colorToString(color);
+        return ColorUtil.colorToColorName(color);
     }
 
     /**

@@ -1573,7 +1573,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     public String getDefaultTextColor() {
-        return ColorUtil.colorToString(defaultTextColor);
+        return ColorUtil.colorToColorName(defaultTextColor);
     }
 
     /**
