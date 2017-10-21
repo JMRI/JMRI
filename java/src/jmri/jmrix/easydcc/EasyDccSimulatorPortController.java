@@ -5,15 +5,15 @@ import java.io.DataOutputStream;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
- * Abstract base for classes representing an EasyDCC communications port
+ * Abstract base for classes representing an EasyDCC simulator communications port (not used yet)
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public abstract class EasyDccPortController extends jmri.jmrix.AbstractSerialPortController {
+public abstract class EasyDccSimulatorPortController extends jmri.jmrix.AbstractSerialPortController {
     // Base class. Implementations will provide InputStream and OutputStream
     // objects to EasyDccTrafficController classes, who in turn will deal in messages.
 
-    protected EasyDccPortController(SystemConnectionMemo connectionMemo) {
+    protected EasyDccSimulatorPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
 

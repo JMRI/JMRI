@@ -104,7 +104,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
         EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
         control.connectPort(this);
-        getSystemConnectionMemo().setEasyDccTrafficController(control);
+        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
         // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
     }

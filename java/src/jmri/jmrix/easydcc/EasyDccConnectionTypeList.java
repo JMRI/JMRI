@@ -19,7 +19,8 @@ public class EasyDccConnectionTypeList implements jmri.jmrix.ConnectionTypeList 
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.easydcc.serialdriver.ConnectionConfig",
-            "jmri.jmrix.easydcc.networkdriver.ConnectionConfig"
+            "jmri.jmrix.easydcc.networkdriver.ConnectionConfig",
+            "jmri.jmrix.easydcc.simulator.ConnectionConfig"
         };
     }
 

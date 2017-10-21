@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a EasyDccMonFrame object
+ * Swing action to create and register an EasyDccMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */
