@@ -34,54 +34,72 @@
       <name>Clear</name>
       <indication>Proceed</indication>
       <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
       <name>Approach</name>
       <indication>Proceed preparing to stop at next signal</indication>
       <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
       <name>Advanced Approach</name>
       <indication>Reduce speed preparing to diverge at next signal</indication>
       <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 	
     <aspect>
       <name>Stop</name>
       <indication>Stop</indication>
       <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
       <name>Diverging Clear</name>
       <indication>Proceed through diverging route</indication>
       <comment>CTC Model Board Signal Masts</comment>
-    </aspect>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+   </aspect>
 
     <aspect>
       <name>Diverging Approach</name>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
       <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
    <aspect>
       <name>Branch Clear</name>
       <indication>Proceed through branch route</indication>
       <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
    <aspect>
       <name>Branch Approach</name>
       <indication>Proceed through branch route preparing to stop at next signal</indication>
       <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
    <aspect>
       <name>Branch Diverging</name>
       <indication>Proceed through branch route at restricted speed</indication>
       <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
  </aspects>
