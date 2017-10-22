@@ -170,7 +170,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     _pickListFrame.dispose();
                 }
                 _pickListFrame = new JmriJFrame();
-                PickListModel model = PickListModel.oBlockPickModelInstance();
+                PickListModel<OBlock> model = PickListModel.oBlockPickModelInstance();
                 _pickListFrame.add(new JScrollPane(model.makePickTable()));
                 _pickListFrame.pack();
                 _pickListFrame.setVisible(true);
@@ -246,13 +246,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        if (_speedUtil.profileHasSpeedInfo(true) || _speedUtil.profileHasSpeedInfo(false)) {
-            RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
-            if (speedProfile != null) {
-                _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
-                _spTable.setVisible(true);
-                return;
-            }            
+        RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
+        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
+            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
+            _spTable.setVisible(true);
+            return;
         }
         JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
     }

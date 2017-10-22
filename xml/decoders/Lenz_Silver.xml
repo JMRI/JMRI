@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Ronald Kuhn" version="8" lastUpdated="20171018"/>
   <version author="Alain Carasso" version="7" lastUpdated="20170112"/>
   <version author="Nigel Cliffe" version="6" lastUpdated="20091016"/>
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="4" lastUpdated="20070411"/>
@@ -28,25 +29,50 @@
   <!-- Version 7 - Add the missing Function map pane (Alain Carasso) -->
   <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
   <!-- and "Low Gear Switching Drive" -->
+  <!-- Version 8 - delete duplicate pane and add german translation (Ronald Kuhn) -->
   <decoder>
     <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="82" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
       <model model="Silver" numOuts="4" numFns="12" nmraWarrant="yes" nmraWarrantStart="200604" lowVersionID="65" highVersionID="75" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-        <output name="3" label="C - Green"/>
-        <output name="4" label="D - Violet"/>
+        <output name="1" label="A - White">
+          <label xml:lang="de">A - Weiß</label>
+        </output>
+        <output name="2" label="B - Yellow">
+          <label xml:lang="de">B - Gelb</label>
+        </output>
+        <output name="3" label="C - Green">
+          <label xml:lang="de">C - Grün</label>
+        </output>
+        <output name="4" label="D - Violet">
+          <label xml:lang="de">D - Violett</label>
+        </output>
       </model>
       <model model="Silver Direct" numOuts="4" numFns="12" lowVersionID="78" highVersionID="78" maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-        <output name="3" label="C - Green"/>
-        <output name="4" label="D - Violet"/>
+        <output name="1" label="A - White">
+          <label xml:lang="de">A - Weiß</label>
+        </output>
+        <output name="2" label="B - Yellow">
+          <label xml:lang="de">B - Gelb</label>
+        </output>
+        <output name="3" label="C - Green">
+          <label xml:lang="de">C - Grün</label>
+        </output>
+        <output name="4" label="D - Violet">
+          <label xml:lang="de">D - Violett</label>
+        </output>
       </model>
       <model model="Silver 21 Pin" numOuts="4" numFns="12" lowVersionID="82" highVersionID="82" maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-        <output name="3" label="C - Green"/>
-        <output name="4" label="D - Violet"/>
+        <output name="1" label="A - White">
+          <label xml:lang="de">A - Weiß</label>
+        </output>
+        <output name="2" label="B - Yellow">
+          <label xml:lang="de">B - Gelb</label>
+        </output>
+        <output name="3" label="C - Green">
+          <label xml:lang="de">C - Grün</label>
+        </output>
+        <output name="4" label="D - Violet">
+          <label xml:lang="de">D - Violett</label>
+        </output>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -73,23 +99,23 @@
         <label>Manufacturer ID - Reset</label>
         <comment>Writing a value of 8 or 33 will reset decoder to factory defaults</comment>
         <label xml:lang="de">Reset</label>
-        <comment xml:lang="de">Writing a value of 8 or 33 will reset decoder to factory defaults</comment>
+        <comment xml:lang="de">Das Schreiben von Wert 8 oder 33 setzt den Decoder auf Werkseinstellungen</comment>
       </variable>
       <variable CV="9" item="Total PWM Period" default="15" comment="Range 0-63">
         <decVal min="0" max="63"/>
         <label>Back EMF Repetition Rate (0-63)</label>
-        <label xml:lang="de">Total PWM Period</label>
+        <label xml:lang="de">Wiederholrate</label>
         <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
         <comment>Range 0-63</comment>
-        <comment xml:lang="de">Range 0-63</comment>
+        <comment xml:lang="de">Bereich 0-63</comment>
         <comment xml:lang="it">Valori 0-63</comment>
       </variable>
       <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
@@ -122,8 +148,8 @@
         </enumVal>
         <label>Motor Type(0-5)</label>
         <comment>Range 0-5</comment>
-        <label xml:lang="de">Motor type</label>
-        <comment xml:lang="de">Range 0-5</comment>
+        <label xml:lang="de">Motor Typ</label>
+        <comment xml:lang="de">Bereich 0-5</comment>
       </variable>
       <variable CV="50" mask="XXVXXXXX" item="EMF Switch" default="0">
         <enumVal>
@@ -137,159 +163,178 @@
           </enumChoice>
         </enumVal>
         <label>EMF Switch</label>
-        <label xml:lang="de">EMF Switch</label>
+        <label xml:lang="de">EMK-Teiler</label>
       </variable>
       <variable CV="50" mask="XVXXXXXX" item="BEMF Control" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>BEMF Control</label>
-        <label xml:lang="de">BEMF Control</label>
+        <label xml:lang="de">Regelung</label>
       </variable>
       <variable CV="50" mask="VXXXXXXX" item="Motor Frequency" default="0">
         <enumVal>
           <enumChoice choice="High ">
             <choice>High </choice>
-            <choice xml:lang="de">High </choice>
+            <choice xml:lang="de">hoch (ca. 23 kHz)</choice>
           </enumChoice>
           <enumChoice choice="Low ">
             <choice>Low </choice>
-            <choice xml:lang="de">Low </choice>
+            <choice xml:lang="de">niedrig (ca. 19 Hz)</choice>
           </enumChoice>
         </enumVal>
         <label>Motor Drive Frequency</label>
-        <label xml:lang="de">Motor Frequency</label>
+        <label xml:lang="de">Motorfrequenz</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
-      <variable CV="55" item="Global lighting option 1" default="255" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
+      <variable CV="55" item="Global lighting option 1" default="255">
         <decVal min="0" max="255"/>
         <label>Dimming Intensity, Outputs A and C (0-255)</label>
-        <label xml:lang="de">Global lighting option 1</label>
-        <tooltip xml:lang="de">Sets intensity of dimmed headlight (larger number = brighter light)</tooltip>
+        <tooltip>Sets intensity of dimmed headlight (larger number = brighter light)</tooltip>
+        <label xml:lang="de">Helligkeit, Ausgang A und C</label>
+        <tooltip xml:lang="de">Stellt die Helligkeit an den Ausgängen A und C ein (0-255).</tooltip>
       </variable>
-      <variable CV="56" item="Global lighting option 2" default="255" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
+      <variable CV="56" item="Global lighting option 2" default="255">
         <decVal min="0" max="255"/>
         <label>Dimming Intensity, Outputs B and D (0-255)</label>
-        <label xml:lang="de">Global lighting option 2</label>
-        <tooltip xml:lang="de">Sets intensity of dimmed headlight (larger number = brighter light)</tooltip>
+        <tooltip>Sets intensity of dimmed headlight (larger number = brighter light)</tooltip>
+        <label xml:lang="de">Helligkeit, Ausgang B und D</label>
+        <tooltip xml:lang="de">Stellt die Helligkeit an den Ausgängen B und D ein (0-255).</tooltip>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
       <variable CV="60" item="Lighting effects A/B" default="0" comment="Range 0-44">
         <decVal min="0" max="44"/>
-        <label>Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) </label>
+        <label>Enter the value corresponding to the desired lighting effect for A/B outputs (0-44)</label>
         <comment>Range 0-44</comment>
-        <label xml:lang="de">Lighting effects A/B</label>
-        <comment xml:lang="de">Range 0-44</comment>
+        <label xml:lang="de">Lichteffekt A/B</label>
+        <comment xml:lang="de">Bereich 0-44</comment>
       </variable>
-      <variable item="Toggle effect (outputs A/B) with F1" CV="61" mask="XXXXXXXV" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F1">
+      <variable CV="61" item="Toggle effect (outputs A/B) with F1" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs A/B) with F1</label>
-        <label xml:lang="de">Toggle effect (outputs A/B) with F1</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F1</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs A and B 'off' using F1</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang A/B) mit F1</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang A und B 'aus' mit F1</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs A/B) with F2" CV="61" mask="XXXXXXVX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F2">
+      <variable CV="61" item="Toggle effect (outputs A/B) with F2" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs A/B) with F2</label>
-        <label xml:lang="de">Toggle effect (outputs A/B) with F2</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F2</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs A and B 'off' using F2</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang A/B) mit F2</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang A und B 'aus' mit F2</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs A/B) with F3" CV="61" mask="XXXXXVXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F3">
+      <variable CV="61" item="Toggle effect (outputs A/B) with F3" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs A/B) with F3</label>
-        <label xml:lang="de">Toggle effect (outputs A/B) with F3</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F3</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs A and B 'off' using F3</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang A/B) mit F3</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang A und B 'aus' mit F3</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs A/B) with F4" CV="61" mask="XXXXVXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F4">
+      <variable CV="61" item="Toggle effect (outputs A/B) with F4" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs A/B) with F4</label>
-        <label xml:lang="de">Toggle effect (outputs A/B) with F4</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F4</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs A and B 'off' using F4</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang A/B) mit F4</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang A und B 'aus' mit F4</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs A/B) with F5" CV="61" mask="XXXVXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F5">
+      <variable CV="61" item="Toggle effect (outputs A/B) with F5" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs A/B) with F5</label>
-        <label xml:lang="de">Toggle effect (outputs A/B) with F5</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F5</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs A and B 'off' using F5</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang A/B) mit F5</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang A und B 'aus' mit F5</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs A/B) with F6" CV="61" mask="XXVXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F6">
+      <variable CV="61" item="Toggle effect (outputs A/B) with F6" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs A/B) with F6</label>
-        <label xml:lang="de">Toggle effect (outputs A/B) with F6</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F6</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs A and B 'off' using F6</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang A/B) mit F6</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang A und B 'aus' mit F6</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs A/B) with F7" CV="61" mask="XVXXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F7">
+      <variable CV="61" item="Toggle effect (outputs A/B) with F7" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs A/B) with F7</label>
-        <label xml:lang="de">Toggle effect (outputs A/B) with F7</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F7</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs A and B 'off' using F7</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang A/B) mit F7</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang A und B 'aus' mit F7</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs A/B) with F8" CV="61" mask="VXXXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F8">
+      <variable CV="61" item="Toggle effect (outputs A/B) with F8" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs A/B) with F8</label>
-        <label xml:lang="de">Toggle effect (outputs A/B) with F8</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F8</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs A and B 'off' using F8</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang A/B) mit F8</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang A und B 'aus' mit F8</tooltip>
       </variable>
       <variable CV="62" minOut="4" item="Lighting effects C/D" default="0" comment="Range 0-53">
         <decVal min="0" max="53"/>
-        <label>Enter the value corresponding to the desired lighting effect for D/C outputs (0-53) </label>
+        <label>Enter the value corresponding to the desired lighting effect for C/D outputs (0-53)</label>
         <comment>Range 0-53</comment>
         <label xml:lang="de">Lighting effects C/D</label>
         <comment xml:lang="de">Range 0-53</comment>
       </variable>
-      <variable CV="63" minOut="4" tooltip="Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))" item="Function 3 options" default="32" comment="Range 0-255">
+      <variable CV="63" minOut="4" item="Function 3 options" default="32" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Flashing frequency for outputs C and D (255 = .13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</label>
         <comment>Range 0-255</comment>
-        <label xml:lang="de">Function 3 options</label>
-        <comment xml:lang="de">Range 0-255</comment>
-        <tooltip xml:lang="de">Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))</tooltip>
+        <tooltip>Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))</tooltip>
+        <label xml:lang="de">Blinkfrequenz für Ausgänge C und D</label>
+        <comment xml:lang="de">Bereich 0-255</comment>
+        <tooltip xml:lang="de">default ca. 1 Sekunde, f = 1 / ( 0,03 * (1 + CV63))</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs C/D) with F1" CV="64" mask="XXXXXXXV" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F1">
+      <variable CV="64" minOut="4" item="Toggle effect (outputs C/D) with F1" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs C/D) with F1</label>
-        <label xml:lang="de">Toggle effect (outputs C/D) with F1</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs C and D 'off' using F1</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs C and D 'off' using F1</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang C/D) mit F1</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang C und D 'aus' mit F1</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs C/D) with F2" CV="64" mask="XXXXXXVX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F2">
+      <variable CV="64" minOut="4" item="Toggle effect (outputs C/D) with F2" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs C/D) with F2</label>
-        <label xml:lang="de">Toggle effect (outputs C/D) with F2</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs C and D 'off' using F2</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs C and D 'off' using F2</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang C/D) mit F2</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang C und D 'aus' mit F2</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs C/D) with F3" CV="64" mask="XXXXXVXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F3">
+      <variable CV="64" minOut="4" item="Toggle effect (outputs C/D) with F3" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs C/D) with F3</label>
-        <label xml:lang="de">Toggle effect (outputs C/D) with F3</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs C and D 'off' using F3</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs C and D 'off' using F3</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang C/D) mit F3</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang C und D 'aus' mit F3</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs C/D) with F4" CV="64" mask="XXXXVXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F4">
+      <variable CV="64" minOut="4" item="Toggle effect (outputs C/D) with F4" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs C/D) with F4</label>
-        <label xml:lang="de">Toggle effect (outputs C/D) with F4</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs C and D 'off' using F4</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs C and D 'off' using F4</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang C/D) mit F4</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang C und D 'aus' mit F4</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs C/D) with F5" CV="64" mask="XXXVXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F5">
+      <variable CV="64" minOut="4" item="Toggle effect (outputs C/D) with F5" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs C/D) with F5</label>
-        <label xml:lang="de">Toggle effect (outputs C/D) with F5</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs C and D 'off' using F5</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs C and D 'off' using F5</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang C/D) mit F5</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang C und D 'aus' mit F5</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs C/D) with F6" CV="64" mask="XXVXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F6">
+      <variable CV="64" minOut="4" item="Toggle effect (outputs C/D) with F6" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs C/D) with F6</label>
-        <label xml:lang="de">Toggle effect (outputs C/D) with F6</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs C and D 'off' using F6</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs C and D 'off' using F6</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang C/D) mit F6</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang C und D 'aus' mit F6</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs C/D) with F7" CV="64" mask="XVXXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F7">
+      <variable CV="64" minOut="4" item="Toggle effect (outputs C/D) with F7" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs C/D) with F7</label>
-        <label xml:lang="de">Toggle effect (outputs C/D) with F7</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs C and D 'off' using F7</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs C and D 'off' using F7</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang C/D) mit F7</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang C und D 'aus' mit F7</tooltip>
       </variable>
-      <variable item="Toggle effect (outputs C/D) with F8" CV="64" mask="VXXXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F8">
+      <variable CV="64" minOut="4" item="Toggle effect (outputs C/D) with F8" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (outputs C/D) with F8</label>
-        <label xml:lang="de">Toggle effect (outputs C/D) with F8</label>
-        <tooltip xml:lang="de">Toggle Lighting Effect for outputs C and D 'off' using F8</tooltip>
+        <tooltip>Toggle Lighting Effect for outputs C and D 'off' using F8</tooltip>
+        <label xml:lang="de">schalte Effekt (Ausgang C/D) mit F8</label>
+        <tooltip xml:lang="de">Schalte Lichteffekt für Ausgang C und D 'aus' mit F8</tooltip>
       </variable>
       <variable item="Speed Table" CV="67">
         <speedTableVal/>
@@ -301,15 +346,15 @@
         <decVal min="0" max="255"/>
         <label>Minimum PWM (Types 4, 5 only)</label>
         <comment>Range 0-255</comment>
-        <label xml:lang="de">Minimum PWM Value</label>
-        <comment xml:lang="de">Range 0-255</comment>
+        <label xml:lang="de">Minimaler PWM-Wert (Motorentyp 4 oder 5)</label>
+        <comment xml:lang="de">Bereich 0-255</comment>
       </variable>
       <variable CV="114" item="Motor Duty Cycle" default="10" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Duty Cycle (Types 4, 5 only)</label>
         <comment>Range 0-255</comment>
-        <label xml:lang="de">Motor Duty Cycle</label>
-        <comment xml:lang="de">Range 0-255</comment>
+        <label xml:lang="de">Motor Duty Cycle (Motorentyp 4 oder 5)</label>
+        <comment xml:lang="de">Bereich 0-255</comment>
       </variable>
       <variable CV="128" readOnly="yes" item="Decoder Software Version" default="1">
         <decVal/>
@@ -323,8 +368,6 @@
       </factReset>
     </resets>
   </decoder>
-  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/> 
   <pane>
     <name>Lenz</name>
     <name xml:lang="de">Lenz</name>
@@ -333,7 +376,7 @@
         <column>
           <label>
             <text>Fault Indication</text>
-            <text xml:lang="de">Fault Indication</text>
+            <text xml:lang="de">Fehler</text>
           </label>
           <display item="Light Short"/>
           <display item="Overheating"/>
@@ -343,7 +386,7 @@
           </label>
           <label>
             <text>Motor Configuration</text>
-            <text xml:lang="de">Motor Configuration</text>
+            <text xml:lang="de">Motor Konfiguration</text>
           </label>
           <display item="Motor type"/>
           <display item="EMF Switch"/>
@@ -363,7 +406,7 @@
         <column>
           <label>
             <text>Braking Configuration</text>
-            <text xml:lang="de">Braking Configuration</text>
+            <text xml:lang="de">Bremskonfiguration</text>
           </label>
           <display item="Constant Braking"/>
           <display item="ABC"/>
@@ -392,7 +435,15 @@
           </label>
           <label>
             <text>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
-            <text xml:lang="de">Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
+            <text xml:lang="de">Tip:</text>
+          </label>
+          <label>
+            <text> </text>
+            <text xml:lang="de">Der konstante Bremsweg ist nur wirksam, wenn die Fahrstufe auf den Wert 0 geändert wird.</text>
+          </label>
+          <label>
+            <text> </text>
+            <text xml:lang="de">Ebenfalls nicht bei eingeschaltetem Rangiergang bzw. abgeschalteter Verzögerung.</text>
           </label>
           <label>
             <text> </text>
@@ -407,4 +458,8 @@
     </column>
   </pane>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
-</decoder-config>
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/> 
+  <!-- duplicated Pane deactivated (Klb4ever)
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
+  -->
+  </decoder-config>
