@@ -1414,7 +1414,6 @@ public class SwitchboardEditor extends Editor {
 
         //add text color menu item
 
-        JMenu textColorMenu = new JMenu(Bundle.getMessage("DefaultTextColor"));
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor"));
         _optionMenu.add(textColorMenuItem);
 
