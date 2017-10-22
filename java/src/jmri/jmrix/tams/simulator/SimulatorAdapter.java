@@ -14,10 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MRC simulator
+ * Tams simulator.
+ * Derived from MRC Simulator
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @author	Paul Bender, Copyright (C) 2009
+ * @authorBob Jacobsen Copyright (C) 2001, 2002
+ * @authorPaul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  * 
  */
@@ -57,7 +58,7 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     /**
-     * set up all of the other objects to simulate operation with an MRC command
+     * Set up all of the other objects to simulate operation with a Tams command
      * station.
      */
     @Override

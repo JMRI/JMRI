@@ -5,11 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.easydcc.EasyDccCommandStation;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
-import jmri.jmrix.easydcc.EasyDccPortController; // no extra simulatorcontroller
+import jmri.jmrix.easydcc.EasyDccPortController; // no special xSimulatorController
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 import org.slf4j.Logger;
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to a simulated EasyDCC system.
  * <p>
- * Currently, the EasyDccSimulator reacts to commands sent from the user interface
+ * Currently, the EasyDCC SimulatorAdapter reacts to commands sent from the user interface
  * with messages an appropriate reply message.
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / DCCppSimulatorAdapter 2017
  * <p>
@@ -29,7 +28,11 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
-public class EasyDccSimulatorAdapter extends EasyDccPortController implements Runnable {
+public class SimulatorAdapter extends EasyDccPortController implements Runnable {
+
+    // private control members
+    private boolean opened = false;
+    private Thread sourceThread;
 
     final static int SENSOR_MSG_RATE = 10;
 
@@ -37,9 +40,20 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
     private boolean checkBuffer = true;
     private boolean trackPowerState = false;
 
-    public EasyDccSimulatorAdapter() {
+    // Simulator responses
+    char EDC_OPS = 'O';
+    char EDC_PROG = 'P';
+    char EDC_ERROR = '!';
+
+    char ACC_CMD = 'S'; // Send general command
+
+    public SimulatorAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC Simulator")); // pass customized user name
         setPort(Bundle.getMessage("None"));
+    }
+
+    @Override
+    public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
@@ -49,16 +63,9 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: " + e.toString());
-            return;
         }
-    }
-
-    @Override
-    public String openPort(String portName, String appName) {
-        // open the port in EasyDcc mode, check ability to set moderators
-        setPort(portName);
-        log.error("openPort should not have been invoked", new Exception());
-        return null;
+        opened = true;
+        return null; // indicates OK return
     }
 
     /**
@@ -97,16 +104,16 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
     public void configure() {
         // Connect to a traffic controller
         EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
-        control.connectPort(this);
-
-        // start operation
-        // packets.startThreads();
         this.getSystemConnectionMemo().setEasyDccTrafficController(control);
+        control.connectPort(this);
 
         // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
 
+        // start the simulator
         sourceThread = new Thread(this);
+        sourceThread.setName("EasyDCC Simulator");
+        sourceThread.setPriority(Thread.MIN_PRIORITY);
         sourceThread.start();
     }
 
@@ -114,19 +121,21 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
 
     @Override
     public DataInputStream getInputStream() {
-        if (pin == null) {
+        if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            return null;
         }
+        log.debug("DataInputStream pin returned");
         return pin;
     }
 
     @Override
     public DataOutputStream getOutputStream() {
-        if (pout == null) {
+        if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            return null;
         }
+        log.debug("DataOutputStream pout returned");
         return pout;
     }
 
@@ -148,20 +157,36 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
 
     @Override
     public void run() { // start a new thread
-        // this thread has one task.  It repeatedly reads from the input pipe
+        // This thread has one task. It repeatedly reads from the input pipe
         // and writes modified data to the output pipe. This is the heart
         // of the command station simulation.
         log.debug("Simulator Thread Started");
-
-        ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+//        while (true) {
         for (;;) {
-            EasyDccMessage m = readMessage();
-            log.debug("Simulator Thread received message {}", m.toString());
-            EasyDccReply r = generateReply(m);
-            // If generateReply() returns null, do nothing. No reply to send.
-            if (r != null) {
-                writeReply(r);
-                log.debug("Simulator Thread sent Reply {}", r.toString());
+            log.debug("Simulator Thread running, read...");
+            EasyDccMessage m = readMessage(); // NPE?
+            if (log.isDebugEnabled()) {
+                StringBuilder buf = new StringBuilder();
+                buf.append("EasyDCC Simulator Thread received message: ");
+                for (int i = 0; i < m.getNumDataElements(); i++) {
+                    buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
+                }
+                log.debug(buf.toString());
+            }
+            if (m != null) {
+                EasyDccReply r = generateReply(m);
+                if (r != null) { // NPE?
+                    writeReply(r);
+                    log.debug("Simulator Thread sent Reply {}", r.toString());
+                }
+                if (log.isDebugEnabled() && r != null) {
+                    StringBuilder buf = new StringBuilder();
+                    buf.append("EasyDCC Simulator Thread sent reply: ");
+                    for (int i = 0; i < r.getNumDataElements(); i++) {
+                        buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
+                    }
+                    log.debug(buf.toString());
+                }
             }
         }
     }
@@ -172,19 +197,18 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
      */
     private EasyDccMessage readMessage() {
         EasyDccMessage msg = null;
+        log.debug("Simulator reading message");
         try {
             msg = loadChars();
         } catch (java.io.IOException e) {
             // should do something meaningful here.
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
-
         }
         setOutputBufferEmpty(true);
         return (msg);
     }
 
     /**
-     * This is the heart of the simulation.  It translates an
+     * This is the heart of the simulation. It translates an
      * incoming EasyDccMessage into an outgoing EasyDccReply.
      *
      * As yet, no meaningful replies are returned. TODO
@@ -192,23 +216,31 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
     @SuppressWarnings("fallthrough")
     private EasyDccReply generateReply(EasyDccMessage msg) {
         String s, r;
-        EasyDccReply reply = null;
-
         log.debug("Generate Reply to message type {} string = {}", msg.getElement(0), msg.toString());
+        EasyDccReply reply = new EasyDccReply();
+        int command = msg.getElement(0);
+//        if (command < 0x80)   // NOTE: NCE command station does not respond to
+//        {
+//            return null;      // command less than 0x80 (times out)
+//        }
+//        if (command > 0xBF) { // Command is out of range
+//            reply.setElement(0, EDC_ERROR);  // Nce command not supported
+//            return reply;
+//        }
 
-        switch (msg.getOpCode()) {
+        switch (command) {
 
 //            case DCCppConstants.THROTTLE_CMD:
 //                log.debug("THROTTLE_CMD detected");
 //                s = msg.toString();
 //                try {
 //                    p = Pattern.compile(DCCppConstants.THROTTLE_CMD_REGEX);
-//                    m = p.matcher(s);
-//                    if (!m.matches()) {
+//                    msg = p.matcher(s);
+//                    if (!msg.matches()) {
 //                        log.error("Malformed Throttle Command: {}", s);
 //                        return (null);
 //                    }
-//                    r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
+//                    r = "T " + msg.group(1) + " " + msg.group(3) + " " + msg.group(4);
 //                    reply = new EasyDccReply(r);
 //                    log.debug("Reply generated = {}", reply.toString());
 //                } catch (PatternSyntaxException e) {
@@ -223,25 +255,12 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
 //                }
 //                break;
 
-            case 'V':
-//                if (msg.isTurnoutAddMessage()) {
-//                    log.debug("Add Turnout Message");
-                    r = "O";
-//                } else if (msg.isTurnoutDeleteMessage()) {
-//                    log.debug("Delete Turnout Message");
-//                    r = "O";
-//                } else if (msg.isListTurnoutsMessage()) {
-//                    log.debug("List Turnouts Message");
-//                    r = "H 1 27 3 1";
-//                } else {
-//                    log.debug("TURNOUT_CMD detected");
-//                    r = "H" + msg.getTOIDString() + " " + Integer.toString(msg.getTOStateInt());
-//                }
-                reply = new EasyDccReply(r);
+            case 'S': // accessory command
+                accessoryCommand(msg, reply);
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
-//            case DCCppConstants.OUTPUT_CMD:
+            case 'T': // Turnout command
 //                if (msg.isOutputCmdMessage()) {
 //                    log.debug("Output Command Message: {}", msg.toString());
 //                    r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
@@ -253,30 +272,30 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
 //                    r = "O";
 //                } else if (msg.isListOutputsMessage()) {
 //                    log.debug("Output List Message");
-//                    r = "Y 1 2 3 4"; // Totally fake, but the right number of arguments.
+//                    r = "T 1 2 3 4"; // Totally fake, but the right number of arguments.
 //                } else {
 //                    log.error("Invalid Output Command: {}{", msg.toString());
 //                    r = "Y 1 2";
 //                }
-//                reply = new EasyDccReply(r);
-//                log.debug("Reply generated = {}", reply.toString());
-//                break;
+                reply = new EasyDccReply("O");
+                log.debug("Reply generated = {}", reply.toString());
+                break;
 
 //            case DCCppConstants.PROG_WRITE_CV_BYTE:
 //                log.debug("PROG_WRITE_CV_BYTE detected");
 //                s = msg.toString();
 //                try {
 //                    p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
-//                    m = p.matcher(s);
-//                    if (!m.matches()) {
+//                    msg = p.matcher(s);
+//                    if (!msg.matches()) {
 //                        log.error("Malformed ProgWriteCVByte Command: {}", s);
 //                        return (null);
 //                    }
 //                    // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
 //                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-//                    r = "r " + m.group(3) + "|" + m.group(4) + "|" + m.group(1) +
-//                            " " + m.group(2);
-//                    CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+//                    r = "r " + msg.group(3) + "|" + msg.group(4) + "|" + msg.group(1) +
+//                            " " + msg.group(2);
+//                    CVs[Integer.parseInt(msg.group(1))] = Integer.parseInt(msg.group(2));
 //                    reply = new EasyDccReply(r);
 //                    log.debug("Reply generated = {}", reply.toString());
 //                } catch (PatternSyntaxException e) {
@@ -296,18 +315,18 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
 //                s = msg.toString();
 //                try {
 //                    p = Pattern.compile(DCCppConstants.PROG_WRITE_BIT_REGEX);
-//                    m = p.matcher(s);
-//                    if (!m.matches()) {
+//                    msg = p.matcher(s);
+//                    if (!msg.matches()) {
 //                        log.error("Malformed ProgWriteCVBit Command: {}", s);
 //                        return (null);
 //                    }
 //                    // CMD: <B CV BIT Value CALLBACKNUM CALLBACKSUB>
 //                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV BIT Value>
-//                    r = "r " + m.group(4) + "|" + m.group(5) + "|" + m.group(1) + " "
-//                            + m.group(2) + m.group(3);
-//                    int idx = Integer.parseInt(m.group(1));
-//                    int bit = Integer.parseInt(m.group(2));
-//                    int v = Integer.parseInt(m.group(3));
+//                    r = "r " + msg.group(4) + "|" + msg.group(5) + "|" + msg.group(1) + " "
+//                            + msg.group(2) + msg.group(3);
+//                    int idx = Integer.parseInt(msg.group(1));
+//                    int bit = Integer.parseInt(msg.group(2));
+//                    int v = Integer.parseInt(msg.group(3));
 //                    if (v == 1) {
 //                        CVs[idx] = CVs[idx] | (0x0001 << bit);
 //                    } else {
@@ -327,26 +346,26 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
 //                }
 //                break;
 
-//            case DCCppConstants.PROG_READ_CV:
+//            case 'R':
 //                log.debug("PROG_READ_CV detected");
 //                s = msg.toString();
 //                try {
 //                    p = Pattern.compile(DCCppConstants.PROG_READ_REGEX);
-//                    m = p.matcher(s);
-//                    if (!m.matches()) {
+//                    msg = p.matcher(s);
+//                    if (!msg.matches()) {
 //                        log.error("Malformed PROG_READ_CV Command: {}", s);
 //                        return (null);
 //                    }
 //                    // TODO: Work Magic Here to retrieve stored value.
 //                    // Make sure that CV exists
-//                    int cv = Integer.parseInt(m.group(1));
+//                    int cv = Integer.parseInt(msg.group(1));
 //                    int cvVal = 0; // Default to 0 if they're reading out of bounds.
 //                    if (cv < CVs.length) {
-//                        cvVal = CVs[Integer.parseInt(m.group(1))];
+//                        cvVal = CVs[Integer.parseInt(msg.group(1))];
 //                    }
 //                    // CMD: <R CV CALLBACKNUM CALLBACKSUB>
 //                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-//                    r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
+//                    r = "r " + msg.group(2) + "|" + msg.group(3) + "|" + msg.group(1) + " "
 //                            + Integer.toString(cvVal);
 //
 //                    reply = new EasyDccReply(r);
@@ -363,67 +382,110 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
 //                }
 //                break;
 
-//            case 'E':
-//                log.debug("TRACK_POWER_ON detected");
-//                trackPowerState = true;
-//                reply = EasyDccReply("p1");
-//                log.debug("Reply generated = {}", reply.toString());
-//                break;
+            case 'E':
+                log.debug("TRACK_POWER_ON detected");
+                trackPowerState = true;
+                reply = new EasyDccReply("O");
+                log.debug("Reply generated = {}", reply.toString());
+                break;
 
-//            case 'K':
-//                log.debug("TRACK_POWER_OFF detected");
-//                trackPowerState = false;
-//                reply = new EasyDccReply("p0");
-//                log.debug("Reply generated = {}", reply.toString());
-//                break;
+            case 'K':
+                log.debug("TRACK_POWER_OFF detected");
+                trackPowerState = false;
+                reply = new EasyDccReply("O");
+                log.debug("Reply generated = {}", reply.toString());
+                break;
 
-//            case DCCppConstants.READ_TRACK_CURRENT:
-//                log.debug("READ_TRACK_CURRENT detected");
-//                int randint = 480 + rgen.nextInt(64);
-//                reply = new EasyDccReply("a " + (trackPowerState ? Integer.toString(randint) : "0"));
-//                log.debug("Reply generated = {}", reply.toString());
-//                break;
-
-//            case DCCppConstants.READ_CS_STATUS:
-//                log.debug("READ_CS_STATUS detected");
-//                generateReadCSStatusReply(); // Handle this special.
-//                break;
+            case 'V':
+                log.debug("Read_CS_Version detected");
+                reply = new EasyDccReply("V999 01 01 1999"); // fake version number reply
+                log.debug("Reply generated = {}", reply.toString());
+                break;
 
             default:
                 log.debug("non-reply message detected");
+                reply = new EasyDccReply("O");
                 // Send no reply.
-                return (null);
+                // return (null);
         }
         return (reply);
     }
 
-    private void generateReadCSStatusReply() {
-        EasyDccReply r = new EasyDccReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
-        writeReply(r);
-        log.debug("Simulator Thread sent Reply {}", r.toString());
-        r = new EasyDccReply("N0: SERIAL");
-        writeReply(r);
-        log.debug("Simulator Thread sent Reply {}", r.toString());
-        // Generate the other messages too...
+    /**
+     * Extract item address from a message.
+     * <p>
+     * Copied from jmri.jmrix.nce.simulator.SimulatorAdapter.
+     *
+     * @param m received message
+     * @return address from the message
+     */
+    private int getEasyDccAddress(EasyDccMessage m) {
+        int addr = m.getElement(1);
+        addr = addr * 256;
+        addr = addr + m.getElement(2);
+        return addr;
     }
 
-    private void writeReply(EasyDccReply r) {
-        int i;
-        int len = r.getNumDataElements();  // opCode+Nbytes+ECC
-        // If r == null, there is no reply to be sent.
-        try {
-            outpipe.writeByte((byte) '<');
-            for (i = 0; i < len; i++) {
-                outpipe.writeByte((byte) r.getElement(i));
+    private byte[] turnoutMemory = new byte[256]; // copied from DCC, remember last state
+
+    private EasyDccReply accessoryCommand(EasyDccMessage m, EasyDccReply reply) {
+        if (m.getElement(3) == 0x03 || m.getElement(3) == 0x04) {  // 0x03 = close, 0x04 = throw
+            String operation = "close";
+            if (m.getElement(3) == 0x04) {
+                operation = "throw";
             }
-            outpipe.writeByte((byte) '>');
+            int _accessoryAddress = getEasyDccAddress(m);
+            log.debug("Accessory command {} to {}T{}", operation, getSystemPrefix(), _accessoryAddress);
+            if (_accessoryAddress > 2044) { // NMRA limit
+                log.error("Turnout address greater than 2044, address: {}", _accessoryAddress);
+                return null;
+            }
+            int bit = (_accessoryAddress - 1) & 0x07;
+            int setMask = 0x01;
+            for (int i = 0; i < bit; i++) {
+                setMask = setMask << 1;
+            }
+            int clearMask = 0x0FFF - setMask;
+            //log.debug("setMask:" + Integer.toHexString(setMask) + " clearMask:" + Integer.toHexString(clearMask));
+            int offset = (_accessoryAddress - 1) >> 3;
+            int read = turnoutMemory[offset];
+            byte write = (byte) (read & clearMask & 0xFF);
+
+            if (operation.equals("close")) {
+                write = (byte) (write + setMask); // set bit if closed
+            }
+            turnoutMemory[offset] = write;
+            log.debug("wrote:" + Integer.toHexString(write));
+        }
+        reply.setElement(0, EDC_OPS);   // Operations ready reply!
+        return reply;
+    }
+
+    /**
+     * Write reply to output.
+     * <p>
+     * Copied from jmri.jmrix.nce.simulator.SimulatorAdapter.
+     *
+     * @param r reply on message
+     */
+    private void writeReply(EasyDccReply r) {
+        if (r == null) {
+            return; // there is no reply to be sent
+        }
+        for (int i = 0; i < r.getNumDataElements(); i++) {
+            try {
+                outpipe.writeByte((byte) r.getElement(i));
+            } catch (java.io.IOException ex) {
+            }
+        }
+        try {
+            outpipe.flush();
         } catch (java.io.IOException ex) {
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
     }
 
     /**
-     * Get characters from the input source, and file a message.
+     * Get characters from the input source.
      * <p>
      * Only used in the Receive thread.
      *
@@ -431,63 +493,17 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
      * @throws IOException when presented by the input source.
      */
     private EasyDccMessage loadChars() throws java.io.IOException {
-        // Spin waiting for start-of-frame '<' character (and toss it)
-        StringBuilder s = new StringBuilder("");
-        byte char1;
-        boolean found_start = false;
+        int nchars;
+        byte[] rcvBuffer = new byte[32];
 
-        // this loop reads every other character; is that the desired behavior?
-        while (!found_start) {
-            char1 = readByteProtected(inpipe);
-            if ((char1 & 0xFF) == '<') {
-                found_start = true;
-                log.debug("Found starting < ");
-                break; // A bit redundant with setting the loop condition true (false)
-            } else {
-                char1 = readByteProtected(inpipe);
-            }
-        }
-        // Now, suck in the rest of the message...
-        // Expects a message of the format "CVnnnvv" where vv is
-        // the hexadecimal value or "Vnvv" where vv is the hexadecimal value.
-        for (int i = 0; i < 7; i++) { // or 5
-            char1 = readByteProtected(inpipe);
-            if (char1 == '>') {
-                log.debug("msg found > ");
-                // Don't store the >
-                break;
-            } else {
-                log.debug("msg read byte {}", char1);
-                char c = (char) (char1 & 0x00FF);
-                s.append(Character.toString(c));
-            }
-        }
-        log.debug("Complete message = {}", s);
-        // BUG FIX: Incoming EasyDCC messages are already formatted for EasyDCC and don't
-        // need to be parsed. Indeed, trying to parse them will screw them up.
-        // So instead, we de-@Deprecated the string constructor so that we can
-        // directly create an EasyDccReply from the incoming string without translation/parsing.
-        return (new EasyDccMessage(s.toString()));
-    }
+        nchars = inpipe.read(rcvBuffer, 0, 32);
+        //log.debug("new message received");
+        EasyDccMessage msg = new EasyDccMessage(nchars);
 
-    /**
-     * Read a single byte, protecting against various timeouts, etc.
-     * <P>
-     * When a port is set to have a receive timeout (via the
-     * enableReceiveTimeout() method), some will return zero bytes or an
-     * EOFException at the end of the timeout. In that case, the read should be
-     * repeated to get the next real character.
-     *
-     */
-    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
-        byte[] rcvBuffer = new byte[1];
-        while (true) { // loop will repeat until character found
-            int nchars;
-            nchars = istream.read(rcvBuffer, 0, 1);
-            if (nchars > 0) {
-                return rcvBuffer[0];
-            }
+        for (int i = 0; i < nchars; i++) {
+            msg.setElement(i, rcvBuffer[i] & 0xFF);
         }
+        return msg;
     }
 
     private DataOutputStream pout = null; // for output to other classes
@@ -495,8 +511,7 @@ public class EasyDccSimulatorAdapter extends EasyDccPortController implements Ru
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout
-    private Thread sourceThread;
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccSimulatorAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
 
 }

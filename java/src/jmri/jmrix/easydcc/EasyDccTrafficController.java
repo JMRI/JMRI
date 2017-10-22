@@ -93,7 +93,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
             log.debug("empty message");
             return;
         }
-        log.debug("EdccTrafficController sendEdccMessage() {}", m.toString());
+        log.debug("EasyDccTrafficController sendMessage() {}", m.toString());
         sendMessage(m, reply);
     }
 

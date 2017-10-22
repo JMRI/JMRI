@@ -109,7 +109,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
         this.getSystemConnectionMemo().configureManagers();
     }
 
-    // base class methods for the EasyDccPortController interface
+    // Base class methods for the EasyDccPortController interface
 
     @Override
     public DataInputStream getInputStream() {
