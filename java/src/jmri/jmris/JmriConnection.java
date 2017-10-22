@@ -3,10 +3,15 @@ package jmri.jmris;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import jmri.InstanceManager;
+import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketException;
-import org.eclipse.jetty.websocket.api.WriteCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,28 +88,25 @@ public class JmriConnection {
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
         } else if (this.session != null && this.session.isOpen()) {
+            Future<Void> future = null;
             try {
-                this.session.getRemote().sendString(message, new WriteCallback() {
-                    @Override
-                    public void writeFailed(Throwable thrwbl) {
-                        // include only first 75 characters of message in log unless debugging
-                        String logMessage = (log.isDebugEnabled() || message.length() <= 75)
-                                ? message
-                                : message.substring(0, 75 - 1);
-                        log.error("Exception \"{}\" sending {}", thrwbl.getMessage(), logMessage, thrwbl);
-                        JmriConnection.this.getSession().close(StatusCode.NO_CODE, thrwbl.getMessage());
-                    }
-
-                    @Override
-                    public void writeSuccess() {
-                        log.debug("Sent {}", message);
-                    }
-                });
+                future = this.session.getRemote().sendStringByFuture(message);
+                future.get(InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval(), TimeUnit.MILLISECONDS);
             } catch (WebSocketException ex) {
                 log.debug("Exception sending message", ex);
                 // A WebSocketException is most likely a broken socket,
                 // so rethrow it as an IOException
-                throw new IOException(ex);
+                throw new IOException("Unable to send message", ex);
+            } catch (InterruptedException | ExecutionException | TimeoutException ex) {
+                // include only first 75 characters of message in log unless debugging
+                String logMessage = (log.isDebugEnabled() || message.length() <= 75)
+                        ? message
+                        : message.substring(0, 75 - 1);
+                log.error("Exception \"{}\" sending {}", ex.getMessage(), logMessage, ex);
+                if (future != null) {
+                    future.cancel(true);
+                }
+                JmriConnection.this.getSession().close(StatusCode.NO_CODE, ex.getMessage());
             }
         }
     }

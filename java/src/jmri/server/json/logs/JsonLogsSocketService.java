@@ -84,6 +84,9 @@ public class JsonLogsSocketService extends JsonSocketService {
 
         private StringBuilder workingMessage = null;
 
+        //TODO: add handler for end of file
+        //TODO: make String handler buffer JSON statements so that EOF handler
+        // sends array
         /**
          * Send lines as JSON messages. Cache lines as needed until a valid JSON
          * object can be read from the cached lines plus current line.
