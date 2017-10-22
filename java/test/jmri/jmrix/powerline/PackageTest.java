@@ -48,6 +48,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialX10LightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

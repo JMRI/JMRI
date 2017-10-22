@@ -1,26 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
+<!--	Translated by Herv&#233; BLOREC on 2017-02-15 -->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+ <title>
+      JMRI: Block Edit Help
+ </title>
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Block Table Edit">
 
-  <title>JMRI: Block Table Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI help Memory Table">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -28,184 +17,153 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Edit Block Window</h1>This edit window allows you to edit
-      the following areas.<br>
-      <a href="#basic">Basic</a><br>
-      <a href="#sensor">Sensor</a><br>
-      <a href="#reporter">Reporter</a><br>
-      <a href="#properties">Properties</a> <a name="basic" id=
-      "basic"></a>
 
-      <h2>Basic</h2>This provides basic information on the details
-      of the block
+<h1>Modifier la Fen&#234;tre Canton</h1>
+<p>Le volet Modifier Canton vous permet de modifier les onglets suivants:
+<ul>
+<li><a href="#basic">Basique</a>
+<li><a href="#sensor">Capteur</a>
+<li><a href="#reporter">Rapport</a>
+<li><a href="#physicaldetails">D&#233;tails Physiques</a>
+<li><a href="#usage">Utilisation</a>
+<li><a href="#properties">Propri&#233;t&#233;s</a>
+</ul>
 
-      <ul>
-        <li>
-          <p><b>System Name</b> - The system name of the Block.
-          There is no functional requirement for a type letter in
-          the System Name of a Block, but by convention we use 'B'
-          for 'Block'. The default implementation is not
-          system-specific, so a system letter of 'I' is
-          appropriate. This leads to system names like "IB201".</p>
-        </li>
+<a name="basic"><h2>Basique</h2></a>
+<p>Ceci fournit l'information basique au sujet du Canton, comme entr&#233;e &#224; sa cr&#233;ation:</p>
+<img src="BlocksEditBasicTab.png" width="460" height="155">
+<ul>
+<li><p><b>Nom Syst&#232;me </b> - Le nom syst&#232;me du Canton. Il n'existe aucune exigence 
+fonctionnelle pour une lettre de type dans le Nom Syst&#232;me d'un Canton, mais par convention nous utilisons 
+'B' pour 'Canton'. L'impl&#233;mentation par d&#233;faut n'est pas sp&#233;cifique au syst&#232;me, Une lettre syst&#232;me 
+'I' est appropri&#233;e. Cela conduit &#224; des noms de syst&#232;me comme "IB201".</p></li> 
 
-        <li>
-          <p><b>User Name</b> - The user name of the Block. The
-          user name of a Block created here may be set to any text.
-          The user name for a Block created by Layout Editor is set
-          by Layout Editor and should not be changed.</p>
-        </li>
+<li><p><b>Nom Utlisateur</b> - Le nnom utilisateur du canton. Le nom utilisateur du Canton cr&#233;&#233;
+ici peut comporter n'importe quel texte. Le nom utilisateur pour un Canton cr&#233;&#233; par l'&#201;diteur de R&#233;seau 
+est cr&#233;&#233; par l'&#201;diteur et ne doit pas &#234;tre chang&#233;.</p></li>
 
-        <li>
-          <p><b>Comment</b> - You may enter any text in this field
-          that will help you distinguish this Block from other
-          Blocks, or provide useful notes about its use.</p>
-        </li>
-      </ul><a name="sensor" id="sensor"></a>
+<li><p><b>Commentaire</b> - Vous pouvez entrer tout texte dans ce champ qui peut vous aider
+&#224; distinguer ce Canton parmi les autres, ou fournir des notes utiles &#224; son usage.</p></li>
+</ul>
 
-      <h2>Sensor</h2>This tabs allows you to assign a sensor to the
-      block to change the occupancy state, it also allows certain
-      information about the sensor to be changed.
+<a name="sensor"><h2>Capteur</h2></a>
+<p>Cet onglet vous permet d'affecter un capteur &#224; ce Canton pour changer son &#233;tat d'occupation. Il
+permet aussi de modifier certaine information concernant le Capteur:</p>
+<img src="BlocksEditSensorTab.png" width="460" height="155">
+<ul>
+<li><p><b>Capteur</b>
+Selectionner le capteur avec la liste d&#233;roulante asoci&#233;e &#224; ce Canton.</li>
 
-      <ul>
-        <li>
-          <p><b>Sensor</b> Select the sensor from the drop down
-          list that will be assoicated with this block.</p>
-        </li>
+Vous pouvez modifier les les options Anti-Rebond dans cet onglet; Le r&#233;glage de l'Antirebond du Capteur 
+vous aide &#224; pr&#233;venir les faux d&#233;clenchements d'un Capteur devant &#234;tre utilis&#233; dans le syst&#232;me et 
+d&#233;clencher d'autres &#233;v&#233;nements dans le syst&#232;me. De tels faux d&#233;clenchements pourraient &#234;tre dus &#224; 
+une portion de voie sale ou &#224; des interf&#233;rences &#233;lectriques..
+<li><b>Utilisation de Valeurs Globales d' Antirebond</b> cocher la case, vous permet de s&#233;lectionner si le capteur 
+utilisera  les valeurs antirebond par d&#233;faut si elles sont configur&#233;e.</li>
+<li><b>Anti-Rebond Capteur Inactif</b> et <b>Anti-Rebond Capteur Actif</b> vous permet de sp&#233;cifier 
+le temps en millisecondes que le syst&#232;me attend avant d'enregistrer le 
+changement d'&#233;tat du capteur.</li>
+</ul>
 
-        <li style="list-style: none">You can edit the sensor
-        debounce options from this tab, setting the Sensor Debounce
-        helps to prevent false triggers of a sensor being passed
-        into the system and triggering other events in the
-        system.<br>
-        Such false triggers could be due to a dirty piece of track
-        or electrical interferance.</li>
+<a name="reporter"><h2>Rapport</h2></a>
+<img src="BlocksEditReporterTab.png" width="460" height="62">
+<ul>
+<li><b>Rapport</b>
+D&#233;finir le rapport affect&#233; &#224; ce Canton. Voir le <a href="ReporterTable.shtml">Tableau Rapport</a>. S&#233;lectionner un Rapport et  clicquer <strong>Appliquer</strong> met la valeur rapport dans le
+la valeur Canton.
 
-        <li><b>Use Global Debounce Values</b> check box, allows you
-        to select if the sensor will use the default sensor
-        debounce values if configured.<br></li>
+<li><b>Utilisation Actuelle?</b>
+Si nous consid&#233;rons le sc&#233;nario par lequel nous voulons suivre un train autour du r&#233;seau, typiquement 
+ceci est obtenu par l'utilisation d'objets m&#233;moire associ&#233;s aux Cantons Jusqu'&#224; ce que le train soit 
+connu, nous n'avons rien &#224; suivre. En r&#232;gle g&#233;n&#233;rale, nous pouvons saisir manuellement l'ID du train 
+dans un panneau, puis nous le suivons autour du r&#233;seau en fonction de l'occupation du Canton. Si, toutefois 
+nous avons un &#233;quipement reli&#233; qui nous fournit l'ID du train, Tel qu'un lecteur RFID, Nous n'avons plus besoin 
+de saisir manuellement l'ID du train - le lecteur fait cela pour nous. Essentiellement, le lecteur n'est gu&#232;re plus 
+qu'un capteur "intelligent" - non seulement il peut sentir que "quelque chose"est l&#224;, mais il peut nous donner son ID.
+Maintenant la mise en &#339;uvre.
+Un Capteur est soit ACTIF soit INACTIFf.
+Un Rapport, toutefois peut nous dire ce qui suit: 
+<ol>
+<li> "Hey, je vois quelque chose en ce moment - c'est &#231;a"
+<li> "Hmm, je ne vois rien en ce moment"
+<li> "H&#233;, j'ai vu quelque chose il y a quelque temps - c'&#233;tait &#231;a"
+<li> "Hmm, je n'ai rien vu encore"
+</ol>
+Les deux premiers viennent du CurrentReport; les deux derniers du LastReport.
+Au d&#233;marrage (en supposant qu'il n'y a rien &#224; port&#233;e du lecteur), les &#233;tats 2 et 4 sont les 
+&#233;tats initiaux. Une fois que quelque chose est vue, les 1 et 3 retourne le m&#234;me r&#233;sultat. 
+Lorsque le quelque chose est hors de port&#233;e 2 et 3 sont alors actifs.
+Avec "Utilisation actuelle?" s&#233;lectionn&#233;e, la valeur du canton bascule entre 1 et 2,
+Avec "Utilisation actuelle?" d&#233;s&#233;lectionn&#233;e, la valeur du canton bascule entre 3 et4.</li>
+</ul>
 
-        <li><b>Sensor Inactive Debounce</b> and <b>Sensor Active
-        Debounce</b> allow you to specify the amount of time in
-        milliSeconds that the system waits before registering the
-        state change of a sensor.</li>
-      </ul><a name="reporter" id="reporter"></a>
+<a name="physicaldetails"><h2>D&#233;tails Physiques</h2></a>
+<p>D&#233;crtit la g&#233;om&#233;trie du Canton en utilisant les champs affich&#233;s.</p>
+<p><img src="BlocksEditPhysicalTab.png" width="460" height="155"></p>
+<table><tr valign="top"><td><img src="BlocksEditCurvaturePopup.png" width="193" height="107"></td>
+<td><img src="BlocksEditSpeedPopup.png" width="249" height="191"></td>
+<td>Options Vitesse:
+<ul>
+<li>Normal générale
+<li>Cab
+<li>Maximum
+<li>Normal
+<li>60 (MPH)
+<li>50 (MPH)
+<li>Limit&#233;
+<li>Moyenne
+<li>Lente
+<li>R&#233;duite
+<li>R&#233;duiteLente
+<li>Stop
+</ul>
+</td>
+</tr></table>
 
-      <h2>Reporter</h2>
+<ul>
+<li><b>Longueur</b> (option) - Affiche la longueur du Canton. Vous pouvez entrer ici la longueur du Canton.
+La longueur est utilis&#233;e pour la circulation automatique des trains. 
+Si "0.0" est affich&#233;, la longueur n'a pas &#233;t&#233; saisie. La longueur entr&#233;e doit &#234;tre 
+la longueur actuelle du Canton du r&#233;seau. La longueur est saisie et affich&#233;e 
+soit en pouces ou en centim&#232;tres, d&#233;pendant de l'unit&#233; affich&#233;e dans le tableau.</li>
+<li><b>Unit&#233;s</b> - Choisir une des deux comme unit&#233; de Longueur du Canton
+<li><b>Courbure</b> (option) - Affiche la courbe s&#233;ectionn&#233;e pour la voie dans 
+le Canton . Courbure est utilis&#233;e pour la circulation automatique des trains, et n'a pas besoin d'&#234;tre saisie 
+si les trains ne circulent pas en automatique. Courbure, si pr&#233;sente, indique &#224; l'ordinateur 
+qu'il doit ralentir le train quand il circule dans le Canton. Si <b>Aucune</b> ou 
+<b>Progressive</b> sont s&#233;lectionn&#233;es, un train en automatique proc&#232;dera &#224; vitesse normale. <b>Serr&#233;e</b> 
+doit &#234;tre s&#233;lectionn&#233;e si le train devra certainement ralentirt; <b>S&#233;v&#232;re</b> doit &#234;tre s&#233;lectionn&#233;e
+si le train doit ralentir un maximum. Si le Canton a une courbure variable, votre s&#233;lection 
+devra s'accorder avec la partie la plus resrictive du Canton.</li>
 
-      <ul>
-        <li>
-          <p><b>Reporter</b> The Reporter assigned to this block.
-          See the Reporter table. Puts the Reporter Value into the
-          Block value</p>
-        </li>
+<li><b>Vitesse</b> - La vitesse est utilis&#233;e avec certain outils d'automatisme et de logique, pour aider 
+&#224; d&#233;terminer la vitesse &#224; laquelle un train peut circuler &#224; travers le Canton.
+Elle est aussi utilis&e par la Logique des  M&#226;ts de Signalisation pour d&#233;terminer 
+quel Aspect doit &#234;tre affich&#233; par un signal<br>
+Dans le menu d&#233;filantt, il vous est pr&#233;sent&#233; un jeu de vitesses fix&#233;es qui ont 
+&#233;t&#233; pr&#233;d&#233;finiesdans le fichier signalSpeed.xml, en compl&#233;ment d'une option g&#233;n&#233;rale.<br>
+Il est aussi possible d'entrer une valeur num&#233;rique pour repr&#233;senter une vitesse .
+La valeur g&#233;n&#233;rale est fix&#233;e via l'option <b>Vitesse</b> du menu.</li>
 
-        <li>
-          <p><b>Use Current?</b> If we consider the scenario
-          whereby we want track a train around the layout,
-          typically this is achieved via the use of Memory objects
-          associated with Blocks. Until the train is known, we have
-          nothing to track. Typically, we can manually type in the
-          train ID into a panel and then this is tracked around the
-          layout based on block occupancy. If, however, we have an
-          attached device that can provide us with the train ID,
-          such as an RFID reader, we no longer need to manually
-          type the train ID in - the reader does this for us. In
-          essence, the reader is little more than an 'intelligent'
-          sensor - not only can it sense that 'something' is there,
-          it can tell us which something it is. Now to the
-          implementation. A Sensor is purely ACTIVE or INACTIVE -
-          i.e. something is there or it isn't. A Reporter, however,
-          can tell us one of the following:</p>
+<li><b>Permissive</b> -L'option permissive est utilis&#233;e potr identifierles Cantons dans lesquels un train peut entrer 
+m&#234;me s'il est d&#233;j&#224; occup&#233;. Cette option est utilis&#233;e avec cetains outils d'automatisme et de logiques pour aider
+&#224; d&#233;terminer si un Train peut entrer dans un Canton occup&#233; et quel Aspect doit &#234;tre affich&#233; sur son M&#226;t de Signalisation.</li>
+</ul>
 
-          <ol>
-            <li>'Hey, I'm seeing something right now - this is
-            it'</li>
+<a name="usage"><h2>Utilisation</h2></a>
+<p>C'est un champ information, montrant o&#249; vous avez le Canton affich&#233; sur le Panneau:</p>
+<img src="BlocksEditUsageTab.png" width="392" height="120">
 
-            <li>'Hmm, I'm not seeing anything right now'</li>
+<a name="properties"><h2>Propri&#233;t&#233;s</h2></a>
+<img src="BlocksEditPropsTab.png" width="392" height="89">
 
-            <li>'Hey, I saw something a while back - this was
-            it'</li>
+<p><a href="../../../../html/tools/tracker/index.shtml">Plus d'information sur les Cantons</a></p>
+<p><a href="../display/LayoutEditor.shtml">Plus d'information sur l'utilisation des Cantons avec l'&#201;diteur de R&#233;seau</a></p>
+<p>Retour &#224; la page <a href="BlockTable.shtml">Aide Tableau Canton<a>.</p>
 
-            <li>'Hmm, I've not seen anything yet'</li>
-          </ol>The first two are from the CurrentReport; the last
-          two from LastReport. At start-up (assuming there is
-          nothing within the range of the reader), both 2 and 4 are
-          the initial state. Once something is seen, both 1 and 3
-          return the same result. When the something is
-          'out-of-range' 2 and 3 are then active. With 'Use
-          Current?' selected the Block value will switch between 1
-          and 2, whereas with 'Use Current?' unselected the Block
-          value will switch between 3 and 4.
-        </li>
-      </ul><a name="properties" id="properties"></a>
-
-      <h2>Properties</h2>
-
-      <ul>
-        <li>
-          <p><b>Length</b> (optional) - Displays the length of the
-          Block. Optionally, you may enter the length of the Block
-          here. The length is used for automatic running of trains.
-          If '0.0' is displayed, the length has not been entered.
-          The entered length should be the actual length of the
-          Block on the model railroad layout. Length is entered and
-          displayed in either inches or centimeters, depending on
-          which unit is requested at the bottom of the Block
-          Table.</p>
-        </li>
-
-        <li>
-          <p><b>Curvature</b> (optional) - Displays the curvature
-          selected for the track in the Block. Curvature is used
-          for automatic running of trains, and need not be entered
-          if trains will not be run automatically. Curvature, if
-          present, indicates to the computer that it should slow
-          the train as it runs through the Block. If <b>None</b> or
-          <b>Gradual</b> are selected, an automatic train will
-          proceed at normal speed. <b>Tight</b> should be selected
-          if the train should slow down some; <b>Severe</b> should
-          be selected if the train should slow by a maximum amount.
-          If the Block has variable curvature, your selection
-          should be made according to the most limiting part of the
-          Block.</p>
-        </li>
-
-        <li>
-          <p><b>Speed</b> The speed is used with certain automation
-          tools and logic, to help determine the speed at which a
-          train can be set through the block. It is also used by
-          the signal mast logic for determining which aspect should
-          be displayed in a signal path.</p>
-
-          <p>In the drop down list, you are presented a set of
-          named fixed speeds that have been predefined in the
-          signalSpeed.xml file, in addition to a global option.<br>
-          It is also possible to enter in a numerical value to
-          represent a speed.</p>
-
-          <p>The global value is set via the <b>Speeds</b> menu
-          option.</p>
-        </li>
-
-        <li>
-          <p><b>Permissive</b> The permissive option is used to
-          identify blocks that can be entered while the block is
-          occupied. It is used with certain automation tools and
-          logic, to help determine if a train can enter an occupied
-          block and what aspect should be displayed on a signal
-          mast.</p>
-        </li>
-      </ul>
-
-      <p><a href="../../../../html/tools/tracker/index.shtml">More
-      information on Blocks</a></p>
-
-      <p><a href="../display/LayoutEditor.shtml">More information
-      on using Blocks with Layout Editor</a><br>
-      Located at package/jmri/jmrt/beantable/BlockTable 
-      <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+Localis&#233; &#224; package/jmri/jmrt/beantable/BlockEdit
+<!--#include virtual="/Footer" -->
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

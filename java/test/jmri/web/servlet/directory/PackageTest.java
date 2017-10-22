@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     BundleTest.class,
     DirectoryHandlerTest.class,
-    DirectoryResourceTest.class
+    DirectoryResourceTest.class,
+    DirectoryServiceTest.class
 })
 
 /**

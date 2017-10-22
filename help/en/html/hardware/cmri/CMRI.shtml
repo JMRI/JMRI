@@ -102,12 +102,12 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
       <li><a href="#L662">Running JMRI when disconnected from your C/MRI
         system</a></li>
       <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>
-      <li><a href="#L737">Documentation</a> 
-        <ul>
-          <li><a href="#L739">JMRI Help</a></li>
-          <li><a href="#L746">Third Party info</a></li>
-        </ul>
-      </li>
+    </ul>
+  </li>
+  <li><a href="#L737">Documentation</a>
+    <ul>
+      <li><a href="#L739">JMRI Help</a></li>
+      <li><a href="#L746">Third Party info</a></li>
     </ul>
   </li>
 </ul>
@@ -125,7 +125,9 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
 
   <h2 id="L164">Limitations</h2>
   <p>Original Chubb IBEC and UBEC interfaces for older PC system buses (ISA,
-  PCI) are not supported. <a name="intro" id="intro"></a></p>
+  PCI) are not supported.</p>
+
+  <a name="intro" id="intro"></a>
   <h2 id="L170">Introduction to C/MRI on JMRI</h2>
 
   <p>C/MRI is a system of digital input and digital output lines that can be
@@ -197,7 +199,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   system supported; C/MRI specific features are accessed via the
   <strong>CMRI</strong> menu from the <strong>PanelPro main screen.</strong></p>
 
-  <p><img alt="" src="images/cmrimenu.png" width="699" height="219"> </p>
+  <p><img alt="" src="images/cmrimenu.png" width="699" height="219"></p>
 
   <p><a name="iobits" id="iobits"></a>JMRI presents itself to users via several
   application front ends, each focusing on a type of use, but all based on the
@@ -305,7 +307,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
 
   <p>You can add new nodes or update an existing node's configuration by
   returning to the Preference dialog (Edit &gt; &gt;Preferences...) or by
-  selecting <strong>Configure Nodes</strong> in the CMRI menu in the main
+  selecting <strong>Configure Nodes</strong> in the C/MRI menu in the main
   PanelPro window.</p>
 
   <p>You will need to save your Preferences after making changes to your node
@@ -819,6 +821,76 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   address, and "bbb" is the address or position of the bit in the output data
   stream.</p>
 
+  <h2>C/MRI Entry Format Summary</h2>
+  <p>Here's a summary, split up for outputs (eg. Turnouts) and
+    inputs (eg. Sensors):</p>
+
+  <table>
+    <tbody><tr>
+    <th>In/Out</th>
+    <th>Entry</th>
+    <th>Meaning</th>
+    <th>makes System Name</th>
+    <th>Mask</th>
+    <th>Equivalent</th>
+    <th>Minimum</th>
+    <th>Maximum</th>
+  </tr>
+  <tr>
+    <td>i/o</td>
+    <td>1003</td>
+    <td>Node 1, Input 3</td>
+    <td>CS1003</td>
+    <td>n digits (node) + 3 digit (pin)</td>
+    <td>1:3</td>
+    <td>node: 1; pin: 1</td>
+    <td>node: 127; pin: 999</td>
+  </tr>
+  <tr>
+    <td>o</td>
+    <td>3</td>
+    <td>Node 0, Output 3</td>
+    <td>CT3</td>
+    <td> </td>
+    <td> </td>
+    <td>1</td>
+    <td>999</td>
+  </tr>
+  <tr>
+    <td>i/o</td>
+    <td>4003</td>
+    <td>Node 4, Output 3</td>
+    <td>CT4003</td>
+    <td>n digits (node) + 3 digit (pin)</td>
+    <td>4:3</td>
+    <td>node: 1; pin: 1</td>
+    <td>node: 127; pin: 999</td>
+  </tr>
+  <tr>
+    <td>o</td>
+    <td>4:3</td>
+    <td>Node 4, Output 3</td>
+    <td>CT4:3</td>
+    <td> </td>
+    <td>4003</td>
+    <td>0:1</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>i/o</td>
+    <td>4B3</td>
+    <td>Node 4, Output 3</td>
+    <td>CT4B3</td>
+    <td> </td>
+    <td>4003</td>
+    <td>0B1</td>
+    <td>127B999</td>
+  </tr>
+  </tbody></table>
+  <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
+  based on information from the Hardware help pages
+  by Egbert Broerse @silverailscolo July 2017 -->
+
   <h1 id="L562">CMRInet Network Management Tools</h1>
 
   <p>The CMRI menu contains three tools which are used to manage nodes in a
@@ -1011,7 +1083,17 @@ height="586"></p>
 
   <p>Click "Edit Node" to update, then close the pane.</p>
 
-  <h1 id="L632">CMRInet Network Connections</h2>
+  <h1 id="L632">CMRInet Network Connections</h1>
+  <h2>Send Command
+  <img alt="" src="images/CMRISendSerialCommand.png" width="246"
+          height="146" align ="right"></h2>
+  <p>To send a command to the C/MRI nodes, select <b>Send Command</b> from the C/MRI menu.<br>
+  Enter a command and click [Send].</p>
+  <p>To poll a node, enter its address in the UA text box and click [Send poll].</p>
+
+  <h2>Extra hints</h2>
+
+  <h3 id="L632">CMRInet Network Connections</h3>
 
   <p>Using USB-serial adapters</p>
 
@@ -1047,7 +1129,7 @@ height="586"></p>
   selection popup menu, you may not have any operating system serial device
   drivers installed.</p>
 
-  <h2 style="margin-left:0;" id="L652">Using An Ethernet Network Connection</h2>
+  <h3 style="margin-left:0;" id="L652">Using An Ethernet Network Connection</h3>
 
   <p>JMRI allows you to connect to C/MRI nodes through a network connection.
   JMRI communicates via the TCP/IP protocol across a network to a
@@ -1074,7 +1156,7 @@ height="586"></p>
   check the Additional Configuration Settings box and enter the port number.
   Click Save and restart the program.</p>
 
-  <h1 id="L662">Running JMRI when disconnected from your C/MRI system</h2>
+  <h3 id="L662">Running JMRI when disconnected from your C/MRI system</h3>
 
   <p>JMRI continually polls the C/MRI hardware for status changes. If one or
   more C/MRI nodes are not responding, eventually their inputs (Sensors) are
@@ -1103,7 +1185,7 @@ height="586"></p>
   <p>When the C/MRI hardware is again available, go the JMRI Preferences,
   select "C/MRI Serial", save Preferences, quit and restart.</p>
 
-  <h1 id="L676">PanelPro Signaling Example Using C/MRI</h2>
+  <h3 id="L676">PanelPro Signaling Example Using C/MRI</h3>
 
   <p>The following is an example of what is needed to create a simple ABS
   signaling system using an SMINI node and Control Panel Editor (CPE) in
@@ -1185,14 +1267,11 @@ height="586"></p>
 
   <p><img alt="" src="images/example-signalmasttable.png" width="1234"></p>
 
-  <p></p>
-
   <p><img alt="" src="images/example-addsignalmast.png" width="495"
   height="492"></p>
 
-  <p><a name="documentation" id="documentation"></a> </p>
-
-  <h1 id="L737">Documentation</h2>
+  <a name="documentation" id="documentation"></a>
+  <h2 id="L737">Documentation</h2>
 
   <h2 id="L739">JMRI Help</h3>
   <ul>

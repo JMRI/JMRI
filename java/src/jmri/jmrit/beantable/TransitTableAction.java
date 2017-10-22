@@ -332,6 +332,7 @@ public class TransitTableAction extends AbstractTableAction {
     @SuppressWarnings("unchecked")
     private List<TransitSectionAction>[] action = new ArrayList[150];
     private boolean[] alternate = new boolean[150];
+    private boolean[] safe = new boolean[150];
     private int maxSections = 150;  // must be equal to the dimension of the above arrays
     private List<Section> primarySectionBoxList = new ArrayList<>();
     private int[] priSectionDirection = new int[150];
@@ -357,6 +358,7 @@ public class TransitTableAction extends AbstractTableAction {
     JButton deleteSections = null;
     JComboBox<String> primarySectionBox = new JComboBox<>();
     JButton addNextSection = null;
+    JCheckBox addAsSafe = null;
     JButton removeLastSection = null;
     JButton removeFirstSection = null;
     JButton insertAtBeginning = null;
@@ -487,6 +489,8 @@ public class TransitTableAction extends AbstractTableAction {
             p13.add(primarySectionBox);
             primarySectionBox.setToolTipText(rbx.getString("PrimarySectionBoxHint"));
             p13.add(addNextSection = new JButton(rbx.getString("AddPrimaryButton")));
+            p13.add(addAsSafe = new JCheckBox(Bundle.getMessage("TransitSectionIsSafe")));
+            addAsSafe.setToolTipText(Bundle.getMessage("TransitSectionIsSafeHint"));
             addNextSection.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -670,6 +674,7 @@ public class TransitTableAction extends AbstractTableAction {
                     direction[i] = ts.getDirection();
                     action[i] = ts.getTransitSectionActionList();
                     alternate[i] = ts.isAlternate();
+                    safe[i] = ts.isSafe();
                 }
             }
             int index = sectionList.size() - 1;
@@ -702,6 +707,7 @@ public class TransitTableAction extends AbstractTableAction {
             sequence[i] = 0;
             action[i] = null;
             alternate[i] = false;
+            safe[i] = false;
         }
         curSection = null;
         curSectionDirection = 0;
@@ -734,6 +740,7 @@ public class TransitTableAction extends AbstractTableAction {
             direction[j] = priSectionDirection[index];
             curSequenceNum++;
             sequence[j] = curSequenceNum;
+            safe[j] = addAsSafe.isSelected();
             action[j] = new ArrayList<>();
             alternate[j] = false;
             if ((sectionList.size() == 2) && (curSection != null)) {
@@ -799,11 +806,13 @@ public class TransitTableAction extends AbstractTableAction {
                 alternate[i + 1] = alternate[i];
                 action[i + 1] = action[i];
                 sequence[i + 1] = sequence[i] + 1;
+                safe[i + 1] = safe[i];
             }
             direction[0] = insertAtBeginningDirection[index];
             curSequenceNum++;
             sequence[0] = 1;
             alternate[0] = false;
+            safe[0] = addAsSafe.isSelected();
             action[0] = new ArrayList<>();
             if (curSequenceNum == 2) {
                 prevSectionDirection = direction[0];
@@ -828,6 +837,7 @@ public class TransitTableAction extends AbstractTableAction {
                 direction[j] = direction[i];
                 action[j] = action[i];
                 alternate[j] = alternate[i];
+                safe[j] = safe[i];
             }
             for (int k = 0; k < keep; k++) {
                 sectionList.remove(0);
@@ -1035,6 +1045,7 @@ public class TransitTableAction extends AbstractTableAction {
                         direction[j] = direction[j + 1];
                         action[j] = action[j + 1];
                         alternate[j] = alternate[j + 1];
+                        safe[j] = safe[j + 1];
                     }
                     sectionList.remove(i);
                 }
@@ -1185,10 +1196,12 @@ public class TransitTableAction extends AbstractTableAction {
             alternate[i + 1] = alternate[i];
             action[i + 1] = action[i];
             sequence[i + 1] = sequence[i];
+            safe[i + 1] = safe[i];
         }
         direction[index] = possiblesDirection[k];
         sequence[index] = sequence[index - 1];
         alternate[index] = true;
+        safe[index] = addAsSafe.isSelected();
         action[index] = new ArrayList<>();
         initializeSectionCombos();
         updateSeqNum();
@@ -1217,6 +1230,7 @@ public class TransitTableAction extends AbstractTableAction {
             sequence[j] = curSequenceNum;
             action[j] = new ArrayList<>();
             alternate[j] = true;
+            safe[j] = addAsSafe.isSelected();
             initializeSectionCombos();
         }
         updateSeqNum();
@@ -1302,7 +1316,7 @@ public class TransitTableAction extends AbstractTableAction {
         curTransit.removeAllSections();
         for (int i = 0; i < sectionList.size(); i++) {
             TransitSection ts = new TransitSection(sectionList.get(i),
-                    sequence[i], direction[i], alternate[i]);
+                    sequence[i], direction[i], alternate[i], safe[i]);
             List<TransitSectionAction> list = action[i];
             if (list != null) {
                 for (int j = 0; j < list.size(); j++) {
@@ -2535,6 +2549,7 @@ public class TransitTableAction extends AbstractTableAction {
         public static final int ACTION_COLUMN = 2;
         public static final int SEC_DIRECTION_COLUMN = 3;
         public static final int ALTERNATE_COLUMN = 4;
+        public static final int SAFE_COLUMN = 5;
 
         public SectionTableModel() {
             super();
@@ -2559,7 +2574,7 @@ public class TransitTableAction extends AbstractTableAction {
 
         @Override
         public int getColumnCount() {
-            return ALTERNATE_COLUMN + 1;
+            return SAFE_COLUMN + 1;
         }
 
         @Override
@@ -2571,6 +2586,8 @@ public class TransitTableAction extends AbstractTableAction {
         public boolean isCellEditable(int r, int c) {
             if (c == ACTION_COLUMN) {
                 return (true);
+            } else if (c == SAFE_COLUMN) {
+                return(true);
             }
             return (false);
         }
@@ -2588,6 +2605,8 @@ public class TransitTableAction extends AbstractTableAction {
                     return rbx.getString("DirectionColName");
                 case ALTERNATE_COLUMN:
                     return rbx.getString("AlternateColName");
+                case SAFE_COLUMN:
+                    return "Safe"; //rbx.getString("SafeColName");
                 default:
                     return "";
             }
@@ -2606,6 +2625,8 @@ public class TransitTableAction extends AbstractTableAction {
                 case SEC_DIRECTION_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
                 case ALTERNATE_COLUMN:
+                    return new JTextField(12).getPreferredSize().width;
+                case SAFE_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
                 default:
                     // fall through
@@ -2639,6 +2660,12 @@ public class TransitTableAction extends AbstractTableAction {
                         return rbx.getString("Alternate");
                     }
                     return rbx.getString("Primary");
+                case SAFE_COLUMN:
+                    if (safe[rx]) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 default:
                     return Bundle.getMessage("BeanStateUnknown");
             }
@@ -2648,6 +2675,12 @@ public class TransitTableAction extends AbstractTableAction {
         public void setValueAt(Object value, int row, int col) {
             if (col == ACTION_COLUMN) {
                 addEditActionsPressed(row);
+            } else if (col == SAFE_COLUMN) {
+                if ( value.equals("true")) {
+                    safe[row] = true;
+                } else if (value.equals("false")) {
+                    safe[row] = false;
+                }
             }
             return;
         }

@@ -197,7 +197,7 @@ public class OperationsServlet extends HttpServlet {
                             )
                     ),
                     InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    !train.getTrainRailroadName().equals("") ? train.getTrainRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                     InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));
@@ -243,7 +243,7 @@ public class OperationsServlet extends HttpServlet {
                             )
                     ),
                     InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    !train.getTrainRailroadName().equals("") ? train.getTrainRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                     InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));

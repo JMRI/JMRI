@@ -1,186 +1,112 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Herv&#233; Blorec le 2012/01/19-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Herv&#233; Blorec le 2016/09/10-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!--  $Id$ -->
+<title>JMRI: Error Messages</title>
 
-  <title>JMRI: Decoder Programmer Error Messages</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
-    <div id="mainContent">
-      <h2>JMRI: Messages d'Erreur du Programmateur de
-      D&eacute;codeur</h2>Diverses choses peuvent mal se passer
-      lorsque JMRI essaie de travailler avec votre centrale de
-      commande DCC pour programmer un d&eacute;codeur DCC. Cette
-      page liste les message d'erreur qui peuvent en
-      r&eacute;sulter, le num&eacute;ro qui les identifie, et les
-      d&eacute;crit leurs significations.
+<h1>JMRI: Messages d'Erreur du Programmateur de D&#233;codeur</H1>
 
-      <dl>
-        <dt>d&eacute;lai de r&eacute;ponse d&eacute;pass&eacute;
-        306</dt>
+<!-- Copy any new content below from page http://jmri.org/help/en/manual/DecoderPro3/Error.shtml -->
+<hr>
+Diverses choses peuvent mal se passer lorsque JMRI essaie de travailler avec votre centrale de commande DCC pour programmer un d&#233;codeur DCC.
+Cette page liste les message d'erreur qui peuvent en r&#233;sulter, le num&#233;ro qui les identifie, et les d&#233;crit leurs significations.</p>
+<h2><a href="../html/setup/Errors.shtml">Codes d'Erreurs JMRI</a></h2>
 
-        <dd>
-          Le programme n'a pas de r&eacute;ponse de la centrale de
-          commande lorsque l'on en attend une.
+<dl>
 
-          <p>C'est de loin le message d'erreur le plus courant
-          quand les gens commencent &agrave; utiliser JMRI. Dans ce
-          cas, cela signifie g&eacute;n&eacute;ralement que la
-          connexion &agrave; la centrale de commande n'est pas
-          correcte. Cela pourrait &ecirc;tre un probl&egrave;me
-          avec le c&acirc;ble (s) de liaison, ou un probl&egrave;me
-          avec la fa&ccedil;on dont les pr&eacute;f&eacute;rences
-          sont d&eacute;finies. Choisir le mauvais port
-          s&eacute;rie est particuli&egrave;rement
-          fr&eacute;quent.</p>
+<dt><strong>301 &#8212;  Pas de locomotive d&#233;tect&#233;e</strong></dt>
+<dd>La centrale de comande a rapporte qu'elle ne voit pas de locomotive surla voie de programmation. </dd>
+<dd>
+<p>Cela peut arriver si les contacts entre la voie et la locomotive ne sont pas bons ou s'il y a un d&#233;faut de c&#226;blage dans la locomotive.</p>
+</dd>
 
-          <p>Une fois que JMRI fonctionne correctement, cette
-          erreur peut parfois arriver &agrave; cause d'une erreur
-          passag&egrave;re. DecoderPro g&eacute;n&eacute;ralement
-          va r&eacute;essayer avec succ&egrave;s, dans ce cas.</p>
-        </dd>
+<dt><strong>302 &#8212; programmateur occup&#233;</strong></dt>
+<dd>
+<p>La centrale de commande a indiqu&#233; qu'il est occup&#233; &#224; faire autre chose, et ne peut pas faire de programmation en ce moment. Cela signifie g&#233;n&#233;ralement que toute autre partie du syst&#232;me DCC fait une op&#233;ration de programmation, par exemple un r&#233;gulateur &#224; main.</p>
+</dd>
+<dd>
+<p>Certains syst&#232;mes DCC ne peuvent pas faire la programmation en mode-ops ( programmation sur voie principale ) tout en utilisant la voie de programmation en mode de service, auquel cas ils vont retourner ce message d'erreur. </P>
+</dd>
+<dt><strong>303 &#8212; demande ne peut pas &#234;tre mise en oeuvre dans la centrale de commande</strong></dt>
+<dd>
+<p>Cela signifie que JMRI a demand&#233; &#224; la centrale de commande de faire quelque chose qu'elle ne prend pas en charge.</P>
+</dd>
+<dd>
+<p>Ce n'est pas cens&#233; se produire, car JMRI doit d&#233;sactiver les modes de programmation que la centrale de commande ne peut pas fournir. Si vous voyez ce message, s'il vous pla&#238;t signaler les circonstances au <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">Groupe Yahoo des utilisateurs de JMRI</a>.</p>
+</dd>
+ <dt><strong>304 &#8212; Interrompu par l'utilisateur</strong></dt>
+<dd>
+<p>L'utilisateur a demand&#233; que la lecture ou l'&#233;criture s'arr&#234;te au plus t&#244;t.</p>
+</dd>
+<dd>
+<p>Ceci est consid&#233;r&#233; comme une erreur, car le programme ne sais pas si le d&#233;codeur a vu r&#233;ellement l'op&#233;ration termin&#233; ou non.</p>
+</dd>
+<dt><strong>305 &#8212; &#201;chec confirm&#233;</strong></dt>
+<dd>
+<p>Certaines centrales de commande vous permettent de "confirmer" le contenu d'un CV, plut&#244;t que de lire sa valeur. En g&#233;n&#233;ral, cela est plus rapide que faire une lecture compl&#232;te. Si la valeur dans le CV ne correspond pas &#224; la valeur attendue, ce message est &#233;mis. Il est consid&#233;r&#233; comme une erreur parce que si les valeurs ne correspondent pas, nous savons que nous ne savons pas la valeur correcte pour le contenu CV.</p>
+</dd>
+<dt><strong>306 &#8212; d&#233;lai de dialogue avec la station de commande d&#233;pass&#233;</strong></dt>
+<dd>
+<p>Le programme n'a pas eu de retour de la centrale de commande.</p>
+</dd>
+<dd>
+<p>Ceci est de loin le message d'erreur le plus fr&#233;quent lorsque les gens commencent &#224; utiliser JMRI. Dans ce cas, cela signifie g&#233;n&#233;ralement que la connexion &#224; la centrale de commande est incorrecte. Cela pourrait &#234;tre un probl&#232;me avec le c&#226;ble de connexion, ou un probl&#232;me avec la fa&#231;on dont les pr&#233;f&#233;rences sont d&#233;finies. Choisir un mauvais port s&#233;rie est particuli&#232;rement fr&#233;quente. </P>
+<p>Quand JMRI travaille correctement, cette erreur peut parfois se produire en raison d'une erreur transitoire. Dans ce cas, DecoderPro fera g&#233;n&#233;ralement une nouvelle tentative.</p>
+</dd>
+<dt><strong>307 &#8212; Erreur inconnuer</strong></dt>
+<dd>
+<p>Une erreur est survenue, mais JMRI n'en sit pas assez &#224; ce sujet pour pouvoir donner plus de d&#233;tails.</p>
+</dd>
+<dd>
+<p>En g&#233;n&#233;ral, JMRI est assez bon pour d&#233;chiffrer ce qui ne va pas, et Ce message n'est pas tr&#232;s commun. Si vous ne voyez ce message, s'il vous pla&#238;t signaler les circonstances &#224; la liste de diffusion jmriusers.</p>
+</dd>
+<dt><strong>308 &#8212; Pas de r&#233;ponse de la Locomotive</strong></dt> 
+<dd>
+<p>A la fin d'une lecture ou d'&#233;criture d'un CV, la locomotive r&#233;pond ("confirmation") &#224; la centrale de commande en utilisant une impulsion de courant.</p>
+</dd>
+<dd>
+<p>Si cette impulsion ne se voit pas, certaines centrales de commande fournissent ce message d'erreur. Elle pourrait &#234;tre due &#224; de mauvaises connexions &#233;lectriques &#224; sur la voie de programmation ou au sein de la locomotive. Il se pourrait aussi que le d&#233;codeur ne supporte pas la relecture.</p>
+<p>Certains d&#233;codeurs sonores particuli&#232;rement certains d&#233;codeurs, sont tellement gourmand en courant que l'impulsion r&#233;ponse n'est pas d&#233;tect&#233;e par la centrale de commande. Dans ce cas, un "booster de programmation" diff&#233;rent peut r&#233;soudre le probl&#232;me.</p>
+</dd>
+<dt><strong>309 &#8212; Court-Circuit sur Voie de Programmation</strong></dt>
+<dd>
+<p>La centrale de commande a rapport&#233; avoir vu un court-circuit sur la voie de programmation. Cela emp&#234;che les op&#233;rations de programmation.</p>
 
-        <dt>Pas de locomotive d&eacute;tect&eacute;e 301</dt>
+<p>V&#233;rifiez les connexions &#233;lectriques &#224; la voie de programmation, et &#233;galement au sein de la locomotive.</p>
+</dd>
+<dt><strong>310 &#8212; Erreur de S&#233;quence</strong></dt>
+<dd>
+<p>Pour une raison quelconque, l'op&#233;ration de programmation s'est termin&#233;e trop t&#244;t et la centrale de commande retourne en mode normal (quitte le mode service)
+   avant qu'elle devrait le faire. </p>
 
-        <dd>
-          La centrale de commande a indiqu&eacute; qu'elle ne voit
-          pas de locomotive sur la voie de programmation.
+<p>C'est une erreur inhabituelle, qui peut indiquer que vous avez s&#233;lectionn&#233; un mauvais type de Centrale dans les pr&#233;f&#233;rences. V&#233;rifiez le.
+	Si c'est correct et que l'erreur persiste, demandez de l'aide sur le forum des utilisateurs JMRI.</p>
+</dd>
 
-          <p>Cela peut arriver si les contacts entre la voie et la
-          locomotive ne sont pas bons ou s'il y a un d&eacute;faut
-          de c&acirc;blage dans la locomotive.</p>
-        </dd>
+</dl>
+<hr>
 
-        <dt>Pas d'acquittement de la locomotive 308</dt>
-
-        <dd>
-          A la fin d'une lecture ou d'&eacute;criture d'un CV, la
-          locomotive r&eacute;pond ("reconna&icirc;t") &agrave; la
-          centrale de commande en utilisant une impulsion de
-          courant.
-
-          <p>Si cette impulsion ne se voit pas, certaines centrales
-          de commande fournissent ce message d'erreur. Elle
-          pourrait &ecirc;tre due &agrave; de mauvaises connexions
-          &eacute;lectriques &agrave; sur la voie de programmation
-          ou au sein de la locomotive. Il se pourrait aussi que le
-          d&eacute;codeur ne supporte pas la relecture.</p>
-
-          <p>Certains d&eacute;codeurs sonores
-          particuli&egrave;rement certains d&eacute;codeurs, sont
-          tellement gourmand en courant que l'impulsion
-          r&eacute;ponse n'est pas d&eacute;tect&eacute;e par la
-          centrale de commande. Dans ce cas, un "booster de
-          programmation" diff&eacute;rent peut r&eacute;soudre le
-          probl&egrave;me.</p>
-        </dd>
-
-        <dt>court-circuit sur voie de programmation 309</dt>
-
-        <dd>
-          La centrale de commande a rapport&eacute; avoir vu un
-          court-circuit sur la voie de programmation. Cela
-          emp&ecirc;che les op&eacute;rations de programmation .
-
-          <p>V&eacute;rifiez les connexions &eacute;lectriques
-          &agrave; la voie de programmation, et &eacute;galement au
-          sein de la locomotive.</p>
-        </dd>
-
-        <dt>programmateur occup&eacute; 302</dt>
-
-        <dd>
-          La centrale de commande a indiqu&eacute; qu'il est
-          occup&eacute; &agrave; faire autre chose, et ne peut pas
-          faire de programmation en ce moment. Cela signifie
-          g&eacute;n&eacute;ralement que toute autre partie du
-          syst&egrave;me DCC fait une op&eacute;ration de
-          programmation, par exemple un r&eacute;gulateur &agrave;
-          main.
-
-          <p>Certains syst&egrave;mes de DCC ne peut pas faire de
-          programmation ops mode (programmation sur la voie
-          principale) tout en utilisant aussi la voie de
-          programmation en mode de service, auquel cas ils
-          retournent ce message d'erreur.</p>
-        </dd>
-
-        <dt>demande ne peut pas &ecirc;tre mise en oeuvre dans la
-        centrale de commande 303</dt>
-
-        <dd>
-          Cela signifie que JMRI a demand&eacute; &agrave; la
-          centrale de commande de faire quelque chose qu'elle ne
-          prend pas en charge.
-
-          <p>Ce n'est pas cens&eacute; se produire, comme JMRI doit
-          d&eacute;sactiver les modes de programmation que la
-          centrale de commande ne peut pas fournir. Si vous voyez
-          ce message, s'il vous pla&icirc;t signaler les
-          circonstances &agrave; la liste de diffusion
-          jmriusers.</p>
-        </dd>
-
-        <dt>Interrompu par l'utilisateur 304</dt>
-
-        <dd>
-          L'utilisateur a demand&eacute; que la lecture ou
-          l'&eacute;criture s'arr&ecirc;te au plus t&ocirc;t.
-
-          <p>Ceci est consid&eacute;r&eacute; comme une erreur, car
-          la programme ne sais pas si le d&eacute;codeur a vu
-          r&eacute;ellement l' op&eacute;ration compl&egrave;te ou
-          non.</p>
-        </dd>
-
-        <dt>&Eacute;chec confirm&eacute; 305</dt>
-
-        <dd>Certaines centrales de commande vous permettent de
-        "confirmer" le contenu d' un CV, plut&ocirc;t que de lire
-        sa valeur. En g&eacute;n&eacute;ral, cela est plus rapide
-        que faire une lecture compl&egrave;te. Si la valeur dans le
-        CV ne correspond pas &agrave; la valeur attendue, ce
-        message est &eacute;mis. Il est consid&eacute;r&eacute;
-        comme une erreur parce que si les valeurs ne correspondent
-        pas, nous savons que nous ne savons pas la valeur correcte
-        pour le contenu CV.</dd>
-
-        <dt>Erreur inconnue 307</dt>
-
-        <dd>
-          Une erreur s'est produite, mais JMRI n'en sait pas assez
-          sur ce sujet pour &ecirc;tre en mesure de rendre compte
-          plus en d&eacute;tail.
-
-          <p>En g&eacute;n&eacute;ral, JMRI est assez bon pour
-          d&eacute;chiffrer ce qui ne va pas, et Ce message n'est
-          pas tr&egrave;s commun. Si vous ne voyez ce message, s'il
-          vous pla&icirc;t signaler les circonstances &agrave; la
-          liste de diffusion jmriusers.</p>
-        </dd>
-      </dl><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
+
+
+
+

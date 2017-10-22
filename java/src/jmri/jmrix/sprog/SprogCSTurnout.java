@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  */
 public class SprogCSTurnout extends AbstractTurnout {
@@ -71,7 +71,10 @@ public class SprogCSTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to {} Pushbutton ST {}", (_pushButtonLockout ? "Lock" : "Unlock"), _number);
+            log.debug("Send command to {} Pushbutton {}T{}",
+                    (_pushButtonLockout ? "Lock" : "Unlock"),
+                    _memo.getSystemPrefix(),
+                    _number);
         }
     }
 
@@ -83,4 +86,5 @@ public class SprogCSTurnout extends AbstractTurnout {
     int _number; // turnout number
 
     private final static Logger log = LoggerFactory.getLogger(SprogCSTurnout.class);
+
 }

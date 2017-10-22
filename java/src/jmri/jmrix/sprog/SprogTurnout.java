@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  */
 public class SprogTurnout extends AbstractTurnout {
@@ -61,7 +61,10 @@ public class SprogTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ST" + _number);
+            log.debug("Send command to {} Pushbutton {}T{}",
+                    (_pushButtonLockout ? "Lock" : "Unlock"),
+                    _memo.getSystemPrefix(),
+                    _number);
         }
     }
 
@@ -78,9 +81,8 @@ public class SprogTurnout extends AbstractTurnout {
                     + " " + Integer.toHexString(0xFF & bl[2]));
         }
 
-        SprogMessage m = new SprogMessage(10); // changes by J.M.Knox 20050411
+        SprogMessage m = new SprogMessage(10);
         int i = 0; // counter to make it easier to format the message
-        // changes by J.M.Knox 20050411
         m.setElement(i++, 'O');  // "S02 " means send it twice
         m.setElement(i++, ' ');
         // m.setElement(i++, '2'); // not required?
@@ -92,7 +94,7 @@ public class SprogTurnout extends AbstractTurnout {
             m.setElement(i++, s.charAt(0));
             m.setElement(i++, s.charAt(1));
         }
-        m.setElement(i++, ' ');          // changes by J.M.Knox 20050411
+        m.setElement(i++, ' ');
         s = Integer.toHexString(bl[1] & 0xFF).toUpperCase();
         if (s.length() == 1) {
             m.setElement(i++, '0');
@@ -101,7 +103,7 @@ public class SprogTurnout extends AbstractTurnout {
             m.setElement(i++, s.charAt(0));
             m.setElement(i++, s.charAt(1));
         }
-        m.setElement(i++, ' ');          // changes by J.M.Knox 20050411
+        m.setElement(i++, ' ');
         s = Integer.toHexString(bl[2] & 0xFF).toUpperCase();
         if (s.length() == 1) {
             m.setElement(i++, '0');

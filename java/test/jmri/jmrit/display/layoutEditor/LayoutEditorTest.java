@@ -1,6 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -54,11 +57,14 @@ public class LayoutEditorTest {
     @Test
     public void testGetSetZoom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((m) -> {
+            m.setSaveAllowed(false); // prevent attempts to save while zooming in rest of test
+        });
         Assert.assertEquals("Zoom Get", 1.0, le.getZoom(), 0.0);
         // note: Layout Editor won't allow zooms below 0.25
         Assert.assertEquals("Zoom Set", 0.25, le.setZoom(0.1), 0.0);
-        // note: Layout Editor won't allow zooms above 6.0.
-        Assert.assertEquals("Zoom Set", 6.0, le.setZoom(10.0), 0.0);
+        // note: Layout Editor won't allow zooms above 8.0.
+        Assert.assertEquals("Zoom Set", 8.0, le.setZoom(10.0), 0.0);
         Assert.assertEquals("Zoom Set", 3.33, le.setZoom(3.33), 0.0);
         Assert.assertEquals("Zoom Get", 3.33, le.getZoom(), 0.0);
     }
@@ -143,15 +149,17 @@ public class LayoutEditorTest {
     @Test
     public void testGetWindowWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // defaults to 0
-        Assert.assertEquals("window width", 0, le.getWindowWidth());
+        // defaults to screen width - 20
+        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
+        Assert.assertEquals("window width", w, le.getWindowWidth());
     }
 
     @Test
     public void testGetWindowHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // defaults to 0
-        Assert.assertEquals("window height", 0, le.getWindowHeight());
+        // defaults to screen height - 120
+        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
+        Assert.assertEquals("window height", h, le.getWindowHeight());
     }
 
     @Test

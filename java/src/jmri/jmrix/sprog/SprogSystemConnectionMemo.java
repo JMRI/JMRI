@@ -24,7 +24,10 @@ import org.slf4j.LoggerFactory;
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public SprogSystemConnectionMemo(SprogTrafficController st, SprogMode sm) {
-        super("S", "Sprog");
+        super(st.getController().getSystemConnectionMemo().getSystemPrefix(), SprogConnectionTypeList.SPROG);
+        if (log.isDebugEnabled()) {
+            log.debug("SprogSystemConnectionMemo, prefix='{}'", st.getController().getSystemConnectionMemo().getSystemPrefix());
+        }
         this.st = st;
         sprogMode = sm;  // static
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
@@ -35,7 +38,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public SprogSystemConnectionMemo(SprogMode sm) {
-        super("S", "Sprog");
+        super("S", SprogConnectionTypeList.SPROG); // default to S
         sprogMode = sm;  // static
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         register();
@@ -45,7 +48,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public SprogSystemConnectionMemo(SprogMode sm, SprogType type) {
-        super("S", "Sprog");
+        super("S", SprogConnectionTypeList.SPROG); // default to S
         sprogMode = sm;  // static
         sprogVersion = new SprogVersion(type);
         register();
@@ -55,7 +58,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public SprogSystemConnectionMemo() {
-        super("S", "Sprog");
+        super("S", SprogConnectionTypeList.SPROG); // default to S
         register(); // registers general type
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
@@ -105,7 +108,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Return the type of SPROG connected.
      *
-     * @return SprogType
+     * @return SprogType set
      */
     public SprogType getSprogType() {
         return sprogVersion.sprogType;
@@ -152,7 +155,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
-    /*
+    /**
      * Get the command station object associated with this connection.
      */
     public SprogCommandStation getCommandStation() {
@@ -209,7 +212,6 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-
         if (T.equals(jmri.PowerManager.class)) {
             return (T) getPowerManager();
         }
@@ -260,7 +262,6 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 log.warn("Unhandled programming mode: {}", sprogMode);
                 break;
         }
-
     }
 
     private SprogProgrammerManager programmerManager;
@@ -323,7 +324,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private SprogVersionQuery svq = null;
 
-    /*
+    /**
      * Return an SprogVersionQuery object for this connection.
      */
     public SprogVersionQuery getSprogVersionQuery() {
@@ -334,4 +335,5 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SprogSystemConnectionMemo.class);
+
 }

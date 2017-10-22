@@ -1,5 +1,6 @@
+
 <!-- Sidebar -->
-<!-- UpDated by Blorec Herv&#233; le 2013-10-01-->
+<!-- UpDated by Blorec Herv&#233; le 2016-09-12-->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
 <html lang="fr">
@@ -9,51 +10,59 @@
 	    <div style="text-align: center">JMRI c'est...</div>
 	    <dl>
 
+
 		<dt><h3><a href="index.shtml">Signalisation</a></h3></dt>
-		<dd>Ajout&#233; des signaux sur votre r&#233;seau avec JMRI.
-		    <UL>
-		    <LI><dfn><a href="IntroToSignalingYourMRR.html">Introduction</a></dfn>
-		    <LI><dfn><a href="SimpleSignalExample.shtml">Exemple Signal Simple</a></dfn>
-		    <LI><dfn><a href="Logic.shtml">Logic</a></dfn>
-		    <LI><dfn><a href="AspectSignaling.shtml">Aspect (Prototypique) de la signalisation</a></dfn>
-		    <LI><dfn><a href="../Signals.shtml">T&#234;tes de Signal</a></dfn>
-		    <LI><dfn><a href="SignalMasts.shtml">M&#226;ts de SignauxSignal Masts</a></dfn>
-		    <LI><dfn><a href="ldt/output.shtml">Signals LDT</a></dfn>
-		    <LI><dfn><a href="interlock/index.shtml">Entr&#233;e Sortie & Enclenchement</a></dfn>
-		    </UL>
-		</dd>
+		<dd>Ajout de signaux à votre réseau avec JMRI.
+		    <ul>
+		    <li><dfn><a href="SignalingSetup.shtml">Signalisation Démarrage Rapide</a></dfn>
+		    <li><dfn><a href="AspectSignaling.shtml">Aspect Signalisation</a></dfn>
+		    <li><dfn><a href="SignalHeads.shtml">Feux de Signalisation</a></dfn>
+		    <li><dfn><a href="SignalMasts.shtml">Mâts de Signalisation</a></dfn>
+		    <li><dfn><a href="SignalGroups.shtml">Groupes de Signaux</a></dfn>
+		    <li><dfn><a href="SignalMastLogic.shtml">Logique Mâts de Signalisation</a></dfn>
+		    <li><dfn><a href="interlock/index.shtml">Enclenchements &amp; Entrée Sortie  </a></dfn>
+		    </ul>
+	</dd>
 
-		<dt><h3><a href="index.shtml">Outils Gen&#233;raux</a></h3></dt>
-		<dd>JMRI fournit des outils puissants pour travailler avec votre r&#233;seau.
+		<dt><h3><a href="../index.shtml">Outils</a></h3></dt>
+		<dd>JMRI fournit des outils puissants pour travailler avec vos r&#233;seaux.
 		    <UL>
-		    <LI><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
-		    <LI><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
-		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
-		    <LI><dfn><a href="./index.shtml">Signals</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
-		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
-		    <LI><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
-		    <LI><dfn><a href="../speedometer/index.shtml">Compteur</a></dfn>
-		    <LI><dfn><a href="../scripting/index.shtml">Scrip</a></dfn>
-		    </UL>
-		</dd>
-
-		<dt><h3><a href="../automation/index.shtml">Automatisation du r&#233;seau</a></h3></dt>
+				<li><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
+				<li><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
+				<li><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
+				<li><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
+				<li><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
+				<li><dfn><a href="../signaling/index.shtml">Signalisation</a></dfn>
+				<li><dfn><a href="../Blocks.shtml">Cantons</a></dfn>
+				<li><dfn><a href="../Reporters.shtml">Rapports</a></dfn>
+				<li><dfn><a href="../Memories.shtml">Variables M&#233;moire</a></dfn>
+				<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
+				<li><dfn><a href="../LRoutes.shtml">LItin&#233;raires</a></dfn>
+		    <li><dfn><a href="../Sections.shtml">Sections</a></dfn>
+				<li><dfn><a href="../Logix.shtml">Logix</a></dfn>
+				<li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
+				<li><dfn><a href="../speedometer/index.shtml">Compteur</a></dfn>
+				<li><dfn><a href="../Audio.shtml">Audio</a></dfn>
+				<li><dfn><a href="../IdTags.shtml">Etiquettes IDs</a></dfn>
 		
-		<dd>JMRI peut &#234;tre utilis&#233; pour automatiser certaines parties
-de votre r&#233;seau, du simple contr&#244;le d'une commande de barri&#232;re jusqu'&#224; faire circuler des trains dans le fond..
-		    <UL>
-		    <LI><dfn><a href="./index.shtml">Signalisation</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
-		    <LI><dfn><a href="../fastclock">Horloges Rapides</a></dfn>
-		    <LI><dfn><a href="../scripting/index.shtml">Script</a></dfn>
-		    </UL>
+		    <li><dfn><a href="../index.shtml#systemSpecificTools">Syst&#232;me-sp&#233;cifique...</a></dfn>
+		    </ul>
 		</dd>
 
-	    </dl>
+			<dt><h3><a href="../automation/index.shtml">Automatisation du R&#233;seau</a></h3></dt>
+	   	<dd>JMRI peut &#234;tre utilis&#233; pour automatiser des parties 
+			de votre r&#233;seau, depuis le simple contr&#244;le d'un croisement 
+			&#224; la circulation de trains en toile de fond.
+		<ul>
+	    <li><dfn><a href="../signaling/index.shtml">Signalisation</a></dfn>
+			<li><dfn><a href="../signaling/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
+			<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
+	    <li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
+	    <li><dfn><a href="../scripting/index.shtml">Script</a></dfn>
+	    </ul>
+		</dd>
 
-	</div> <!-- closes #side -->
+	  </dl>
 
+</div> <!-- closes #side -->
 <!-- /Sidebar -->

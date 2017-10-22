@@ -151,7 +151,7 @@ public class SpeedProfilePanel extends JPanel {
         
         SpeedTableModel(RosterSpeedProfile sp, HashMap<Integer, Boolean> anomaly) {
             profile = sp;
-            _editable = (anomaly != null);
+            _editable = (anomaly != null && anomaly.size() > 0);
             _anomaly = anomaly;
             TreeMap<Integer, SpeedStep> speeds = sp.getProfileSpeeds();
             Map.Entry<Integer, SpeedStep> entry = speeds.firstEntry();
