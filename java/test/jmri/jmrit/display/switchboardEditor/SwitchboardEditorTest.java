@@ -89,7 +89,7 @@ public class SwitchboardEditorTest {
     public void testGetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
-        Assert.assertEquals("Default Text Color",Bundle.getMessage("ColorBlack"), e.getDefaultTextColor());
+        Assert.assertEquals("Default Text Color",ColorUtil.ColorBlack, e.getDefaultTextColor());
         JUnitUtil.dispose(e);
     }
 
@@ -97,8 +97,8 @@ public class SwitchboardEditorTest {
     public void testSetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
-        e.setDefaultTextColor(Bundle.getMessage("ColorPink"));
-        Assert.assertEquals("Default Text Color after Set",Bundle.getMessage("ColorPink"), e.getDefaultTextColor());
+        e.setDefaultTextColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Text Color after Set",ColorUtil.ColorPink, e.getDefaultTextColor());
         JUnitUtil.dispose(e);
     }
 
