@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.Icon;
 import javax.swing.ButtonGroup;
+import javax.swing.BoxLayout;
 import javax.swing.JRadioButton;
 
 /**
@@ -48,6 +49,7 @@ public class ButtonGroupColorChooserPanel extends AbstractColorChooserPanel {
 
     @Override
     protected void buildChooser(){
+        setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         // build the combo box.
         colorButtonGroup  = new ButtonGroup();
         for (int i = 0; i < numColors; i++) {
