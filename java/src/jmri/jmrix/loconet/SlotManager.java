@@ -1,8 +1,5 @@
 package jmri.jmrix.loconet;
 
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_ACTIVE;
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_BUSY;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -1129,7 +1126,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // schedule next read if needed
         if (nextReadSlot < 127) {
-            javax.swing.Timer t = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+            javax.swing.Timer t = new javax.swing.Timer(200, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     readNextSlot();
