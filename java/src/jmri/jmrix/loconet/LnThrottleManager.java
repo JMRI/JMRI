@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
@@ -98,7 +97,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         retrySetupThread.start();
         waitingForNotification.put(address.getNumber(), retrySetupThread);
     }
-
+    
     volatile Thread retrySetupThread;
     
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
@@ -152,7 +151,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 slotForAddress.put(s.locoAddr(),s);
                 notifyStealRequest(s.locoAddr());
                 return;
-            }
+            } 
         }
         if ((s.consistStatus() == LnConstants.CONSIST_MID) ||
                 (s.consistStatus() == LnConstants.CONSIST_SUB)) {
@@ -167,14 +166,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     private void commitToAcquireThrottle(LocoNetSlot s) {
-        tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
-        try {
-            Thread.sleep(60);   // temporary attempt to resolve DCS51 problem acquiring locos.
-        } catch (InterruptedException ex) {
-            log.warn("Interrupted exception during throttle acquire wait:{}",ex);
-        }
-        log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
-
         // haven't identified a particular reason to refuse throttle acquisition at this time...
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
         s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
@@ -218,10 +209,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             }
             Thread thr = new Thread(new InformRejection( address, cause));
             thr.start();
-
-            
-            
-            
         }
         
     }
@@ -281,20 +268,39 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     @Override
     public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("dispatchThrottle - throttle {}", t.getLocoAddress());
-        // set status to common
         if (t instanceof LocoNetThrottle){
             LocoNetThrottle lnt = (LocoNetThrottle) t;
             LocoNetSlot tSlot = lnt.getLocoNetSlot();
 
+            // set status to idle
             tc.sendLocoNetMessage(
-                    tSlot.writeStatus(LnConstants.LOCO_COMMON));
+                    tSlot.writeStatus(LnConstants.LOCO_IDLE));
 
             // and dispatch to slot 0
             tc.sendLocoNetMessage(tSlot.dispatchSlot());
         }
-        super.releaseThrottle(t, l);
-    }
+        setupDispatchDelay(t, l);
 
+    }
+    
+    private void finishTheDispatch(DccThrottle t, ThrottleListener l) {
+        super.dispatchThrottle(t,l);
+    }
+    javax.swing.Timer delayedDispatch = null;
+
+    private void setupDispatchDelay(DccThrottle t, ThrottleListener l) {
+        delayedDispatch = new javax.swing.Timer(200, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                log.debug("delayed throttle dispatch timer triggered.");
+            delayedDispatch.stop();
+            finishTheDispatch(t,l);
+            }
+        });
+        delayedDispatch.setRepeats(false);
+        delayedDispatch.start();
+
+    }
     @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("releaseThrottle - throttle {}", t.getLocoAddress());
@@ -302,8 +308,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             LocoNetThrottle lnt = (LocoNetThrottle) t;
             LocoNetSlot tSlot = lnt.getLocoNetSlot();
             if (tSlot != null) {
-                tc.sendLocoNetMessage(
-                        tSlot.writeStatus(LnConstants.LOCO_COMMON));
+                if (tSlot.slotStatus() == LnConstants.LOCO_IN_USE) {
+                    tc.sendLocoNetMessage(
+                            tSlot.writeStatus(LnConstants.LOCO_COMMON));
+                }
             }
         }
         super.releaseThrottle(t, l);
