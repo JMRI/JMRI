@@ -167,7 +167,12 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     private void commitToAcquireThrottle(LocoNetSlot s) {
-                tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
+        tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
+        try {
+            Thread.sleep(60);   // temporary attempt to resolve DCS51 problem acquiring locos.
+        } catch (InterruptedException ex) {
+            log.warn("Interrupted exception during throttle acquire wait:{}",ex);
+        }
         log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
 
         // haven't identified a particular reason to refuse throttle acquisition at this time...
