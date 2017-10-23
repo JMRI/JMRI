@@ -287,13 +287,13 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setXScale(xScale);
         panel.setYScale(yScale);
 
-        String defaultColor = Bundle.getMessage("ColorBlack");
+        String defaultColor = ColorUtil.ColorBlack;
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
             defaultColor = a.getValue();
         }
         panel.setDefaultTrackColor(defaultColor);
 
-        String defaultTextColor = Bundle.getMessage("ColorBlack");
+        String defaultTextColor = ColorUtil.ColorBlack;
         if ((a = shared.getAttribute("defaulttextcolor")) != null) {
             defaultTextColor = a.getValue();
         }
