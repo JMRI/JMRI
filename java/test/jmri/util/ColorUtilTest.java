@@ -14,111 +14,111 @@ import org.junit.Assert;
 public class ColorUtilTest extends TestCase {
 
     public void testBlackFromString() {
-        Assert.assertEquals("Black from string", Color.black, ColorUtil.stringToColor(Bundle.getMessage("ColorBlack")));
+        Assert.assertEquals("Black from string", Color.black, ColorUtil.stringToColor(ColorUtil.ColorBlack));
     }
 
     public void testStringFromBlack() {
-        Assert.assertEquals("Black to string", Bundle.getMessage("ColorBlack"), ColorUtil.colorToString(Color.black));
+        Assert.assertEquals("Black to string", ColorUtil.ColorBlack, ColorUtil.colorToString(Color.black));
     }
 
     public void testDarkGrayFromString() {
-        Assert.assertEquals("DarkGray from string", Color.darkGray, ColorUtil.stringToColor(Bundle.getMessage("ColorDarkGray")));
+        Assert.assertEquals("DarkGray from string", Color.darkGray, ColorUtil.stringToColor(ColorUtil.ColorDarkGray));
     }
 
     public void testGrayFromString() {
-        Assert.assertEquals("Gray from string", Color.gray, ColorUtil.stringToColor(Bundle.getMessage("ColorGray")));
+        Assert.assertEquals("Gray from string", Color.gray, ColorUtil.stringToColor(ColorUtil.ColorGray));
     }
 
     public void testStringFromGray() {
-        Assert.assertEquals("Gray to string",Bundle.getMessage("ColorGray"), ColorUtil.colorToString(Color.gray));
+        Assert.assertEquals("Gray to string",ColorUtil.ColorGray, ColorUtil.colorToString(Color.gray));
     }
 
     public void testLightGrayFromString() {
-        Assert.assertEquals("LightGray from string", Color.lightGray, ColorUtil.stringToColor(Bundle.getMessage("ColorLightGray")));
+        Assert.assertEquals("LightGray from string", Color.lightGray, ColorUtil.stringToColor(ColorUtil.ColorLightGray));
     }
 
     public void testStringFromLightGray() {
-        Assert.assertEquals("LightGray to string",Bundle.getMessage("ColorLightGray"), ColorUtil.colorToString(Color.lightGray));
+        Assert.assertEquals("LightGray to string",ColorUtil.ColorLightGray, ColorUtil.colorToString(Color.lightGray));
     }
 
     public void testStringFromDarkGray() {
-        Assert.assertEquals("DarkGray to string",Bundle.getMessage("ColorDarkGray"), ColorUtil.colorToString(Color.darkGray));
+        Assert.assertEquals("DarkGray to string",ColorUtil.ColorDarkGray, ColorUtil.colorToString(Color.darkGray));
     }
 
     public void testWhiteFromString() {
-        Assert.assertEquals("White from string", Color.white, ColorUtil.stringToColor(Bundle.getMessage("ColorWhite")));
+        Assert.assertEquals("White from string", Color.white, ColorUtil.stringToColor(ColorUtil.ColorWhite));
     }
 
     public void testStringFromWhite() {
-        Assert.assertEquals("White to string",Bundle.getMessage("ColorWhite"), ColorUtil.colorToString(Color.white));
+        Assert.assertEquals("White to string",ColorUtil.ColorWhite, ColorUtil.colorToString(Color.white));
     }
 
     public void testStringFromRed() {
-        Assert.assertEquals("Red to String",Bundle.getMessage("ColorRed"), ColorUtil.colorToString(Color.red));
+        Assert.assertEquals("Red to String",ColorUtil.ColorRed, ColorUtil.colorToString(Color.red));
     }
 
     public void testRedFromString() {
-        Assert.assertEquals("Red from string",Color.red, ColorUtil.stringToColor(Bundle.getMessage("ColorRed")));
+        Assert.assertEquals("Red from string",Color.red, ColorUtil.stringToColor(ColorUtil.ColorRed));
     }
 
     public void testStringFromPink() {
-        Assert.assertEquals("Pink to string",Bundle.getMessage("ColorPink"), ColorUtil.colorToString(Color.pink));
+        Assert.assertEquals("Pink to string",ColorUtil.ColorPink, ColorUtil.colorToString(Color.pink));
     }
 
     public void testPinkFromString() {
-        Assert.assertEquals("Pink from string", Color.pink, ColorUtil.stringToColor(Bundle.getMessage("ColorPink")));
+        Assert.assertEquals("Pink from string", Color.pink, ColorUtil.stringToColor(ColorUtil.ColorPink));
     }
 
     public void testStringFromOrange() {
-        Assert.assertEquals("Orange to string",Bundle.getMessage("ColorOrange"), ColorUtil.colorToString(Color.orange));
+        Assert.assertEquals("Orange to string",ColorUtil.ColorOrange, ColorUtil.colorToString(Color.orange));
     }
 
     public void testOrangeFromString() {
-        Assert.assertEquals("Orange from string", Color.orange, ColorUtil.stringToColor(Bundle.getMessage("ColorOrange")));
+        Assert.assertEquals("Orange from string", Color.orange, ColorUtil.stringToColor(ColorUtil.ColorOrange));
     }
 
     public void testYellowFromString() {
-        Assert.assertEquals("Yellow from string", Color.yellow, ColorUtil.stringToColor(Bundle.getMessage("ColorYellow")));
+        Assert.assertEquals("Yellow from string", Color.yellow, ColorUtil.stringToColor(ColorUtil.ColorYellow));
     }
 
     public void testStringFromYellow() {
-        Assert.assertEquals("Yellow to string",Bundle.getMessage("ColorYellow"), ColorUtil.colorToString(Color.yellow));
+        Assert.assertEquals("Yellow to string",ColorUtil.ColorYellow, ColorUtil.colorToString(Color.yellow));
     }
 
     public void testStringFromGreen() {
-        Assert.assertEquals("Green to String",Bundle.getMessage("ColorGreen"), ColorUtil.colorToString(Color.green));
+        Assert.assertEquals("Green to String",ColorUtil.ColorGreen, ColorUtil.colorToString(Color.green));
     }
 
     public void testGreenFromString() {
-        Assert.assertEquals("Green from string", Color.green, ColorUtil.stringToColor(Bundle.getMessage("ColorGreen")));
+        Assert.assertEquals("Green from string", Color.green, ColorUtil.stringToColor(ColorUtil.ColorGreen));
     }
 
     public void testStringFromBlue() {
-        Assert.assertEquals("Blue to string",Bundle.getMessage("ColorBlue"), ColorUtil.colorToString(Color.blue));
+        Assert.assertEquals("Blue to string",ColorUtil.ColorBlue,ColorUtil.colorToString(Color.blue));
     }
 
     public void testBlueFromString() {
-        Assert.assertEquals("Blue from string", Color.blue, ColorUtil.stringToColor(Bundle.getMessage("ColorBlue")));
+        Assert.assertEquals("Blue from string", Color.blue, ColorUtil.stringToColor(ColorUtil.ColorBlue));
     }
 
     public void testStringFromMagenta() {
-        Assert.assertEquals("Magenta to string",Bundle.getMessage("ColorMagenta"), ColorUtil.colorToString(Color.magenta));
+        Assert.assertEquals("Magenta to string",ColorUtil.ColorMagenta, ColorUtil.colorToString(Color.magenta));
     }
 
     public void testMagentaFromString() {
-        Assert.assertEquals("Magenta to string", Color.magenta, ColorUtil.stringToColor(Bundle.getMessage("ColorMagenta")));
+        Assert.assertEquals("Magenta to string", Color.magenta, ColorUtil.stringToColor(ColorUtil.ColorMagenta));
     }
 
     public void testStringFromCyan() {
-        Assert.assertEquals("Cyan to string",Bundle.getMessage("ColorCyan"), ColorUtil.colorToString(Color.cyan));
+        Assert.assertEquals("Cyan to string",ColorUtil.ColorCyan, ColorUtil.colorToString(Color.cyan));
     }
 
     public void testCyanFromString() {
-        Assert.assertEquals("Cyan to string", Color.cyan, ColorUtil.stringToColor(Bundle.getMessage("ColorCyan")));
+        Assert.assertEquals("Cyan to string", Color.cyan, ColorUtil.stringToColor(ColorUtil.ColorCyan));
     }
 
     public void testDefaultStringFromColor() {
-        Assert.assertEquals("other to string",Bundle.getMessage("ColorBlack"), ColorUtil.colorToString(new Color(42,42,42)));
+        Assert.assertEquals("other to string",ColorUtil.ColorBlack, ColorUtil.colorToString(new Color(42,42,42)));
         jmri.util.JUnitAppender.assertErrorMessage("unknown color sent to colorToString");
     }
 
@@ -128,11 +128,11 @@ public class ColorUtilTest extends TestCase {
     }
 
     public void testStringFromNull() {
-        Assert.assertEquals("null to string",Bundle.getMessage("ColorTrack"), ColorUtil.colorToString(null));
+        Assert.assertEquals("null to string",ColorUtil.ColorTrack, ColorUtil.colorToString(null));
     }
 
     public void testColorFromTrack() {
-        Assert.assertNull("track from null", ColorUtil.stringToColor(Bundle.getMessage("ColorTrack")));
+        Assert.assertNull("track from null", ColorUtil.stringToColor(ColorUtil.ColorTrack));
     }
 
     public void testHexStringFromMagenta() {
@@ -144,7 +144,7 @@ public class ColorUtilTest extends TestCase {
     }
 
     public void testColorNameForMagenta() {
-        Assert.assertEquals("color name for magenta", ColorUtil.colorToColorName(Color.MAGENTA),Bundle.getMessage("ColorMagenta"));
+        Assert.assertEquals("color name for magenta", ColorUtil.colorToColorName(Color.MAGENTA),ColorUtil.ColorMagenta);
     }
 
     public void testColorNameForFFCCFF() {
@@ -152,7 +152,7 @@ public class ColorUtilTest extends TestCase {
     }
 
     public void testColorNameForFF00FF() {
-        Assert.assertEquals("color name for #FF00FF", ColorUtil.colorToColorName(new Color(255, 0, 255)), Bundle.getMessage("ColorMagenta"));
+        Assert.assertEquals("color name for #FF00FF", ColorUtil.colorToColorName(new Color(255, 0, 255)), ColorUtil.ColorMagenta);
     }
 
     public void testColorNameFromNull() {
