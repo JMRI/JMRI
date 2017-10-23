@@ -9054,6 +9054,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      * @param color value to set the defalut track color to.
      */
     public void setDefaultTrackColor(@Nonnull Color color){
+        LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
     }
 
