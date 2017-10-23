@@ -56,7 +56,7 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     /**
-     * set up all of the other objects to simulate operation with an MRC command
+     * Set up all of the other objects to simulate operation with an MRC command
      * station.
      */
     @Override

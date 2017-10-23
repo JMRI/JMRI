@@ -5,10 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.jmrix.easydcc.EasyDccCommandStation;
+//import jmri.jmrix.easydcc.EasyDccCommandStation;
 import jmri.jmrix.easydcc.EasyDccMessage;
-import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccPortController; // no special xSimulatorController
+import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 import org.slf4j.Logger;
@@ -49,15 +49,16 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
 
     public SimulatorAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC Simulator")); // pass customized user name
-        setPort(Bundle.getMessage("None"));
     }
 
     @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
+            log.debug("tempPipeI created {}", tempPipeI != null);
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
+            log.debug("inpipe created {}", inpipe != null);
             PipedOutputStream tempPipeO = new PipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
@@ -102,19 +103,27 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
      */
     @Override
     public void configure() {
-        // Connect to a traffic controller
+        // connect to the traffic controller
+        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
         EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
-        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
         control.connectPort(this);
-
+        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
         // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
-
         // start the simulator
         sourceThread = new Thread(this);
         sourceThread.setName("EasyDCC Simulator");
         sourceThread.setPriority(Thread.MIN_PRIORITY);
         sourceThread.start();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void connect() throws java.io.IOException {
+        log.debug("connect called");
+        super.connect();
     }
 
     // Base class methods for the EasyDccSimulatorPortController interface
@@ -123,7 +132,6 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");
-            return null;
         }
         log.debug("DataInputStream pin returned");
         return pin;
@@ -133,7 +141,6 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");
-            return null;
         }
         log.debug("DataOutputStream pout returned");
         return pout;
@@ -141,7 +148,7 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
 
     @Override
     public boolean status() {
-        return (pout != null && pin != null);
+        return opened;
     }
 
     /**
@@ -199,7 +206,9 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
         EasyDccMessage msg = null;
         log.debug("Simulator reading message");
         try {
-            msg = loadChars();
+            if (inpipe != null && inpipe.available() > 0) {
+                msg = loadChars();
+            }
         } catch (java.io.IOException e) {
             // should do something meaningful here.
         }
