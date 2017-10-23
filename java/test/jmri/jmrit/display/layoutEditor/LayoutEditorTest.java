@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -265,14 +266,14 @@ public class LayoutEditorTest {
     @Test
     public void testGetDefaultTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Track Color",Bundle.getMessage("ColorBlack"), le.getDefaultTrackColor());
+        Assert.assertEquals("Default Track Color",ColorUtil.ColorBlack, le.getDefaultTrackColor());
     }
 
     @Test
     public void testSetDefaultTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        le.setDefaultTrackColor(Bundle.getMessage("ColorPink"));
-        Assert.assertEquals("Default Track Color after Set", Bundle.getMessage("ColorPink"), le.getDefaultTrackColor());
+        le.setDefaultTrackColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Track Color after Set", ColorUtil.ColorPink, le.getDefaultTrackColor());
     }
 
     @Test
@@ -284,47 +285,47 @@ public class LayoutEditorTest {
     @Test
     public void testSetDefaultOccupiedTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        le.setDefaultOccupiedTrackColor(Bundle.getMessage("ColorPink"));
-        Assert.assertEquals("Default Occupied Track Color after Set", Bundle.getMessage("ColorPink"), le.getDefaultOccupiedTrackColor());
+        le.setDefaultOccupiedTrackColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Occupied Track Color after Set", ColorUtil.ColorPink, le.getDefaultOccupiedTrackColor());
     }
 
     @Test
     public void testGetDefaultAlternativeTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Alternative Track Color",Bundle.getMessage("ColorWhite"), le.getDefaultAlternativeTrackColor());
+        Assert.assertEquals("Default Alternative Track Color",ColorUtil.ColorWhite, le.getDefaultAlternativeTrackColor());
     }
 
     @Test
     public void testSetDefaultAlternativeTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        le.setDefaultAlternativeTrackColor(Bundle.getMessage("ColorPink"));
-        Assert.assertEquals("Default Alternative Track Color after Set",Bundle.getMessage("ColorPink"), le.getDefaultAlternativeTrackColor());
+        le.setDefaultAlternativeTrackColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Alternative Track Color after Set",ColorUtil.ColorPink, le.getDefaultAlternativeTrackColor());
     }
 
     @Test
     public void testGetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Text Color",Bundle.getMessage("ColorBlack"), le.getDefaultTextColor());
+        Assert.assertEquals("Default Text Color",ColorUtil.ColorBlack, le.getDefaultTextColor());
     }
 
     @Test
     public void testSetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        le.setDefaultTextColor(Bundle.getMessage("ColorPink"));
-        Assert.assertEquals("Default Text Color after Set",Bundle.getMessage("ColorPink"), le.getDefaultTextColor());
+        le.setDefaultTextColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Text Color after Set",ColorUtil.ColorPink, le.getDefaultTextColor());
     }
 
     @Test
     public void testGetTurnoutCircleColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Turnout Circle Color",Bundle.getMessage("ColorBlack"), le.getTurnoutCircleColor());
+        Assert.assertEquals("Turnout Circle Color",ColorUtil.ColorBlack, le.getTurnoutCircleColor());
     }
 
     @Test
     public void testSetTurnoutCircleColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        le.setTurnoutCircleColor(Bundle.getMessage("ColorPink"));
-        Assert.assertEquals("Turnout Circle after Set",Bundle.getMessage("ColorPink"), le.getTurnoutCircleColor());
+        le.setTurnoutCircleColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Turnout Circle after Set",ColorUtil.ColorPink, le.getTurnoutCircleColor());
     }
 
     @Test
