@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>9</minor>
+    <test>6</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="0" y="27" height="960" width="1900" windowheight="1053" windowwidth="1920" panelheight="960" panelwidth="1900" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="#663300" defaultoccupiedtrackcolor="#9999FF" defaultalternativetrackcolor="#00CCCC" defaulttextcolor="#6600CC" turnoutcirclecolor="#CCCCFF" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="102" greenBackground="255" blueBackground="102" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Oct 22 22:08:32 EDT 2017</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Oct 22 22:09:11 EDT 2017</date>
+      <filename>/home/Paul/.jmri/XNetSimulator/LayoutEditorHexColorTest.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sun Oct 22 22:04:15 EDT 2017</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Oct 22 22:07:02 EDT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Oct 22 22:09:36 EDT 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.9.6ish+Paul+20171023T0208Z+R4eea8f1 on Sun Oct 22 22:09:36 EDT 2017-->
+</layout-config>
