@@ -42,10 +42,10 @@ public class SpeedUtil {
     private List<BlockOrder> _orders;
 
     private DccThrottle _throttle;
-    private float _stepIncrement;   // decoder throttle step interval
+    private float _stepIncrement = 1.0f / 126.0f;   // decoder throttle step interval
     private float _stepRampThrottleIncrement;   // user specified throttle increment for ramping
     private int _stepRampTimeIncrement; // user specified time for ramp step increment
-    private RosterSpeedProfile _speedProfile; // merge of existing Roster speeedProfile and session speeedProfile
+    private RosterSpeedProfile _mergeProfile; // merge of existing Roster speeedProfile and session speeedProfile
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
     private SignalSpeedMap _signalSpeedMap; 
     private int _ma;  // milliseconds needed to increase speed by _stepRampThrottleIncrement amount 
@@ -86,7 +86,7 @@ public class SpeedUtil {
     public void setRosterId(String id) {
        if (log.isDebugEnabled()) log.debug("setRosterId({}) _rosterId= {}", id, _rosterId);
        if (id == null || !id.equals(_rosterId)) {
-            _speedProfile = null;
+            _mergeProfile = null;
             _sessionProfile = null;
             if (id != null) {
                 _rosterId = id;
@@ -206,16 +206,30 @@ public class SpeedUtil {
     }
 
     // throttle's minimum speed increase amount 
-    protected float getSpeedStep() {
+    protected float getThrottleSpeedStepIncrement() {
         return _stepIncrement;
     }
 
     protected RosterSpeedProfile getSpeedProfile() {
-        if (_speedProfile == null) {
-            makeSpeedTree();
-            makeRampParameters();
+        if (_sessionProfile == null) {
+            if (_mergeProfile == null) {
+                makeSpeedTree();
+                makeRampParameters();                
+            } else {
+                return _mergeProfile;
+            }
+        } else if (!_sessionProfile.hasForwardSpeeds() && !_sessionProfile.hasReverseSpeeds()) {
+                return _mergeProfile;
         }
-        return _speedProfile;
+        return _sessionProfile;
+    }
+    
+    protected RosterSpeedProfile getMergeProfile() {
+        if (_mergeProfile == null) {
+            makeSpeedTree();
+            makeRampParameters();                
+        }
+        return _mergeProfile;
     }
 
     private void makeSpeedTree() {
@@ -224,20 +238,20 @@ public class SpeedUtil {
         }
         if (log.isDebugEnabled()) log.debug("makeSpeedTree for {}.", _rosterId);
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        _speedProfile = manager.getMergeProfile(_rosterId);
+        _mergeProfile = manager.getMergeProfile(_rosterId);
         _sessionProfile = manager.getSessionProfile(_rosterId);
         if (_sessionProfile == null) {
             _sessionProfile = new RosterSpeedProfile(null);
         }
-        if (_speedProfile == null) {
-            _speedProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile            
+        if (_mergeProfile == null) {
+            _mergeProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile            
             if (_rosterEntry!=null) {
                 if (log.isDebugEnabled()) log.debug("makeSpeedTree - Copy TreeMap");
                 RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
                 if (speedProfile!=null) { // make copy of tree
                     TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
                     for (Map.Entry<Integer, SpeedStep> entry : rosterTree.entrySet()) {
-                        _speedProfile.setSpeed(entry.getKey(), entry.getValue().getForwardSpeed(), entry.getValue().getReverseSpeed());
+                        _mergeProfile.setSpeed(entry.getKey(), entry.getValue().getForwardSpeed(), entry.getValue().getReverseSpeed());
                     }
                 }
             }
@@ -256,7 +270,7 @@ public class SpeedUtil {
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
-        _mp = (int)(6300 * _stepRampThrottleIncrement);
+        _mp = (int)(9000 * _stepRampThrottleIncrement);
         _ma = _mp;  // acceleration momentum time
         _md = _mp;  // deceleration momentum time
         if (_stepRampTimeIncrement < _mp) {
@@ -333,24 +347,23 @@ public class SpeedUtil {
         } else {
             return _mp;
         }
-       
     }
     
-    protected boolean profileHasSpeedInfo(boolean isForward) {
-        if (_speedProfile == null) {
+    protected boolean profileHasSpeedInfo() {
+        RosterSpeedProfile speedProfile = getSpeedProfile();
+        if (speedProfile == null) {
             return false;
         }
-        if (isForward) {
-            return _speedProfile.hasForwardSpeeds();            
-        } else {
-            return _speedProfile.hasReverseSpeeds();            
+        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
+            return true;
         }
+        return false;
     }
 
     protected void stopRun(boolean updateSpeedProfile) {
-        if (updateSpeedProfile && _speedProfile!=null) {
+        if (updateSpeedProfile && _sessionProfile != null) {
             WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-            manager.setSpeedProfiles(_rosterId, _speedProfile, _sessionProfile);
+            manager.setSpeedProfiles(_rosterId, _mergeProfile, _sessionProfile);
         }
         if (_throttle != null) {  // quiet
             _throttle.setF0(false);
@@ -370,10 +383,6 @@ public class SpeedUtil {
         getSpeedProfile();
     }
     
-    protected float getSpeedIncrement() {
-        _stepIncrement = _throttle.getSpeedIncrement();
-        return _stepIncrement;
-    }
     /**
      * Calculates the scale speed of the current throttle setting for display
      * @param speedType name of current speed
@@ -493,7 +502,7 @@ public class SpeedUtil {
         if (speed <= 0.0f) {
             float factor = _signalSpeedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _signalSpeedMap.getLayoutScale();
             speed = throttleSetting * factor;
-            if (log.isDebugEnabled()) log.debug("getTrackSpeed for setting= {}, speed= {}, by factor= {}. train= {}",
+            if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by factor= {}. train= {}",
                     throttleSetting, speed, factor, _rosterId);
         } else {
             if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, SpeedProfile. train= {}",
@@ -580,15 +589,8 @@ public class SpeedUtil {
         boolean increasing = (fromSpeed <= toSpeed);
         float momentumTime = getMomentumTime(increasing);
 
-        if (!increasing) {
-            float speed = toSpeed;
-            while (speed + deltaThrottle <= fromSpeed) {
-                speed += deltaThrottle;
-                deltaThrottle *= NXFrame.INCRE_RATE;
-            }            
-        }
         if (increasing) {
-            while (fromSpeed <= toSpeed) {
+            while (fromSpeed < toSpeed) {
                 float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
                         + getTrackSpeed(fromSpeed + deltaThrottle, isForward) * (deltaTime - momentumTime);
                 if (dist <= 0.0f) {
@@ -598,23 +600,35 @@ public class SpeedUtil {
                 if (fromSpeed <= toSpeed) {
                     rampLength += dist;
                 } else {
-                    rampLength += (toSpeed - fromSpeed) * dist / deltaThrottle;
+                    rampLength += (fromSpeed - toSpeed) * dist / deltaThrottle;
                 }
                 deltaThrottle *= NXFrame.INCRE_RATE;
                 numSteps++;
             }
         } else {
+            // Start with largest throttle increment
+            float tempSpeed = toSpeed;
+            while (tempSpeed + deltaThrottle <= fromSpeed) {
+                tempSpeed += deltaThrottle;
+                deltaThrottle *= NXFrame.INCRE_RATE;
+            }
             while (fromSpeed >= toSpeed) {
+                float nextSpeed;
+                if (fromSpeed < deltaThrottle) {
+                    nextSpeed = deltaThrottle - fromSpeed;
+                } else {
+                    nextSpeed = fromSpeed - deltaThrottle;
+                }
                 float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
-                        + getTrackSpeed(fromSpeed - deltaThrottle, isForward) * (deltaTime - momentumTime);
+                        + getTrackSpeed(nextSpeed, isForward) * (deltaTime - momentumTime);
                 if (dist <= 0.0f) {
                     break;
                 }
                 fromSpeed -= deltaThrottle;
-                if (fromSpeed >= toSpeed) {
+                if (fromSpeed > toSpeed) {
                     rampLength += dist;
                 } else {
-                    rampLength += (fromSpeed + deltaThrottle - toSpeed) * dist / deltaThrottle;
+                    rampLength += (toSpeed - fromSpeed) * dist / deltaThrottle;
                 }
                 deltaThrottle /= NXFrame.INCRE_RATE;
                 numSteps++;
@@ -643,6 +657,9 @@ public class SpeedUtil {
     protected void enteredBlock(int lastIdx, int newIdx) {
         speedChange();
         if (lastIdx > 0) {   // Distance traveled in 1st block unknown 
+            if (!log.isDebugEnabled() && _numchanges > 1) {
+                return;
+            }
             float totalLength = 0.0f;
             boolean isForward = _throttle.getIsForward();
             boolean mergeOK = true;
@@ -659,57 +676,60 @@ public class SpeedUtil {
                     totalLength += length;
                 }                
             }
-            float throttle = _throttle.getSpeedSetting();
-            float speed = 0;
-            long elpsedTime = _orders.get(newIdx).getBlock()._entryTime - _orders.get(lastIdx).getBlock()._entryTime;
-            if (elpsedTime > 0) {
-                speed = totalLength / elpsedTime;
-                speed *= 1000;                
+            OBlock fromBlock = _orders.get(newIdx).getBlock();
+            OBlock toBlock = _orders.get(lastIdx).getBlock();
+            if (!mergeOK || (_numchanges > 1 && Math.abs(_distanceTravelled - totalLength) < 25.0f)) {   // allow 1 inch
+                clearStats();
+                if (log.isDebugEnabled())
+                    log.debug("Speed data invalid between {} and {} (bad length data)", fromBlock.getDisplayName(), toBlock.getDisplayName());
+                return;
             }
-            float profileSpeed;
-            if (log.isDebugEnabled()) {
-                float aveSpeed = 0;
-                float aveThrottle = 0;
-//                float compare = _timeAtSpeed / elpsedTime;  // ideally this == 1.0
-//                if (compare < 1.05f && compare > 0.95f) {
-                if (_timeAtSpeed > 0) {
-                    aveSpeed = totalLength / _timeAtSpeed;
-                    aveSpeed *= 1000;   // SpeedProfile is mm/sec
-                    aveThrottle = _settingsTravelled / _timeAtSpeed;
-                    // throttle setting should be a step increment
-                } else {
-                    mergeOK = false;
+            long elpsedTime = fromBlock._entryTime - toBlock._entryTime;
+            float speed;
+            float throttle;
+            float aveSpeed = totalLength / elpsedTime;
+            if (_numchanges == 1) {
+                throttle = _throttle.getSpeedSetting();
+                speed = aveSpeed;
+            } else {
+                if (Math.abs(elpsedTime - _timeAtSpeed) < 30) { // only allow 30ms
+                    clearStats();
+                    if (log.isDebugEnabled())
+                        log.debug("Speed data invalid between {} and {} (timing bad)", fromBlock.getDisplayName(), toBlock.getDisplayName());
+                    return;
                 }
-                profileSpeed = _speedProfile.getSpeed(aveThrottle, isForward);                
-                log.debug("{} speed changes. AveThtle= {}, curThtle= {}. \"dist\"= {}, dist = {}. \"et\"= {}, et= {}.",
-                        _numchanges, aveThrottle, throttle, _distanceTravelled, totalLength, _timeAtSpeed, elpsedTime);
-                log.debug("Speeds: SpeedProfile= {}, aveSpeed= {}, speed= {}, over block {} to {}",
-                        profileSpeed, aveSpeed, speed, _orders.get(lastIdx).getBlock().getDisplayName(),
-                        _orders.get(newIdx).getBlock().getDisplayName());
-                if ( _numchanges != 1) {
-                    throttle = aveThrottle;
-                    speed = aveSpeed;                    
-                }
+                speed = totalLength / _timeAtSpeed;
+                throttle = _settingsTravelled / _timeAtSpeed;
             }
-
+            speed *= 1000;   // SpeedProfile is mm/sec
+            
+            if (throttle < _stepIncrement || speed <= 0.0f || Math.abs(aveSpeed - speed) < 20) {
+                clearStats();
+                if (log.isDebugEnabled())
+                    log.debug("Speeds invalid between {} and {}", fromBlock.getDisplayName(), toBlock.getDisplayName());
+                return;
+            }
+            RosterSpeedProfile mergeProfile = getMergeProfile();
+            float mergeSpeed = mergeProfile.getSpeed(throttle, isForward);                
+            float profileSpeed = _sessionProfile.getSpeed(throttle, isForward);                
             throttle = _stepIncrement * Math.round(throttle/_stepIncrement);
-            profileSpeed = _speedProfile.getSpeed(throttle, isForward);                
-            float mergeSpeed = speed;
-            if (profileSpeed > 0.0f && speed > 0.0f) {   // perhaps spSpeed should be weighted.  but how much?
-                mergeSpeed = (speed + profileSpeed) / 2;
-            } else if (speed < _stepIncrement){
-                mergeOK = false;
+            if (log.isDebugEnabled()) {
+                log.debug("{} changes between {} and {}. ave speed= {}",
+                        _numchanges, fromBlock.getDisplayName(), toBlock.getDisplayName(), aveSpeed);
+                log.debug("throttle= {}, speed= {}, profileSpeed={}, mergeSpeed={}",
+                        throttle, speed, profileSpeed, mergeSpeed);
             }
-            if (mergeOK && _numchanges == 1) {  // restrict recording profiles for further testing
+            if (_numchanges == 1) {
+                mergeSpeed = (mergeSpeed + speed) / 2;
                 if (isForward) {
-                    _speedProfile.setForwardSpeed(throttle, mergeSpeed);
+                    _mergeProfile.setForwardSpeed(throttle, mergeSpeed);
                     _sessionProfile.setForwardSpeed(throttle, speed);
                 } else {
-                    _speedProfile.setReverseSpeed(throttle, mergeSpeed);            
+                    _mergeProfile.setReverseSpeed(throttle, mergeSpeed);            
                     _sessionProfile.setReverseSpeed(throttle, speed);
                 }
-                if (log.isDebugEnabled()) log.debug("Set ProfileSpeed throttle= {}, speed= {}", throttle, speed);
-            }            
+                if (log.isDebugEnabled()) log.debug("Set ProfileSpeed throttle= {}, sessionSpeed= {} mergeSpeed={}", throttle, speed, mergeSpeed);
+            }
         }
         clearStats();
     }
@@ -727,12 +747,16 @@ public class SpeedUtil {
      */
     protected void speedChange() {
         _numchanges++;
+        if (!log.isDebugEnabled() && _numchanges > 1) {
+            return;
+        }
         long time = System.currentTimeMillis();
         float throttleSetting = _throttle.getSpeedSetting();
         long elapsedTime = time - _changetime;
         if (throttleSetting > 0.0f) {
             _timeAtSpeed += elapsedTime;
-            float speed = _speedProfile.getSpeed(throttleSetting, _throttle.getIsForward());
+            RosterSpeedProfile speedProfile = getSpeedProfile();
+            float speed = speedProfile.getSpeed(throttleSetting, _throttle.getIsForward());
             if (speed > 0.0f) {
                 _distanceTravelled += elapsedTime * speed / 1000;
             }

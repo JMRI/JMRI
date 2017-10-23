@@ -471,7 +471,7 @@ public class WarrantFrame extends WarrantRoute {
     
     private void addSpeeds() {
         setAddress();
-        RosterSpeedProfile speedProfile =  _speedUtil.getSpeedProfile();         
+        RosterSpeedProfile speedProfile =  _speedUtil.getMergeProfile();         
         boolean isForward = true;
         for (ThrottleSetting ts :_throttleCommands) {
             if ("FORWARD".equalsIgnoreCase(ts.getCommand())) {
@@ -1257,7 +1257,7 @@ public class WarrantFrame extends WarrantRoute {
     }
     
     protected void setSpeedCommand(float speed, boolean isForward) {
-        if (_warrant.getSpeedUtil().profileHasSpeedInfo(isForward)) {
+        if (_warrant.getSpeedUtil().profileHasSpeedInfo()) {
             _speed = _warrant.getSpeedUtil().getTrackSpeed(speed, isForward);  // mm/ms            
         } else {
             _speed = 0.0f;

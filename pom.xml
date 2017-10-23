@@ -20,7 +20,7 @@
         <slf4j.version>1.7.21</slf4j.version>
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.14</openlcb.version>
+        <openlcb.version>0.7.15</openlcb.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
