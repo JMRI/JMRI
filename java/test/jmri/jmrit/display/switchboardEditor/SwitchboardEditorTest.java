@@ -98,7 +98,7 @@ public class SwitchboardEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
         e.setDefaultTextColor(jmri.util.ColorUtil.ColorPink);
-        Assert.assertEquals("Default Text Color after Set",jmri.uitl.ColorUtil.ColorPink, e.getDefaultTextColor());
+        Assert.assertEquals("Default Text Color after Set",jmri.util.ColorUtil.ColorPink, e.getDefaultTextColor());
         JUnitUtil.dispose(e);
     }
 
