@@ -532,11 +532,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
                 break;
             case DCCppConstants.WRITE_DCC_PACKET_MAIN:
                 text = "Write DCC Packet Main Cmd: ";
-                text += toString();
+                text += "\n\tRegister: " + getRegisterString();
+                text += "\n\tPacket:" + getPacketString();
                 break;
             case DCCppConstants.WRITE_DCC_PACKET_PROG:
                 text = "Write DCC Packet Prog Cmd: ";
-                text += toString();
+                text += "\n\tRegister: " + getRegisterString();
+                text += "\n\tPacket:" + getPacketString();
                 break;
             case DCCppConstants.GET_FREE_MEMORY:
                 text = "Get Free Memory Cmd: ";
@@ -605,7 +607,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public String getOpCodeString() {
         return(Character.toString(opcode));
     }
-    
+   
+    private int getGroupCount(){
+        Matcher m = match(myMessage.toString(), myRegex, "gvs");
+        return m.groupCount();
+    }
+ 
     public String getValueString(int idx) {
         Matcher m = match(myMessage.toString(), myRegex, "gvs");
         if (m == null) {
@@ -651,7 +658,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * return the message length
      */
     public int length() {
-//        return _nDataChars;
         return(myMessage.length());
     }
 
@@ -735,32 +741,58 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     
     // Identity Methods
     public boolean isThrottleMessage() { return(this.getOpCodeChar() == DCCppConstants.THROTTLE_CMD); }
+
     public boolean isAccessoryMessage() { return(this.getOpCodeChar() == DCCppConstants.ACCESSORY_CMD); }
+
     public boolean isFunctionMessage() { return(this.getOpCodeChar() == DCCppConstants.FUNCTION_CMD); }
+
     public boolean isTurnoutMessage() { return(this.getOpCodeChar() == DCCppConstants.TURNOUT_CMD); }
+
     public boolean isSensorMessage() { return(this.getOpCodeChar() == DCCppConstants.SENSOR_CMD); }
+
     public boolean isEEPROMWriteMessage() { return(this.getOpCodeChar() == DCCppConstants.WRITE_TO_EEPROM_CMD); }
+
     public boolean isEEPROMClearMessage() { return(this.getOpCodeChar() == DCCppConstants.CLEAR_EEPROM_CMD); }
+
     public boolean isOpsWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.OPS_WRITE_CV_BYTE); }
+
     public boolean isOpsWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.OPS_WRITE_CV_BIT); }
+
     public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE); }
+
     public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT); }
+
     public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV); }
+
     //public boolean isQuerySensorMessage() { return(this.getOpCodeChar() == DCCppConstants.QUERY_SENSOR_STATE); }
 
     public boolean isTurnoutCmdMessage() { return(this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null); }
+
     public boolean isTurnoutAddMessage() { return(this.match(DCCppConstants.TURNOUT_ADD_REGEX) != null); }
+
     public boolean isTurnoutDeleteMessage() { return(this.match(DCCppConstants.TURNOUT_DELETE_REGEX) != null); }
+
     public boolean isListTurnoutsMessage() { return(this.match(DCCppConstants.TURNOUT_LIST_REGEX) != null); }
+
     public boolean isSensorAddMessage() { return(this.match(DCCppConstants.SENSOR_ADD_REGEX) != null); }
+
     public boolean isSensorDeleteMessage() { return(this.match(DCCppConstants.SENSOR_DELETE_REGEX) != null); }
+
     public boolean isListSensorsMessage() { return(this.match(DCCppConstants.SENSOR_LIST_REGEX) != null); }
+
     //public boolean isOutputCmdMessage() { return(this.getOpCodeChar() == DCCppConstants.OUTPUT_CMD); }
+
     public boolean isOutputCmdMessage() { return(this.match(DCCppConstants.OUTPUT_CMD_REGEX) != null); }
+
     public boolean isOutputAddMessage() { return(this.match(DCCppConstants.OUTPUT_ADD_REGEX) != null); }
+
     public boolean isOutputDeleteMessage() { return(this.match(DCCppConstants.OUTPUT_DELETE_REGEX) != null); }
+
     public boolean isListOutputsMessage() { return(this.match(DCCppConstants.OUTPUT_LIST_REGEX) != null); }
+
     public boolean isQuerySensorStatesMessage() { return(this.match(DCCppConstants.QUERY_SENSOR_STATES_REGEX) != null); }
+
+    public boolean isWriteDccPacketMessage() { return ((this.getOpCodeChar() == DCCppConstants.WRITE_DCC_PACKET_MAIN) || (this.getOpCodeChar() == DCCppConstants.WRITE_DCC_PACKET_PROG)); }
 
     //------------------------------------------------------
     // Helper methods for Sensor Query Commands
@@ -970,7 +1002,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // Helper methods for Throttle Commands
 
     public String getRegisterString() {
- if (this.isThrottleMessage()) {
+ if (this.isThrottleMessage() || this.isWriteDccPacketMessage() ) {
             return(getValueString(1));
  } else {
      log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
@@ -1361,6 +1393,19 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             return(getValueInt(2));
         } else {
             return(0);
+        }
+    }
+
+    public String getPacketString() {
+       if ( this.isWriteDccPacketMessage() ) {
+            StringBuffer b = new StringBuffer();
+            for(int i = 2;i<=getGroupCount();i++){
+                b.append(this.getValueString(i));
+            }
+            return(b.toString());
+       } else {
+            log.error("Write Dcc Packet parser called on non-Dcc Packet message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
@@ -2385,6 +2430,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         if (num_bytes < 2 || num_bytes > 5) return(null);
  
         DCCppMessage m = new DCCppMessage(DCCppConstants.WRITE_DCC_PACKET_MAIN);
+        m.myMessage.append(" " + register);
         for (int k = 0; k < num_bytes; k++) {
             m.myMessage.append(" " + jmri.util.StringUtil.twoHexFromInt(bytes[k]));
         }
@@ -2400,8 +2446,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         if (num_bytes < 2 || num_bytes > 5) return(null);
  
         DCCppMessage m = new DCCppMessage(DCCppConstants.WRITE_DCC_PACKET_PROG);
+        m.myMessage.append(" " + register);
         for (int k = 0; k < num_bytes; k++) {
-            m.myMessage.append(" " + bytes[k]);
+            m.myMessage.append(" " + jmri.util.StringUtil.twoHexFromInt(bytes[k]));
         }
         m.myRegex = DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX;
         return(m);
