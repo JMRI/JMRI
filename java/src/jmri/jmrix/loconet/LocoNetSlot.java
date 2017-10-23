@@ -390,6 +390,7 @@ public class LocoNetSlot {
         l.setOpCode(LnConstants.OPC_SLOT_STAT1);
         l.setElement(1, slot);
         l.setElement(2, (stat & ~LnConstants.DEC_MODE_MASK) | status);
+        log.debug("writeSlotMode for slot {}", slot);
         return l;
     }
     
@@ -409,6 +410,7 @@ public class LocoNetSlot {
         l.setOpCode(LnConstants.OPC_SLOT_STAT1);
         l.setElement(1, slot);
         l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
+        log.debug("writeSlotStatus for slot {} with new status ", slot, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
         return l;
     }
 
@@ -416,7 +418,9 @@ public class LocoNetSlot {
      * Update the status mode bits in STAT1 (D5, D4)
      *
      * @param status New values for STAT1 (D5, D4)
+     * @deprecated 4.9.5 account does not do anything useful
      */
+    @Deprecated
     public void sendWriteStatus(int status) {
         LocoNetMessage l = new LocoNetMessage(4);
         l.setOpCode(LnConstants.OPC_SLOT_STAT1);
@@ -450,12 +454,11 @@ public class LocoNetSlot {
      * @return LocoNet message which "releases" the slot
     */
     public LocoNetMessage releaseSlot() {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
-        l.setElement(1, slot);
-        // set slot status to "Idle" - valid address in slot, but it's not refreshed on the track signal.
-        stat = stat & (~LnConstants.STAT1_SL_ACTIVE) | LnConstants.STAT1_SL_BUSY;
-        l.setElement(2, stat);
+        // want to effect the same activity as a DT400 throttle when it "exits" 
+        // a loco assignment: transition the slot status to "COMMON" state, not "Idle"
+        
+        LocoNetMessage l = writeStatus(LnConstants.LOCO_COMMON);
+        log.debug("releaseSlot is setting slot status to Idle");
         return l;
     }
 
@@ -522,12 +525,11 @@ public class LocoNetSlot {
         synchronized (this) {
             v = new ArrayList<SlotListener>(slotListeners);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size() // NOI18N
-                    + " SlotListeners"); // NOI18N
-        }
         // forward to all listeners
         int cnt = v.size();
+        if (log.isDebugEnabled() && (cnt > 0)) {
+            log.debug("notify {} SlotListeners", cnt ); // NOI18N
+        }
         for (int i = 0; i < cnt; i++) {
             SlotListener client = v.get(i);
             client.notifyChangedSlot(this);
