@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
-public class SimulatorAdapter extends EasyDccPortController implements Runnable {
+public class SimulatorAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
 
     // private control members
     private boolean opened = false;
@@ -159,38 +159,55 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
      */
     @Override
     public String[] validBaudRates() {
+        log.debug("validBaudRates should not have been invoked");
         return null;
+    }
+
+    @Override
+    public String getCurrentBaudRate() {
+        return "";
     }
 
     @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
-        // and writes modified data to the output pipe. This is the heart
-        // of the command station simulation.
-        log.debug("Simulator Thread Started");
-//        while (true) {
-        for (;;) {
-            log.debug("Simulator Thread running, read...");
-            EasyDccMessage m = readMessage(); // NPE?
+        // and writes an appropriate response to the output pipe. This is the heart
+        // of the EasyDCC command station simulation.
+        // report status?
+        log.info("EasyDCC Simulator Started");
+        while (true) {
+            try {
+                synchronized (this) {
+                    wait(50);
+                }
+            } catch (InterruptedException e) {
+                log.debug("interrupted, ending");
+                return;
+            }
+            EasyDccMessage m = readMessage();
+            EasyDccReply r;
             if (log.isDebugEnabled()) {
-                StringBuilder buf = new StringBuilder();
+                StringBuffer buf = new StringBuffer();
                 buf.append("EasyDCC Simulator Thread received message: ");
-                for (int i = 0; i < m.getNumDataElements(); i++) {
-                    buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
+                if (m != null) {
+                    for (int i = 0; i < m.getNumDataElements(); i++) {
+                        buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+                    }
+                } else {
+                    buf.append("null message buffer");
                 }
                 log.debug(buf.toString());
             }
             if (m != null) {
-                EasyDccReply r = generateReply(m);
-                if (r != null) { // NPE?
-                    writeReply(r);
-                    log.debug("Simulator Thread sent Reply {}", r.toString());
-                }
+                //if(m.isReplyExpected()){
+                r = generateReply(m);
+                writeReply(r);
+                //}
                 if (log.isDebugEnabled() && r != null) {
-                    StringBuilder buf = new StringBuilder();
+                    StringBuffer buf = new StringBuffer();
                     buf.append("EasyDCC Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
+                        buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
                     }
                     log.debug(buf.toString());
                 }
@@ -515,8 +532,9 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
         return msg;
     }
 
-    private DataOutputStream pout = null; // for output to other classes
-    private DataInputStream pin = null; // for input from other classes
+    // streams to share with user class
+    private DataOutputStream pout = null; // this is provided to classes who want to write to us
+    private DataInputStream pin = null; // this is provided to classes who want data from us
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout

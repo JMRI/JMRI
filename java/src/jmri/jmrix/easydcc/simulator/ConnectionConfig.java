@@ -1,7 +1,7 @@
 package jmri.jmrix.easydcc.simulator;
 
 /**
- * Handle configuring a EasyDcc layout connection via an EasyDccSimulator
+ * Handle configuring a EasyDCC layout connection via an EasyDccSimulator
  * adapter.
  * <p>
  * This uses the {@link SimulatorAdapter} class to do the actual connection.

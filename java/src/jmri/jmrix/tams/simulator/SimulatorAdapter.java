@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * Tams simulator.
  * Derived from MRC Simulator
  *
- * @authorBob Jacobsen Copyright (C) 2001, 2002
- * @authorPaul Bender, Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  * 
  */
@@ -31,7 +31,7 @@ public class SimulatorAdapter extends TamsPortController implements
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null; // this is provided to class who want data from us
+    private DataInputStream pin = null; // this is provided to classes who want data from us
 
     // internal ends of the pipes
     private DataOutputStream outpipe = null; // feed pin
@@ -67,7 +67,6 @@ public class SimulatorAdapter extends TamsPortController implements
         tc.connectPort(this);
         this.getSystemConnectionMemo().setTamsTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-        //tc.connectPort(this);     
 
         this.getSystemConnectionMemo().configureManagers();
         //tc.setCabNumber(2);
@@ -118,8 +117,8 @@ public class SimulatorAdapter extends TamsPortController implements
 
     @Override
     public void run() { // start a new thread
-        // this thread has one task.  It repeatedly reads from the input pipe
-        // and writes an appropriate response to the output pipe.  This is the heart
+        // This thread has one task. It repeatedly reads from the input pipe
+        // and writes an appropriate response to the output pipe. This is the heart
         // of the TAMS command station simulation.
         // report status?
         if (log.isInfoEnabled()) {
