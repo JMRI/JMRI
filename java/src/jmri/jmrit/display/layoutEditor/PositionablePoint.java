@@ -915,8 +915,16 @@ public class PositionablePoint extends LayoutTrack {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        // bring up signals at block boundary tool dialog
+                        // bring up signal masts at block boundary tool dialog
                         tools.setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
+                    }
+                });
+                popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        // bring up sensors at block boundary tool dialog
+                        tools.setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
+                                layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
             } else {
