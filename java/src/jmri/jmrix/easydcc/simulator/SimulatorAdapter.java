@@ -41,11 +41,8 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     private boolean trackPowerState = false;
 
     // Simulator responses
-    char EDC_OPS = 'O';
-    char EDC_PROG = 'P';
-    char EDC_ERROR = '!';
-
-    char ACC_CMD = 'S'; // Send general command
+    char EDC_OPS = 0x4F;
+    char EDC_PROG = 0x50;
 
     public SimulatorAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC Simulator")); // pass customized user name
@@ -247,32 +244,30 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         log.debug("Message type = " + command);
         switch (command) {
 
-            case 'S':
-                reply.setElement(i++, 0x4f); // capital O for Operation
+            case 'X': // eXit programming
+            case 'S': // Send packet
+            case 'D': // Deque packet
+            case 'Q': // Que packet
+            case 'F': // display memory
+            case 'C': // program loCo
+                reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
+            case 'P':
             case 'M':
-                reply.setElement(i++, 0x50); // capital P for Programming
-                break;
-
-            case 'R':
-                reply.setElement(i++, 0x50); // capital P for Programming
-                break;
-
-            case 'A': // accessory command
-                accessoryCommand(msg, reply);
+                reply.setElement(i++, EDC_PROG); // capital P for Programming
                 break;
 
             case 'E':
                 log.debug("TRACK_POWER_ON detected");
                 trackPowerState = true;
-                reply.setElement(i++, 0x4f); // capital O for Operation
+                reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
             case 'K':
                 log.debug("TRACK_POWER_OFF detected");
                 trackPowerState = false;
-                reply.setElement(i++, 0x4f); // capital O for Operation
+                reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
             case 'V':
@@ -280,195 +275,47 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 String replyString = "V999 01 01 1999";
                 reply = new EasyDccReply(replyString); // fake version number reply
                 i = replyString.length();
-//                reply.setElement(i++, 0x4f); // capital O for Operation
+//                reply.setElement(i++, 0x0d); // add CR
+//                reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
-//            case DCCppConstants.THROTTLE_CMD:
-//                log.debug("THROTTLE_CMD detected");
-//                s = msg.toString();
-//                try {
-//                    p = Pattern.compile(DCCppConstants.THROTTLE_CMD_REGEX);
-//                    msg = p.matcher(s);
-//                    if (!msg.matches()) {
-//                        log.error("Malformed Throttle Command: {}", s);
-//                        return (null);
-//                    }
-//                    r = "T " + msg.group(1) + " " + msg.group(3) + " " + msg.group(4);
-//                    reply = new EasyDccReply(r);
-//                    log.debug("Reply generated = {}", reply.toString());
-//                } catch (PatternSyntaxException e) {
-//                    log.error("Malformed pattern syntax! ");
-//                    return (null);
-//                } catch (IllegalStateException e) {
-//                    log.error("Group called before match operation executed string= " + s);
-//                    return (null);
-//                } catch (IndexOutOfBoundsException e) {
-//                    log.error("Index out of bounds string= " + s);
-//                    return (null);
-//                }
-//                break;
+            case 'G': // Consist
+                log.debug("Consist detected");
+                if (msg.toString().charAt(0) == 'D') { // Display consist
+                    replyString = "G" + msg.getElement(2) + msg.getElement(3) + "0000";
+                    reply = new EasyDccReply(replyString); // fake version number reply
+                    i = replyString.length();
+//                    reply.setElement(i++, 0x0d); // add CR
+                    break;
+                }
+                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
+                break;
 
+            case 'L': // Read Loco
+                log.debug("Read Loco detected");
+                replyString = "L" + msg.getElement(1) + msg.getElement(2) + msg.getElement(3) + msg.getElement(4) + "000000";
+                reply = new EasyDccReply(replyString); // fake reply dir = 00 step = 00 F5-12=00
+                i = replyString.length();
+//                reply.setElement(i++, 0x0d); // add CR
+//                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
+                break;
 
-//            case DCCppConstants.PROG_WRITE_CV_BYTE:
-//                log.debug("PROG_WRITE_CV_BYTE detected");
-//                s = msg.toString();
-//                try {
-//                    p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
-//                    msg = p.matcher(s);
-//                    if (!msg.matches()) {
-//                        log.error("Malformed ProgWriteCVByte Command: {}", s);
-//                        return (null);
-//                    }
-//                    // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
-//                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-//                    r = "r " + msg.group(3) + "|" + msg.group(4) + "|" + msg.group(1) +
-//                            " " + msg.group(2);
-//                    CVs[Integer.parseInt(msg.group(1))] = Integer.parseInt(msg.group(2));
-//                    reply = new EasyDccReply(r);
-//                    log.debug("Reply generated = {}", reply.toString());
-//                } catch (PatternSyntaxException e) {
-//                    log.error("Malformed pattern syntax! ");
-//                    return (null);
-//                } catch (IllegalStateException e) {
-//                    log.error("Group called before match operation executed string= " + s);
-//                    return (null);
-//                } catch (IndexOutOfBoundsException e) {
-//                    log.error("Index out of bounds string= " + s);
-//                    return (null);
-//                }
-//                break;
-
-//            case DCCppConstants.PROG_WRITE_CV_BIT:
-//                log.debug("PROG_WRITE_CV_BIT detected");
-//                s = msg.toString();
-//                try {
-//                    p = Pattern.compile(DCCppConstants.PROG_WRITE_BIT_REGEX);
-//                    msg = p.matcher(s);
-//                    if (!msg.matches()) {
-//                        log.error("Malformed ProgWriteCVBit Command: {}", s);
-//                        return (null);
-//                    }
-//                    // CMD: <B CV BIT Value CALLBACKNUM CALLBACKSUB>
-//                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV BIT Value>
-//                    r = "r " + msg.group(4) + "|" + msg.group(5) + "|" + msg.group(1) + " "
-//                            + msg.group(2) + msg.group(3);
-//                    int idx = Integer.parseInt(msg.group(1));
-//                    int bit = Integer.parseInt(msg.group(2));
-//                    int v = Integer.parseInt(msg.group(3));
-//                    if (v == 1) {
-//                        CVs[idx] = CVs[idx] | (0x0001 << bit);
-//                    } else {
-//                        CVs[idx] = CVs[idx] & ~(0x0001 << bit);
-//                    }
-//                    reply = new EasyDccReply(r);
-//                    log.debug("Reply generated = {}", reply.toString());
-//                } catch (PatternSyntaxException e) {
-//                    log.error("Malformed pattern syntax! ");
-//                    return (null);
-//                } catch (IllegalStateException e) {
-//                    log.error("Group called before match operation executed string= " + s);
-//                    return (null);
-//                } catch (IndexOutOfBoundsException e) {
-//                    log.error("Index out of bounds string= " + s);
-//                    return (null);
-//                }
-//                break;
-
-//            case 'R':
-//                log.debug("PROG_READ_CV detected");
-//                s = msg.toString();
-//                try {
-//                    p = Pattern.compile(DCCppConstants.PROG_READ_REGEX);
-//                    msg = p.matcher(s);
-//                    if (!msg.matches()) {
-//                        log.error("Malformed PROG_READ_CV Command: {}", s);
-//                        return (null);
-//                    }
-//                    // TODO: Work Magic Here to retrieve stored value.
-//                    // Make sure that CV exists
-//                    int cv = Integer.parseInt(msg.group(1));
-//                    int cvVal = 0; // Default to 0 if they're reading out of bounds.
-//                    if (cv < CVs.length) {
-//                        cvVal = CVs[Integer.parseInt(msg.group(1))];
-//                    }
-//                    // CMD: <R CV CALLBACKNUM CALLBACKSUB>
-//                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-//                    r = "r " + msg.group(2) + "|" + msg.group(3) + "|" + msg.group(1) + " "
-//                            + Integer.toString(cvVal);
-//
-//                    reply = new EasyDccReply(r);
-//                    log.debug("Reply generated = {}", reply.toString());
-//                } catch (PatternSyntaxException e) {
-//                    log.error("Malformed pattern syntax! ");
-//                    return (null);
-//                } catch (IllegalStateException e) {
-//                    log.error("Group called before match operation executed string= " + s);
-//                    return (null);
-//                } catch (IndexOutOfBoundsException e) {
-//                    log.error("Index out of bounds string= " + s);
-//                    return (null);
-//                }
-//                break;
+            case 'R':
+                log.debug("Read_CV detected");
+                replyString = "--";
+                reply = new EasyDccReply(replyString); // cannot read
+                i = replyString.length();
+//                reply.setElement(i++, 0x0d); // add CR
+//                reply.setElement(i++, EDC_PROG); // capital O for Operation
+                break;
 
             default:
                 log.debug("non-reply message detected");
-                reply.setElement(i++, 0x4f); // capital O for Operation
-                // Send no reply.
-                // return (null);
+                reply.setElement(i++, EDC_OPS); // capital O for Operation
         }
         log.debug("Reply generated = {}", reply.toString());
-        reply.setElement(i++, 0x0d); // add CR
+        reply.setElement(i++, 0x0d); // add final CR
         return (reply);
-    }
-
-    /**
-     * Extract item address from a message.
-     * <p>
-     * Copied from jmri.jmrix.nce.simulator.SimulatorAdapter.
-     *
-     * @param m received message
-     * @return address from the message
-     */
-    private int getEasyDccAddress(EasyDccMessage m) {
-        int addr = m.getElement(1);
-        addr = addr * 256;
-        addr = addr + m.getElement(2);
-        return addr;
-    }
-
-    private byte[] turnoutMemory = new byte[256]; // copied from DCC, remember last state
-
-    private EasyDccReply accessoryCommand(EasyDccMessage m, EasyDccReply reply) {
-        if (m.getElement(3) == 0x03 || m.getElement(3) == 0x04) {  // 0x03 = close, 0x04 = throw
-            String operation = "close";
-            if (m.getElement(3) == 0x04) {
-                operation = "throw";
-            }
-            int _accessoryAddress = getEasyDccAddress(m);
-            log.debug("Accessory command {} to {}T{}", operation, getSystemPrefix(), _accessoryAddress);
-            if (_accessoryAddress > 2044) { // NMRA limit
-                log.error("Turnout address greater than 2044, address: {}", _accessoryAddress);
-                return null;
-            }
-            int bit = (_accessoryAddress - 1) & 0x07;
-            int setMask = 0x01;
-            for (int i = 0; i < bit; i++) {
-                setMask = setMask << 1;
-            }
-            int clearMask = 0x0FFF - setMask;
-            //log.debug("setMask:" + Integer.toHexString(setMask) + " clearMask:" + Integer.toHexString(clearMask));
-            int offset = (_accessoryAddress - 1) >> 3;
-            int read = turnoutMemory[offset];
-            byte write = (byte) (read & clearMask & 0xFF);
-
-            if (operation.equals("close")) {
-                write = (byte) (write + setMask); // set bit if closed
-            }
-            turnoutMemory[offset] = write;
-            log.debug("wrote:" + Integer.toHexString(write));
-        }
-        reply.setElement(0, EDC_OPS);   // Operations ready reply!
-        return reply;
     }
 
     /**

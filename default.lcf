@@ -113,4 +113,3 @@ log4j.category.javax.jmdns=OFF
 
 #log4j.category.jmri.jmrit.display.layoutEditor=DEBUG
 #log4j.category.jmri.jmrit.display.layoutEditor.LayoutBlock=DEBUG
-#log4j.category.jmri.jmrix.easydcc=DEBUG
