@@ -242,6 +242,13 @@
                     </execution>
                 </executions>
                 -->
+                <configuration>
+                    <target>
+                        <ant antfile="${basedir}/build.xml">
+                            <target name="${target}"/>
+                        </ant>
+                    </target>
+                </configuration>
                 <dependencies>
                     <!-- use the version of ant we specify -->
                     <dependency>
