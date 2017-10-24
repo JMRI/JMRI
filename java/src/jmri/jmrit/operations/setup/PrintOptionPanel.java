@@ -207,18 +207,18 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         JPanel pPickupColor = new JPanel();
         pPickupColor.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutPickupColor")));
-        pickupColorChooser = new JColorChooser(ColorUtil.stringToColor(Setup.getPickupTextColor()));
+        pickupColorChooser = new JColorChooser(Setup.getPickupColor());
         pPickupColor.add(pickupColorChooser);
 
         JPanel pDropColor = new JPanel();
         pDropColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDropColor")));
-        dropColorChooser = new JColorChooser(ColorUtil.stringToColor(Setup.getDropTextColor()));
+        dropColorChooser = new JColorChooser(Setup.getDropColor());
         pDropColor.add(dropColorChooser);
 
         JPanel pLocalColor = new JPanel();
         pLocalColor.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutLocalColor")));
-        localColorChooser = new JColorChooser(ColorUtil.stringToColor(Setup.getLocalTextColor()));
+        localColorChooser = new JColorChooser(Setup.getLocalColor());
         pLocalColor.add(localColorChooser);
 
         p1.add(pFont);
