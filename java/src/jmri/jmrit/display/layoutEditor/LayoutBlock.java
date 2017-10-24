@@ -47,7 +47,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
-import jmri.util.swing.ComboBoxColorChooserPanel;
+import jmri.util.swing.ButtonSwatchColorChooserPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -1105,20 +1105,20 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             trackColorChooser = new JColorChooser(blockTrackColor);
             trackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            //AbstractColorChooserPanel trackColorPanels[] = { new ComboBoxColorChooserPanel()};
-            //trackColorChooser.setChooserPanels(trackColorPanels);
+            AbstractColorChooserPanel trackColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            trackColorChooser.setChooserPanels(trackColorPanels);
             layout.addItem(new BeanEditItem(trackColorChooser, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
 
             occupiedColorChooser = new JColorChooser(blockOccupiedColor);
             occupiedColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            //AbstractColorChooserPanel occupiedColorPanels[] = { new ComboBoxColorChooserPanel()};
-            //occupiedColorChooser.setChooserPanels(occupiedColorPanels);
+            AbstractColorChooserPanel occupiedColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            occupiedColorChooser.setChooserPanels(occupiedColorPanels);
             layout.addItem(new BeanEditItem(occupiedColorChooser, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
 
             extraColorChooser = new JColorChooser(blockExtraColor);
             extraColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            //AbstractColorChooserPanel extraColorPanels[] = { new ComboBoxColorChooserPanel()};
-            //extraColorChooser.setChooserPanels(extraColorPanels);
+            AbstractColorChooserPanel extraColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            extraColorChooser.setChooserPanels(extraColorPanels);
             layout.addItem(new BeanEditItem(extraColorChooser, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
 
             layout.setSaveItem(new AbstractAction() {
