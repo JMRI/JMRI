@@ -1143,16 +1143,17 @@ public class XNetReplyTest {
 
     @Test
     public void testToMonitorStringCSVersionReply(){
+        String version = jmri.util.IntlUtilities.valueOf(3.6);
         XNetReply r = new XNetReply("63 21 36 00 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: LZ100/LZV100",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: LZ100/LZV100",r.toMonitorString());
         r = new XNetReply("63 21 36 01 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: LH200",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: LH200",r.toMonitorString());
         r = new XNetReply("63 21 36 02 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: Compact or Other",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: Compact or Other",r.toMonitorString());
         r = new XNetReply("63 21 36 10 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: multiMaus",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: multiMaus",r.toMonitorString());
         r = new XNetReply("63 21 36 20 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: 32",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: 32",r.toMonitorString());
     }
 
     @Test
