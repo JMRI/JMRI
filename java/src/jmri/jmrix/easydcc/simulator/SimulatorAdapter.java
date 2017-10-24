@@ -173,7 +173,6 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
         // of the EasyDCC command station simulation.
-        // report status?
         log.info("EasyDCC Simulator Started");
         while (true) {
             try {
@@ -196,13 +195,11 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 } else {
                     buf.append("null message buffer");
                 }
-                log.debug(buf.toString());
+//                log.debug(buf.toString());
             }
             if (m != null) {
-                //if(m.isReplyExpected()){
                 r = generateReply(m);
                 writeReply(r);
-                //}
                 if (log.isDebugEnabled() && r != null) {
                     StringBuffer buf = new StringBuffer();
                     buf.append("EasyDCC Simulator Thread sent reply: ");
@@ -221,7 +218,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      */
     private EasyDccMessage readMessage() {
         EasyDccMessage msg = null;
-        log.debug("Simulator reading message");
+//        log.debug("Simulator reading message");
         try {
             if (inpipe != null && inpipe.available() > 0) {
                 msg = loadChars();
@@ -237,24 +234,54 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      * This is the heart of the simulation. It translates an
      * incoming EasyDccMessage into an outgoing EasyDccReply.
      *
-     * As yet, no meaningful replies are returned. TODO
+     * As yet, not all messages receive a meaningful reply. TODO: Throttle, Program
      */
     @SuppressWarnings("fallthrough")
     private EasyDccReply generateReply(EasyDccMessage msg) {
-        String s, r;
-        log.debug("Generate Reply to message type {} string = {}", msg.getElement(0), msg.toString());
-        EasyDccReply reply = new EasyDccReply();
-        int command = msg.getElement(0);
-//        if (command < 0x80)   // NOTE: NCE command station does not respond to
-//        {
-//            return null;      // command less than 0x80 (times out)
-//        }
-//        if (command > 0xBF) { // Command is out of range
-//            reply.setElement(0, EDC_ERROR);  // Nce command not supported
-//            return reply;
-//        }
+        log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
+        String s, r;
+        EasyDccReply reply = new EasyDccReply();
+        int i = 0;
+        char command = msg.toString().charAt(0);
+        log.debug("Message type = " + command);
         switch (command) {
+
+            case 'S':
+                reply.setElement(i++, 0x4f); // capital O for Operation
+                break;
+
+            case 'M':
+                reply.setElement(i++, 0x50); // capital P for Programming
+                break;
+
+            case 'R':
+                reply.setElement(i++, 0x50); // capital P for Programming
+                break;
+
+            case 'A': // accessory command
+                accessoryCommand(msg, reply);
+                break;
+
+            case 'E':
+                log.debug("TRACK_POWER_ON detected");
+                trackPowerState = true;
+                reply.setElement(i++, 0x4f); // capital O for Operation
+                break;
+
+            case 'K':
+                log.debug("TRACK_POWER_OFF detected");
+                trackPowerState = false;
+                reply.setElement(i++, 0x4f); // capital O for Operation
+                break;
+
+            case 'V':
+                log.debug("Read_CS_Version detected");
+                String replyString = "V999 01 01 1999";
+                reply = new EasyDccReply(replyString); // fake version number reply
+                i = replyString.length();
+//                reply.setElement(i++, 0x4f); // capital O for Operation
+                break;
 
 //            case DCCppConstants.THROTTLE_CMD:
 //                log.debug("THROTTLE_CMD detected");
@@ -281,31 +308,6 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 //                }
 //                break;
 
-            case 'S': // accessory command
-                accessoryCommand(msg, reply);
-                log.debug("Reply generated = {}", reply.toString());
-                break;
-
-            case 'T': // Turnout command
-//                if (msg.isOutputCmdMessage()) {
-//                    log.debug("Output Command Message: {}", msg.toString());
-//                    r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
-//                    log.debug("Reply String: {}", r);
-//                    reply = new EasyDccReply(r);
-//                    log.debug("Reply generated = {}", reply.toString());
-//                } else if (msg.isOutputAddMessage() || msg.isOutputDeleteMessage()) {
-//                    log.debug("Output Add/Delete Message");
-//                    r = "O";
-//                } else if (msg.isListOutputsMessage()) {
-//                    log.debug("Output List Message");
-//                    r = "T 1 2 3 4"; // Totally fake, but the right number of arguments.
-//                } else {
-//                    log.error("Invalid Output Command: {}{", msg.toString());
-//                    r = "Y 1 2";
-//                }
-                reply = new EasyDccReply("O");
-                log.debug("Reply generated = {}", reply.toString());
-                break;
 
 //            case DCCppConstants.PROG_WRITE_CV_BYTE:
 //                log.debug("PROG_WRITE_CV_BYTE detected");
@@ -408,32 +410,14 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 //                }
 //                break;
 
-            case 'E':
-                log.debug("TRACK_POWER_ON detected");
-                trackPowerState = true;
-                reply = new EasyDccReply("O");
-                log.debug("Reply generated = {}", reply.toString());
-                break;
-
-            case 'K':
-                log.debug("TRACK_POWER_OFF detected");
-                trackPowerState = false;
-                reply = new EasyDccReply("O");
-                log.debug("Reply generated = {}", reply.toString());
-                break;
-
-            case 'V':
-                log.debug("Read_CS_Version detected");
-                reply = new EasyDccReply("V999 01 01 1999"); // fake version number reply
-                log.debug("Reply generated = {}", reply.toString());
-                break;
-
             default:
                 log.debug("non-reply message detected");
-                reply = new EasyDccReply("O");
+                reply.setElement(i++, 0x4f); // capital O for Operation
                 // Send no reply.
                 // return (null);
         }
+        log.debug("Reply generated = {}", reply.toString());
+        reply.setElement(i++, 0x0d); // add CR
         return (reply);
     }
 
