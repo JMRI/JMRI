@@ -21,10 +21,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.ColorUtil;
 import jmri.util.FileUtil;
+import jmri.util.swing.ButtonSwatchColorChooserPanel;
 import jmri.util.swing.FontComboUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,17 +210,26 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pPickupColor.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutPickupColor")));
         pickupColorChooser = new JColorChooser(Setup.getPickupColor());
+        AbstractColorChooserPanel pickupColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        pickupColorChooser.setChooserPanels(pickupColorPanels);
+        pickupColorChooser.setPreviewPanel(new JPanel());
         pPickupColor.add(pickupColorChooser);
 
         JPanel pDropColor = new JPanel();
         pDropColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDropColor")));
         dropColorChooser = new JColorChooser(Setup.getDropColor());
+        AbstractColorChooserPanel dropColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        dropColorChooser.setChooserPanels(dropColorPanels);
+        dropColorChooser.setPreviewPanel(new JPanel());
         pDropColor.add(dropColorChooser);
 
         JPanel pLocalColor = new JPanel();
         pLocalColor.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutLocalColor")));
         localColorChooser = new JColorChooser(Setup.getLocalColor());
+        AbstractColorChooserPanel localColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        localColorChooser.setChooserPanels(localColorPanels);
+        localColorChooser.setPreviewPanel(new JPanel());
         pLocalColor.add(localColorChooser);
 
         p1.add(pFont);
