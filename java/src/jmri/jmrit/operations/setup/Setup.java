@@ -201,9 +201,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
-    private String pickupColor = ColorUtil.ColorBlack;
-    private String dropColor = ColorUtil.ColorBlack;
-    private String localColor = ColorUtil.ColorBlack;
+    private Color pickupColor = Color.black;
+    private Color dropColor = Color.black;
+    private Color localColor = Color.black;
     private String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
     private String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
     private String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
@@ -1423,39 +1423,51 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static String getDropTextColor() {
-        return getDefault().dropColor;
+        return ColorUtil.colorToColorName(getDefault().dropColor);
     }
 
     public static void setDropTextColor(String color) {
-        getDefault().dropColor = color;
+        getDefault().dropColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setDropColor(Color c) {
+        getDefault().dropColor = c;
     }
 
     public static String getPickupTextColor() {
-        return getDefault().pickupColor;
+        return ColorUtil.colorToColorName(getDefault().pickupColor);
     }
 
     public static void setPickupTextColor(String color) {
-        getDefault().pickupColor = color;
+        getDefault().pickupColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setPickupColor(Color c) {
+        getDefault().pickupColor = c;
     }
 
     public static String getLocalTextColor() {
-        return getDefault().localColor;
+        return ColorUtil.colorToColorName(getDefault().localColor);
     }
 
     public static void setLocalTextColor(String color) {
-        getDefault().localColor = color;
+        getDefault().localColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setLocalColor(Color c) {
+        getDefault().localColor = c;
     }
 
     public static Color getPickupColor() {
-        return getColor(getDefault().pickupColor);
+        return getDefault().pickupColor;
     }
 
     public static Color getDropColor() {
-        return getColor(getDefault().dropColor);
+        return getDefault().dropColor;
     }
 
     public static Color getLocalColor() {
-        return getColor(getDefault().localColor);
+        return getDefault().localColor;
     }
 
     public static Color getColor(String colorName) {

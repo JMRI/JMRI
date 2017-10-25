@@ -782,9 +782,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         // format
         Setup.setManifestFormat((String) manifestFormatComboBox.getSelectedItem());
         // drop and pick up color option
-        Setup.setDropTextColor(ColorUtil.colorToString(dropColorChooser.getColor()));
-        Setup.setPickupTextColor(ColorUtil.colorToString(pickupColorChooser.getColor()));
-        Setup.setLocalTextColor(ColorUtil.colorToString(localColorChooser.getColor()));
+        Setup.setDropColor(dropColorChooser.getColor());
+        Setup.setPickupColor(pickupColorChooser.getColor());
+        Setup.setLocalColor(localColorChooser.getColor());
         // save engine pick up message format
         Setup.setPickupEnginePrefix(pickupEngPrefix.getText());
         String[] format = new String[enginePickupMessageList.size()];
