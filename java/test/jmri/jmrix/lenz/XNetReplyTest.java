@@ -1095,7 +1095,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringLIVersionReply(){
         XNetReply r = new XNetReply("02 01 36 34");
-        Assert.assertEquals("Monitor String","LI10x Hardware Version: 0.1 Software Version: 3.6",r.toMonitorString());
+        Assert.assertEquals("Monitor String","LI10x Hardware Version: "+jmri.util.IntlUtilities.valueOf(0.1)+" Software Version: "+jmri.util.IntlUtilities.valueOf(3.6),r.toMonitorString());
     }
 
     @Test
@@ -1159,7 +1159,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringCSV1VersionReply(){
         XNetReply r = new XNetReply("62 21 21 62");
-        Assert.assertEquals("Monitor String","Command Station Software Version: 2.1 Type: Unknown (X-Bus V1 or V2)",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: "+jmri.util.IntlUtilities.valueOf(2.1)+" Type: Unknown (X-Bus V1 or V2)",r.toMonitorString());
     }
 
     @Test
