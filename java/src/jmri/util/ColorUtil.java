@@ -136,7 +136,7 @@ public class ColorUtil {
                       return Color.magenta;
                    } if( string.equals(Bundle.getMessage("Cyan"))) {
                       return Color.cyan;
-                   } if( string.equals(Bundle.getMessage("Clear"))) {
+                   } if( string.equals(Bundle.getMessage("ColorClear"))) {
                        return null;
                    } if( string.equals(Bundle.getMessage("None"))) {
                        return null;
