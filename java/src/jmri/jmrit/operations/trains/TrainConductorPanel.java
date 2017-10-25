@@ -189,7 +189,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
                     } else {
                         moveButton.setEnabled(false);
-                        setButton.setEnabled(false);
+                        modifyButton.setEnabled(false);
                     }
                     
                     textStatus.setText(getStatus(rl, IS_MANIFEST));
@@ -201,6 +201,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                         moveButton.setText(Bundle.getMessage("Move"));
                     }
                     updateComplete();
+                    
                 }
             }
         });

@@ -2426,46 +2426,58 @@ public class LayoutTurnout extends LayoutTrack {
                     || (connectC != null) || (connectD != null)) {
                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
                 if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectAName) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectAName);
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            LayoutTrack lt = lf.findObjectByName(connectA.getName());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
                 if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectBName) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectBName);
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            LayoutTrack lt = lf.findObjectByName(connectB.getName());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
                 if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectCName) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectCName);
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            LayoutTrack lt = lf.findObjectByName(connectC.getName());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
                 if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectDName) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectDName);
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            LayoutTrack lt = lf.findObjectByName(connectD.getName());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
