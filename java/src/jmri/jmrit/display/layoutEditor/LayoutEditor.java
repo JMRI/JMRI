@@ -445,11 +445,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     //Selected point information
     private transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
-    private transient Object selectedObject = null;       //selected object, null if nothing selected
-    private transient Object prevSelectedObject = null;   //previous selected object, for undo
+    protected transient Object selectedObject = null;       //selected object, null if nothing selected
+    protected transient Object prevSelectedObject = null;   //previous selected object, for undo
     private int selectedPointType = 0;          //hit point type within the selected object
 
-    private transient Object foundObject = null; //found object, null if nothing found
+    private transient LayoutTrack foundObject = null; //found object, null if nothing found
 
     private transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
 
@@ -457,7 +457,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     @SuppressWarnings("unused")
     private boolean foundNeedsConnect = false; //true if found point needs a connection
-    private transient Object beginObject = null; //begin track segment connection object, null if
+    private transient LayoutTrack beginObject = null; //begin track segment connection object, null if
     //none
     private transient Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
     private int beginPointType = LayoutTrack.NONE; //connection type within begin connection object
@@ -5402,7 +5402,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     private boolean findLayoutTracksHitPoint(@Nonnull Point2D loc,
-            boolean requireUnconnected, @Nullable Object avoid) {
+            boolean requireUnconnected, @Nullable LayoutTrack avoid) {
         boolean result = false; // assume failure (pessimist!)
 
         foundObject = null;
@@ -7029,7 +7029,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         addAnchor(currentPoint);
     }
 
-    private PositionablePoint addAnchor(@Nonnull Point2D p) {
+    protected PositionablePoint addAnchor(@Nonnull Point2D p) {
         //get unique name
         String name = finder.uniqueName("A", numAnchors++);
 
@@ -7407,8 +7407,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * Adds a link in the 'to' object to the 'from' object
      */
-    private void setLink(@Nonnull LayoutTrack fromObject, int fromPointType,
-            @Nonnull Object toObject, int toPointType) {
+    protected void setLink(@Nonnull LayoutTrack fromObject, int fromPointType,
+            @Nonnull LayoutTrack toObject, int toPointType) {
         switch (toPointType) {
             case LayoutTrack.POS_POINT: {
                 if (fromPointType == LayoutTrack.TRACK) {
@@ -7955,7 +7955,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //removeLayoutTurnout
 
     private void substituteAnchor(@Nonnull Point2D loc,
-            @Nonnull Object o, @Nonnull TrackSegment t) {
+            @Nonnull LayoutTrack o, @Nonnull TrackSegment t) {
         PositionablePoint p = addAnchor(loc);
 
         if (t.getConnect1() == o) {
@@ -8252,7 +8252,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         redrawPanel();
     } //removeTrackSegment
 
-    private void disconnect(@Nonnull Object o, int type) {
+    private void disconnect(@Nonnull LayoutTrack o, int type) {
         if (o == null) {
             return;
         }
