@@ -88,7 +88,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     // to listen for status changes from Ecos system
     @Override
     public void reply(EcosReply m) {
-        log.debug("reply "+m);
+        log.debug("reply " + m);
         // is this a list of turnouts?
         EcosTurnout et;
 

@@ -15,12 +15,15 @@ import org.slf4j.LoggerFactory;
 public class EasyDccConsist extends jmri.implementation.DccConsist implements EasyDccListener {
 
     private EasyDccSystemConnectionMemo _memo = null;
+    private EasyDccTrafficController trafficController = null;
 
     // Initialize a consist for the specific address.
     // The Default consist type is an advanced consist
     public EasyDccConsist(int address, EasyDccSystemConnectionMemo memo) {
         super(address);
         _memo = memo;
+        // connect to the TrafficManager
+        trafficController = memo.getTrafficController();
     }
 
     // Initialize a consist for the specific address.
@@ -28,6 +31,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     public EasyDccConsist(DccLocoAddress address, EasyDccSystemConnectionMemo memo) {
         super(address);
         _memo = memo;
+        // connect to the TrafficManager
+        trafficController = memo.getTrafficController();
     }
 
     // Clean Up local storage.

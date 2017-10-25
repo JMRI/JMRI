@@ -46,6 +46,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
     public SimulatorAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC Simulator")); // pass customized user name
+        setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
     @Override

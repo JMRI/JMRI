@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from Marklin CS2 messages. The
  * "MarklinInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a MarklinPortController is via a pair of UDP Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -61,7 +61,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     }
 
     /**
-     * CommandStation implementation, not yet supported
+     * CommandStation implementation, not yet supported.
      */
     @Override
     public void sendPacket(byte[] packet, int count) {
@@ -264,4 +264,5 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     }
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class);
+
 }

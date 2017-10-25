@@ -9,7 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Description:	JUnit tests for the EasyDccPowerManager class
+ * JUnit tests for the EasyDccPowerManager class
  *
  * @author	Bob Jacobsen Copyright 2006
  */
@@ -65,6 +65,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
         apps.tests.Log4JFixture.setUp();
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
         controller = new EasyDccTrafficControlScaffold(memo);
+        memo.setEasyDccTrafficController(controller); // important for successful getTrafficController()
         p = new EasyDccPowerManager(memo);
     }
 

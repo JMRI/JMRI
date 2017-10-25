@@ -5,7 +5,7 @@ import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide ops mode programmers for EasyDcc
+ * Extend DefaultProgrammerManager to provide ops mode programmers for EasyDCC
  * systems.
  *
  * @see jmri.managers.DefaultProgrammerManager
@@ -19,7 +19,6 @@ public class EasyDccProgrammerManager extends DefaultProgrammerManager {
     public EasyDccProgrammerManager(Programmer serviceModeProgrammer, EasyDccSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         _memo = memo;
-        // localProgrammer = serviceModeProgrammer;
     }
 
     /**

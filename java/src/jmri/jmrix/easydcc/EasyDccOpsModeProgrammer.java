@@ -24,13 +24,11 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
 
     int mAddress;
     boolean mLongAddr;
-//    private SprogSystemConnectionMemo _memo = null;
 
     public EasyDccOpsModeProgrammer(int pAddress, boolean pLongAddr, EasyDccSystemConnectionMemo memo) {
         super(memo);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-//        _memo = memo;
     }
 
     /**

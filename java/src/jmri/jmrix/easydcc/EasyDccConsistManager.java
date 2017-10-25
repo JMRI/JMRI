@@ -16,6 +16,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
 
     private EasyDccConsistReader reader;
     private EasyDccSystemConnectionMemo _memo = null;
+    private EasyDccTrafficController trafficController = null;
 
     /**
      * Constructor - call the constructor for the superclass, and initialize the
@@ -28,6 +29,8 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         super();
         reader = new EasyDccConsistReader();
         _memo = memo;
+        // connect to the TrafficManager
+        trafficController = memo.getTrafficController();
     }
 
     /**
@@ -103,7 +106,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
             log.debug("Sending request for next consist, _lastAddress is: {}", _lastAddress);
             currentState = SEARCHREQUESTSENT;
             EasyDccMessage msg = EasyDccMessage.getDisplayConsist(++_lastAddress);
-            _memo.getTrafficController().sendEasyDccMessage(msg, this);
+            trafficController.sendEasyDccMessage(msg, this);
         }
 
         // Listener for messages from the command station
@@ -118,7 +121,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
                 // previously.  If the message has any other
                 // opcode, we can ignore the message.
                 if (log.isDebugEnabled()) {
-                    log.debug("Message Recieved in SEARCHREQUESTSENT state.  Message is: {}", r.toString());
+                    log.debug("Message Received in SEARCHREQUESTSENT state. Message is: {}", r.toString());
                 }
                 if (r.getOpCode() == 'G') {
                     // This is the response we're looking for
@@ -160,7 +163,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
                                     tempAddr & 0x7fff, (tempAddr & 0x7fff) > 99);
                             if (currentConsist != null) {
                                 currentConsist.restore(locoAddress, directionNormal);
-                            } else //should never happen since currentCOnsist get set in the first pass
+                            } else //should never happen since currentConsist gets set in the first pass
                             {
                                 log.error("currentConsist is null!");
                             }
@@ -174,7 +177,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
                     }
                 } else {
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Recieved in IDLE state.  Message is: {}", r.toString());
+                        log.debug("Message Received in IDLE state. Message is: {}", r.toString());
                     }
                 }
             }

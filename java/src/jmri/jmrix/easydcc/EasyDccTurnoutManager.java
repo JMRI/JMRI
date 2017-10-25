@@ -11,10 +11,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */
-public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
+public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager implements EasyDccListener {
 
     EasyDccSystemConnectionMemo _memo = null;
     private String prefix = "E";
+    private EasyDccTrafficController trafficController = null;
     public final static int MAX_ACC_DECODER_ADDRESS = 511;
 
     public EasyDccTurnoutManager() {
@@ -24,6 +25,11 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     public EasyDccTurnoutManager(EasyDccSystemConnectionMemo memo) {
         _memo = memo;
         prefix = memo.getSystemPrefix();
+        // connect to the TrafficManager
+        trafficController = memo.getTrafficController();
+        // listen for turnout creation
+        // connect to the TrafficManager
+        trafficController.addEasyDccListener(this);
         log.debug("EasyDCC Turnout Manager prefix={}", prefix);
     }
 
@@ -36,10 +42,25 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        t = new EasyDccTurnout(addr, _memo);
+        t = new EasyDccTurnout(prefix, addr, trafficController);
         t.setUserName(userName);
 
         return t;
+    }
+
+    /**
+     * Listeners for messages from the command station.
+     */
+    @Override
+    public void message(EasyDccMessage m) {
+        log.debug("message received unexpectedly: {}", m.toString());
+    }
+
+    // Listen for status changes from EasyDcc system
+    @Override
+    public void reply(EasyDccReply r) {
+        // There isn't anything meaningful coming back at this time.
+        log.debug("reply received unexpectedly: {}", r.toString());
     }
 
     /**

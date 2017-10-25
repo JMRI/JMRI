@@ -1,6 +1,7 @@
 package jmri.jmrix.easydcc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -26,24 +27,16 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
 
     /**
      * Ctor
-     */
-//    public EasyDccTrafficController() {
-//        super();
-//        log.debug("creating a new EasyDccTrafficController object w/o memo");
-//    }
-
-    /**
-     * Ctor
      *
      * @param adaptermemo associated SystemConnectionMemo
      */
-    public EasyDccTrafficController(EasyDccSystemConnectionMemo adaptermemo) {
+    public EasyDccTrafficController(@Nonnull EasyDccSystemConnectionMemo adaptermemo) {
         super();
         mMemo = adaptermemo;
         log.debug("creating a new EasyDccTrafficController object");
     }
 
-    // The methods to implement the EasyDccInterface
+    // Methods to implement the EasyDccInterface
 
     @Override
     public synchronized void addEasyDccListener(EasyDccListener l) {

@@ -18,7 +18,7 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
     }
 
     String userName = "EasyDcc"; // NOI18N
-    EasyDccTrafficController trafficController = null;
+    private EasyDccTrafficController trafficController = null;
 
     @Override
     public String getUserName() {

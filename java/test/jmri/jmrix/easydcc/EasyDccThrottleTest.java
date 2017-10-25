@@ -201,7 +201,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold(null);
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new EasyDccThrottleManager(memo));
-        instance = new EasyDccThrottle(memo,new jmri.DccLocoAddress(100,true));
+        instance = new EasyDccThrottle(memo, new jmri.DccLocoAddress(100,true));
     }
 
     @After

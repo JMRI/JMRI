@@ -1,7 +1,7 @@
 /**
  * Tests for the jmri.jmrix.nce.EasyDccConsistManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2017
+ * @author Paul Bender Copyright (C) 2012,2017
  */
 package jmri.jmrix.easydcc;
 
@@ -99,16 +99,17 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
+        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
         t = new EasyDccTrafficControlScaffold(memo);
+        memo.setEasyDccTrafficController(t); // important for successful getTrafficController()
         cm = new EasyDccConsistManager(memo);
     }
 
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
         cm = null;
+        apps.tests.Log4JFixture.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class);

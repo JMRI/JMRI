@@ -147,7 +147,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     public void setUp() {
         c = null;
         apps.tests.Log4JFixture.setUp();
-        tc = new EasyDccTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
+        tc = new EasyDccTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC Test"));
     }
 
     @Override
