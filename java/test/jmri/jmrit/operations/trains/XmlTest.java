@@ -101,8 +101,8 @@ public class XmlTest extends OperationsTestCase {
     public void testXMLCreate() throws JDOMException, IOException {
 
         // confirm that file name has been modified
-        Assert.assertEquals("test file name", "OperationsJUnitTestTrainRoster.xml", TrainManagerXml
-                .instance().getOperationsFileName());
+        Assert.assertEquals("test file name", "OperationsJUnitTestTrainRoster.xml", InstanceManager.getDefault(TrainManagerXml.class)
+                .getOperationsFileName());
 
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         Route A = rmanager.newRoute("A");
