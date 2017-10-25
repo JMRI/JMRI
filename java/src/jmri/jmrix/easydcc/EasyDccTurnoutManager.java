@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for EasyDcc systems.
  * <p>
- * System names are "ETnnn", where nnn is the turnout number without padding.
+ * System names are "ETnnn", where nnn is the turnout number
+ * without padding, E is user configurable
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */
@@ -28,7 +29,6 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         // connect to the TrafficManager
         trafficController = memo.getTrafficController();
         // listen for turnout creation
-        // connect to the TrafficManager
         trafficController.addEasyDccListener(this);
         log.debug("EasyDCC Turnout Manager prefix={}", prefix);
     }
@@ -42,7 +42,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        t = new EasyDccTurnout(prefix, addr, trafficController);
+        t = new EasyDccTurnout(prefix, addr, _memo);
         t.setUserName(userName);
 
         return t;
@@ -117,10 +117,8 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      */
     @Deprecated
     static public EasyDccTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new EasyDccTurnoutManager();
-        }
-        return _instance;
+        log.warn("deprecated instance() call for EasyDccTurnoutManager");
+        return null;
     }
 
     /**

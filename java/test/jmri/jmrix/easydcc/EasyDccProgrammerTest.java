@@ -253,7 +253,7 @@ public class EasyDccProgrammerTest extends TestCase {
         Assert.assertEquals(" programmer listener not invoked again", 1, rcvdInvoked);
     }
 
-    // internal class to simulate a EasyDccListener
+    // internal class to simulate an EasyDccListener
     class EasyDccListenerScaffold implements jmri.ProgListener {
 
         public EasyDccListenerScaffold() {

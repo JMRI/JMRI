@@ -14,17 +14,18 @@ import org.junit.Before;
 public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
 
     private EasyDccTrafficControlScaffold tcis = null;
+    private EasyDccSystemConnectionMemo memo = null;
 
     @Before
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface
-        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
+        memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
         tcis = new EasyDccTrafficControlScaffold(memo);
         memo.setEasyDccTrafficController(tcis); // important for successful getTrafficController()
 
-        t = new EasyDccTurnout("E", 4, tcis);
+        t = new EasyDccTurnout("E", 4, memo);
     }
 
     @Override

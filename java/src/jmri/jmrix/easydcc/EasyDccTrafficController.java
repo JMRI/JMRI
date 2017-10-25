@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
+ * <p>
+ * Migrated for multiple connections, multi char connection prefix and Simulator.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -146,7 +148,6 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     protected void setInstance() {
         // this is called from AbstractMRTrafficController, so suppress this
         // error.
-        //log.error("Deprecated method setInstance called");
     }
 
     @Override
@@ -156,7 +157,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // note special case:  CV read / register read messages dont actually
+        // note special case:  CV read / register read messages don't actually
         // end until a P is received!
         if ((msg.getElement(0) == 'C' && msg.getElement(1) == 'V') || (msg.getElement(0) == 'V')) {
             // require the P

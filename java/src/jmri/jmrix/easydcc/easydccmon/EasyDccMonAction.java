@@ -22,7 +22,7 @@ public class EasyDccMonAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // create a EasyDccMonFrame
+        // create an EasyDccMonFrame
         EasyDccMonFrame f = new EasyDccMonFrame(_memo);
         try {
             f.initComponents();

@@ -28,9 +28,9 @@ public class EasyDccTurnout extends AbstractTurnout {
      *
      * @param number the NMRA turnout number from 0 to 511
      */
-    public EasyDccTurnout(String prefix, int number, EasyDccTrafficController controller) {
+    public EasyDccTurnout(String prefix, int number, EasyDccSystemConnectionMemo memo) {
         super(prefix + "T" + number);
-        tc = controller;
+        tc = memo.getTrafficController();
         _number = number;
         _prefix = prefix;
         // At construction, don't register for messages (see package doc)

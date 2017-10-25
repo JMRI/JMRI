@@ -25,9 +25,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        if (adapter == null) {
-            adapter = new NetworkDriverAdapter();
-        }
+        adapter = new NetworkDriverAdapter();
     }
 
     @Override
@@ -35,66 +33,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
-    /*public Element store(Object o) {
-     ConnectionConfig c = (ConnectionConfig)o;
-     Element e = new Element("connection");
-     e.setAttribute("manufacturer", c.getManufacturer());
-     e.setAttribute("port", c.host.getText());
-     e.setAttribute("option1", c.port.getText());
-
-     e.setAttribute("class", this.getClass().getName());
-
-     return e;
-     }*/
-
-    /*public boolean load(Element e) {
-     boolean result = true;
-     // configure port name
-     String hostName = e.getAttribute("port").getValue();
-     String portNumber = e.getAttribute("option1").getValue();
-
-     // notify
-     JFrame f = new JFrame("EasyDCC network connection");
-     f.getContentPane().add(new JLabel("Connecting to "+hostName+":"+portNumber));
-     f.pack();
-     f.setVisible(true);
-
-     // slightly different, as not based on a serial port...
-     // create the adapter
-     NetworkDriverAdapter client = new NetworkDriverAdapter();
-
-     // start the connection
-     try {
-     client.connect(hostName, Integer.parseInt(portNumber));
-     } catch (Exception ex) {
-     log.error("Error opening connection to "+hostName+" was: "+ex);
-     result = false;
-     }
-        
-     String manufacturer = null;
-     try { 
-     manufacturer = e.getAttribute("manufacturer").getValue();
-     } catch ( NullPointerException ex) { //Considered normal if not present
-     }
-
-     // configure the other instance objects
-     client.configure();
-
-     f.setVisible(false);
-     f.dispose();
-
-     // register, so can be picked up
-     register(hostName, portNumber, manufacturer);
-     return result;
-     }*/
-
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    /*protected void register(String host, String port, String manufacturer) {
-     InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, manufacturer));
-     }*/
 
 }

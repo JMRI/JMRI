@@ -282,7 +282,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                             modeMsg = new EcosMessage("set(" + ecosObject + ", stop)");
                             break;
                         default:
-                            modeMsg = new EcosMessage("request(" + ecosObject + ",control)");
+                            modeMsg = new EcosMessage("request(" + ecosObject + ", control)");
                             break;
                     }
                     modeMsg.setTimeout(50);
@@ -322,6 +322,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
+
     private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class);
 
 }

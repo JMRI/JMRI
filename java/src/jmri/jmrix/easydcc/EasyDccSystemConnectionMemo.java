@@ -14,9 +14,12 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
+ * <p>
+ * Migrated for multiple connections, multi char connection prefix and Simulator.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -39,7 +42,6 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     public EasyDccSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name);
-
         register(); // registers general type
         log.debug("EasyDCC SystemConnectionMemo prefix={}", prefix);
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type

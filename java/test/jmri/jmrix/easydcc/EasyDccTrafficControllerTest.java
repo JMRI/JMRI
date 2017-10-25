@@ -20,7 +20,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
 
     @Test
     public void testSendThenRcvReply() throws Exception {
-        c = (EasyDccTrafficController)tc;
+        c = (EasyDccTrafficController) tc;
 
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -61,7 +61,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
     }
 
-    // internal class to simulate a EasyDccListener
+    // internal class to simulate an EasyDccListener
     class EasyDccListenerScaffold implements EasyDccListener {
 
         public EasyDccListenerScaffold() {
@@ -82,7 +82,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     EasyDccReply rcvdReply;
     EasyDccMessage rcvdMsg;
 
-    // internal class to simulate a EasyDccPortController
+    // internal class to simulate an EasyDccPortController
     class EasyDccPortControllerScaffold extends EasyDccPortController {
 
         @Override
@@ -134,10 +134,10 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         }
     }
     DataOutputStream ostream;  // Traffic controller writes to this
-    DataInputStream tostream; // so we can read it from this
+    DataInputStream tostream;  // so we can read it from this
 
     DataOutputStream tistream; // tests write to this
-    DataInputStream istream;  // so the traffic controller can read from this
+    DataInputStream istream;   // so the traffic controller can read from this
 
     EasyDccTrafficController c;
     
