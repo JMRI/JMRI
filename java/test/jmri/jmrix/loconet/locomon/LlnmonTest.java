@@ -298,7 +298,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x12, 0x40, 0x20, 0x10, 0x08, 0x10, 0x04, 0x02, 0x01, 0x7F, 0x0A});
         assertEquals("SV2 test 3","(SV Format 2) Write single SV request to destination address "+jmri.util.IntlUtilities.valueOf(41024)+" initiated by agent 1:\n"
-                +"\tChange SV2,064 to 4\n"
+                +"\tChange SV"+jmri.util.IntlUtilities.valueOf(2064)+" to 4\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x10, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x08});
