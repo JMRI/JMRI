@@ -242,6 +242,13 @@
                     </execution>
                 </executions>
                 -->
+                <configuration>
+                    <target>
+                        <ant antfile="${basedir}/build.xml">
+                            <target name="${target}"/>
+                        </ant>
+                    </target>
+                </configuration>
                 <dependencies>
                     <!-- use the version of ant we specify -->
                     <dependency>
@@ -573,6 +580,20 @@
                     <showSuccess>false</showSuccess>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.5</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependency-updates-report</report>
+                            <report>plugin-updates-report</report>
+                            <report>property-updates-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>        
         </plugins>
     </reporting>
 
