@@ -11,8 +11,10 @@ import java.util.Map.Entry;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
@@ -805,13 +807,102 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     JMenu stateMenu(final String name, int state) {
         JMenu menu = new JMenu(name);
-        JMenu colorMenu = new JMenu(Bundle.getMessage("FontColor"));
-        getPopupUtility().makeColorMenu(colorMenu, state);
+        JMenuItem colorMenu = new JMenuItem(Bundle.getMessage("FontColor"));
+        colorMenu.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog((JComponent)this,
+                                 Bundle.getMessage("FontColor"),
+                                 getColor(state));
+            if (desiredColor!=null ) {
+                 setColor(desiredColor,state);
+            }
+        });
         menu.add(colorMenu);
-        colorMenu = new JMenu(Bundle.getMessage("FontBackgroundColor"));
-        getPopupUtility().makeColorMenu(colorMenu, state + 1);
+        colorMenu = new JMenuItem(Bundle.getMessage("FontBackgroundColor"));
+        colorMenu.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog((JComponent)this,
+                                 Bundle.getMessage("FontBackgroundColor"),
+                                 getColor(state+1));
+            if (desiredColor!=null ) {
+                 setColor(desiredColor,state+1);
+            }
+        });
         menu.add(colorMenu);
         return menu;
+    }
+
+    private void setColor(Color desiredColor, int state){
+        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();        
+        switch (state) {
+           case PositionablePopupUtil.FONT_COLOR:
+              util.setForeground(desiredColor);
+              break;
+           case PositionablePopupUtil.BACKGROUND_COLOR:
+              util.setBackgroundColor(desiredColor);
+              break;
+           case PositionablePopupUtil.BORDER_COLOR:
+              util.setBorderColor(desiredColor);
+              break;
+           case UNKOWN_FONT_COLOR:
+              setTextUnknown(desiredColor);
+              break;
+           case UNKOWN_BACKGROUND_COLOR:
+              util.setHasBackground(desiredColor != null);
+              setBackgroundUnknown(desiredColor);
+              break;
+           case ACTIVE_FONT_COLOR:
+              setTextActive(desiredColor);
+              break;
+           case ACTIVE_BACKGROUND_COLOR:
+              util.setHasBackground(desiredColor != null);
+              setBackgroundActive(desiredColor);
+              break;
+           case INACTIVE_FONT_COLOR:
+              setTextInActive(desiredColor);
+              break;
+           case INACTIVE_BACKGROUND_COLOR:
+              util.setHasBackground(desiredColor != null);
+              setBackgroundInActive(desiredColor);
+              break;
+           case INCONSISTENT_FONT_COLOR:
+              setTextInconsistent(desiredColor);
+              break;
+           case INCONSISTENT_BACKGROUND_COLOR:
+              util.setHasBackground(desiredColor != null);
+              setBackgroundInconsistent(desiredColor);
+              break;
+           default:
+              break;
+       }
+    }
+
+    private Color getColor(int state){
+        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();        
+        switch (state) {
+           case PositionablePopupUtil.FONT_COLOR:
+              return util.getForeground();
+           case PositionablePopupUtil.BACKGROUND_COLOR:
+              return util.getBackground();
+           case PositionablePopupUtil.BORDER_COLOR:
+              return util.getBorderColor();
+           case UNKOWN_FONT_COLOR:
+              return getTextUnknown();
+           case UNKOWN_BACKGROUND_COLOR:
+              return getBackgroundUnknown();
+           case ACTIVE_FONT_COLOR:
+              return getTextActive();
+           case ACTIVE_BACKGROUND_COLOR:
+              return getBackgroundActive();
+           case INACTIVE_FONT_COLOR:
+              return getTextInActive();
+           case INACTIVE_BACKGROUND_COLOR:
+              return getBackgroundInActive();
+           case INCONSISTENT_FONT_COLOR:
+              return getTextInconsistent();
+           case INCONSISTENT_BACKGROUND_COLOR:
+              return getBackgroundInconsistent();
+           default:
+              return null;
+       }
     }
 
     void changeLayoutSensorType() {
@@ -960,117 +1051,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (isIcon()) {
                 super.setBackgroundMenu(popup);
             }
-        }
-
-        @Override
-        protected ButtonGroup makeColorMenu(JMenu colorMenu, int type) {
-            ButtonGroup buttonGrp = super.makeColorMenu(colorMenu, type);
-            if (type == UNKOWN_BACKGROUND_COLOR || type == ACTIVE_BACKGROUND_COLOR
-                    || type == INACTIVE_BACKGROUND_COLOR || type == INCONSISTENT_BACKGROUND_COLOR) {
-                addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null, type);
-            }
-            return buttonGrp;
-        }
-
-        @Override
-        protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
-                final String name, final Color color, final int colorType) {
-            ActionListener a = new ActionListener() {
-                //final String desiredName = name;
-                final Color desiredColor = color;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    switch (colorType) {
-                        case FONT_COLOR:
-                            setForeground(desiredColor);
-                            break;
-                        case BACKGROUND_COLOR:
-                            setBackgroundColor(desiredColor);
-                            break;
-                        case BORDER_COLOR:
-                            setBorderColor(desiredColor);
-                            break;
-                        case UNKOWN_FONT_COLOR:
-                            setTextUnknown(desiredColor);
-                            break;
-                        case UNKOWN_BACKGROUND_COLOR:
-                            _self.setHasBackground(color != null);
-                            setBackgroundUnknown(desiredColor);
-                            break;
-                        case ACTIVE_FONT_COLOR:
-                            setTextActive(desiredColor);
-                            break;
-                        case ACTIVE_BACKGROUND_COLOR:
-                            _self.setHasBackground(color != null);
-                            setBackgroundActive(desiredColor);
-                            break;
-                        case INACTIVE_FONT_COLOR:
-                            setTextInActive(desiredColor);
-                            break;
-                        case INACTIVE_BACKGROUND_COLOR:
-                            _self.setHasBackground(color != null);
-                            setBackgroundInActive(desiredColor);
-                            break;
-                        case INCONSISTENT_FONT_COLOR:
-                            setTextInconsistent(desiredColor);
-                            break;
-                        case INCONSISTENT_BACKGROUND_COLOR:
-                            _self.setHasBackground(color != null);
-                            setBackgroundInconsistent(desiredColor);
-                            break;
-                        default:
-                            break;
-                    }
-                    _parent.getEditor().setAttributes(_self, _parent);
-                }
-            };
-            JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-            r.addActionListener(a);
-
-            switch (colorType) {
-                case FONT_COLOR:
-                    setColorButton(getForeground(), color, r);
-                    break;
-                case BACKGROUND_COLOR:
-                    if (hasBackground()) {
-                        setColorButton(getBackground(), color, r);
-                    } else {
-                        setColorButton(null, color, r);
-                    }
-                    break;
-                case BORDER_COLOR:
-                    setColorButton(getBorderColor(), color, r);
-                    break;
-                case UNKOWN_FONT_COLOR:
-                    setColorButton(getTextUnknown(), color, r);
-                    break;
-                case UNKOWN_BACKGROUND_COLOR:
-                    setColorButton(getBackgroundUnknown(), color, r);
-                    break;
-                case ACTIVE_FONT_COLOR:
-                    setColorButton(getTextActive(), color, r);
-                    break;
-                case ACTIVE_BACKGROUND_COLOR:
-                    setColorButton(getBackgroundActive(), color, r);
-                    break;
-                case INACTIVE_FONT_COLOR:
-                    setColorButton(getTextInActive(), color, r);
-                    break;
-                case INACTIVE_BACKGROUND_COLOR:
-                    setColorButton(getBackgroundInActive(), color, r);
-                    break;
-                case INCONSISTENT_FONT_COLOR:
-                    setColorButton(getTextInconsistent(), color, r);
-                    break;
-                case INCONSISTENT_BACKGROUND_COLOR:
-                    setColorButton(getBackgroundInconsistent(), color, r);
-                    break;
-                default:
-                    break;
-            }
-            colorButtonGroup.add(r);
-            menu.add(r);
         }
     }
 

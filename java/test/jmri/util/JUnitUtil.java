@@ -428,7 +428,10 @@ public class JUnitUtil {
             }
 
         };
-        InstanceManager.setDefault(jmri.CommandStation.class, cs);
+        // we should use setDefault here, but setCommandStation will
+        // install a consist manager if one is not already installed.
+        //InstanceManager.setDefault(jmri.CommandStation.class,cs);
+        InstanceManager.setCommandStation(cs);
     }
 
     public static void initDebugThrottleManager() {
