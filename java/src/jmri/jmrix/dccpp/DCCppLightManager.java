@@ -88,7 +88,7 @@ public class DCCppLightManager extends AbstractLightManager {
     /**
      * Public method to validate system name format.
      *
-     * @eturn VALID if system name has a valid format, else returns INVALID
+     * @return VALID if system name has a valid format, else returns INVALID
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -99,7 +99,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * Public method to validate system name for configuration.
      * Needed for the Abstract Light class.
      *
-     * @returns 'true' if system name has a valid meaning in current configuration,
+     * @return 'true' if system name has a valid meaning in current configuration,
      * else returns 'false' for now, this method always returns 'true'
      */
     @Override

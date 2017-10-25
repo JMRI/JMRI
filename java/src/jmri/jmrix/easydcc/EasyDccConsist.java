@@ -148,7 +148,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     /**
      * Add a Locomotive to a Consist.
      *
-     * @param address is the Locomotive address to add to the locomotive
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
@@ -177,7 +177,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
      * the command station.  This is used for restoring the consist
      * from a file or adding a consist read from the command station.
      *
-     * @param address is the Locomotive address to add to the locomotive
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
@@ -196,7 +196,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     /**
      * Remove a Locomotive from this Consist.
      *
-     * @param address is the Locomotive address to add to the locomotive
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      */
     @Override
     public synchronized void remove(DccLocoAddress LocoAddress) {
@@ -215,7 +215,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     /**
      * Add a Locomotive to an Advanced Consist.
      *
-     * @param address is the Locomotive address to add to the locomotive
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
@@ -253,7 +253,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     /**
      * Remove a Locomotive from an Advanced Consist
      *
-     * @param address is the Locomotive address to add to the locomotive
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      */
     @Override
     protected synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
@@ -286,7 +286,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     /**
      * Add a Locomotive to an EasyDCC Standard Consist.
      *
-     * @param address is the Locomotive address to add to the locomotive
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
@@ -311,7 +311,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     /**
      * Remove a Locomotive from an EasyDCC Standard Consist.
      *
-     * @param address is the Locomotive address to add to the locomotive
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      */
     public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
         if (log.isDebugEnabled()) {
