@@ -293,11 +293,11 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x48, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x49});
         assertEquals("SV2 test 2", "(SV Format 2) Reply from destination address 513 to Identify device request initiated by agent 1:\n"
-                +"\tDevice characteristics are manufacturer 3, developer number 4, product 1,541, serial number 2,055\n"
+                +"\tDevice characteristics are manufacturer 3, developer number 4, product "+jmri.util.IntlUtilities.valueOf(1541)+", serial number "+jmri.util.IntlUtilities.valueOf(2055)+"\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x12, 0x40, 0x20, 0x10, 0x08, 0x10, 0x04, 0x02, 0x01, 0x7F, 0x0A});
-        assertEquals("SV2 test 3","(SV Format 2) Write single SV request to destination address 41,024 initiated by agent 1:\n"
+        assertEquals("SV2 test 3","(SV Format 2) Write single SV request to destination address "+jmri.util.IntlUtilities.valueOf(41024)+" initiated by agent 1:\n"
                 +"\tChange SV2,064 to 4\n"
                 , f.displayMessage(l));
 
@@ -2614,7 +2614,7 @@ public class LlnmonTest extends TestCase {
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x5e, 0x00, 0x7f, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         assertEquals(" Immediate Packet test 69",
-                "Write CV on Main Track (Ops Mode) for Uhlenbrock IB-COM / Intellibox - Address: 32,512 CV: 0 Value: 0.\n",
+                "Write CV on Main Track (Ops Mode) for Uhlenbrock IB-COM / Intellibox - Address: "+jmri.util.IntlUtilities.valueOf(32512)+" CV: 0 Value: 0.\n",
             f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x5e, 0x00, 0x00, 0x01, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
