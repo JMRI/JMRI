@@ -109,8 +109,41 @@ public class ColorUtil {
                case ColorTrack:
                    return null;
                default:
-                   log.error("unknown color text '" + string + "' sent to stringToColor");
-                   return Color.black;
+                   // check translated strings, just in case there is one in a data file.
+                   if( string.equals(Bundle.getMessage("Black"))) {
+                      return Color.black;
+                   } if( string.equals(Bundle.getMessage("DarkGray"))) {
+                      return Color.darkGray;
+                   } if( string.equals(Bundle.getMessage("Gray"))) {
+                      return Color.gray;
+                   } if( string.equals(Bundle.getMessage("LightGray"))) {
+                      return Color.lightGray;
+                   } if( string.equals(Bundle.getMessage("White"))) {
+                      return Color.white;
+                   } if( string.equals(Bundle.getMessage("Red"))) {
+                      return Color.red;
+                   } if( string.equals(Bundle.getMessage("Pink"))) {
+                      return Color.pink;
+                   } if( string.equals(Bundle.getMessage("Yellow"))) {
+                      return Color.yellow;
+                   } if( string.equals(Bundle.getMessage("Green"))) {
+                      return Color.green;
+                   } if( string.equals(Bundle.getMessage("Orange"))) {
+                      return Color.orange;
+                   } if( string.equals(Bundle.getMessage("Blue"))) {
+                      return Color.blue;
+                   } if( string.equals(Bundle.getMessage("Magenta"))) {
+                      return Color.magenta;
+                   } if( string.equals(Bundle.getMessage("Cyan"))) {
+                      return Color.cyan;
+                   } if( string.equals(Bundle.getMessage("Clear"))) {
+                       return null;
+                   } if( string.equals(Bundle.getMessage("None"))) {
+                       return null;
+                   } else {
+                      log.error("unknown color text '" + string + "' sent to stringToColor");
+                      return Color.black;
+                   }
             }
         }
     }
