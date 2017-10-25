@@ -513,8 +513,11 @@ public class LayoutTurntable extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
                         LayoutTrack lt = lf.findObjectByName(rt.getConnect().getName());
-                        layoutEditor.setSelectionRect(lt.getBounds());
-                        lt.showPopup();
+                        // this shouldn't ever be null... however...
+                        if (lt != null) {
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
+                        }
                     }
                 });
 

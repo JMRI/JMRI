@@ -295,7 +295,12 @@ public class Train implements java.beans.PropertyChangeListener {
      * @return The color when highlighting the train's row
      */
     public Color getTableRowColor() {
-        return Setup.getColor(getTableRowColorName());
+        String colorName = getTableRowColorName();
+        if(colorName == NONE){
+           return null;
+        } else {
+           return Setup.getColor(colorName);
+        }
     }
 
     /**
