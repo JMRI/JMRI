@@ -8751,10 +8751,10 @@ public class LayoutEditorTools {
 
             JPanel panel1 = new JPanel(new FlowLayout());
 
-            turnoutSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            turnoutSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            turnoutSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            turnoutSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
+            turnoutSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
             if (turnoutMastFromMenu) {
                 JLabel turnoutMastNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
@@ -9280,10 +9280,10 @@ public class LayoutEditorTools {
         }
         // Initialize if needed
         if (signalMastsAtSlipFrame == null) {
-            slipSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            slipSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            slipSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            slipSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
+            slipSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            slipSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            slipSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            slipSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
             signalMastsAtSlipFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLayoutSlip"), false, true);
             signalMastsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
@@ -9778,10 +9778,10 @@ public class LayoutEditorTools {
         }
         // Initialize if needed
         if (signalMastsAtXingFrame == null) {
-            xingSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            xingSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            xingSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            xingSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
+            xingSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            xingSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            xingSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            xingSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
             signalMastsAtXingFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLevelXing"), false, true);
             signalMastsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
