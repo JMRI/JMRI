@@ -50,6 +50,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     public LocoNetThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot slot) {
         super(memo);
+        log.debug("Creeating LocoNetThrottle for address {}", slot.locoAddr());
         this.slot = slot;
         network = memo.getLnTrafficController();
         needToSetThrottleID = (slot.id() != throttleID);
@@ -453,7 +454,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (slot != pSlot) {
             log.error("notified of change in different slot");
         }
-        log.debug("notifyChangedSlot executing for slot {}, slotStatus {}", slot.getSlot(), Integer.toHexString(slot.slotStatus()));
+        log.debug("notifyChangedSlot executing for slot {}, slotStatus {} address {}", slot.getSlot(), Integer.toHexString(slot.slotStatus()), slot.locoAddr());
 
         // Save current layout state of spd/dirf/snd so we won't run amok
         // toggling values if another LocoNet entity accesses the slot while

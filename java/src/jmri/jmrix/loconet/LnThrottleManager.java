@@ -55,8 +55,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("requestThrottleSetup: address {}, control {}", address, control);
 
-        slotManager.slotFromLocoAddress(address.getNumber(), this);  //first try
-
         class RetrySetup implements Runnable {  //setup for retries and failure check
 
             DccLocoAddress address;
@@ -96,6 +94,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         retrySetupThread.setName("LnThrottleManager RetrySetup "+address);
         retrySetupThread.start();
         waitingForNotification.put(address.getNumber(), retrySetupThread);
+        slotManager.slotFromLocoAddress(address.getNumber(), this);  //first try
     }
 
     volatile Thread retrySetupThread;
@@ -133,42 +132,70 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      */
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
-        log.debug("notifyChangedSlot - slot {}, slotStatus {}", s.getSlot(), Integer.toHexString(s.slotStatus()));
-        // This is invoked only if the SlotManager knows that the LnThrottleManager is
-        // interested in the address associated with this slot.
+        log.debug("notifyChangedSlot - slot {}, slotStatus {}, address {}", s.getSlot(), Integer.toHexString(s.slotStatus()), s.locoAddr());
+        
+        if (waitingForNotification.containsKey(s.locoAddr())) {
+            // This is invoked only if the SlotManager knows that the LnThrottleManager is
+            // interested in the address associated with this slot.
+            
+            // NOTE: NEED TO REMOVE duplicate slot numbers before adding 
+            // this slot, to prevent a single slot from being inaccurately 
+            // associated with multiple different loco addresses.
 
-        // need to check to see if the slot is in a suitable state for creating a throttle.
-        if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
-            // loco is already in-use or is consist-mid or consist-sub
-            log.warn("slot {} address {} is  already in-use.",
-                    s.getSlot(), s.locoAddr());
-            // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
-            if (s.id() != throttleID) {
+            java.util.Enumeration keySet = slotForAddress.keys();
+
+            while (keySet.hasMoreElements()) {
+                Object key = keySet.nextElement();
+                if (key.getClass() == Integer.class) {
+                    int addr = (Integer)key;
+                    LocoNetSlot s2 = slotForAddress.get(addr);
+                    if ((s2.getSlot() != s.getSlot()) && (addr != s.locoAddr())) {
+                        log.debug("removing slotForAddress for address {} slot {}", addr, s2.getSlot());
+                        slotForAddress.remove(addr);
+                    }
+                }
+
+            }
+
+
+            // need to check to see if the slot is in a suitable state for creating a throttle.
+            if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
+                // loco is already in-use or is consist-mid or consist-sub
+                log.warn("slot {} address {} is  already in-use.",
+                        s.getSlot(), s.locoAddr());
+                // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
+                if (s.id() != throttleID) {
+                    // notify the LnThrottleManager about failure of acquisition.
+                    // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCITONALITY HERE
+                    //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
+                    //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
+                    
+
+                    slotForAddress.put(s.locoAddr(),s);
+                    notifyStealRequest(s.locoAddr());
+                    return;
+                }
+            }
+            if ((s.consistStatus() == LnConstants.CONSIST_MID) ||
+                    (s.consistStatus() == LnConstants.CONSIST_SUB)) {
+                // cannot acquire loco account is consist-mid or consist-sub
+                log.warn("slot {} address {} cannot be acquired for loco control account already in-use, consist-mid or consist-sub.",
+                        s.getSlot(), s.locoAddr());
                 // notify the LnThrottleManager about failure of acquisition.
-                // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCITONALITY HERE
-                //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
-                //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
-                slotForAddress.put(s.locoAddr(),s);
-                notifyStealRequest(s.locoAddr());
+                notifyRefused(s.locoAddr(), "Locomotive burried in a consist cannot be acquired.");
                 return;
             }
+            commitToAcquireThrottle(s);
+        } else {
+            log.warn("was notified of a slot change for loco address {} which is not currently being acquired.", s.locoAddr());
         }
-        if ((s.consistStatus() == LnConstants.CONSIST_MID) ||
-                (s.consistStatus() == LnConstants.CONSIST_SUB)) {
-            // cannot acquire loco account is consist-mid or consist-sub
-            log.warn("slot {} address {} cannot be acquired for loco control account already in-use, consist-mid or consist-sub.",
-                    s.getSlot(), s.locoAddr());
-            // notify the LnThrottleManager about failure of acquisition.
-            notifyRefused(s.locoAddr(), "Locomotive burried in a consist cannot be acquired.");
-            return;
-        }
-        commitToAcquireThrottle(s);
     }
 
     private void commitToAcquireThrottle(LocoNetSlot s) {
         // haven't identified a particular reason to refuse throttle acquisition at this time...
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
         s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
+        log.debug("Notifying throttle user of concrete throttle for address {}", s.locoAddr());
         notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));
         //end the waiting thread since we got a response
         if (waitingForNotification.containsKey(s.locoAddr())) {
