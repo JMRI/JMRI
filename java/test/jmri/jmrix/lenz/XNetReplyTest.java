@@ -892,7 +892,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringOKMessage(){
         XNetReply r = new XNetReply("01 04 05");
-        Assert.assertEquals("Monitor String","Command Successfully Sent/Normal Operations Resumed after timeout",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyOkMessage"),r.toMonitorString());
     }
 
    // check is this an Timeslot Restored message
@@ -937,7 +937,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringCSBusyMessage(){
         XNetReply r = new XNetReply("61 81 e0");
-        Assert.assertEquals("Monitor String","Command Station Busy",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSBusy"),r.toMonitorString());
     }
    
     // check is this a CS transfer error message
@@ -954,7 +954,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringCSTransferError(){
         XNetReply r = new XNetReply("61 80 e1");
-        Assert.assertEquals("Monitor String","Command Station Reported Transfer Error",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSTransferError"),r.toMonitorString());
     }
 
 
@@ -993,55 +993,55 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringErrorPCtoLI(){
         XNetReply r = new XNetReply("01 01 00");
-        Assert.assertEquals("Monitor String","Error occurred between the interface and the PC",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorPCtoLI"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorLItoCS(){
         XNetReply r = new XNetReply("01 02 03");
-        Assert.assertEquals("Monitor String","Error occurred between the interface and the command station.",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorLItoCS"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorUnknown(){
         XNetReply r = new XNetReply("01 03 02");
-        Assert.assertEquals("Monitor String","Unknown Communication Error",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorUnknown"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorNoTimeslot(){
         XNetReply r = new XNetReply("01 05 04");
-        Assert.assertEquals("Monitor String","The Command Station is no longer providing the LI a timeslot for communication",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorNoTimeSlot"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorBufferOverflow(){
         XNetReply r = new XNetReply("01 06 07");
-        Assert.assertEquals("Monitor String","Buffer overflow in the LI",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorBufferOverflow"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringTimeSlotRestored(){
         XNetReply r = new XNetReply("01 07 06");
-        Assert.assertEquals("Monitor String","Timeslot Restored",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyTimeSlotRestored"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDataSentNoTimeslot(){
         XNetReply r = new XNetReply("01 08 09");
-        Assert.assertEquals("Monitor String","Request Sent while the CS is not providing a Timeslot",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyRequestSentWhileNoTimeslot"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorBadData(){
         XNetReply r = new XNetReply("01 09 08");
-        Assert.assertEquals("Monitor String","Bad Data in Request sent to CS",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBadDataInRequest"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringRetransmissionRequested(){
         XNetReply r = new XNetReply("01 0A 0B");
-        Assert.assertEquals("Monitor String","Retransmission Requested",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyRetransmitRequest"),r.toMonitorString());
     }
 
     // check is this a Timeslot message  message
@@ -1097,49 +1097,49 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringBCEmergencyOff(){
         XNetReply r = new XNetReply("61 00 61");
-        Assert.assertEquals("Monitor String","Broadcast: Emergency Off (short circuit);",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBCEverythingOff"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringBCNormalOpers(){
         XNetReply r = new XNetReply("61 01 60");
-        Assert.assertEquals("Monitor String","Broadcast: Normal Operations Resumed;",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBCNormalOpsResumed"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringBCServiceModeEntry(){
         XNetReply r = new XNetReply("61 02 63");
-        Assert.assertEquals("Monitor String","Broadcast: Service Mode Entry;",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBCServiceEntry"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModeCSReady(){
         XNetReply r = new XNetReply("61 11 70");
-        Assert.assertEquals("Monitor String","Service Mode: Command Station Ready",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeCSReady"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModeShortCircuit(){
         XNetReply r = new XNetReply("61 12 73");
-        Assert.assertEquals("Monitor String","Service Mode: Short Circuit;",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeShort"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModeByteNotFound(){
         XNetReply r = new XNetReply("61 13 72");
-        Assert.assertEquals("Monitor String","Service Mode: Data Byte Not Found",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeDataByteNotFound"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModeCSBusy(){
         XNetReply r = new XNetReply("61 1F 7E");
-        Assert.assertEquals("Monitor String","Service Mode: Command Station Busy",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeCSBusy"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringCSNotSupported(){
         XNetReply r = new XNetReply("61 82 E3");
-        Assert.assertEquals("Monitor String","XpressNet Instruction not supported by Command Station",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSNotSupported"),r.toMonitorString());
     }
 
     @Test
