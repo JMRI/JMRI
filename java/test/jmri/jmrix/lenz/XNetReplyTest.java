@@ -1252,7 +1252,6 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringLIBaud4Reply(){
         XNetReply r = new XNetReply("F2 02 04 F4");
-        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 115,200 bps",r.toMonitorString());
         Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyLIBaud","115,200 bps"),r.toMonitorString());
     }
 
@@ -1283,57 +1282,67 @@ public class XNetReplyTest {
     public void testToMonitorStringCSVersionReply(){
         String version = jmri.util.IntlUtilities.valueOf(3.6);
         XNetReply r = new XNetReply("63 21 36 00 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: LZ100/LZV100",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeLZ100")),r.toMonitorString());
         r = new XNetReply("63 21 36 01 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: LH200",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeLH200")),r.toMonitorString());
         r = new XNetReply("63 21 36 02 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: Compact or Other",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeCompact")),r.toMonitorString());
         r = new XNetReply("63 21 36 10 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: multiMaus",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeMultiMaus")),r.toMonitorString());
         r = new XNetReply("63 21 36 20 55");
-        Assert.assertEquals("Monitor String","Command Station Software Version: "+version+" Type: 32",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,"32"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringCSV1VersionReply(){
         XNetReply r = new XNetReply("62 21 21 62");
-        Assert.assertEquals("Monitor String","Command Station Software Version: "+jmri.util.IntlUtilities.valueOf(2.1)+" Type: Unknown (X-Bus V1 or V2)",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersionV1",2.1,"32"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringBCEmeregncyStop(){
         XNetReply r = new XNetReply("81 00 81");
-        Assert.assertEquals("Monitor String","Broadcast: Emergency Stop (track power on)",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBCEverythingStop"),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseNormalLoco(){
         XNetReply r = new XNetReply("E3 30 C1 04 11");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Normal Locomotive: 260",r.toMonitorString());
+        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
+        targetString += Bundle.getMessage("XNetReplySearchNormalLabel") + " 260";
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseDoubleHeaderLoco(){
         XNetReply r = new XNetReply("E3 31 C1 04 17");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Loco in Double Header: 260",r.toMonitorString());
+        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
+        targetString += Bundle.getMessage("XNetReplySearchDHLabel") + " 260";
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseMUBaseLoco(){
         XNetReply r = new XNetReply("E3 32 00 04 C5");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: MU Base Address: 4",r.toMonitorString());
+        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
+        targetString += Bundle.getMessage("XNetReplySearchMUBaseLabel") + " 4";
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseMULoco(){
         XNetReply r = new XNetReply("E3 33 C1 04 15");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Loco in MU: 260",r.toMonitorString());
+        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
+        targetString += Bundle.getMessage("XNetReplySearchMULabel") + " 260";
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseFail(){
         XNetReply r = new XNetReply("E3 34 C1 04 15");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response: Search failed for: 260",r.toMonitorString());
+        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
+        targetString += Bundle.getMessage("XNetReplySearchFailedLabel") + " 260";
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     // the following are invalid by the XpressNet Standard, but we want to
