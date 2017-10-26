@@ -10,20 +10,23 @@ import javax.swing.JMenu;
  */
 public class SPROGMenu extends JMenu {
 
-    SprogSystemConnectionMemo _memo = null;
-
     public SPROGMenu(SprogSystemConnectionMemo memo) {
         super();
-        _memo = memo;
 
-        setText(memo.getUserName());
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText("Sprog");
+        }
 
-        add(new jmri.jmrix.sprog.sprogmon.SprogMonAction(Bundle.getMessage("MonitorXTitle", "SPROG"), _memo));
-        add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction(Bundle.getMessage("SendCommandTitle"), _memo));
-        add(new jmri.jmrix.sprog.console.SprogConsoleAction(Bundle.getMessage("MenuItemConsole"), _memo));
-        add(new jmri.jmrix.sprog.update.SprogVersionAction(Bundle.getMessage("GetSprogFirmwareVersion"), _memo));
-        add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", "v3/v4"), _memo));
-        add(new jmri.jmrix.sprog.update.SprogIIUpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", " II/SPROG 3"), _memo));
+        if (memo != null) {
+            add(new jmri.jmrix.sprog.sprogmon.SprogMonAction(Bundle.getMessage("MonitorXTitle", "SPROG"), memo));
+            add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction(Bundle.getMessage("SendCommandTitle"), memo));
+            add(new jmri.jmrix.sprog.console.SprogConsoleAction(Bundle.getMessage("MenuItemConsole"), memo));
+            add(new jmri.jmrix.sprog.update.SprogVersionAction(Bundle.getMessage("GetSprogFirmwareVersion"), memo));
+            add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", "v3/v4"), memo));
+            add(new jmri.jmrix.sprog.update.SprogIIUpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", " II/SPROG 3"), memo));
+        }
     }
 
 }

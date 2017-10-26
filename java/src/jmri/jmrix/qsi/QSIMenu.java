@@ -9,8 +9,6 @@ import javax.swing.JMenu;
  */
 public class QSIMenu extends JMenu {
 
-    private QsiSystemConnectionMemo _memo = null;
-
     public QSIMenu(String name, QsiSystemConnectionMemo memo) {
         this(memo);
 
@@ -19,15 +17,17 @@ public class QSIMenu extends JMenu {
 
     public QSIMenu(QsiSystemConnectionMemo memo) {
         super();
-        _memo = memo;
+
         if (memo != null) {
             setText(memo.getUserName());
         } else {
             setText("QSI");
         }
 
-        add(new jmri.jmrix.qsi.qsimon.QsiMonAction(_memo));
-        add(new jmri.jmrix.qsi.packetgen.PacketGenAction(_memo));
+        if (memo != null) {
+            add(new jmri.jmrix.qsi.qsimon.QsiMonAction(memo));
+            add(new jmri.jmrix.qsi.packetgen.PacketGenAction(memo));
+        }
     }
 
 }

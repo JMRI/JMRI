@@ -12,8 +12,6 @@ import javax.swing.JMenu;
  */
 public class AcelaMenu extends JMenu {
 
-    private AcelaSystemConnectionMemo _memo = null;
-
     public AcelaMenu(String name, AcelaSystemConnectionMemo memo) {
         this(memo);
         setText(name);
@@ -21,7 +19,6 @@ public class AcelaMenu extends JMenu {
 
     public AcelaMenu(AcelaSystemConnectionMemo memo) {
         super();
-        _memo = memo;
 
         if (memo != null) {
             setText(memo.getUserName());
@@ -29,9 +26,11 @@ public class AcelaMenu extends JMenu {
             setText("Acela");
         }
 
-        add(new jmri.jmrix.acela.acelamon.AcelaMonAction(Bundle.getMessage("AcelaMonitorTitle"), _memo));
-        add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(Bundle.getMessage("AcelaSendCommandTitle"), _memo));
-        add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(Bundle.getMessage("ConfigNodesTitle"), _memo));
+        if (memo != null) {
+            add(new jmri.jmrix.acela.acelamon.AcelaMonAction(Bundle.getMessage("AcelaMonitorTitle"), memo));
+            add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(Bundle.getMessage("AcelaSendCommandTitle"), memo));
+            add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(Bundle.getMessage("ConfigNodesTitle"), memo));
+        }
     }
 
 }

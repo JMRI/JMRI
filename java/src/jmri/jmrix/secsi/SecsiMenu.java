@@ -25,7 +25,6 @@ public class SecsiMenu extends JMenu {
 
         add(new jmri.jmrix.secsi.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
         add(new jmri.jmrix.secsi.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
-
     }
 
 }

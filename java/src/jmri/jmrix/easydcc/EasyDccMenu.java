@@ -10,11 +10,9 @@ import javax.swing.JMenu;
  */
 public class EasyDccMenu extends JMenu {
 
-    EasyDccSystemConnectionMemo _memo = null;
-
     public EasyDccMenu(EasyDccSystemConnectionMemo memo) {
+
         super();
-        _memo = memo;
         if (memo != null) {
             setText(memo.getUserName());
         } else {
@@ -23,9 +21,10 @@ public class EasyDccMenu extends JMenu {
 
         // do we have an EasyDccTrafficController?
         setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!
-
-        add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction(Bundle.getMessage("MonitorXTitle", "EasyDCC"), _memo));
-        add(new jmri.jmrix.easydcc.packetgen.EasyDccPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), _memo));
+        if (memo != null) {
+            add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction(Bundle.getMessage("MonitorXTitle", "EasyDCC"), memo));
+            add(new jmri.jmrix.easydcc.packetgen.EasyDccPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
+        }
     }
 
 }
