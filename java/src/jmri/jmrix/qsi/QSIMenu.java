@@ -18,14 +18,11 @@ public class QSIMenu extends JMenu {
 
     public QSIMenu(QsiSystemConnectionMemo memo) {
         super();
-
-        setText("QSI");
         _memo = memo;
+        setText(memo.getUserName());
 
         add(new jmri.jmrix.qsi.qsimon.QsiMonAction(_memo));
         add(new jmri.jmrix.qsi.packetgen.PacketGenAction(_memo));
-
-        setText(memo.getUserName());
     }
 
 }
