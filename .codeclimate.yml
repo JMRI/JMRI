@@ -37,11 +37,13 @@ ratings:
   - "**.py"
   - "**.rb"
 exclude_paths:
+## non-production code
 - java/test/
 ## third party code
 - lib/
 - web/app/node_modules/
 ## artifacts
+- java/tmp/
 - target/
 - "**.min.js"
 - "**.min.css"
