@@ -1056,7 +1056,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     case 1:
                         text = text + Bundle.getMessage("TurnoutWFeedback")
                                 + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-                                + "" + getTurnoutMsgAddr(i) + " "
+                                + " " + getTurnoutMsgAddr(i) + " "
                                 + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " ";
                         if ((getElement(i + 1) & 0x03) == 0x00) {
                             text = text + Bundle.getMessage("XNetReplyNotOperated"); // last items on line, no trailing space

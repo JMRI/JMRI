@@ -179,13 +179,13 @@ public class XNetReplyTest {
    @Test
     public void testToMonitorStringServiceModeDirectResponse(){
         XNetReply r = new XNetReply("63 14 01 04 72");
-        Assert.assertEquals("Monitor String","Service Mode: Direct Programming Mode Response: CV:1 Value:4",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeDirectResponse",1,4),r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModePagedResponse(){
         XNetReply r = new XNetReply("63 10 01 04 76");
-        Assert.assertEquals("Monitor String","Service Mode: Register or Paged Mode Response: CV:1 Value:4",r.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModePagedResponse",1,4),r.toMonitorString());
     }
 
     // check is paged mode response
@@ -520,25 +520,143 @@ public class XNetReplyTest {
     public void testToMonitorStringFeedbackResponse() {
         // feedback message for turnout
         XNetReply r = new XNetReply("42 05 00 47");
-        Assert.assertEquals("Monitor String","Feedback Response: Turnout without Feedback Turnout: 21 State: Not Operated; Turnout: 22 State: Not Operated",r.toMonitorString());
+        String targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("TurnoutWoFeedback")
+             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 21 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
+             + Bundle.getMessage("XNetReplyNotOperated")+ "; " 
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 22 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+             + Bundle.getMessage("XNetReplyNotOperated");
+        Assert.assertEquals("Monitor String",targetString, r.toMonitorString());
         r = new XNetReply("42 05 05 42");
-        Assert.assertEquals("Monitor String","Feedback Response: Turnout without Feedback Turnout: 21 State: Thrown Left; Turnout: 22 State: Thrown Left",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("TurnoutWoFeedback")
+             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 21 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
+             + Bundle.getMessage("XNetReplyThrownLeft")+ "; " 
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 22 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+             + Bundle.getMessage("XNetReplyThrownLeft");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 0A 4C");
-        Assert.assertEquals("Monitor String","Feedback Response: Turnout without Feedback Turnout: 21 State: Thrown Right; Turnout: 22 State: Thrown Right",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("TurnoutWoFeedback")
+             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 21 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
+             + Bundle.getMessage("XNetReplyThrownRight")+ "; " 
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 22 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+             + Bundle.getMessage("XNetReplyThrownRight");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 0F 48");
-        Assert.assertEquals("Monitor String","Feedback Response: Turnout without Feedback Turnout: 21 State: <invalid>; Turnout: 22 State: <invalid>",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("TurnoutWoFeedback")
+             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 21 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
+             + Bundle.getMessage("XNetReplyInvalid")+ "; " 
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 22 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+             + Bundle.getMessage("XNetReplyInvalid");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 20 67");
-        Assert.assertEquals("Monitor String","Feedback Response: Turnout with Feedback Turnout:21 State: Not Operated; Turnout: 22 State: Not Operated",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("TurnoutWFeedback")
+             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 21 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
+             + Bundle.getMessage("XNetReplyNotOperated")+ "; " 
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 22 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+             + Bundle.getMessage("XNetReplyNotOperated");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 25 62");
-        Assert.assertEquals("Monitor String","Feedback Response: Turnout with Feedback Turnout:21 State: Thrown Left; Turnout: 22 State: Thrown Left",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("TurnoutWFeedback")
+             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 21 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
+             + Bundle.getMessage("XNetReplyThrownLeft")+ "; " 
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 22 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+             + Bundle.getMessage("XNetReplyThrownLeft");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 2A 6C");
-        Assert.assertEquals("Monitor String","Feedback Response: Turnout with Feedback Turnout:21 State: Thrown Right; Turnout: 22 State: Thrown Right",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("TurnoutWFeedback")
+             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 21 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
+             + Bundle.getMessage("XNetReplyThrownRight")+ "; " 
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 22 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+             + Bundle.getMessage("XNetReplyThrownRight");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 2F 68");
-        Assert.assertEquals("Monitor String","Feedback Response: Turnout with Feedback Turnout:21 State: <invalid>; Turnout: 22 State: <invalid>",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("TurnoutWFeedback")
+             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 21 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
+             + Bundle.getMessage("XNetReplyInvalid")+ "; " 
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+             + " " + 22 + " "
+             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
+             + Bundle.getMessage("XNetReplyInvalid");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 48 0F");
-        Assert.assertEquals("Monitor String","Feedback Response: Feedback Encoder Base Address: 6 Contact: 1 State: Off; Contact: 2 State: Off; Contact: 3 State: Off; Contact: 4 State: On; ",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 6 + " ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 1 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 2 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 3 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 4 "; 
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 57 0F");
-        Assert.assertEquals("Monitor String","Feedback Response: Feedback Encoder Base Address: 6 Contact: 5 State: On; Contact: 6 State: On; Contact: 7 State: On; Contact: 8 State: Off; ",r.toMonitorString());
+        targetString =
+             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+             Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 6 + " ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 5 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 6 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 7 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 8 "; 
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     // throttle related replies.
@@ -596,9 +714,19 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringThrottleTakeoverMsg() {
         XNetReply r = new XNetReply("E3 40 00 04 57");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive 4 is being operated by another device.",r.toMonitorString());
+        String targetString = 
+               Bundle.getMessage("XNetReplyLocoLabel") + " ";
+        targetString += Bundle.getMessage("rsType") + " ";
+        targetString += 4 + " ";
+        targetString += Bundle.getMessage("XNetReplyLocoOperated");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("E3 40 C1 04 61");
-        Assert.assertEquals("Monitor String","Locomotive Information Response: Locomotive 260 is being operated by another device.",r.toMonitorString());
+        targetString = 
+               Bundle.getMessage("XNetReplyLocoLabel") + " ";
+        targetString += Bundle.getMessage("rsType") + " ";
+        targetString += 260 + " ";
+        targetString += Bundle.getMessage("XNetReplyLocoOperated");
+        Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
