@@ -13,7 +13,6 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -217,20 +216,20 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.SHOW_PROPERTY) {
+//        if (Control.SHOW_PROPERTY) {
             log.debug("Property change ({}) for: ({}) old: {}, new: {}",
                     e.getPropertyName(), e.getSource().toString(),
                     e.getOldValue(), e.getNewValue());
-        }
+//        }
         if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             clearAndUpdate();
         }
         if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
                 || (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) && e
                 .getNewValue() == null)
-                || e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
             // remove car from list
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();
@@ -238,6 +237,9 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 checkBoxes.remove("s" + car.getId());
                 checkBoxes.remove("m" + car.getId());
                 log.debug("Car ({}) removed from list", car.toString());
+                if (car.isUtility()) {
+                    clearAndUpdate(); // need to recalculate number of utility cars
+                }
             }
             update();
         }
