@@ -647,8 +647,9 @@ class Diesel3Sound extends EngineSound {
                             //log.debug("D3Loop"+ _sound.getName() + "Loop: Adding buffer " + b.getSystemName());
                             _sound.queueBuffer(b);
                         }
-                        if (!_sound.isPlaying()) {
+                        if (_sound.getSource().getState() != Audio.STATE_PLAYING) {
                             _sound.play();
+                            log.info("loop sound re-started. Possibly queue underrun or audio shutdown");
                         }
                     } else {
                         // Quietly wait for the sound to get turned on again

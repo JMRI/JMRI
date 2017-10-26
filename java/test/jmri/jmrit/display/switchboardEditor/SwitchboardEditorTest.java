@@ -44,14 +44,6 @@ public class SwitchboardEditorTest {
         JUnitUtil.dispose(e);
     }
 
-//    @Test
-//    public void testGetSetZoom() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        Assert.assertEquals("Zoom Get", 1.0, e.getZoom(), 0.0);
-//        Assert.assertEquals("Zoom Set", 3.33, e.setZoom(3.33), 0.0);
-//        Assert.assertEquals("Zoom Get", 3.33, e.getZoom(), 0.0);
-//    }
     @Test
     public void testIsDirty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -97,7 +89,7 @@ public class SwitchboardEditorTest {
     public void testGetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
-        Assert.assertEquals("Default Text Color", "black", e.getDefaultTextColor());
+        Assert.assertEquals("Default Text Color",jmri.util.ColorUtil.ColorBlack, e.getDefaultTextColor());
         JUnitUtil.dispose(e);
     }
 
@@ -105,28 +97,11 @@ public class SwitchboardEditorTest {
     public void testSetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
-        e.setDefaultTextColor("pink");
-        Assert.assertEquals("Default Text Color after Set", "pink", e.getDefaultTextColor());
+        e.setDefaultTextColor(jmri.util.ColorUtil.ColorPink);
+        Assert.assertEquals("Default Text Color after Set",jmri.util.ColorUtil.ColorPink, e.getDefaultTextColor());
         JUnitUtil.dispose(e);
     }
 
-//    @Test
-//    public void testGetShowHelpBar() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        // default to true
-//        Assert.assertTrue("getShowHelpBar", e.getShowHelpBar());
-//    }
-//
-//    @Test
-//    public void testSetShowHelpBar() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        // default to true, so set to false.
-//        e.setShowHelpBar(false);
-//        Assert.assertFalse("getShowHelpBar after set", e.getShowHelpBar());
-//    }
-    // from here down is testing infrastructure
     @Before
     public void setUp() {
         JUnitUtil.setUp();

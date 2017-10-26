@@ -35,7 +35,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced Pink with Pinker", "Pinker", f.comboBox.getItemAt(0));
 
@@ -75,7 +75,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced TestKernel with TestKernel2", "TestKernel2", f.comboBox.getItemAt(1));
 

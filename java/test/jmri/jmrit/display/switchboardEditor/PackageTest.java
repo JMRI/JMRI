@@ -14,6 +14,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.display.switchboardEditor.configurexml.PackageTest.class,
         SwitchboardEditorTest.class,
         SwitchboardEditorActionTest.class,
+        SchemaTest.class
 })
 
 public class PackageTest {
