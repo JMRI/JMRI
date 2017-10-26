@@ -42,6 +42,13 @@ exclude_paths:
 ## third party code
 - lib/
 - web/app/node_modules/
+- web/js/bootstrap.js
+- web/js/faq.js
+- web/js/jquery.iframe-transport.js
+- web/js/jquery.mousewheel.js
+- web/js/jquery.ui.widget.js
+- web/js/json2.js
+- web/js/sorttable.js
 ## artifacts
 - java/tmp/
 - target/
