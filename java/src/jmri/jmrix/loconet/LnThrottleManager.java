@@ -32,6 +32,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         this.slotManager = memo.getSlotManager();//slotManager;
         this.tc = memo.getLnTrafficController();
         slotForAddress = new Hashtable<>();
+        throttleRequests = new java.util.HashSet<>(5);
     }
 
     /**
@@ -53,7 +54,49 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        log.debug("requestThrottleSetup: address {}, control {}", address, control);
+        log.debug("begin of request for LnThrottle for address {}", address);
+        queueThrottleRequest(address, control);
+    }
+
+    // fields which help manage the process of serialization of overlapping 
+    // throttle requests
+    java.util.HashSet<Integer> throttleRequests;
+    Integer inProgressThrottleAddress = -1;
+  
+    Hashtable<Integer, LocoNetSlot> slotForAddress;    
+    
+    private void queueThrottleRequest(LocoAddress address, boolean control) {
+        if (throttleRequests.contains(address.getNumber())) {
+                return;
+        }
+        throttleRequests.add(address.getNumber());
+        tryBeginNextThrottleRequest();
+    }
+    
+    private void removeThrottleRequestEntry(Integer address) {
+        if (throttleRequests.contains(address)) {
+            log.debug("Removing throttle request for address {}", address);
+            throttleRequests.remove(address);
+        } else {
+            log.warn("Cannot remove a thottle request for address {} because there is not a request pending.", address);
+        }
+        if (!throttleRequests.isEmpty()) {
+            log.debug("queueing request for loco acquire from the list of unfulfilled throttle requests");
+            tryBeginNextThrottleRequest();
+        }
+
+    }
+    
+    private void tryBeginNextThrottleRequest() {
+        if (inProgressThrottleAddress == -1) {
+            inProgressThrottleAddress = throttleRequests.iterator().next();
+            beginThrottleRequest(inProgressThrottleAddress);
+        }
+    }
+    
+    private void beginThrottleRequest(Integer address) {
+        
+        slotManager.slotFromLocoAddress(address, this);  //first try
 
         class RetrySetup implements Runnable {  //setup for retries and failure check
 
@@ -71,8 +114,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 int maxAttempts = 10;
                 while (attempts <= maxAttempts) {
                     try {
-                        Thread.sleep(2500);  //wait one second
+                        Thread.sleep(1000);  //wait one second
                     } catch (InterruptedException ex) {
+                        log.debug("ending because interrupted");
                         return;  //stop waiting if slot is found or error occurs
                     }
                     String msg = "No response to slot request for {}, attempt {}"; // NOI18N
@@ -87,21 +131,16 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 failedThrottleRequest(address, "Failed to get response from command station");
             }
         }
-
-        retrySetupThread = new Thread(
-                new RetrySetup(new DccLocoAddress(address.getNumber(),
-                        isLongAddress(address.getNumber())), this));
+        
+        retrySetupThread = new Thread(new RetrySetup(new DccLocoAddress(address, isLongAddress(address)), this));
         retrySetupThread.setName("LnThrottleManager RetrySetup "+address);
         retrySetupThread.start();
-        waitingForNotification.put(address.getNumber(), retrySetupThread);
-        slotManager.slotFromLocoAddress(address.getNumber(), this);  //first try
+        waitingForNotification.put(address, retrySetupThread);
     }
 
     volatile Thread retrySetupThread;
 
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
-
-    Hashtable<Integer, LocoNetSlot> slotForAddress;
 
     /**
      * LocoNet does have a Dispatch function
@@ -177,6 +216,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 } else {
                     log.debug("notifyChangedSlot for slot {} address {} is being sent to 'commitToAcquireThrottle'", s.getSlot(), s.locoAddr());
                     commitToAcquireThrottle(s);
+                    log.debug("deleting entry in waitingForNotification for address {}", s.locoAddr());
+                    waitingForNotification.remove(s.locoAddr());
+                    inProgressThrottleAddress = -1;
+                    removeThrottleRequestEntry(s.locoAddr());
                 }
             } else {
                 log.debug("notifyChangedSlot for slot {} address {} is other than 'in-use'",s.getSlot(), s.locoAddr());
@@ -195,6 +238,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                         s.getSlot(), s.locoAddr());
                 // notify the LnThrottleManager about failure of acquisition.
                 notifyRefused(s.locoAddr(), "Locomotive burried in a consist cannot be acquired.");
+                waitingForNotification.remove(s.locoAddr());
+                inProgressThrottleAddress = -1;
+                removeThrottleRequestEntry(s.locoAddr());
                 return;
             }
         } else {
@@ -380,6 +426,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             waitingForNotification.get(address.getNumber()).interrupt();
             waitingForNotification.remove(address.getNumber());
         }
+        removeThrottleRequestEntry(address.getNumber());
     }
 
     /**
@@ -399,6 +446,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             waitingForNotification.get(address).interrupt();
             waitingForNotification.remove(address);
         }
+        removeThrottleRequestEntry(address);
     }
 
     protected int throttleID = 0x0171;
