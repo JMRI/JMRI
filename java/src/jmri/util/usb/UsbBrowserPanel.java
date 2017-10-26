@@ -25,6 +25,7 @@ import javax.usb.UsbDisconnectedException;
 import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
+import javax.usb.UsbPort;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
 import org.slf4j.Logger;
@@ -89,7 +90,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                 UsbTreeNode node = new UsbTreeNode(device);
                 this.buildTree(node);
                 log.debug("Adding {} to {}", node, root);
-                root.add(new UsbTreeNode(device));
+                root.add(node);
             });
         }
         // prevent NPE if called in constructor
@@ -177,7 +178,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                     log.error("Unable to get root USB hub.", ex);
                 }
             } else {
-                log.error("Description of {} is\n{}", node, node.getUsbDeviceDescriptor());
+                log.info("Description of {} is\n{}", node, node.getUsbDeviceDescriptor());
             }
             this.userObject = node;
         }
@@ -206,7 +207,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         @Override
         public int getRowCount() {
-            return (device != null) ? 5 : 1;
+            return (device != null) ? 6 : 1;
         }
 
         @Override
@@ -237,6 +238,8 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                             return Bundle.getMessage("UsbDeviceVendorId");
                         case 4:
                             return Bundle.getMessage("UsbDeviceProductId");
+                        case 5:
+                            return Bundle.getMessage("UsbDeviceLocation");
                         default:
                             break;
                     }
@@ -255,6 +258,8 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                                 return String.format("%04x", this.device.getUsbDeviceDescriptor().idVendor());
                             case 4:
                                 return String.format("%04x", this.device.getUsbDeviceDescriptor().idProduct());
+                            case 5:
+                                return getUsbDeviceLocation(this.device);
                             default:
                                 return null;
                         }
@@ -277,6 +282,28 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                 this.fireTableStructureChanged();
             }
             this.fireTableDataChanged();
+        }
+
+        public String getUsbDeviceLocation(UsbDevice usbDevice) {
+            String result = null;
+            UsbPort usbPort = usbDevice.getParentUsbPort();
+            if (usbPort != null) {
+                byte portNumber = usbPort.getPortNumber();
+                result = "" + portNumber;
+                UsbHub usbHub = usbPort.getUsbHub();
+                while (usbHub != null) {
+                    UsbPort hubPort = usbHub.getParentUsbPort();
+                    if (hubPort != null) {
+                        byte hubPortNumber = hubPort.getPortNumber();
+                        result = hubPortNumber + "." + result;
+                        usbHub = hubPort.getUsbHub();
+                    } else {
+                        result = "0." + result;
+                        break;
+                    }
+                }
+            }
+            return result;
         }
     }
 }
