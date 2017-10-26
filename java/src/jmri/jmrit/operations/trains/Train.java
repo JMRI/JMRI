@@ -646,7 +646,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return NONE;
     }
 
-    protected RouteLocation getTrainTerminatesRouteLocation() {
+    public RouteLocation getTrainTerminatesRouteLocation() {
         if (getRoute() == null) {
             return null;
         }

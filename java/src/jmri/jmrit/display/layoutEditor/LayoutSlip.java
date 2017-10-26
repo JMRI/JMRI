@@ -751,8 +751,11 @@ public class LayoutSlip extends LayoutTurnout {
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
                             LayoutTrack lt = lf.findObjectByName(connectA.getName());
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
@@ -762,8 +765,11 @@ public class LayoutSlip extends LayoutTurnout {
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
                             LayoutTrack lt = lf.findObjectByName(connectB.getName());
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
@@ -773,8 +779,11 @@ public class LayoutSlip extends LayoutTurnout {
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
                             LayoutTrack lt = lf.findObjectByName(connectC.getName());
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
@@ -784,8 +793,11 @@ public class LayoutSlip extends LayoutTurnout {
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
                             LayoutTrack lt = lf.findObjectByName(connectD.getName());
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }

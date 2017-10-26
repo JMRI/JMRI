@@ -35,7 +35,7 @@ public class TrainConductorFrame extends OperationsFrame {
             menuBar.add(toolMenu);
         }
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_TrainConductor", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }

@@ -214,7 +214,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         // don't delete, we need this train for the next two tests
         // testTrainBuildOptionFrame() and testTrainEditFrameRead()
-        pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), "No");
+        pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonNo"));
 
         ThreadingUtil.runOnGUI(() -> {
             JUnitUtil.dispose(ref);
@@ -587,7 +587,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(trainEditFrame.deleteTrainButton);
 
         // And now press the confirmation button
-        pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), "Yes");
+        pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonYes"));
 
         t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNull("train deleted", t);
