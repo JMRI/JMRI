@@ -27,7 +27,7 @@ public class XmlTest extends OperationsTestCase {
      * that had to run in the order specified. Now changed on 8/29/2013 to be
      * one long test.
      *
-     * @throws Exception
+     * @throws Exception exception
      */
     public void testXMLCreate() throws Exception {
         LocationManager manager = InstanceManager.getDefault(LocationManager.class);

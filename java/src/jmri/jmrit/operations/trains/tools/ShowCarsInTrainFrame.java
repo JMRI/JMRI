@@ -194,10 +194,12 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                         }
                     }
 
-                    textStatus.setText(getStatus(rl));
-                } else {
-                    textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
-                            new Object[]{_train.getTrainTerminatesName()}));
+                    if (rl != _train.getTrainTerminatesRouteLocation()) {
+                        textStatus.setText(getStatus(rl));
+                    } else {
+                        textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
+                                new Object[]{_train.getTrainTerminatesName()}));
+                    }
                 }
                 pCars.repaint();
             }

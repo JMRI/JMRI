@@ -95,14 +95,14 @@ public class XmlTest extends OperationsTestCase {
      * Test train XML create, read, and backup support. Originally written as
      * three separate tests, now one large test as of 8/29/2013
      *
-     * @throws JDOMException
-     * @throws IOException
+     * @throws JDOMException exception
+     * @throws IOException exception
      */
     public void testXMLCreate() throws JDOMException, IOException {
 
         // confirm that file name has been modified
-        Assert.assertEquals("test file name", "OperationsJUnitTestTrainRoster.xml", TrainManagerXml
-                .instance().getOperationsFileName());
+        Assert.assertEquals("test file name", "OperationsJUnitTestTrainRoster.xml", InstanceManager.getDefault(TrainManagerXml.class)
+                .getOperationsFileName());
 
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         Route A = rmanager.newRoute("A");

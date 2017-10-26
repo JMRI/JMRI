@@ -18,11 +18,14 @@ import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jmri.BeanSetting;
 import jmri.Block;
 import jmri.BlockManager;
@@ -44,6 +47,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.ButtonSwatchColorChooserPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -881,9 +885,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private int senseActiveIndex;
     private int senseInactiveIndex;
 
-    private final JComboBox<String> trackColorBox = new JComboBox<>();
-    private final JComboBox<String> occupiedColorBox = new JComboBox<>();
-    private final JComboBox<String> extraColorBox = new JComboBox<>();
+    private JColorChooser trackColorChooser = null;
+    private JColorChooser occupiedColorChooser = null;
+    private JColorChooser extraColorChooser = null;
     private final JComboBox<String> blockSpeedBox = new JComboBox<>();
 
     private final JLabel blockUseLabel = new JLabel(Bundle.getMessage("UseCount"));
@@ -979,19 +983,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         //check if track color changed
         Color oldColor = blockTrackColor;
-        blockTrackColor = getSelectedColor(trackColorBox);
+        blockTrackColor = trackColorChooser.getColor();
         if (oldColor != blockTrackColor) {
             needsRedraw = true;
         }
         //check if occupied color changed
         oldColor = blockOccupiedColor;
-        blockOccupiedColor = getSelectedColor(occupiedColorBox);
+        blockOccupiedColor = occupiedColorChooser.getColor();
         if (oldColor != blockOccupiedColor) {
             needsRedraw = true;
         }
         //check if extra color changed
         oldColor = blockExtraColor;
-        blockExtraColor = getSelectedColor(extraColorBox);
+        blockExtraColor = extraColorChooser.getColor();
         if (oldColor != blockExtraColor) {
             needsRedraw = true;
         }
@@ -1099,14 +1103,23 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             layout.addItem(new BeanEditItem(senseBox, Bundle.getMessage("OccupiedSense"), Bundle.getMessage("OccupiedSenseHint")));
 
-            initializeColorCombo(trackColorBox);
-            layout.addItem(new BeanEditItem(trackColorBox, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
+            trackColorChooser = new JColorChooser(blockTrackColor);
+            trackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
+            AbstractColorChooserPanel trackColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            trackColorChooser.setChooserPanels(trackColorPanels);
+            layout.addItem(new BeanEditItem(trackColorChooser, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
 
-            initializeColorCombo(occupiedColorBox);
-            layout.addItem(new BeanEditItem(occupiedColorBox, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
+            occupiedColorChooser = new JColorChooser(blockOccupiedColor);
+            occupiedColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
+            AbstractColorChooserPanel occupiedColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            occupiedColorChooser.setChooserPanels(occupiedColorPanels);
+            layout.addItem(new BeanEditItem(occupiedColorChooser, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
 
-            initializeColorCombo(extraColorBox);
-            layout.addItem(new BeanEditItem(extraColorBox, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
+            extraColorChooser = new JColorChooser(blockExtraColor);
+            extraColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
+            AbstractColorChooserPanel extraColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            extraColorChooser.setChooserPanels(extraColorPanels);
+            layout.addItem(new BeanEditItem(extraColorChooser, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
 
             layout.setSaveItem(new AbstractAction() {
                 @Override
@@ -1126,19 +1139,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                     //check if track color changed
                     Color oldColor = blockTrackColor;
-                    blockTrackColor = getSelectedColor(trackColorBox);
+                    blockTrackColor = trackColorChooser.getColor();
                     if (oldColor != blockTrackColor) {
                         needsRedraw = true;
                     }
                     //check if occupied color changed
                     oldColor = blockOccupiedColor;
-                    blockOccupiedColor = getSelectedColor(occupiedColorBox);
+                    blockOccupiedColor = occupiedColorChooser.getColor();
                     if (oldColor != blockOccupiedColor) {
                         needsRedraw = true;
                     }
                     //check if extra color changed
                     oldColor = blockExtraColor;
-                    blockExtraColor = getSelectedColor(extraColorBox);
+                    blockExtraColor = extraColorChooser.getColor();
                     if (oldColor != blockExtraColor) {
                         needsRedraw = true;
                     }
@@ -1168,9 +1181,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     memoryComboBox.setText(memoryName);
-                    setColorCombo(trackColorBox, blockTrackColor);
-                    setColorCombo(occupiedColorBox, blockOccupiedColor);
-                    setColorCombo(extraColorBox, blockExtraColor);
+                    trackColorChooser.setColor(blockTrackColor);
+                    occupiedColorChooser.setColor(blockOccupiedColor);
+                    extraColorChooser.setColor(blockExtraColor);
                     if (occupiedSense == Sensor.ACTIVE) {
                         senseBox.setSelectedIndex(senseActiveIndex);
                     } else {
@@ -1257,39 +1270,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             bei.add(routing);
             return routing;
         }
-    }
-
-    /**
-     * Methods and data to support initialization of color Combo box
-     */
-    private String[] colorText = {"Black", "DarkGray", "Gray",
-        "LightGray", "White", "Red", "Pink", "Orange",
-        "Yellow", "Green", "Blue", "Magenta", "Cyan"};    //NOI18N
-    private Color[] colorCode = {Color.black, Color.darkGray, Color.gray,
-        Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
-        Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
-    private int numColors = 13; //number of entries in the above arrays
-
-    private void initializeColorCombo(JComboBox<String> colorCombo) {
-        colorCombo.removeAllItems();
-        for (int i = 0; i < numColors; i++) {
-            colorCombo.addItem(Bundle.getMessage(colorText[i]));    //use higher level Bundle, removed duplicates
-            //Colors are also used in Operations-, Display, EntryExitBundles
-        }
-        colorCombo.setMaximumRowCount(numColors);
-    }
-
-    private void setColorCombo(JComboBox<String> colorCombo, Color color) {
-        for (int i = 0; i < numColors; i++) {
-            if (color == colorCode[i]) {
-                colorCombo.setSelectedIndex(i);
-                return;
-            }
-        }
-    }
-
-    private Color getSelectedColor(JComboBox<String> colorCombo) {
-        return colorCode[colorCombo.getSelectedIndex()];
     }
 
     /**

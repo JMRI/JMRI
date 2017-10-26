@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Building JMRI with Ant</title>
+  <title>JMRI: Building JMRI with Command Line Tools</title>
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI technical code ant">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -32,12 +32,19 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Building JMRI with Ant</h1>Those of you who prefer a
-      command line approach might want to investigate "ant", a
-      better make-like utility for Java projects. Ant is available
-      for download at <a href=
-      "http://ant.apache.org/">http://ant.apache.org/</a>. Install
-      it, then:
+      <h1>Building JMRI with Command Line Tools</h1>
+
+      Those of you who prefer a command line approach might want to
+      investigate <cite><a href="#ant">ant</a></cite> and
+      <cite><a href="#maven">maven</a></cite>, build utilities for
+      Java projects. In the JMRI devlopment ecosystem, these two tools
+      complement each other, each providing unique capabilities the other
+      tool does not.
+
+      <h2 id="ant">Ant</h2>
+      Ant is available for download at
+      <a href="http://ant.apache.org/">http://ant.apache.org/</a>.
+      Install it, then:
 
       <ul>
         <li>Create a directory to contain your project.</li>
@@ -69,15 +76,39 @@
 
       <p>To make sure everything is working, before you e.g. commit
       your code back, please do:</p>
-      <pre>
-<code>   ant clean
-   ant alltest
-</code>
-</pre>and make sure the tests run cleanly.
+      <code>ant clean alltest</code>
+      <p>and make sure the tests run cleanly.</p>
 
       <p>A new JMRI checkout should build cleanly. If not, please
       check with the JMRIusers or jmri-developers mailings lists
-      for help.</p><!--#include virtual="/Footer" -->
+      for help.</p>
+
+      <h2 id="maven">Maven</h2>
+      Maven is an extensible plugin-based build tool for Java development.
+      Maven is available for download at
+      <a href="http://maven.apache.org/">http://maven.apache.org/</a>. Maven
+      will download the appropriate plugins and dependencies as needed.
+      After installation, the following can be done from your JMRI working copy
+      (see <a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a>
+      for instructions on creating a working copy):
+
+      <dl>
+        <dt>Run unit and integration tests</dt>
+        <dd><code>mvn test</code><br>Use <code>mvn test -Dtest=PATTERN</code> to
+          run specific tests. See
+          <a href="https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html">Running a Single Test</a>
+        for more details, including running only a single test method.</dt>
+        <dt>Check for newer versions of JMRI dependencies</dt>
+        <dd><code>mvn versions:display-dependency-updates</code></dd>
+        <dt>Check for newer versions of the maven plugins</dt>
+        <dd><code>mvn versions:display-plugin-updates</code></dd>
+        <dt>Run DecoderPro</dt>
+        <dd><code>mvn antrun:run -Dtarget=decoderpro</code></dd>
+        <dt>Run PanelPro</dt>
+        <dd><code>mvn antrun:run -Dtarget=panelpro</code></dd>
+      </dl>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -23,6 +23,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.script.JmriScriptEngineManager;
+import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -694,20 +695,22 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     /**
      *
      * @return the available text colors used for printing
+     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
      */
+    @Deprecated
     public JComboBox<String> getRowColorComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(NONE);
-        box.addItem(Setup.BLACK);
-        box.addItem(Setup.RED);
-        box.addItem(Setup.PINK);
-        box.addItem(Setup.ORANGE);
-        box.addItem(Setup.YELLOW);
-        box.addItem(Setup.GREEN);
-        box.addItem(Setup.MAGENTA);
-        box.addItem(Setup.CYAN);
-        box.addItem(Setup.BLUE);
-        box.addItem(Setup.GRAY);
+        box.addItem(ColorUtil.ColorBlack);
+        box.addItem(ColorUtil.ColorRed);
+        box.addItem(ColorUtil.ColorPink);
+        box.addItem(ColorUtil.ColorOrange);
+        box.addItem(ColorUtil.ColorYellow);
+        box.addItem(ColorUtil.ColorGreen);
+        box.addItem(ColorUtil.ColorMagenta);
+        box.addItem(ColorUtil.ColorCyan);
+        box.addItem(ColorUtil.ColorBlue);
+        box.addItem(ColorUtil.ColorGray);
         return box;
     }
 

@@ -242,6 +242,13 @@
                     </execution>
                 </executions>
                 -->
+                <configuration>
+                    <target>
+                        <ant antfile="${basedir}/build.xml">
+                            <target name="${target}"/>
+                        </ant>
+                    </target>
+                </configuration>
                 <dependencies>
                     <!-- use the version of ant we specify -->
                     <dependency>
@@ -398,6 +405,18 @@
                             <locale>en,US</locale>
                         </configuration>
                     </execution>
+                    <execution>
+                      <id>add-test-source</id>
+                      <phase>generate-test-sources</phase>
+                      <goals>
+                          <goal>add-test-source</goal>
+                      </goals>
+                      <configuration>
+                         <sources>
+                             <source>${basedir}/java/acceptancetest/step_definitions</source>
+                         </sources>
+                      </configuration>
+                   </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -561,6 +580,20 @@
                     <showSuccess>false</showSuccess>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.5</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependency-updates-report</report>
+                            <report>plugin-updates-report</report>
+                            <report>property-updates-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>        
         </plugins>
     </reporting>
 
@@ -595,6 +628,30 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>1.2.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-java8</artifactId>
+            <version>1.2.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>1.2.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
