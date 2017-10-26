@@ -296,7 +296,7 @@ public class Train implements java.beans.PropertyChangeListener {
      */
     public Color getTableRowColor() {
         String colorName = getTableRowColorName();
-        if(colorName == NONE){
+        if(colorName.equals(NONE)){
            return null;
         } else {
            return Setup.getColor(colorName);
