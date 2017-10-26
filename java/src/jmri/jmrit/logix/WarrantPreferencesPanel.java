@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -22,7 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -46,8 +46,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private JComboBox<ScaleData> _layoutScales;
     private JSpinner _searchDepth;
     private JSpinner _timeIncre;
-    private JSpinner _rampIncre;
-    private JSpinner _throttleScale;
+    private JTextField _rampIncre;
+    private JTextField _throttleScale;
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;
     private ArrayList<DataPair<String, Float>> _speedNameMap;
     private SpeedNameTableModel _speedNameModel;
@@ -217,15 +217,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
 
     private JPanel throttleScalePanel(boolean vertical) {
-        _throttleScale = new JSpinner(new SpinnerNumberModel(Float.valueOf(0.50f),
-                Float.valueOf(0.10f), Float.valueOf(1.50f), Float.valueOf(0.01f)));
-        _throttleScale.setEditor(new JSpinner.NumberEditor(_throttleScale, "# %"));
-        Float throttleScalePref = WarrantPreferences.getDefault().getThrottleScale();
-        if (throttleScalePref >= 0.10f && throttleScalePref <= 1.50f) {
-            _throttleScale.setValue(throttleScalePref);
-        }
+        _throttleScale = new JTextField(5);
+        _throttleScale.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleScale()));
         JPanel p = new JPanel();
         p.add(WarrantRoute.makeTextBoxPanel(vertical, _throttleScale, "ThrottleScale", "ToolTipThrottleScale"));
+        _throttleScale.setColumns(8);
         p.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
         return p;
     }
@@ -243,35 +239,30 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
 
     private JPanel throttleIncrementPanel(boolean vertical) {
-        _rampIncre = new JSpinner(new SpinnerNumberModel(Float.valueOf(0.040f),
-                Float.valueOf(0.002f), Float.valueOf(0.200f), Float.valueOf(0.001f)));
-        _rampIncre.setEditor(new JSpinner.NumberEditor(_rampIncre, "#0.0 %"));
-        Float rampIncrePrefs = WarrantPreferences.getDefault().getThrottleIncrement();
-        if (rampIncrePrefs >= 0.002f && rampIncrePrefs <= 0.200f) {
-            _rampIncre.setValue(rampIncrePrefs);
-        }
+        _rampIncre = new JTextField(6);
+        _rampIncre.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleIncrement()));
         JPanel p = new JPanel();
         p.add(WarrantFrame.makeTextBoxPanel(vertical, _rampIncre, "RampIncrement", "ToolTipRampIncrement"));
         p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
+        _rampIncre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = _rampIncre.getText();
+                boolean showdialog = false;
+                try {
+                    float incr = NumberFormat.getNumberInstance().parse(text).floatValue();
+                    showdialog = (incr < 0.002f || incr > 0.2f);
+                } catch (java.text.ParseException pe) {
+                    showdialog = true;
+                }
+                if (showdialog) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
         return p;
     }
-
-    /* alternative UI test
-    private JPanel throttleIncrementPanel(boolean vertical) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.add(new JLabel("Ramp step amount"));
-        JPanel p = new JPanel();
-        p.add(new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(1,1,20,1 )));
-        p.add(new JLabel(" steps, in"));
-        panel.add(p);
-        p = new JPanel();
-        String[] modes = {"14", "28", "128"};
-        p.add(new JComboBox<String>(modes));
-        p.add(new JLabel(" stepmode"));
-        panel.add(p);
-        return panel;
-    }*/
 
     private JPanel speedRosterPanel(boolean vertical) {
         ButtonGroup bg = new ButtonGroup();
@@ -484,8 +475,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
 
     /**
-     * Compare GUI values with Preferences.
-     * When different, update Preferences and set _isDirty flag.
+     * Compare GUI values with Preferences. When different, update Preferences
+     * and set _isDirty flag.
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private void setValues() {
@@ -507,13 +498,23 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             _isDirty = true;
         }
 
-        float scale = (Float) _rampIncre.getValue();
+        float scale = preferences.getThrottleIncrement();
+        try {
+            scale = NumberFormat.getNumberInstance().parse(_rampIncre.getText()).floatValue();
+        } catch (java.text.ParseException pe) {
+            _rampIncre.setText(NumberFormat.getNumberInstance().format(preferences.getThrottleIncrement()));
+        }
         if (preferences.getThrottleIncrement() != scale) {
             preferences.setThrottleIncrement(scale);
             _isDirty = true;
         }
 
-        scale = (Float) _throttleScale.getValue();
+        scale = preferences.getThrottleScale();
+        try {
+            scale = NumberFormat.getNumberInstance().parse(_throttleScale.getText()).floatValue();
+        } catch (java.text.ParseException pe) {
+            _throttleScale.setText(NumberFormat.getNumberInstance().format(preferences.getThrottleScale()));
+        }
         if (preferences.getThrottleScale() != scale) {
             preferences.setThrottleScale(scale);
             _isDirty = true;

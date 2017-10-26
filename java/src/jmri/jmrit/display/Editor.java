@@ -1198,23 +1198,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Display the rotation of the Positionable item and provide a dialog menu
-     * item to edit it.
-     *
-     * @param p     The item to add the menu item to
-     * @param popup The menu item to add the action to
-     * @return always returns true
-     */
-    public boolean setShowRotationMenu(Positionable p, JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("Rotation", "..."));
-        JMenuItem jmi = edit.add(Bundle.getMessage("Rotation", " = " + p.getDegrees()));
-        jmi.setEnabled(false);
-        edit.add(CoordinateEdit.getRotateEditAction(p));
-        popup.add(edit);
-        return true;
-    }
-
-    /**
      * Offer actions to align the selected Positionable items either
      * Horizontally (at average y coordinates) or Vertically (at average x
      * coordinates).

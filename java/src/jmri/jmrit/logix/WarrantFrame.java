@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -1394,6 +1395,7 @@ public class WarrantFrame extends WarrantRoute {
         public static final int SPEED_COLUMN = 5;
         public static final int NUMCOLS = 6;
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
+        NumberFormat formatter = NumberFormat.getNumberInstance(); 
 
         public ThrottleTableModel() {
             super();
@@ -1465,6 +1467,7 @@ public class WarrantFrame extends WarrantRoute {
             return new JTextField(12).getPreferredSize().width;
         }
 
+        // TODO Internationalize command names
         @Override
         public Object getValueAt(int row, int col) {
             // some error checking
@@ -1488,6 +1491,12 @@ public class WarrantFrame extends WarrantRoute {
                 case VALUE_COLUMN:
                     if ("Mark".equalsIgnoreCase(ts.getValue())) {
                         return Bundle.getMessage("Mark");
+                    } else{
+                        String cmd = ts.getCommand().trim().toUpperCase();
+                        if ("SPEED".equals(cmd)) {
+                            float speed = Float.parseFloat(ts.getValue());
+                            return formatter.format(speed);
+                        }
                     }
                     return ts.getValue();
                 case BLOCK_COLUMN:
@@ -1501,6 +1510,7 @@ public class WarrantFrame extends WarrantRoute {
             return "";
         }
 
+        // TODO Internationalize command names
         @Override
         public void setValueAt(Object value, int row, int col) {
             ThrottleSetting ts = _throttleCommands.get(row);
@@ -1572,7 +1582,6 @@ public class WarrantFrame extends WarrantRoute {
                     break;
                 case VALUE_COLUMN:
                     if (value == null || ((String) value).length() == 0) {
-//                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("ValueCol"));
                         break;
                     }
                     boolean resetBlockColumn = true;
@@ -1583,12 +1592,14 @@ public class WarrantFrame extends WarrantRoute {
                     cmd = ts.getCommand().toUpperCase();
                     if ("SPEED".equals(cmd)) {
                         try {
-                            float speed = Float.parseFloat((String) value);
+                            float speed = formatter.parse((String) value).floatValue();
                             if (0.0f <= speed && speed <= 1.0f) {
-                                ts.setValue((String) value);
+                                ts.setValue(Float.toString(speed));
                                 break;
                             }
                             msg = Bundle.getMessage("throttlesetting", value);
+                        } catch (java.text.ParseException pe) {
+                            msg = Bundle.getMessage("invalidNumber");
                         } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("invalidNumber");
                         }

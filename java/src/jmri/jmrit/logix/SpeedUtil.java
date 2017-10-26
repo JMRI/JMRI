@@ -51,6 +51,7 @@ public class SpeedUtil {
     private int _ma;  // milliseconds needed to increase speed by _stepRampThrottleIncrement amount 
     private int _md;  // milliseconds needed to decrease speed by _stepRampThrottleIncrement amount
     private int _mp;  // default milliseconds needed to change speed by _stepRampThrottleIncrement amount
+    private boolean _preferMetric;
 
     public static float SCALE_FACTOR = 125; // divided by _scale, gives a rough correction for track speed
 
@@ -84,7 +85,7 @@ public class SpeedUtil {
     }
 
     public void setRosterId(String id) {
-       if (log.isDebugEnabled()) log.debug("setRosterId({}) _rosterId= {}", id, _rosterId);
+       if (log.isTraceEnabled()) log.debug("setRosterId({}) _rosterId= {}", id, _rosterId);
        if (id == null || !id.equals(_rosterId)) {
             _mergeProfile = null;
             _sessionProfile = null;
@@ -133,7 +134,7 @@ public class SpeedUtil {
      * @return true if address found for id
      */
     public boolean setDccAddress(String id) {
-        if (log.isDebugEnabled()) log.debug("setDccAddress({}) _rosterId= {}", id, _rosterId);
+        if (log.isTraceEnabled()) log.debug("setDccAddress({}) _rosterId= {}", id, _rosterId);
         if (id == null || id.trim().length()==0) {
             setRosterId(null);   // set _rosterId
             _dccAddress = null;           
@@ -184,7 +185,7 @@ public class SpeedUtil {
             _dccAddress = _rosterEntry.getDccLocoAddress();
 //            _rosterId = _rosterEntry.getId();
         }
-        if (log.isDebugEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
+        if (log.isTraceEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
         return true;
     }
 
@@ -267,6 +268,7 @@ public class SpeedUtil {
         WarrantPreferences preferences = WarrantPreferences.getDefault();
         _stepRampTimeIncrement = preferences.getTimeIncrement();
         _stepRampThrottleIncrement = preferences.getThrottleIncrement();
+        _preferMetric = preferences.preferMetricDisplay();
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
@@ -393,7 +395,7 @@ public class SpeedUtil {
         float speed = getTrackSpeed(_throttle.getSpeedSetting(), _throttle.getIsForward()) * _signalSpeedMap.getLayoutScale();
 
         String units;
-        if (_signalSpeedMap.getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+        if (_preferMetric) {
             units = "Kmph";
             speed = speed * 3.6f;
         } else {
@@ -476,8 +478,8 @@ public class SpeedUtil {
                 log.error("Unknown speed interpretation {}", _signalSpeedMap.getInterpretation());
                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _signalSpeedMap.getInterpretation());
         }
-        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, signalSpeed= {} using interpretation {}",
-                tSpeed, throttleSpeed, signalSpeed, _signalSpeedMap.getInterpretation());
+        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, signalSpeed= {}. display {} units",
+                tSpeed, throttleSpeed, signalSpeed, (_preferMetric ? "KMph" : "Mph"));
         return throttleSpeed;
     }
 

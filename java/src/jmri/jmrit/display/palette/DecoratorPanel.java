@@ -388,6 +388,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 public void keyReleased(KeyEvent E) {
                     JTextField tmp = (JTextField) E.getSource();
                     sample.setText(tmp.getText());
+                    updateSamples();
                 }
             }.init(sample));
             p.add(textField);            

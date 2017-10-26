@@ -902,10 +902,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             boolean isForward = _engineer.getIsForward();
                             // expected speed after ramp up -  could be less, depends on following script
                             float expectedSpeed = _engineer.getExpectedSpeed(_curSpeedType);
+                            if (expectedSpeed < _speedUtil.getRampThrottleIncrement()) {
+                                _engineer.setHalt(false);
+                                break;
+                            }
                             // speed restriction if signal or occupation found
                             float restrictSpeed = _speedUtil.modifySpeed(expectedSpeed, _curSpeedType, isForward);
                             float rampLen = _speedUtil.rampLengthForSpeedChange(expectedSpeed, restrictSpeed, isForward);
-                            if ((idxBlockOrder > _idxCurrentOrder+1) &&rampLen <= dist || _idxCurrentOrder == _orders.size() - 1) {
+                            if ((idxBlockOrder > (_idxCurrentOrder+1) && rampLen <= dist) || _idxCurrentOrder == _orders.size() - 1) {
                                 // this and next block were clear
                                 // This is users decision to retest and override wait flags
                                 _engineer.resumeSpeedFrom(RESUME); // will ramp if needed and clear wait
@@ -915,7 +919,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         } else if (runState == WAIT_FOR_TRAIN) {
                             // user wants to increase throttle of stalled train
                             float speedSetting = _engineer.getSpeedSetting();
-                            _engineer.setSpeed(speedSetting +_speedUtil.getRampThrottleIncrement());
+                            _engineer.setSpeed(speedSetting + _speedUtil.getRampThrottleIncrement());
                         } else {
                             ret = false;
                         }
@@ -998,9 +1002,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             t.setName("Engineer "+throttle.toString());
             t.start();
 
-            if ((getBlockAt(0).getState() & OBlock.UNDETECTED) != 0) {
+            if (_delayStart) {
                 // user must explicitly start train (resume) in a dark block
-                _engineer.setHalt(true);    // throttle already at 0
                 firePropertyChange("Command", -1, 0);
             }
             if (_engineer.getRunState() == Warrant.RUNNING) {
