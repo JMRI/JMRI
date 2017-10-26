@@ -141,6 +141,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             // NOTE: NEED TO REMOVE duplicate slot numbers from slotForAddress 
             // before adding this slot, to prevent a single slot from being inaccurately 
             // associated with multiple different loco addresses.
+            // Note that the command station may "change to a different slot number" 
+            // during the loco acquire process.
             log.debug("notifychangedSlot - is waiting on notifications from {}", s.locoAddr());
 
             java.util.Enumeration keySet = slotForAddress.keys();
@@ -434,9 +436,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         // send that "throttleListener" a notification that the command station needs
         // permission to "steal" the loco address.
         if (waitingForNotification.containsKey(locoAddr)) {
-            waitingForNotification.get(locoAddr).interrupt();
-            waitingForNotification.remove(locoAddr);
-
             notifyStealRequest(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)));
         }
     }
