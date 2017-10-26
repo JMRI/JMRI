@@ -598,11 +598,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
             if (l != null) {
-                // only notify once per request
-                mLocoAddrHash.remove(Integer.valueOf(addr));
-                // and send the notification
+                // send the notification
                 log.debug("notify listener"); // NOI18N
                 l.notifyChangedSlot(_slots[i]);
+                if (_slots[i].slotStatus() == LnConstants.LOCO_IN_USE) {
+                    mLocoAddrHash.remove(Integer.valueOf(addr));
+                }
             } else {
                 log.debug("no request for addr {}", addr); // NOI18N
             }
