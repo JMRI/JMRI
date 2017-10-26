@@ -1,7 +1,7 @@
 ---
 engines:
   checkstyle:
-    enabled: true
+    enabled: false
   csslint:
     enabled: true
   duplication:
@@ -15,7 +15,10 @@ engines:
   fixme:
     enabled: true
   phpmd:
-    enabled: true
+    enabled: false
+    config:
+      file_extensions:
+      - php
   pmd:
     enabled: true
   radon:
@@ -34,5 +37,11 @@ ratings:
   - "**.py"
   - "**.rb"
 exclude_paths:
-- test/
-- web/app/node_modules
+- java/test/
+## third party code
+- lib/
+- web/app/node_modules/
+## artifacts
+- target/
+- "**.min.js"
+- "**.min.css"
