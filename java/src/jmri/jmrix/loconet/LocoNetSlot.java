@@ -445,6 +445,10 @@ public class LocoNetSlot {
         return l;
     }
 
+    public int getTrk() {
+        return trk;
+    }
+
     /**
      * Create LocoNet message which releases this slot
      *
