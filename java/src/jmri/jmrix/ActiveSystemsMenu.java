@@ -51,10 +51,6 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-//        if (jmri.jmrix.easydcc.ActiveFlag.isActive()) { // migrated 2017 4.9.5
-//            m.add(getMenu("jmri.jmrix.easydcc.EasyDccMenu"));
-//        }
-
         if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
         }
@@ -101,9 +97,6 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-//        if (jmri.jmrix.easydcc.ActiveFlag.isActive()) { // migrated 2017 4.9.6ish
-//            m.add(getMenu("jmri.jmrix.easydcc.EasyDccMenu"));
-//        }
         if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
         }

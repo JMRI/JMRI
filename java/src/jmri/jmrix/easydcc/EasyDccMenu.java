@@ -14,14 +14,12 @@ public class EasyDccMenu extends JMenu {
 
     public EasyDccMenu(EasyDccSystemConnectionMemo memo) {
         super();
-
-        // memo can not be null!
-        if (memo == null) {
-            return;
-        }
         _memo = memo;
-
-        setText(memo.getUserName());
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText("Easy DCC");
+        }
 
         // do we have an EasyDccTrafficController?
         setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!

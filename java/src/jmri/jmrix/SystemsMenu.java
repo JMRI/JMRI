@@ -61,7 +61,7 @@ public class SystemsMenu extends JMenu {
         // DCC++ is migrated
         add(new jmri.jmrix.dccpp.swing.DCCppMenu(null));
         // EasyDCC is migrated
-        add(new jmri.jmrix.easydcc.EasyDccMenu(null));
+        add(new jmri.jmrix.easydcc.EasyDccMenu(new jmri.jmrix.easydcc.EasyDccSystemConnectionMemo()));
 
         addMenu("jmri.jmrix.grapevine.GrapevineMenu");
 
@@ -78,12 +78,12 @@ public class SystemsMenu extends JMenu {
         add(new jmri.jmrix.powerline.swing.PowerlineMenu(null));
         addMenu("jmri.jmrix.pricom.PricomMenu"); // special type of connection, not to be migrated
         // QSI is migrated
-        add(new jmri.jmrix.qsi.QSIMenu(null));
+        add(new jmri.jmrix.qsi.QSIMenu(new jmri.jmrix.qsi.QsiSystemConnectionMemo()));
 
         addMenu("jmri.jmrix.rps.RpsMenu");
         addMenu("jmri.jmrix.secsi.SecsiMenu");
         // SPROG is migrated
-        add(new jmri.jmrix.sprog.SPROGMenu(null));
+        add(new jmri.jmrix.sprog.SPROGMenu(new jmri.jmrix.sprog.SprogSystemConnectionMemo()));
         // SRCP is migrated
         add(new jmri.jmrix.srcp.swing.SystemMenu(null));
 
@@ -109,7 +109,7 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.maple.MapleMenu");
 
         // JMRI Network Client is migrated
-        add(new jmri.jmrix.jmriclient.swing.JMRIClientMenu(null));
+        add(new jmri.jmrix.jmriclient.swing.JMRIClientMenu(new jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo()));
         add(new JsonClientMenu(null));
         add(new jmri.jmrix.rfid.swing.RfidMenu(null));
         add(new jmri.jmrix.ieee802154.swing.IEEE802154Menu(null));

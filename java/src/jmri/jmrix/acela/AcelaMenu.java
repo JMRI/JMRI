@@ -22,13 +22,16 @@ public class AcelaMenu extends JMenu {
     public AcelaMenu(AcelaSystemConnectionMemo memo) {
         super();
         _memo = memo;
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        setText(rb.getString("MenuItemAcela"));
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText("Acela");
+        }
 
-        add(new jmri.jmrix.acela.acelamon.AcelaMonAction(rb.getString("MenuItemCommandMonitor"), _memo)); // TODO use Bundle and include Acela
-        add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(rb.getString("MenuItemSendCommand"), _memo));
-        add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes"), _memo));
+        add(new jmri.jmrix.acela.acelamon.AcelaMonAction(Bundle.getMessage("AcelaMonitorTitle"), _memo));
+        add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(Bundle.getMessage("AcelaSendCommandTitle"), _memo));
+        add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(Bundle.getMessage("ConfigNodesTitle"), _memo));
     }
 
 }
