@@ -39,9 +39,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     public LayoutEditorXml() {
     }
 
-    //TODO: Convert to use Bundle.getMessage(...) (and remove this line)
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     /**
      * Default implementation for storing the contents of a LayoutEditor
      *
@@ -272,11 +269,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             JFrame frame = new JFrame("DialogDemo");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
-            //TODO: Convert to use Bundle.getMessage(...)
             int n = JOptionPane.showConfirmDialog(frame,
-                    MessageFormat.format(rb.getString("DuplicatePanel"),
-                            new Object[]{name}),
-                    rb.getString("DuplicatePanelTitle"),
+                    Bundle.getMessage("DuplicatePanel",name),
+                    Bundle.getMessage("DuplicatePanelTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.NO_OPTION) {
                 return false;
@@ -292,23 +287,23 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setXScale(xScale);
         panel.setYScale(yScale);
 
-        String defaultColor = "black";
+        String defaultColor = ColorUtil.ColorBlack;
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
             defaultColor = a.getValue();
         }
         panel.setDefaultTrackColor(defaultColor);
 
-        String defaultTextColor = "black";
+        String defaultTextColor = ColorUtil.ColorBlack;
         if ((a = shared.getAttribute("defaulttextcolor")) != null) {
             defaultTextColor = a.getValue();
         }
-        panel.setDefaultTextColor(defaultTextColor);
+        panel.setDefaultTextColor(ColorUtil.stringToColor(defaultTextColor));
 
         String turnoutCircleColor = "track";  //default to using use default track color for circle color
         if ((a = shared.getAttribute("turnoutcirclecolor")) != null) {
             turnoutCircleColor = a.getValue();
         }
-        panel.setTurnoutCircleColor(turnoutCircleColor);
+        panel.setTurnoutCircleColor(ColorUtil.stringToColor(turnoutCircleColor));
 
         if ((a = shared.getAttribute("turnoutcirclesize")) != null) {
             try {
@@ -469,22 +464,22 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         // set default track color
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
-            panel.setDefaultTrackColor(a.getValue());
+            panel.setDefaultTrackColor(ColorUtil.stringToColor(a.getValue()));
         }
         // set default track color
         if ((a = shared.getAttribute("defaultoccupiedtrackcolor")) != null) {
-            panel.setDefaultOccupiedTrackColor(a.getValue());
+            panel.setDefaultOccupiedTrackColor(ColorUtil.stringToColor(a.getValue()));
         }
         // set default track color
         if ((a = shared.getAttribute("defaultalternativetrackcolor")) != null) {
-            panel.setDefaultAlternativeTrackColor(a.getValue());
+            panel.setDefaultAlternativeTrackColor(ColorUtil.stringToColor(a.getValue()));
         }
         try {
             int red = shared.getAttribute("redBackground").getIntValue();
             int blue = shared.getAttribute("blueBackground").getIntValue();
             int green = shared.getAttribute("greenBackground").getIntValue();
             Color backgroundColor = new Color(red, green, blue);
-            panel.setDefaultBackgroundColor(ColorUtil.colorToColorName(backgroundColor));
+            panel.setDefaultBackgroundColor(backgroundColor);
             panel.setBackgroundColor(backgroundColor);
         } catch (DataConversionException e) {
             log.warn("Could not parse color attributes!");

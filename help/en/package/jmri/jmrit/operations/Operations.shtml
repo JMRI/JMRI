@@ -288,16 +288,22 @@
 
       <li><a href="#TrainReset">Reset Train</a></li>
 
-      <li><a href="#TrainBuildOptions">Train Build Options</a></li>
+      <li><a href="#EditTrainTools">Edit Train Tools</a>
 
-      <li><a href="#TrainLoadOptions">Train Load Options</a></li>
+       <ul>
+        <li><a href="#TrainBuildOptions">Train Build Options</a></li>
 
-      <li><a href="#TrainRoadOptions">Train Road Options</a></li>
+        <li><a href="#TrainLoadOptions">Train Load Options</a></li>
 
-      <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
+        <li><a href="#TrainRoadOptions">Train Road Options</a></li>
 
-      <li><a href="#TrainScripts">Scripts</a></li>
+        <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
 
+        <li><a href="#TrainScripts">Scripts</a></li>
+        
+        <li><a href="#TrainConductor">Train Conductor</a></li>
+       </ul>
+       
       <li><a href="#TrainsTools">Trains Tools</a>
 
        <ul>
@@ -3809,6 +3815,12 @@
     (OperationsTrainRoster.xml) in your JMRI directory in a folder called "operations". A backup
     file with the last settings for all of your trains is also created each time the "Save Train"
     button is pressed.</p>
+    
+    <a name="EditTrainTools" id="EditTrainTools"></a>
+   <h3>Edit Train Tools</h3>
+   <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">
+
+   <p>In the upper left side of each "Edit Train" window is the "Tools" menu for that train.</p>
 
    <a name="TrainBuildOptions" id="TrainBuildOptions"></a>
    <h3>Train Build Options</h3>
@@ -4261,7 +4273,44 @@
    </table>
 
    <p>
-    FD = Final Destination <a name="TrainsTools" id="TrainsTools"></a>
+    FD = Final Destination
+    </p>
+
+   <a name="TrainConductor" id="TrainConductor"></a>
+   <h3>Train Conductor</h3>
+
+   The train conductor window provides a train manifest for each location that the train visits.
+   This real time window allows you to see the work needed at a location for a built train, and once
+   the work is completed by selected all of the work checkboxes, allows you to move the train to the
+   next location in the train's route.
+
+   <h4>Modifying a built train</h4>
+
+   <p>You can also modify the train's manifest by pressing the "Modify" button. The modify
+    button once pressed will ask you if you want to add cars to the train. If you answer yes a
+    "Cars" window will appear for the location being serviced. Press the "Set" button for the car
+    you want to add, and in the "Set Car" window under the section "Optional -- Normally Set by
+    Program" enter a destination, destination track, and train for that car. Note that by default, a
+    car's destination and track is disabled, but you can enable it under the "Tools" menu in the set
+    car window. Pressing "Save" should cause the program to ask you if you want to add the car to
+    the train.</p>
+
+   <p>To remove a car from the train, press the "Set" button, and the "Set Car" window should
+    appear. Pressing the set car "Save" button will ask you if you really want to remove the car
+    from the train.</p>
+
+   <h4>Yardmaster</h4>
+
+   <p>
+    The Yardmaster window provides the real time version of a <a href="#SwitchList">switch list</a>. To
+    see the work for all trains visiting a location, press the "Yardmaster" button in the <a
+     href="#Locations">locations</a> window. The Yardmaster window also allows you to modify a built
+    train.
+   </p>
+
+
+   <a name="TrainsTools" id="TrainsTools"></a>
+   
    <h3>Trains Tools</h3>
    <img src="images/TrainsPaneMenu.png" alt="Operations Trains window Tools Menu">
 

@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -26,6 +27,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineSetFrame;
@@ -73,7 +75,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     // major buttons
     protected JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
     protected JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
-    protected JButton setButton = new JButton(Bundle.getMessage("Set"));
+    protected JButton modifyButton = new JButton(Bundle.getMessage("Modify")); // see setModifyButtonText()
     protected JButton moveButton = new JButton(Bundle.getMessage("Move"));
 
     // text panes
@@ -173,8 +175,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         textTrainRouteLocationCommentPane.setMaximumSize(new Dimension(2000, 200));
 
         // row 12
-        if ((getPreferredSize().width > Control.panelWidth1025 && Setup.isTabEnabled())
-                || (getPreferredSize().width > Control.panelWidth1025 - 200 && !Setup.isTabEnabled())) {
+        if ((getPreferredSize().width > Control.panelWidth1025 && Setup.isTabEnabled()) ||
+                (getPreferredSize().width > Control.panelWidth1025 - 200 && !Setup.isTabEnabled())) {
             pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.X_AXIS));
             pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
         } else {
@@ -197,12 +199,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         pButtons.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Work")));
         addItem(pButtons, selectButton, 0, 0);
         addItem(pButtons, clearButton, 1, 0);
-        addItem(pButtons, setButton, 2, 0);
+        addItem(pButtons, modifyButton, 2, 0);
 
         // setup buttons
         addButtonAction(selectButton);
         addButtonAction(clearButton);
-        addButtonAction(setButton);
+        addButtonAction(modifyButton);
 
         setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
@@ -216,9 +218,13 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         if (ae.getSource() == clearButton) {
             selectCheckboxes(false);
         }
-        if (ae.getSource() == setButton) {
+        if (ae.getSource() == modifyButton) {
             isSetMode = !isSetMode; // toggle setMode
             update();
+            // ask if user wants to add cars to train
+            if (isSetMode) {
+                addCarToTrain();
+            }
         }
         check();
     }
@@ -242,7 +248,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
         textTrainRouteLocationCommentPane.setVisible(false);
 
-        setButtonText();
+        setModifyButtonText();
     }
 
     protected void updateComplete() {
@@ -263,6 +269,15 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         check();
 
         log.debug("update complete");
+    }
+
+    private void addCarToTrain() {
+        if (JOptionPane.showConfirmDialog(this,
+                MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[]{_train.getName()}),
+                Bundle.getMessage("AddCarsToTrain?"),
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            new CarsTableFrame(false, textLocationName.getText(), null);
+        }
     }
 
     CarSetFrame csf = null;
@@ -310,15 +325,15 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             if (!checkBox.isSelected()) {
                 // log.debug("Checkbox (" + checkBox.getText() + ") isn't selected ");
                 moveButton.setEnabled(false);
-                setButton.setEnabled(true);
+                modifyButton.setEnabled(true);
                 return;
             }
         }
         // all selected, work done!
         moveButton.setEnabled(_train != null && _train.isBuilt());
-        setButton.setEnabled(false);
+        modifyButton.setEnabled(false);
         isSetMode = false;
-        setButtonText();
+        setModifyButtonText();
     }
 
     protected void selectCheckboxes(boolean enable) {
@@ -331,8 +346,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     /**
-     * Uses "ep" prefix to denote a checkbox with an engine pick up, and "es"
-     * for an engine set out.
+     * Uses "ep" prefix to denote a checkbox with an engine pick up, and "es" for an
+     * engine set out.
      *
      * @param rl The routeLocation to show loco pick ups or set outs.
      */
@@ -395,24 +410,24 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     /**
-     * Block cars by track (optional), then pick up and set out for each
-     * location in a train's route. This shows each car with a check box or with
-     * a set button. The set button is displayed when the checkbox isn't
-     * selected and the display is in "set" mode. If the car is a utility. Show
-     * the number of cars that have the same attributes, and not the car's road
-     * and number. Each car is displayed only once in one of three panes. The
-     * three panes are pick up, set out, or local move. To keep track of each
-     * car and which pane to use, they are placed in the list "rollingStock"
-     * with the prefix "p", "s" or "m" and the car's unique id.
+     * Block cars by track (optional), then pick up and set out for each location in
+     * a train's route. This shows each car with a check box or with a set button.
+     * The set button is displayed when the checkbox isn't selected and the display
+     * is in "set" mode. If the car is a utility. Show the number of cars that have
+     * the same attributes, and not the car's road and number. Each car is displayed
+     * only once in one of three panes. The three panes are pick up, set out, or
+     * local move. To keep track of each car and which pane to use, they are placed
+     * in the list "rollingStock" with the prefix "p", "s" or "m" and the car's
+     * unique id.
      *
-     * @param rl         The RouteLocation
+     * @param rl The RouteLocation
      * @param isManifest True if manifest, false if switch list
      *
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {
         if (Setup.isPrintHeadersEnabled()) {
-            JLabel header = new JLabel(Tab
-                    + trainCommon.getPickupCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
+            JLabel header =
+                    new JLabel(Tab + trainCommon.getPickupCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
             setLabelFont(header);
             pPickups.add(header);
             header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
@@ -431,11 +446,14 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     // determine if car is a pick up from the right track
                     // caboose or FRED is placed at end of the train
                     // passenger trains are already blocked in the car list
-                    if (car.getTrack() != null && car.getRouteLocation() == rl && car.getRouteDestination() != rl
-                            && (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName()))
-                            && ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred())
-                            || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred()))
-                            || car.isPassenger())) {
+                    if (car.getTrack() != null &&
+                            car.getRouteLocation() == rl &&
+                            car.getRouteDestination() != rl &&
+                            (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName())) &&
+                            ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
+                                    (rld == routeList.get(routeList.size() - 1) &&
+                                            (car.isCaboose() || car.hasFred())) ||
+                                    car.isPassenger())) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
                         pickupPane.setVisible(true);
@@ -455,7 +473,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         } else {
                             String text;
                             if (car.isUtility()) {
-                                text = trainCommon.pickupUtilityCars(carList, car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);
+                                text = trainCommon.pickupUtilityCars(carList, car, isManifest,
+                                        !TrainCommon.IS_TWO_COLUMN_TRACK);
                                 if (text == null) {
                                     continue; // this car type has already been processed
                                 }
@@ -478,7 +497,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 }
                 // car in train if track null, second check is for yard master window
                 if (car.getTrack() == null || car.getTrack() != null && (car.getRouteLocation() != rl)) {
-                    if (Setup.isSortByTrackNameEnabled() && !car.getDestinationTrack().getName().equals(track.getName())) {
+                    if (Setup.isSortByTrackNameEnabled() &&
+                            !car.getDestinationTrack().getName().equals(track.getName())) {
                         continue;
                     }
                     // we have set outs
@@ -512,8 +532,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         checkBoxes.put("s" + car.getId(), checkBox);
                     }
                     // local move?
-                } else if (car.getTrack() != null && car.getRouteLocation() == rl
-                        && (!Setup.isSortByTrackNameEnabled() || car.getTrack().getName().equals(track.getName()))) {
+                } else if (car.getTrack() != null &&
+                        car.getRouteLocation() == rl &&
+                        (!Setup.isSortByTrackNameEnabled() || car.getTrack().getName().equals(track.getName()))) {
                     movePane.setVisible(true);
                     if (!rollingStock.contains(car)) {
                         rollingStock.add(car);
@@ -560,6 +581,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         JPanel pSet = new JPanel();
         pSet.setLayout(new GridBagLayout());
         JButton setButton = new JButton(Bundle.getMessage("Set"));
+        setButton.setToolTipText(Bundle.getMessage("SetButtonToolTip"));
         setButton.setName(rs.getId());
         setButton.addActionListener((ActionEvent e) -> {
             if (Car.class.isInstance(rs)) {
@@ -591,11 +613,11 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
     }
 
-    protected void setButtonText() {
+    protected void setModifyButtonText() {
         if (isSetMode) {
-            setButton.setText(Bundle.getMessage("Done"));
+            modifyButton.setText(Bundle.getMessage("Done"));
         } else {
-            setButton.setText(Bundle.getMessage("Set"));
+            modifyButton.setText(Bundle.getMessage("Modify"));
         }
     }
 
@@ -603,11 +625,11 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected String getStatus(RouteLocation rl, boolean isManifest) {
         if (rl == _train.getRoute().getTerminatesRouteLocation()) {
             return MessageFormat.format(TrainManifestText.getStringTrainTerminates(), new Object[]{_train
-                .getTrainTerminatesName()});
+                    .getTrainTerminatesName()});
         }
         if (rl != _train.getCurrentLocation() && _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
             return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[]{_train
-                .getName()});
+                    .getName()});
         }
         if (!_train.isBuilt()) {
             return _train.getStatus();
@@ -621,9 +643,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 text = TrainSwitchListText.getStringTrainDepartsLoads();
             }
             return MessageFormat.format(text, new Object[]{TrainCommon.splitString(rl.getName()),
-                rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
-                _train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
-                _train.getTrainTerminatesName(), _train.getName()});
+                    rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
+                    _train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
+                    _train.getTrainTerminatesName(), _train.getName()});
         } else {
             String text;
             if (isManifest) {
@@ -632,9 +654,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 text = TrainSwitchListText.getStringTrainDepartsCars();
             }
             return MessageFormat.format(text, new Object[]{TrainCommon.splitString(rl.getName()),
-                rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
-                Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl), _train.getTrainTerminatesName(),
-                _train.getName()});
+                    rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
+                    Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl), _train.getTrainTerminatesName(),
+                    _train.getName()});
         }
     }
 
