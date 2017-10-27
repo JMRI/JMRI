@@ -32,6 +32,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
+import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -141,17 +142,6 @@ public class SwitchboardEditor extends Editor {
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
     private Color defaultTextColor = Color.BLACK;
-    private ButtonGroup textColorButtonGroup = null;
-    private ButtonGroup backgroundColorButtonGroup = null;
-    private final JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
-    private final JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
-    private final Color[] textColors = new Color[13];
-    private final Color[] backgroundColors = new Color[13];
-    private int textColorCount = 0;
-    private int backgroundColorCount = 0;
-
-    //private JPanel helpBarPanel = null;
-    //private JPanel helpBar = new JPanel();
     // option menu items not in Editor
     private boolean showHelpBar = true;
     private boolean _hideUnconnected = false;
@@ -1395,39 +1385,60 @@ public class SwitchboardEditor extends Editor {
             setScroll(SCROLL_VERTICAL);
         });
         //add background color menu item
-        JMenu backgroundColorMenu = new JMenu(Bundle.getMessage("SetBackgroundColor"));
-        backgroundColorButtonGroup = new ButtonGroup();
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Black"), Color.black);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Gray"), Color.gray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("White"), Color.white);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Red"), Color.red);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Pink"), Color.pink);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Green"), Color.green);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Blue"), Color.blue);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
-        _optionMenu.add(backgroundColorMenu);
+        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor"));
+        _optionMenu.add(backgroundColorMenuItem);
+
+        backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("SetBackgroundColor"),
+                                 defaultBackgroundColor);
+            if (desiredColor!=null && !defaultBackgroundColor.equals(desiredColor)) {
+               // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
+               if (desiredColor.equals(defaultTextColor)) {
+                  int retval = JOptionPane.showOptionDialog(null,
+                               Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
+                               0, JOptionPane.INFORMATION_MESSAGE, null,
+                               new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+                  log.debug("Retval: {}", retval);
+                  if (retval != 0) {
+                     return;
+                  }
+               }
+               defaultBackgroundColor = desiredColor;
+               setBackgroundColor(desiredColor);
+               setDirty(true);
+               repaint();
+           }
+        });
+
+
         //add text color menu item
-        JMenu textColorMenu = new JMenu(Bundle.getMessage("DefaultTextColor"));
-        textColorButtonGroup = new ButtonGroup();
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Black"), Color.black);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Gray"), Color.gray);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("White"), Color.white);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Red"), Color.red);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Pink"), Color.pink);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Green"), Color.green);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Blue"), Color.blue);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
-        _optionMenu.add(textColorMenu);
+
+        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor"));
+        _optionMenu.add(textColorMenuItem);
+
+        textColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("DefaultTextColor"),
+                                 defaultTextColor);
+            if (desiredColor!=null && !defaultTextColor.equals(desiredColor)) {
+               // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
+               if (desiredColor.equals(defaultBackgroundColor)) {
+                  int retval = JOptionPane.showOptionDialog(null,
+                  Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
+                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                  new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+                  log.debug("Retval: {}", retval);
+                  if (retval != 0) {
+                     return;
+                  }
+               }
+               defaultTextColor = desiredColor;
+               setDirty(true);
+               repaint();
+            }
+        });
+
     }
 
     private void makeFileMenu() {
@@ -1466,114 +1477,12 @@ public class SwitchboardEditor extends Editor {
         });
     }
 
-    void addBackgroundColorMenuEntry(JMenu menu, final String name, final Color color) {
-        ActionListener a = new ActionListener() {
-            final Color desiredColor = color;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!defaultBackgroundColor.equals(desiredColor)) {
-                    // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
-                    if (desiredColor == defaultTextColor) {
-                        int retval = JOptionPane.showOptionDialog(null,
-                                Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
-                                0, JOptionPane.INFORMATION_MESSAGE, null,
-                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-                        log.debug("Retval: {}", retval);
-                        if (retval != 0) {
-                            return;
-                        }
-                    }
-                    defaultBackgroundColor = desiredColor;
-                    setBackgroundColor(desiredColor);
-                    setDirty(true);
-                    repaint();
-                }
-            }
-        };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        backgroundColorButtonGroup.add(r);
-
-        if (defaultBackgroundColor.equals(color)) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
-        menu.add(r);
-        backgroundColorMenuItems[backgroundColorCount] = r;
-        backgroundColors[backgroundColorCount] = color;
-        backgroundColorCount++;
-    }
-
-    void addTextColorMenuEntry(JMenu menu, final String name, final Color color) {
-        ActionListener a = new ActionListener() {
-            final Color desiredColor = color;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!defaultTextColor.equals(desiredColor)) {
-                    // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
-                    if (desiredColor == defaultBackgroundColor) {
-                        int retval = JOptionPane.showOptionDialog(null,
-                                Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
-                                0, JOptionPane.INFORMATION_MESSAGE, null,
-                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-                        log.debug("Retval: {}", retval);
-                        if (retval != 0) {
-                            return;
-                        }
-                    }
-                    defaultTextColor = desiredColor;
-                    setDirty(true);
-                    repaint();
-                }
-            }
-        };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        textColorButtonGroup.add(r);
-
-        if (defaultTextColor.equals(color)) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
-        menu.add(r);
-        textColorMenuItems[textColorCount] = r;
-        textColors[textColorCount] = color;
-        textColorCount++;
-    }
-
-    protected void setOptionMenuTextColor() {
-        for (int i = 0; i < textColorCount; i++) {
-            if (textColors[i].equals(defaultTextColor)) {
-                textColorMenuItems[i].setSelected(true);
-            } else {
-                textColorMenuItems[i].setSelected(false);
-            }
-        }
-    }
-
-    protected void setOptionMenuBackgroundColor() {
-        for (int i = 0; i < backgroundColorCount; i++) {
-            if (backgroundColors[i].equals(defaultBackgroundColor)) {
-                backgroundColorMenuItems[i].setSelected(true);
-            } else {
-                backgroundColorMenuItems[i].setSelected(false);
-            }
-        }
-    }
-
     public void setDefaultTextColor(String color) {
         defaultTextColor = ColorUtil.stringToColor(color);
-        setOptionMenuTextColor();
     }
 
     public String getDefaultTextColor() {
-        return ColorUtil.colorToString(defaultTextColor);
+        return ColorUtil.colorToColorName(defaultTextColor);
     }
 
     /**
@@ -1584,7 +1493,6 @@ public class SwitchboardEditor extends Editor {
     public void setDefaultBackgroundColor(Color color) {
         setBackgroundColor(color); // via Editor
         defaultBackgroundColor = color;
-        setOptionMenuBackgroundColor();
     }
 
     // *********************** end Menus ************************

@@ -74,7 +74,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
         enterClickAndLeave(f.deleteScheduleButton);
         // Yes to pop up
-        pressDialogButton(f, Bundle.getMessage("DeleteSchedule?"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("DeleteSchedule?"), Bundle.getMessage("ButtonYes"));
         s = m.getScheduleByName("Test Schedule A");
         Assert.assertNull("Test Schedule A exists", s);
 
