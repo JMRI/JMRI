@@ -1392,7 +1392,7 @@ public class PositionablePoint extends LayoutTrack {
 
             double trackWidth = Math.min(layoutEditor.setTrackStrokeWidth(g2, mainline), 3.0);
             Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            //Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            g2.setColor(defaultTrackColor);
             trackWidth *= 2.0;
 
             if (!ep1.equals(ep2)) {

@@ -1085,38 +1085,6 @@ public class LayoutSlip extends LayoutTurnout {
         Color mainColourD = setColorForTrackBlock(g2, getLayoutBlockD());
         Color subColourD = setColorForTrackBlock(g2, getLayoutBlockD(), true);
 
-        //LayoutBlock b = getLayoutBlock();
-        //Color mainColourA = defaultTrackColor;
-        //Color subColourA = defaultTrackColor;
-        //if (b != null) {
-        //    mainColourA = b.getBlockColor();
-        //    subColourA = b.getBlockTrackColor();
-        //}
-
-        //b = getLayoutBlockB();
-        //Color mainColourB = defaultTrackColor;
-        //Color subColourB = defaultTrackColor;
-        //if (b != null) {
-        //    mainColourB = b.getBlockColor();
-        //    subColourB = b.getBlockTrackColor();
-        //}
-
-        //b = getLayoutBlockC();
-        //Color mainColourC = defaultTrackColor;
-        //Color subColourC = defaultTrackColor;
-        //if (b != null) {
-        //    mainColourC = b.getBlockColor();
-        //    subColourC = b.getBlockTrackColor();
-        //}
-
-        //b = getLayoutBlockD();
-        //Color mainColourD = defaultTrackColor;
-        //Color subColourD = defaultTrackColor;
-        //if (b != null) {
-        //    mainColourD = b.getBlockColor();
-        //    subColourD = b.getBlockTrackColor();
-        //}
-
         layoutEditor.setTrackStrokeWidth(g2, isMainline());
 
         boolean isMainA = (connectA != null) && (((TrackSegment) connectA).isMainline());
@@ -1196,6 +1164,10 @@ public class LayoutSlip extends LayoutTurnout {
             g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointB)));
         }
     }   // draw
+
+    // these are implemented in superclass LayoutTrunout
+    // protected void drawBallast(Graphics2D g2) {}
+    // protected void drawTies(Graphics2D g2);
 
     /**
      * {@inheritDoc}

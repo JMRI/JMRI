@@ -9493,6 +9493,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             drawHiddenLayoutTracks(g2);
         }
 
+        drawTrackBallast(g2);
+        drawTrackTies(g2);
+
         setDrawRailsFlag(false);
         setTrackStrokeWidth(g2, !main);
 
@@ -9557,6 +9560,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             trackWidth = main ? mainlineTrackWidth : sideTrackWidth;
             if (isDrawRailsFlag() && (mainlineTrackWidth > 3.F) && (sideTrackWidth > 2.F)) {
                 trackWidth -= main ? 3.F : 2.F;
+                //float dash_phase = 0.F;
+                //Stroke stroke = g2.getStroke();
+                //if (stroke instanceof BasicStroke) {
+                //    dash_phase = ((BasicStroke) stroke).getDashPhase();
+                //}
+                //g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0, new float[]{2.F, 3.F}, dash_phase));
             }
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         }
@@ -9579,6 +9588,33 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
         }
     } //drawHiddenLayoutTracks
+
+    private void drawTrackBallast(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(mainlineTrackWidth * 2.F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        g2.setColor(LayoutTrack.defaultBallastColor);
+        for (LayoutTrack tr : layoutTrackList) {
+            if (!tr.isHidden()) {
+                tr.drawBallast(g2);
+            }
+        }
+        setTrackStrokeWidth(g2, !main); // force reset
+    }
+
+    private void drawTrackTies(Graphics2D g2) {
+        float dash_phase = 0;
+        Stroke stroke = g2.getStroke();
+        if (stroke instanceof BasicStroke) {
+            dash_phase = ((BasicStroke) stroke).getDashPhase();
+        }
+        g2.setStroke(new BasicStroke(mainlineTrackWidth * 1.33F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0, new float[]{2.F, 3.F}, dash_phase));
+        g2.setColor(LayoutTrack.defaultTieColor);
+        for (LayoutTrack tr : layoutTrackList) {
+            if (!tr.isHidden()) {
+                tr.drawTies(g2);
+            }
+        }
+        setTrackStrokeWidth(g2, !main); // force reset
+    }
 
     private void drawLayoutTracks(Graphics2D g2) {
         for (LayoutTrack tr : layoutTrackList) {

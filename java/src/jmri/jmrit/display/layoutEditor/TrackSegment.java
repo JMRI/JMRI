@@ -1426,11 +1426,34 @@ public class TrackSegment extends LayoutTrack {
                 drawHidden(g2);
             }
         } else if (isDashed()) {
+            float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
+            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+            g2.setStroke(drawingStroke);
             drawDashed(g2);
-        } else if (!isHidden()) {
+        } else {
             drawSolid(g2);
         }
         g2.setStroke(oldStroke);    // restore previous stroke
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawBallast(Graphics2D g2) {
+        if (!isDashed()) {
+            drawSolid(g2);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawTies(Graphics2D g2) {
+        if (!isDashed()) {
+            drawDashed(g2);
+        }
     }
 
     /**
@@ -1444,20 +1467,14 @@ public class TrackSegment extends LayoutTrack {
 
     private void drawHidden(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
-                layoutEditor.getCoords(getConnect2(), getType2())));
+        drawSolid(g2);
     }   // drawHidden
 
     private void drawDashed(Graphics2D g2) {
-        float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
         if (isArc()) {
             calculateTrackSegmentAngle();
-            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-            g2.setStroke(drawingStroke);
             g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
         } else if (isBezier()) {
-            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-            g2.setStroke(drawingStroke);
 
             Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -1475,26 +1492,28 @@ public class TrackSegment extends LayoutTrack {
             Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-            double delX = end1.getX() - end2.getX();
-            double delY = end1.getY() - end2.getY();
-            double cLength = Math.hypot(delX, delY);
+            g2.draw(new Line2D.Double(end1, end2));
 
-            // note: The preferred dimension of a dash (solid + blank space) is
-            //         5 * the track width - about 60% solid and 40% blank.
-            int nDashes = (int) (cLength / ((trackWidth) * 5.0));
-            if (nDashes < 3) {
-                nDashes = 3;
-            }
-            double delXDash = -delX / ((nDashes) - 0.5);
-            double delYDash = -delY / ((nDashes) - 0.5);
-            double begX = end1.getX();
-            double begY = end1.getY();
-            for (int k = 0; k < nDashes; k++) {
-                g2.draw(new Line2D.Double(new Point2D.Double(begX, begY),
-                        new Point2D.Double(begX + (delXDash * 0.5), begY + (delYDash * 0.5))));
-                begX += delXDash;
-                begY += delYDash;
-            }
+            //double delX = end1.getX() - end2.getX();
+            //double delY = end1.getY() - end2.getY();
+            //double cLength = Math.hypot(delX, delY);
+            //
+            //// note: The preferred dimension of a dash (solid + blank space) is
+            ////         5 * the track width - about 60% solid and 40% blank.
+            //int nDashes = (int) (cLength / ((trackWidth) * 5.0));
+            //if (nDashes < 3) {
+            //    nDashes = 3;
+            //}
+            //double delXDash = -delX / ((nDashes) - 0.5);
+            //double delYDash = -delY / ((nDashes) - 0.5);
+            //double begX = end1.getX();
+            //double begY = end1.getY();
+            //for (int k = 0; k < nDashes; k++) {
+            //    g2.draw(new Line2D.Double(new Point2D.Double(begX, begY),
+            //            new Point2D.Double(begX + (delXDash * 0.5), begY + (delYDash * 0.5))));
+            //    begX += delXDash;
+            //    begY += delYDash;
+            //}
         }
     }   // drawDashed
 
