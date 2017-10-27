@@ -1073,37 +1073,49 @@ public class LayoutSlip extends LayoutTurnout {
      * @param g2 the graphics port to draw to
      */
     protected void draw(Graphics2D g2) {
-        LayoutBlock b = getLayoutBlock();
-        Color mainColourA = defaultTrackColor;
-        Color subColourA = defaultTrackColor;
-        if (b != null) {
-            mainColourA = b.getBlockColor();
-            subColourA = b.getBlockTrackColor();
-        }
+        Color mainColourA = setColorForTrackBlock(g2, getLayoutBlock());
+        Color subColourA = setColorForTrackBlock(g2, getLayoutBlock(), true);
 
-        b = getLayoutBlockB();
-        Color mainColourB = defaultTrackColor;
-        Color subColourB = defaultTrackColor;
-        if (b != null) {
-            mainColourB = b.getBlockColor();
-            subColourB = b.getBlockTrackColor();
-        }
+        Color mainColourB = setColorForTrackBlock(g2, getLayoutBlockB());
+        Color subColourB = setColorForTrackBlock(g2, getLayoutBlockB(), true);
 
-        b = getLayoutBlockC();
-        Color mainColourC = defaultTrackColor;
-        Color subColourC = defaultTrackColor;
-        if (b != null) {
-            mainColourC = b.getBlockColor();
-            subColourC = b.getBlockTrackColor();
-        }
+        Color mainColourC = setColorForTrackBlock(g2, getLayoutBlockC());
+        Color subColourC = setColorForTrackBlock(g2, getLayoutBlockC(), true);
 
-        b = getLayoutBlockD();
-        Color mainColourD = defaultTrackColor;
-        Color subColourD = defaultTrackColor;
-        if (b != null) {
-            mainColourD = b.getBlockColor();
-            subColourD = b.getBlockTrackColor();
-        }
+        Color mainColourD = setColorForTrackBlock(g2, getLayoutBlockD());
+        Color subColourD = setColorForTrackBlock(g2, getLayoutBlockD(), true);
+
+        //LayoutBlock b = getLayoutBlock();
+        //Color mainColourA = defaultTrackColor;
+        //Color subColourA = defaultTrackColor;
+        //if (b != null) {
+        //    mainColourA = b.getBlockColor();
+        //    subColourA = b.getBlockTrackColor();
+        //}
+
+        //b = getLayoutBlockB();
+        //Color mainColourB = defaultTrackColor;
+        //Color subColourB = defaultTrackColor;
+        //if (b != null) {
+        //    mainColourB = b.getBlockColor();
+        //    subColourB = b.getBlockTrackColor();
+        //}
+
+        //b = getLayoutBlockC();
+        //Color mainColourC = defaultTrackColor;
+        //Color subColourC = defaultTrackColor;
+        //if (b != null) {
+        //    mainColourC = b.getBlockColor();
+        //    subColourC = b.getBlockTrackColor();
+        //}
+
+        //b = getLayoutBlockD();
+        //Color mainColourD = defaultTrackColor;
+        //Color subColourD = defaultTrackColor;
+        //if (b != null) {
+        //    mainColourD = b.getBlockColor();
+        //    subColourD = b.getBlockTrackColor();
+        //}
 
         layoutEditor.setTrackStrokeWidth(g2, isMainline());
 

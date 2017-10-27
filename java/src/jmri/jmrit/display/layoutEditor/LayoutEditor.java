@@ -2754,14 +2754,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("SetBackgroundColor"),
-                                 defaultBackgroundColor);
-            if (desiredColor!=null && !defaultBackgroundColor.equals(desiredColor)) {
-               defaultBackgroundColor = desiredColor;
-               setBackgroundColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("SetBackgroundColor"),
+                    defaultBackgroundColor);
+            if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
+                defaultBackgroundColor = desiredColor;
+                setBackgroundColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
 
         optionMenu.add(backgroundColorMenuItem);
@@ -2833,26 +2833,26 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         trackColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultTrackColor"),
-                                 defaultTrackColor);
-            if (desiredColor!=null && !defaultTrackColor.equals(desiredColor)) {
-               setDefaultTrackColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("DefaultTrackColor"),
+                    defaultTrackColor);
+            if (desiredColor != null && !defaultTrackColor.equals(desiredColor)) {
+                setDefaultTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         trkColourMenu.add(trackColorMenuItem);
 
         JMenuItem trackOccupiedColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultOccupiedTrackColor"));
         trackOccupiedColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultOccupiedTrackColor"),
-                                 defaultOccupiedTrackColor);
-            if (desiredColor!=null && !defaultOccupiedTrackColor.equals(desiredColor)) {
-               setDefaultOccupiedTrackColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("DefaultOccupiedTrackColor"),
+                    defaultOccupiedTrackColor);
+            if (desiredColor != null && !defaultOccupiedTrackColor.equals(desiredColor)) {
+                setDefaultOccupiedTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         trkColourMenu.add(trackOccupiedColorMenuItem);
 
@@ -2860,13 +2860,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         trackAlternativeColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultAlternativeTrackColor"),
-                                 defaultAlternativeTrackColor);
-            if (desiredColor!=null && !defaultAlternativeTrackColor.equals(desiredColor)) {
-               setDefaultAlternativeTrackColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("DefaultAlternativeTrackColor"),
+                    defaultAlternativeTrackColor);
+            if (desiredColor != null && !defaultAlternativeTrackColor.equals(desiredColor)) {
+                setDefaultAlternativeTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         trkColourMenu.add(trackAlternativeColorMenuItem);
 
@@ -2877,13 +2877,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         textColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultTextColor"),
-                                 defaultTextColor);
-            if (desiredColor!=null && !defaultTextColor.equals(desiredColor)) {
-               setDefaultTextColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("DefaultTextColor"),
+                    defaultTextColor);
+            if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
+                setDefaultTextColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         optionMenu.add(textColorMenuItem);
 
@@ -2907,13 +2907,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         turnoutCircleColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("TurnoutCircleColor"),
-                                 turnoutCircleColor);
-            if (desiredColor!=null && !turnoutCircleColor.equals(desiredColor)) {
-               setTurnoutCircleColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("TurnoutCircleColor"),
+                    turnoutCircleColor);
+            if (desiredColor != null && !turnoutCircleColor.equals(desiredColor)) {
+                setTurnoutCircleColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         turnoutOptionsMenu.add(turnoutCircleColorMenuItem);
 
@@ -8887,6 +8887,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return yScale;
     }
 
+    public Color getDefaultBackgroundColor() {
+        return defaultBackgroundColor;
+    }
+
     public String getDefaultTrackColor() {
         return ColorUtil.colorToColorName(defaultTrackColor);
     }
@@ -9043,7 +9047,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead.
      */
     @Deprecated
     public void setDefaultTrackColor(@Nonnull String colorName) {
@@ -9053,13 +9057,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the defalut track color to.
      */
-    public void setDefaultTrackColor(@Nonnull Color color){
+    public void setDefaultTrackColor(@Nonnull Color color) {
         LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)}
+     * instead.
      */
     @Deprecated
     public void setDefaultOccupiedTrackColor(@Nonnull String colorName) {
@@ -9069,12 +9074,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the defalut occupied track color to.
      */
-    public void setDefaultOccupiedTrackColor(@Nonnull Color color){
+    public void setDefaultOccupiedTrackColor(@Nonnull Color color) {
         defaultOccupiedTrackColor = color;
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultAlternativeTrackColor(Color)} instead. 
+     * @deprecated since 4.9.6 use
+     * {@link #setDefaultAlternativeTrackColor(Color)} instead.
      */
     @Deprecated
     public void setDefaultAlternativeTrackColor(@Nonnull String colorName) {
@@ -9084,12 +9090,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the defalut alternate track color to.
      */
-    public void setDefaultAlternativeTrackColor(@Nonnull Color color){
+    public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)}
+     * instead.
      */
     @Deprecated
     public void setTurnoutCircleColor(@Nonnull String colorName) {
@@ -9101,9 +9108,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /**
      * @param color new color for turnout circle.
-     */ 
+     */
     public void setTurnoutCircleColor(Color color) {
-        if (color==null) {
+        if (color == null) {
             turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
         } else {
             turnoutCircleColor = color;
@@ -9129,7 +9136,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //setTurnoutDrawUnselectedLeg
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead.
      */
     @Deprecated
     public void setDefaultTextColor(@Nonnull String colorName) {
@@ -9139,12 +9146,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the defalut text color to.
      */
-    public void setDefaultTextColor(@Nonnull Color color){
+    public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)}
+     * instead.
      */
     @Deprecated
     public void setDefaultBackgroundColor(@Nonnull String colorName) {
@@ -9154,7 +9162,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the panel background to.
      */
-    public void setDefaultBackgroundColor(@Nonnull Color color){
+    public void setDefaultBackgroundColor(@Nonnull Color color) {
         defaultBackgroundColor = color;
     }
 
@@ -9446,6 +9454,16 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
 
+    private boolean drawRailsFlag = false;
+
+    protected boolean isDrawRailsFlag() {
+        return drawRailsFlag;
+    }
+
+    protected void setDrawRailsFlag(boolean bool) {
+        drawRailsFlag = bool;
+    }
+
     /**
      * Special internal class to allow drawing of layout to a JLayeredPane This
      * is the 'target' pane where the layout is displayed
@@ -9475,13 +9493,34 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             drawHiddenLayoutTracks(g2);
         }
 
+        setDrawRailsFlag(false);
+        setTrackStrokeWidth(g2, !main);
+
         List<TrackSegment> trackSegments = getTrackSegments();
         drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
         drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
         drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
         drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
 
+        setDrawRailsFlag(true);
+        setTrackStrokeWidth(g2, !main);
+
+        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
+        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
+        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
+        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
+
+        setDrawRailsFlag(false);
+        setTrackStrokeWidth(g2, !main);
+
         drawLayoutTracks(g2);
+
+        setDrawRailsFlag(true);
+        setTrackStrokeWidth(g2, !main);
+
+        drawLayoutTracks(g2);
+
+        setDrawRailsFlag(false);
 
         // things that only get drawn in edit mode
         if (isEditable()) {
@@ -9516,6 +9555,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             //change track stroke width
             trackWidth = main ? mainlineTrackWidth : sideTrackWidth;
+            if (isDrawRailsFlag() && (mainlineTrackWidth > 3.F) && (sideTrackWidth > 2.F)) {
+                trackWidth -= main ? 3.F : 2.F;
+            }
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         }
         return trackWidth;
@@ -9639,7 +9681,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Rectangle targetRect = targetPanel.getVisibleRect();
         // this will make it the size of the targetRect
         // (effectively centering it onscreen)
-        Rectangle2D selRect2D = MathUtil.inset(selectionRect, 
+        Rectangle2D selRect2D = MathUtil.inset(selectionRect,
                 (selectionRect.getWidth() - targetRect.getWidth()) / 2.0,
                 (selectionRect.getHeight() - targetRect.getHeight()) / 2.0);
         // don't let the origin go negative
