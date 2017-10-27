@@ -1391,18 +1391,17 @@ public class PositionablePoint extends LayoutTrack {
             }
 
             double trackWidth = Math.min(layoutEditor.setTrackStrokeWidth(g2, mainline), 3.0);
+            double tieWidth = trackWidth * 2.0;
             Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
             g2.setColor(defaultTrackColor);
-            trackWidth *= 2.0;
 
             if (!ep1.equals(ep2)) {
-                setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
                 double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
                 Point2D p1, p2, p3, p4;
                 if (getType() == END_BUMPER) {
                     // draw a cross tie
-                    p1 = new Point2D.Double(0.0, -trackWidth);
-                    p2 = new Point2D.Double(0.0, +trackWidth);
+                    p1 = new Point2D.Double(0.0, -tieWidth);
+                    p2 = new Point2D.Double(0.0, +tieWidth);
 
                     p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                     p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
@@ -1410,10 +1409,10 @@ public class PositionablePoint extends LayoutTrack {
                     g2.draw(new Line2D.Double(p1, p2));
                 } else if (getType() == EDGE_CONNECTOR) {
                     // draw an X
-                    p1 = new Point2D.Double(-trackWidth, -trackWidth);
-                    p2 = new Point2D.Double(-trackWidth, +trackWidth);
-                    p3 = new Point2D.Double(+trackWidth, +trackWidth);
-                    p4 = new Point2D.Double(+trackWidth, -trackWidth);
+                    p1 = new Point2D.Double(-trackWidth - tieWidth, -tieWidth);
+                    p2 = new Point2D.Double(-trackWidth - tieWidth, +tieWidth);
+                    p3 = new Point2D.Double(-trackWidth + tieWidth, +tieWidth);
+                    p4 = new Point2D.Double(-trackWidth + tieWidth, -tieWidth);
 
                     p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                     p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
