@@ -1,19 +1,15 @@
 package jmri.util.swing;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.util.Enumeration;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-import javax.swing.JRadioButton;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 /**
  * Abstract Color Chooser extension that presents a swatch sample of the color
@@ -27,20 +23,22 @@ public class ButtonSwatchColorChooserPanel extends AbstractColorChooserPanel {
 
     private JLabel swatch = null;
     private JButton setButton = null;
-    private static final int ICON_DIMENSION = 10;
+    private static final int ICON_DIMENSION = 20;
 
     @Override
     public void updateChooser(){
         Color color = getColorFromModel();
         // update the Swatch to have the right color showing.
-        int ICON_DIMENSION = 10;
         BufferedImage image = new BufferedImage(ICON_DIMENSION, ICON_DIMENSION,
                 BufferedImage.TYPE_INT_RGB);
 
         Graphics g = image.getGraphics();
-        // set completely transparent
+        // fill it with its representative color
         g.setColor(color);
         g.fillRect(0, 0, ICON_DIMENSION, ICON_DIMENSION);
+        // draw a black border around it
+        g.setColor(Color.black);
+        g.drawRect(0, 0, ICON_DIMENSION - 1, ICON_DIMENSION - 1);
 
         ImageIcon icon = new ImageIcon(image); 
 
