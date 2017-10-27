@@ -33,10 +33,12 @@ public class JsonRouteSocketService extends JsonSocketService {
     private final RoutesListener routesListener = new RoutesListener();
     private Locale locale;
     private final static Logger log = LoggerFactory.getLogger(JsonRouteSocketService.class);
+    private RouteManager routeManager = null;
 
     public JsonRouteSocketService(JsonConnection connection) {
         super(connection);
         this.service = new JsonRouteHttpService(connection.getObjectMapper());
+        routeManager = InstanceManager.getDefault(RouteManager.class);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class JsonRouteSocketService extends JsonSocketService {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
         if (!this.routeListeners.containsKey(name)) {
-            Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
+            Route route = routeManager.getRoute(name);
             if (route != null) {
                 Sensor sensor = route.getTurnoutsAlgdSensor();
                 if (sensor != null) {
@@ -66,15 +68,15 @@ public class JsonRouteSocketService extends JsonSocketService {
         this.locale = locale;
         this.connection.sendMessage(this.service.doGetList(type, locale));
         log.debug("adding RoutesListener");
-        InstanceManager.getDefault(RouteManager.class).addPropertyChangeListener(routesListener); //add parent listener
+        routeManager.addPropertyChangeListener(routesListener); //add parent listener
         addListenersToChildren();
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(RouteManager.class).getSystemNameList().stream().forEach((rn) -> { //add listeners to each child (if not already)
+        routeManager.getSystemNameList().stream().forEach((rn) -> { //add listeners to each child (if not already)
             if (!routeListeners.containsKey(rn)) {
                 log.debug("adding RouteListener for Route {}", rn);
-                Route route  = InstanceManager.getDefault(RouteManager.class).getRoute(rn);
+                Route route  = routeManager.getRoute(rn);
                 if (route != null) {
                     Sensor sensor = route.getTurnoutsAlgdSensor();
                     if (sensor != null) {
@@ -93,7 +95,7 @@ public class JsonRouteSocketService extends JsonSocketService {
             route.route.removePropertyChangeListener(route);
         });
         routeListeners.clear();
-        InstanceManager.getDefault(RouteManager.class).removePropertyChangeListener(routesListener);
+        routeManager.removePropertyChangeListener(routesListener);
 
     }
 
@@ -145,7 +147,7 @@ public class JsonRouteSocketService extends JsonSocketService {
             } catch (IOException ex) {
                 // if we get an error, de-register
                 log.debug("deregistering sensorsListener due to IOException");
-                InstanceManager.getDefault(RouteManager.class).removePropertyChangeListener(routesListener);
+                routeManager.removePropertyChangeListener(routesListener);
             }
         }
     }
