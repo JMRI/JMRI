@@ -226,7 +226,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         }
         // make this url the default "Save Panels..." file
         JFileChooser ufc = jmri.configurexml.StoreXmlUserAction.getUserFileChooser();
-        ufc.setSelectedFile(new File(url.getFile()));
+        ufc.setSelectedFile(new File(url.getPath()));
         return this.legacy.load(url, registerDeferred);
         // return true; // always return true once legacy support is dropped
     }
