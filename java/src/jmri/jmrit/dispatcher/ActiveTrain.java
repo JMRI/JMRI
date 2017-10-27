@@ -157,6 +157,15 @@ public class ActiveTrain {
     public static final int OPERATIONS = 0x02;
     public static final int USER = 0x04;
 
+    /**
+     * The value of {@link #getAllocateMethod()} if allocating as many sections as are clear.
+     */
+    public static final int ALLOCATE_AS_FAR_AS_IT_CAN = -1;
+    /**
+     * The value of {@link #getAllocateMethod()} if allocating up until the next safe section
+     */
+    public static final int ALLOCATE_BY_SAFE_SECTIONS = 0;
+
     // instance variables
     private Transit mTransit = null;
     private String mTrainName = "";
@@ -167,8 +176,9 @@ public class ActiveTrain {
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
     private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
     private AutoActiveTrain mAutoActiveTrain = null;
-    private ArrayList<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
+    private List<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
     private jmri.Section mLastAllocatedSection = null;
+    private int mLastAllocatedSectionSeqNumber = 0;
     private jmri.Section mSecondAllocatedSection = null;
     private int mNextAllocationNumber = 1;
     private jmri.Section mNextSectionToAllocate = null;
@@ -184,7 +194,7 @@ public class ActiveTrain {
     private String mDccAddress = "";
     private boolean mResetWhenDone = true;
     private boolean mReverseAtEnd = false;
-    private boolean mAllocateAllTheWay = false;
+    private int mAllocateMethod = 3;
     public final static int NODELAY = 0x00;
     public final static int TIMEDDELAY = 0x01;
     public final static int SENSORDELAY = 0x02;
@@ -342,7 +352,7 @@ public class ActiveTrain {
         return mDelayedRestart;
     }
 
-    public void setDelayedReStart(int delay) {
+    public void setDelayedRestart(int delay) {
         mDelayedRestart = delay;
     }
 
@@ -604,6 +614,7 @@ public class ActiveTrain {
             if (as.getSection() == mNextSectionToAllocate) {
                 // this  is the next Section in the Transit, update pointers
                 mLastAllocatedSection = as.getSection();
+                mLastAllocatedSectionSeqNumber = mNextSectionSeqNumber;
                 mNextSectionToAllocate = as.getNextSection();
                 mNextSectionSeqNumber = as.getNextSectionSequence();
                 mNextSectionDirection = getAllocationDirectionFromSectionAndSeq(
@@ -673,6 +684,7 @@ public class ActiveTrain {
             if (mAllocatedSections.size() > 0) {
                 mLastAllocatedSection = mAllocatedSections.get(
                         mAllocatedSections.size() - 1).getSection();
+                mLastAllocatedSectionSeqNumber = mAllocatedSections.size() - 1;
             }
         }
     }
@@ -683,7 +695,7 @@ public class ActiveTrain {
     public void allocateAFresh() {
         setStatus(WAITING);
         setTransitReversed(false);
-        ArrayList<AllocatedSection> sectionsToRelease = new ArrayList<AllocatedSection>();
+        List<AllocatedSection> sectionsToRelease = new ArrayList<AllocatedSection>();
         for (AllocatedSection as : InstanceManager.getDefault(DispatcherFrame.class).getAllocatedSectionsList()) {
             if (as.getActiveTrain() == this) {
                 sectionsToRelease.add(as);
@@ -710,8 +722,8 @@ public class ActiveTrain {
         }
     }
 
-    public ArrayList<AllocatedSection> getAllocatedSectionList() {
-        ArrayList<AllocatedSection> list = new ArrayList<>();
+    public List<AllocatedSection> getAllocatedSectionList() {
+        List<AllocatedSection> list = new ArrayList<>();
         for (int i = 0; i < mAllocatedSections.size(); i++) {
             list.add(mAllocatedSections.get(i));
         }
@@ -728,11 +740,11 @@ public class ActiveTrain {
      *
      * @return the list of blocks order of occupation
      */
-    public ArrayList<Block> getBlockList() {
-        ArrayList<Block> list = new ArrayList<>();
+    public List<Block> getBlockList() {
+        List<Block> list = new ArrayList<>();
         for (int i = 0; i < mAllocatedSections.size(); i++) { // loop thru allocated sections, then all blocks for each section
             Section s = mAllocatedSections.get(i).getSection();
-            ArrayList<Block> bl = s.getBlockList();
+            List<Block> bl = s.getBlockList();
             if (bl.size() > 1) { //sections with multiple blocks need extra logic
 
                 boolean blocksConnected = true;
@@ -792,6 +804,10 @@ public class ActiveTrain {
 
     public jmri.Section getLastAllocatedSection() {
         return mLastAllocatedSection;
+    }
+
+    public int getLastAllocatedSectionSeqNumber() {
+        return mLastAllocatedSectionSeqNumber;
     }
 
     public String getLastAllocatedSectionName() {
@@ -905,16 +921,27 @@ public class ActiveTrain {
         mReverseAtEnd = s;
     }
 
-    public boolean getAllocateAllTheWay() {
-        return mAllocateAllTheWay;
-    }
-
-    public void setAllocateAllTheWay(boolean s) {
-        mAllocateAllTheWay = s;
-    }
-
     protected jmri.Section getSecondAllocatedSection() {
         return mSecondAllocatedSection;
+    }
+
+    /**
+     * Returns the AllocateM Method to be used by autoAllocate
+     *
+     * @return The number of Blocks ahead to be allocated or 0 = Allocate By Safe
+     *         sections or -1 - Allocate All The Way.
+     */
+    public int getAllocateMethod() {
+        return mAllocateMethod;
+    }
+
+    /**
+     * Sets the Allocation Method to be used bu autoAllocate
+     * @param i The number of Blocks ahead to be allocated or 0 = Allocate By Safe
+     *          sections or -1 - Allocate All The Way.
+     */
+    public void setAllocateMethod(int i) {
+        mAllocateMethod = i;
     }
 
     //
@@ -1088,6 +1115,6 @@ public class ActiveTrain {
         pcs.removePropertyChangeListener(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class);
 
 }

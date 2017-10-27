@@ -1,6 +1,8 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.EditorScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -19,23 +21,22 @@ public class ItemPaletteTest {
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = new ItemPalette("Test ItemPalette", null);
+            ip = ItemPalette.getDefault("Test ItemPalette",  new EditorScaffold());
             ip.pack();
             ip.setVisible(true);
         });
-        ip.dispose();
+        JUnitUtil.dispose(ip);
     }
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
         ip = null;
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

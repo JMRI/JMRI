@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -80,7 +80,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return super.getBundle().handleGetMessage(locale,key);
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class);
 
     /**
      * Merges user data with a translated string for a given key in a given

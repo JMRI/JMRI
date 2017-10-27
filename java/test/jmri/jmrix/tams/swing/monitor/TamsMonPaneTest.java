@@ -1,6 +1,5 @@
 package jmri.jmrix.tams.swing.monitor;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,23 +14,16 @@ import org.junit.Test;
 public class TamsMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane );
-    }
-
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
-        pane = new TamsMonPane();
+        JUnitUtil.setUp();
+        // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
+        panel = pane = new TamsMonPane();
+        title="Tams Command Monitor";
     }
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

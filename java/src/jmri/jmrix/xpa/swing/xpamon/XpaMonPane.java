@@ -2,8 +2,8 @@ package jmri.jmrix.xpa.swing.xpamon;
 
 import jmri.jmrix.xpa.XpaListener;
 import jmri.jmrix.xpa.XpaMessage;
-import jmri.jmrix.xpa.XpaTrafficController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
+import jmri.jmrix.xpa.XpaTrafficController;
 
 /**
  * Panel displaying (and logging) Xpa+Modem command messages.  

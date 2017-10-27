@@ -389,5 +389,5 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _status = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CvTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CvTableModel.class);
 }

@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import jmri.AddressedProgrammer;
+import jmri.AddressedProgrammerManager;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,12 +28,12 @@ public class ConsistController extends AbstractController implements ProgListene
 
     public ConsistController() {
         //  writeFile needs to be separate method
-        if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
+        if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseWiFiConsist()) {
             manager = new WiFiConsistManager();
-            jmri.InstanceManager.store(manager,jmri.ConsistManager.class);
+            InstanceManager.store(manager, ConsistManager.class);
             log.debug("Using WiFiConsisting");
         } else {
-            manager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);
+            manager = InstanceManager.getNullableDefault(ConsistManager.class);
             log.debug("Using JMRIConsisting");
         }
 
@@ -38,14 +41,14 @@ public class ConsistController extends AbstractController implements ProgListene
             log.info("No consist manager instance.");
             isValid = false;
         } else {
-            if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
+            if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseWiFiConsist()) {
                 file = new WiFiConsistFile(manager);
             } else {
                 file = new ConsistFile();
                 try {
                     file.readFile();
-                } catch (Exception e) {
-                    log.warn("error reading consist file: " + e);
+                } catch (IOException | JDOMException e) {
+                    log.warn("error reading consist file: {}", (Object) e);
                 }
             }
             isValid = true;
@@ -84,79 +87,8 @@ public class ConsistController extends AbstractController implements ProgListene
         for (DccLocoAddress conAddr : manager.getConsistList()) {
             sendDataForConsist(manager.getConsist(conAddr));
         }
-
-        // Loop through the NCE consists and send consist detail for each
-     /* dboudreau 2/26/2012 added consist manager for NCE
-         NceConsistRoster r = NceConsistRoster.getDefault();
-         List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
-         int i=-1;
-         for (i = 0; i<l.size(); i++) {
-         sendDataForNCEConsist(l.get(i));
-         }
-         */
     }
 
-    //send consist detail record for a single NCE consist, e.g. RCD}|{127(S)}|{2591]\[2591(L)}|{true]\[6318(L)}|{true]\[2608(L)}|{false
-    /* dboudreau 2/26/2012 added consist manager for NCE
-     public void sendDataForNCEConsist(NceConsistRosterEntry con){
-     if (listeners == null) return;
-     StringBuilder list = new StringBuilder("RCD");  //  Roster Consist Data
-     list.append("}|{");
-     list.append(con.getConsistNumber());  //address
-     list.append("(S)}|{");  //consist address is always short
-     if (con.getId().length() > 0){  
-     list.append(con.getId());   //id
-     }
-        
-     //append entries for each loco (if set)
-     list.append("]\\[");
-     list.append(con.getLoco1DccAddress());  //loco address
-     list.append(con.isLoco1LongAddress() ? "(L)" : "(S)");  //include length
-     list.append("}|{");
-     list.append((con.getLoco1Direction().equals("normal")));  //forward is true, reverse is false
-     if (!con.getLoco2DccAddress().equals("")) {
-     list.append("]\\[");
-     list.append(con.getLoco2DccAddress());
-     list.append(con.isLoco2LongAddress() ? "(L)" : "(S)");
-     list.append("}|{");
-     list.append((con.getLoco2Direction().equals("normal")));
-     }
-     if (!con.getLoco3DccAddress().equals("")) {
-     list.append("]\\[");
-     list.append(con.getLoco3DccAddress());
-     list.append(con.isLoco3LongAddress() ? "(L)" : "(S)");
-     list.append("}|{");
-     list.append((con.getLoco3Direction().equals("normal")));
-     }
-     if (!con.getLoco4DccAddress().equals("")) {
-     list.append("]\\[");
-     list.append(con.getLoco4DccAddress());
-     list.append(con.isLoco4LongAddress() ? "(L)" : "(S)");
-     list.append("}|{");
-     list.append((con.getLoco4Direction().equals("normal")));
-     }
-     if (!con.getLoco5DccAddress().equals("")) {
-     list.append("]\\[");
-     list.append(con.getLoco5DccAddress());
-     list.append(con.isLoco5LongAddress() ? "(L)" : "(S)");
-     list.append("}|{");
-     list.append((con.getLoco5Direction().equals("normal")));
-     }
-     if (!con.getLoco6DccAddress().equals("")) {
-     list.append("]\\[");
-     list.append(con.getLoco6DccAddress());
-     list.append(con.isLoco6LongAddress() ? "(L)" : "(S)");
-     list.append("}|{");
-     list.append((con.getLoco6Direction().equals("normal")));
-     }
-
-     String message = list.toString();
-
-     for (ControllerInterface listener : listeners){
-     listener.sendPacketToDevice(message);
-     }
-     }
-     */
     public void sendDataForConsist(Consist con) {
         if (listeners == null) {
             return;
@@ -219,7 +151,7 @@ public class ConsistController extends AbstractController implements ProgListene
                 setConsistCVs(message);
             }
         } catch (NullPointerException exb) {
-            log.warn("Message \"" + message + "\" does not match a consist command.");
+            log.warn("Message \"{}\" does not match a consist command.", message);
         }
     }
 
@@ -236,13 +168,13 @@ public class ConsistController extends AbstractController implements ProgListene
         List<String> headerAndLocos = Arrays.asList(message.split("<:>"));
 
         if (headerAndLocos.size() < 2) {
-            log.warn("reorderConsist missing data in message: " + message);
+            log.warn("reorderConsist missing data in message: {}", message);
             return;
         }
 
         try {
             List<String> headerData = Arrays.asList(headerAndLocos.get(0).split("<;>"));
-            //  
+            //
             consist = manager.getConsist(stringToDcc(headerData.get(1)));
 
             List<String> locoData = Arrays.asList(headerAndLocos.get(1).split("<;>"));
@@ -261,7 +193,7 @@ public class ConsistController extends AbstractController implements ProgListene
             }
 
         } catch (NullPointerException e) {
-            log.warn("reorderConsist error for message: " + message);
+            log.warn("reorderConsist error for message: {}", message);
             return;
         }
 
@@ -277,25 +209,22 @@ public class ConsistController extends AbstractController implements ProgListene
      */
     private void removeConsist(String message) {
         List<String> header = Arrays.asList(message.split("<;>"));
-        Consist consist = null;
         try {
-            consist = manager.getConsist(stringToDcc(header.get(1)));
+            Consist consist = manager.getConsist(stringToDcc(header.get(1)));
             while (!consist.getConsistList().isEmpty()) {
                 DccLocoAddress loco = consist.getConsistList().get(0);
-                if (log.isDebugEnabled()) {
-                    log.debug("Remove loco: " + loco + ", from consist: " + consist.getConsistAddress().toString());
-                }
+                log.debug("Remove loco: {}, from consist: {}", loco, consist.getConsistAddress());
                 consist.remove(loco);
             }
         } catch (NullPointerException noCon) {
-            log.warn("Consist: " + header.get(1) + " not found. Cannot delete.");
+            log.warn("Consist: {} not found. Cannot delete.", header.get(1));
             return;
         }
 
         try {
             manager.delConsist(stringToDcc(header.get(1)));
         } catch (NullPointerException noCon) {
-            log.warn("Consist: " + header.get(1) + " not found. Cannot delete.");
+            log.warn("Consist: {} not found. Cannot delete.", header.get(1));
             return;
         }
 
@@ -331,7 +260,7 @@ public class ConsistController extends AbstractController implements ProgListene
             }
 
         } catch (NullPointerException e) {
-            log.warn("addLoco error for message: " + message);
+            log.warn("addLoco error for message: {}", message);
             return;
         }
 
@@ -348,9 +277,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
         List<String> headerAndLoco = Arrays.asList(message.split("<:>"));
 
-        if (log.isDebugEnabled()) {
-            log.debug("remove loco string: " + message);
-        }
+        log.debug("remove loco string: {}", message);
 
         try {
             List<String> headerData = Arrays.asList(headerAndLoco.get(0).split("<;>"));
@@ -371,7 +298,7 @@ public class ConsistController extends AbstractController implements ProgListene
                 }
             }
         } catch (NullPointerException e) {
-            log.warn("removeLoco error for message: " + message);
+            log.warn("removeLoco error for message: {}", message);
             return;
         }
 
@@ -380,7 +307,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     private void writeFile() {
         try {
-            if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
+            if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseWiFiConsist()) {
                 file.writeFile(manager.getConsistList(), WiFiConsistFile.getFileLocation() + "wifiConsist.xml");
             } else {
                 file.writeFile(manager.getConsistList());
@@ -401,9 +328,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
         List<String> headerAndCVs = Arrays.asList(message.split("<:>"));
 
-        if (log.isDebugEnabled()) {
-            log.debug("setConsistCVs string: " + message);
-        }
+        log.debug("setConsistCVs string: {}", message);
 
         try {
             List<String> headerData = Arrays.asList(headerAndCVs.get(0).split("<;>"));
@@ -414,30 +339,27 @@ public class ConsistController extends AbstractController implements ProgListene
             }
 
         } catch (NullPointerException e) {
-            log.warn("setConsistCVs error for message: " + message);
-
+            log.warn("setConsistCVs error for message: {}", message);
             return;
         }
-        AddressedProgrammer pom = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class)
-                .getAddressedProgrammer(loco.isLongAddress(), loco.getNumber());
+        AddressedProgrammer pom = InstanceManager.getDefault(AddressedProgrammerManager.class).getAddressedProgrammer(loco);
+        if (pom != null) {
+            // loco done, now get CVs
+            for (int i = 1; i < headerAndCVs.size(); i++) {
+                List<String> CVData = Arrays.asList(headerAndCVs.get(i).split("<;>"));
 
-        // loco done, now get CVs
-        for (int i = 1; i < headerAndCVs.size(); i++) {
-            List<String> CVData = Arrays.asList(headerAndCVs.get(i).split("<;>"));
-
-            try {
-                int CVNum = Integer.parseInt(CVData.get(0));
-                int CVValue = Integer.parseInt(CVData.get(1));
                 try {
-                    pom.writeCV(CVNum, CVValue, this);
-                } catch (ProgrammerException e) {
+                    try {
+                        pom.writeCV(CVData.get(0), Integer.parseInt(CVData.get(1)), this);
+                    } catch (ProgrammerException e) {
+                        log.debug("Unable to communicate with programmer manager.");
+                    }
+                } catch (NumberFormatException nfe) {
+                    log.warn("Error in setting CVs: {}", (Object) nfe);
                 }
-            } catch (NumberFormatException nfe) {
-                log.warn("Error in setting CVs: " + nfe);
             }
+            InstanceManager.getDefault(AddressedProgrammerManager.class).releaseAddressedProgrammer(pom);
         }
-        jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).releaseAddressedProgrammer(pom);
-
     }
 
     @Override
@@ -476,6 +398,6 @@ public class ConsistController extends AbstractController implements ProgListene
         throw new UnsupportedOperationException("Not used.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConsistController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistController.class);
 
 }

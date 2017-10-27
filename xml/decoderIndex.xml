@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.2ish+jake+20170812T2112Z+Rde4dd1b01e on Sat Aug 12 14:12:37 PDT 2017-->
-  <decoderIndex version="828">
+  <!--Written by JMRI version 4.9.6ish+heap+20171008T0138Z+Rc65e3b3 on Sun Oct 08 12:38:51 AEDT 2017-->
+  <decoderIndex version="844">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4990,9 +4990,11 @@
         <model model="LokPilot Micro V3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554478">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
           <protocols>
@@ -5004,18 +5006,22 @@
         <model model="LokPilot Micro V3.0 DCC" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554479">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
         </model>
         <model model="LokPilot V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554460,33554470,33554473">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5029,9 +5035,11 @@
         <model model="LokPilot V3.0 DCC" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554461,33554471,33554474">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5040,9 +5048,11 @@
         <model model="LokPilot Micro Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554486">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5055,9 +5065,11 @@
         <model model="LokPilot Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="33554476">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5072,9 +5084,11 @@
         <model model="LokPilot XL V3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="33554483">
           <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other" />
           <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other" />
@@ -5091,9 +5105,11 @@
         <model show="no" model="LokPilot micro 3.0" replacementModel="LokPilot Micro V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
           <protocols>
@@ -5105,18 +5121,22 @@
         <model show="no" model="LokPilot micro DCC 3.0" replacementModel="LokPilot Micro V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0 DCC">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
         </model>
         <model show="no" model="LokPilot 3.0" replacementModel="LokPilot V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5130,9 +5150,11 @@
         <model show="no" model="LokPilot DCC 3.0" replacementModel="LokPilot V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0 DCC">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5141,9 +5163,11 @@
         <model show="no" model="LokPilot mfx 3.0" replacementModel="LokPilot Micro Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot Micro Fx V3.0">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5156,9 +5180,11 @@
         <model show="no" model="LokPilot XL 3.0" replacementModel="LokPilot XL V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="LokPilot XL V3.0">
           <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other" />
           <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other" />
@@ -5175,9 +5201,11 @@
         <model show="no" model="LokPilot Fx 3.0" replacementModel="LokPilot Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="LokPilot Fx V3.0">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5519,52 +5547,63 @@
         </model>
       </family>
       <family name="ESU LokSound V3.0 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59" file="ESU_LokSoundV3_0.xml">
-        <model model="ESU_LokSound3" numOuts="6">
+        <model model="LokSound V3.0" numOuts="6">
           <output name="1" label="Front|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="250mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="250mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="250mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="250mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="|" />
           <output name="8" label="|" />
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="|" />
           <output name="15" label="|" />
@@ -5572,61 +5611,75 @@
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="31" width="15.5" height="6.5" units="mm" />
         </model>
-        <model model="LokSoundXL Version 3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+        <model model="LokSoundXL V3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
           <output name="1" label="Front|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="600mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="600mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="600mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="600mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="Aux|5" maxcurrent="600mA">
             <label xml:lang="fr">Aux|5</label>
             <label xml:lang="it">Ausil|5</label>
+            <label xml:lang="de">Aux|5</label>
           </output>
           <output name="8" label="Aux|6" maxcurrent="600mA">
             <label xml:lang="fr">Aux|6</label>
             <label xml:lang="it">Ausil|6</label>
+            <label xml:lang="de">Aux|6</label>
           </output>
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="|" />
           <output name="15" label="|" />
@@ -5634,6 +5687,155 @@
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
+          </output>
+          <size length="51" width="40" height="14" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model show="no" model="ESU_LokSound3" replacementModel="LokSound V3.0" numOuts="6">
+          <output name="1" label="Front|Light" maxcurrent="250mA">
+            <label xml:lang="fr">Feux|avant</label>
+            <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="250mA">
+            <label xml:lang="fr">Feux|arrière</label>
+            <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
+          </output>
+          <output name="3" label="Aux|1" maxcurrent="250mA">
+            <label xml:lang="fr">Aux|1</label>
+            <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
+          </output>
+          <output name="4" label="Aux|2" maxcurrent="250mA">
+            <label xml:lang="fr">Aux|2</label>
+            <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
+          </output>
+          <output name="5" label="Aux|3" maxcurrent="250mA">
+            <label xml:lang="fr">Aux|3</label>
+            <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
+          </output>
+          <output name="6" label="Aux|4" maxcurrent="250mA">
+            <label xml:lang="fr">Aux|4</label>
+            <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
+          </output>
+          <output name="7" label="|" />
+          <output name="8" label="|" />
+          <output name="9" label="Momentum|off">
+            <label xml:lang="fr">Inertie|désactivée</label>
+            <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
+          </output>
+          <output name="10" label="Shunt|mode">
+            <label xml:lang="fr">Mode|manœuvre</label>
+            <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
+          </output>
+          <output name="11" label="Sound|on">
+            <label xml:lang="fr">Son|allumé</label>
+            <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
+          </output>
+          <output name="12" label="Shift|mode">
+            <label xml:lang="fr">Changement|mode</label>
+            <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
+          </output>
+          <output name="13" label="Fan|sound">
+            <label xml:lang="fr">Son|ventilateur</label>
+            <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
+          </output>
+          <output name="14" label="|" />
+          <output name="15" label="|" />
+          <output name="16" label="|" />
+          <output name="17" label="Sound|slot">
+            <label xml:lang="fr">Créneau|Son</label>
+            <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
+          </output>
+          <size length="31" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model show="no" model="LokSoundXL Version 3.0" replacementModel="LokSoundXL V3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+          <output name="1" label="Front|Light" maxcurrent="600mA">
+            <label xml:lang="fr">Feux|avant</label>
+            <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="600mA">
+            <label xml:lang="fr">Feux|arrière</label>
+            <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
+          </output>
+          <output name="3" label="Aux|1" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|1</label>
+            <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
+          </output>
+          <output name="4" label="Aux|2" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|2</label>
+            <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
+          </output>
+          <output name="5" label="Aux|3" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|3</label>
+            <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
+          </output>
+          <output name="6" label="Aux|4" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|4</label>
+            <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
+          </output>
+          <output name="7" label="Aux|5" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|5</label>
+            <label xml:lang="it">Ausil|5</label>
+            <label xml:lang="de">Aux|5</label>
+          </output>
+          <output name="8" label="Aux|6" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|6</label>
+            <label xml:lang="it">Ausil|6</label>
+            <label xml:lang="de">Aux|6</label>
+          </output>
+          <output name="9" label="Momentum|off">
+            <label xml:lang="fr">Inertie|désactivée</label>
+            <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
+          </output>
+          <output name="10" label="Shunt|mode">
+            <label xml:lang="fr">Mode|manœuvre</label>
+            <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
+          </output>
+          <output name="11" label="Sound|on">
+            <label xml:lang="fr">Son|allumé</label>
+            <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
+          </output>
+          <output name="12" label="Shift|mode">
+            <label xml:lang="fr">Changement|mode</label>
+            <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
+          </output>
+          <output name="13" label="Fan|sound">
+            <label xml:lang="fr">Son|ventilateur</label>
+            <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
+          </output>
+          <output name="14" label="|" />
+          <output name="15" label="|" />
+          <output name="16" label="|" />
+          <output name="17" label="Sound|slot">
+            <label xml:lang="fr">Créneau|Son</label>
+            <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="51" width="40" height="14" units="mm" />
           <protocols>
@@ -5647,70 +5849,87 @@
           <output name="1" label="Front|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="250mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="250mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="250mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="250mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="Notch|up">
             <label xml:lang="fr">Monter|cran</label>
             <label xml:lang="it">Incrementa|velocità</label>
+            <label xml:lang="de">Diesel|auf</label>
           </output>
           <output name="8" label="Notch|down">
             <label xml:lang="fr">Descendre|cran</label>
             <label xml:lang="it">Rallenta|velocità</label>
+            <label xml:lang="de">Diesel|ab</label>
           </output>
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="Doppler|effect">
             <label xml:lang="fr">Effet|Doppler</label>
             <label xml:lang="it">Effetto |Doppler</label>
+            <label xml:lang="de">Doppler|effekt</label>
           </output>
           <output name="15" label="Volume|/Mute">
             <label xml:lang="fr">Volume|/Muet</label>
             <label xml:lang="it">Volume|/Muto</label>
+            <label xml:lang="de">Lautst./|Mute</label>
           </output>
           <output name="16" label="Dynamic|brake">
             <label xml:lang="fr">Frein|dynamique</label>
             <label xml:lang="it">Freni|Dinamici</label>
+            <label xml:lang="de">Dynam.|Bremse</label>
           </output>
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="31" width="15.5" height="6.5" units="mm" />
           <protocols>
@@ -5722,70 +5941,87 @@
           <output name="1" label="Front|Light" maxcurrent="180mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="180mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="180mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="180mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="180mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="180mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="Notch|up">
             <label xml:lang="fr">Monter|cran</label>
             <label xml:lang="it">Incrementa|velocità</label>
+            <label xml:lang="de">Diesel|auf</label>
           </output>
           <output name="8" label="Notch|down">
             <label xml:lang="fr">Descendre|cran</label>
             <label xml:lang="it">Rallenta|velocità</label>
+            <label xml:lang="de">Diesel|ab</label>
           </output>
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="Doppler|effect">
             <label xml:lang="fr">Effet|Doppler</label>
             <label xml:lang="it">Effetto |Doppler</label>
+            <label xml:lang="de">Doppler|effekt</label>
           </output>
           <output name="15" label="Volume|/Mute">
             <label xml:lang="fr">Volume|/Muet</label>
             <label xml:lang="it">Volume|/Muto</label>
+            <label xml:lang="de">Lautst./|Mute</label>
           </output>
           <output name="16" label="Dynamic|brake">
             <label xml:lang="fr">Frein|dynamique</label>
             <label xml:lang="it">Freni|Dinamici</label>
+            <label xml:lang="de">Dynam.|Bremse</label>
           </output>
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="28.5" width="10" height="5" units="mm" />
           <protocols>
@@ -5793,74 +6029,91 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokSoundXL Version 3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
+        <model model="LokSoundXL V3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
           <output name="1" label="Front|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="600mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="600mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="600mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="600mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="Aux|5" maxcurrent="600mA">
             <label xml:lang="fr">Aux|5</label>
             <label xml:lang="it">Ausil|5</label>
+            <label xml:lang="de">Aux|5</label>
           </output>
           <output name="8" label="Aux|6" maxcurrent="600mA">
             <label xml:lang="fr">Aux|6</label>
             <label xml:lang="it">Ausil|6</label>
+            <label xml:lang="de">Aux|6</label>
           </output>
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="Doppler|effect">
             <label xml:lang="fr">Effet|Doppler</label>
             <label xml:lang="it">Effetto |Doppler</label>
+            <label xml:lang="de">Doppler|effekt</label>
           </output>
           <output name="15" label="Volume|/Mute">
             <label xml:lang="fr">Volume|/Muet</label>
             <label xml:lang="it">Volume|/Muto</label>
+            <label xml:lang="de">Lautst./|Mute</label>
           </output>
           <output name="16" label="Dynamic|brake">
             <label xml:lang="fr">Frein|dynamique</label>
             <label xml:lang="it">Freni|Dinamici</label>
+            <label xml:lang="de">Dynam.|Bremse</label>
           </output>
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="51" width="40" height="14" units="mm" />
           <protocols>
@@ -6017,6 +6270,98 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
+        <model show="no" model="LokSoundXL Version 3.5" replacementModel="LokSoundXL V3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+          <output name="1" label="Front|Light" maxcurrent="600mA">
+            <label xml:lang="fr">Feux|avant</label>
+            <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="600mA">
+            <label xml:lang="fr">Feux|arrière</label>
+            <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
+          </output>
+          <output name="3" label="Aux|1" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|1</label>
+            <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
+          </output>
+          <output name="4" label="Aux|2" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|2</label>
+            <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
+          </output>
+          <output name="5" label="Aux|3" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|3</label>
+            <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
+          </output>
+          <output name="6" label="Aux|4" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|4</label>
+            <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
+          </output>
+          <output name="7" label="Aux|5" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|5</label>
+            <label xml:lang="it">Ausil|5</label>
+            <label xml:lang="de">Aux|5</label>
+          </output>
+          <output name="8" label="Aux|6" maxcurrent="600mA">
+            <label xml:lang="fr">Aux|6</label>
+            <label xml:lang="it">Ausil|6</label>
+            <label xml:lang="de">Aux|6</label>
+          </output>
+          <output name="9" label="Momentum|off">
+            <label xml:lang="fr">Inertie|désactivée</label>
+            <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
+          </output>
+          <output name="10" label="Shunt|mode">
+            <label xml:lang="fr">Mode|manœuvre</label>
+            <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
+          </output>
+          <output name="11" label="Sound|on">
+            <label xml:lang="fr">Son|allumé</label>
+            <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
+          </output>
+          <output name="12" label="Shift|mode">
+            <label xml:lang="fr">Changement|mode</label>
+            <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
+          </output>
+          <output name="13" label="Fan|sound">
+            <label xml:lang="fr">Son|ventilateur</label>
+            <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
+          </output>
+          <output name="14" label="Doppler|effect">
+            <label xml:lang="fr">Effet|Doppler</label>
+            <label xml:lang="it">Effetto |Doppler</label>
+            <label xml:lang="de">Doppler|effekt</label>
+          </output>
+          <output name="15" label="Volume|/Mute">
+            <label xml:lang="fr">Volume|/Muet</label>
+            <label xml:lang="it">Volume|/Muto</label>
+            <label xml:lang="de">Lautst./|Mute</label>
+          </output>
+          <output name="16" label="Dynamic|brake">
+            <label xml:lang="fr">Frein|dynamique</label>
+            <label xml:lang="it">Freni|Dinamici</label>
+            <label xml:lang="de">Dynam.|Bremse</label>
+          </output>
+          <output name="17" label="Sound|slot">
+            <label xml:lang="fr">Créneau|Son</label>
+            <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
+          </output>
+          <size length="51" width="40" height="14" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -6078,32 +6423,7 @@
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
-          <functionlabel num="1" lockable="true">Snd</functionlabel>
-          <functionlabel num="2" lockable="false">SS3</functionlabel>
-          <functionlabel num="3" lockable="true">SS4</functionlabel>
-          <functionlabel num="4" lockable="true">AUX2+SS5</functionlabel>
-          <functionlabel num="5" lockable="true">SS6</functionlabel>
-          <functionlabel num="6" lockable="true">Switching</functionlabel>
-          <functionlabel num="7" lockable="true">SS15</functionlabel>
-          <functionlabel num="8" lockable="true">AUX1</functionlabel>
-          <functionlabel num="9" lockable="true">SS9</functionlabel>
-          <functionlabel num="10" lockable="true">SS10</functionlabel>
-          <functionlabel num="11" lockable="true">SS8</functionlabel>
-          <functionlabel num="12" lockable="true">SS11</functionlabel>
-          <functionlabel num="13" lockable="true">SS13</functionlabel>
-          <functionlabel num="14" lockable="true">SS7</functionlabel>
-          <functionlabel num="15" lockable="true">SS16</functionlabel>
-          <functionlabel num="16" lockable="true">SS12</functionlabel>
-          <functionlabel num="17" lockable="true">SS17+SS18</functionlabel>
-          <functionlabel num="18" lockable="true">SS15</functionlabel>
-          <functionlabel num="19" lockable="true">SS19</functionlabel>
-          <functionlabel num="20" lockable="true">SS20</functionlabel>
-          <functionlabel num="21" lockable="true">SS21</functionlabel>
-          <functionlabel num="22" lockable="true" />
-          <functionlabel num="23" lockable="true" />
-          <functionlabel num="24" lockable="true" />
-          <functionlabel num="25" lockable="true" />
-          <functionlabel num="26" lockable="true" />
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
         </functionlabels>
         <soundlabels>
           <soundlabel num="25">Random sounds</soundlabel>
@@ -6114,447 +6434,115 @@
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select.xml">
         <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527,33554569">
           <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
+        </model>
+        <model model="LokSound Select direct / micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+          <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533,33554570">
           <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
-        </model>
-        <model model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
-          <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
-        </model>
-        <model model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
-          <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
         </model>
         <model model="LokSound Select L" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554553">
           <size length="51" width="26" height="14" units="mm" />
         </model>
-        <model model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
-          <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
-        </model>
-        <model model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
+        <model show="no" model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
+        <model show="no" model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
+        <model show="no" model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
+        <model show="no" model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
+        <model show="no" model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
+        <model show="no" model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+        <model show="no" model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
+        <model show="no" model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
+        <model show="no" model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
+        <model show="no" model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
+        <model show="no" model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
+        <model show="no" model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
+        <model show="no" model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
+        <model show="no" model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
+        <model show="no" model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
+        <model show="no" model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
+        <model show="no" model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
+        <model show="no" model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
+        <model show="no" model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
+        <model show="no" model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
+        <model show="no" model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
+        <model show="no" model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+        <model show="no" model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+        <model show="no" model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+        <model show="no" model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
+        <model show="no" model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model show="no" model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model show="no" model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model show="no" model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <functionlabels>
-          <functionlabel num="0" lockable="true">Headlight</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="2" lockable="false">Horn</functionlabel>
-          <functionlabel num="3" lockable="true">Coupler</functionlabel>
-          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
-          <functionlabel num="5" lockable="true">Mars Light</functionlabel>
-          <functionlabel num="6" lockable="true">Ditch Light</functionlabel>
-          <functionlabel num="7" lockable="true">Switching</functionlabel>
-          <functionlabel num="8" lockable="true">Sound On</functionlabel>
-          <functionlabel num="9" lockable="true">Notch Up</functionlabel>
-          <functionlabel num="10" lockable="true">Notch Down</functionlabel>
-          <functionlabel num="11" lockable="true">Radiator Fan</functionlabel>
-          <functionlabel num="12" lockable="true">Dimmer</functionlabel>
-          <functionlabel num="13" lockable="true">AUX4</functionlabel>
-          <functionlabel num="14" lockable="true">Detector</functionlabel>
-          <functionlabel num="15" lockable="true">Crossing</functionlabel>
-          <functionlabel num="16" lockable="true">Rail Clack</functionlabel>
-          <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
-          <functionlabel num="18" lockable="true">Sanding</functionlabel>
-          <functionlabel num="19" lockable="true">Air</functionlabel>
-          <functionlabel num="20" lockable="true">Compressor</functionlabel>
-          <functionlabel num="21" lockable="true">Spitter Valve</functionlabel>
         </functionlabels>
         <soundlabels>
-          <soundlabel num="1">Diesel</soundlabel>
-          <soundlabel num="3">Airhorn</soundlabel>
-          <soundlabel num="4">Bell</soundlabel>
-          <soundlabel num="5">Coupler</soundlabel>
-          <soundlabel num="6">Dynamic Brake</soundlabel>
-          <soundlabel num="7">Air Compressor</soundlabel>
-          <soundlabel num="8">Radiator Fan</soundlabel>
-          <soundlabel num="9">Detector</soundlabel>
-          <soundlabel num="10">Crossing Comm</soundlabel>
-          <soundlabel num="11">Rail Clack</soundlabel>
-          <soundlabel num="12">Brake Set/Release</soundlabel>
-          <soundlabel num="13">Sanding Valve</soundlabel>
-          <soundlabel num="14">Short Air Let Off</soundlabel>
-          <soundlabel num="15">Pop Valve</soundlabel>
-          <soundlabel num="16">Short Airhorn</soundlabel>
           <soundlabel num="25">Random sounds</soundlabel>
           <soundlabel num="26">Automatic brake sound</soundlabel>
           <soundlabel num="27">Gear shift sound</soundlabel>
         </soundlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select_Steam.xml">
-        <model model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
+        <model show="no" model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>
             <functionlabel num="0" lockable="true" />
@@ -6617,28 +6605,28 @@
             <soundlabel num="27" />
           </soundlabels>
         </model>
-        <model model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+        <model show="no" model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
+        <model show="no" model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
+        <model show="no" model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
+        <model show="no" model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
+        <model show="no" model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
+        <model show="no" model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+        <model show="no" model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
+        <model show="no" model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <functionlabels>
@@ -24439,6 +24427,74 @@
           <output name="9" label="Vmid" />
         </model>
       </family>
+      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2066.xml">
+        <model model="ATL2066" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="13">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">E/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschak.</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+          </output>
+        </model>
+        <model model="ATL2066p" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="3A" maxTotalCurrent="3A" formFactor="HO" numOuts="9" numFns="13">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+          </output>
+        </model>
+      </family>
       <family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="5" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom" file="Viessmann_45xx_Point_motor.xml">
         <model model="4557" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4557" comment="TT Point motor for Tillig road bed point">
           <size length="68.4" width="24.5" height="5.3" units="mm" />
@@ -25226,25 +25282,49 @@
         <!-- End sound-only models -->
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX600v31.xml">
-        <model model="MX600 version 31" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
+        <model model="MX600 version 31+" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX600R version 31" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
+        <model model="MX600R version 31+" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX600P12 version 31" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
+        <model model="MX600P12 version 31+" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
       </family>

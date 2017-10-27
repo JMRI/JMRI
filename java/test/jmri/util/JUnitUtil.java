@@ -1,6 +1,7 @@
 package jmri.util;
 
 import apps.gui.GuiLafPreferencesManager;
+import apps.tests.Log4JFixture;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import javax.annotation.Nonnull;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LogixManager;
@@ -51,6 +53,7 @@ import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
 import org.junit.Assert;
+import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,13 +64,12 @@ import org.slf4j.LoggerFactory;
  * To release the current thread and allow other listeners to execute:  <code><pre>
  * JUnitUtil.releaseThread(this);
  * </pre></code> Note that this is not appropriate for Swing objects; you need
- * to use JFCUnit for that.
+ * to use Jemmy for that.
  * <p>
  * If you're using the InstanceManager, setUp() implementation should start
  * with:
  * <pre><code>
- * super.setUp();
- * JUnitUtil.resetInstanceManager();
+ * JUnitUtil.setUp();
  * JUnitUtil.initInternalTurnoutManager();
  * JUnitUtil.initInternalLightManager();
  * JUnitUtil.initInternalSensorManager();
@@ -76,8 +78,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Your tearDown() should end with:
  * <pre><code>
- * JUnitUtil.resetInstanceManager();
- * super.tearDown();
+ * JUnitUtil.tearDown();
  * </code></pre>
  * <p>
  * Note that memory managers and some others are completely internal, and will
@@ -89,8 +90,33 @@ import org.slf4j.LoggerFactory;
 public class JUnitUtil {
 
     static final int DEFAULT_RELEASETHREAD_DELAY = 50;
+    static final int WAITFOR_DELAY_STEP = 5;
+    static final int WAITFOR_MAX_DELAY = 30000; // really long, but only matters when failing, and LayoutEditor/SignalMastLogic is slow
 
     static int count = 0;
+
+    /**
+     * Setup for tests. This should be the first line in the {@code @Before}
+     * annotated method.
+     */
+    public static void setUp() {
+        Log4JFixture.setUp();
+        // ideally this would be false, true to force an error if an earlier
+        // test left a window open, but different platforms seem to have just
+        // enough differences that this is, for now, only emitting a warning
+        resetWindows(true, false);
+        resetInstanceManager();
+    }
+
+    /**
+     * Teardown from tests. This should be the last line in the {@code @After}
+     * annotated method.
+     */
+    public static void tearDown() {
+        resetWindows(true, false); // warn
+        resetInstanceManager();
+        Log4JFixture.tearDown();
+    }
 
     /**
      * Release the current thread, allowing other threads to process. Waits for
@@ -132,9 +158,6 @@ public class JUnitUtil {
             Assert.fail("failed due to InterruptedException");
         }
     }
-
-    static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 15000; // really long, but only matters when failing
 
     /**
      * Wait for a specific condition to be true, without having to wait longer
@@ -263,9 +286,23 @@ public class JUnitUtil {
         }
     }
 
+    /**
+     * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
+     * a thread-safe way, including waiting for the state to appear.
+     *
+     * You can't assume that all the consequences of that setting will have
+     * propagated through when this returns; those might take a long time. But
+     * the set operation itself will be complete.
+     *
+     * @param bean  the bean
+     * @param state the desired state
+     */
+    static public void setBeanStateAndWait(NamedBean bean, int state) {
+        setBeanState(bean, state);
+        JUnitUtil.waitFor(()->{return state == bean.getState();}, "setAndWait "+bean.getSystemName()+": "+state);
+    }
+
     public static void resetInstanceManager() {
-        // close any open windows
-        resetWindows(true);
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
         // ensure the auto-defeault UserPreferencesManager is not created
@@ -376,19 +413,25 @@ public class JUnitUtil {
 
     public static void initDebugCommandStation() {
         jmri.CommandStation cs = new jmri.CommandStation() {
+            @Override
             public void sendPacket(@Nonnull byte[] packet, int repeats) {
             }
 
+            @Override
             public String getUserName() {
                 return "testCS";
             }
 
+            @Override
             public String getSystemPrefix() {
                 return "I";
             }
 
         };
-        InstanceManager.setDefault(jmri.CommandStation.class, cs);
+        // we should use setDefault here, but setCommandStation will
+        // install a consist manager if one is not already installed.
+        //InstanceManager.setDefault(jmri.CommandStation.class,cs);
+        InstanceManager.setCommandStation(cs);
     }
 
     public static void initDebugThrottleManager() {
@@ -398,7 +441,8 @@ public class JUnitUtil {
 
     public static void initDebugProgrammerManager() {
         DebugProgrammerManager m = new DebugProgrammerManager();
-        InstanceManager.setProgrammerManager(m);
+        InstanceManager.setAddressedProgrammerManager(m);
+        InstanceManager.store(m, GlobalProgrammerManager.class);
     }
 
     public static void initDebugPowerManager() {
@@ -511,16 +555,16 @@ public class JUnitUtil {
     public static void resetPreferencesProviders() {
         try {
             // reset UI provider
-            Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("providers");
+            Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
             ((HashMap<?, ?>) providers.get(null)).clear();
             // reset XML storage provider
-            providers = JmriConfigurationProvider.class.getDeclaredField("providers");
+            providers = JmriConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
             ((HashMap<?, ?>) providers.get(null)).clear();
             // reset java.util.prefs.Preferences storage provider
-            Field shared = JmriPreferencesProvider.class.getDeclaredField("sharedProviders");
-            Field privat = JmriPreferencesProvider.class.getDeclaredField("privateProviders");
+            Field shared = JmriPreferencesProvider.class.getDeclaredField("SHARED_PROVIDERS");
+            Field privat = JmriPreferencesProvider.class.getDeclaredField("PRIVATE_PROVIDERS");
             shared.setAccessible(true);
             ((HashMap<?, ?>) shared.get(null)).clear();
             privat.setAccessible(true);
@@ -554,29 +598,99 @@ public class JUnitUtil {
         org.netbeans.jemmy.JemmyProperties.setCurrentOutput(output);
     }
 
-    public static void resetWindows(boolean logWindow) {
+    /**
+     * Service method to find the test class name in the traceback.
+     * Heuristic: First jmri or apps class that isn't this one.
+     */
+    static String getTestClassName() {
+        StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+        
+        for (StackTraceElement e : trace) {
+            if (e.getClassName().startsWith("jmri") || e.getClassName().startsWith("apps")) {
+                if (!e.getClassName().endsWith("JUnitUtil")) {
+                    return e.getClassName();
+                }
+            }
+        }
+
+        return "<unknown class>";
+    }
+    
+    /**
+     * Dispose of any disposable windows. This should only be used if there is
+     * no ability to actually close windows opened by a test using
+     * {@link #dispose(java.awt.Window)} or
+     * {@link #disposeFrame(java.lang.String, boolean, boolean)}, since this may
+     * mask other side effects that should be dealt with explicitly.
+     *
+     * @param warn  log a warning for each window if true
+     * @param error log an error (failing the test) for each window if true
+     */
+    public static void resetWindows(boolean warn, boolean error) {
         // close any open remaining windows from earlier tests
         for (Frame frame : Frame.getFrames()) {
             if (frame.isDisplayable()) {
-                if (logWindow) {
-                    log.warn("Cleaning up frame \"{}\" (a {}) from earlier test.", frame.getTitle(), frame.getClass());
+                String message = "Cleaning up frame \"{}\" (a {}) in {}.";
+                if (error) {
+                    log.error(message, frame.getTitle(), frame.getClass(), getTestClassName());
+                } else if (warn) {
+                    log.warn(message, frame.getTitle(), frame.getClass(), getTestClassName());
                 }
-                ThreadingUtil.runOnGUI(() -> {
-                    frame.dispose();
-                });
+                JUnitUtil.dispose(frame);
             }
         }
         for (Window window : Window.getWindows()) {
             if (window.isDisplayable()) {
-                if (logWindow) {
-                    log.warn("Cleaning up window \"{}\" (a {}) from earlier test.", window.getName(), window.getClass());
+                if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
+                    String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
+                    if (!error) {
+                        log.warn(message, getTestClassName());
+                    } else {
+                        log.error(message, getTestClassName());
+                    }
+                } else {
+                    String message = "Cleaning up window \"{}\" (a {}) in {}.";
+                    if (error) {
+                        log.error(message, window.getName(), window.getClass(), getTestClassName());
+                    } else if (warn) {
+                        log.warn(message, window.getName(), window.getClass(), getTestClassName());
+                    }
                 }
-                ThreadingUtil.runOnGUI(() -> {
-                    window.dispose();
-                });
+                JUnitUtil.dispose(window);
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
+    /**
+     * Dispose of a visible frame searched for by title. Disposes of the first
+     * visible frame found with the given title. Asserts that the calling test
+     * failed if the frame cannot be found.
+     *
+     * @param title the title of the frame to dispose of
+     * @param ce    true to match title param as a substring of the frame's
+     *              title; false to require an exact match
+     * @param cc    true if search is case sensitive; false otherwise
+     */
+    public static void disposeFrame(String title, boolean ce, boolean cc) {
+        Frame frame = FrameWaiter.getFrame(title, ce, cc);
+        if (frame != null) {
+            JUnitUtil.dispose(frame);
+        } else {
+            Assert.fail("Unable to find frame \"" + title + "\" to dispose.");
+        }
+    }
+
+    /**
+     * Dispose of a window. Disposes of the window on the GUI thread, returning
+     * only after the window is disposed of.
+     *
+     * @param window the window to dispose of
+     */
+    public static void dispose(@Nonnull Window window) {
+        ThreadingUtil.runOnGUI(() -> {
+            window.dispose();
+        });
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);
 }

@@ -78,4 +78,6 @@ public final class SprogConstants {
 
     public final static int DEFAULT_I = 996;            /* milliAmps */
 
+    public final static int MAX_ACC_DECODER_JMRI_ADDR = 2044; // copied from DCCppConstants
+
 }

@@ -4,6 +4,7 @@ package jmri.jmrit.operations.setup;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -50,8 +51,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
-        owner.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
     @Test
@@ -64,8 +65,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
-        owner.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
     @Test
@@ -78,8 +79,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
-        owner.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
     // private Frame findFrameByClassName(String className) {
@@ -123,8 +124,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // tester.verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot,
     // setName);
     //
-    // bf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(bf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testBackupButtonWithSuppliedName() {
     // OperationsSetupFrame f = new OperationsSetupFrame();
@@ -154,8 +155,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // tester.verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot,
     // setName);
     //
-    // bf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(bf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testRestoreButtonWithDefaultName() throws IOException {
     // // Get the name that will be used for the backup
@@ -190,8 +191,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // tester.verifyBackupSetAgainst(defaultBackupRoot, setName, operationsRoot,
     // "");
     //
-    // rf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(rf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testVerifyBackupSetNameListAndRestore() throws IOException {
     //
@@ -253,6 +254,6 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // operationsRoot,
     // "", tester.getRegularBackupSetFileNames());
     //
-    // rf.dispose();
+    // JUnitUtil.dispose(rf);
     // }
 }

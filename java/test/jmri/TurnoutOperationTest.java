@@ -1,12 +1,11 @@
 package jmri;
 
-import org.junit.Assert;
+import jmri.implementation.AbstractTurnout;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.util.JUnitUtil;
-import jmri.implementation.AbstractTurnout;
+import org.junit.Assert;
 
 /**
  * Tests for the TurnoutOperation class

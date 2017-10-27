@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.ResourceBundle;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
@@ -36,8 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionableLabel extends JLabel implements Positionable {
 
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     protected Editor _editor;
 
     protected boolean _icon = false;
@@ -58,6 +56,10 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _rotateText = false;
     private int _degrees;
 
+    /**
+     * {@inheritDoc}
+     * @param editor where this label is displayed
+     */
     public PositionableLabel(String s, Editor editor) {
         super(s);
         _editor = editor;
@@ -69,12 +71,12 @@ public class PositionableLabel extends JLabel implements Positionable {
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
-    public PositionableLabel(NamedIcon s, Editor editor) {
+    public PositionableLabel(@Nullable NamedIcon s, Editor editor) {
         super(s);
         _editor = editor;
         _icon = true;
         _namedIcon = s;
-        log.debug("PositionableLabel ctor (icon) {}", s.getName());
+        log.debug("PositionableLabel ctor (icon) {}", s != null ? s.getName() : null);
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
@@ -100,9 +102,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _editor = ed;
     }
 
-    /**
-     * *************** Positionable methods *********************
-     */
+    // *************** Positionable methods *********************
     @Override
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
@@ -191,22 +191,22 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     @Override
-    public void setShowTooltip(boolean set) {
+    public void setShowToolTip(boolean set) {
         _showTooltip = set;
     }
 
     @Override
-    public boolean showTooltip() {
+    public boolean showToolTip() {
         return _showTooltip;
     }
 
     @Override
-    public void setTooltip(ToolTip tip) {
+    public void setToolTip(ToolTip tip) {
         _tooltip = tip;
     }
 
     @Override
-    public ToolTip getTooltip() {
+    public ToolTip getToolTip() {
         return _tooltip;
     }
 
@@ -259,7 +259,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         pos._hidden = _hidden;
         pos._positionable = _positionable;
         pos._showTooltip = _showTooltip;
-        pos.setTooltip(getTooltip());
+        pos.setToolTip(getToolTip());
         pos._editable = _editable;
         if (getPopupUtility() == null) {
             pos.setPopupUtility(null);
@@ -434,7 +434,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
         }
         if (log.isTraceEnabled()) { // avoid AWT size computation
-            log.trace("maxWidth= {} preferred width= ", result, getPreferredSize().width);
+            log.trace("maxWidth= {} preferred width= {}", result, getPreferredSize().width);
         }
         return result;
     }
@@ -860,8 +860,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * create a text image whose bit map can be rotated
-     *
+     * Create a text image whose bit map can be rotated.
      */
     private NamedIcon makeTextIcon(String text) {
         if (text == null || text.equals("")) {
@@ -1107,5 +1106,5 @@ public class PositionableLabel extends JLabel implements Positionable {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);
 }

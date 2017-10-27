@@ -34,18 +34,17 @@ import org.slf4j.LoggerFactory;
  * Frame for user to place RollingStock on the layout
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
+ * @param <T> the type of RollingStock supported by this frame
  */
-public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class RollingStockSetFrame<T extends RollingStock> extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
-    RollingStockManager manager;
-
     protected LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
     protected TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
-    RollingStock _rs;
+    T _rs;
     protected boolean _disableComboBoxUpdate = false;
 
     // labels
@@ -253,7 +252,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
-    public void load(RollingStock rs) {
+    public void load(T rs) {
         _rs = rs;
         textRoad.setText(_rs.getRoadName() + " " + _rs.getNumber());
         textType.setText(_rs.getTypeName());
@@ -307,7 +306,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     RouteLocation rd;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
-    protected boolean change(RollingStock rs) {
+    protected boolean change(T rs) {
         log.debug("Change button action for rs ({})", rs.toString());
         // save the auto buttons
         autoTrackCheckBoxSelected = autoTrackCheckBox.isSelected();
@@ -442,7 +441,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         return true;
     }
 
-    private boolean changeLocation(RollingStock rs) {
+    private boolean changeLocation(T rs) {
         if (!ignoreLocationCheckBox.isSelected()) {
             if (locationBox.getSelectedItem() == null) {
                 rs.setLocation(null, null);
@@ -485,7 +484,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         return true;
     }
 
-    private void loadTrain(RollingStock rs) {
+    private void loadTrain(T rs) {
         if (!ignoreTrainCheckBox.isSelected()) {
             if (trainBox.getSelectedItem() == null) {
                 if (rs.getTrain() != null) {
@@ -504,7 +503,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private boolean changeDestination(RollingStock rs) {
+    private boolean changeDestination(T rs) {
         if (!ignoreDestinationCheckBox.isSelected()) {
             if (destinationBox.getSelectedItem() == null) {
                 rs.setDestination(null, null);
@@ -524,7 +523,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                 // determine is user changed the destination track and is part of train
                 if (destTrack != null && rs.getDestinationTrack() != destTrack && rs.getTrain() != null
                         && rs.getTrain().isBuilt() && rs.getRouteLocation() != null) {
-                    log.debug("Rolling stock ({}) has new track destination in built train ({})", 
+                    log.debug("Rolling stock ({}) has new track destination in built train ({})",
                             rs.toString(), rs.getTrainName());
                     rs.getTrain().setModified(true);
                 }
@@ -543,7 +542,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         return true;
     }
 
-    protected void checkTrain(RollingStock rs) {
+    protected void checkTrain(T rs) {
         // determine if train is built and car is part of train or wants to be part of the train
         Train train = rs.getTrain();
         if (train != null && train.isBuilt()) {
@@ -583,7 +582,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    protected void setRouteLocationAndDestination(RollingStock rs, Train train, RouteLocation rl,
+    protected void setRouteLocationAndDestination(T rs, Train train, RouteLocation rl,
             RouteLocation rd) {
         if (rs.getRouteLocation() != null || rl != null) {
             train.setModified(true);
@@ -607,8 +606,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         updateDestinationComboBoxes();
     }
 
-    protected boolean updateGroup(List<RollingStock> list) {
-        for (RollingStock rs : list) {
+    protected boolean updateGroup(List<T> list) {
+        for (T rs : list) {
             if (rs == _rs) {
                 continue;
             }
@@ -820,5 +819,5 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockSetFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockSetFrame.class);
 }

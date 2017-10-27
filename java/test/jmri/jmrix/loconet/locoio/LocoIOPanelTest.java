@@ -3,29 +3,24 @@ package jmri.jmrix.loconet.locoio;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  */
-public class LocoIOPanelTest extends TestCase {
+public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    public void testFrameCreate() {
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        new LocoIOPanel();
-        Assert.assertNotNull("exists", lnis);
-    }
+    private LocoNetInterfaceScaffold lnis;
 
+    @Test
     public void testReadAll() {
-        // prepare an interface
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-
-        LocoIOPanel f = new LocoIOPanel();
+        LocoIOPanel f = (LocoIOPanel) panel;
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
         f.initComponents(memo);
@@ -44,13 +39,13 @@ public class LocoIOPanelTest extends TestCase {
         f.dispose();
     }
 
+    @Test
     public void testAddrField() {
         // make sure that the address field does a notify
         // and new address is used
         // prepare an interface
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
-        LocoIOPanel f = new LocoIOPanel();
+        LocoIOPanel f = (LocoIOPanel) panel;
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
         f.initComponents(memo);
@@ -72,10 +67,8 @@ public class LocoIOPanelTest extends TestCase {
         f.dispose();
     }
 
+    @Test
     public void testSetAddr() {
-        // prepare an interface
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-
         // skip the warning dialog box
         LocoIOPanel f = new LocoIOPanel() {
             @Override
@@ -103,32 +96,21 @@ public class LocoIOPanelTest extends TestCase {
         f.dispose();
     }
 
-    // from here down is testing infrastructure
-    public LocoIOPanelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LocoIOPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LocoIOPanelTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        lnis = new LocoNetInterfaceScaffold();
+        panel = new LocoIOPanel();
+        helpTarget = "package.jmri.jmrix.loconet.locoio.LocoIOFrame";
+        title = Bundle.getMessage("MenuItemLocoIOProgrammer");
     }
 
     @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

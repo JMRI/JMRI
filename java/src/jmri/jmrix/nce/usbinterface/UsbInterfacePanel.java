@@ -48,7 +48,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private static final int REPLY_2 = 2;   // reply length of 2 byte
     private static final int REPLY_4 = 4;   // reply length of 4 byte
 
-    Thread NceCabUpdateThread;
+    Thread nceCabUpdateThread;
     private boolean setRequested = false;
     private int setCabId = -1;
 
@@ -71,13 +71,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
-            try {
-                initComponents((NceSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("UsbInterface initContext failed");
-            }
+            initComponents((NceSystemConnectionMemo) context);
         }
     }
 
@@ -100,7 +96,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     @Override
-    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
 
@@ -185,8 +181,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             } else {
                 statusText.setText(MessageFormat.format(rb.getString("StatusInvalidCabIdEntered"), i));
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             // presume it failed to convert.
+            log.debug("failed to convert {}", i);
         }
     }
 
@@ -196,10 +193,10 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             setCabId = cabId;
         }
         // Set up a separate thread to access CS memory
-        if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive()) {
+        if (nceCabUpdateThread != null && nceCabUpdateThread.isAlive()) {
             return; // thread is already running
         }
-        NceCabUpdateThread = new Thread(new Runnable() {
+        nceCabUpdateThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
@@ -209,9 +206,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         });
-        NceCabUpdateThread.setName(rb.getString("ThreadTitle"));
-        NceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
-        NceCabUpdateThread.start();
+        nceCabUpdateThread.setName(rb.getString("ThreadTitle"));
+        nceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
+        nceCabUpdateThread.start();
     }
 
     private boolean firstTime = true; // wait for panel to display
@@ -365,5 +362,5 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(UsbInterfacePanel.class.getName());
+            .getLogger(UsbInterfacePanel.class);
 }

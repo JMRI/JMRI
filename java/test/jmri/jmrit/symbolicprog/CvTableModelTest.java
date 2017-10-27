@@ -1,35 +1,21 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * @author	Bob Jacobsen
   */
-public class CvTableModelTest extends TestCase {
+public class CvTableModelTest {
 
+    @Test
     public void testStart() {
-        new CvTableModel(new JLabel(), null);
+        Assert.assertNotNull(new CvTableModel(new JLabel(), null));
     }
 
-    // from here down is testing infrastructure
-    public CvTableModelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {CvTableModelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CvTableModelTest.class);
-        return suite;
-    }
-
-    // static Logger log = LoggerFactory.getLogger(CvTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CvTableModelTest.class);
 }

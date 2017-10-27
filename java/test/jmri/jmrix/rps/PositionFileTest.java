@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
 import jmri.util.FileUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.PositionFile class.
@@ -52,7 +52,7 @@ public class PositionFileTest extends TestCase {
     }
 
     void checkReading(Reading first, Reading second) {
-        Assert.assertEquals("id ok", first.getID(), second.getID());
+        Assert.assertEquals("id ok", first.getId(), second.getId());
         Assert.assertEquals("num ok", first.getNValues(), second.getNValues());
 
         for (int i = 1; i <= first.getNValues(); i++) {

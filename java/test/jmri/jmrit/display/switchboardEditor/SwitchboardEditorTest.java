@@ -11,8 +11,8 @@ import org.junit.Test;
 /**
  * Test simple functioning of SwitchboardEditor
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Egbert Broerse Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2016
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class SwitchboardEditorTest {
 
@@ -28,7 +28,7 @@ public class SwitchboardEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor("Test Layout");
         Assert.assertNotNull("exists", e);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -41,17 +41,8 @@ public class SwitchboardEditorTest {
         // numbers, but setSize expects integer parameters.
         Assert.assertEquals("Width Set", 100.0, d.getWidth(), 0.0);
         Assert.assertEquals("Height Set", 100.0, d.getHeight(), 0.0);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
-
-//    @Test
-//    public void testGetSetZoom() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        Assert.assertEquals("Zoom Get", 1.0, e.getZoom(), 0.0);
-//        Assert.assertEquals("Zoom Set", 3.33, e.setZoom(3.33), 0.0);
-//        Assert.assertEquals("Zoom Get", 3.33, e.getZoom(), 0.0);
-//    }
 
     @Test
     public void testIsDirty() {
@@ -59,7 +50,7 @@ public class SwitchboardEditorTest {
         SwitchboardEditor e = new SwitchboardEditor();
         // defaults to false.
         Assert.assertFalse("isDirty", e.isDirty());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -69,7 +60,7 @@ public class SwitchboardEditorTest {
         // defaults to false, setDirty() sets it to true.
         e.setDirty();
         Assert.assertTrue("isDirty after set", e.isDirty());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -79,7 +70,7 @@ public class SwitchboardEditorTest {
         // defaults to false, so set it to true.
         e.setDirty(true);
         Assert.assertTrue("isDirty after set", e.isDirty());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -91,54 +82,34 @@ public class SwitchboardEditorTest {
         // then call resetDirty, which sets it back to false.
         e.resetDirty();
         Assert.assertFalse("isDirty after reset", e.isDirty());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
     public void testGetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
-        Assert.assertEquals("Default Text Color", "black", e.getDefaultTextColor());
-        e.dispose();
+        Assert.assertEquals("Default Text Color",jmri.util.ColorUtil.ColorBlack, e.getDefaultTextColor());
+        JUnitUtil.dispose(e);
     }
 
     @Test
     public void testSetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
-        e.setDefaultTextColor("pink");
-        Assert.assertEquals("Default Text Color after Set", "pink", e.getDefaultTextColor());
-        e.dispose();
+        e.setDefaultTextColor(jmri.util.ColorUtil.ColorPink);
+        Assert.assertEquals("Default Text Color after Set",jmri.util.ColorUtil.ColorPink, e.getDefaultTextColor());
+        JUnitUtil.dispose(e);
     }
 
-//    @Test
-//    public void testGetShowHelpBar() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        // default to true
-//        Assert.assertTrue("getShowHelpBar", e.getShowHelpBar());
-//    }
-//
-//    @Test
-//    public void testSetShowHelpBar() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        // default to true, so set to false.
-//        e.setShowHelpBar(false);
-//        Assert.assertFalse("getShowHelpBar after set", e.getShowHelpBar());
-//    }
-
-    // from here down is testing infrastructure
     @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

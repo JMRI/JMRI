@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -22,12 +23,12 @@ public class ControllerFilterFrameTest {
     }
 
     @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 }

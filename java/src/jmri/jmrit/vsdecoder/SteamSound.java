@@ -290,6 +290,6 @@ class SteamSound extends EngineSound {
          */
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SteamSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SteamSound.class);
 
 }

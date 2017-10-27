@@ -385,5 +385,5 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         cancelLooking();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class);
 }

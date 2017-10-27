@@ -16,11 +16,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class sets up and executes TransitSectionAction's specified for Sections
- * traversed by one automatically running train. It ia an extension to
+ * traversed by one automatically running train. It is an extension to
  * AutoActiveTrain that handles special actions while its train is running
  * automatically.
  * <P>
- * This class is linked via it's parent AutoActiveTrain object.
+ * This class is linked via its parent AutoActiveTrain object.
  * <P>
  * When an AutoActiveTrain enters a Section, it passes the TransitSection of the
  * entered Section to this class.
@@ -711,5 +711,5 @@ public class AutoTrainAction {
         private TransitSectionAction _tsa = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoTrainAction.class);
 }

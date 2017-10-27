@@ -2,6 +2,7 @@ package jmri.util;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.python.jline.internal.Log;
 
@@ -46,6 +47,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         } else {
             JUnitAppender.instance = this;
         }
+
         super.activateOptions();
     }
 
@@ -62,7 +64,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     static boolean hold = false;
 
-    static private JUnitAppender instance = null;
+    static private JUnitAppender instance = null;    
 
     // package-level access for testing
     static boolean unexpectedFatalSeen = false;
@@ -129,13 +131,16 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             instance().superappend(evt);
         }
     }
-
+    
+    /** 
+     * do common local processing of event, then pass up to super class
+     */
     void superappend(LoggingEvent l) {
         if (l.getLevel() == Level.FATAL) {
             unexpectedFatalSeen = true;
         }
         if (l.getLevel() == Level.ERROR) {
-            if (compare((String) l.getMessage(), "Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
+            if (compare(l, "Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
                 // still an error, just suppressed
             } else {
                 unexpectedErrorSeen = true;
@@ -147,6 +152,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         if (l.getLevel() == Level.INFO) {
             unexpectedInfoSeen = true;
         }
+            
         super.append(l);
     }
 
@@ -234,7 +240,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("Level mismatch when looking for ERROR message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
         }
 
-        if (!compare((String) evt.getMessage(), msg)) {
+        if (!compare(evt, msg)) {
             Assert.fail("Looking for ERROR message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
         }
     }
@@ -254,7 +260,6 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
         while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
             if (list.isEmpty()) {
-                Assert.fail("Only debug/info messages present: " + msg);
                 return;
             }
             evt = list.remove(0);
@@ -265,11 +270,55 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("Level mismatch when looking for ERROR message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
         }
 
-        if (!compare((String) evt.getMessage(), msg)) {
+        if (!compare(evt, msg)) {
             Assert.fail("Looking for ERROR message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
         }
     }
 
+    /**
+     * See if a message (completely matching particular text) 
+     * has been emitted yet.
+     * @param msg the message text to check for
+     * @return null if not present, else the LoggingEvent for possible further checks of level, etc
+     */
+    public static LoggingEvent checkForMessage(String msg) {
+        if (list.isEmpty()) return null;
+        
+        LoggingEvent evt = list.remove(0);
+        while (!compare(evt, msg)) {
+            if (list.isEmpty()) {
+                return null;  // normal to not find it
+            }
+            evt = list.remove(0);
+        }
+        // fall through with a match
+        
+        return evt; 
+    }
+    
+    /**
+     * See if a message that starts with particular text
+     * has been emitted yet.
+     * @param msg the message text to check for
+     * @return null if not present, else the LoggingEvent for possible further checks of level, etc
+     */
+    public static LoggingEvent checkForMessageStartingWith(String msg) {
+        if (list.isEmpty()) return null;
+        
+        String tmsg = StringUtils.deleteWhitespace(msg);
+        
+        LoggingEvent evt = list.remove(0);
+        while (! StringUtils.deleteWhitespace(evt.getMessage().toString()).startsWith(tmsg)) {
+            if (list.isEmpty()) {
+                return null;  // normal to not find it
+            }
+            evt = list.remove(0);
+        }
+        // fall through with a match
+        
+        return evt; 
+    }
+    
     /**
      * Check that the next queued message was of Warn severity, and has a
      * specific message.
@@ -283,28 +332,44 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("No message present: " + msg);
             return;
         }
+        LoggingEvent evt = checkForMessage(msg);
+        
+        if (evt == null) {
+             Assert.fail("Looking for message \"" + msg + "\" and didn't find it");
+        }
+    }
+
+    /**
+     * Assert that a specific message, of any severity, has been logged.
+     * <P>
+     * Invokes a JUnit Assert if no matching message is found, but doesn't require it to 
+     * be the next message. This allows use e.g. for debug-severity messages.
+     *
+     * @param msg the message to assert exists
+     */
+    public static void assertMessage(String msg) {
+        if (list.isEmpty()) {
+            Assert.fail("No message present: " + msg);
+            return;
+        }
         LoggingEvent evt = list.remove(0);
 
         while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
             if (list.isEmpty()) {
-                Assert.fail("Only debug/info messages present: " + msg);
+                Assert.fail("Message not found: " + msg);
                 return;
             }
             evt = list.remove(0);
         }
 
-        // check the remaining message, if any
-        if (evt.getLevel() != Level.WARN) {
-            Assert.fail("Level mismatch when looking for WARN message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
-        }
-
-        if (!compare((String) evt.getMessage(), msg)) {
-            Assert.fail("Looking for WARN message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
+        if (!compare(evt, msg)) {
+            Assert.fail("Looking for message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
         }
     }
 
-    protected static boolean compare(String s1, String s2) {
-        return org.apache.commons.lang3.StringUtils.deleteWhitespace(s1).equals(org.apache.commons.lang3.StringUtils.deleteWhitespace(s2));
+    protected static boolean compare(LoggingEvent e1, String s2) {
+        String s1 = e1.getMessage().toString();
+        return StringUtils.deleteWhitespace(s1).equals(StringUtils.deleteWhitespace(s2));
     }
 
     public static JUnitAppender instance() {

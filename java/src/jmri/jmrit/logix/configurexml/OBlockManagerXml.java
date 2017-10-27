@@ -269,7 +269,7 @@ public class OBlockManagerXml // extends XmlFile
     }
 
     @Override
-    public void load(Element element, Object o) throws Exception {
+    public void load(Element element, Object o) {
         log.error("load called. Invalid method.");
     }
 
@@ -569,5 +569,5 @@ public class OBlockManagerXml // extends XmlFile
         return InstanceManager.getDefault(OBlockManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class);
 }   // class OBlockManagerXml

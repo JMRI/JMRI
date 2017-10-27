@@ -219,7 +219,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(EngineManager.class));
     }
 
-    private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
+    private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager<? extends RollingStock> manager) {
         for (RollingStock rs : manager.getByIdList()) {
             if (rs.getTrack() == fromTrack) {
                 rs.setLocation(toTrack.getLocation(), toTrack, RollingStock.FORCE);
@@ -241,5 +241,5 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationCopyFrame.class);
 }

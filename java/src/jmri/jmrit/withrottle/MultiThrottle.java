@@ -1,8 +1,8 @@
 package jmri.jmrit.withrottle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * Sample messages:<ul>
  * <li> {@literal MT+L757<;>L757} On T throttle, add loco L757.
  * <li> {@literal MT+L1234<;>L1234} On T throttle, add loco L1234.
+ * <li> {@literal MTSL1234<;>L1234} On T throttle, steal loco L1234.
  * <li> {@literal MTAL757<;>R1} On T throttle, loco L757, set direction to
  * forward.
  * <li> {@literal MTAL1234<;>R0} On T throttle, loco L1234, set direction to
@@ -35,13 +36,12 @@ public class MultiThrottle {
     private ThrottleControllerListener parentTCL = null;
     private ControllerInterface parentController = null;
     char whichThrottle;
-    Hashtable<String, MultiThrottleController> throttles;
+    HashMap<String, MultiThrottleController> throttles;
 
     public MultiThrottle(char id, ThrottleControllerListener tcl, ControllerInterface ci) {
         if (log.isDebugEnabled()) {
             log.debug("Creating new MultiThrottle for id: " + id);
         }
-        new Hashtable<String, MultiThrottleController>(1);
         whichThrottle = id;
         parentTCL = tcl;
         parentController = ci;
@@ -57,7 +57,7 @@ public class MultiThrottle {
      *                the MultiThrottleController.
      */
     public void handleMessage(String message) {
-        log.debug("MT handleMessage: " + message);
+        log.debug("MT handleMessage: {}", message);
         List<String> unit = Arrays.asList(message.substring(1).split("<;>"));
         String key = unit.get(0);
         String action = unit.get(1);
@@ -75,6 +75,9 @@ public class MultiThrottle {
             case '-':  //  remove loco
                 removeThrottleController(key, action);
                 break;
+            case 'S':   //  Steal loco
+                stealThrottleController(key, action);
+                break;
             default:
                 log.warn("Unhandled code: {}", message.charAt(0));
                 break;
@@ -82,9 +85,9 @@ public class MultiThrottle {
 
     }
 
-    public boolean addThrottleController(String key, String action) {   //  key is address format L#### or S##
+    protected boolean addThrottleController(String key, String action) {   //  key is address format L#### or S##
         if (throttles == null) {
-            throttles = new Hashtable<String, MultiThrottleController>(1);
+            throttles = new HashMap<>(1);
         }
 
         if (throttles.containsKey(key)) {
@@ -105,17 +108,18 @@ public class MultiThrottle {
         return true;
     }
 
-    public boolean removeThrottleController(String key, String action) {
+    protected boolean removeThrottleController(String key, String action) {
 
         if (throttles == null) {
-            log.debug("No MultiThrottle to remove " + key + " from.");
+            log.debug("No MultiThrottle to remove {} from.", key);
             return false;
         }
         if (key.equals("*")) {
-            for (Enumeration<String> e = throttles.keys(); e.hasMoreElements();) {
-                removeThrottleController(e.nextElement(), action);
+            ArrayList<String> throttleKeys = new ArrayList<String>(throttles.keySet());  //copy to avoid concurrentModificationException
+            throttleKeys.forEach((throttle) -> {
+                removeThrottleController(throttle, action);
                 //  Runs each loco through this method individually
-            }
+            });
             return true;
         }
         if (!throttles.containsKey(key)) {
@@ -136,7 +140,7 @@ public class MultiThrottle {
         return true;
     }
 
-    public void passActionsToControllers(String key, String action) {
+    protected void passActionsToControllers(String key, String action) {
         if (throttles == null) {
             log.debug("No throttles in MultiThrottle to receive action.");
             return;
@@ -146,10 +150,11 @@ public class MultiThrottle {
         }
 
         if (key.equals("*")) {
-            for (Enumeration<String> e = throttles.keys(); e.hasMoreElements();) {
-                passActionsToControllers(e.nextElement(), action);
+            ArrayList<String> throttleKeys = new ArrayList<String>(throttles.keySet());  //copy to avoid concurrentModificationException
+            throttleKeys.forEach((throttle) -> {
+                passActionsToControllers(throttle, action);
                 //  Runs each loco through this method individually
-            }
+            });
             return;
         }
         if (throttles.containsKey(key)) {
@@ -157,23 +162,73 @@ public class MultiThrottle {
         }
     }
 
+    protected void stealThrottleController(String key, String action) {
+        if (throttles == null) {
+            throttles = new HashMap<>(1);
+        }
+
+        if (throttles.containsKey(key)) {
+            if (log.isDebugEnabled()) {
+                log.debug("Throttle: " + key + " already in MultiThrottle consist.");
+            }
+            return;
+        }
+        MultiThrottleController mtc = new MultiThrottleController(whichThrottle, key, parentTCL, parentController);
+        throttles.put(key, mtc);
+
+        //  This will request the loco as a DccTrottle
+        mtc.requestStealAddress(action);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Throttle: " + key + " stolen to MultiThrottle consist.");
+        }
+    }
+
     public void dispose() {
         if (throttles == null) {
             return;
         }
-        for (Enumeration<String> e = throttles.keys(); e.hasMoreElements();) {
-            removeThrottleController(e.nextElement(), "r");
-        }
+        ArrayList<String> throttleKeys = new ArrayList<String>(throttles.keySet());  //copy to avoid concurrentModificationException
+        throttleKeys.forEach((throttle) -> {
+            removeThrottleController(throttle, "r");
+        });
     }
 
     public void eStop() {
         if (throttles == null) {
             return;
         }
-        for (Enumeration<String> e = throttles.keys(); e.hasMoreElements();) {
-            passActionsToControllers(e.nextElement(), "X");
+        ArrayList<String> throttleKeys = new ArrayList<String>(throttles.keySet());  //copy to avoid concurrentModificationException
+        throttleKeys.forEach((throttle) -> {
+            passActionsToControllers(throttle, "X");
+        });
+    }
+
+    /**
+     * A request for a this address has been cancelled, clean up the waiting
+     * ThrottleController
+     *
+     * @param key The string to use as a key to remove the proper
+     *            MultiThrottleController
+     */
+    public void canceledThrottleRequest(String key) {
+        if (throttles == null) {
+            log.warn("No MultiThrottle to remove {} from.", key);
+            return;
+        }
+        if (!throttles.containsKey(key)) {
+            if (log.isDebugEnabled()) {
+                log.debug("Throttle: {} not in MultiThrottle.", key);
+            }
+            return;
+        }
+        MultiThrottleController mtc = throttles.get(key);
+        mtc.removeControllerListener(parentController);
+        throttles.remove(key);
+        if (log.isDebugEnabled()) {
+            log.debug("Throttle: {} cancelled from MultiThrottle.", key);
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiThrottle.class);
 }

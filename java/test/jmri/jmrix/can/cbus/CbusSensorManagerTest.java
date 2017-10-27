@@ -1,9 +1,9 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Sensor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
-
-import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +16,7 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
-        
+
     private CanSystemConnectionMemo memo = null;
 
     @Override
@@ -27,7 +27,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     @Override
     public void testCreate() {
-        Assert.assertNotNull("creaesSensor",l.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6"));
+        Assert.assertNotNull("creaesSensor", l.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6"));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t2 = l.provideSensor("MSX0A;+N15E" + getNumToTest2());
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
@@ -66,8 +66,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(new TestTrafficController());
         l = new CbusSensorManager(memo);
@@ -77,8 +76,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void tearDown() {
         l.dispose();
         memo.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

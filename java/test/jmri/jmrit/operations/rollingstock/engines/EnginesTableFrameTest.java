@@ -8,10 +8,10 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -44,7 +44,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Engine e5 = eManager.getByRoadAndNumber("NH", "5");
 
         // default is sort by number
-        List<RollingStock> Engines = etf.enginesModel.getSelectedEngineList();
+        List<Engine> Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by number list", e1.getId(), Engines.get(0).getId());
         Assert.assertEquals("2nd Engine in sort by number list", e4.getId(), Engines.get(1).getId());
         Assert.assertEquals("3rd Engine in sort by number list", e2.getId(), Engines.get(2).getId());
@@ -148,7 +148,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         // create the EngineEditFrame
         enterClickAndLeave(etf.addButton);
 
-        etf.dispose();
+        JUnitUtil.dispose(etf);
     }
 
     // Ensure minimal setup for log4J

@@ -65,10 +65,10 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSACCBYTEMODE);
-        ret.add(DefaultProgrammerManager.OPSACCBITMODE);
-        ret.add(DefaultProgrammerManager.OPSACCEXTBYTEMODE);
-        ret.add(DefaultProgrammerManager.OPSACCEXTBITMODE);
+        ret.add(ProgrammingMode.OPSACCBYTEMODE);
+        ret.add(ProgrammingMode.OPSACCBITMODE);
+        ret.add(ProgrammingMode.OPSACCEXTBYTEMODE);
+        ret.add(ProgrammingMode.OPSACCEXTBITMODE);
         return ret;
     }
 
@@ -136,11 +136,6 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         }
         // and reply done
         this.programmingOpReply(val, ProgListener.OK);
-    }
-
-    @Override
-    synchronized public void confirmCV(String cv, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(cv, p);
     }
 
     @Override
@@ -214,6 +209,6 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacade.class);
 
 }

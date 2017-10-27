@@ -26,7 +26,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Returns the second letter in the system name for a Light
+     * Returns the type letter in the system name for a Light
      */
     @Override
     public char typeLetter() {
@@ -77,7 +77,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     public Light getBySystemName(String name) {
-        return (Light) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     public Light getByUserName(String key) {
-        return (Light) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -120,8 +120,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if (!validSystemNameFormat(systemName)) {
-            log.error("Invalid system name for newLight: " + systemName);
+        if (validSystemNameFormat(systemName) != NameValidity.VALID) {
+            log.error("Invalid system name for newLight: {}", systemName);
             throw new IllegalArgumentException("\""+systemName+"\" is invalid");
         }
 
@@ -129,8 +129,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         Light s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name ("
-                        + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+                log.error("inconsistent user '{}' and system name '{}' results; user name related to {}",
+                        userName, systemName, s.getSystemName());
             }
             return s;
         }
@@ -138,8 +138,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found light via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+                log.warn("Found light via system name '{}' with non-null user name '{}'",
+                        systemName, userName);
             }
             return s;
         }
@@ -147,7 +147,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         // doesn't exist, make a new one
         s = createNewLight(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("cannot create new light " + systemName);
         }
@@ -196,9 +196,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     /**
      * Normalize the system name
      * <P>
-     * This routine is used to ensure that each system name is uniquely linked
-     * to one C/MRI bit, by removing extra zeros inserted by the user.
-     * <P>
      * If a system implementation has names that could be normalized, the
      * system-specific Light Manager should override this routine and supply a
      * normalized system name.
@@ -212,7 +209,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * Convert the system name to a normalized alternate name
      * <P>
      * This routine is to allow testing to ensure that two Lights with alternate
-     * names that refer to the same output bit are not created.
+     * names that refer to the same output bit are not created in systems with multiple name formats.
      * <P>
      * If a system implementation has alternate names, the system specific Light
      * Manager should override this routine and supply the alternate name.
@@ -251,7 +248,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
@@ -259,6 +256,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class);
 
 }

@@ -1,8 +1,8 @@
 package jmri.jmrix.easydcc;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 
 /**
@@ -65,7 +65,8 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public void configureManagers() {
 
-        InstanceManager.setProgrammerManager(getProgrammerManager());
+        InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
 
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
@@ -87,9 +88,6 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
@@ -121,9 +119,6 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -202,16 +197,16 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return consistManager;
     }
 
-    private ProgrammerManager programmerManager;
+    private EasyDccProgrammerManager programmerManager;
 
-    public ProgrammerManager getProgrammerManager() {
+    public EasyDccProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
             programmerManager = new EasyDccProgrammerManager(new EasyDccProgrammer(), this);
         }
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(EasyDccProgrammerManager p) {
         programmerManager = p;
     }
 

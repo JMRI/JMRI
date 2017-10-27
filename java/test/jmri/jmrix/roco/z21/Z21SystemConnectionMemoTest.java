@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,20 +37,27 @@ public class Z21SystemConnectionMemoTest {
 
     @Test
     @Ignore("needs more setup")
-    public void testProvidesProgrammerManager() {
+    public void testProvidesAddressedProgrammerManager() {
         Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
-        Assert.assertTrue(a.provides(jmri.ProgrammerManager.class));
+        Assert.assertTrue(a.provides(jmri.AddressedProgrammerManager.class));
+    }
+
+    @Test
+    @Ignore("needs more setup")
+    public void testProvidesGlobalProgrammerManager() {
+        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
+        Assert.assertTrue(a.provides(jmri.GlobalProgrammerManager.class));
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

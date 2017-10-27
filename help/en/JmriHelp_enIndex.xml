@@ -200,7 +200,7 @@
 
  <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
- <indexitem text="Switchboard Editor " target="package.jmri.jmrit.display.SwitchbaordEditor"/>
+ <indexitem text="Switchboard Editor " target="package.jmri.jmrit.display.SwitchboardEditor"/>
 
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
 
@@ -259,7 +259,11 @@
  <indexitem text="Logix ">
   <indexitem text="Add Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
-  <indexitem text="Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
+  <indexitem text="Add/Edit Conditionals using the List Editor " target="package.jmri.jmrit.conditional.ConditionalListEditor"/>
+
+  <indexitem text="Add/Edit Conditionals using the Tree Editor " target="package.jmri.jmrit.conditional.ConditionalTreeEditor"/>
+
+  <indexitem text="Conditional State Variable and Action List " target="package.jmri.jmrit.conditional.StateVariableActionList"/>
 
   <indexitem text="Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 

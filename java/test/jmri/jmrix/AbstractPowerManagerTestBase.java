@@ -117,7 +117,7 @@ public abstract class AbstractPowerManagerTestBase {
         p.removePropertyChangeListener(ln);
         listenerResult = false;
         hearOn();
-        Assert.assertTrue("listener should not have heard message after removeListner",
+        Assert.assertTrue("listener should not have heard message after removeListener",
                 !listenerResult);
     }
 

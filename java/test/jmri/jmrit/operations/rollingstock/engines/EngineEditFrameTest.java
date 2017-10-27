@@ -10,6 +10,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -60,7 +61,7 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
         // should have 6 Engines now
         Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -89,7 +90,7 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
         // should have 5 Engines now
         Assert.assertEquals("number of Engines", 4, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Override

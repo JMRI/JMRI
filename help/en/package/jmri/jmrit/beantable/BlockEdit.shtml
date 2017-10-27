@@ -41,8 +41,8 @@
       <h2>Basic</h2>
 
       <p>This provides basic information about the Block, as
-      entered on its creation:</p><img src="BlocksEditBasicTab.png"
-      width="460" height="155">
+      entered on its creation:</p>
+      <img src="images/BlocksEditBasicTab.png" width="461" height="155">
 
       <ul>
         <li>
@@ -73,7 +73,7 @@
       <p>This tab allows you to assign a Sensor to the Block to
       change the occupancy state. It also allows certain
       information about the Sensor to be changed:</p><img src=
-      "BlocksEditSensorTab.png" width="460" height="155">
+      "images/BlocksEditSensorTab.png" width="460" height="193">
 
       <ul>
         <li>
@@ -88,18 +88,20 @@
         Such false triggers could be due to a dirty piece of track
         or electrical interference.</li>
 
-        <li><b>Use Global Debounce Values</b> check box, allows you
+        <li>The <b>Use Global Debounce Values</b> check box, allows you
         to select if the sensor will use the default sensor
         debounce values if configured.</li>
 
         <li><b>Sensor Inactive Debounce</b> and <b>Sensor Active
         Debounce</b> allow you to specify the amount of time in
-        milliSeconds that the system waits before registering the
+        milliseconds that the system waits before registering the
         state change of a sensor.</li>
-      </ul><a name="reporter" id="reporter"></a>
+      </ul>
 
-      <h2>Reporter</h2><img src="BlocksEditReporterTab.png" width=
-      "460" height="62">
+      <a name="reporter" id="reporter"></a>
+      <h2>Reporter</h2>
+      <img src="images/BlocksEditReporterTab.png" width="460"
+           height="62">
 
       <ul>
         <li><b>Reporter</b> Set the Reporter assigned to this
@@ -109,16 +111,16 @@
         Block value.</li>
 
         <li>
-          <b>Use Current?</b> If we consider the scenario whereby
-          we want track a train around the layout, typically this
+          <b>Use Current</b> If we consider the scenario whereby
+          we want to track a train around the layout, typically this
           is achieved via the use of Memory objects associated with
           Blocks. Until the train is known, we have nothing to
-          track. Typically, we can manually type in the train ID
+          track. Typically, we can manually type in the Train ID
           into a panel and then this is tracked around the layout
-          based on block occupancy. If, however, we have an
-          attached device that can provide us with the train ID,
+          based on Block occupancy. If, however, we have an
+          attached device that can provide us with the Train ID,
           such as an RFID reader, we no longer need to manually
-          type the train ID in - the reader does this for us. In
+          type in the Train ID - the reader does this for us. In
           essence, the reader is little more than an 'intelligent'
           sensor - not only can it sense that 'something' is there,
           it can tell us which something it is. Now to the
@@ -136,32 +138,34 @@
             it'</li>
 
             <li>'Hmm, I've not seen anything yet'</li>
-          </ol>The first two are from the CurrentReport; the last
+          </ol>
+          The first two are from the CurrentReport; the last
           two from LastReport. At start-up (assuming there is
           nothing within the range of the reader), both 2 and 4 are
           the initial state. Once something is seen, both 1 and 3
           return the same result. When the something is
           'out-of-range' 2 and 3 are then active. With 'Use
-          Current?' selected the Block value will switch between 1
-          and 2, whereas with 'Use Current?' unselected the Block
+          Current' selected the Block value will switch between 1
+          and 2, whereas with 'Use Current' unselected the Block
           value will switch between 3 and 4.
         </li>
-      </ul><a name="physicaldetails" id="physicaldetails"></a>
+      </ul>
 
+      <a name="physicaldetails" id="physicaldetails"></a>
       <h2>Physical Details</h2>
 
       <p>Describe the geometry of the Block using the fields
       shown.</p>
 
-      <p><img src="BlocksEditPhysicalTab.png" width="460" height=
-      "155"></p>
+      <p><img src="images/BlocksEditPhysicalTab.png" width="460" height=
+      "191"></p>
 
       <table>
         <tr valign="top">
-          <td><img src="BlocksEditCurvaturePopup.png" width="193"
+          <td><img src="images/BlocksEditCurvaturePopup.png" width="193"
           height="107"></td>
 
-          <td><img src="BlocksEditSpeedPopup.png" width="249"
+          <td><img src="images/BlocksEditSpeedPopup.png" width="249"
           height="191"></td>
 
           <td>
@@ -240,17 +244,17 @@
         automation tools and Logix to help determine if a Train can
         enter an occupied Block and what Aspect should be displayed
         on its Signal Mast.</li>
-      </ul><a name="usage" id="usage"></a>
 
+      </ul><a name="usage" id="usage"></a>
       <h2>Usage</h2>
 
       <p>This is an information field, showing where you have the
       Block displayed on a Panel:</p><img src=
-      "BlocksEditUsageTab.png" width="392" height="120"> <a name=
-      "properties" id="properties"></a>
+      "images/BlocksEditUsageTab.png" width="460" height="120"> <a name=
+      "images/properties" id="properties"></a>
 
-      <h2>Properties</h2><img src="BlocksEditPropsTab.png" width=
-      "392" height="89">
+      <h2>Properties</h2>
+      <img src="images/BlocksEditPropsTab.png" width="392" height="89">
 
       <p><a href="../../../../html/tools/tracker/index.shtml">More
       information on Blocks</a></p>
@@ -259,7 +263,7 @@
       on using Blocks with Layout Editor</a></p>
 
       <p>Back to the <a href="BlockTable.shtml">Block Table Help
-      page</a>.</p>Located at package/jmri/jmrt/beantable/BlockEdit
+      page</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

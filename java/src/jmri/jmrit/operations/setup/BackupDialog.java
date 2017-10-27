@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class BackupDialog extends JDialog {
 
     private final static Logger log = LoggerFactory
-            .getLogger(BackupDialog.class.getName());
+            .getLogger(BackupDialog.class);
 
     private final JPanel contentPanel = new JPanel();
     private JLabel captionLabel;

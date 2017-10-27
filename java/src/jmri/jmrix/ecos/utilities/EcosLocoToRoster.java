@@ -189,8 +189,9 @@ public class EcosLocoToRoster implements EcosListener {
                         try {
                             WindowMaker t = new WindowMaker(tmploco);
                             javax.swing.SwingUtilities.invokeAndWait(t);
-                        } catch (Exception ex) {
-                            // Thread.currentThread().interrupt();
+                        } catch (java.lang.reflect.InvocationTargetException | InterruptedException ex) {
+                            log.warn("Exception, ending", ex);
+                            return;
                         }
                     } else {
                         waitingForComplete = true;
@@ -204,7 +205,6 @@ public class EcosLocoToRoster implements EcosListener {
                                 }
                             } catch (InterruptedException ex) {
                                 Thread.currentThread().interrupt();
-
                             }
                         }
                     };
@@ -252,7 +252,7 @@ public class EcosLocoToRoster implements EcosListener {
         List<DecoderFile> decoder = decoderind.matchingDecoderList(null, null, ecosLoco.getCVAsString(8), ecosLoco.getCVAsString(7), null, null);
         if (decoder.size() == 1) {
             pDecoderFile = decoder.get(0);
-            SelectedDecoder(pDecoderFile);
+            selectedDecoder(pDecoderFile);
 
         } else {
 
@@ -432,7 +432,7 @@ public class EcosLocoToRoster implements EcosListener {
 
                     re.setFunctionLabel(functNo, functionLabel);
                     re.setFunctionLockable(functNo, !moment);
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.error("Error occurred while getting the function information : " + e.toString());
                 }
                 getFunctionDetails(functNo + 1);
@@ -532,11 +532,11 @@ public class EcosLocoToRoster implements EcosListener {
 
     private void okayButton() {
         pDecoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
-        SelectedDecoder(pDecoderFile);
+        selectedDecoder(pDecoderFile);
         frame.dispose();
     }
 
-    private void SelectedDecoder(DecoderFile pDecoderFile) {
+    private void selectedDecoder(DecoderFile pDecoderFile) {
         //pDecoderFile=InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         re.setDecoderModel(pDecoderFile.getModel());
         re.setDecoderFamily(pDecoderFile.getFamily());
@@ -907,14 +907,14 @@ public class EcosLocoToRoster implements EcosListener {
             return;
         }
         log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                + " " + df.getFilename());
+                + " " + df.getFileName());
 
         try {
-            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (org.jdom2.JDOMException e) {
-            log.error("JDOM Exception while loading decoder XML file: " + df.getFilename());
+            log.error("JDOM Exception while loading decoder XML file: " + df.getFileName());
         } catch (java.io.IOException e) {
-            log.error("IO Exception while loading decoder XML file: " + df.getFilename());
+            log.error("IO Exception while loading decoder XML file: " + df.getFileName());
         }
         // load variables from decoder tree
         df.getProductID();
@@ -971,7 +971,7 @@ public class EcosLocoToRoster implements EcosListener {
         adaptermemo.getTrafficController().sendEcosMessage(m, this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class);
 
 }
 /*

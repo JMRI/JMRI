@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintSavedTrainManifestAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class);
 
     public PrintSavedTrainManifestAction(String actionName, boolean isPreview, Train train) {
         super(actionName);

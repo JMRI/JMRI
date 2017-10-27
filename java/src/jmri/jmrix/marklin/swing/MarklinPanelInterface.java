@@ -17,6 +17,6 @@ public interface MarklinPanelInterface {
      * This needs to be connected to the initContext() method in implementing
      * classes.
      */
-    public void initComponents(MarklinSystemConnectionMemo memo) throws Exception;
+    public void initComponents(MarklinSystemConnectionMemo memo);
 
 }

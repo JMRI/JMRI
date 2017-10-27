@@ -4,8 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.TooManyListenersException;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -37,6 +37,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         // open the port in XpressNet mode, check ability to set moderators
@@ -62,7 +65,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
+            } catch (UnsupportedCommOperationException et) {
                 log.info("failed to set serial timeout: " + et);
             }
 
@@ -133,7 +136,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
             );
             try {
                 activeSerialPort.notifyOnFramingError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnFramingError: " + e);
                 }
@@ -141,7 +144,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnBreakInterrupt(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnBreakInterrupt: " + e);
                 }
@@ -149,7 +152,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnParityError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnParityError: " + e);
                 }
@@ -157,7 +160,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnOutputEmpty(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnOutputEmpty: " + e);
                 }
@@ -165,7 +168,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnOverrunError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnOverrunError: " + e);
                 }
@@ -201,7 +204,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         new LI100XNetInitializationManager(this.getSystemConnectionMemo());
     }
 
-    // base class methods for the XNetSerialPortController interface
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -211,6 +216,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -224,6 +232,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -245,20 +256,20 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = 0;
         }
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+
         /*if (getOptionState(option2Name).equals(validOption2[0]))
          checkBuffer = true;*/
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
@@ -282,6 +293,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     }
     static volatile LI100Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LI100Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100Adapter.class);
 
 }

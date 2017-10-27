@@ -27,6 +27,9 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Block> namedBlock;
 
+    /**
+     * {@inheritDoc}
+     */
     public BlockContentsIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();
@@ -334,5 +337,5 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         getBlock().setValue(val);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class);
 }

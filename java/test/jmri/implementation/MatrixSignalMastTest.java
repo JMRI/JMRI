@@ -156,8 +156,7 @@ public class MatrixSignalMastTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
@@ -166,5 +165,5 @@ public class MatrixSignalMastTest {
         JUnitUtil.resetInstanceManager();
     }
 
-    static protected Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
 }

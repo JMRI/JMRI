@@ -59,21 +59,21 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
 
     @Override
     public Audio getBySystemName(String key) {
-        //return (Audio)_tsys.get(key);
-        Audio rv = (Audio) _tsys.get(key);
+        //return _tsys.get(key);
+        Audio rv =  _tsys.get(key);
         if (rv == null) {
-            rv = (Audio) _tsys.get(key.toUpperCase());
+            rv = _tsys.get(key.toUpperCase());
         }
         return (rv);
     }
 
     @Override
     public Audio getByUserName(String key) {
-        //return key==null?null:(Audio)_tuser.get(key);
+        //return key==null?null:_tuser.get(key);
         if (key == null) {
             return (null);
         }
-        Audio rv = (Audio) _tuser.get(key);
+        Audio rv = _tuser.get(key);
         if (rv == null) {
             rv = this.getBySystemName(key);
         }
@@ -164,5 +164,5 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         return Bundle.getMessage("BeanNameAudio");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class);
 }

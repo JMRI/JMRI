@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos.swing.statusframe;
 
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -163,6 +162,6 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StatusPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StatusPanel.class);
 
 }

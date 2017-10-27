@@ -4,7 +4,7 @@
 # please also update the file for distribution at 'scripts/default.lcf'
 
 # JMRI itself uses Log4J et al for logging.  Some of the components
-# that JMRI uses, however, use other approaches.  
+# that JMRI uses, however, use other approaches.
 #    purejavacomm:  Uses a "purejavacomm.loglevel" system property not controlled here,
 #                   c.f.the build.xml file for how we handle it when running under Ant.
 

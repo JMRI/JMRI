@@ -29,8 +29,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>JMRI Virtual Sound Decoder Manager Window</h1>
-      This is the quick
-      reference page for the Manager window in the JMRI Virtual Sound Decoder tool.<br>
+      This is the quick reference page for the Manager window
+      in the JMRI Virtual Sound Decoder tool.<br>
       <br>
       What is this thing? The Virtual Sound Secoder ("VSDecoder"
       for short) sits on your computer, listening to its assigned
@@ -45,30 +45,36 @@
       You <i>do</i> need to have a working sound system and
       speakers on your computer, of course!<br>
       You must also have the OpenAL or JavaSound audio system
-      installed on your computer. See <a href=
-      "http://jmri.org/help/en/html/tools/Audio.shtml">the JMRI
+      installed on your computer. See the <a href=
+      "http://jmri.org/help/en/html/tools/Audio.shtml">JMRI
       Audio Help Pages</a> for details.<br>
+      <br>See the <a href=
+      "http://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml">
+      DecoderPro Manual Pages</a> for more details on Virtual
+      Sound Decoder.<br>
+      <br>
       <hr>
 
-      <h2>VSDecoder Manager Window</h2>
+      <h2>Virtual Sound Decoder Manager Window</h2>
 
       <p>The VSDecoder Manager Window contains a control panel for
       each Virtual Sound Decoder ("VSDecoder") that is running.</p>
 
       <p>When first launched the window is empty, except for a
-      volume slider, mute button, and "Add Decoder" button. To
+      volume slider, "Mute" button, and "Add Decoder" button. To
       create a VSDecoder, click "Add Decoder". This will open the
-      VSDecoder Config Dialog.</p>
+      Configure New VSDecoder Window.</p>
 
       <p>The Volume slider and Mute button are "master" controls
       that control the sound output of all running VSDecoders.</p>
 
-      <h3>VSDecoder Config Dialog</h3>The Config Dialog lets you
-      choose which sound profile to use (steam vs. Diesel, EMD vs.
+      <h3>Configure New VSDecoder Window</h3>A config dialog lets you
+      choose which sound profile to use (Steam vs. Diesel, EMD vs.
       GE, Leslie vs. Nathan, etc.), and assign a decoder address to
       listen to.
 
-      <h4>Roster Select and Save</h4>You can select an existing
+      <h4>Roster Select and Save</h4>
+      You can select an existing 
       Roster Entry, if you have any. Press the "Save" button to
       store the currently loaded VSD File and Profile to the
       selected Roster Entry. The next time you select that Roster
@@ -76,12 +82,13 @@
       You don't have to use the Roster at all if you don't want
       to.<br>
 
-      <h4>Profile Selection</h4>To select a profile, you must first
+      <h4>Profile Selection</h4>
+      To select a profile, you must first
       load a "VSD File". An example VSD file is included with the
-      package, 
-      more examples are available for download
+      package, more examples are available for download
       <a href="https://github.com/JMRI/vsdecoder">on the web</a>
-      and you can make (and share!) your own. Click the
+      and you can make (and share!) your own.<br>
+	  Click the
       "Load VSD File" button or choose "File-&gt;Load VSD File"
       from the menu bar to load a VSD file. You can't do anything
       else (except pick a roster entry) until a VSD file is
@@ -90,42 +97,40 @@
       Profile drop-down. Note that you can't do anything else
       (except pick a roster entry) until you've selected a Profile.
 
-      <h4>Address Assignment and the Roster</h4>Once you've loaded
+      <h4>Address Assignment and the Roster</h4>
+      Once you've loaded
       a VSD file and set a Profile, you can either enter a decoder
       Address directly - and click "Set" - or you can choose a
-      locomotive from your roster. The VSD will then respond to
-      throttle inputs. It will listen to <i>any</i> throttle that
-      sends status information to JMRI. This includes JMRI software
-      throttles, "smart phone" throttles like WiThrottle and
-      EngineDriver, and most (but not all) hardware throttles.<br>
+      locomotive from your roster. The VSDecoder will then respond
+      to throttle inputs. It will listen to <i>any</i> throttle
+      that sends status information to JMRI. This includes JMRI
+      software throttles, "smart phone" throttles like WiThrottle
+      and EngineDriver, and most (but not all) hardware throttles.
+      <br>
       Once you have configured your decoder, click "OK" to start
       it.
 
-      <h4>Decoder Control Pane</h4>
-
-      <p>When you Add a VSDecoder, you will see a pane full of
+      <h3>Decoder Control Pane</h3>
+      When you Add a VSDecoder, you will see a pane full of
       controls for that decoder. Left to right you see the
-      locomotive address, a set of buttons for directly playing
-      engine and auxiliary sounds, and a set of buttons for
-      controlling the decoder directly.</p>
+      locomotive address, the profile name, a set of buttons for
+      directly playing engine and auxiliary sounds, and a set of
+      buttons for controlling the decoder directly.
 
       <ul>
-        <li>Config : Launch the Config Dialog for this
+        <li>Options: Launch the Options Dialog for this
         VSDecoder</li>
 
-        <li>Options : Launch the Options Dialog for this
-        VSDecoder</li>
-
-        <li>Delete : Delete this VSDecoder</li>
+        <li>Delete: Delete this VSDecoder</li>
       </ul>
 
-      <p>The exact selection of sound control buttons will very
-      depending on the Sound Profile you have loaded.</p>
+      The exact selection of sound control buttons will very
+      depending on the Sound Profile you have loaded.<br>
+      <br>
+      Note: Some of the buttons may be non-functional, for
+      display/demonstration purposes only.<br>
 
-      <p>Note: Some of the buttons may be non-functional, for
-      display/demonstration purposes only</p>
-
-      <h5>Diesel Engine Control</h5>The Diesel Engine Control comes
+      <h4>Engine Control</h4>The Engine Control comes
       with two features.
 
       <ul>
@@ -146,19 +151,14 @@
       start immediately when you advance the throttle, without
       first pressing "Engine Start", there is a setting in the
       VSDecoder Preferences to change this. (This feature is
-      currently broken for Steam sounds...)<br>
+      currently not active ...)<br>
       <hr>
 
       <h3>Options Dialog</h3>
-
-      <p>In the future, the Options Dialog will provide various
-      option settings. For now, it is non-functional. The gadgets
-      on this pane are just for show.</p>
-
-      <h4>Special note about Engine sounds</h4>The actual engine
-      sound generation is still very "rough". Expect rather "jerky"
-      transitions between speed steps, and some other odd effects.
-      Be patient. This is still "Alpha" code!
+      The Options Dialog provides a train selection for each
+      VSDecoder. When you MOVE the train in Operations, the sound
+      will move to the next location on the Route.
+      <br>
       <hr>
 
       <h2>Menu Items</h2>
@@ -184,6 +184,7 @@
 
       <h3>Window and Help Menus</h3>These are the standard JMRI
       Window and Help menus.<br>
+      <br>
       <hr>
 
       <h2>VSDecoder Preferences</h2>
@@ -204,17 +205,19 @@
         Default Path/Name fields will be automatically loaded on
         decoder start-up.</dd>
 
-        <dt>Default VSD File PathThis path is both the default path
+        <dt>Default VSD File Path</dt>
+		
+		<dd>This path is both the default path
         for the "Load VSD File" chooser box and the expected path
         for the Default VSD File if the "Auto Load VSD File"
-        checkbox is selected.</dt>
+        checkbox is selected.</dd>
 
         <dt>Default VSD File Name</dt>
 
         <dd>This VSD file, assumed to be in the "Default VSD File
         Path", will be auto-loaded on decoder start-up, if the
         "Auto Load VSD File" checkbox is checked.</dd>
-      </dl><br>
+      </dl>
       <hr>
 
       <h2>Roster Interaction</h2>
@@ -232,8 +235,9 @@
         Roster entry</li>
       </ul>To store the current VSDecoder profile setting to a
       Roster Entry, select the Roster Entry and click the "Save"
-      button.
+      button.<br>
 
+      <hr>
       <h2>Bugs and other notes</h2>A few notes on limitations
       (bugs, mostly):
 
@@ -247,11 +251,10 @@
 
         <li>Many other things are buggy or broken. Please log a bug
         report if something appears truly broken.</li>
-      </ul><br>
+      </ul>
       <hr>
-      <br>
       <a id="prefs" name="prefs">(This is the
-      jmri.jmrit.vsdecoder.VSDecoderFrame help page) 
+      jmri.jmrit.vsdecoder.swing.VSDManagerFrame help page) 
       <!--#include virtual="/Footer" --></a>
     </div>
   </div>

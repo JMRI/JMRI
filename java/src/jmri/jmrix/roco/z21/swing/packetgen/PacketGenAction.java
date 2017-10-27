@@ -50,6 +50,6 @@ public class PacketGenAction extends AbstractAction {
         f.connect(_memo.getTrafficController());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 
 }

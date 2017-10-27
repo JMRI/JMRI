@@ -162,7 +162,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     public void addNXSourcePoint(NamedBean source) {
         PointDetails point = null;
-        ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        List<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         for (int i = 0; i < layout.size(); i++) {
             point = providePoint(source, layout.get(i));
         }
@@ -260,6 +260,16 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * @return always 'VALID' 
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
+    }
+
+    /**
      * Enforces, and as a user convenience converts to, the standard form for a system name
      * for the NamedBeans handled by this manager.
      *
@@ -273,9 +283,22 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return inputName;
     }
 
+    /**
+     * Implemented to support the Conditional combo box name list
+     * @since 4.9.3
+     * @return a sorted array of NX names
+     */
     @Override
     public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        List<String> nxList = getEntryExitList();
+        String[] arr = new String[nxList.size()];
+        int i = 0;
+        for (String nxRow : nxList) {
+            arr[i] = nxRow;
+            i++;
+        }
+        java.util.Arrays.sort(arr);
+        return arr;
     }
 
     @Override
@@ -284,8 +307,20 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     @Override
+    /**
+     * Implemented to support the Conditional combo box name list
+     * @since 4.9.3
+     * @return a list of Destination Point beans
+     */
     public List<DestinationPoints> getNamedBeanList() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        List<DestinationPoints> beanList = new ArrayList<>();
+        for (Source e : nxpair.values()) {
+            List<String> uidList = e.getDestinationUniqueId();
+            for (String uid : uidList) {
+                beanList.add(e.getByUniqueId(uid));
+            }
+        }
+        return beanList;
     }
 
     @Override
@@ -397,7 +432,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
                 }
                 boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(), pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.SENSORTOSENSOR);
                 if (result) {
-                    ArrayList<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
+                    List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
                     if (!blkList.isEmpty()) {
                         List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, fromPd.getPanel(), jmri.Sensor.class);
                         PointDetails fromPoint = fromPd;
@@ -434,7 +469,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * List holding SourceToDest sets of routes between two points.
      */
-    ArrayList<SourceToDest> routesToSet = new ArrayList<>();
+    List<SourceToDest> routesToSet = new ArrayList<>();
 
     /**
      * Class to store NX sets consisting of a source point, a destination point,
@@ -485,7 +520,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * Remove remaining SourceToDest sets in routesToSet
      */
     synchronized void removeRemainingRoute() {
-        ArrayList<SourceToDest> toRemove = new ArrayList<>();
+        List<SourceToDest> toRemove = new ArrayList<>();
         for (SourceToDest rts : routesToSet) {
             if (rts.ref == currentDealing) {
                 toRemove.add(rts);
@@ -509,13 +544,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         }
     };
 
-    ArrayList<Object> destinationList = new ArrayList<>();
+    List<Object> destinationList = new ArrayList<>();
 
     // Need to sort out the presentation of the name here rather than using the point ID.
     // This is used for the creation and display of information in the table.
     // The presentation of the name might have to be done at the table level.
-    public ArrayList<Object> getNxSource(LayoutEditor panel) {
-        ArrayList<Object> source = new ArrayList<>();
+    public List<Object> getNxSource(LayoutEditor panel) {
+        List<Object> source = new ArrayList<>();
         destinationList = new ArrayList<>();
 
         for (Entry<PointDetails, Source> e : nxpair.entrySet()) {
@@ -532,12 +567,12 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return source;
     }
 
-    public ArrayList<Object> getNxDestination() {
+    public List<Object> getNxDestination() {
         return destinationList;
     }
 
-    public ArrayList<LayoutEditor> getSourcePanelList() {
-        ArrayList<LayoutEditor> list = new ArrayList<>();
+    public List<LayoutEditor> getSourcePanelList() {
+        List<LayoutEditor> list = new ArrayList<>();
 
         for (Entry<PointDetails, Source> e : nxpair.entrySet()) {
             PointDetails key = e.getKey();
@@ -595,8 +630,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         firePropertyChange("length", null, null);  // NOI18N
     }
 
-    public ArrayList<Object> getDestinationList(Object obj, LayoutEditor panel) {
-        ArrayList<Object> list = new ArrayList<>();
+    public List<Object> getDestinationList(Object obj, LayoutEditor panel) {
+        List<Object> list = new ArrayList<>();
         if (nxpair.containsKey(getPointDetails(obj, panel))) {
             List<PointDetails> from = nxpair.get(getPointDetails(obj, panel)).getDestinationPoints();
             for (int i = 0; i < from.size(); i++) {
@@ -696,7 +731,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     public List<String> getEntryExitList() {
-        ArrayList<String> destlist = new ArrayList<>();
+        List<String> destlist = new ArrayList<>();
         for (Source e : nxpair.values()) {
             destlist.addAll(e.getDestinationUniqueId());
         }
@@ -769,7 +804,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     //No point can have multiple copies of what is the same thing.
-    static ArrayList<PointDetails> pointDetails = new ArrayList<PointDetails>();
+    static List<PointDetails> pointDetails = new ArrayList<PointDetails>();
 
     /**
      * Get the name of a destinationPoint on a LE Panel.
@@ -789,7 +824,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return "empty";  // NOI18N
     }
 
-    ArrayList<StackDetails> stackList = new ArrayList<>();
+    List<StackDetails> stackList = new ArrayList<>();
 
     /**
      * If a route is requested but is currently blocked, ask user
@@ -825,7 +860,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * Get a list of all stacked routes from stackList.
      *
-     * @return an ArrayList containing destinationPoint elements
+     * @return an List containing destinationPoint elements
      */
     public List<DestinationPoints> getStackedInterlocks() {
         List<DestinationPoints> dpList = new ArrayList<>();
@@ -977,12 +1012,12 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");  // NOI18N
             return;
         }
-        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
+        Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
         Enumeration<NamedBean> en = validPaths.keys();
         EntryExitPairs eep = this;
         while (en.hasMoreElements()) {
             NamedBean key = en.nextElement();
-            ArrayList<NamedBean> validDestMast = validPaths.get(key);
+            List<NamedBean> validDestMast = validPaths.get(key);
             if (validDestMast.size() > 0) {
                 eep.addNXSourcePoint(key, editor);
                 for (int i = 0; i < validDestMast.size(); i++) {
@@ -1043,5 +1078,5 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
 }

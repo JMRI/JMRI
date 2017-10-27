@@ -15,6 +15,7 @@ import jmri.SignalMastManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.signalling.EntryExitPairs;
+import jmri.util.ColorUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,20 +39,20 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-
         EntryExitPairs p = (EntryExitPairs) o;
         Element element = new Element("entryexitpairs");  // NOI18N
         setStoreElementClass(element);
-        ArrayList<LayoutEditor> editors = p.getSourcePanelList();
+        List<LayoutEditor> editors = p.getSourcePanelList();
         if (editors.isEmpty()) {
-            return element;
+            return null;    //return element;   // <== don't store empty (unused) element
         }
+
         element.addContent(new Element("cleardown").addContent("" + p.getClearDownOption()));  // NOI18N
         if (p.getDispatcherIntegration()) {
             element.addContent(new Element("dispatcherintegration").addContent("yes"));  // NOI18N
         }
         if (p.useDifferentColorWhenSetting()) {
-            element.addContent(new Element("colourwhilesetting").addContent(colorToString(p.getSettingRouteColor())));  // NOI18N
+            element.addContent(new Element("colourwhilesetting").addContent(ColorUtil.colorToColorName(p.getSettingRouteColor())));  // NOI18N
             element.addContent(new Element("settingTimer").addContent("" + p.getSettingTimer()));  // NOI18N
         }
         for (int k = 0; k < editors.size(); k++) {
@@ -80,7 +81,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                 source.setAttribute("type", type);  // NOI18N
                 source.setAttribute("item", item);  // NOI18N
 
-                ArrayList<Object> a = p.getDestinationList(key, panel);
+                List<Object> a = p.getDestinationList(key, panel);
                 for (int i = 0; i < a.size(); i++) {
                     Object keyDest = a.get(i);
                     String typeDest = "";
@@ -166,7 +167,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
         // get attributes
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        ArrayList<Object> loadedPanel;
+        List<Object> loadedPanel;
         if (cm != null) {
             loadedPanel = cm.getInstanceList(LayoutEditor.class);
         } else {
@@ -177,7 +178,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             eep.setDispatcherIntegration(true);
         }
         if (shared.getChild("colourwhilesetting") != null) {
-            eep.setSettingRouteColor(stringToColor(shared.getChild("colourwhilesetting").getText()));  // NOI18N
+            eep.setSettingRouteColor(ColorUtil.stringToColor(shared.getChild("colourwhilesetting").getText()));  // NOI18N
             int settingTimer = 2000;
             try {
                 settingTimer = Integer.parseInt(shared.getChild("settingTimer").getText());  // NOI18N
@@ -285,39 +286,11 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      *
      * @param color Integer value of a color to display on screen
      * @return lower case color name in English; None if color entered is null
+     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#colorToColorName(Color)} instead
      */
+    @Deprecated
     public static String colorToString(Color color) {
-        if (color == Color.black) {
-            return "black";  // NOI18N
-        } else if (color == Color.darkGray) {
-            return "darkGray";  // NOI18N
-        } else if (color == Color.gray) {
-            return "gray";  // NOI18N
-        } else if (color == Color.lightGray) {
-            return "lightGray";  // NOI18N
-        } else if (color == Color.white) {
-            return "white";  // NOI18N
-        } else if (color == Color.red) {
-            return "red";  // NOI18N
-        } else if (color == Color.pink) {
-            return "pink";  // NOI18N
-        } else if (color == Color.orange) {
-            return "orange";  // NOI18N
-        } else if (color == Color.yellow) {
-            return "yellow";  // NOI18N
-        } else if (color == Color.green) {
-            return "green";  // NOI18N
-        } else if (color == Color.blue) {
-            return "blue";  // NOI18N
-        } else if (color == Color.magenta) {
-            return "magenta";  // NOI18N
-        } else if (color == Color.cyan) {
-            return "cyan";
-        } else if (color == null) {
-            return "None";  // NOI18N
-        }
-        log.error("unknown color sent to colorToString");  // NOI18N
-        return "black";  // NOI18N
+        return ColorUtil.colorToColorName(color);
     }
 
     /**
@@ -325,48 +298,18 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      *
      * @param string String describing a color
      * @return integer representing a screen color
+     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#stringToColor(String)} instead
+     * 
      */
+    @Deprecated
     public static Color stringToColor(String string) {
-        switch (string) {
-            case "black": // NOI18N
-                return Color.black;
-            case "darkGray": // NOI18N
-                return Color.darkGray;
-            case "gray": // NOI18N
-                return Color.gray;
-            case "lightGray": // NOI18N
-                return Color.lightGray;
-            case "white": // NOI18N
-                return Color.white;
-            case "red": // NOI18N
-                return Color.red;
-            case "pink": // NOI18N
-                return Color.pink;
-            case "orange": // NOI18N
-                return Color.orange;
-            case "yellow": // NOI18N
-                return Color.yellow;
-            case "green": // NOI18N
-                return Color.green;
-            case "blue": // NOI18N
-                return Color.blue;
-            case "magenta": // NOI18N
-                return Color.magenta;
-            case "cyan": // NOI18N
-                return Color.cyan;
-            case "None": // NOI18N
-                return null;
-            default:
-                break;
-        }
-        log.error("unknown color text '{}' sent to stringToColor", string);  // NOI18N
-        return Color.black;
-    }
+        return ColorUtil.stringToColor(string);
+    }   // stringToColor
 
     @Override
     public int loadOrder() {
         return InstanceManager.getDefault(EntryExitPairs.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class);
 }

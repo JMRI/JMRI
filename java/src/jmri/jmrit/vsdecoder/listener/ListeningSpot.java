@@ -255,6 +255,6 @@ public class ListeningSpot {
             _lookAt = parseVector3d(e.getAttributeValue("look_at"));
         }
     }
-    private static final Logger log = LoggerFactory.getLogger(ListeningSpot.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ListeningSpot.class);
 
 }

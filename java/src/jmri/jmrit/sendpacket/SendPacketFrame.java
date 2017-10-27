@@ -43,7 +43,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     JToggleButton mRunButton = new JToggleButton("Go");
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         setTitle("Send DCC Packet");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -251,6 +251,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     // private data
     private CommandStation cs = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class);
 
 }

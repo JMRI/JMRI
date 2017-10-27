@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
- *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -43,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2014
  */
 public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
@@ -58,7 +56,9 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      */
     @Override
     public Programmer getProgrammer() {
-        if (progBox.getSelectedItem() == null) return null;
+        if (progBox.getSelectedItem() == null) {
+            return null;
+        }
         return ((GlobalProgrammerManager) progBox.getSelectedItem()).getGlobalProgrammer();
     }
 
@@ -86,10 +86,12 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     }
 
     /**
-     * Get the list of global managers
+     * Get the list of global managers.
+     *
      * @return empty list if none
      */
-    @CheckForNull public List<GlobalProgrammerManager> getMgrList() {
+    @Nonnull
+    public List<GlobalProgrammerManager> getMgrList() {
         return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
     }
 
@@ -222,9 +224,12 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     @Override
     public void dispose() {
         for (GlobalProgrammerManager pm : getMgrList()) {
-            pm.getGlobalProgrammer().removePropertyChangeListener(this);
+            Programmer gp = pm.getGlobalProgrammer();
+            if (gp != null) {
+                gp.removePropertyChangeListener(this);
+            }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgServiceModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgServiceModePane.class);
 }

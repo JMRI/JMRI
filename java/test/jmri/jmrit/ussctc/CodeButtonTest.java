@@ -1,8 +1,7 @@
 package jmri.jmrit.ussctc;
 
+import jmri.util.JUnitUtil;
 import org.junit.*;
-
-import jmri.util.*;
 
 /**
  * Tests for CodeButton class in the jmri.jmrit.ussctc package
@@ -19,8 +18,7 @@ public class CodeButtonTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -29,8 +27,7 @@ public class CodeButtonTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

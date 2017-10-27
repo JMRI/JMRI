@@ -25,11 +25,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: DecoderPro Main Window</h1>The DecoderPro main
+      <h1>JMRI: DecoderPro Main Window</h1>
+      <p>The DecoderPro main
       window gives you access to all the capabilities of JMRI. For
       more information on DecoderPro itself, please see <a href=
       "../../../manual/index.shtml">the DecoderPro online
-      manual</a>.
+        manual</a>.</p>
 
       <p>Help on specific menus:</p>
 
@@ -89,8 +90,8 @@
       Symbolic Programmer and a Quit button that ends the JMRI
       program.</p>
 
-      <p>This is the apps.DecoderPro.DecoderPro.shtml help page 
-      <!--#include virtual="/Footer" --></p>
+      <p>This is the apps.DecoderPro.DecoderPro.shtml help page.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

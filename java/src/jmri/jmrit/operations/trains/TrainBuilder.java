@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,8 +43,6 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  *         2014, 2015
  */
-@SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-        justification = "CarManager only provides Car Objects")
 public class TrainBuilder extends TrainCommon {
 
     // report levels
@@ -444,7 +441,7 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTerminateStaging"), new Object[]{
                     _terminateLocation.getName(), Integer.toString(stagingTracksTerminate.size())}));
             if (stagingTracksTerminate.size() > 1 && Setup.isPromptToStagingEnabled()) {
-                _terminateStageTrack = PromptToStagingDialog();
+                _terminateStageTrack = promptToStagingDialog();
                 startTime = new Date(); // reset build time
             } else {
                 // is this train returning to the same staging in aggressive mode?
@@ -490,7 +487,7 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildDepartStaging"), new Object[]{
                     _departLocation.getName(), Integer.toString(stagingTracks.size())}));
             if (stagingTracks.size() > 1 && Setup.isPromptFromStagingEnabled()) {
-                _departStageTrack = PromptFromStagingDialog();
+                _departStageTrack = promptFromStagingDialog();
                 startTime = new Date(); // restart build timer
                 if (_departStageTrack == null) {
                     showTrainRequirements();
@@ -783,7 +780,7 @@ public class TrainBuilder extends TrainCommon {
      *
      * @return The departure track the user selected.
      */
-    private Track PromptFromStagingDialog() {
+    private Track promptFromStagingDialog() {
         List<Track> tracksIn = _departLocation.getTrackList();
         List<Track> validTracks = new ArrayList<Track>();
         // only show valid tracks
@@ -823,7 +820,7 @@ public class TrainBuilder extends TrainCommon {
      *
      * @return The arrival track selected by the user.
      */
-    private Track PromptToStagingDialog() {
+    private Track promptToStagingDialog() {
         List<Track> tracksIn = _terminateLocation.getTrackByNameList(null);
         List<Track> validTracks = new ArrayList<Track>();
         // only show valid tracks
@@ -2501,7 +2498,7 @@ public class TrainBuilder extends TrainCommon {
      * @param rl the planned origin for this car
      * @param rld the planned destination for this car
      * @param track the final destination for car
-     * 
+     *
      */
     private void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAssignedDest"), new Object[]{
@@ -2809,8 +2806,7 @@ public class TrainBuilder extends TrainCommon {
         }
 
         if (departStageTrack.getNumberEngines() > 0) {
-            for (RollingStock rs : engineManager.getList()) {
-                Engine eng = (Engine) rs;
+            for (Engine eng : engineManager.getList()) {
                 if (eng.getTrack() == departStageTrack) {
                     // has engine been assigned to another train?
                     if (eng.getRouteLocation() != null) {
@@ -2875,8 +2871,7 @@ public class TrainBuilder extends TrainCommon {
         boolean foundCaboose = false;
         boolean foundFRED = false;
         if (departStageTrack.getNumberCars() > 0) {
-            for (RollingStock rs : carManager.getList()) {
-                Car car = (Car) rs;
+            for (Car car : carManager.getList()) {
                 if (car.getTrack() != departStageTrack) {
                     continue;
                 }
@@ -3689,7 +3684,7 @@ public class TrainBuilder extends TrainCommon {
      * Checks all of the cars on an interchange track and returns the oldest
      * (FIFO) or newest (LIFO) car residing on that track. Note high priority
      * cars will be serviced first, then low.
-     * 
+     *
      * Also see checkCarOrder(Car car).
      *
      * @param car the car being pulled from the interchange track
@@ -4570,9 +4565,8 @@ public class TrainBuilder extends TrainCommon {
             return false;
         }
         boolean redirected = false;
-        List<RollingStock> cars = carManager.getByTrainList(_train);
-        for (RollingStock rs : cars) {
-            Car car = (Car) rs;
+        List<Car> cars = carManager.getByTrainList(_train);
+        for (Car car : cars) {
             // does the car have a final destination and the destination is this one?
             if (car.getFinalDestination() == null ||
                     car.getFinalDestinationTrack() == null ||
@@ -4884,8 +4878,8 @@ public class TrainBuilder extends TrainCommon {
         }
         int numberLocos = 0;
         // determine how many locos have already been assigned to the train
-        List<RollingStock> engines = InstanceManager.getDefault(EngineManager.class).getList(_train);
-        for (RollingStock rs : engines) {
+        List<Engine> engines = InstanceManager.getDefault(EngineManager.class).getList(_train);
+        for (Engine rs : engines) {
             if (rs.getRouteLocation() == rl) {
                 numberLocos++;
             }
@@ -5002,6 +4996,6 @@ public class TrainBuilder extends TrainCommon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainBuilder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainBuilder.class);
 
 }

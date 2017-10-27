@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
@@ -270,6 +269,6 @@ public class DccSpeedProfile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class);
 
 }

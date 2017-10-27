@@ -1,13 +1,12 @@
 package jmri.jmrix.secsi.nodeconfig;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of NodeConfigFrame
@@ -23,15 +22,29 @@ public class NodeConfigFrameTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        NodeConfigFrame t = new NodeConfigFrame();
+        // for now, just makes ure there isn't an exception.
+        t.initComponents();
+        t.dispose();
+    }
+
+    @Test
+    public void testGetTitle(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        NodeConfigFrame t = new NodeConfigFrame();
+        t.initComponents();
+        Assert.assertEquals("title","Configure Nodes",t.getTitle());
+        t.dispose();
+    }
+
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

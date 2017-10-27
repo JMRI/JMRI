@@ -1,5 +1,7 @@
 package jmri.server.json.route;
 
+import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -11,9 +13,6 @@ import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
-
-import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
-
 import jmri.server.json.JsonNamedBeanHttpService;
 
 /**

@@ -32,6 +32,6 @@ public class NodeTableAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeTableAction.class);
 
 }

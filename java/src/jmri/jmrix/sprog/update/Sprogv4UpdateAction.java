@@ -2,9 +2,9 @@ package jmri.jmrix.sprog.update;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogIIUpdateFrame object
@@ -36,7 +36,7 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Sprogv4UpdateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Sprogv4UpdateAction.class);
 
 }
 

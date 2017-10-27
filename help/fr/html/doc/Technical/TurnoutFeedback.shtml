@@ -1,303 +1,242 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!--UpDated by Herv&#233; Blorec le 2013/09/09-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!--UpDated by Herv&#233; Blorec le 2016/08/17-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+    <TITLE>
+ 	JMRI: Turnout Feedback
+   </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI Turnout feedback">
 
-  <title>JMRI: R&eacute;troSignalisation Aiguillage</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI Turnout feedback">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head>
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
 
-<body>
-  <!--#include virtual="/Header" -->
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=.iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: R&eacute;troSignalisation Aiguillage</h1>Les
-      Mod&egrave;listes ferroviaires veulent des choses
-      diff&eacute;rentes quand il s'agit de conna&icirc;tre
-      l'&eacute;tat des aiguillages sur leur r&eacute;seau.
-      Certains sont tr&egrave;s heureux de pouvoir dire "je lui ai
-      dit de se d&eacute;placer, c'est assez bon pour moi". Ces
-      personnes ne s'inqui&egrave;tent pas de savoir si un
-      aiguillage de leur r&eacute;seau s'est d&eacute;plac&eacute;
-      quand ils le lui ont dit. Ces gens peuvent simplement ignorer
-      cette page, et laisser les param&egrave;tres de JMRI par
-      d&eacute;faut.
 
-      <p>Mais certains mod&eacute;listes veulent avoir une
-      meilleure information sur l'&eacute;tat des aiguillages sur
-      leur r&eacute;seau, et ainsi utiliser une certaine forme de
-      "r&eacute;tro-signalisation" pour indiquer la position des
-      aiguillages. Cela pourrait &ecirc;tre aussi compliqu&eacute;
-      que deux micro contacts, ajust&eacute;s afin de ne se fermer
-      que lorsque l'aiguillage est correctement install&eacute;
-      dans n'importe laquelle des position. Ou ce pourrait
-      &ecirc;tre quelque chose de plus simple.</p>
+<H1>JMRI: R&#233;troSignalisation Aiguillage</H1>
 
-      <p>Dans le code, les objets Aiguillages font conna&icirc;tre
-      deux &eacute;tats diff&eacute;rents l'&eacute;tat
-      "command&eacute;" et l'&eacute;tat "connu". L'&eacute;tat
-      command&eacute; est "Ceci est ce qui &eacute;tait
-      demand&eacute; au final ". L'&eacute;tat connu est" C'est ce
-      qui est fait correctement sur le r&eacute;seau autant que je
-      le sache".</p>
+Les Mod&#232;listes ferroviaires veulent des choses diff&#233;rentes quand il s'agit de conna&#238;tre 
+l'&#233;tat des aiguillages sur leur r&#233;seau. Certains sont tr&#232;s heureux de pouvoir 
+dire "je lui ai dit de se d&#233;placer, c'est assez bon pour moi".
+Ces personnes ne s'inqui&#232;tent pas de savoir si un aiguillage 
+de leur r&#233;seau s'est d&#233;plac&#233; quand ils le lui ont dit. Ces gens 
+peuvent simplement ignorer cette page, et laisser les param&#232;tres de JMRI 
+par d&#233;faut.
+<P>
+Mais certains mod&#233;listes veulent avoir une meilleure information sur 
+l'&#233;tat des aiguillages sur leur r&#233;seau, et ainsi utiliser
+une certaine forme de "r&#233;tro-signalisation" pour indiquer la position des aiguillages. Cela pourrait &#234;tre
+aussi compliqu&#233; que deux micro contacts, ajust&#233;s afin de ne se fermer que lorsque l'aiguillage
+ est correctement install&#233; dans n'importe laquelle des position. Ou ce pourrait &#234;tre quelque chose de
+plus simple.
 
-      <p>Configur&eacute; pour les deux options, LocoNet et
-      XPressNet ont des capacit&eacute;s limit&eacute;es pour
-      contr&ocirc;ler ce qui se passe sur leurs r&eacute;seaux et
-      s'adapter aux messages de changements d'&eacute;tat des
-      Aiguillage . Tous les autres protocoles utilisent
-      habituellement un "vous lui dites de changer, ainsi il le
-      fait" . En d'autres termes, quand quelque chose dans le code
-      (l'outil aiguillage ou un script) commande un changement
-      d'&eacute;tat droit &agrave; d&eacute;vi&eacute;, par
-      d&eacute;faut c'est &agrave; la fois pour l'&eacute;tat
-      command&eacute; et l'&eacute;tat connu pour changer en
-      "d&eacute;vi&eacute;".</p>
+<P>
+Dans le code, les objets Aiguillages font conna&#238;tre deux &#233;tats diff&#233;rents 
+l'&#233;tat "command&#233;" et l'&#233;tat "connu". L'&#233;tat command&#233; est "Ceci est
+ce qui &#233;tait demand&#233; au final ". L'&#233;tat connu est" C'est ce qui est
+fait correctement sur le r&#233;seau autant que je le sache". 
 
-      <p>Mais il est &eacute;galement possible de contr&ocirc;ler
-      cela plus en d&eacute;tail si vous avez c&acirc;bl&eacute;
-      votre r&eacute;seau pour le permettre.</p>
+<P>
+Configur&#233; pour les deux options, LocoNet et XPressNet ont des capacit&#233;s limit&#233;es pour contr&#244;ler ce
+qui se passe sur leurs r&#233;seaux et s'adapter aux messages de changements d'&#233;tat des Aiguillage. Le NCE Powerhouse Pro peut fournir 
+le dernier &#233;tat connu d'un aiguaillage qui a chang&#233; par une macro ou un pupitre.Tous les autres protocoles 
+utilisent habituellement un "vous lui dites de changer, ainsi il le fait" . En d'autres termes,  quand quelque chose dans le code
+(l'outil aiguillage ou un script) commande un changement d'&#233;tat droit &#224; d&#233;vi&#233;, par d&#233;faut 
+c'est &#224; la fois pour l'&#233;tat command&#233; et l'&#233;tat connu pour changer en "d&#233;vi&#233;".
 
-      <p>Toute la question de la r&eacute;tro-signalisation de
-      l'aiguillage: "Comment pouvons nous configurer le programme
-      pour comprendre l'&eacute;tat connu, donn&eacute;e par le
-      mat&eacute;riel du r&eacute;seau? "</p>
+<P>
+Mais il est &#233;galement possible de contr&#244;ler cela plus en d&#233;tail si vous avez
+c&#226;bl&#233; votre r&#233;seau pour le permettre.
 
-      <p>Si vous allez &agrave; l'outil "Tableau Aiguillage", vous
-      verrez qu'il a quatre colonnes associ&eacute;es &agrave; des
-      R&eacute;tro-Signalisations:</p>
+<P>
+Toute la question de la r&#233;tro-signalisation de l'aiguillage: "Comment pouvons nous configurer
+le programme pour comprendre l'&#233;tat connu, donn&#233;e par mon
+mat&#233;riel du r&#233;seau? "
 
-      <dl>
-        <dt>"R&eacute;tro Signalisation"</dt>
 
-        <dd>C'est "l'&eacute;tat connu". Vous ne pouvez pas le
-        changer, mais cette colonne vous montre ce que le programme
-        pense qu'il est.</dd>
+<P>
+Si vous allez &#224; l'outil <A HREF="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Tableau Aiguillage</A>, vous verrez qu'il a quatre colonnes
+associ&#233;es &#224; des r&#233;tro-signalisations:
+<DL>
+<DT> "R&#233;tro Signalisation"</DT><DD> C'est "l'&#233;tat connu". Vous ne pouvez pas le changer, mais cette
+colonne vous montre ce que le programme pense qu'il est.</DD>
 
-        <dt>"Mode"</dt>
+<DT> "Mode"</DT><DD> C'est la m&#233;thode de r&#233;tro signalisation utilis&#233;e par cet aiguillage. (Vous pouvez
+le changer pour chaque aiguillage individuellement, mais il faut noter que le changement ne
+prendra effet qu'apr&#232;s que vous ayez cliqu&#233; ailleurs, et vous pourriez avoir besoin d'ajouter
+certains noms de capteur dans la(es) colonne(s) suivante (s))</DD>
 
-        <dd>C'est la m&eacute;thode utilis&eacute;e par cette
-        r&eacute;tro signalisation d'aiguillage. (Vous pouvez le
-        changer pour chaque aiguillage individuellement, mais il
-        faut noter que le changement ne prendra effet
-        qu'apr&egrave;s que vous ayez cliqu&eacute; ailleurs, et
-        vous pourriez avoir besoin d'ajouter certains noms de
-        capteur dans la(es) colonne(s) suivante (s))</dd>
+<DT> "Capteur 1", "Capteur 2"</DT><DD> Ceux-ci d&#233;finissent les capteurs n&#233;cessaires &#224; certains
+types de r&#233;tros. Vous pouvez taper un num&#233;ro de capteur, le nom syst&#232;me ou le nom utilisateur
+ici, le programme va le changer pour le nom syst&#232;me dont il a
+besoins.</DD>
+</DL>
 
-        <dt>"Capteur 1", "Capteur 2"</dt>
+<P>
+Les modes de r&#233;tro signalisation disponibles sont:
+<DL>
+<DT> DIRECT</DT><DD> La valeur par d&#233;faut dans de nombreux cas, et aussi le comportement d'origine
+du programme. Quand quelque chose
+demande &#224; l'aiguillage de changer, c'est qu'il a imm&#233;diatement assum&#233;
+qu'il l'a vraiment fait.</DD>
 
-        <dd>Ceux-ci d&eacute;finissent les capteurs
-        n&eacute;cessaires &agrave; certains types de
-        r&eacute;tros. Vous pouvez taper un num&eacute;ro de
-        capteur, le nom syst&egrave;me ou le nom utilisateur ici,
-        le programme va le changer pour le nom syst&egrave;me dont
-        il a besoins.</dd>
-      </dl>
+<DT>ONESENSOR</DT><DD> L'aiguillage montre le capteur d&#233;fini par la colonne "Capteur 1"
+, qui est probablement reli&#233; &#224; un micro contact sur l'aiguillage ou 
+similaire. Lorsque le capteur est Actif, l'aiguillage est connu pour &#234;tre dans
+la position "d&#233;vi&#233;e"  . Quand il est Inactif, l'aiguillage est connu pour
+&#234;tre dans la position "directe".</DD>
 
-      <p>Les modes de r&eacute;tro signalisation disponibles
-      sont:</p>
+<DT>TWOSENSOR</DT><DD> L'aiguillage montre deux capteurs d&#233;finis par les colonnes "Capteur 1"
+et "Capteur 2", qui sont probablement reli&#233;s &#224; des micro contacts &#224; 
+chaque extr&#233;mit&#233; de la barre de commande de l'aiguillage. Lorsque le capteur 1 est actif, 
+l'aiguillage est connu pour &#234;tre "d&#233;vi&#233;". Lorsque le capteur 2 est actif, l'aiguillage 
+est connu pour &#234;tre "directe" (normal)
+</DD>
 
-      <dl>
-        <dt>DIRECT</dt>
+<DT>MONITORING</DT><DD> Par d&#233;faut pour les aiguillages LocoNet et XPressNet, et disponible pour NCE, 
+cela signifie que le r&#233;seau est surveill&#233; par des messages au sujet de l'
+&#233;tat de l'aiguillage. Ce mode est disponible uniquement pour certains
+protocoles, &#224; savoir certains protocoles ne peuvent pas faire le suivi correctement,
+et n'ont pas ce choix</DD>
 
-        <dd>La valeur par d&eacute;faut dans de nombreux cas, et
-        aussi le comportement d'origine du programme. Quand quelque
-        chose demande l'aiguillage de changer, c'est qu'il a
-        imm&eacute;diatement assum&eacute; qu'il l'a vraiment
-        fait.</dd>
+<DT>INDIRECT</DT><DD>Actuellement disponible uniquement pour les aiguillages LocoNet, 
+il informe le programme que l'aiguillage est 
+entra&#238;n&#233; par un DS54 Digitrax avec un micro contact fix&#233;
+sur la tige de commande. Pour plus d'informations, consultez la
+<A HREF="../../hardware/loconet/DS54.shtml"> page DS54</a>.</DD>
 
-        <dt>UN CAPTEUR</dt>
+<DT>EXACT</DT><DD>Actuellement uniquement disponible pour les aiguillages LocoNet et XPressNet. 
+Pour les aiguillages LocoNet, ceci informe le programme que l'aiguillage est 
+pilot&#233; par un Digitrax DS54 avec deux micro contacts attach&#233;s 
+&#224; l'interrupteur et aux commandes. Pour plus d'informations, consultez la:
+<A HREF="../../hardware/loconet/DS54.shtml"> page DS54</a>. Pour les aiguillages XPressNet ceci informe le programme que l'aiguillage est pilot&#233; par un LS100 et que les entr&#233;es r&#233;tro signalisations ont &#233;t&#233; connect&#233;es comme d&#233;crit dans le <a href="http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">manuel LS100  (lien externe, PDF)</a>.</DD>
 
-        <dd>L'aiguillage montre le capteur d&eacute;fini par la
-        colonne "Capteur 1" , qui est probablement reli&eacute;
-        &agrave; un micro contact sur l'aiguillage ou similaire.
-        Lorsque le capteur est actif, l'aiguillage est connu pour
-        &ecirc;tre dans la position "d&eacute;vi&eacute;e" . Quand
-        il est inactif, l'aiguillage est connu pour &ecirc;tre dans
-        la position "droit".</dd>
+</DL>
 
-        <dt>DEUX CAPTEURS</dt>
+<P>La plupart des gens (devrait probablement!) accepte la valeur de type de r&#233;tro-signalisation 
+par d&#233;faut que le logiciel s&#233;lectionne pour eux.
 
-        <dd>L'aiguillage montre deux capteurs d&eacute;finis par
-        les colonnes "Capteur 1" et "Capteur 2", qui sont
-        probablement reli&eacute;s &agrave; des micro contacts
-        &agrave; chaque extr&eacute;mit&eacute; de la barre de
-        commande de l'aiguillage. Lorsque le capteur 1 est actif,
-        le l'aiguillage est connu pour &ecirc;tre
-        "d&eacute;vi&eacute;". Lorsque le capteur 2 est actif,
-        l'aiguillage est connu pour &ecirc;tre "droit"
-        (normal)</dd>
+<h2>Op&#233;ration</h2>
 
-        <dt>SUIVI</dt>
+Lorsque la r&#233;tro signalisation est utilis&#233;e, les Aiguillages peuvent commencer &#224; se comporter de fa&#231;on compliqu&#233;e.
 
-        <dd>Par d&eacute;faut pour les aiguillages LocoNet et
-        XPressNet, cela signifie que le r&eacute;seau est
-        surveill&eacute; par des messages au sujet de l'
-        &eacute;tat de l'aiguillage. Ce mode est disponible
-        uniquement pour certains protocoles, &agrave; savoir
-        certains protocoles ne peuvent pas faire le suivi
-        correctement, et n'ont pas ce choix</dd>
+<H3>Cas le plus simple </H3>
+Le cas le plus commun est JMRI commandant les aiguillages pour les d&#233;placer, et ils se d&#233;placent correctement.
+La s&#233;quence est alors:
+<OL>
+<LI>JMRI commande &#224; l'aiguillage de passer par la mise en l'&#233;tat command&#233; par exemple D&#201;VI&#201;
+<LI>Les objet Aiguillage ont le droit d'envoyer des commandes pour le mat&#233;riel du r&#233;seau,
+et travaillent avec le reste du programme pour le faire.
+<LI>La position change sur le r&#233;seau..
+</OL>
 
-        <dt>INDIRECT</dt>
+Si aucune r&#233;tro-signalisation (vraiment, la r&#233;tro signalisation DIRECT) est en cours d'utilisation, 
+l'&#233;tat connu de l'aiguillage va aussi changer &#224; l'&#233;tape 1. &#192; ce point,les
+ic&#244;nes sur les panneaux, logique signal, etc seront tous inform&#233;s du changement et r&#233;agirons.
 
-        <dd>Actuellement disponible uniquement pour les aiguillages
-        LocoNet , il informe le programme que l'aiguillage est
-        entra&icirc;n&eacute; par une DS54 Digitrax avec un micro
-        contact fix&eacute; sur la tige de commande. Pour plus
-        d'informations, consultez la <a href=
-        "../../hardware/loconet/DS54.shtml">page DS54</a>.</dd>
+ <H3>Simple R&#233;troaction R&#233;seau</H3>
 
-        <dt>EXACT</dt>
+Le cas le plus simple pour l'utilisation d'un micro contact de la r&#233;tro signalisation sur le r&#233;seau est similaire:
 
-        <dd>Actuellement uniquement disponible pour les aiguillages
-        LocoNet et XPressNet. Pour les aiguillages LocoNet, ceci
-        informe le programme que l'aiguillage est pilot&eacute; par
-        un Digitrax DS54 avec deux micro contacts attach&eacute;s
-        &agrave; l'interrupteur et aux commandes. Pour plus
-        d'informations, consultez la: <a href=
-        "../../hardware/loconet/DS54.shtml">page DS54</a>. Pour les
-        aiguillages XPressNet ceci informe le programme que
-        l'aiguillage est pilot&eacute; par un LS100 et que les
-        entr&eacute;es r&eacute;tro signalisations ont
-        &eacute;t&eacute; connect&eacute;es comme d&eacute;crit
-        dans le <a href=
-        "http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">
-        manuel LS100 (lien externe, PDF)</a>.</dd>
-      </dl>
+<ol>
+<li>JMRI commande l'aiguillage pour passer &#224; la mise &#224; l'&#233;tat command&#233; par exemple D&#201;VI&#201;.
+<li>L'objet de aiguillage chiffre la bonne commande &#224; envoyer au mat&#233;riel du r&#233;seau,
+et travaille avec le reste du programme pour le faire.
+<li>La position change sur le r&#233;seau .
+<li>Un micro contact d&#233;tecte le changement de position, et informe l'&#233;lectronique du r&#233;seau,
+qui &#224; leur tour modifie une entr&#233;e de JMRI.
+<li>Cette entr&#233;e est connect&#233;e &#224; un objet Capteur JMRI, qui change d'&#233;tat
+par exemple d'INACTIF &#224; ACTIF.
+<li>Parce que l'aiguillage surveille ce capteur de r&#233;tro signalisation ONESENSOR, lorsque 
+le changement se produit, il d&#233;finit l'&#233;tat connu de l'aiguillage pour D&#201;VI&#201;.
+</ol>
 
-      <p>La plupart des gens (devrait probablement!) accepter la
-      valeur de type de r&eacute;tro-signalisation par
-      d&eacute;faut que le logiciel s&eacute;lectionne pour
-      eux.</p>
+Cette s&#233;quence prend un peu de temps, mais l'&#233;tat connu de 
+l'aiguillage n'est pas chang&#233; jusqu'&#224; ce que les points soit effectivement d&#233;plac&#233;s sur le reseau. 
+Ensuite, les ic&#244;nes sur les panneaux, logique signal, etc seront tous inform&#233;s du changement
+dans un &#233;tat connu et r&#233;agiront.
 
-      <h2>Op&eacute;ration</h2>Lorsque la r&eacute;tro
-      signalisation est utilis&eacute;e, les branchements peuvent
-      commencer &agrave; se comporter de fa&ccedil;on
-      compliqu&eacute;e.
+<h3>Changement Intempestif sur le R&#233;seau</h3>
 
-      <h3>Cas le plus simple</h3>Le cas le plus commun est JMRI
-      commandant les aiguillages pour les d&eacute;placer, et ils
-      se d&eacute;placent correctement. La s&eacute;quence est
-      alors:
+La r&#233;tro signalisation permet &#224; JMRI de d&#233;tecter que quelque chose a chang&#233;
+due &#224; une action sur le r&#233;seau au lieu d'une commande &#224; partir du programme.
+Par exemple, si vous utilisez les r&#233;troaction d'un aiguillage, vous pourriez voir
+quelque chose comme cette s&#233;quence:
+<ol>
+<li>Le programme d&#233;finit l'&#233;tat de commande pour D&#201;VI&#201;, et les
+instructions de sortie pour l'aiguillage lui disant de se d&#233;placer vers cette position.
+<li>Plus tard, le retour d'information revient pour indiquer que le
+mouvement a eu lieu. Ceci d&#233;finit l'&#233;tat connu dans JMRI
+&#224; "DEVI&#201;".
+<li>Plus tard, et ind&#233;pendamment, vous d&#233;placez l'aiguillage sur le r&#233;seau &#224; la position DROIT, 
+peut-&#234;tre avec bouton-poussoir local.
+<li>Cela provoque un retour d'information envoy&#233;e &#224; JMRI pour changer.
+<li>Pour cette raison, l'&#233;tat connu est chang&#233; pour DROIT .
+<li>&#224; ce stade, JMRI fait l'hypoth&#232;se que vous avez voulu que cela se produise, en effet, une commande a &#233;t&#233; donn&#233;e par le r&#233;seau 
+(et non dans le programme) pour d&#233;placer l'aiguillage. Alors JMRI change la commande d'&#233;tat pour DIRECT aussi
+</ul>
 
-      <ol>
-        <li>JMRI commande &agrave; l'aiguillage de passer par la
-        mise en l'&eacute;tat command&eacute; par exemple
-        D&Eacute;VI&Eacute;</li>
+Notez que cette derni&#232;re transition de l'&#233;tat command&#233; n'a pas ordonn&#233; d'envoyer des commandes
+au r&#233;seau, c'est juste un changement au sein du programme.
 
-        <li>Les objet Aiguillage ont le droit d'envoyer des
-        commandes pour le mat&eacute;riel du r&eacute;seau, et
-        travaille avec le reste du programme pour le faire.</li>
+<h3>R&#233;tro Signalisation TWOSENSOR et l'&#233;tat incoh&#233;rent</h3>
 
-        <li>Les position changent sur le r&eacute;seau..</li>
-      </ol>Si aucune r&eacute;tro-signalisation (vraiment, la
-      r&eacute;tro signalisation directe) n'est pas en cours
-      d'utilisation, l' &eacute;tat connu de l'aiguillage va aussi
-      changer &agrave; l'&eacute;tape 1. A ce point,les
-      ic&ocirc;nes sur les panneaux, signaux logiques, etc seront
-      tous inform&eacute;s du changement et r&eacute;agirons.
+La r&#233;trosignalisation TWOSENSOR utilise deux capteurs s&#233;par&#233;s pour indiquer quand l'aiguillage a
+&#233;t&#233; successivement de l'&#233;tat DIRECT &#224; D&#201VI&#201. Pendant la transition entre ces deux &#233;tats,
+il est dans aucun &#233;tat, ainsi l'&#233;tat de l'aiguillage appara&#238;t comme INCOH&#201RENT. Par exemple:
+<ol>
+<li>L'Aiguillage est actuellement montr&#233; DIRECTE, avec le Capteur d&#233;tectant direct montr&#233; actif
+et le Capteur d&#233;tectant d&#233;vi&#233; montr&#233; inactif
+<li>Vous commandez l'aiguillage pour bouger, et il commence le mouvement.
+<li>Le Capteur d&#233;tectant direct va &#224; Inactif car ce point devient off, et l'aiguillage 
+commence &#224; montrer INCOHERENT
+<li>le Capteur d&#233;tectant d&#233;vi&#233; va &#224; Actif car ce point s'installe sur ferm&#233;, et l'aiguillage 
+commence &#224; montrer l'&#233;tat D&#201VI&#201.
+</OL>
 
-      <h3>Simple R&eacute;troaction R&eacute;seau</h3>Le cas le
-      plus simple pour l'utilisation d'un micro contact de la
-      r&eacute;tro signalisation sur le r&eacute;seau est
-      similaire:
+La m&#234;me chose arrive si vous commandez &#224; distance le mouvement de l'aiguillage, par exemple avec un bouton-poussoir local.
+<ol>
+<li>L'aiguillage commence le mouvement
+<li>Le capteur indique qu'il devient inactif, et l'aiguillage montre INCOH&#201RENT
+<li>L'autre capteur voit l'aiguillage se mettre en place, et l'&#233;tat final est montr&#233;
+<li>JMRI pense que vous l'avez fait volontairement, et l'&#233;tat command&#233; &#233;gal &#224; l'&#233;tat r&#233;trosignal&#233;.
+</ol>
 
-      <ol>
-        <li>JMRI commande l'aiguillage pour passer &agrave; la mise
-        &agrave; l'&eacute;tat command&eacute; par exemple
-        D&eacute;VI&eacute;.</li>
+( N.b: Parfois les liaisons m&#233;caniques ne sont pas parfaites, et le capteur "arriv&#233;e" est Actif 
+avant que le capteur "d&#233;part" soit Inactif. Le programme g&#232;re ceci de la m&#234;me mani&#232;re: Il montrera
+INCOH&#201RENT si l'un des deux capteurs est actif, ou les deux inactifs).
 
-        <li>Les donn&eacute;es objet aiguillage ont le droit
-        d'envoyer des commandes pour le mat&eacute;riel du
-        r&eacute;seau, et travaille avec le reste du programme pour
-        le faire.</li>
+<h3>Bus Syst&#232;me et Messages d'Entr&#233;e</h3>
 
-        <li>Les position changent sur le r&eacute;seau .</li>
+Quelques syst&#232;mes DCC ex: Loconet, XpressNet et syst&#232;me NCE, peuvent g&#233;rer les commandes 
+d'aiguillages provenant de multiple sources. Quand c'est r&#233;gl&#233; sur r&#233;trosignalisation "MONITORING", JMRI cherche celles-ci
+pour la confirmation de l'&#233;tat correct des aiguillages: le message envoy&#233; est consid&#233;r&#233; comme
+confirmation que l'aiguillage a chang&#233;. 
+<p>
+Avec le r&#233;glage MONITORING, quand quelque chose en dehord de JMRI ( un autre programme , un r&#233;gulateur manuel)
+change l'&#233;tat de l'aiguillage, JMRI l'accepte et change ses &#233;tats internes pour l'aiguillage.
 
-        <li>Un micro contact d&eacute;tecte le changement de
-        position, et informe l'&eacute;lectronique du
-        r&eacute;seau, qui &agrave; leur tour modifie une
-        entr&eacute;e de JMRI.</li>
+<!--#include virtual="/Footer" -->
 
-        <li>l'entr&eacute;e est connect&eacute;e &agrave; un objet
-        Capteur JMRI, qui change d'&eacute;tat par exemple
-        d'INACTIF &agrave; ACTIF.</li>
-
-        <li>Parce que l'aiguillage regarde le capteur de
-        r&eacute;tro signalisation ONESENSOR, lorsque le changement
-        se produit, il d&eacute;finit l'&eacute;tat connu de
-        l'aiguillage pour D&eacute;VI&eacute;.</li>
-      </ol>Cette s&eacute;quence prend un peu de temps, mais
-      l'&eacute;tat connu de l'aiguillage n'est pas chang&eacute;
-      jusqu'&agrave; ce que les points soit effectivement
-      d&eacute;plac&eacute;s sur le reseau. Ensuite, les
-      ic&ocirc;nes sur les panneaux, signaux logiques, etc seront
-      tous inform&eacute;s du changement dans un &eacute;tat connu
-      et r&eacute;agiront.
-
-      <h3>Changement Intempestif sur le R&eacute;seau</h3>La
-      r&eacute;tro signalisation permet &agrave; JMRI de
-      d&eacute;tecter que quelque chose a chang&eacute; due
-      &agrave; une action sur le r&eacute;seau au lieu d'une
-      commande &agrave; partir du programme. Par exemple, si vous
-      utilisez les r&eacute;troaction d'un aiguillage, vous
-      pourriez voir quelque chose comme cette s&eacute;quence:
-
-      <ol>
-        <li>Le programme d&eacute;finit l'&eacute;tat de commande
-        pour DEVI&eacute;, et les instructions de sortie pour
-        l'aiguillage lui disant de se d&eacute;placer vers cette
-        position.</li>
-
-        <li>Plus tard, le retour d'information revient pour
-        indiquer que le mouvement a eu lieu. Ceci d&eacute;finit
-        l'&eacute;tat connu dans JMRI &agrave; "DEVI&eacute;".</li>
-
-        <li>Plus tard, et ind&eacute;pendamment, vous
-        d&eacute;placez l'aiguillage sur le r&eacute;seau &agrave;
-        la position DROIT, peut-&ecirc;tre avec bouton-poussoir
-        local.</li>
-
-        <li>Cela provoque un retour d'information envoyer &agrave;
-        JMRI pour changer.</li>
-
-        <li>Pour cette raison, l'&eacute;tat connu est
-        chang&eacute; pour DROIT .</li>
-
-        <li>&agrave; ce stade, JMRI fait l'hypoth&egrave;se que
-        vous avez voulu que cela se produise, en effet, une
-        commande a &eacute;t&eacute; donn&eacute;e par le
-        r&eacute;seau (et non dans le programme) pour
-        d&eacute;placer l'aiguillage. Alors JMRI change la commande
-        d'&eacute;tat pour DIRECT aussi Notez que cette
-        derni&egrave;re transition de l'&eacute;tat n'a pas
-        ordonn&eacute; d'envoyer des commandes aux au
-        r&eacute;seau, c'est juste un changement au sein du
-        programme.
-
-          <h3>R&eacute;tro Signalisation DEUXCAPTEURS et
-          l'&eacute;tat incoh&eacute;rent</h3>
-
-          <h3>Bus Syst&egrave;me et Messages d'Entr&eacute;e</h3>
-          <!--#include virtual="/Footer" -->
-        </li>
-      </ol>
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -182,11 +182,11 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
             // non-indexed operation
             state = ProgState.PROGRAMMING;
-            prog.writeCV(_cv, val, this);
+            prog.writeCV(CV, val, this);
         } else if (useCachePiSi()) {
             // indexed operation with set values is same as non-indexed operation
             state = ProgState.PROGRAMMING;
-            prog.writeCV(_cv, val, this);
+            prog.writeCV(CV, val, this);
         } else {
             lastValuePI = valuePI;  // after check in 'if' statement
             lastValueSI = valueSI;
@@ -195,11 +195,6 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
             state = ProgState.FINISHWRITE;
             prog.writeCV(indexPI, valuePI, this);
         }
-    }
-
-    @Override
-    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
     }
 
     @Override
@@ -342,6 +337,6 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiIndexProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiIndexProgrammerFacade.class);
 
 }

@@ -41,7 +41,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() {
         opened = false;
 
         if (m_HostName == null) {
@@ -131,6 +131,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         return opened;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

@@ -319,5 +319,5 @@ public class SprogVersionQuery implements SprogListener {
         timer.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class);
 }

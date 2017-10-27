@@ -20,6 +20,11 @@ public class InternalTurnoutManager extends jmri.managers.InternalTurnoutManager
         return true;
     }
 
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
+    }
+
     /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */

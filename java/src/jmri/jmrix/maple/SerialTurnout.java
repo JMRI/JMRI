@@ -52,17 +52,41 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnout extends AbstractTurnout {
 
+    private MapleSystemConnectionMemo _memo = null;
+
     /**
      * Create a Turnout object, with both system and user names.
-     * <P>
-     * 'systemName' was previously validated in SerialTurnoutManager
+     * <p>
+     * 'systemName' has already been validated in SerialTurnoutManager
+     *
+     * @param systemName the system name for this Turnout
+     * @param userName   the user name for this Turnout
+     * @param memo       the memo for the system connection
      */
-    public SerialTurnout(String systemName, String userName) {
+    public SerialTurnout(String systemName, String userName, MapleSystemConnectionMemo memo) {
         super(systemName, userName);
         // Save system Name
         tSystemName = systemName;
+        _memo = memo;
         // Extract the Bit from the name
-        tBit = SerialAddress.getBitFromSystemName(systemName);
+        tBit = SerialAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
+    }
+
+    /**
+     * Create a Turnout object, with only a system name.
+     * <p>
+     * 'systemName' has already been validated in SerialTurnoutManager
+     *
+     * @param systemName the system name for this Turnout
+     * @param memo       the memo for the system connection
+     */
+    public SerialTurnout(String systemName, MapleSystemConnectionMemo memo) {
+        super(systemName);
+        // Save system Name
+        tSystemName = systemName;
+        _memo = memo;
+        // Extract the Bit from the name
+        tBit = SerialAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
     }
 
     /**
@@ -84,7 +108,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN: " + newState);
+                log.error("Cannot command both CLOSED and THROWN: {}", newState);
                 return;
             } else {
                 // send a CLOSED command
@@ -107,7 +131,7 @@ public class SerialTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ");
+            log.debug("Send command to {} Pushbutton", (_pushButtonLockout ? "Lock" : "Unlock"));
         }
     }
 
@@ -210,5 +234,6 @@ public class SerialTurnout extends AbstractTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+
 }

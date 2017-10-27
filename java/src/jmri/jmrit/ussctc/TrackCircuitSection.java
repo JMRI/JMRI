@@ -1,7 +1,6 @@
 package jmri.jmrit.ussctc;
 
 import jmri.*;
-import java.util.*;
 
 /**
  * Drive a single Track Circuit section on a USS CTC panel.
@@ -115,5 +114,5 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
         }
     }
      
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackCircuitSection.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackCircuitSection.class);
 }

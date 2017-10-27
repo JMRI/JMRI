@@ -2,6 +2,7 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -366,8 +367,7 @@ public class SerialNodeTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // replace the SerialTrafficController
         stcs = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
@@ -376,8 +376,7 @@ public class SerialNodeTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
         stcs = null;
         memo = null;
     }

@@ -12,7 +12,8 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import org.jdom2.Element;
+import org.jdom2.*;
+import java.io.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,13 +110,13 @@ public class PaneSet {
         }
         if (log.isDebugEnabled()) {
             log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                    + " " + df.getFilename());
+                    + " " + df.getFileName());
         }
 
         try {
-            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
-        } catch (Exception e) {
-            log.error("Exception while loading decoder XML file: " + df.getFilename(), e);
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
+        } catch (JDOMException | IOException e) {
+            log.error("Exception while loading decoder XML file: " + df.getFileName(), e);
         }
         // load variables from decoder tree
         df.getProductID();
@@ -199,5 +200,5 @@ public class PaneSet {
         re.writeFile(cvModel, variableModel);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneSet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneSet.class);
 }

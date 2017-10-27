@@ -55,7 +55,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
         panel.setAttribute("positionable", "" + (p.allPositionable() ? "yes" : "no"));
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
-        panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
+        panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
@@ -87,7 +87,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                     if (e != null) {
                         panel.addContent(e);
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.error("Error storing panel element: {}", e.getMessage(), e);
                 }
             }
@@ -172,7 +172,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;
         }
-        panel.setAllShowTooltip(value);
+        panel.setAllShowToolTip(value);
 
         value = true;
         if ((a = shared.getAttribute("controlling")) != null && a.getValue().equals("no")) {
@@ -250,7 +250,9 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException 
+                    | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
+                    | RuntimeException e) {
                 log.error("Exception while loading {}: {}", item.getName(), e.getMessage(), e);
                 result = false;
             }
@@ -309,6 +311,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ControlPanelEditorXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ControlPanelEditorXml.class);
 
 }

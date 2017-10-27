@@ -537,8 +537,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     void alternateOnClick() {
-        if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
-        {
+        if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {  // if clear known state, set to opposite
             getTurnout().setCommandedState(jmri.Turnout.THROWN);
         } else if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
             getTurnout().setCommandedState(jmri.Turnout.CLOSED);
@@ -578,5 +577,5 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         return clone;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutIcon.class);
 }

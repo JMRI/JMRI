@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialLight.java
- *
  * Implementation of the Light Object
  * <P>
  * Based in part on SerialTurnout.java
@@ -16,13 +14,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLight extends AbstractLight {
 
+    private OakTreeSystemConnectionMemo _memo = null;
+
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName) {
+    public SerialLight(String systemName, OakTreeSystemConnectionMemo memo) {
         super(systemName);
+        _memo = memo;
         // Initialize the Light
         initializeLight(systemName);
     }
@@ -32,8 +33,10 @@ public class SerialLight extends AbstractLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName, String userName) {
+    public SerialLight(String systemName, String userName, OakTreeSystemConnectionMemo memo) {
         super(systemName, userName);
+        _memo = memo;
+        // Initialize the Light
         initializeLight(systemName);
     }
 
@@ -44,7 +47,7 @@ public class SerialLight extends AbstractLight {
      */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
-        mBit = SerialAddress.getBitFromSystemName(systemName);
+        mBit = SerialAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
         // Set initial state
         setState(OFF);
     }
@@ -62,17 +65,18 @@ public class SerialLight extends AbstractLight {
      */
     @Override
     protected void doNewState(int oldState, int newState) {
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName(), _memo.getSystemPrefix());
         if (mNode != null) {
             if (newState == ON) {
                 mNode.setOutputBit(mBit, false);
             } else if (newState == OFF) {
                 mNode.setOutputBit(mBit, true);
             } else {
-                log.warn("illegal state requested for Light: " + getSystemName());
+                log.warn("illegal state requested for Light: {}", getSystemName());
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLight.class);
+
 }

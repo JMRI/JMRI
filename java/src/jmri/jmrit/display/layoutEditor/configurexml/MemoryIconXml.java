@@ -8,7 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
  */
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Cannot rename for user data compatiblity reasons.")
 // For explanation of annotation, see layoutEditor.MemoryIcon
 public class MemoryIconXml extends jmri.jmrit.display.configurexml.MemoryIconXml {
 

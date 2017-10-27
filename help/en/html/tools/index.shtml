@@ -174,10 +174,23 @@
           when using Blocks directly.</dd>
 
           <dd>
+            <h3><a href="Transits.shtml">Transits</a></h3>
+          </dd>
+
+          <dd>A <b>Transit</b> is a group of two or more connected
+            <b><a href="Sections.shtml">Sections</a></b> that
+            describes a route around the layout of a Train traveling in a
+            given direction. A Section may be in multiple Transits,
+            and may be in a given Transit multiple times.<br>
+            Transits and Sections are essential to <a href=
+            "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+          </dd>
+
+          <dd>
             <h3><a href="Logix.shtml">Logix</a></h3>
           </dd>
 
-          <dd>A Logix is a tool for entering powerful logical
+          <dd>A <b>Logix</b> is a tool for entering powerful logical
           expressions that can control parts of a layout. Each one
           can monitor multiple inputs and logical operations
           through containing a number of Conditional expressions,

@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.List;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -264,10 +265,5 @@ public interface TurnoutManager extends Manager<Turnout> {
     public String getDefaultThrownSpeed();
 
     public String getDefaultClosedSpeed();
-
-    /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
-     */
-    public String getEntryToolTip();
 
 }

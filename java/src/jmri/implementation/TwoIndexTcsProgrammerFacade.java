@@ -101,11 +101,6 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     }
 
     @Override
-    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
-    }
-
-    @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
         parseCV(CV);
@@ -330,6 +325,6 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacade.class);
 
 }

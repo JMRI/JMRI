@@ -4,9 +4,8 @@ import java.beans.PropertyChangeListener;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 
 
@@ -25,11 +24,11 @@ import org.junit.Ignore;
 public abstract class AbstractReporterMgrTestBase {
 
     /**
-     * Max number of Reporters supported.  Override to return 1 if 
+     * Max number of Reporters supported.  Override to return 1 if
      * only 1 can be created, for example
      */
     protected int maxN() { return 100; }
-    
+
     // implementing classes must provide these abstract members:
     abstract public void setUp();    	// load l with actual object; create scaffolds as needed, tag @Before
 
@@ -77,7 +76,7 @@ public abstract class AbstractReporterMgrTestBase {
     @Test(expected=IllegalArgumentException.class)
     @Ignore("Not currently functional")
     public void testProvideFailure() {
-        Reporter t = l.provideReporter("..");
+        l.provideReporter("..");
     }
 
     @Test

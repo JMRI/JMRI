@@ -1,37 +1,46 @@
 <!-- Sidebar -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<!-- Translated by Blorec Herv&#233; le 2012-01-18-->
+<!-- Updated by Blorec Herv&#233;<bzh5620@yahoo.fr> le 2016-09-09-->
 <html lang="fr">  
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI is...</div>
-	    <dl>
+<dl>
 
 		<dt><h3><a href="../scripting/index.shtml">&#201;criture de Scripts</a></h3></dt>
 		<dd>Information sur &#233;criture de scripts pour contr&#244;ler JMRI plus en detail:
 		    <UL>
 		    <LI><dfn><a href="../scripting/Start.shtml">Introduction</a></dfn>
 		    <LI><dfn><A HREF="../scripting/Python.shtml">Le Langage</a></dfn>
-		    <LI><dfn><a href="../scripting/Examples.shtml">Examples</a></dfn>
+		    <LI><dfn><a href="../scripting/Examples.shtml">Exemples</a></dfn>
+			 <li><dfn><a href="../scripting/ex_set_turnouts.shtml">Exemple: Configurations Aiguillages</a></dfn>
 		    <LI><dfn><a href="../scripting/FAQ.shtml">Frequently Questions Pos&#233;es (FAQs)</a></dfn>
-		    <LI><dfn><a href="../scripting/ex_set_turnouts.shtml">Exemple: R&#233;glage Aiguillages</a></dfn>
+		    <li><dfn><a href="../scripting/Jynstruments.shtml">Jynstruments pour modifier l'Interface Graphique Utilisateur ( GUI )</a></dfn>
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="../index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>
-		<dd>Les objets g&#233;n&#233;raux disponibles pour contr&#244;ler votre r&#233;seau.
+		<dt><h3><a href="../index.shtml">Outils</a></h3></dt>
+		<dd>Les objets g&#233;n&#233;raux disponibles pour commander votre r&#233;seau.
 		    <UL>
-		    <LI><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
-		    <LI><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
-		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
-		    <LI><dfn><a href="../Signals.shtml">Signaux</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
-		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
-		    <LI><dfn><a href="../fastclock/index.shtml">Horloge Rapide</a></dfn>
-		    <LI><dfn><a href="../speedometer/index.shtml">Tachym&#232;tre</a></dfn>
-		    </UL>
+				<li><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
+				<li><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
+				<li><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
+				<li><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
+				<li><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
+				<li><dfn><a href="../signaling/index.shtml">Signalisation</a></dfn>
+				<li><dfn><a href="../Blocks.shtml">Cantons</a></dfn>
+				<li><dfn><a href="../Reporters.shtml">Rapports</a></dfn>
+				<li><dfn><a href="../Memories.shtml">Variables M&#233;moire</a></dfn>
+				<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
+				<li><dfn><a href="../LRoutes.shtml">LItin&#233;raires</a></dfn>
+		    <li><dfn><a href="../Sections.shtml">Sections</a></dfn>
+				<li><dfn><a href="../Logix.shtml">Logix</a></dfn>
+				<li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
+				<li><dfn><a href="../speedometer/index.shtml">Compteur</a></dfn>
+				<li><dfn><a href="../Audio.shtml">Audio</a></dfn>
+				<li><dfn><a href="../IdTags.shtml">Etiquettes IDs</a></dfn>
+		
+		    <li><dfn><a href="../index.shtml#systemSpecificTools">Syst&#232;me-sp&#233;cifique...</a></dfn>
+		    </ul>
 		</dd>
 
 	    </dl>

@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XpaTrafficControllerTest.class));
         suite.addTest(new TestSuite(XpaSystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaTurnoutTest.class));
-        suite.addTest(new TestSuite(XpaThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XpaThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaPowerManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaThrottleManagerTest.class));

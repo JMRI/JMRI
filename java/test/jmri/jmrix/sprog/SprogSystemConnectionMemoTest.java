@@ -1,5 +1,7 @@
 package jmri.jmrix.sprog;
 
+import jmri.util.JUnitUtil;
+import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,15 +21,41 @@ public class SprogSystemConnectionMemoTest {
        Assert.assertNotNull(m);
    }
 
+   @Test
+   public void setAndGetSProgMode(){
+       SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
+       m.setSprogMode(SprogMode.SERVICE);
+       Assert.assertEquals("Sprog Mode",SprogMode.SERVICE,m.getSprogMode());
+   }
+
+   @Test
+   public void setAndGetTrafficController(){
+       SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
+       SprogTrafficController tc = new SprogTrafficControlScaffold(m);
+       m.setSprogTrafficController(tc);
+       Assert.assertEquals("Traffic Controller",tc,m.getSprogTrafficController());
+   }
+
+   @Test
+   public void configureAndGetCSTest(){
+       SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
+       SprogTrafficController tc = new SprogTrafficControlScaffold(m);
+       m.setSprogTrafficController(tc);
+       m.setSprogMode(SprogMode.SERVICE);
+       m.configureCommandStation();
+       Assert.assertNotNull("Command Station",m.getCommandStation());
+   }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

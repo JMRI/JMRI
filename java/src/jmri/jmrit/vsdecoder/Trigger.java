@@ -143,5 +143,5 @@ abstract public class Trigger implements PropertyChangeListener {
         }
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(Trigger.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(Trigger.class);
 }

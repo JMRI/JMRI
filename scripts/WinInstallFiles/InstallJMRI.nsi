@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.12
+; - Remove outmoded Jetty and WebSocket libraries
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.11
 ; - Remove outmoded lib\ch.ntb.usb.jar
 ; -------------------------------------------------------------------------
@@ -339,17 +342,21 @@ SetCompressor /SOLID /FINAL lzma
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME ""
 
 ; -------------------------------------------------------------------------
-; - Defines for log saving
-; -------------------------------------------------------------------------
-!define LVM_GETITEMCOUNT 0x1004
-!define LVM_GETITEMTEXT 0x102D
-
-; -------------------------------------------------------------------------
 ; - Includes
 ; -------------------------------------------------------------------------
 !include "MultiUser.nsh" ; MultiUser installation
 !include "WordFunc.nsh" ; add header for word manipulation
 !insertmacro VersionCompare ; add function to compare versions
+
+; -------------------------------------------------------------------------
+; - Defines for log saving
+; -------------------------------------------------------------------------
+!ifndef LVM_GETITEMCOUNT
+!define LVM_GETITEMCOUNT 0x1004
+!endif
+!ifndef LVM_GETITEMTEXT
+!define LVM_GETITEMTEXT 0x102D
+!endif
 
 ; -------------------------------------------------------------------------
 ; - Runtime Switches
@@ -429,9 +436,9 @@ InstType "Full"
 ; - actual installation itself should be stored in the first data block -
 ; - this will ensure that the installer starts faster
 ; -------------------------------------------------------------------------
-ReserveFile "${NSISDIR}\Plugins\System.dll"
-ReserveFile "${NSISDIR}\Plugins\NSISdl.dll"
-ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
+ReserveFile /plugin "System.dll"
+ReserveFile /plugin "NSISdl.dll"
+ReserveFile /plugin "UserInfo.dll"
 
 ; -------------------------------------------------------------------------
 ; - Set version information
@@ -474,6 +481,19 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Delete old vecmath.jar files as of JMRI 4.5.1
     Delete "$OUTDIR\lib\vecmath.jar"
+
+    ; -- Delete jetty and websocket libraries irrespective of version
+    Delete "$OUTDIR\lib\jetty-http-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-io-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-security-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-server-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-util-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-api-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-client-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-common-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-server-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-servlet-9.3.9.v20160517.jar"
 
     ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of
     ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)
@@ -573,7 +593,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\xml\decoders\zimo\CV739-CV744twoSwitchIP.xml"
     Delete "$OUTDIR\xml\decoders\zimo\CV739-CV768.xml"
 
-    ; -- Delete old .jar & support files in lib/ directory
+    ; -- Delete old .jar & support files in lib\ directory
     Delete "$OUTDIR\lib\activation.jar"
     Delete "$OUTDIR\lib\crimson.jar"
     Delete "$OUTDIR\lib\comm.jar"

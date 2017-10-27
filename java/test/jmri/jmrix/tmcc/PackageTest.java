@@ -1,5 +1,6 @@
 package jmri.jmrix.tmcc;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -43,17 +44,18 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

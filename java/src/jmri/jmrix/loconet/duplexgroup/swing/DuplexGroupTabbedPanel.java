@@ -29,9 +29,11 @@ public class DuplexGroupTabbedPanel extends LnPanel {
 
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
-        super.initComponents();
+    public void initComponents() {
         tabbedPane = new javax.swing.JTabbedPane();
         dgsp = new DuplexGroupScanPanel();
         dgip = new DuplexGroupInfoPanel();
@@ -45,6 +47,9 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         // uses swing operations
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -54,6 +59,9 @@ public class DuplexGroupTabbedPanel extends LnPanel {
     }
     javax.swing.Timer tmr = null;
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void initContext(Object context) {
 
@@ -73,16 +81,25 @@ public class DuplexGroupTabbedPanel extends LnPanel {
     }
     private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbed");
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"; // NOI18N
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return rb.getString("Title");
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         dgip.dispose();

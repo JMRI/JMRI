@@ -31,7 +31,7 @@ import jmri.managers.AbstractManager;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2011
  */
-public class TransitManager extends AbstractManager implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class TransitManager extends AbstractManager<Transit> implements PropertyChangeListener, InstanceManagerAutoDefault {
 
     public TransitManager() {
         super();
@@ -145,11 +145,11 @@ public class TransitManager extends AbstractManager implements PropertyChangeLis
 
     public Transit getBySystemName(String name) {
         String key = name.toUpperCase();
-        return (Transit) _tsys.get(key);
+        return  _tsys.get(key);
     }
 
     public Transit getByUserName(String key) {
-        return (Transit) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**

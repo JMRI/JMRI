@@ -19,8 +19,8 @@ package jmri;
  * Depending on which type you have, only certain modes can be set. Valid modes
  * are specified by the class static constants.
  * <P>
- * You get a Programmer object from a {@link ProgrammerManager}, which in turn
- * can be located from the {@link InstanceManager}.
+ * You get a Programmer object from an {@link AddressedProgrammerManager}, which
+ * in turn can be located from the {@link InstanceManager}.
  * <p>
  * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
  * methods that use ints for CV addresses will later be deprecated.
@@ -35,7 +35,7 @@ package jmri;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @see jmri.ProgrammerManager
+ * @see jmri.AddressedProgrammerManager
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2014
  */

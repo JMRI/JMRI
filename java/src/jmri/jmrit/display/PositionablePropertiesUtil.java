@@ -8,6 +8,8 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -20,6 +22,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -37,11 +40,15 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
+import jmri.util.swing.ButtonSwatchColorChooserPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Creates the UI to set the properties of a range of Positionable Icons on (Control) Panels.
+ * Creates the UI to set the properties of a range of Positionable Icons on
+ * (Control) Panels.
  */
 public class PositionablePropertiesUtil {
 
@@ -70,12 +77,9 @@ public class PositionablePropertiesUtil {
         JPanel tmp = new JPanel();
 
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                undoChanges();
-                mFrame.dispose();
-            }
+        cancel.addActionListener((ActionEvent e) -> {
+            undoChanges();
+            mFrame.dispose();
         });
 
         tmp.setLayout(new BoxLayout(tmp, BoxLayout.Y_AXIS));
@@ -91,20 +95,14 @@ public class PositionablePropertiesUtil {
 
         JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
         _buttonArea.add(applyButton);
-        applyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fontApply();
-            }
+        applyButton.addActionListener((ActionEvent e) -> {
+            fontApply();
         });
         JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         _buttonArea.add(okButton);
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fontApply();
-                mFrame.dispose();
-            }
+        okButton.addActionListener((ActionEvent e) -> {
+            fontApply();
+            mFrame.dispose();
         });
         tmp.add(_buttonArea);
         exampleHolder.setBackground(_parent.getParent().getBackground());
@@ -116,16 +114,9 @@ public class PositionablePropertiesUtil {
     }
 
     JComponent _textPanel;
-    //JLabel example;
 
-    ImageIcon[] images;
-    String[] _fontcolors = {"Black", "Dark Gray", "Gray", "Light Gray", "White", "Red", "Orange", "Yellow", "Green", "Blue", "Magenta"}; // NOI18N
-    // Strings in _fontcolors are used to:
-    // a. look up a system color (triplet of RGB int values) by uppercase key like "DARK_GRAY"
-    // b. to look up the translation of a color name (after stripping out spaces) by key like "DarkGrey"
-    String[] _backgroundcolors;
-    JComboBox<Integer> fontColor;
-    JComboBox<Integer> backgroundColor;
+    private JColorChooser fontColorChooser = null;
+    private JColorChooser backgroundColorChooser = null;
     JTextField fontSizeField;
 
     String[] _justification = {Bundle.getMessage("left"), Bundle.getMessage("right"), Bundle.getMessage("center")};
@@ -143,79 +134,24 @@ public class PositionablePropertiesUtil {
         JPanel backgroundColorPanel = new JPanel();
         backgroundColorPanel.add(new JLabel(Bundle.getMessage("FontBackgroundColor") + ": "));
         Color defaultLabelBackground = backgroundColorPanel.getBackground();
-        _backgroundcolors = new String[_fontcolors.length + 1];
-        for (int i = 0; i < _fontcolors.length; i++) {
-            _backgroundcolors[i] = _fontcolors[i]; // copy _fontcolors[] to _backgroundcolors[]
-        }
-        _backgroundcolors[_backgroundcolors.length - 1] = "ColorClear"; // NOI18N
-        // add extra line for transparent bg color; colors stored as RGB int values in xml
+        backgroundColorChooser = new JColorChooser(defaultLabelBackground);
+        backgroundColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
+        AbstractColorChooserPanel backgroundColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        backgroundColorChooser.setChooserPanels(backgroundColorPanels);
 
-        Integer[] intArray = new Integer[_backgroundcolors.length];
-        images = new ImageIcon[_backgroundcolors.length];
-        Color desiredColor = Color.black;
-        int backCurrentColor = _backgroundcolors.length - 1;
-        for (int i = 0; i < _backgroundcolors.length; i++) {
-            intArray[i] = Integer.valueOf(i);
-            try {
-                // try to get a color by name using reflection
-                Field f = Color.class.getField((_backgroundcolors[i].toUpperCase()).replaceAll(" ", "_")); // like "DARK_GRAY"
-                desiredColor = (Color) f.get(null);
-            } catch (NoSuchFieldException ce) {
-                //Can be considered normal if background is set None/Clear
-                desiredColor = null;
-            } catch (SecurityException ce) {
-                //Can be considered normal if background is set None/Clear
-                desiredColor = null;
-            } catch (IllegalAccessException ce) {
-                //Can be considered normal if background is set None/Clear
-                desiredColor = null;
-            }
-            if (desiredColor != null) {
-                images[i] = getColourIcon(desiredColor);
-                if (desiredColor.equals(defaultBackground)) {
-                    backCurrentColor = i;
-                }
-            } else {
-                images[i] = getColourIcon(defaultLabelBackground);
-                images[i].setDescription(_backgroundcolors[i]); // NOI18N
-                // look up translation of color name in ColorComboBoxRenderer (ca. line 882)
-            }
-            if (images[i] != null) {
-                images[i].setDescription(_backgroundcolors[i]);
-                // look up translation of color name in ColorComboBoxRenderer (ca. line 882)
-            }
-        }
-        backgroundColor = new JComboBox<Integer>(intArray);
-        backgroundColor.setRenderer(new ColorComboBoxRenderer<Integer>());
-        backgroundColor.setMaximumRowCount(5);
-        backgroundColor.setSelectedIndex(backCurrentColor);
-        backgroundColor.addActionListener(PreviewActionListener);
-        backgroundColorPanel.add(backgroundColor);
+        backgroundColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
+        backgroundColorPanel.add(backgroundColorChooser);
 
-        int fontCurrentColor = 0;
-        for (int i = 0; i < _fontcolors.length; i++) {
-            intArray[i] = Integer.valueOf(i);
-            try {
-                Field f = Color.class.getField((_fontcolors[i].toUpperCase()).replaceAll(" ", "_"));
-                desiredColor = (Color) f.get(null);
-            } catch (Exception ce) {
-                log.error("Unable to get font color from field " + ce);
-            }
-            if (desiredColor != null && desiredColor.equals(defaultForeground)) {
-                fontCurrentColor = i;
-            }
-        }
-
-        fontColor = new JComboBox<Integer>(intArray);
-        fontColor.setRenderer(new ColorComboBoxRenderer<Integer>());
-        fontColor.setMaximumRowCount(5);
-        fontColor.setSelectedIndex(fontCurrentColor);
-        fontColor.addActionListener(PreviewActionListener);
-        fontColorPanel.add(fontColor);
+        fontColorChooser = new JColorChooser(defaultForeground);
+        fontColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
+        AbstractColorChooserPanel fontColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        fontColorChooser.setChooserPanels(fontColorPanels);
+        fontColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
+        fontColorPanel.add(fontColorChooser);
 
         JPanel fontSizePanel = new JPanel();
         fontSizePanel.setLayout(new BoxLayout(fontSizePanel, BoxLayout.Y_AXIS));
-        fontSizeChoice = new JList<String>(fontSizes);
+        fontSizeChoice = new JList<>(fontSizes);
 
         fontSizeChoice.setSelectedValue("" + fontSize, true);
         fontSizeChoice.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -224,7 +160,7 @@ public class PositionablePropertiesUtil {
 
         JPanel FontPanel = new JPanel();
         fontSizeField = new JTextField("" + fontSize, fontSizeChoice.getWidth());
-        fontSizeField.addKeyListener(PreviewKeyActionListener);
+        fontSizeField.addKeyListener(previewKeyActionListener);
         fontSizePanel.add(fontSizeField);
         fontSizePanel.add(listScroller);
         FontPanel.add(fontSizePanel);
@@ -243,85 +179,65 @@ public class PositionablePropertiesUtil {
         _textPanel.add(ColorPanel);
 
         JPanel justificationPanel = new JPanel();
-        _justificationCombo = new JComboBox<String>(_justification);
-        if (justification == 0x00) {
-            _justificationCombo.setSelectedIndex(0);
-        } else if (justification == 0x02) {
-            _justificationCombo.setSelectedIndex(1);
-        } else {
-            _justificationCombo.setSelectedIndex(2);
+        _justificationCombo = new JComboBox<>(_justification);
+        switch (justification) {
+            case 0x00:
+                _justificationCombo.setSelectedIndex(0);
+                break;
+            case 0x02:
+                _justificationCombo.setSelectedIndex(1);
+                break;
+            default:
+                _justificationCombo.setSelectedIndex(2);
+                break;
         }
         justificationPanel.add(new JLabel(Bundle.getMessage("Justification") + ": "));
         justificationPanel.add(_justificationCombo);
         _textPanel.add(justificationPanel);
 
-        _justificationCombo.addActionListener(PreviewActionListener);
-        bold.addActionListener(PreviewActionListener);
-        italic.addActionListener(PreviewActionListener);
-        //fontSizeChoice.addActionListener(PreviewActionListener);
-        fontSizeChoice.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
-            public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-                fontSizeField.setText(fontSizeChoice.getSelectedValue());
-                preview();
-            }
+        _justificationCombo.addActionListener(previewActionListener);
+        bold.addActionListener(previewActionListener);
+        italic.addActionListener(previewActionListener);
+        //fontSizeChoice.addActionListener(previewActionListener);
+        fontSizeChoice.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            fontSizeField.setText(fontSizeChoice.getSelectedValue());
+            preview();
         });
 
         for (int i = 0; i < txtList.size(); i++) { // repeat 4 times for sensor icons, or just once
             final int x = i;
 
-            int fontcolor = 0;
-            int backcolor = _backgroundcolors.length - 1;
-            for (int j = 0; j < _backgroundcolors.length; j++) {
-                try {
-                    // try to get a color by name using reflection
-                    Field f = Color.class.getField((_backgroundcolors[j].toUpperCase()).replaceAll(" ", "_"));
-                    desiredColor = (Color) f.get(null);
-                } catch (NoSuchFieldException ce) {
-                    desiredColor = null;
-                } catch (IllegalAccessException ce) {
-                    desiredColor = null;
-                }
-                if (desiredColor != null) {
-                    if (desiredColor.equals(txtList.get(i).getBackground())) {
-                        backcolor = j;
-                    }
-                    if (desiredColor.equals(txtList.get(i).getForeground())) {
-                        fontcolor = j;
-                    }
-                }
-            }
-
-            final JComboBox<Integer> txtColor = new JComboBox<Integer>(intArray);
             JPanel txtPanel = new JPanel();
-            //txtPanel.setLayout(new BoxLayout(txtPanel, BoxLayout.Y_AXIS));
-            JPanel p = new JPanel();
-            txtColor.setRenderer(new ColorComboBoxRenderer<Integer>());
-            txtColor.setMaximumRowCount(5);
 
-            txtColor.setSelectedIndex(fontcolor);
-            txtColor.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    txtList.get(x).setForeground(colorFromComboBox(txtColor, Color.black));
-                }
+            JColorChooser txtColorChooser = new JColorChooser(defaultForeground);
+            txtColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
+            AbstractColorChooserPanel txtColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            txtColorChooser.setChooserPanels(txtColorPanels);
+            txtColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
+            txtPanel.add(txtColorChooser);
+            txtColorChooser.getSelectionModel().addChangeListener((ChangeEvent ce) -> {
+                txtList.get(x).setForeground(txtColorChooser.getColor());
             });
+
+            JPanel p = new JPanel();
             p.add(new JLabel(Bundle.getMessage("FontColor") + ": "));
-            p.add(txtColor);
+            p.add(txtColorChooser);
+
             txtPanel.add(p);
-            final JComboBox<Integer> txtBackColor = new JComboBox<Integer>(intArray);
-            txtBackColor.setRenderer(new ColorComboBoxRenderer<Integer>());
-            txtBackColor.setMaximumRowCount(5);
-            txtBackColor.setSelectedIndex(backcolor);
-            txtBackColor.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    txtList.get(x).setBackground(colorFromComboBox(txtBackColor, null));
-                }
+
+            defaultBackground = _parent.getBackground();
+            JColorChooser txtBackColorChooser = new JColorChooser(defaultBackground);
+            txtBackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
+            AbstractColorChooserPanel txtBackColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            txtBackColorChooser.setChooserPanels(txtBackColorPanels);
+            txtBackColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
+            txtPanel.add(txtBackColorChooser);
+            txtBackColorChooser.getSelectionModel().addChangeListener((ChangeEvent ce) -> {
+                txtList.get(x).setBackground(txtBackColorChooser.getColor());
             });
             p = new JPanel();
             p.add(new JLabel(Bundle.getMessage("FontBackgroundColor") + ": "));
-            p.add(txtBackColor);
+            p.add(txtBackColorChooser);
 
             String _borderTitle = txtList.get(i).getDescription();
             if (_borderTitle.equals(Bundle.getMessage("TextExampleLabel"))) {
@@ -336,18 +252,12 @@ public class PositionablePropertiesUtil {
         propertiesPanel.addTab(Bundle.getMessage("FontTabTitle"), null, _textPanel, Bundle.getMessage("FontTabTooltip"));
     }
 
-    ActionListener PreviewActionListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            preview();
-        }
+    ActionListener previewActionListener = (ActionEvent actionEvent) -> {
+        preview();
     };
 
-    ChangeListener SpinnerChangeListener = new ChangeListener() {
-        @Override
-        public void stateChanged(ChangeEvent actionEvent) {
-            preview();
-        }
+    ChangeListener spinnerChangeListener = (ChangeEvent actionEvent) -> {
+        preview();
     };
 
     FocusListener textFieldFocus = new FocusListener() {
@@ -365,7 +275,7 @@ public class PositionablePropertiesUtil {
         }
     };
 
-    KeyListener PreviewKeyActionListener = new KeyListener() {
+    KeyListener previewKeyActionListener = new KeyListener() {
         @Override
         public void keyTyped(KeyEvent E) {
         }
@@ -383,7 +293,11 @@ public class PositionablePropertiesUtil {
         }
     };
 
-    JComboBox<Integer> borderColorCombo;
+    ChangeListener previewChangeListener = (ChangeEvent ce) -> {
+        preview();
+    };
+
+    private JColorChooser borderColorChooser = null;
     javax.swing.JSpinner borderSizeTextSpin;
     javax.swing.JSpinner marginSizeTextSpin;
 
@@ -394,41 +308,26 @@ public class PositionablePropertiesUtil {
         Color desiredColor = null;
         JPanel borderPanel = new JPanel();
 
-        Integer[] intArray = new Integer[_backgroundcolors.length];
-        int borderCurrentColor = _backgroundcolors.length - 1;
-        for (int i = 0; i < (_backgroundcolors.length - 1); i++) {
-            intArray[i] = Integer.valueOf(i);
-            try {
-                Field f = Color.class.getField((_fontcolors[i].toUpperCase()).replaceAll(" ", "_"));
-                desiredColor = (Color) f.get(null);
-            } catch (Exception ce) {
-                log.error("Unable to convert the selected font color to a color " + ce);
-            }
-            if (desiredColor != null && desiredColor.equals(defaultBorderColor)) {
-                borderCurrentColor = i;
-            }
-        }
-        //Last colour on the background is None.
-        intArray[_backgroundcolors.length - 1] = Integer.valueOf(_backgroundcolors.length - 1);
-        borderColorCombo = new JComboBox<Integer>(intArray);
-        borderColorCombo.setRenderer(new ColorComboBoxRenderer<Integer>());
-        borderColorCombo.setMaximumRowCount(5);
-        borderColorCombo.setSelectedIndex(borderCurrentColor);
-        borderColorCombo.addActionListener(PreviewActionListener);
+        borderColorChooser = new JColorChooser(defaultBorderColor);
+        AbstractColorChooserPanel borderColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        borderColorChooser.setChooserPanels(borderColorPanels);
+        borderColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
+
+        borderColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
 
         JPanel borderColorPanel = new JPanel();
         borderColorPanel.add(new JLabel(Bundle.getMessage("borderColor") + ": "));
-        borderColorPanel.add(borderColorCombo);
+        borderColorPanel.add(borderColorChooser);
 
         JPanel borderSizePanel = new JPanel();
         borderSizeTextSpin = getSpinner(borderSize, Bundle.getMessage("borderSize"));
-        borderSizeTextSpin.addChangeListener(SpinnerChangeListener);
+        borderSizeTextSpin.addChangeListener(spinnerChangeListener);
         borderSizePanel.add(new JLabel(Bundle.getMessage("borderSize") + ": "));
         borderSizePanel.add(borderSizeTextSpin);
 
         JPanel marginSizePanel = new JPanel();
         marginSizeTextSpin = getSpinner(marginSize, Bundle.getMessage("marginSize"));
-        marginSizeTextSpin.addChangeListener(SpinnerChangeListener);
+        marginSizeTextSpin.addChangeListener(spinnerChangeListener);
 
         marginSizePanel.add(new JLabel(Bundle.getMessage("marginSize") + ": "));
         marginSizePanel.add(marginSizeTextSpin);
@@ -501,14 +400,14 @@ public class PositionablePropertiesUtil {
         JPanel xPanel = new JPanel();
         JLabel txt = new JLabel(" X: ");
         xPositionTextSpin = getSpinner(xPos, "x position");
-        xPositionTextSpin.addChangeListener(SpinnerChangeListener);
+        xPositionTextSpin.addChangeListener(spinnerChangeListener);
         xPanel.add(txt);
         xPanel.add(xPositionTextSpin);
 
         JPanel yPanel = new JPanel();
         txt = new JLabel(" Y: ");
         yPositionTextSpin = getSpinner(yPos, "y position");
-        yPositionTextSpin.addChangeListener(SpinnerChangeListener);
+        yPositionTextSpin.addChangeListener(spinnerChangeListener);
         yPanel.add(txt);
         yPanel.add(yPositionTextSpin);
 
@@ -519,18 +418,18 @@ public class PositionablePropertiesUtil {
         sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.Y_AXIS));
         JPanel widthPanel = new JPanel();
         widthSizeTextSpin = getSpinner(fixedWidth, Bundle.getMessage("width"));
-        widthSizeTextSpin.addChangeListener(SpinnerChangeListener);
+        widthSizeTextSpin.addChangeListener(spinnerChangeListener);
         /*widthSizeText = new JTextField(""+fixedWidth, 10);
-         widthSizeText.addKeyListener(PreviewKeyActionListener);*/
+         widthSizeText.addKeyListener(previewKeyActionListener);*/
         txt = new JLabel(Bundle.getMessage("width") + ": ");
         widthPanel.add(txt);
         widthPanel.add(widthSizeTextSpin);
 
         JPanel heightPanel = new JPanel();
         /*heightSizeText = new JTextField(""+fixedHeight, 10);
-         heightSizeText.addKeyListener(PreviewKeyActionListener);*/
+         heightSizeText.addKeyListener(previewKeyActionListener);*/
         heightSizeTextSpin = getSpinner(fixedHeight, Bundle.getMessage("height"));
-        heightSizeTextSpin.addChangeListener(SpinnerChangeListener);
+        heightSizeTextSpin.addChangeListener(spinnerChangeListener);
         txt = new JLabel(Bundle.getMessage("height") + ": ");
         heightPanel.add(txt);
         heightPanel.add(heightSizeTextSpin);
@@ -557,18 +456,7 @@ public class PositionablePropertiesUtil {
         } else {
             pop.setFontStyle(0, Font.ITALIC);
         }
-        Color desiredColor = Color.black;
-        try {
-            String selectedColor = _fontcolors[fontColor.getSelectedIndex()];
-            Field f = Color.class.getField(((selectedColor).toUpperCase()).replaceAll(" ", "_"));
-            desiredColor = (Color) f.get(null);
-        } catch (NoSuchFieldException ce) {
-            desiredColor = Color.black;
-        } catch (SecurityException ce) {
-            desiredColor = Color.black;
-        } catch (IllegalAccessException ce) {
-            desiredColor = Color.black;
-        }
+        Color desiredColor;
 
         if (_parent instanceof SensorIcon) {
             SensorIcon si = (SensorIcon) _parent;
@@ -602,10 +490,10 @@ public class PositionablePropertiesUtil {
         }
 
         int deg = _parent.getDegrees();
-        if (deg!=0) {
+        if (deg != 0) {
             _parent.rotate(0);
         }
-        desiredColor = colorFromComboBox(borderColorCombo, null);
+        desiredColor = borderColorChooser.getColor();
         pop.setBorderColor(desiredColor);
 
         pop.setBorderSize(((Number) borderSizeTextSpin.getValue()).intValue());
@@ -648,10 +536,10 @@ public class PositionablePropertiesUtil {
 
         Color desiredColor;
 
-        desiredColor = colorFromComboBox(borderColorCombo, null);
-        Border borderMargin = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+        desiredColor = borderColorChooser.getColor();
+        Border borderMargin;
         int margin = ((Number) marginSizeTextSpin.getValue()).intValue();
-        Border outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+        Border outlineBorder;
         if (desiredColor != null) {
             outlineBorder = new LineBorder(desiredColor, ((Number) borderSizeTextSpin.getValue()).intValue());
         } else {
@@ -758,7 +646,7 @@ public class PositionablePropertiesUtil {
             pop.setBackgroundColor(txtList.get(0).getOrigBackground());
         }
         int deg = _parent.getDegrees();
-        if (deg!=0) {
+        if (deg != 0) {
             _parent.rotate(0);
         }
         pop.setJustification(justification);
@@ -775,7 +663,7 @@ public class PositionablePropertiesUtil {
 
     private void getCurrentValues() {
         pop = _parent.getPopupUtility();
-        txtList = new ArrayList<TextDetails>();
+        txtList = new ArrayList<>();
 
         if (_parent instanceof SensorIcon) {
             SensorIcon si = (SensorIcon) _parent;
@@ -822,9 +710,9 @@ public class PositionablePropertiesUtil {
         }
     }
     private int fontStyle;
-    private Color defaultForeground;
+    private Color defaultForeground = Color.black;
     private Color defaultBackground;
-    private Color defaultBorderColor;
+    private Color defaultBorderColor = Color.black;
     private int fixedWidth = 0;
     private int fixedHeight = 0;
     private int marginSize = 0;
@@ -836,46 +724,13 @@ public class PositionablePropertiesUtil {
 
     private ArrayList<TextDetails> txtList = null;
 
-    private JCheckBox italic = new JCheckBox(Bundle.getMessage("Italic"), false);
-    private JCheckBox bold = new JCheckBox(Bundle.getMessage("Bold"), false);
+    private final JCheckBox italic = new JCheckBox(Bundle.getMessage("Italic"), false);
+    private final JCheckBox bold = new JCheckBox(Bundle.getMessage("Bold"), false);
 
     protected JList<String> fontSizeChoice;
 
     protected String fontSizes[] = {"6", "8", "10", "11", "12", "14", "16",
         "20", "24", "28", "32", "36"};
-
-    Color colorFromComboBox(JComboBox<Integer> select, Color defaultColor) {
-        Color desiredColor = defaultColor;
-        try {
-            // try to get a color by name using reflection
-            String selectedColor = _backgroundcolors[select.getSelectedIndex()];
-            Field f = Color.class.getField((selectedColor.toUpperCase()).replaceAll(" ", "_"));
-            desiredColor = (Color) f.get(null);
-        } catch (NoSuchFieldException ce) {
-            desiredColor = defaultColor;
-        } catch (SecurityException ce) {
-            desiredColor = defaultColor;
-        } catch (IllegalAccessException ce) {
-            desiredColor = defaultColor;
-        }
-        return desiredColor;
-    }
-
-    ImageIcon getColourIcon(Color color) {
-
-        int ICON_DIMENSION = 10;
-        BufferedImage image = new BufferedImage(ICON_DIMENSION, ICON_DIMENSION,
-                BufferedImage.TYPE_INT_RGB);
-
-        Graphics g = image.getGraphics();
-        // set completely transparent
-        g.setColor(color);
-        g.fillRect(0, 0, ICON_DIMENSION, ICON_DIMENSION);
-
-        ImageIcon icon = new ImageIcon(image);
-        return icon;
-
-    }
 
     javax.swing.JSpinner getSpinner(int value, String tooltip) {
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 1000, 1);
@@ -885,34 +740,6 @@ public class PositionablePropertiesUtil {
         spinX.setMaximumSize(new Dimension(
                 spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         return spinX;
-    }
-
-    class ColorComboBoxRenderer<E> extends JLabel
-            implements ListCellRenderer<E> {
-
-        public ColorComboBoxRenderer() {
-            setOpaque(true);
-            setHorizontalAlignment(LEFT);
-            setVerticalAlignment(CENTER);
-        }
-
-        // FIXME: This still needs the JList typed, but I'm unsure how to type it properly
-        @Override
-        public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value, int index,
-                boolean isSelected, boolean cellHasFocus) {
-            if (value == null) {
-                return this;
-            }
-            int selectedIndex = ((Integer) value).intValue();
-            ImageIcon icon = images[selectedIndex];
-            // String colorString = _backgroundcolors[selectedIndex];
-            // called every time the user opens color drop down and while hovering over/selecting a color from list
-            String colorString = Bundle.getMessage(_backgroundcolors[selectedIndex].replaceAll(" ", ""));
-            // I18N looks up translated name of color in Bundle
-            setIcon(icon);
-            setText(colorString);
-            return this;
-        }
     }
 
     static class TextDetails {
@@ -995,5 +822,6 @@ public class PositionablePropertiesUtil {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(PositionablePropertiesUtil.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(PositionablePropertiesUtil.class);
 }

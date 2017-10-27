@@ -51,7 +51,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
         PerformFileModel m = new PerformFileModel();
@@ -71,6 +71,6 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class);
 
 }

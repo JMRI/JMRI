@@ -46,8 +46,8 @@ public class Z21XNetInitializationManagerTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
         JUnitUtil.initConnectionConfigManager();
     }
 

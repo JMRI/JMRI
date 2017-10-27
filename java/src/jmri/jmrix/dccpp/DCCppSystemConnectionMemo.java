@@ -3,12 +3,10 @@ package jmri.jmrix.dccpp;
 
 import java.util.ResourceBundle;
 import jmri.CommandStation;
-import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.MultiMeter;
 import jmri.PowerManager;
-import jmri.ProgrammerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
@@ -79,15 +77,15 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provides access to the Programmer for this particular connection. NOTE:
      * Programmer defaults to null
      */
-    public ProgrammerManager getProgrammerManager() {
+    public DCCppProgrammerManager getProgrammerManager() {
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(DCCppProgrammerManager p) {
         programmerManager = p;
     }
 
-    private ProgrammerManager programmerManager = null;
+    private DCCppProgrammerManager programmerManager = null;
 
     /*
      * Provides access to the Throttle Manager for this particular connection.
@@ -115,30 +113,30 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         log.debug("power manager created: {}", powerManager);
         return powerManager;
-        
+
     }
-    
+
     public void setPowerManager(PowerManager p) {
         powerManager = p;
     }
-    
+
     private PowerManager powerManager;
-    
+
     /*
      * Provides access to the Sensor Manager for this particular connection.
      * NOTE: Sensor manager defaults to NULL
      */
     public SensorManager getSensorManager() {
         return sensorManager;
-        
+
     }
-    
+
     public void setSensorManager(SensorManager s) {
         sensorManager = s;
     }
-    
+
     private SensorManager sensorManager = null;
-    
+
     /*
      * Provides access to the Turnout Manager for this particular connection.
      * NOTE: Turnout manager defaults to NULL
@@ -170,20 +168,6 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private LightManager lightManager = null;
 
     /*
-     * Provides access to the Consist Manager for this particular connection.
-     * NOTE: Consist manager defaults to NULL
-     */
-    public ConsistManager getConsistManager() {
-        return consistManager;
-    }
-
-    public void setConsistManager(ConsistManager c) {
-        consistManager = c;
-    }
-
-    private ConsistManager consistManager = null;
-
-    /*
      * Provides access to the Command Station for this particular connection.
      * NOTE: Command Station defaults to NULL
      */
@@ -196,33 +180,31 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         ((DCCppCommandStation) c).setTrafficController(xt);
         ((DCCppCommandStation) c).setSystemConnectionMemo(this);
     }
-    
+
     private CommandStation commandStation = null;
-    
+
     private MultiMeter multiMeter = null;
-    
+
     public MultiMeter getMultiMeter() {
         return(multiMeter);
     }
-    
+
     public void setMultiMeter(MultiMeter m) {
         multiMeter = m;
     }
-    
+
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        } else if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
         } else if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            ProgrammerManager p = getProgrammerManager();
+            DCCppProgrammerManager p = getProgrammerManager();
             if (p == null) {
                 return false;
             }
             return p.isGlobalProgrammerAvailable();
         } else if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            ProgrammerManager p = getProgrammerManager();
+            DCCppProgrammerManager p = getProgrammerManager();
             if (p == null) {
                 return false;
             }
@@ -238,8 +220,6 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         } else if (type.equals(jmri.LightManager.class)) {
             return true;
-        } else if (type.equals(jmri.ConsistManager.class)) {
-            return false;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         } else if (type.equals(jmri.MultiMeter.class)) {
@@ -248,15 +228,12 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false; // nothing, by default
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -279,9 +256,6 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
         }
-        if (T.equals(jmri.ConsistManager.class)) {
-            return (T) getConsistManager();
-        }
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
@@ -290,7 +264,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         return null; // nothing, by default
     }
-    
+
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.dccpp.DCCppActionListBundle");
@@ -306,7 +280,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSystemConnectionMemo.class);
 
 }
 

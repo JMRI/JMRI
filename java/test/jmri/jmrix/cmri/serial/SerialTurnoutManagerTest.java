@@ -1,6 +1,7 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,8 +22,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // replace the SerialTrafficController
         stcs = new SerialTrafficControlScaffold();
         stcs.registerNode(new SerialNode(stcs));
@@ -39,8 +39,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
         stcs = null;
         memo = null;
     }
@@ -62,10 +61,10 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("CT21"));
+            log.debug("by system name: {}", l.getBySystemName("CT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("CT21"));
@@ -73,6 +72,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

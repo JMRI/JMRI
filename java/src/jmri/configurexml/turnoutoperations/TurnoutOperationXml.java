@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlAdapter {
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         loadOne(shared);
         return true;
     }
@@ -105,5 +105,5 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         return adapter;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationXml.class);
 }

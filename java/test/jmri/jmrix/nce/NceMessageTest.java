@@ -1,9 +1,9 @@
 package jmri.jmrix.nce;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the NceMessage class

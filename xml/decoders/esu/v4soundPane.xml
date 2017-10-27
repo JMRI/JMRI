@@ -97,23 +97,19 @@
                     </column>
                 </column>
             </griditem>
-            <griditem gridx="2" gridy="1">
+            <griditem gridx="3" gridy="1">
                 <display item="Heavy Load Option 1" format="checkbox" layout="above"/>
             </griditem>
             <griditem gridx="3" gridy="0">
                 <display item="Heavy Load" layout="above" label=""/>
                 <display item="Heavy Load" format="hslider" layout="above"/>
             </griditem>
-            <griditem gridx="3" gridy="1">
+            <griditem gridx="4" gridy="1">
                 <display item="Coast Mode Option 1" format="checkbox" layout="above"/>
             </griditem>
             <griditem gridx="4" gridy="0">
                 <display item="Coast Mode" layout="above" label=""/>
                 <display item="Coast Mode" format="hslider" layout="above"/>
-            </griditem>
-            <griditem gridx="4" gridy="1">
-                <display item="Sound Max Speed Brake" layout="above" label=""/>
-                <display item="Sound Max Speed Brake" format="hslider" layout="above"/>
             </griditem>
         </grid>
         <separator/>

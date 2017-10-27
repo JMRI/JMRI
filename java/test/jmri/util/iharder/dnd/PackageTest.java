@@ -6,7 +6,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    DnDListTest.class
+    DnDListTest.class,
+    FileDropTest.class,
+    FileDropEventTest.class,
+    TransferableObjectTest.class
 })
 /**
  * Tests for the jmri.util.iharder.dnd package

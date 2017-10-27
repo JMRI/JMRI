@@ -1,14 +1,12 @@
 package jmri.jmrix.pi;
 
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioProvider;
+import jmri.Sensor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioProvider;
-
-import jmri.Sensor;
 
 
 /**

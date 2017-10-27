@@ -1,6 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
+<<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--  $Id$ -->
+<!-- UpDated by Blorec Herv&#233; le 2016-08-12--> 
+<p>
 
 <html lang="fr">
 <head>
@@ -24,274 +25,272 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
-<body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --><!-- Required -->
+	    <!-- ------------- -->
 
-    <div id="mainContent">
-      <h1>JMRI: Ajouter un Nouveau Syst&egrave;me</h1>
+	    <H1>JMRI: Ajouter un Nouveau Syst&#232;me</H1>
 
-      <p>Cette page d&eacute;crit les &eacute;tapes pour ajouter un
-      nouveau type de donn&eacute;es, par exemple, Appareils
-      Powerline (Coupleur Courant Porteur CPL), &agrave; JMRI.</p>
+		<div class=para>
+		<p>Cette page d&#233;crit les &#233;tapes pour ajouter un nouveau type de donn&#233;es,
+		par exemple, Appareils Powerline (Coupleur Courant Porteur CPL), &#224; JMRI.</P>
 
-      <p>Elle utilise comme exemple l'ajout du type du "courant
-      porteur en ligne" en Janvier 2008.</p>
+		<p>Elle utilise comme exemple l'ajout du type 
+		du "courant porteur en ligne"  en Janvier 2008.</p>
+		</div>
 
-      <div class="list">
-        <p>Nous listons les fichiers qui sont modifi&eacute;s et
-        cr&eacute;&eacute;s dans l' ordre o&ugrave; ils ont
-        &eacute;t&eacute; fait dans ce cas, les autres ordres
-        peuvent aussi travailler, et vous ne pourriez pas devoir
-        &agrave; faire tout cela.</p>
+ 		<divclass=list><div
+		<p>Nous listons les fichiers qui sont modifi&#233;s et cr&#233;&#233;s dans l'
+		ordre o&#249; ils ont &#233;t&#233; fait dans ce cas, les autres ordres peuvent aussi travailler,
+		et vous ne pourriez pas devoir &#224; faire tout cela.</p>
+		<P>
+		Dans ce cas particulier, nous avons commenc&#233; par la copie d'une
+		r&#233;alisation d'un syst&#232;me existant (SECSI). Ceci affecte la fa&#231;on
+		dont nous avons ordonn&#233; cela, et fait bouger le processus de base assez
+		rapidement.
+	
+		<dl>
 
-        <p>Dans ce cas particulier, nous avons commenc&eacute; par
-        la copie d'une r&iuml;&iquest;&frac12;alisation d'un
-        syst&egrave;me existant (SECSI). Comment nous avons
-        ordonn&eacute; ces effets, et fait progresser le processus
-        de base assez rapidement.</p>
+		<h3>Dupliquer un syst&#232;me existant</h3>
 
-        <dl>
-          <dd>
-            <h3>Dupliquer un syst&egrave;me existant</h3>
-          </dd>
+		    <dt>Cr&#233;er une double arborescence de fichiers</dt>
+				<dd>
+						<p>En utilisant tous les outils qui vous aident,
+						dupliquer l'arborecence src/jmri/jmrix  correspondant
+						au syst&#232;me existant que vous souhaitez copier.</p>
+				</dd>
 
-          <dt>Cr&eacute;er un double arborescence de fichiers</dt>
+				<dt>Modifiez les informations de nom du paquet</dt>
+				<dd>
+						<p>En utilisant votre &#233;diteur favori, changez tous les noms des paquets
+						dans les nouveaux fichiers &#224; leur nouveaux emplacements. Dans cet exemple
+						qui &#233;tait un remplacement de  "jmri.jmrix.secsi" par "jmri.jmrix.powerline".
+		    </dd>
 
-          <dd>
-            <p>En utilisant tous les outils qui vous aident,
-            dupliquer l'arborecence src/jmri/jmrix correspondant au
-            syst&egrave;me existant que vous souhaitez copier.</p>
-          </dd>
+				<p>&#192; ce point, soyez s&#251;r de pouvoir compiler. Ce code
+						n'est pas encore compatible, Mais il devrait se compiler.</p>
 
-          <dt>Nettoyer les r&eacute;pertoires CVS</dt>
+		    <dt>V&#233;rifier les dates du copyright</dt>
+		    <dd>
+					<p>Parce que vous avez copi&#233; un syst&#232;me qui pourraient ne pas 
+					avoir &#233;t&#233; touch&#233; pendant un certain temps, ajoutez l'ann&#233;e 
+					courante ( et si n&#233;cessaire, votre nom ) aux notes du copyright
+					dans tous les fichiers.</p>
+				</dd>
+	
 
-          <dd>
-            <p>Il est absolument <u>essentiel</u> que vous retiriez
-            le sous-r&eacute;pertoire CVS de l'arborescence des
-            r&eacute;pertoires en double que vous venez de
-            cr&eacute;er. Si vous ne le faites pas, vous aurez des
-            probl&egrave;mes difficiles &agrave; diagnostiquer
-            lorsque vous essayerez de soumettre ce CVS.</p>
+				<dt>Cr&#233;ation d'une structure SVN</dt>
+				<dd>
+					<p>Dans cette &#233;tape, nous avons la structure de base SVN en place.</p>
+					<ul>
+					<li>Ajouter tous les r&#233;pertoires que vous avez cr&#233;&#233; dans SVN. Dans l'exemple,
+					c'&#233;tait: <br/>
+					<code>svn add powerline powerline serialdriver/serialmon/<br/> 
+					svn add powerline/configurexml powerline/serialdriver/configurexml</code>
+					<li>Ajouter tous les fichiers COPYING :<br/>
+					<code>svn add  powerline/COPYING powerline/*/COPYING powerline/*/*/COPYING</code>
+		<li>Enfin, remettre ces fichiers (mais seulement ces fichiers):<br/>
+					<code>svn  commit -m"usual file" powerline</code>
+					</Ul>
+			</Dd>
 
-            <p>pour v&eacute;rifier que vous avez fait cela,
-            utilisez une commande comme:<br>
-            <code>find. -name CVS-print</code><br></p>
-          </dd>
+			<P>&#192; ce stade, assurez-vous que vous pouvez compiler.</P>
+					
+			<h3>Faire  une Migration Basique</h3>
 
-          <dt>Modifiez l'information du nom du paquet</dt>
+      <dt>Migrer les noms</dt>
+			<dd>
+			<p>&#192; l'aide de votre &#233;diteur favori, changer toutes
+			les occurrences de l'ancien nom syst&#232;me par le nouveau. 
+			<p>Puis rechercher et remplacer, peut-&#234;tre pas litt&#233;ralement, toutes les
+			occurrences.</p>
+			</dd>
+            
+		    <P>&#192; ce stade, assurez-vous que vous pouvez compiler..</P>
 
-          <dd>
-            <p>A l'aide de votre &eacute;diteur favori, changer
-            tous les noms des paquets dans les nouveaux fichiers
-            &agrave; leur nouveaux emplacements. Dans cet exemple,
-            qui &eacute;tait un gros, remplacer des
-            "jmri.jmrix.secsi" par "jmri.jmrix.powerline"</p>
-          </dd>
+			<h3>Cr&#233;er des Tests Basiques</h3>
 
-          <dd>
-            <p>&Aacute; ce stade, assurez-vous que vous pouvez
-            compiler. Ce code n'est pas encore conforme, mais il
-            faut compiler.</p>
-          </dd>
+            <dt> Dupliquer  les r&#233;pertoire</dt>
+						<dd>
+						<p>En suivant les &#233;tapes ci-dessus, Dupliquer
+						le r&#233;pertoire pour les tests des syst&#232;mes pr&#233;c&#233;dents, la cr&#233;ation
+						d'un nouveau r&#233;pertoire dans le test/jmri/jmrix pour contenir les
+						tests. 
+						Changer le nom des paquets,
+						v&#233;rifier les dates de copyright,
+						cr&#233;er la structure de SVN,
+						et migrer les noms.</p>
+            </dd>
+            
+		    		<P>A ce stade, assurez-vous que vous pouvez compiler
+						&#224; la fois le code principal (qui n'a pas &#233;t&#233; modifi&#233; dans cette &#233;tape)
+						et les tests.</P>
 
-          <dt>V&eacute;rifiez les dates de copyright</dt>
+						<p>Vous devez &#233;galement &#234;tre en mesure d'ex&#233;cuter avec succ&#232;s le
+						tests dans votre nouveau syst&#232;me (m&#234;me s'il a &#233;t&#233; cr&#233;&#233;
+						pour la fonctionnalit&#233; de l'ancien syst&#232;me):
+						tests ant <code> &amp;&amp;./runtest.csh jmri.jmrix.powerline.SerialTest</code>
+           	</dd>
 
-          <dd>
-            <p>Parce que vous avez copi&eacute; un syst&egrave;me
-            qui pourrait ne pas avoir &eacute;t&eacute;
-            touch&eacute; pendant un moment, passer et ajouter
-            l'ann&eacute;e en cours (et si besoin est, votre nom)
-            &agrave; la notices de copyright dans tous les
-            fichiers.</p>&lt;/ Dd&gt;
-          </dd>
 
-          <dt>CVS Cr&eacute;ation d'une structure</dt>
+		<h3>Connectez les Bases vers le reste du syst&#232;me</h3>
 
-          <dd>
-            <p>Dans cette &eacute;tape, nous avons la structure de
-            base CVS en place.</p>
+            <dt>Connectez-vous &#224; la configuration des menus</dt>
+             <dd>
+             <p>Modifier les fichiers jmri/jmrix/ActiveSystemsMenu.java (deux places),
+             src/jmri/jmrix/JmrixConfigPane.java (une place) et
+             src/jmri/jmrix/SystemsMenu.java (une place) pour ajouter le nouveau
+             syst&#232;me.</p>
+             <p Ne soumettez pas ce SVN encore!</p>
+            </dd>
 
-            <ul>
-              <li>Ajouter tous les r&eacute;pertoires que vous avez
-              cr&eacute;&eacute; &agrave; CVS. Dans l'exemple,
-              c'&eacute;tait:<br>
-              <code>cvs ajouter powerline powerline
-              serialdriver/serialmon/<br>
-              cvs add powerline/configurexml
-              powerline/serialdriver/configurexml</code></li>
+		<P>&#192; ce stade, assurez - vous que vous pouvez compiler et ex&#233;cuter DecoderPro, et
+		que votre nouveau syst&#232;me appara&#238;t dans le panneau des pr&#233;f&#233;rences.</P>
+            
+             <dt>Connectez - vous pour tester l'arbre</dt>
+             <dd>
+             <p>Modifier le fichier test/jmri/jmrix/JmrixTest.java
+              pour appeler vos tests du nouveau syst&#232;me.</p>
+             <p>Ne soumettez pas ce SVN encore!</p>
+            </dd>
 
-              <li>Ajouter tous les fichiers COPYING :<br>
-              <code>cvs add powerline/COPYING powerline/*/COPYING
-              powerline/*/*/COPYING</code></li>
+		<P>&#192; ce point, lorsque vous faites "ant alltest", votre nouveau syst&#232;me de test
+		doit &#234;tre ex&#233;cut&#233;.</p> 
+            
 
-              <li>Ajouter tous les fichiers .cvsignore:.<br>
-              <code>cvs add powerline/.cvsignore
-              powerline/*/.cvsignore
-              powerline/*/*/.cvsignor</code></li>
+		<h3>Migrer vers des fonctionnalit&#233;s de Base</h3>
 
-              <li>Enfin, remettre dans ces fichiers (mais seulement
-              les fichiers):<br>
-              <code>cvs commit-m "usual file"
-              powerlined</code></li>
-            </ul>
-          </dd>
+            <dt>mise &#224; jour des options de connexion</dt>
+            <dd>
+            Vitesses, etc, dans powerline/serialdriver/SerialDriverAdapter.java.
+            </dd>
 
-          <dd>
-            <p>&Aacute; ce stade, assurez-vous que vous pouvez
-            compiler.</p>
+            <dt>Obtenez  d'envoyer/recevoir des communications de travail</dt>
+            <dd>
+            La premi&#232;re &#233;tape est d'obtenir des communications de travail afin que
+             vous puissiez envoyer un message de la fen&#234;tre "Envoyer la commande",
+             et la voir et voir la r&#233;ponse dans la fen&#234;tre "Moniteur".</dd>
+                         
+		<h3>Le Rendre facile &#224; utiliser</h3>
 
-            <h3>Faire une Migration Basique</h3>
-          </dd>
+		    <dt>Ajouter de Possibles &#201;l&#233;ments de D&#233;marrage</dt>
+				<dd>
+				<p>Modifier src/apps/ActionListBundle.properties pour ajouter des &#233;l&#233;ments appropri&#233;s.</p>
+				</dd>
 
-          <dt>Migrer les noms</dt>
+		<h3>Compl&#233;ter la documentation</h3>
 
-          <dd>
-            <p>A l'aide de votre &eacute;diteur favori, changer
-            toutes les occurrences de l'ancien nom syst&egrave;me
-            par le nouveau.</p>
+		    <dt>Cr&#233;er L'Arbre d'Aide</dt>
+				<dd>
+				<p>Commencez par dupliquer, puis modifiez, n'oubliez pas de
+				mettre &#224; jour l'index.</p>
+				<p>Vous aurez &#233;galement &#224; modifier les emplacements sur
+				les diff&#233;rents cadres</p>
+				</dd>
 
-            <p>Puis rechercher et remplacer, peut-&ecirc;tre pas
-            litt&eacute;ralement, toutes les occurrences.</p>
-          </dd>
+				<dt>ant javadoc</dt>
+				<dd>
+				<p>Cr&#233;er les JavaDocs, et r&#233;soudre les &#233;ventuels nouveaux (ou anciens) probl&#232;mes.</p>
+				</dd>
 
-          <dd>
-            <p>&Aacute; ce stade, assurez-vous que vous pouvez
-            compiler..</p>
+				<dt>Ajouter le syst&#232;me aux pages web "mat&#233;riel"</dt>
+				<dd>
+				<p>Modifier help/fr/html/hardware/index.shtml.</p>
+			<dd>
 
-            <h3>Cr&eacute;er des Tests Basiques</h3>
-          </dd>
+			</dl>
+    
+<h2>Ajouter une connexion TCP/IP &#224; un syst&#232;me existant</h2>			
 
-          <dt>Dupliquer r&eacute;pertoire</dt>
+Ce sont des notes brutes de l'ajout d'une connexion TCP/IP du type RFID,
+en copiant l'architecture du syst&#232;me C/MRI.
 
-          <dd>
-            <p>En suivant les &eacute;tapes ci-dessus, Dupliquer le
-            r&eacute;pertoire pour les tests des syst&egrave;mes
-            pr&eacute;c&eacute;dents, la cr&eacute;ation d'un
-            nouveau r&eacute;pertoire dans le test/jmri/jmrix pour
-            contenir les tests. <u>Supprimer tous les
-            r&eacute;pertoires CVS</u>, changer le nom du paquet,
-            v&eacute;rifier les dates de copyright, cr&eacute;er la
-            structure de CVS, et de migrer les noms.</p>
-          </dd>
+<ol>
+<li>Cr&#233;er un r&#233;pertoire "networkdriver" en parall&#232;le avec le r&#233;pertoire "serialdriver".
+<br>
+<code>svn cp java/src/jmri/jmrix/cmri/serial/networkdriver/ java/src/jmri/jmrix/rfid/</code>
 
-          <dd>
-            <p>A ce stade, assurez - vous que vous pouvez compiler
-            &agrave; la fois le code principal (qui n'a pas
-            &eacute;t&eacute; modifi&eacute; dans cette
-            &eacute;tape) et les tests.</p>
+<li>&#201;ditez le paquet et importez les &#233;tats, tous les fichiers ".cmri.serial." &#224; ".rfid.",
+puis ".cmri." &#224; ".rfid.".
 
-            <p>Vous devez &eacute;galement &ecirc;tre en mesure
-            d'ex&eacute;cuter avec succ&egrave;s le tests dans
-            votre nouveau syst&egrave;me (m&ecirc;me s'il a
-            &eacute;t&eacute; cr&eacute;&eacute; pour la
-            fonctionnalit&eacute; de l'ancien syst&egrave;me):
-            tests ant <code>&amp;&amp;./runtest.csh
-            jmri.jmrix.powerline.SerialTest</code></p>
-          </dd>
+<li>changez le "setManufacturer" appel&#233; dans NetworkDriverAdapter.
 
-          <dd>
-            <h3>Connectez les Bases vers le reste du
-            syst&egrave;me</h3>
-          </dd>
+<li>C/MRI pourrait ne pas avoir &#233;t&#233; le meilleur point de d&#233;part, mais c'est ce que nous avons.
+Quelques modifications sp&#233;cifiques n&#233;cessaire:
+<ul>
+		<li>Changez CMRISystemConnectionMemo pour RfidSystemConnectionMemo
+		<li>Enlevez la r&#233;f&#233;rence &#224; NodeConfigAction dans ConnectionConfig ( ou
+				utilisez ceci comme la base pour les configurations sp&#233;ciales dont vous avez besoin;
+				c'&#233;tait pour ajouter un bouton "Configure Nodes" )
+		<li>Changez le nom de SerialSensorManager
+		<li>Enlevez les r&#233;f&#233;rences SerialTurnoutManager SerialLightManager ( Il n'y en a pas dans la RFID )
+		<li>Ajoutez RfidReporterManager 
+</ul>
 
-          <dt>Connectez - vous &agrave; la configuration des
-          menus</dt>
+<li>&#192; besoin d'un pilote de r&#233;seau:
+<code>svn cp java/src/jmri/jmrix/cmri/serial/SerialNetworkPortController.java java/src/jmri/jmrix/rfid/RfidNetworkPortController.java</code><br>
+et modifiez le comme ci-dessus.
 
-          <dd>
-            <p>Modifier les fichiers jmri/jmrix fichier
-            /ActiveSystemsMenu.java (deux places),
-            src/jmri/jmrix/JmrixConfigPane.java (une place) et
-            src/jmri/jmrix/SystemsMenu.java (une place) les
-            fichiers pour ajouter le nouveau syst&egrave;me.</p>
+<LI>java/src/jmri/jmrix/rfid/networkdriver/configurexml/ConnectionConfigXml.java
+contient du code mort pour configurer les n&#339;uds C/MRI (encore une fois, peut-&#234;tre pas 
+le bon syst&#232;me &#224; copier). Laissez cela pour plus tard en commentant le corps 
+de extendElement (Element e) et d&#233;compressez Element (&#233;l&#233;ment e).
 
-            <p>N'engagez pas ce CVS encore!</p>
-          </dd>
 
-          <dd>
-            <p>&Aacute; ce stade, assurez - vous que vous pouvez
-            compiler et ex&eacute;cuter DecoderPro, et que votre
-            nouveau syst&egrave;me appara&icirc;t dans le panneau
-            des pr&eacute;f&eacute;rences.</p>
-          </dd>
+<li>Changez les r&#233;f&#233;rences SerialTrafficController pour RfidTrafficController.
 
-          <dt>Connectez - vous &agrave; test arbre</dt>
+<li>Un autre probl&#232;me avec C/MRI comme prototype est qu'il a encore une 
+instance () appel dans NetworkDriverAdapter. Aller &#224; RFID SerialDriverAdapter 
+et copiez la structure l&#224;.
+<code><pre>
+        // connect to the traffic controller
+        this.getSystemConnectionMemo().setRfidTrafficController(control);
+        control.setAdapterMemo(this.getSystemConnectionMemo());
+        control.connectPort(this);
+        control.sendInitString();
 
-          <dd>
-            <p>Modifier le test /jmri/jmrix fichier/JmrixTest.java
-            pour invoquer vos tests du nouveau syst&egrave;me.</p>
+        // declare up
+        jmri.jmrix.rfid.ActiveFlag.setActive();
+</code></pre>
+( Il y a aussi un tas de choses avant cela dans la m&#233;thode configur&#233;e () qui doit 
+simplement &#234;tre copi&#233;, parce que Les connexions RFID ont aussi besoin d'une configuration compliqu&#233;e );
+l'acteur a &#233;galement besoin de certaines parties copi&#233;es.
 
-            <p>N'engagez pas ce CVS encore!</p>
-          </dd>
+<li>Ajoutez jmri.jmrix.rfid.networkdriver.ConnectionConfig &#224; java/src/jmri/jmrix/rfid//RfidConnectionTypeList.java
 
-          <dd>
-            <p>&Aacute; ce point, lorsque vous faites "ant
-            alltest", votre nouveau syst&egrave;me de test doit
-            &ecirc;tre ex&eacute;cut&eacute;.</p>
+<li>Changez "RFID Device Connection" pour "Direct Serial Connection" dans ConnectionConfig.name()
+La connexion r&#233;seau par d&#233;faut &#224; "Network Connection".
 
-            <h3>Migrer vers des fonctionnalit&eacute;s de base</h3>
-          </dd>
+<li>V&#233;rifiez que configure/save/restart ram&#232;ne toutes les options de configuration.
 
-          <dt>mise &agrave; jour d'options de connexion</dt>
+</ol>
 
-          <dd>Vitesses, etc, en courant porteur en ligne
-          /serialdriver/SerialDriverAdapter.java.</dd>
+<h2>Connexions avec une Configuration Compliqu&#233;e</h2>
 
-          <dt>Obtenez envoyer/recevoir des communications de
-          travail</dt>
+Certains types de connexion ont besoin de plus de configuration et/ou la configuration que vous pouvez 
+obtenir avec l'habituel m&#233;canisme  option1/option2/option3. Les outils disponibles sont:
 
-          <dd>La premi&egrave;re &eacute;tape est d'obtenir des
-          communications de travail afin que vous puissiez envoyer
-          un message de la fen&ecirc;tre "Envoyer la commande", et
-          la voir et voir la r&eacute;ponse dans la fen&ecirc;tre
-          "Moniteur".</dd>
+<ul>
+<li>loadDetails() dans ConnectionConfig. Cette fonction est appel&#233;e lors de
+la mise en place de la fen&#234;tre des pr&#233;f&#233;rences, et peut &#234;tre utilis&#233;e pour ajouter 
+des commandes suppl&#233;mentaires C/MRI l'utilise pour ajouter un bouton "Configure Nodes".
+RFID l'utilise pour ajouter des &#233;couteurs qui contr&#244;lent quelles combinaisons d'options sont disponibles.
 
-          <dd>
-            <h3>Le Rendre facile &agrave; utiliser</h3>
-          </dd>
+<li>extendElement(Element e) et unpackElement(Element e) dans ConnectionConfigXml
+peut &#234;tre utilis&#233; pour stocker des informations suppl&#233;mentaires et les recharger, respectivement.
+C/MRI l'ajoute pour stocker ses informations de n&#339;uds
 
-          <dt>Ajouter de possibles &eacute;l&eacute;ments de
-          d&eacute;marrage</dt>
+</ul>
 
-          <dd>
-            <p>Modifier src/apps/ActionListBundle.properties pour
-            ajouter des &eacute;l&eacute;ments
-            appropri&eacute;s.</p>
-          </dd>
+</div>
 
-          <dd>
-            <h3>Compl&eacute;ter la documentation</h3>
-          </dd>
+<!--#include virtual="/Footer" -->
 
-          <dt>Cr&eacute;er L'arbre d'Aide</dt>
-
-          <dd>
-            <p>Commencez par dupliquer, puis modifiez, n'oubliez
-            pas de mettre &agrave; jour l'index.</p>
-
-            <p>Vous aurez &eacute;galement &agrave; modifier les
-            emplacements sur les diff&eacute;rents cadres</p>
-          </dd>
-
-          <dt>ant javadoc</dt>
-
-          <dd>
-            <p>Cr&eacute;er des Javadocs, et r&eacute;soudre les
-            &eacute;ventuels nouveaux (ou anciens)
-            probl&egrave;mes.</p>
-          </dd>
-
-          <dt>Ajouter le syst&egrave;me aux pages "mat&eacute;riel"
-          web</dt>
-
-          <dd>
-            <p>Modifier help/fr/html/hardware/index.shtml</p>
-          </dd>
-        </dl>
-      </div><!--#include virtual="/Footer" -->s'il
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
 </body>
 </html>

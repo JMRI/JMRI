@@ -11,11 +11,6 @@ import jmri.*;
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
 public class CodeButton {
-
-    /**
-     * Nobody can build anonymous object
-     */
-    private CodeButton() {}
     
     /**
      * Create and configure 
@@ -90,5 +85,5 @@ public class CodeButton {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeButton.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeButton.class);
 }

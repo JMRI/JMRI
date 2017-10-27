@@ -1,12 +1,12 @@
 package jmri.jmrix.loconet;
 
-import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
-
-import org.junit.Assert;
+import jmri.ProgrammingMode;
+import jmri.managers.DefaultProgrammerManager;
+import jmri.util.JUnitUtil;
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 public class LnOpsModeProgrammerTest extends TestCase {
 
@@ -19,7 +19,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         try {
-            lnopsmodeprogrammer.setMode(DefaultProgrammerManager.PAGEMODE);
+            lnopsmodeprogrammer.setMode(ProgrammingMode.PAGEMODE);
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -31,7 +31,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         ProgrammingMode intRet = lnopsmodeprogrammer.getMode();
-        Assert.assertEquals("OpsByteMode", DefaultProgrammerManager.OPSBYTEMODE, intRet);
+        Assert.assertEquals("OpsByteMode", ProgrammingMode.OPSBYTEMODE, intRet);
     }
 
     public void testGetCanRead() {
@@ -97,6 +97,19 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals(0x01, m.getElement(14));
     }
     
+     public void testSOps16001Read() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 16001, true);
+        
+        lnopsmodeprogrammer.readCV("2",pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        Assert.assertEquals("message", "[EF 0E 7C 2F 00 7D 01 00 00 01 00 7F 7F 00]", lnis.outbound.toString());
+                
+     }
+
       public void testSv1Write() throws ProgrammerException {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
         
@@ -265,6 +278,6 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

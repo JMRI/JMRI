@@ -8,27 +8,21 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 
 /**
- * PositionableRoundRect.
- * <P>
  * @author Pete cresman Copyright (c) 2012
  */
 public class PositionableRectangle extends PositionableShape {
 
     public PositionableRectangle(Editor editor) {
         super(editor);
-        makeShape();
     }
 
     public PositionableRectangle(Editor editor, Shape shape) {
         super(editor, shape);
     }
 
-    /**
-     * Make shape with new parameters
-     */
     @Override
-    public void makeShape() {
-        setShape(new Rectangle2D.Double(0, 0, _width, _height));
+    protected Shape makeShape() {
+        return new Rectangle2D.Double(0, 0, _width, _height);
     }
 
     @Override
@@ -50,12 +44,17 @@ public class PositionableRectangle extends PositionableShape {
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_editFrame == null) {
-                    _editFrame = new DrawRectangle("editShape", "Rectangle", null);
-                    setEditParams();
-                }
+                makeEditFrame();
             }
         });
         return true;
     }
+    
+    private void makeEditFrame() {
+        if (_editFrame == null) {
+            _editFrame = new DrawRectangle("editShape", "Rectangle", this);
+            setEditParams();
+        }
+    }
+        
 }

@@ -150,7 +150,7 @@ public class Engine implements ReadingListener {
         // to reduce the work done.
 
         // ok to send next poll
-        log.debug("po false " + r.getID());
+        log.debug("po false " + r.getId());
         pollOutstanding = false;
 
         // make a list of receiver positions to provide 
@@ -187,7 +187,7 @@ public class Engine implements ReadingListener {
 
         Measurement m = c.convert(r, lastPoint);
 
-        saveLastMeasurement(r.getID(), m);
+        saveLastMeasurement(r.getId(), m);
 
         lastPoint = m;
         Distributor.instance().submitMeasurement(m);
@@ -196,7 +196,7 @@ public class Engine implements ReadingListener {
     // Store the lastMeasurement 
     void saveLastMeasurement(String id, Measurement m) {
         for (int i = 0; i < getNumTransmitters(); i++) {
-            if (getTransmitter(i).getID().equals(id) && getTransmitter(i).isPolled()) {
+            if (getTransmitter(i).getId().equals(id) && getTransmitter(i).isPolled()) {
                 getTransmitter(i).setLastMeasurement(m);
                 // might be more than one, so don't end here
             }
@@ -292,9 +292,9 @@ public class Engine implements ReadingListener {
     public void setPolling(boolean polling) {
         this.polling = polling;
         if (polling) {
-            startpoll();
+            startPoll();
         } else {
-            stoppoll();
+            stopPoll();
         }
     }
 
@@ -395,7 +395,7 @@ public class Engine implements ReadingListener {
         if (t == null) {
             return "";
         }
-        return t.getID();
+        return t.getId();
     }
 
     public int getPolledAddress() {
@@ -460,7 +460,7 @@ public class Engine implements ReadingListener {
         return !(bscPoll || throttlePoll);
     }
 
-    void startpoll() {
+    void startPoll() {
         // time to start operation
         pollThread = new Thread() {
             @Override
@@ -521,7 +521,7 @@ public class Engine implements ReadingListener {
         }
     }
 
-    void stoppoll() {
+    void stopPoll() {
         if (pollThread != null) {
             pollThread.interrupt();
         }
@@ -610,5 +610,5 @@ public class Engine implements ReadingListener {
         prop.addPropertyChangeListener(p);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Engine.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Engine.class);
 }

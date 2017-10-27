@@ -13,7 +13,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008, 2010
  */
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public class BeanSetting {
 
     public BeanSetting(jmri.NamedBean t, String pName, int setting) {

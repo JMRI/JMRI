@@ -36,46 +36,46 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     @Override
     public Turnout provideTurnout(String name) {
-        Turnout t = getTurnout(name);
-        if (t != null) {
-            return t;
+        Turnout result = getTurnout(name);
+        if (result == null) {
+            if (name.startsWith(getSystemPrefix() + typeLetter())) {
+                result = newTurnout(name, null);
+            } else {
+                result = newTurnout(makeSystemName(name), null);
+            }
         }
-        if (name.startsWith(getSystemPrefix() + typeLetter())) {
-            return newTurnout(name, null);
-        } else {
-            return newTurnout(makeSystemName(name), null);
-        }
+        return result;
     }
 
     @Override
     public Turnout getTurnout(String name) {
-        Turnout t = getByUserName(name);
-        if (t != null) {
-            return t;
+        Turnout result = getByUserName(name);
+        if (result == null) {
+            result = getBySystemName(name);
         }
-
-        return getBySystemName(name);
+        return result;
     }
 
     @Override
     public Turnout getBySystemName(String name) {
-        return (Turnout) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Turnout getByUserName(String key) {
-        return (Turnout) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
     public Turnout newTurnout(String systemName, String userName) {
+        // add normalize? see AbstractSensor
         if (log.isDebugEnabled()) {
             log.debug("newTurnout:"
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.error("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
@@ -105,7 +105,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         // doesn't exist, make a new one
         s = createNewTurnout(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("Unable to create turnout from " + systemName);
         }
@@ -232,7 +232,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         try {
             Integer.parseInt(curAddress);
         } catch (java.lang.NumberFormatException ex) {
-            log.error("Hardware Address passed should be a number", ex);
+            log.warn("Hardware Address passed should be a number, was {}", curAddress);
             throw new JmriException("Hardware Address passed should be a number");
         }
         return prefix + typeLetter() + curAddress;
@@ -247,7 +247,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
             return null;
         }
 
@@ -263,7 +263,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
             return null;
         }
         // The Number of Output Bits of the previous turnout will help determine the next
@@ -360,7 +360,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
@@ -368,6 +368,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
 
 }

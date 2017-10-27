@@ -1,6 +1,5 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
 
 import java.util.*;
 
@@ -94,6 +93,7 @@ public class Station {
     /**
      * Tell the sections that code information has arrived in the field
      */
+    @SuppressWarnings("unchecked") // we store multiple enum types for codeValueDelivered
     public void codeValueDelivered() {
         log.debug("Station - start codeValueDelivered");
         // clear the code light
@@ -134,6 +134,7 @@ public class Station {
      * Gather layout status and turn on code lamp.
      *  Rest of action is on indicationComplete
      */
+    @SuppressWarnings("unchecked") // we store multiple enum types for codeValueDelivered
     public void indicationComplete() {
         log.debug("Station - start indicationComplete");
         
@@ -151,5 +152,5 @@ public class Station {
     ArrayList<Enum> sentValues;         // type is constrained in generic arguments to Section
     ArrayList<Enum> indicationValues;   // type is constrained in generic arguments to Section
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Station.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Station.class);
 }

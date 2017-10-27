@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -71,7 +72,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveButton);
         // Change all car type to caboose dialog window should appear
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[]{"Caboose"}), "No");
+        pressDialogButton(f, Bundle.getMessage("carModifyAllType", new Object[]{"Caboose"}), Bundle.getMessage("ButtonNo"));
 
         Assert.assertTrue("now a caboose", c6.isCaboose());
         Assert.assertFalse("not hazardous 2", c6.isHazardous());
@@ -81,7 +82,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("still no fred", c6.hasFred());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[]{"Caboose"}), "No");
+        pressDialogButton(f, Bundle.getMessage("carModifyAllType", new Object[]{"Caboose"}), Bundle.getMessage("ButtonNo"));
         Assert.assertFalse("no longer a caboose", c6.isCaboose());
         Assert.assertTrue("now has a fred", c6.hasFred());
         Assert.assertFalse("not hazardous 3", c6.isHazardous());
@@ -90,7 +91,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("still not hazardous 3", c6.isHazardous());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[]{"Caboose"}), "No");
+        pressDialogButton(f, Bundle.getMessage("carModifyAllType", new Object[]{"Caboose"}), Bundle.getMessage("ButtonNo"));
         Assert.assertFalse("still no longer a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
         Assert.assertTrue("now hazardous", c6.isHazardous());
@@ -99,7 +100,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("not utility", c6.isUtility());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[]{"Caboose"}), "No");
+        pressDialogButton(f, Bundle.getMessage("carModifyAllType", new Object[]{"Caboose"}), Bundle.getMessage("ButtonNo"));
         Assert.assertTrue("now utility", c6.isUtility());
         Assert.assertFalse("not a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
@@ -108,7 +109,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         // should have 6 cars now
         Assert.assertEquals("number of cars", 6, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -147,7 +148,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         // should have 5 cars now
         Assert.assertEquals("number of cars", 4, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     private void loadCars() {

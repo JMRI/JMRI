@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.BoxLayout;
@@ -25,6 +27,7 @@ import javax.swing.SortOrder;
 import jmri.ConfigureManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.JmriException;
 import jmri.UserPreferencesManager;
 import jmri.beans.Bean;
@@ -48,7 +51,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of {@link UserPreferencesManager} that saves user interface
  * preferences that should be automatically remembered as they are set.
- *
+ * <p>
  * This class is intended to be a transitional class from a single user
  * interface preferences manager to multiple, domain-specific (windows, tables,
  * dialogs, etc) user interface preferences managers. Domain-specific managers
@@ -57,7 +60,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2016
  */
-public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager {
+public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager, InstanceManagerAutoInitialize {
 
     public final static String SAVE_ALLOWED = "saveAllowed";
 
@@ -76,8 +79,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * exists. Load user preferences if needed.
      *
      * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault(java.lang.Class)}
-     * with {@code UserPreferencesManager.class} as the argument instead.
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
+     * {@code UserPreferencesManager.class} as the argument instead.
      */
     @Deprecated
     public static UserPreferencesManager getInstance() {
@@ -89,8 +93,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * exists. Load user preferences if needed.
      *
      * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault(java.lang.Class)}
-     * with {@code UserPreferencesManager.class} as the argument instead.
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
+     * {@code UserPreferencesManager.class} as the argument instead.
      */
     @Deprecated
     public static UserPreferencesManager getDefault() {
@@ -147,7 +152,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * allow that checkBox to be set to a true state when it is next
      * initialized. This can also be used anywhere else that a simple yes/no,
      * true/false type preference needs to be stored.
-     *
+     * <p>
      * It should not be used for remembering if a user wants to suppress a
      * message as there is no means in the GUI for the user to reset the flag.
      * setPreferenceState() should be used in this instance The name is
@@ -1216,6 +1221,11 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         });
     }
 
+    @Override
+    public void initialize() {
+        this.readUserPreferences();
+    }
+
     /**
      * Holds details about the specific class.
      */
@@ -1383,10 +1393,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     protected final static class WindowLocations {
 
-        Point xyLocation = new Point(0, 0);
-        Dimension size = new Dimension(0, 0);
-        boolean saveSize = false;
-        boolean saveLocation = false;
+        private Point xyLocation = new Point(0, 0);
+        private Dimension size = new Dimension(0, 0);
+        private boolean saveSize = false;
+        private boolean saveLocation = false;
 
         WindowLocations() {
         }
@@ -1425,10 +1435,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             saveSize = true;
         }
 
-        void setProperty(String key, Object value) {
-            parameters.put(key, value);
+        void setProperty(@Nonnull String key, @CheckForNull Object value) {
+            if (value == null) {
+                parameters.remove(key);
+            } else {
+                parameters.put(key, value);
+            }
         }
 
+        @CheckForNull
         Object getProperty(String key) {
             return parameters.get(key);
         }
@@ -1437,7 +1452,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             return parameters.keySet();
         }
 
-        final HashMap<String, Object> parameters = new HashMap<>();
+        final ConcurrentHashMap<String, Object> parameters = new ConcurrentHashMap<>();
 
     }
 
@@ -1447,9 +1462,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(UserPreferencesManager.class)) {
-                JmriUserPreferencesManager instance = new JmriUserPreferencesManager();
-                instance.readUserPreferences();
-                return instance;
+                return new JmriUserPreferencesManager();
             }
             return super.getDefault(type);
         }

@@ -1,15 +1,16 @@
 
 package jmri.jmrix.loconet.locomon;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JmriJFrame;
-import jmri.jmrix.AbstractMonPaneScaffold;
 
 
 /**
@@ -20,13 +21,6 @@ import jmri.jmrix.AbstractMonPaneScaffold;
  * @author	Bob Jacobsen   Copyright 2015
  */
 public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
-
-    @Test
-    public void testLifeCycle() throws Exception {
-        // test runs lifecycle through setup, shutdown
-        pane.initComponents();
-        Assert.assertNotNull("exists",pane);
-    }
 
     @Test
     public void testInput() throws Exception {
@@ -114,11 +108,12 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        
-        pane = new LocoMonPane();  
+        // pane for AbstractMonFrameTestBase, panel for JmriPanelTest
+        panel = pane = new LocoMonPane();
+        helpTarget = "package.jmri.jmrix.loconet.locomon.LocoMonFrame";
+        title = Bundle.getMessage("MenuItemLocoNetMonitor"); 
     }
 
     @Override

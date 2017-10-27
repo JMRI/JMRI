@@ -1,10 +1,9 @@
 package jmri.jmrit.ussctc;
 
-import org.junit.*;
-
-import jmri.*;
-
 import java.util.*;
+import jmri.*;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 /**
  * Tests for TimeLock class in the jmri.jmrit.ussctc package
@@ -16,37 +15,37 @@ public class TimeLockTest {
     @Test
     public void testEmpty() {
         ArrayList<SignalHeadSection> list = new ArrayList<>();
-        
+
         TimeLock lock = new TimeLock(list);
-        
+
         Assert.assertTrue(lock.isLockClear());
     }
 
     @Test
     public void testOneInListPass() throws JmriException {
         ArrayList<SignalHeadSection> list = new ArrayList<>();
-        
+
         SignalHeadSection s = new SignalHeadSection() {
             public boolean isRunningTime() { return false;}
         };
         list.add(s);
- 
+
         TimeLock lock = new TimeLock(list);
-        
+
         Assert.assertTrue(lock.isLockClear());
     }
 
     @Test
     public void testOneFailActive() throws JmriException {
         ArrayList<SignalHeadSection> list = new ArrayList<>();
-        
+
         SignalHeadSection s = new SignalHeadSection() {
             public boolean isRunningTime() { return true;}
         };
         list.add(s);
- 
+
         TimeLock lock = new TimeLock(list);
-        
+
         Assert.assertTrue( ! lock.isLockClear());
     }
 
@@ -57,7 +56,7 @@ public class TimeLockTest {
         };
 
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s});
-        
+
         Assert.assertTrue( ! lock.isLockClear());
     }
 
@@ -68,41 +67,41 @@ public class TimeLockTest {
         };
 
         TimeLock lock = new TimeLock(s);
-        
+
         Assert.assertTrue( ! lock.isLockClear());
     }
 
     @Test
     public void testSecondFailActive() throws JmriException {
         ArrayList<SignalHeadSection> list = new ArrayList<>();
-        
+
         SignalHeadSection s = new SignalHeadSection() {
             public boolean isRunningTime() { return false;}
-        };     
+        };
         list.add(s);
 
         s = new SignalHeadSection() {
             public boolean isRunningTime() { return true;}
-        };    
+        };
         list.add(s);
 
         TimeLock lock = new TimeLock(list);
-        
+
         Assert.assertTrue( ! lock.isLockClear());
     }
- 
+
     @Test
     public void testBeanSettingMatch() throws JmriException {
         SignalHeadSection s = new SignalHeadSection() {
             public boolean isRunningTime() { return true;}
-        };  
+        };
 
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         t.setCommandedState(Turnout.CLOSED);
-        
+
         BeanSetting b = new BeanSetting(t, Turnout.CLOSED);
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s}, new BeanSetting[]{b});
-        
+
         Assert.assertTrue( ! lock.isLockClear());
     }
 
@@ -114,26 +113,24 @@ public class TimeLockTest {
 
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         t.setCommandedState(Turnout.CLOSED);
-        
+
         BeanSetting b = new BeanSetting(t, Turnout.THROWN);
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s}, new BeanSetting[]{b});
-        
+
         Assert.assertTrue( lock.isLockClear());
     }
 
-      
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initConfigureManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initConfigureManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

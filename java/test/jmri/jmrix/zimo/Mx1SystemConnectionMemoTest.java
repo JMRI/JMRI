@@ -23,8 +23,7 @@ public class Mx1SystemConnectionMemoTest {
 
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        Mx1TrafficController tc = new Mx1TrafficController(){
           @Override
           public boolean status(){
@@ -39,8 +38,7 @@ public class Mx1SystemConnectionMemoTest {
 
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

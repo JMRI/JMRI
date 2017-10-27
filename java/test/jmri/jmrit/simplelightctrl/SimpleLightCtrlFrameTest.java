@@ -1,6 +1,5 @@
 package jmri.jmrit.simplelightctrl;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -21,18 +20,14 @@ public class SimpleLightCtrlFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SimpleLightCtrlFrame action = new SimpleLightCtrlFrame();
         Assert.assertNotNull("exists", action);
-        action.dispose();
+        JUnitUtil.dispose(action);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

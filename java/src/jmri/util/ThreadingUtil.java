@@ -1,8 +1,10 @@
 package jmri.util;
 
+import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.annotation.Nonnull;
 
 /**
  * Utilities for handling JMRI's threading conventions.
@@ -21,22 +23,26 @@ public class ThreadingUtil {
     static public interface ThreadAction extends Runnable {
 
         /**
-         * Must handle its own exceptions
+         * {@inheritDoc}
+         * <p>
+         * Must handle its own exceptions.
          */
         @Override
         public void run();
     }
 
     /**
-     * Run some layout-specific code before returning
+     * Run some layout-specific code before returning.
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayout( ()->{ sensor.setState(value); } );   }
+     * {@code ThreadingUtil.runOnLayout(() -> {
+     *     sensor.setState(value);
+     * }); }
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnLayout(ThreadAction ta) {
+    static public void runOnLayout(@Nonnull ThreadAction ta) {
         runOnGUI(ta);
     }
 
@@ -48,29 +54,35 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );   }
+     * {@code ThreadingUtil.runOnLayoutEventually(() -> {
+     *     sensor.setState(value);
+     * }); }
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnLayoutEventually(ThreadAction ta) {
+    static public void runOnLayoutEventually(@Nonnull ThreadAction ta) {
         runOnGUIEventually(ta);
     }
 
     /**
-     * Run some layout-specific code at some later point, at least a 
-     * known time in the future.
+     * Run some layout-specific code at some later point, at least a known time
+     * in the future.
      * <p>
      * There is no long-term guarantee about the accuracy of the interval.
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); }, 1000 );   }
+     * {@code ThreadingUtil.runOnLayoutEventually(() -> {
+     *     sensor.setState(value);
+     * }, 1000); }
      *
-     * @param ta What to run, usually as a lambda expression
+     * @param ta    What to run, usually as a lambda expression
      * @param delay interval in milliseconds
+     * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
-    static public void runOnLayoutDelayed(ThreadAction ta, int delay) {
-        runOnGUIDelayed(ta, delay);
+    @Nonnull 
+    static public Timer runOnLayoutDelayed(@Nonnull ThreadAction ta, int delay) {
+        return runOnGUIDelayed(ta, delay);
     }
 
     /**
@@ -87,11 +99,13 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUI( ()->{ mine.setVisible(); } );   }
+     * {@code ThreadingUtil.runOnGUI(() -> {
+     *     mine.setVisible();
+     * }); }
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnGUI(ThreadAction ta) {
+    static public void runOnGUI(@Nonnull ThreadAction ta) {
         if (isGUIThread()) {
             // run now
             ta.run();
@@ -117,37 +131,39 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );   }
+     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } ); }
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnGUIEventually(ThreadAction ta) {
+    static public void runOnGUIEventually(@Nonnull ThreadAction ta) {
         // dispatch to Swing
         SwingUtilities.invokeLater(ta);
     }
 
     /**
-     * Run some GUI-specific code at some later point, at least a 
-     * known time in the future.
+     * Run some GUI-specific code at some later point, at least a known time in
+     * the future.
      * <p>
      * There is no long-term guarantee about the accuracy of the interval.
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); }, 1000 );   }
+     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); }, 1000
+     * ); }
      *
-     * @param ta What to run, usually as a lambda expression
+     * @param ta    What to run, usually as a lambda expression
      * @param delay interval in milliseconds
+     * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
-    static public void runOnGUIDelayed(ThreadAction ta, int delay) {
+    @Nonnull 
+    static public Timer runOnGUIDelayed(@Nonnull ThreadAction ta, int delay) {
         // dispatch to Swing via timer
-        Timer timer = new Timer(delay, new java.awt.event.ActionListener(){
-                                            public void actionPerformed(java.awt.event.ActionEvent e) {
-                                                                        ta.run();
-                                                                    }
-                                        });
+        Timer timer = new Timer(delay, (ActionEvent e) -> {
+            ta.run();
+        });
         timer.setRepeats(false);
         timer.start();
+        return timer;
     }
 
     /**
@@ -158,33 +174,35 @@ public class ThreadingUtil {
     static public boolean isGUIThread() {
         return SwingUtilities.isEventDispatchThread();
     }
-    
-    /** 
-     * Check whether a specific thread is running (or able to run) 
-     * right now.
+
+    /**
+     * Check whether a specific thread is running (or able to run) right now.
+     *
+     * @param t the thread to check
      * @return true is the specified thread is or could be running right now
      */
-     static public boolean canThreadRun(Thread t) {
+    static public boolean canThreadRun(@Nonnull Thread t) {
         Thread.State s = t.getState();
         return s.equals(Thread.State.RUNNABLE);
-     }
+    }
 
-    /** 
+    /**
      * Check whether a specific thread is currently waiting.
      * <p>
-     * Note: This includes both waiting due to an explicit wait() call, and 
-     *  due to being blocked attempting to synchronize.
+     * Note: This includes both waiting due to an explicit wait() call, and due
+     * to being blocked attempting to synchronize.
      * <p>
      * Note: {@link #canThreadRun(Thread)} and {@link #isThreadWaiting(Thread)}
-     *  should never simultanously be true, but it might look that way due to 
-     *  sampling delays when checking on another thread.
-     * 
+     * should never simultaneously be true, but it might look that way due to
+     * sampling delays when checking on another thread.
+     *
+     * @param t the thread to check
      * @return true is the specified thread is or could be running right now
      */
-     static public boolean isThreadWaiting(Thread t) {
+    static public boolean isThreadWaiting(@Nonnull Thread t) {
         Thread.State s = t.getState();
         return s.equals(Thread.State.BLOCKED) || s.equals(Thread.State.WAITING) || s.equals(Thread.State.TIMED_WAITING);
-     }
-     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class.getName());
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class);
 }

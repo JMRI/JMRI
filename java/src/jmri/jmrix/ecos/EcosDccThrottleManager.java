@@ -135,6 +135,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleManager.class);
 
 }
