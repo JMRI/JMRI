@@ -182,18 +182,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * The SlotListener is not subscribed for slot notifications; it can do that
      * later if it wants. We don't currently think that's a race condition.
      *
-     * @param i Specific slot, counted starting from zero.
+     * @param address Specific loco address, counted starting from zero.
      * @param l The SlotListener to notify of the answer.
      */
-    public void slotFromLocoAddress (int i, SlotListener l) {
+    public void slotFromLocoAddress (int address, SlotListener l) {
         // store connection between this address and listener for later
-        mLocoAddrHash.put(Integer.valueOf(i), l);
+        log.debug("slotFromLocoAddress - request for address {}", address);
+        mLocoAddrHash.put(Integer.valueOf(address), l);
 
         // send info request
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
-        m.setElement(1, (i / 128) & 0x7F);
-        m.setElement(2, i & 0x7F);
+        m.setElement(1, (address / 128) & 0x7F);
+        m.setElement(2, address & 0x7F);
         tc.sendLocoNetMessage(m);
     }
 
