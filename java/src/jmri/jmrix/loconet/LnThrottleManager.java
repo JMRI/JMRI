@@ -177,7 +177,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             // need to check to see if the slot is in a suitable state for creating a throttle.
             if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
                 // loco is already in-use or is consist-mid or consist-sub
-                log.warn("notifyChangedSlot: slot is marked as 'in-use' for slot {} address {}", s.getSlot(), s.locoAddr());
+                log.debug("notifyChangedSlot: slot is marked as 'in-use' for slot {} address {}", s.getSlot(), s.locoAddr());
                 // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
                 if ((s.id() != throttleID) && (s.id() != 0)) {
                     // notify the LnThrottleManager about failure of acquisition.
@@ -473,9 +473,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             log.debug("InterruptedException happened while killing the retry thread; this is to be ignored.");
         }
 
-        // need to find the "throttleListener" associated with the request for locoAddr, and
-        // send that "throttleListener" a notification that the command station needs
-        // permission to "steal" the loco address.
         if (waitingForNotification.containsKey(locoAddr)) {
             notifyStealRequest(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)));
         }

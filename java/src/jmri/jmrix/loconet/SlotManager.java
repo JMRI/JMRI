@@ -596,7 +596,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // to reflect the content of the LocoNet message, so _slots[i]
             // has the locomotive address of this request 
             int addr = _slots[i].locoAddr();
-            log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
+            log.debug("OPC_SL_RD_DATA resp is slot {} for addr {} with status {}", i, addr, LnConstants.LOCO_STAT(_slots[i].slotStatus())); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
             if (l != null) {
                 // send the notification
