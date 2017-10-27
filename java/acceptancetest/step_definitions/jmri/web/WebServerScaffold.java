@@ -20,8 +20,7 @@ public class WebServerScaffold implements En {
    public WebServerScaffold() {
 
       Before(tags,()->{
-          //jmri.util.JUnitUtil.setUp();
-          jmri.util.JUnitUtil.resetInstanceManager();
+          jmri.util.JUnitUtil.setUp();
           jmri.util.JUnitUtil.resetProfileManager();
           jmri.util.JUnitUtil.initShutDownManager();
           jmri.util.JUnitUtil.initDebugPowerManager();
@@ -45,7 +44,7 @@ public class WebServerScaffold implements En {
                  ex.printStackTrace();
                  Assert.fail("Exception occured during web server shutdown:" + ex);
              }
-             //jmri.util.JUnitUtil.tearDown();
+             jmri.util.JUnitUtil.tearDown();
          } catch(java.lang.NullPointerException npe2) {
              //npe2.printStackTrace();
              //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
