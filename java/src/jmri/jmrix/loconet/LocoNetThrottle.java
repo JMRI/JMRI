@@ -270,6 +270,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
+        if (slot == null) {
+            log.warn("setSpeedSetting - slot is null so cannot set speed!");
+            return;
+        }
+
         log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
         if (LnConstants.CONSIST_MID == slot.consistStatus()
                 || LnConstants.CONSIST_SUB == slot.consistStatus()) {
@@ -348,7 +353,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // release connections
         int delayTime = 5;
         if (slot != null) {
-            if ((slot.speed() != 0) && (slot.speed() != 1)) {
+            if ((slot.speed() != 0) && (slot.speed() != 1) && (slot.slotStatus() == LnConstants.LOCO_IN_USE)) {
                 // TODO: stopping a slot upon release is a SUBTRACTIVE change - is it justified?
                 setSpeedSetting(0); // stop the loco (if it is not already stopped).
                                     // This will re-start the refresh timer.
@@ -385,6 +390,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         mRefreshTimer = null;
     }
 
+
     public void setupDisposeTimer() {
         SlotListener listenerToRemove = this;
         log.debug("setting up throttle dispose timer.");
@@ -392,13 +398,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 log.debug("throttle dispose timer triggered.");
-            throttleDisposeTimer.stop();
-            slot.removeSlotListener(listenerToRemove);
-            slot.notifySlotListeners();
-            slot = null;
-            network = null;
+                throttleDisposeTimer.stop();
+                slot.removeSlotListener(listenerToRemove);
+                slot.notifySlotListeners();
+                slot = null;
+                network = null;
 
-            finishRecord();
+                finishRecord();
             }
         });
         throttleDisposeTimer.setRepeats(false);
@@ -488,6 +494,16 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             notifyPropertyChangeListener("ThrottleConnected", (slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE, // NOI18N
                     !((slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE));
             slotStatus = newStat;
+            if (newStat == LnConstants.LOCO_FREE) {
+                log.debug("need to do something that will release the LocoNetThrottle for address {}",slot.locoAddr());
+                //TODO Figure out how to inform all throttles for this address
+                //      that they no longer control the loco address!
+                //
+                //      Note: Cannot use LnThrottleManager.disposeThrottle because
+                //      we don't have a ThrottleListener reference to pass along.
+                throttleDispose();
+                return;
+            }
         }
 
         // It is possible that the slot status change we are being notified of
@@ -731,20 +747,20 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     @Override
     public LocoAddress getLocoAddress() {
-        if (slot != null) {
-            if (slot.slotStatus() == LnConstants.LOCO_IN_USE) {
-                switch (slot.consistStatus()) {
-                    case LnConstants.CONSIST_NO:
-                    case LnConstants.CONSIST_TOP:
-                        log.debug("getLocoAddress replying address {} for slot {}", address, slot.getSlot());
+//        if (slot != null) {
+//            if (slot.slotStatus() == LnConstants.LOCO_IN_USE) {
+//                switch (slot.consistStatus()) {
+//                    case LnConstants.CONSIST_NO:
+//                    case LnConstants.CONSIST_TOP:
+//                        log.debug("getLocoAddress replying address {} for slot {}", address, slot.getSlot());
                         return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
-                    default:
-                        break;
-                    }
-            }
-        }
-        log.debug("getLocoAddress replying address {} for slot not in-use or for sub-consisted slot or for null slot", address);
-        return new DccLocoAddress(address, LnThrottleManager.isLongAddress(65536));
+//                    default:
+//                        break;
+//                    }
+//            }
+//        }
+//        log.debug("getLocoAddress replying address {} for slot not in-use or for sub-consisted slot or for null slot", 65536);
+//        return new DccLocoAddress(, LnThrottleManager.isLongAddress(65536));
     }
 
     //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
