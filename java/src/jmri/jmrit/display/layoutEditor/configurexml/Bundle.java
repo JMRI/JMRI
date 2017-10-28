@@ -21,8 +21,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrit.display.Bundle {
-
+public class Bundle extends jmri.jmrit.display.layoutEditor.Bundle {
+ 
     @Nullable
     private static final String name = null;
 
