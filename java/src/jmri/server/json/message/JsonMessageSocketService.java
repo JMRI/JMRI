@@ -21,8 +21,11 @@ import jmri.server.json.JsonSocketService;
  */
 public class JsonMessageSocketService extends JsonSocketService {
 
+    private JsonMessageClientManager messageClientManager = null;
+
     public JsonMessageSocketService(JsonConnection connection) {
         super(connection);
+        messageClientManager = InstanceManager.getDefault(JsonMessageClientManager.class);
     }
 
     @Override
@@ -43,13 +46,13 @@ public class JsonMessageSocketService extends JsonSocketService {
                         if (!data.path(CLIENT).isMissingNode()) {
                             String client = data.path(CLIENT).asText();
                             if (!client.isEmpty()) {
-                                InstanceManager.getDefault(JsonMessageClientManager.class).unsubscribe(client);
+                               messageClientManager.unsubscribe(client);
                             }
                         }
                         break;
                     case JSON.GET:
                         // create id for client, register it, and inform client
-                        String uuid = InstanceManager.getDefault(JsonMessageClientManager.class).getClient(this.connection);
+                        String uuid = messageClientManager.getClient(this.connection);
                         if (uuid == null) {
                             uuid = UUID.randomUUID().toString();
                         }
@@ -85,12 +88,12 @@ public class JsonMessageSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        InstanceManager.getDefault(JsonMessageClientManager.class).unsubscribe(this.connection);
+        messageClientManager.unsubscribe(this.connection);
     }
 
     private void subscribe(String client) throws JsonException {
         try {
-            InstanceManager.getDefault(JsonMessageClientManager.class).subscribe(client, this.connection);
+            messageClientManager.subscribe(client, this.connection);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_CONFLICT, Bundle.getMessage(this.connection.getLocale(), "ErrorClientConflict", CLIENT));
         }
