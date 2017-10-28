@@ -125,5 +125,13 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/cucumber-core-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-java-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-java8-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-junit-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-jvm-deps-1.0.5.jar"/>
+	<classpathentry kind="lib" path="lib/gherkin-2.12.2.jar"/>
+	<classpathentry kind="lib" path="lib/gherkin-jvm-deps-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/gherkin3-3.0.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
