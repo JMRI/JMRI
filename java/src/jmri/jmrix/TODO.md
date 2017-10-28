@@ -1,12 +1,12 @@
 Work still to be done on multi-connection support
 
-(June 2016)
-- [] Follow the deprecation report on the various instance() methods and convert calls to those to multi-connection versions
+(June 2016, reviewed Oct 2017)
+- [ ] Follow the deprecation report on the various instance() methods and convert calls to those to multi-connection versions
 
-- [] Once not invoked, remove the instance() methods themselves
+- [ ] Once not invoked, remove the instance() methods themselves
 
 - These systems might have non-deprecated instance() methods, which means they aren't migrated to multi-connection:
-  - [] easydcc
+  - [x] easydcc (migrated 4.9.6)
   - [ ] grapevine
   - [ ] maple
   - [ ] oaktree

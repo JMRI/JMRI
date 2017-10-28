@@ -27,6 +27,8 @@ public class AcelaMenu extends JMenu {
         }
 
         if (memo != null) {
+            // do we have an AcelaTrafficController?
+            setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!
             add(new jmri.jmrix.acela.acelamon.AcelaMonAction(Bundle.getMessage("AcelaMonitorTitle"), memo));
             add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(Bundle.getMessage("AcelaSendCommandTitle"), memo));
             add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(Bundle.getMessage("ConfigNodesTitle"), memo));

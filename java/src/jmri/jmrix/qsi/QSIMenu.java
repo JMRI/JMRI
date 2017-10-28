@@ -25,6 +25,8 @@ public class QSIMenu extends JMenu {
         }
 
         if (memo != null) {
+            // do we have a QsiTrafficController?
+            setEnabled(memo.getQsiTrafficController() != null); // disable menu, no connection, no tools!
             add(new jmri.jmrix.qsi.qsimon.QsiMonAction(memo));
             add(new jmri.jmrix.qsi.packetgen.PacketGenAction(memo));
         }

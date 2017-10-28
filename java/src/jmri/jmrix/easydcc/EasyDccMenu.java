@@ -10,18 +10,24 @@ import javax.swing.JMenu;
  */
 public class EasyDccMenu extends JMenu {
 
+    public EasyDccMenu(String name, EasyDccSystemConnectionMemo memo) {
+        this(memo);
+
+        setText(name);
+    }
+
     public EasyDccMenu(EasyDccSystemConnectionMemo memo) {
 
         super();
         if (memo != null) {
             setText(memo.getUserName());
         } else {
-            setText("Easy DCC");
+            setText(Bundle.getMessage("MenuEasyDCC"));
         }
 
-        // do we have an EasyDccTrafficController?
-        setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!
         if (memo != null) {
+            // do we have an EasyDccTrafficController?
+            setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!
             add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction(Bundle.getMessage("MonitorXTitle", "EasyDCC"), memo));
             add(new jmri.jmrix.easydcc.packetgen.EasyDccPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
         }

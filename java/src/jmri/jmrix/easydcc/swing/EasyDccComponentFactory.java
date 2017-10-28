@@ -9,7 +9,7 @@ import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2010
- * @since 3.5.1
+ * @since 4.9.5
  */
 public class EasyDccComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
