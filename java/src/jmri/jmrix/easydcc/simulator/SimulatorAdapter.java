@@ -108,6 +108,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         this.getSystemConnectionMemo().setEasyDccTrafficController(control);
         // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
+
         // start the simulator
         sourceThread = new Thread(this);
         sourceThread.setName("EasyDCC Simulator");
@@ -124,7 +125,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         super.connect();
     }
 
-    // Base class methods for the EasyDccSimulatorPortController interface
+    // Base class methods for the EasyDccPortController simulated interface
 
     @Override
     public DataInputStream getInputStream() {

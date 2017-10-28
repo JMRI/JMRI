@@ -13,7 +13,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This contains all compiled systems, whether active or not. For the set of
  * currently-active system-specific tools, see {@link ActiveSystemsMenu}.
- * To be updated when a connection type is migrated to support multiple connections.
+ * <p>
+ * To be updated when a connection type is migrated to support multiple connections
+ * to use add(new... instead of addMenu()
  *
  * @see ActiveSystemsMenu
  * @author Bob Jacobsen Copyright 2003
@@ -30,9 +32,7 @@ public class SystemsMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
-        setText(rb.getString("MenuSystems"));
+        setText(Bundle.getMessage("MenuSystems"));
 
         // Put configured menus at top
         // get ComponentFactory object(s) and create menus
@@ -76,7 +76,6 @@ public class SystemsMenu extends JMenu {
 
         // Powerline is migrated
         add(new jmri.jmrix.powerline.swing.PowerlineMenu(null));
-        addMenu("jmri.jmrix.pricom.PricomMenu"); // special type of connection, not to be migrated
         // QSI is migrated
         add(new jmri.jmrix.qsi.QSIMenu(new jmri.jmrix.qsi.QsiSystemConnectionMemo()));
 
@@ -114,6 +113,11 @@ public class SystemsMenu extends JMenu {
         add(new jmri.jmrix.rfid.swing.RfidMenu(null));
         add(new jmri.jmrix.ieee802154.swing.IEEE802154Menu(null));
         add(new jmri.jmrix.ieee802154.xbee.swing.XBeeMenu(null));
+
+        add(new javax.swing.JSeparator());
+
+        addMenu("jmri.jmrix.pricom.PricomMenu"); // special package, not a 'system' to be migrated
+
     }
 
     void addMenu(String className) {

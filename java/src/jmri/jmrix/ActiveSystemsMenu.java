@@ -22,16 +22,12 @@ public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
         this();
         setText(name);
-
         addItems(this);
     }
 
     public ActiveSystemsMenu() {
         super();
-
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-        setText(rb.getString("MenuSystems"));
-
+        setText(Bundle.getMessage("MenuSystems"));
         addItems(this);
     }
 
@@ -127,7 +123,7 @@ public class ActiveSystemsMenu extends JMenu {
         try {
             return (JMenu) Class.forName(className).newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            log.error("Could not load class " + className, e);
+            log.error("Could not load class {}", className, e);
             return null;
         }
     }
