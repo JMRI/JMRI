@@ -25,7 +25,7 @@ public class WebServerAcceptanceSteps implements En {
    String[] chrometags = {"@webtest","@chrome"};
    String[] tags = {"@webtest"};
    
-   public WebServerAcceptanceSteps() {
+   public WebServerAcceptanceSteps(jmri.InstanceManager instance) {
 
       Given("^I am using firefox$", () -> {
          if(GraphicsEnvironment.isHeadless()) {
