@@ -6918,8 +6918,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         setDirty();
 
         //link to connected objects
-        setLink(newTrack, LayoutTrack.TRACK, beginObject, beginPointType);
-        setLink(newTrack, LayoutTrack.TRACK, foundObject, foundPointType);
+        setLink(beginObject, beginPointType, newTrack, LayoutTrack.TRACK);
+        setLink(foundObject, foundPointType, newTrack, LayoutTrack.TRACK);
 
         //check on layout block
         String newName = blockIDComboBox.getDisplayName();
@@ -7230,77 +7230,82 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //validatePhysicalTurnout
 
     /**
-     * Adds a link in the 'to' object to the 'from' object
+     * link the 'from' object and type to the 'to' object and type
+     * @param fromObject the object to link from
+     * @param fromPointType the object type to link from
+     * @param toObject the object to link to
+     * @param toPointType the object type to link to
      */
     protected void setLink(@Nonnull LayoutTrack fromObject, int fromPointType,
             @Nonnull LayoutTrack toObject, int toPointType) {
-        switch (toPointType) {
+        switch (fromPointType) {
             case LayoutTrack.POS_POINT: {
-                if (fromPointType == LayoutTrack.TRACK) {
-                    ((PositionablePoint) toObject).setTrackConnection((TrackSegment) fromObject);
+                if (toPointType == LayoutTrack.TRACK) {
+                    ((PositionablePoint) fromObject).setTrackConnection((TrackSegment) toObject);
                 } else {
-                    log.error("Attempt to set a non-TRACK connection to a Positionable Point");
+                    log.error("Attempt to link a non-TRACK connection ('{}')to a Positionable Point ('{}')", 
+                            toObject.getName(), fromObject.getName());
                 }
                 break;
             }
 
             case LayoutTrack.TURNOUT_A: {
-                ((LayoutTurnout) toObject).setConnectA(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_B: {
-                ((LayoutTurnout) toObject).setConnectB(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_C: {
-                ((LayoutTurnout) toObject).setConnectC(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_D: {
-                ((LayoutTurnout) toObject).setConnectD(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_A: {
-                ((LevelXing) toObject).setConnectA(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_B: {
-                ((LevelXing) toObject).setConnectB(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_C: {
-                ((LevelXing) toObject).setConnectC(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_D: {
-                ((LevelXing) toObject).setConnectD(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_A: {
-                ((LayoutSlip) toObject).setConnectA(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_B: {
-                ((LayoutSlip) toObject).setConnectB(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_C: {
-                ((LayoutSlip) toObject).setConnectC(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_D: {
-                ((LayoutSlip) toObject).setConnectD(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
@@ -7311,9 +7316,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
 
             default: {
-                if ((toPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (fromPointType == LayoutTrack.TRACK)) {
-                    ((LayoutTurntable) toObject).setRayConnect((TrackSegment) fromObject,
-                            toPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+                if ((fromPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (toPointType == LayoutTrack.TRACK)) {
+                    ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
+                            fromPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
                 break;
             }
