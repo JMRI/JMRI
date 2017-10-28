@@ -680,7 +680,7 @@ public class PositionablePoint extends LayoutTrack {
                 result = false; // can't replace null with null
             }
             if (!result) {
-                log.error("Attempt to remove non-existant track connection: {}", oldTrack.getName());
+                log.error("Attempt to remove non-existant track connection: {}", oldTrack);
             }
         } else // already connected to newTrack?
         if ((connect1 != newTrack) && (connect2 != newTrack)) {
@@ -705,7 +705,7 @@ public class PositionablePoint extends LayoutTrack {
                 result = false;
         }
         return result;
-    }
+    }   // replaceTrackConnection
 
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
