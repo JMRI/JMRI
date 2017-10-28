@@ -21,8 +21,8 @@ public class XmlTest extends OperationsTestCase {
      * Test Xml create and read support. Originally written as two separate
      * tests, now combined into one as of 8/29/2013.
      *
-     * @throws JDOMException
-     * @throws IOException
+     * @throws JDOMException exception
+     * @throws IOException exception
      */
     public void testXMLCreate() throws JDOMException, IOException {
 
