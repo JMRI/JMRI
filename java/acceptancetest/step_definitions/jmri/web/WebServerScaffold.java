@@ -5,6 +5,7 @@ import cucumber.api.java8.En;
 import org.junit.Assert;
 
 import jmri.web.server.WebServer;
+import jmri.util.JUnitAppender;
 
 /**
  * Cucumber helper to handle starting and stoping the web server
@@ -38,6 +39,8 @@ public class WebServerScaffold implements En {
              } catch(java.lang.NullPointerException npe) {
                 //npe.printStackTrace();
                 //Assert.fail("Null Pointer Exception while stopping web server:" + npe);
+                // if there is a log message related to this error, remove it.
+                JUnitAppender.checkForMessageStartingWith("java.lang.NullPointerException");
              } catch(Exception ex) {
                  // Exception is thrown by the stop call above.
                  // if an Exception occurs here, we may want to raise a flag,
