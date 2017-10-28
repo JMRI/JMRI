@@ -11,13 +11,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from NMRA packets and controls sending to the
  * direct interface.
- * <P>
+ * <p>
  * This is much simpler than many other "TrafficHandler" classes, because
- *   <UL>
- *   <LI>It's not handling mode information, or even any information back from the
+ *   <ul>
+ *   <li>It's not handling mode information, or even any information back from the
  *   device; it's just sending.
- *   <LI>It can work with the direct packets.
- *   </UL>
+ *   <li>It can work with the direct packets.
+ *   </ul>
  * This actually bears more similarity to a pure implementation of the
  * CommandStation interface, which is where the real guts of it is. In
  * particular, note that transmission is not a threaded operation.

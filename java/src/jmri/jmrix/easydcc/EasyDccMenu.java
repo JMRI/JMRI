@@ -12,12 +12,10 @@ public class EasyDccMenu extends JMenu {
 
     public EasyDccMenu(String name, EasyDccSystemConnectionMemo memo) {
         this(memo);
-
         setText(name);
     }
 
     public EasyDccMenu(EasyDccSystemConnectionMemo memo) {
-
         super();
         if (memo != null) {
             setText(memo.getUserName());

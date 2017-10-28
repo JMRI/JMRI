@@ -18,7 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -32,7 +33,8 @@
       <p>For more information on the various controls and options,
       please see the <a href=
       "../../AbstractMonFrame.shtml">Communications Monitor Window
-      page</a>. <!--#include virtual="/Footer" --></p>
+      page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

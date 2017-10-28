@@ -278,7 +278,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 String replyString = "V999 01 01 1999";
                 reply = new EasyDccReply(replyString); // fake version number reply
                 i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR
+//                reply.setElement(i++, 0x0d); // add CR for second reply line
 //                reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
@@ -299,7 +299,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 replyString = "L" + msg.getElement(1) + msg.getElement(2) + msg.getElement(3) + msg.getElement(4) + "000000";
                 reply = new EasyDccReply(replyString); // fake reply dir = 00 step = 00 F5-12=00
                 i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR
+//                reply.setElement(i++, 0x0d); // add CR for second reply line
 //                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
                 break;
 
@@ -308,7 +308,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 replyString = "--";
                 reply = new EasyDccReply(replyString); // cannot read
                 i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR
+//                reply.setElement(i++, 0x0d); // add CR for second reply line
 //                reply.setElement(i++, EDC_PROG); // capital O for Operation
                 break;
 
@@ -317,7 +317,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 reply.setElement(i++, EDC_OPS); // capital O for Operation
         }
         log.debug("Reply generated = {}", reply.toString());
-        reply.setElement(i++, 0x0d); // add final CR
+        reply.setElement(i++, 0x0d); // add final CR for all replies
         return (reply);
     }
 
@@ -370,7 +370,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
     private DataInputStream pin = null; // this is provided to classes who want data from us
     // internal ends of the pipes
-    private DataOutputStream outpipe = null;  // feed pin
+    private DataOutputStream outpipe = null; // feed pin
     private DataInputStream inpipe = null; // feed pout
 
     private final static Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);

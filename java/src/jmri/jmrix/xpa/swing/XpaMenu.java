@@ -19,8 +19,6 @@ public class XpaMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
         if (memo != null) {
            setText(memo.getUserName());
         } else {
@@ -29,7 +27,7 @@ public class XpaMenu extends JMenu {
 
         add(new jmri.jmrix.xpa.swing.xpamon.XpaMonAction());
         if (memo != null) {
-            add(new jmri.jmrix.xpa.swing.packetgen.XpaPacketGenAction(rb.getString("MenuItemSendCommand"), memo));
+            add(new jmri.jmrix.xpa.swing.packetgen.XpaPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
             add(new jmri.jmrix.xpa.swing.xpaconfig.XpaConfigureAction(Bundle.getMessage("MenuItemXpaConfigTool"), memo));
         }
     }

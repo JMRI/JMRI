@@ -24,6 +24,10 @@ public class EasyDccPacketGenAction extends AbstractAction {
         this("Generate EasyDCC message", memo);
     }
 
+    public EasyDccPacketGenAction() {
+        this(Bundle.getMessage("SendCommandTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.easydcc.EasyDccSystemConnectionMemo.class));
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         EasyDccPacketGenFrame f = new EasyDccPacketGenFrame(_memo);

@@ -22,7 +22,7 @@ import purejavacomm.SerialPortEventListener;
  * Removed Runnable implementation and methods for it.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener {
 
     private SprogReply reply = new SprogReply();
@@ -283,6 +283,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     private SprogSystemConnectionMemo memo = null;
+
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
@@ -299,6 +300,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * <p>
      * In this case we are only dealing with DATA_AVAILABLE but the other
      * events are left here for reference.
+     *
      * @author AJB Jan 2010
      */
     @Override

@@ -20,6 +20,10 @@ public class EasyDccMonAction extends AbstractAction {
         _memo = memo;
     }
 
+    public EasyDccMonAction() {
+        this(Bundle.getMessage("MonitorXTitle", "EasyDCC"), jmri.InstanceManager.getDefault(jmri.jmrix.easydcc.EasyDccSystemConnectionMemo.class));
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         // create an EasyDccMonFrame

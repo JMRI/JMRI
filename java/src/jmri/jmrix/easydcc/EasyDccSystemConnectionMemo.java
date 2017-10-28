@@ -27,7 +27,16 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         this("E", EasyDccConnectionTypeList.EASYDCC);
     }
 
+    /**
+     * Ctor
+     *
+     * @param et the associated TrafficController
+     */
     public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
+//        super(st.getController().getSystemConnectionMemo().getSystemPrefix(), SprogConnectionTypeList.SPROG);
+//        if (log.isDebugEnabled()) {
+//            log.debug("SprogSystemConnectionMemo, prefix='{}'", st.getController().getSystemConnectionMemo().getSystemPrefix());
+//        }
         super("E", EasyDccConnectionTypeList.EASYDCC);
         this.et = et;
         register();
