@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map.Entry;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -627,14 +626,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         LinkedHashMap<String, String> old = new LinkedHashMap<>(this._headAppearances);
         this.setAppearances(map);
         this.firePropertyChange(APPEARANCES, old, new LinkedHashMap<>(this._headAppearances));
-    }
-    
-    public boolean preferMetricDisplay() {
-        String tag = Locale.getDefault().toLanguageTag();
-        if (!tag.startsWith("en") || _interpretation == SignalSpeedMap.SPEED_KMPH) {
-            return true;
-        }
-        return false;
     }
 
     public int getInterpretation() {

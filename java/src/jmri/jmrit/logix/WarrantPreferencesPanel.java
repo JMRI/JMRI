@@ -26,6 +26,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import jmri.implementation.SignalSpeedMap;
 import jmri.swing.PreferencesPanel;
@@ -69,15 +70,15 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
         leftPanel.add(layoutScalePanel());
-        leftPanel.add(searchDepthPanel(false));
-        leftPanel.add(timeIncrementPanel(false));
-        leftPanel.add(throttleIncrementPanel(false));
-        leftPanel.add(throttleScalePanel(false));
+        leftPanel.add(searchDepthPanel(true));
+        leftPanel.add(timeIncrementPanel(true));
+        leftPanel.add(throttleIncrementPanel(true));
+        leftPanel.add(throttleScalePanel(true));
         leftPanel.add(speedRosterPanel(true));
         rightPanel.add(speedNamesPanel());
         rightPanel.add(Box.createGlue());
-        rightPanel.add(interpretationPanel());
-        rightPanel.add(Box.createGlue());
+//        rightPanel.add(interpretationPanel());
+//        rightPanel.add(Box.createGlue());
         rightPanel.add(appearancePanel());
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
@@ -89,7 +90,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private JPanel layoutScalePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        _layoutScales = new JComboBox<ScaleData>();
+        _layoutScales = new JComboBox<>();
         _layoutScales.addItem(new ScaleData("G", 20.3f));
         _layoutScales.addItem(new ScaleData("L", 38f));
         _layoutScales.addItem(new ScaleData("O", 43f));
@@ -232,17 +233,23 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         if (timeIncrePrefs >= 200 && timeIncrePrefs <= 10000) {
             _timeIncre.setValue(timeIncrePrefs);
         }
+        JPanel incrPanel = new JPanel();
+        incrPanel.add(_timeIncre);
+        incrPanel.add(new JLabel(Bundle.getMessage("milliseconds")));
         JPanel p = new JPanel();
-        p.add(WarrantFrame.makeTextBoxPanel(vertical, _timeIncre, "TimeIncrement", "ToolTipTimeIncrement"));
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, incrPanel, "TimeIncrement", "ToolTipTimeIncrement"));
         p.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
         return p;
     }
 
     private JPanel throttleIncrementPanel(boolean vertical) {
         _rampIncre = new JTextField(6);
-        _rampIncre.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleIncrement()));
+        _rampIncre.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleIncrement()*100));
+        JPanel incrPanel = new JPanel();
+        incrPanel.add(_rampIncre);
+        incrPanel.add(new JLabel(Bundle.getMessage("percent")));
         JPanel p = new JPanel();
-        p.add(WarrantFrame.makeTextBoxPanel(vertical, _rampIncre, "RampIncrement", "ToolTipRampIncrement"));
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, incrPanel, "RampIncrement", "ToolTipRampIncrement"));
         p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
         _rampIncre.addActionListener(new ActionListener() {
             @Override
@@ -251,7 +258,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                 boolean showdialog = false;
                 try {
                     float incr = NumberFormat.getNumberInstance().parse(text).floatValue();
-                    showdialog = (incr < 0.002f || incr > 0.2f);
+                    showdialog = (incr < 0.5f || incr > 25f);
                 } catch (java.text.ParseException pe) {
                     showdialog = true;
                 }
@@ -345,6 +352,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             }
         };
         panel.add(tablePanel(_speedNameTable, "ToolTipSpeedNameTable", insertAction, deleteAction));
+        panel.add(interpretationPanel());
         return panel;
     }
 
@@ -354,7 +362,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                 Bundle.getMessage("LabelAppearanceTable"),
                 javax.swing.border.TitledBorder.CENTER,
                 javax.swing.border.TitledBorder.TOP));
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
         _appearanceMap = new ArrayList<>();
         Iterator<Entry<String, String>> it = WarrantPreferences.getDefault().getAppearanceEntryIterator();
@@ -368,7 +376,9 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             int width = _appearanceModel.getPreferredWidth(i);
             _appearanceTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
+        panel.add(Box.createGlue());
         panel.add(tablePanel(_appearanceTable, "ToolTipAppearanceTable", null, null));
+        panel.add(Box.createGlue());
         return panel;
     }
 
@@ -411,7 +421,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        _speedNameMap.add(row, new DataPair<String, Float>("", 0f));
+        _speedNameMap.add(row, new DataPair<>("", 0f));
         _speedNameModel.fireTableDataChanged();
     }
 
@@ -438,11 +448,14 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JPanel p = new JPanel();
-        JLabel label = new JLabel(Bundle.getMessage("LabelInterpretation"));
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        p.add(Box.createGlue());
+        JLabel label = new JLabel(Bundle.getMessage("LabelInterpretation", SwingConstants.CENTER));
         label.setToolTipText(Bundle.getMessage("ToolTipInterpretation"));
         p.setToolTipText(Bundle.getMessage("ToolTipInterpretation"));
         p.add(label);
-        panel.add(p);
+        p.add(Box.createGlue());
+        panel.add(p, SwingConstants.CENTER);
         panel.add(buttonPanel, Box.CENTER_ALIGNMENT);
         return panel;
     }
@@ -502,11 +515,18 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         try {
             scale = NumberFormat.getNumberInstance().parse(_rampIncre.getText()).floatValue();
         } catch (java.text.ParseException pe) {
-            _rampIncre.setText(NumberFormat.getNumberInstance().format(preferences.getThrottleIncrement()));
+            _rampIncre.setText(NumberFormat.getNumberInstance().format(preferences.getThrottleIncrement()*100));
         }
-        if (preferences.getThrottleIncrement() != scale) {
-            preferences.setThrottleIncrement(scale);
-            _isDirty = true;
+        if (scale < 0.5f || scale > 25f) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", _rampIncre.getText()),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                
+            _rampIncre.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleIncrement()*100));
+        } else {
+            scale /= 100;
+            if (preferences.getThrottleIncrement() != scale) {
+                preferences.setThrottleIncrement(scale);
+                _isDirty = true;
+            }
         }
 
         scale = preferences.getThrottleScale();

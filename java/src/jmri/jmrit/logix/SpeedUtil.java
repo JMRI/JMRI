@@ -51,7 +51,6 @@ public class SpeedUtil {
     private int _ma;  // milliseconds needed to increase speed by _stepRampThrottleIncrement amount 
     private int _md;  // milliseconds needed to decrease speed by _stepRampThrottleIncrement amount
     private int _mp;  // default milliseconds needed to change speed by _stepRampThrottleIncrement amount
-    private boolean _preferMetric;
 
     public static float SCALE_FACTOR = 125; // divided by _scale, gives a rough correction for track speed
 
@@ -268,7 +267,6 @@ public class SpeedUtil {
         WarrantPreferences preferences = WarrantPreferences.getDefault();
         _stepRampTimeIncrement = preferences.getTimeIncrement();
         _stepRampThrottleIncrement = preferences.getThrottleIncrement();
-        _preferMetric = preferences.preferMetricDisplay();
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
@@ -385,26 +383,6 @@ public class SpeedUtil {
         getSpeedProfile();
     }
     
-    /**
-     * Calculates the scale speed of the current throttle setting for display
-     * @param speedType name of current speed
-     * @return text message
-     */
-//    @SuppressFBWarnings(value="IS2_INCONSISTENT_SYNC", justification="speed type name in message is ok")
-    public String getSpeedMessage(String speedType) {
-        float speed = getTrackSpeed(_throttle.getSpeedSetting(), _throttle.getIsForward()) * _signalSpeedMap.getLayoutScale();
-
-        String units;
-        if (_preferMetric) {
-            units = "Kmph";
-            speed = speed * 3.6f;
-        } else {
-            units = "Mph";
-            speed = speed * 2.2369363f;
-        }
-        return Bundle.getMessage("atSpeed", speedType, Math.round(speed), units);
-    }
-
     // return true if the speed named 'speed2' is strictly greater than that of 'speed1'
     protected boolean secondGreaterThanFirst(String speed1, String speed2) {
         if (speed2 == null) {
@@ -478,8 +456,8 @@ public class SpeedUtil {
                 log.error("Unknown speed interpretation {}", _signalSpeedMap.getInterpretation());
                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _signalSpeedMap.getInterpretation());
         }
-        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, signalSpeed= {}. display {} units",
-                tSpeed, throttleSpeed, signalSpeed, (_preferMetric ? "KMph" : "Mph"));
+        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, signalSpeed= {}. interpretation= {}",
+                tSpeed, throttleSpeed, signalSpeed, _signalSpeedMap.getInterpretation());
         return throttleSpeed;
     }
 

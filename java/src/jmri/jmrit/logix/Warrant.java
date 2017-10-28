@@ -48,10 +48,9 @@ import org.slf4j.LoggerFactory;
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean implements ThrottleListener, java.beans.PropertyChangeListener {
 
-    public static final String Stop = "Stop"; // NOI18N
-    public static final String EStop = "EStop"; // NOI18N
-    public static final String Normal = "Normal"; // NOI18N
-    public static final String Clear = "Clear"; // NOI18N
+    public static final String Stop = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(0.0f); // aspect name
+    public static final String EStop = Bundle.getMessage("EStop");
+    public static final String Normal ="Normal";    // Cannot determine which SignalSystem(s) and their name(s) for "Clear"
 
     // permanent members.
     private List<BlockOrder> _orders;
@@ -552,7 +551,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     return Bundle.getMessage("LostTrain", _trainName, block.getDisplayName());
                 }
                 String blockName = block.getDisplayName();
-                String speed = _speedUtil.getSpeedMessage(_curSpeedType);
+                String speed = getSpeedMessage(_curSpeedType);
 
                 switch (_engineer.getRunState()) {
                     case Warrant.HALT:
@@ -613,6 +612,53 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             default:
         }
         return "ERROR mode= " + MODES[_runMode];
+    }
+
+    /**
+     * Calculates the scale speed of the current throttle setting for display
+     * @param speedType name of current speed
+     * @return text message
+     */
+    private String getSpeedMessage(String speedType) {
+        float speed = 0;
+        String units;
+        SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+        switch (speedMap.getInterpretation()) {
+            case SignalSpeedMap.PERCENT_NORMAL:
+                units = Bundle.getMessage("percentNormal");
+                if (_idxCurrentOrder == _orders.size() - 1 
+                        || _engineer.getCurrentCommandIndex() >= _commands.size() - 1) {
+                    speed = _speedInfo.get(_idxCurrentOrder).getEntranceSpeed();
+                } else {
+                    for (int idx = _engineer.getCurrentCommandIndex(); idx >=0; idx--) {
+                        ThrottleSetting ts = _commands.get(idx);
+                        if ("SPEED".equals(ts.getCommand().toUpperCase())) {
+                            speed = Float.parseFloat(ts.getValue());
+                            break;
+                        }
+                    }                    
+                }
+                speed = (_engineer.getSpeedSetting() / speed) * 100;
+                break;
+            case SignalSpeedMap.PERCENT_THROTTLE:
+                units = Bundle.getMessage("percentThrottle");
+                speed = _engineer.getSpeedSetting() * 100;
+                break;
+            case SignalSpeedMap.SPEED_MPH:
+                units = "Mph";
+                speed = _speedUtil.getTrackSpeed(_engineer.getSpeedSetting(), _engineer.getIsForward()) * speedMap.getLayoutScale();
+                speed = speed * 2.2369363f;
+                break;
+            case SignalSpeedMap.SPEED_KMPH:
+                units = "Kmph";
+                speed = _speedUtil.getTrackSpeed(_engineer.getSpeedSetting(), _engineer.getIsForward()) * speedMap.getLayoutScale();
+                speed = speed * 3.6f;
+                break;
+            default:
+                log.error("Unknown speed interpretation {}", speedMap.getInterpretation());
+                throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + speedMap.getInterpretation());
+        }
+        return Bundle.getMessage("atSpeed", speedType, Math.round(speed), units);
     }
 
     protected void startTracker() {
@@ -1332,7 +1378,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         if (speed == null) {
             return false; // dark or no specified speed
-        } else if (speed.equals(Stop)) {
+        } else if (speed.equals(Warrant.Stop)) {
             _waitForSignal = true;
             return true;
         } else {
@@ -1570,7 +1616,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     // Therefore, assume a Rogue has just entered.
                     setStoppingBlock(block);
                     _engineer.setWaitforClear(true);
-                    _engineer.setSpeedToType(Stop);
+                    _engineer.setSpeedToType(Warrant.Stop);
                     return;
                 }
             }
@@ -1961,14 +2007,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (speedType == null) {
             speedType = _curSpeedType;
         } else {
-            if (speedType.equals(Stop)) {
+            if (speedType.equals(Warrant.Stop)) {
                 // block speed cannot be Stop, so OK to assume signal
                 _waitForSignal = true;
             }
         }
 
         if (block.allocate(this) != null || (block.getState() & OBlock.OCCUPIED) != 0) {
-            speedType = Stop;
+            speedType = Warrant.Stop;
             setStoppingBlock(block);
             if (idxBlockOrder > _idxCurrentOrder) {
                 _waitForBlock = true;
