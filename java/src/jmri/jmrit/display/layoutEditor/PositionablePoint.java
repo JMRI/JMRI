@@ -680,7 +680,7 @@ public class PositionablePoint extends LayoutTrack {
                 result = false; // can't replace null with null
             }
             if (!result) {
-                log.error("Attempt to remove non-existant track connection");
+                log.error("Attempt to remove non-existant track connection: {}", oldTrack.getName());
             }
         } else // already connected to newTrack?
         if ((connect1 != newTrack) && (connect2 != newTrack)) {
@@ -700,6 +700,9 @@ public class PositionablePoint extends LayoutTrack {
                 log.error("Attempt to assign more than allowed number of connections");
                 result = false;
             }
+        } else {
+                log.error("Already connected to {}", newTrack.getName());
+                result = false;
         }
         return result;
     }
@@ -920,7 +923,7 @@ public class PositionablePoint extends LayoutTrack {
                                     PositionablePoint pp = (PositionablePoint) newConnect2;
                                     pp.replaceTrackConnection(connect2, connect1);
                                 } else {
-                                    layoutEditor.setLink(connect1, TRACK, newConnect2, newType2);
+                                    layoutEditor.setLink(newConnect2, newType2, connect1, TRACK);
                                 }
                                 // connect the track at my connect1 to the newConnect2
                                 if (connect1.getConnect1() == pp_this) {
