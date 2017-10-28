@@ -152,9 +152,6 @@ public class OperationsBackupTest extends TestCase {
 
         FileUtil.createDirectory("temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName());
 
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
         // Delete any existing auto or default backup sets
         if (autoBackupRoot.exists()) {
             for (File f : autoBackupRoot.listFiles()) {
@@ -183,8 +180,6 @@ public class OperationsBackupTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        // restore locale
-        Locale.setDefault(Locale.getDefault());
         apps.tests.Log4JFixture.tearDown();
         deleteTestFiles();
     }

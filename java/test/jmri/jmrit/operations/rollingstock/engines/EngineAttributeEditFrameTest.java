@@ -43,7 +43,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
 
