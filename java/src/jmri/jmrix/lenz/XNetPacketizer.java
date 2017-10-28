@@ -5,19 +5,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from XNet messages. The "XNetInterface" side
- * sends/receives XNetMessage objects. The connection to a XNetPortController is
+ * sends/receives XNetMessage objects. The connection to an XNetPortController is
  * via a pair of Streams, which then carry sequences of characters for
  * transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
+ * <ul>
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -26,10 +26,6 @@ public class XNetPacketizer extends XNetTrafficController {
     public XNetPacketizer(LenzCommandStation pCommandStation) {
         super(pCommandStation);
         // The instance method (from XNetTrafficController) is deprecated
-        // But for the moment we need to make sure we set the static
-        // self variable, and hte instance method does this for us in a
-        // static way (which makes findbugs happy).
-        //instance();
     }
 
 // The methods to implement the XNetInterface

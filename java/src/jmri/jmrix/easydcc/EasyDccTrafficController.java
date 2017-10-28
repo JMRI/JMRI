@@ -1,7 +1,6 @@
 package jmri.jmrix.easydcc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -30,9 +29,9 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     /**
      * Ctor
      *
-     * @param adaptermemo associated SystemConnectionMemo
+     * @param adaptermemo the associated SystemConnectionMemo
      */
-    public EasyDccTrafficController(@Nonnull EasyDccSystemConnectionMemo adaptermemo) {
+    public EasyDccTrafficController(EasyDccSystemConnectionMemo adaptermemo) {
         super();
         mMemo = adaptermemo;
         log.debug("creating a new EasyDccTrafficController object");

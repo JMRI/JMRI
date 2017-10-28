@@ -111,7 +111,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     }
 
     /**
-     * Set up all of the other objects to operate with a XNetSimulator connected
+     * Set up all of the other objects to operate with an XNetSimulator connected
      * to this port.
      */
     @Override

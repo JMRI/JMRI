@@ -421,4 +421,5 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class);
+
 }

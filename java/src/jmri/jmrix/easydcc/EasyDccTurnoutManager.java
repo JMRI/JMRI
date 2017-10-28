@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Implement turnout manager for EasyDcc systems.
  * <p>
  * System names are "ETnnn", where nnn is the turnout number
- * without padding, E is user configurable
+ * without padding, E is user configurable.
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */

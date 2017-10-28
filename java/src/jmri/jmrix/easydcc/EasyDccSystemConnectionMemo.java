@@ -53,6 +53,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
+    private EasyDccTrafficController et;
 
     /**
      * Provide access to the TrafficController for this particular connection.
@@ -71,8 +72,6 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         // set the systemConnectionMemo in the traffic controller
         et.setSystemConnectionMemo(this);
     }
-
-    private EasyDccTrafficController et;
 
     /**
      * Configure the common managers for EasyDCC connections. This puts the
