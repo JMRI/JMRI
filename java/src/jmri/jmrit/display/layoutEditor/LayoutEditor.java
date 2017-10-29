@@ -67,6 +67,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -142,7 +143,6 @@ import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.jmrit.signalling.AddEntryExitPairAction;
 import jmri.util.ColorUtil;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
@@ -427,17 +427,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
     private JCheckBoxMenuItem highlightSelectedBlockCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
     private JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
     private JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
-
-    private ButtonGroup trackColorButtonGroup = null;
-    private ButtonGroup trackOccupiedColorButtonGroup = null;
-    private ButtonGroup trackAlternativeColorButtonGroup = null;
-    private ButtonGroup textColorButtonGroup = null;
-    private ButtonGroup backgroundColorButtonGroup = null;
-    private ButtonGroup turnoutCircleColorButtonGroup = null;
     private ButtonGroup turnoutCircleSizeButtonGroup = null;
 
     private boolean turnoutDrawUnselectedLeg = true;
@@ -560,7 +552,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     JPanel blockPropertiesPanel = null;
 
     //A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
-    private transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    protected transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
     //Antialiasing rendering
     private static final RenderingHints antialiasing = new RenderingHints(
@@ -641,7 +633,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         setupOptionMenu(menuBar);
 
         //setup Tools menu
-        setupToolsMenu(menuBar);
+        getLETools().setupToolsMenu(menuBar);
 
         //setup Zoom menu
         setupZoomMenu(menuBar);
@@ -2139,123 +2131,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //initStringsToVTCodes
 
-    private transient AddEntryExitPairAction entryExit = null;
-
-    protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
-        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
-
-        toolsMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuToolsMnemonic")));
-        menuBar.add(toolsMenu);
-
-        //setup checks menu
-        getLEChecks().setupChecksMenu(toolsMenu);
-
-        //scale track diagram
-        JMenuItem scaleItem = new JMenuItem(Bundle.getMessage("ScaleTrackDiagram") + "...");
-        toolsMenu.add(scaleItem);
-        scaleItem.addActionListener((ActionEvent event) -> {
-            //bring up scale track diagram dialog
-            scaleTrackDiagram();
-        });
-
-        //translate selection
-        JMenuItem moveItem = new JMenuItem(Bundle.getMessage("TranslateSelection") + "...");
-        toolsMenu.add(moveItem);
-        moveItem.addActionListener((ActionEvent event) -> {
-            //bring up translate selection dialog
-            moveSelection();
-        });
-
-        //undo translate selection
-        JMenuItem undoMoveItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
-        toolsMenu.add(undoMoveItem);
-        undoMoveItem.addActionListener((ActionEvent event) -> {
-            //undo previous move selection
-            undoMoveSelection();
-        });
-
-        //reset turnout size to program defaults
-        JMenuItem undoTurnoutSize = new JMenuItem(Bundle.getMessage("ResetTurnoutSize"));
-        toolsMenu.add(undoTurnoutSize);
-        undoTurnoutSize.addActionListener((ActionEvent event) -> {
-            //undo previous move selection
-            resetTurnoutSize();
-        });
-        toolsMenu.addSeparator();
-
-        //skip turnout
-        skipTurnoutCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SkipInternalTurnout"));
-        toolsMenu.add(skipTurnoutCheckBoxMenuItem);
-        skipTurnoutCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setIncludedTurnoutSkipped(skipTurnoutCheckBoxMenuItem.isSelected());
-        });
-        skipTurnoutCheckBoxMenuItem.setSelected(isIncludedTurnoutSkipped());
-
-        //set signals at turnout
-        JMenuItem turnoutItem = new JMenuItem(Bundle.getMessage("SignalsAtTurnout") + "...");
-        toolsMenu.add(turnoutItem);
-        turnoutItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at turnout tool dialog
-            getLETools().setSignalsAtTurnout(signalIconEditor, signalFrame);
-        });
-
-        //set signals at block boundary
-        JMenuItem boundaryItem = new JMenuItem(Bundle.getMessage("SignalsAtBoundary") + "...");
-        toolsMenu.add(boundaryItem);
-        boundaryItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at block boundary tool dialog
-            getLETools().setSignalsAtBlockBoundary(signalIconEditor, signalFrame);
-        });
-
-        //set signals at crossover turnout
-        JMenuItem xoverItem = new JMenuItem(Bundle.getMessage("SignalsAtXoverTurnout") + "...");
-        toolsMenu.add(xoverItem);
-        xoverItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at double crossover tool dialog
-            getLETools().setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
-        });
-
-        //set signals at level crossing
-        JMenuItem xingItem = new JMenuItem(Bundle.getMessage("SignalsAtLevelXing") + "...");
-        toolsMenu.add(xingItem);
-        xingItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at level crossing tool dialog
-            getLETools().setSignalsAtLevelXing(signalIconEditor, signalFrame);
-        });
-
-        //set signals at throat-to-throat turnouts
-        JMenuItem tToTItem = new JMenuItem(Bundle.getMessage("SignalsAtTToTTurnout") + "...");
-        toolsMenu.add(tToTItem);
-        tToTItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at throat-to-throat turnouts tool dialog
-            getLETools().setSignalsAtThroatToThroatTurnouts(signalIconEditor, signalFrame);
-        });
-
-        //set signals at 3-way turnout
-        JMenuItem way3Item = new JMenuItem(Bundle.getMessage("SignalsAt3WayTurnout") + "...");
-        toolsMenu.add(way3Item);
-        way3Item.addActionListener((ActionEvent event) -> {
-            //bring up signals at 3-way turnout tool dialog
-            getLETools().setSignalsAt3WayTurnout(signalIconEditor, signalFrame);
-        });
-
-        JMenuItem slipItem = new JMenuItem(Bundle.getMessage("SignalsAtSlip") + "...");
-        toolsMenu.add(slipItem);
-        slipItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at throat-to-throat turnouts tool dialog
-            getLETools().setSignalsAtSlip(signalIconEditor, signalFrame);
-        });
-
-        JMenuItem entryExitItem = new JMenuItem(Bundle.getMessage("EntryExit") + "...");
-        toolsMenu.add(entryExitItem);
-        entryExitItem.addActionListener((ActionEvent event) -> {
-            if (entryExit == null) {
-                entryExit = new jmri.jmrit.signalling.AddEntryExitPairAction("ENTRY EXIT", LayoutEditor.this);
-            }
-            entryExit.actionPerformed(event);
-        });
-    } //setupToolsMenu
-
     /**
      * Set up the Option menu.
      *
@@ -2756,22 +2631,21 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //
         //background color menu item
         //
-        JMenu backgroundColorMenu = new JMenu(Bundle.getMessage("SetBackgroundColor"));
-        backgroundColorButtonGroup = new ButtonGroup();
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Black"), Color.black);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Gray"), Color.gray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("White"), Color.white);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Red"), Color.red);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Pink"), Color.pink);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Green"), Color.green);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Blue"), Color.blue);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
-        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
-        optionMenu.add(backgroundColorMenu);
+        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor"));
+
+        backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("SetBackgroundColor"),
+                                 defaultBackgroundColor);
+            if (desiredColor!=null && !defaultBackgroundColor.equals(desiredColor)) {
+               defaultBackgroundColor = desiredColor;
+               setBackgroundColor(desiredColor);
+               setDirty();
+               redrawPanel();
+           }
+        });
+
+        optionMenu.add(backgroundColorMenuItem);
 
         //
         //add fast clock menu item
@@ -2836,76 +2710,63 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenu trkColourMenu = new JMenu(Bundle.getMessage("TrackColorSubMenu"));
         optionMenu.add(trkColourMenu);
 
-        JMenu trackColorMenu = new JMenu(Bundle.getMessage("DefaultTrackColor"));
-        trackColorButtonGroup = new ButtonGroup();
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Black"), Color.black);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Gray"), Color.gray);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("White"), Color.white);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Red"), Color.red);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Pink"), Color.pink);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Green"), Color.green);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Blue"), Color.blue);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
-        trkColourMenu.add(trackColorMenu);
+        JMenuItem trackColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTrackColor"));
 
-        JMenu trackOccupiedColorMenu = new JMenu(Bundle.getMessage("DefaultOccupiedTrackColor"));
-        trackOccupiedColorButtonGroup = new ButtonGroup();
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Black"), Color.black);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Gray"), Color.gray);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("White"), Color.white);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Red"), Color.red);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Pink"), Color.pink);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Green"), Color.green);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Blue"), Color.blue);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
-        trkColourMenu.add(trackOccupiedColorMenu);
+        trackColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("DefaultTrackColor"),
+                                 defaultTrackColor);
+            if (desiredColor!=null && !defaultTrackColor.equals(desiredColor)) {
+               setDefaultTrackColor(desiredColor);
+               setDirty();
+               redrawPanel();
+           }
+        });
+        trkColourMenu.add(trackColorMenuItem);
 
-        JMenu trackAlternativeColorMenu = new JMenu(Bundle.getMessage("DefaultAlternativeTrackColor"));
-        trackAlternativeColorButtonGroup = new ButtonGroup();
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Black"), Color.black);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Gray"), Color.gray);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("White"), Color.white);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Red"), Color.red);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Pink"), Color.pink);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Green"), Color.green);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Blue"), Color.blue);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
-        trkColourMenu.add(trackAlternativeColorMenu);
+        JMenuItem trackOccupiedColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultOccupiedTrackColor"));
+        trackOccupiedColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("DefaultOccupiedTrackColor"),
+                                 defaultOccupiedTrackColor);
+            if (desiredColor!=null && !defaultOccupiedTrackColor.equals(desiredColor)) {
+               setDefaultOccupiedTrackColor(desiredColor);
+               setDirty();
+               redrawPanel();
+           }
+        });
+        trkColourMenu.add(trackOccupiedColorMenuItem);
+
+        JMenuItem trackAlternativeColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultAlternativeTrackColor"));
+
+        trackAlternativeColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("DefaultAlternativeTrackColor"),
+                                 defaultAlternativeTrackColor);
+            if (desiredColor!=null && !defaultAlternativeTrackColor.equals(desiredColor)) {
+               setDefaultAlternativeTrackColor(desiredColor);
+               setDirty();
+               redrawPanel();
+           }
+        });
+        trkColourMenu.add(trackAlternativeColorMenuItem);
 
         //
         //add text color menu item
         //
-        JMenu textColorMenu = new JMenu(Bundle.getMessage("DefaultTextColor"));
-        textColorButtonGroup = new ButtonGroup();
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Black"), Color.black);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Gray"), Color.gray);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("White"), Color.white);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Red"), Color.red);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Pink"), Color.pink);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Green"), Color.green);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Blue"), Color.blue);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
-        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
-        optionMenu.add(textColorMenu);
+        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor"));
+
+        textColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("DefaultTextColor"),
+                                 defaultTextColor);
+            if (desiredColor!=null && !defaultTextColor.equals(desiredColor)) {
+               setDefaultTextColor(desiredColor);
+               setDirty();
+               redrawPanel();
+           }
+        });
+        optionMenu.add(textColorMenuItem);
 
         //
         //add turnout options submenu
@@ -2923,23 +2784,19 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         turnoutCirclesOnCheckBoxMenuItem.setSelected(turnoutCirclesWithoutEditMode);
 
         //select turnout circle color
-        JMenu turnoutCircleColorMenu = new JMenu(Bundle.getMessage("TurnoutCircleColor"));
-        turnoutCircleColorButtonGroup = new ButtonGroup();
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("UseDefaultTrackColor"), null);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Black"), Color.black);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Gray"), Color.gray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("White"), Color.white);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Red"), Color.red);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Pink"), Color.pink);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Green"), Color.green);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Blue"), Color.blue);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
-        turnoutOptionsMenu.add(turnoutCircleColorMenu);
+        JMenuItem turnoutCircleColorMenuItem = new JMenuItem(Bundle.getMessage("TurnoutCircleColor"));
+
+        turnoutCircleColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("TurnoutCircleColor"),
+                                 turnoutCircleColor);
+            if (desiredColor!=null && !turnoutCircleColor.equals(desiredColor)) {
+               setTurnoutCircleColor(desiredColor);
+               setDirty();
+               redrawPanel();
+           }
+        });
+        turnoutOptionsMenu.add(turnoutCircleColorMenuItem);
 
         //select turnout circle size
         JMenu turnoutCircleSizeMenu = new JMenu(Bundle.getMessage("TurnoutCircleSize"));
@@ -3780,6 +3637,17 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         super.removeMarkers();
         redrawPanel();
     } //removeMarkers
+
+    /**
+     * Assign the block from the toolbar to all selected layout tracks
+     */
+    protected void assignBlockToSelection() {
+        String newName = blockIDComboBox.getDisplayName();
+        LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
+        for (LayoutTrack lt : _layoutTrackSelection) {
+            lt.setAllLayoutBlocks(b);
+        }
+    }
 
     /*======================================*\
     |* Dialog box to enter new track widths *|
@@ -4853,114 +4721,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return result;
     }
 
-    private void addBackgroundColorMenuEntry(
-            @Nonnull JMenu inMenu,
-            @Nonnull String inName,
-            @Nonnull final Color inColor) {
-        ActionListener a = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if (!defaultBackgroundColor.equals(inColor)) {
-                    defaultBackgroundColor = inColor;
-                    setBackgroundColor(inColor);
-                    setDirty();
-                    redrawPanel();
-                }
-            }
-        };
-        addButtonGroupMenuEntry(inMenu, backgroundColorButtonGroup, inName,
-                inColor == defaultBackgroundColor, a);
-    } //addBackgroundColorMenuEntry
-
-    private void addTrackColorMenuEntry(
-            @Nonnull JMenu inMenu,
-            @Nonnull String inName,
-            @Nonnull final Color inColor) {
-        ActionListener a = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if (!defaultTrackColor.equals(inColor)) {
-                    LayoutTrack.setDefaultTrackColor(inColor);
-                    defaultTrackColor = inColor;
-                    setDirty();
-                    redrawPanel();
-                }
-            } //actionPerformed
-        };
-        addButtonGroupMenuEntry(inMenu, trackColorButtonGroup, inName,
-                inColor == defaultTrackColor, a);
-    } //addTrackColorMenuEntry
-
-    private void addTrackOccupiedColorMenuEntry(
-            @Nonnull JMenu inMenu,
-            @Nonnull String inName,
-            @Nonnull final Color inColor) {
-        ActionListener a = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if (!defaultOccupiedTrackColor.equals(inColor)) {
-                    defaultOccupiedTrackColor = inColor;
-                    setDirty();
-                    redrawPanel();
-                }
-            } //actionPerformed
-        };
-        addButtonGroupMenuEntry(inMenu, trackOccupiedColorButtonGroup, inName,
-                inColor == defaultOccupiedTrackColor, a);
-    } //addTrackOccupiedColorMenuEntry
-
-    private void addTrackAlternativeColorMenuEntry(
-            @Nonnull JMenu inMenu,
-            @Nonnull String inName,
-            @Nonnull final Color inColor) {
-        ActionListener a = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if (!defaultAlternativeTrackColor.equals(inColor)) {
-                    defaultAlternativeTrackColor = inColor;
-                    setDirty();
-                    redrawPanel();
-                }
-            } //actionPerformed
-        };
-        addButtonGroupMenuEntry(inMenu, trackAlternativeColorButtonGroup, inName,
-                inColor == defaultAlternativeTrackColor, a);
-    } //addTrackAlternativeColorMenuEntry
-
-    private void addTextColorMenuEntry(
-            @Nonnull JMenu inMenu,
-            @Nonnull String inName,
-            @Nonnull final Color inColor) {
-        ActionListener a = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if (!defaultTextColor.equals(inColor)) {
-                    defaultTextColor = inColor;
-                    setDirty();
-                    redrawPanel();
-                }
-            } //actionPerformed
-        };
-        addButtonGroupMenuEntry(inMenu, textColorButtonGroup, inName,
-                inColor == defaultTextColor, a);
-    } //addTextColorMenuEntry
-
-    private void addTurnoutCircleColorMenuEntry(
-            @Nonnull JMenu inMenu,
-            @Nonnull String inName,
-            @Nullable final Color inColor) {
-        ActionListener a = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setTurnoutCircleColor(ColorUtil.colorToString(inColor));
-                setDirty();
-                redrawPanel();
-            } //actionPerformed
-        };
-        addButtonGroupMenuEntry(inMenu, turnoutCircleColorButtonGroup, inName,
-                (inColor != null) && (inColor == turnoutCircleColor), a);
-    } //addTurnoutCircleColorMenuEntry
-
     private void addTurnoutCircleSizeMenuEntry(
             @Nonnull JMenu inMenu,
             @Nonnull String inName,
@@ -4989,49 +4749,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             button.setSelected(buttonName.equals(tcs));
         }
     } //setOptionMenuTurnoutCircleSize
-
-    protected void setOptionMenuTurnoutCircleColor() {
-        setOptionMenuColor(turnoutCircleColorButtonGroup, turnoutCircleColor);
-        // if nothing is selected...
-        if (turnoutCircleSizeButtonGroup.getSelection() == null) {
-            // then select the 1st button
-            Enumeration e = turnoutCircleColorButtonGroup.getElements();
-            AbstractButton button = (AbstractButton) e.nextElement();
-            button.setSelected(true);
-        }
-    } //setOptionMenuTurnoutCircleColor
-
-    protected void setOptionMenuTextColor() {
-        setOptionMenuColor(textColorButtonGroup, defaultTextColor);
-    } //setOptionMenuTextColor
-
-    protected void setOptionMenuBackgroundColor() {
-        setOptionMenuColor(backgroundColorButtonGroup, defaultBackgroundColor);
-    } //setOptionMenuBackgroundColor
-
-    protected void setOptionMenuTrackColor() {
-        setOptionMenuColor(trackColorButtonGroup, defaultTrackColor);
-        setOptionMenuColor(trackOccupiedColorButtonGroup, defaultOccupiedTrackColor);
-        setOptionMenuColor(trackAlternativeColorButtonGroup, defaultAlternativeTrackColor);
-    } //setOptionMenuTrackColor
-
-    private void setOptionMenuColor(
-            @Nonnull ButtonGroup inButtonGroup,
-            @Nullable Color inColor) {
-        Enumeration e = inButtonGroup.getElements();
-        while (e.hasMoreElements()) {
-            AbstractButton button = (AbstractButton) e.nextElement();
-            String buttonName = button.getText().replaceAll("\\s+", "");
-            if (buttonName.equals("UseDefaultTrackColor")) {
-                button.setSelected(false);
-            } else {
-                // make 1st character lower case
-                buttonName = Character.toLowerCase(buttonName.charAt(0)) + buttonName.substring(1);
-                Color buttonColor = ColorUtil.stringToColor(buttonName);
-                button.setSelected(buttonColor == inColor);
-            }
-        }
-    }
 
     @Override
     public void setScroll(int state) {
@@ -7093,8 +6810,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         setDirty();
 
         //link to connected objects
-        setLink(newTrack, LayoutTrack.TRACK, beginObject, beginPointType);
-        setLink(newTrack, LayoutTrack.TRACK, foundObject, foundPointType);
+        setLink(beginObject, beginPointType, newTrack, LayoutTrack.TRACK);
+        setLink(foundObject, foundPointType, newTrack, LayoutTrack.TRACK);
 
         //check on layout block
         String newName = blockIDComboBox.getDisplayName();
@@ -7405,77 +7122,82 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //validatePhysicalTurnout
 
     /**
-     * Adds a link in the 'to' object to the 'from' object
+     * link the 'from' object and type to the 'to' object and type
+     * @param fromObject the object to link from
+     * @param fromPointType the object type to link from
+     * @param toObject the object to link to
+     * @param toPointType the object type to link to
      */
     protected void setLink(@Nonnull LayoutTrack fromObject, int fromPointType,
             @Nonnull LayoutTrack toObject, int toPointType) {
-        switch (toPointType) {
+        switch (fromPointType) {
             case LayoutTrack.POS_POINT: {
-                if (fromPointType == LayoutTrack.TRACK) {
-                    ((PositionablePoint) toObject).setTrackConnection((TrackSegment) fromObject);
+                if (toPointType == LayoutTrack.TRACK) {
+                    ((PositionablePoint) fromObject).setTrackConnection((TrackSegment) toObject);
                 } else {
-                    log.error("Attempt to set a non-TRACK connection to a Positionable Point");
+                    log.error("Attempt to link a non-TRACK connection ('{}')to a Positionable Point ('{}')", 
+                            toObject.getName(), fromObject.getName());
                 }
                 break;
             }
 
             case LayoutTrack.TURNOUT_A: {
-                ((LayoutTurnout) toObject).setConnectA(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_B: {
-                ((LayoutTurnout) toObject).setConnectB(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_C: {
-                ((LayoutTurnout) toObject).setConnectC(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_D: {
-                ((LayoutTurnout) toObject).setConnectD(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_A: {
-                ((LevelXing) toObject).setConnectA(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_B: {
-                ((LevelXing) toObject).setConnectB(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_C: {
-                ((LevelXing) toObject).setConnectC(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_D: {
-                ((LevelXing) toObject).setConnectD(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_A: {
-                ((LayoutSlip) toObject).setConnectA(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_B: {
-                ((LayoutSlip) toObject).setConnectB(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_C: {
-                ((LayoutSlip) toObject).setConnectC(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_D: {
-                ((LayoutSlip) toObject).setConnectD(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
@@ -7486,9 +7208,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
 
             default: {
-                if ((toPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (fromPointType == LayoutTrack.TRACK)) {
-                    ((LayoutTurntable) toObject).setRayConnect((TrackSegment) fromObject,
-                            toPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+                if ((fromPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (toPointType == LayoutTrack.TRACK)) {
+                    ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
+                            fromPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
                 break;
             }
@@ -9063,23 +8785,23 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public String getDefaultTrackColor() {
-        return ColorUtil.colorToString(defaultTrackColor);
+        return ColorUtil.colorToColorName(defaultTrackColor);
     }
 
     public String getDefaultOccupiedTrackColor() {
-        return ColorUtil.colorToString(defaultOccupiedTrackColor);
+        return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
     }
 
     public String getDefaultAlternativeTrackColor() {
-        return ColorUtil.colorToString(defaultAlternativeTrackColor);
+        return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
     }
 
     public String getDefaultTextColor() {
-        return ColorUtil.colorToString(defaultTextColor);
+        return ColorUtil.colorToColorName(defaultTextColor);
     }
 
     public String getTurnoutCircleColor() {
-        return ColorUtil.colorToString(turnoutCircleColor);
+        return ColorUtil.colorToColorName(turnoutCircleColor);
     }
 
     public int getTurnoutCircleSize() {
@@ -9217,27 +8939,72 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         sideTrackWidth = w;
     }
 
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultTrackColor(@Nonnull String colorName) {
-        defaultTrackColor = ColorUtil.stringToColor(colorName);
-        setOptionMenuTrackColor();
+        setDefaultTrackColor(ColorUtil.stringToColor(colorName));
     }
 
+    /**
+     * @param color value to set the defalut track color to.
+     */
+    public void setDefaultTrackColor(@Nonnull Color color){
+        LayoutTrack.setDefaultTrackColor(color);
+        defaultTrackColor = color;
+    }
+
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultOccupiedTrackColor(@Nonnull String colorName) {
-        defaultOccupiedTrackColor = ColorUtil.stringToColor(colorName);
-        setOptionMenuTrackColor();
+        setDefaultOccupiedTrackColor(ColorUtil.stringToColor(colorName));
     }
 
+    /**
+     * @param color value to set the defalut occupied track color to.
+     */
+    public void setDefaultOccupiedTrackColor(@Nonnull Color color){
+        defaultOccupiedTrackColor = color;
+    }
+
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultAlternativeTrackColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultAlternativeTrackColor(@Nonnull String colorName) {
-        defaultAlternativeTrackColor = ColorUtil.stringToColor(colorName);
-        setOptionMenuTrackColor();
+        setDefaultAlternativeTrackColor(ColorUtil.stringToColor(colorName));
     }
 
+    /**
+     * @param color value to set the defalut alternate track color to.
+     */
+    public void setDefaultAlternativeTrackColor(@Nonnull Color color){
+        defaultAlternativeTrackColor = color;
+    }
+
+    /**
+     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)} instead. 
+     */
+    @Deprecated
     public void setTurnoutCircleColor(@Nonnull String colorName) {
         if (colorName.equals("track")) {
             colorName = getDefaultTrackColor();
         }
-        turnoutCircleColor = ColorUtil.stringToColor(colorName);
-        setOptionMenuTurnoutCircleColor();
+        setTurnoutCircleColor(ColorUtil.stringToColor(colorName));
+    }
+
+    /**
+     * @param color new color for turnout circle.
+     */ 
+    public void setTurnoutCircleColor(Color color) {
+        if (color==null) {
+            turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
+        } else {
+            turnoutCircleColor = color;
+        }
     }
 
     public void setTurnoutCircleSize(int size) {
@@ -9258,14 +9025,34 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //setTurnoutDrawUnselectedLeg
 
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultTextColor(@Nonnull String colorName) {
-        defaultTextColor = ColorUtil.stringToColor(colorName);
-        setOptionMenuTextColor();
+        setDefaultTextColor(ColorUtil.stringToColor(colorName));
     }
 
+    /**
+     * @param color value to set the defalut text color to.
+     */
+    public void setDefaultTextColor(@Nonnull Color color){
+        defaultTextColor = color;
+    }
+
+    /**
+     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)} instead. 
+     */
+    @Deprecated
     public void setDefaultBackgroundColor(@Nonnull String colorName) {
-        defaultBackgroundColor = ColorUtil.stringToColor(colorName);
-        setOptionMenuBackgroundColor();
+        setDefaultBackgroundColor(ColorUtil.stringToColor(colorName));
+    }
+
+    /**
+     * @param color value to set the panel background to.
+     */
+    public void setDefaultBackgroundColor(@Nonnull Color color){
+        defaultBackgroundColor = color;
     }
 
     public void setXScale(double xSc) {
@@ -9504,7 +9291,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     //reset turnout sizes to program defaults
-    private void resetTurnoutSize() {
+    protected void resetTurnoutSize() {
         turnoutBX = LayoutTurnout.turnoutBXDefault;
         turnoutCX = LayoutTurnout.turnoutCXDefault;
         turnoutWid = LayoutTurnout.turnoutWidDefault;
@@ -9749,7 +9536,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Rectangle targetRect = targetPanel.getVisibleRect();
         // this will make it the size of the targetRect
         // (effectively centering it onscreen)
-        Rectangle2D selRect2D = MathUtil.inset(selectionRect, 
+        Rectangle2D selRect2D = MathUtil.inset(selectionRect,
                 (selectionRect.getWidth() - targetRect.getWidth()) / 2.0,
                 (selectionRect.getHeight() - targetRect.getHeight()) / 2.0);
         // don't let the origin go negative
