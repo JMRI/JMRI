@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -41,7 +40,7 @@
   <variable CV="3" label="Accel">
     <decVal max="31"/>
     <label xml:lang="it">Accellerazione</label>
-    <label xml:lang="fr">AccÃ©lÃ©ration</label>
+    <label xml:lang="fr">Accélération</label>
     <label xml:lang="de">Beschleunigungszeit</label>
   </variable>
   
@@ -49,7 +48,7 @@
   <variable CV="4" item="Decel" label="Deceleration">
     <decVal max="31"/>
     <label xml:lang="it">Decellerazione</label>
-    <label xml:lang="fr">DÃ©cÃ©lÃ©ration</label>
+    <label xml:lang="fr">Décélération</label>
     <label xml:lang="de">Bremszeit</label>
   </variable>
   
@@ -57,7 +56,7 @@
   <variable CV="7" readOnly="yes" item="Decoder Version">
     <decVal/>
     <label xml:lang="it">Versione Decoder Costruttore: </label>
-    <label xml:lang="fr">Version dÃ©codeur: </label>
+    <label xml:lang="fr">Version décodeur: </label>
     <label xml:lang="de">Decoder Version: </label>
   </variable>
   

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <a href="http://jmri.org/help/en/html/tools/automation/viaJava.shtml">JMRI
  * Layout Automation in Java page</a>.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @see jmri.jmrit.automat.SampleAutomatonAction
  */
 public class SampleAutomaton extends AbstractAutomaton {
@@ -107,6 +107,6 @@ public class SampleAutomaton extends AbstractAutomaton {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SampleAutomaton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SampleAutomaton.class);
 
 }

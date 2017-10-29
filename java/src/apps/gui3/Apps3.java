@@ -50,13 +50,17 @@ import org.slf4j.LoggerFactory;
  * There are a large number of missing features marked with TODO in comments
  * including code from the earlier implementation.
  * <P>
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public abstract class Apps3 extends AppsBase {
 
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     * <ul>
+     * <li> Operations from {@link AppsBase#preInit(String)}
+     * <li> Initialize the console support
+     * </ul>
      *
      * @param applicationName application name
      */
@@ -136,7 +140,7 @@ public abstract class Apps3 extends AppsBase {
         // tell help to use default browser for external types
         SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-        // help items are set in the various Tree/Menu/Toolbar constructors        
+        // help items are set in the various Tree/Menu/Toolbar constructors
     }
 
     abstract protected void createMainFrame();
@@ -315,15 +319,15 @@ public abstract class Apps3 extends AppsBase {
         }
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
-        // a system property jmri.profile as a profile id.
+        // a system property org.jmri.profile as a profile id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
-        if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
+        if (!profileFile.exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
-                    // notify user of change only if migration occured
+                    // notify user of change only if migration occurred
                     // TODO: a real migration message
                     JOptionPane.showMessageDialog(sp,
                             Bundle.getMessage("ConfigMigratedToProfile"),
@@ -343,7 +347,8 @@ public abstract class Apps3 extends AppsBase {
             // Manually setting the configFilename property since calling
             // Apps.setConfigFilename() does not reset the system property
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
-            log.info("Starting with profile {}", ProfileManager.getDefault().getActiveProfile().getId());
+            Profile profile = ProfileManager.getDefault().getActiveProfile();
+            log.info("Starting with profile {}", profile != null ? profile.getId() : "<none>");
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
@@ -363,15 +368,16 @@ public abstract class Apps3 extends AppsBase {
         super.setAndLoadPreferenceFile();
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
             // this was logged in the super method
+            Profile profile = ProfileManager.getDefault().getActiveProfile();
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", ProfileManager.getDefault().getActiveProfile().getName()),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile != null ? profile.getName() : "<none>"),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Apps3.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Apps3.class);
 
 }

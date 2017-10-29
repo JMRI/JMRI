@@ -250,7 +250,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             for (RouteLocation rld : train.getRoute().getLocationsBySequenceList()) {
                 for (Car car : carList) {
                     if (pickedUp.contains(car.getId())
-                            || (Setup.isSortByTrackEnabled() && !splitString(track.getName()).equals(
+                            || (Setup.isSortByTrackNameEnabled() && !splitString(track.getName()).equals(
                                     splitString(car.getTrackName())))) {
                         continue;
                     }
@@ -287,7 +287,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             trackNames.add(splitString(track.getName())); // use a track name once
             for (Car car : carList) {
                 if (dropped.contains(car.getId())
-                        || (Setup.isSortByTrackEnabled() && !splitString(track.getName()).equals(
+                        || (Setup.isSortByTrackNameEnabled() && !splitString(track.getName()).equals(
                                 splitString(car.getDestinationTrackName())))) {
                     continue;
                 }

@@ -2,7 +2,7 @@ package jmri.jmrix.nce;
 
 /*
  * Identifying class representing a NCE communications port
- * @author			Bob Jacobsen    Copyright (C) 2001
+ * @author   Bob Jacobsen    Copyright (C) 2001
  */
 public abstract class NcePortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream

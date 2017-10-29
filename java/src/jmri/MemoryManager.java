@@ -1,7 +1,6 @@
 package jmri;
 
 import java.util.List;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -37,12 +36,12 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  * @see jmri.Memory
  * @see jmri.managers.AbstractMemoryManager
  * @see jmri.InstanceManager
  */
-public interface MemoryManager extends Manager {
+public interface MemoryManager extends Manager<Memory> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a

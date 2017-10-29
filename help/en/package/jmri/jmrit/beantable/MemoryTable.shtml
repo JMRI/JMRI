@@ -19,9 +19,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>The Memory Variable Table</h1>You can use the Memory
+      <h1>The Memory Variable Table</h1>
+      <p>You can use the Memory
       Variable Table to look at the contents of JMRI memory
-      variables.
+        variables.</p>
 
       <p>Note that you can sort the table by each of the columns,
       just click on the column heading.</p>
@@ -31,13 +32,16 @@
       row. Enter a new value, followed by hitting the Return or
       Enter key to store the value.</p>
 
+      <a name="addMemory" id="addMemory"></a>
+      <h2>Adding a new Memory</h2>
       <p>To create a new Memory Variable, click on the "<a href=
       "MemoryAddEdit.shtml">Add...</a>" button at the bottom left
       of the pane.</p>
 
       <p>For more information on Memory Variables, see the <a href=
       "../../../../html/tools/Memories.shtml">Memory Variables help
-      page</a>. <!--#include virtual="/Footer" --></p>
+      page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

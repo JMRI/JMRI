@@ -28,7 +28,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 public class VSDOptionsDialog extends JDialog {
@@ -73,5 +73,5 @@ public class VSDOptionsDialog extends JDialog {
     }
 
     // Log not used... yet...
-    //    private static final Logger log = LoggerFactory.getLogger(VSDOptionsDialog.class.getName());
+    //    private static final Logger log = LoggerFactory.getLogger(VSDOptionsDialog.class);
 }

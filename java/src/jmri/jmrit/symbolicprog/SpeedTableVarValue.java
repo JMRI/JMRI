@@ -67,7 +67,7 @@ import org.slf4j.LoggerFactory;
  * _value is a holdover from the LongAddrVariableValue, which this was copied
  * from; it should be removed.
  * <P>
- * @author	Bob Jacobsen, Alex Shepherd Copyright (C) 2001, 2004, 2013
+ * @author Bob Jacobsen, Alex Shepherd Copyright (C) 2001, 2004, 2013
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style speed table
  * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue (Vstart {@literal &} Vhigh not written)
  * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &} Vhigh
@@ -434,7 +434,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                 log.debug("Font size " + v.getFont().getSize());
             }
             float newSize = v.getFont().getSize() * 0.8f;
-            v.setFont(jmri.util.FontUtil.deriveFont(v.getFont(), newSize));
+            v.setFont(v.getFont().deriveFont(newSize));
             j.add(v);
 
             cs.gridy++;
@@ -885,7 +885,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * model between this object and others.  And this is listening to
      * a CV state, not a variable.
      *
-     * @author			Bob Jacobsen   Copyright (C) 2001
+     * @author   Bob Jacobsen   Copyright (C) 2001
      */
     public class VarSlider extends JSlider {
 
@@ -946,6 +946,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class);
 
 }

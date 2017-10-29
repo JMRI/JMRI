@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on Glen Oberhauser's original LnThrottle implementation
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public class MarklinThrottle extends AbstractThrottle implements MarklinListener {
@@ -473,6 +473,6 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MarklinThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinThrottle.class);
 
 }

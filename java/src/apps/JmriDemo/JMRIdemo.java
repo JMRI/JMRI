@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class JMRIdemo extends Apps {
 
-    JMRIdemo(JFrame p) {
-        super(p);
+    JMRIdemo() {
+        super();
     }
 
     @Override
@@ -68,15 +68,16 @@ public class JMRIdemo extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.setStartupInfo("JMRIdemo");
+        Apps.setStartupInfo("JmriDemo");
 
         setConfigFilename("JmriDemoConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("JmriDemo");
-        createFrame(new JMRIdemo(f), f);
+        JMRIdemo jd = new JMRIdemo();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
+        createFrame(jd, f);
 
         log.debug("main initialization done");
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIdemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIdemo.class);
 }

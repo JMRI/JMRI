@@ -6,7 +6,6 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-
 import org.openlcb.OlcbInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * System names are "MSnnn", where nnn is the sensor number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2008, 2010
   */
 public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
@@ -34,7 +33,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         super.dispose();
     }
 
-    //Implimented ready for new system connection memo
+    // Implemented ready for new system connection memo
     public OlcbSensorManager(CanSystemConnectionMemo memo) {
         this.memo = memo;
         prefix = memo.getSystemPrefix();
@@ -60,7 +59,8 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return s;
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
@@ -118,7 +118,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void updateAll() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
 
 }
 

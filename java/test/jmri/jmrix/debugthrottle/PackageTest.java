@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   DebugThrottleManagerTest.class
+   DebugThrottleManagerTest.class,
+   DebugThrottleTest.class
 })
 /**
  * Tests for the jmri.jmrix.debugthrottle package

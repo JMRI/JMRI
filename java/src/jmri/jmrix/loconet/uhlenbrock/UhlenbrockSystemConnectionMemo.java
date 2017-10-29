@@ -1,16 +1,16 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotManager;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Lightweight class to denote that an Uhlenbrock IB-COM or Intellibox II is
  * active
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
@@ -24,7 +24,7 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
     }
 
     @Override
-    public ProgrammerManager getProgrammerManager() {
+    public DefaultProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
             setProgrammerManager(new UhlenbrockProgrammerManager(getSlotManager(), this));
         }

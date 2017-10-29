@@ -6,7 +6,7 @@ import jmri.TurnoutOperation;
  * Configuration for NoFeedbackTurnoutOperation class All the work is done by
  * the Common... class
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  */
 public class SensorTurnoutOperationConfig extends CommonTurnoutOperationConfig {
 

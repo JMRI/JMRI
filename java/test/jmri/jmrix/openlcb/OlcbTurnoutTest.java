@@ -1,46 +1,34 @@
 package jmri.jmrix.openlcb;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import jmri.util.JUnitUtil;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.regex.Pattern;
 import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
-
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.MockPropertyChangeListener;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import org.junit.Assert;
+import org.openlcb.EventID;
+import org.openlcb.implementations.EventTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutTest extends TestCase {
-    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
 
-    interface MockablePropertyChangeListener {
-        void onChange(String property, Object newValue);
-    }
-    class FPropertyChangeListener implements PropertyChangeListener {
-        MockablePropertyChangeListener m;
-        FPropertyChangeListener() {
-            m = mock(MockablePropertyChangeListener.class);
-        }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-            m.onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
-        }
-    }
-
-    protected FPropertyChangeListener l = new FPropertyChangeListener();
+    protected MockPropertyChangeListener l = new MockPropertyChangeListener();
 
     private static final String COMMANDED_STATE = "CommandedState";
     private static final String KNOWN_STATE = "KnownState";
@@ -99,6 +87,16 @@ public class OlcbTurnoutTest extends TestCase {
         log.debug("recv msg: " + t.tc.rcvMessage + " header " + Integer.toHexString(t.tc.rcvMessage.getHeader()));
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(t.tc.rcvMessage));
 
+        t.tc.rcvMessage = null;
+        s.setState(Turnout.CLOSED);
+        t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
+        Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
+
+        // repeated set of local state
         t.tc.rcvMessage = null;
         s.setState(Turnout.CLOSED);
         t.flush();
@@ -180,6 +178,31 @@ public class OlcbTurnoutTest extends TestCase {
         verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
         verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
+    }
+
+    public void testEventTable() {
+        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
+
+        EventTable.EventTableEntry[] elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertTrue("Incorrect name: " + elist[0].getDescription(), Pattern.compile("Turnout.*Thrown").matcher(elist[0].getDescription()).matches());
+
+        s.setUserName("MySwitch");
+
+        elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertEquals("Turnout MySwitch Thrown", elist[0].getDescription());
+
+        elist = t.iface.getEventTable()
+                .getEventInfo(new EventID("1.2.3.4.5.6.7.9")).getAllEntries();
+
+        Assert.assertEquals(1, elist.length);
+        Assert.assertEquals("Turnout MySwitch Closed", elist[0].getDescription());
     }
 
     public void testNameFormatXlower() {
@@ -273,6 +296,6 @@ public class OlcbTurnoutTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -14,7 +14,7 @@ import jmri.util.FileUtil;
 /**
  * Pane for building mast definitions
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class MastBuilderPane extends javax.swing.JPanel {
 

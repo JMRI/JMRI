@@ -1,7 +1,6 @@
 package jmri.jmrit.powerpanel;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane for power control
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
 public class PowerPane extends jmri.util.swing.JmriPanel
         implements java.beans.PropertyChangeListener {
@@ -25,14 +24,13 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
     @Override
     public String getTitle() {
-        return res.getString("TitlePowerPanel");
+        return Bundle.getMessage("TitlePowerPanel");
     }
 
     // GUI member declarations
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
-    JLabel onOffStatus = new JLabel(res.getString("LabelUnknown"));
-    JButton onButton = new JButton(res.getString("ButtonOn"));
-    JButton offButton = new JButton(res.getString("ButtonOff"));
+    JLabel onOffStatus = new JLabel(Bundle.getMessage("LabelUnknown"));
+    JButton onButton = new JButton(Bundle.getMessage("ButtonOn"));
+    JButton offButton = new JButton(Bundle.getMessage("ButtonOff"));
 
     jmri.swing.PowerManagerMenu selectMenu;
 
@@ -78,7 +76,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         setLayout(new jmri.util.javaworld.GridLayout2(2, 2, 6, 0)); // r, c, hgap , vgap
 
         // install items in GUI
-        add(new JLabel(res.getString("LabelLayoutPower")));
+        add(new JLabel(Bundle.getMessage("LabelLayoutPower")));
         add(onButton);
         add(onOffStatus); // on row 2
         add(offButton);
@@ -94,17 +92,17 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         if (mgrOK()) {
             try {
                 if (listening.getPower() == PowerManager.ON) {
-                    onOffStatus.setText(res.getString("StatusOn"));
+                    onOffStatus.setText(Bundle.getMessage("StatusOn"));
                 } else if (listening.getPower() == PowerManager.OFF) {
-                    onOffStatus.setText(res.getString("StatusOff"));
+                    onOffStatus.setText(Bundle.getMessage("StatusOff"));
                 } else if (listening.getPower() == PowerManager.UNKNOWN) {
-                    onOffStatus.setText(res.getString("StatusUnknown"));
+                    onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                 } else {
-                    onOffStatus.setText(res.getString("StatusUnknown"));
+                    onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                     log.error("Unexpected state value: {0}", selectMenu.getManager().getPower());
                 }
             } catch (JmriException ex) {
-                onOffStatus.setText(res.getString("StatusUnknown"));
+                onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
             }
         }
     }
@@ -127,9 +125,9 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     private boolean mgrOK() {
         if (listening == null) {
             listening = selectMenu.getManager();
-	        log.debug("Manager = {}", listening);
+         log.debug("Manager = {}", listening);
             if (listening == null) {
-                log.warn("No power manager instance found, panel not active");
+                log.debug("No power manager instance found, panel not active");
                 return false;
             } else {
                 listening.addPropertyChangeListener(this);
@@ -169,17 +167,17 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         log.debug("PropertyChange received ");
         try {
             if (listening.getPower() == PowerManager.ON) {
-                onOffStatus.setText(res.getString("StatusOn"));
+                onOffStatus.setText(Bundle.getMessage("StatusOn"));
             } else if (listening.getPower() == PowerManager.OFF) {
-                onOffStatus.setText(res.getString("StatusOff"));
+                onOffStatus.setText(Bundle.getMessage("StatusOff"));
             } else if (listening.getPower() == PowerManager.UNKNOWN) {
-                onOffStatus.setText(res.getString("StatusUnknown"));
+                onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
             } else {
-                onOffStatus.setText(res.getString("StatusUnknown"));
+                onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                 log.error("Unexpected state value: {0}", listening.getPower());
             }
         } catch (JmriException ex) {
-            onOffStatus.setText(res.getString("StatusUnknown"));
+            onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
         }
     }
 
@@ -190,6 +188,6 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PowerPane.class);
 
 }

@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * underlying data, so we provide this as an escape claus for unrecognized
  * content.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 class FourByteMacroEditor extends SdfMacroEditor {
 

@@ -192,8 +192,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
         // can we find a roster entry?
         if ((rosterEntry == null)
-                && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle())
-                && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch())
+                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
+                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isEnablingRosterSearch())
                 && addrSelector.getAddress() != null) {
             List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + addrSelector.getAddress().getNumber(), null, null, null, null);
             if (l.size() > 0) {
@@ -212,8 +212,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         // enable program button if programmer available
         // for ops-mode programming
         if ((rosterEntry != null) && (ProgDefault.getDefaultProgFile() != null)
-                && (InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null) 
-                && (InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible())) {
+                && (InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) != null)
+                && (InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).isAddressedModePossible())) {
             progButton.setEnabled(true);
         }
 
@@ -232,6 +232,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         javax.swing.JOptionPane.showMessageDialog(null, reason, Bundle.getMessage("FailedSetupRequestTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        int choice = javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION);
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, choice == javax.swing.JOptionPane.YES_OPTION);
     }
 
     /**
@@ -461,8 +467,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     private void changeOfAddress() {
         currentAddress = addrSelector.getAddress();
         if (currentAddress == null) {
-            return;	// no address
-        }		// send notification of new address
+            return; // no address
+        }  // send notification of new address
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
             if (log.isDebugEnabled()) {
@@ -480,8 +486,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     private void changeOfConsistAddress() {
         if (consistAddress == null) {
-            return;	// no address
-        }		// send notification of new address
+            return; // no address
+        }  // send notification of new address
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
             if (log.isDebugEnabled()) {
@@ -513,8 +519,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         if (address < 100) {
             longAddr = false;
         }
-        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(longAddr, address);
-        // and created the frame        
+        Programmer programmer = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(longAddr, address);
+        // and created the frame
         JFrame p = new PaneOpsProgFrame(null, rosterEntry,
                 title, "programmers" + File.separator + ProgDefault.getDefaultProgFile() + ".xml",
                 programmer);
@@ -657,7 +663,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddressPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddressPanel.class);
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

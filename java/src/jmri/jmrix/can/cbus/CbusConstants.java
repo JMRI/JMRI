@@ -3,9 +3,9 @@ package jmri.jmrix.can.cbus;
 /**
  * CbusConstants.java
  *
- * Description:	Constants to represent CBUS protocol
+ * Description: Constants to represent CBUS protocol
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public final class CbusConstants {
 

@@ -7,7 +7,7 @@ import javax.swing.JSeparator;
 /**
  * Create a "Debug" menu containing the JMRI system-independent debugging tools.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class DebugMenu extends JMenu {
 

@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Events &mdash; bootstrap-datepicker  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="bootstrap-datepicker  documentation" href="index.html"/>
+        <link rel="next" title="Keyboard support" href="keyboard.html"/>
+        <link rel="prev" title="Methods" href="methods.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> bootstrap-datepicker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="markup.html">Markup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html#reference">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html">Methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Events</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#show">show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hide">hide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cleardate">clearDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changedate">changeDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changeyear">changeYear</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changemonth">changeMonth</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="keyboard.html">Keyboard support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="i18n.html">I18N</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">bootstrap-datepicker</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Events</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/events.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="events">
+<h1>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h1>
+<p>Datepicker triggers a number of events in certain circumstances.  All events have extra data attached to the event object that is passed to any event handlers</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.datepicker&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">picker_event</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// `e` here contains the extra attributes</span>
+    <span class="p">});</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">date</span></code>: the relevant Date object, in local timezone.  For a multidate picker, this will be the latest date picked.</li>
+<li><code class="docutils literal"><span class="pre">dates</span></code>: an Array of Date objects, in local timezone, when using a multidate picker.</li>
+<li><code class="docutils literal"><span class="pre">format([ix],</span> <span class="pre">[format])</span></code>: a function to make formatting <code class="docutils literal"><span class="pre">date</span></code> easier.  <code class="docutils literal"><span class="pre">ix</span></code> can be the index of a Date in the <code class="docutils literal"><span class="pre">dates</span></code> array to format; if absent, the last date selected will be used.  <code class="docutils literal"><span class="pre">format</span></code> can be any format string that datepicker supports; if absent, the format set on the datepicker will be used.  Both arguments are optional.</li>
+</ul>
+<div class="section" id="show">
+<h2>show<a class="headerlink" href="#show" title="Permalink to this headline">¶</a></h2>
+<p>Fired when the date picker is displayed.</p>
+</div>
+<div class="section" id="hide">
+<h2>hide<a class="headerlink" href="#hide" title="Permalink to this headline">¶</a></h2>
+<p>Fired when the date picker is hidden.</p>
+</div>
+<div class="section" id="cleardate">
+<h2>clearDate<a class="headerlink" href="#cleardate" title="Permalink to this headline">¶</a></h2>
+<p>Fired when the date is cleared, normally when the &#8220;clear&#8221; button (enabled with the <code class="docutils literal"><span class="pre">clearBtn</span></code> option) is pressed.</p>
+</div>
+<div class="section" id="changedate">
+<h2>changeDate<a class="headerlink" href="#changedate" title="Permalink to this headline">¶</a></h2>
+<p>Fired when the date is changed.</p>
+</div>
+<div class="section" id="changeyear">
+<h2>changeYear<a class="headerlink" href="#changeyear" title="Permalink to this headline">¶</a></h2>
+<p>Fired when the <em>view</em> year is changed from decade view.</p>
+</div>
+<div class="section" id="changemonth">
+<h2>changeMonth<a class="headerlink" href="#changemonth" title="Permalink to this headline">¶</a></h2>
+<p>Fired when the <em>view</em> month is changed from year view.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="keyboard.html" class="btn btn-neutral float-right" title="Keyboard support" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="methods.html" class="btn btn-neutral" title="Methods" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2013, eternicode.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,6 +1,0 @@
-# Providers of StartupActionFactory instances
-# Order is insignificant
-apps.RestartStartupActionFactory
-jmri.jmrit.XmlFileValidateStartupActionFactory
-jmri.jmrit.roster.swing.RosterFrameStartupActionFactory
-jmri.jmrit.vsdecoder.VSDecoderCreationStartupActionFactory

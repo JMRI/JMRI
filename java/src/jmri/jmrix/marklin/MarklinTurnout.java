@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public class MarklinTurnout extends AbstractTurnout
@@ -43,9 +43,9 @@ public class MarklinTurnout extends AbstractTurnout
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //										Object oldValue,
-        //										Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -138,7 +138,7 @@ public class MarklinTurnout extends AbstractTurnout
                 try {
                     sendOffMessage((state ? 1 : 0));
                 } catch (Exception e) {
-                    log.error("Exception occured while sending delayed off to turnout: " + e);
+                    log.error("Exception occurred while sending delayed off to turnout: " + e);
                 }
             }
         }, METERINTERVAL);
@@ -195,5 +195,5 @@ public class MarklinTurnout extends AbstractTurnout
     static final int METERINTERVAL = 100;  // msec wait before closed
     static java.util.Timer meterTimer = new java.util.Timer(true);
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class);
 }

@@ -7,7 +7,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 /**
  * Swing action to create and register a Block Routing Table.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockRouteTableAction extends AbstractAction {
 
@@ -18,14 +18,14 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
      * resulting frame. Perhaps this should be changed?
      *
      */
-    public LayoutBlockRouteTableAction(String s, LayoutBlock lBlock) {
+    public LayoutBlockRouteTableAction(String s, LayoutBlock layoutBlock) {
         super(s);
-        this.lBlock = lBlock;
+        lBlock = layoutBlock;
     }
 
     //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    LayoutBlock lBlock;
+    private LayoutBlock lBlock = null;
 
     LayoutBlockRouteTable m;
     //LayoutBlockNeighbourTable mn;

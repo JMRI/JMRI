@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
  * Frame for user configuration of IEEE 802.15.4 nodes. 
  * Derived from node configuration for c/mri nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Paul Bender Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2013
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -56,6 +56,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     /**
      * Constructor method
+     * @param tc connector for node
      */
     public NodeConfigFrame(IEEE802154TrafficController tc) {
         super();
@@ -453,6 +454,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Check for consistency errors by node type Returns 'true' if successful,
      * 'false' if an error was detected. If an error is detected, a suitable
      * error message is placed in the Notes area
+     * @return always true
      */
     protected boolean checkConsistency() {
         return true;
@@ -478,6 +480,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddr64Field.setSelectedIndex(nodeAddrField.getSelectedIndex());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

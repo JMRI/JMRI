@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to check for more recent JMRI version. Checks a jmri.org URL for
  * information.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2014
+ * @author Bob Jacobsen Copyright (C) 2007, 2014
  * @author Matt Harris Copyright (C) 2008
  *
  */
@@ -147,7 +147,7 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CheckForUpdateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CheckForUpdateAction.class);
 
 }
 

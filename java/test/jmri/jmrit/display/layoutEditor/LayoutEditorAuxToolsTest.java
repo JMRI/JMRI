@@ -11,33 +11,27 @@ import org.junit.Test;
 /**
  * Test simple functioning of LayoutEditorAuxTools
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LayoutEditorAuxToolsTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditorAuxTools t = new LayoutEditorAuxTools(new LayoutEditor());
+        LayoutEditor e = new LayoutEditor();
+        LayoutEditorAuxTools t = new LayoutEditorAuxTools(e);
         Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
-
 }

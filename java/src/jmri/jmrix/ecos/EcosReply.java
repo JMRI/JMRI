@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Some rudimentary support is provided for the "binary" option.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
  */
 public class EcosReply extends jmri.jmrix.AbstractMRReply {
@@ -31,7 +31,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     // these can be very large
     @Override
     public int maxSize() {
-        return 5000;
+        return 10000;
     }
 
     // no need to do anything
@@ -263,7 +263,6 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         return line.substring(startval, endval);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosReply.class);
+
 }
-
-

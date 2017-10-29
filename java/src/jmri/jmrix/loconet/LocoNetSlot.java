@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Stephen Williams Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Stephen Williams Copyright (C) 2008
  */
 public class LocoNetSlot {
 
@@ -326,6 +326,7 @@ public class LocoNetSlot {
                 // change in slot status will be reported by the reply,
                 // so don't need to do anything here (but could)
                 lastUpdateTime = System.currentTimeMillis();
+                notifySlotListeners();
                 return;
             }
             case LnConstants.OPC_LOCO_SPD: {
@@ -391,6 +392,11 @@ public class LocoNetSlot {
         l.setElement(2, (stat & ~LnConstants.DEC_MODE_MASK) | status);
         return l;
     }
+    
+    public LocoNetMessage writeThrottleID(int newID) {
+        id = (newID & 0x17F);
+        return writeSlot();
+    }
 
     /**
      * Update the status mode bits in STAT1 (D5, D4)
@@ -406,11 +412,50 @@ public class LocoNetSlot {
         return l;
     }
 
+    /**
+     * Update the status mode bits in STAT1 (D5, D4)
+     *
+     * @param status New values for STAT1 (D5, D4)
+     */
+    public void sendWriteStatus(int status) {
+        LocoNetMessage l = new LocoNetMessage(4);
+        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
+        l.setElement(1, slot);
+        l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
+        
+    }
+
+    /**
+     * Create LocoNet message which dispatches this slot
+     * 
+     * Note that the invoking method ought to invoke the slot's NotifySlotListeners 
+     * method to inform any other interested parties that the slot status has changed.
+     * 
+     * @return LocoNet message which "dispatches" the slot
+    */
     public LocoNetMessage dispatchSlot() {
         LocoNetMessage l = new LocoNetMessage(4);
         l.setOpCode(LnConstants.OPC_MOVE_SLOTS);
         l.setElement(1, slot);
         l.setElement(2, 0);
+        return l;
+    }
+
+    /**
+     * Create LocoNet message which releases this slot
+     * 
+     * Note that the invoking method ought to invoke the slot's NotifySlotListeners 
+     * method to inform any other interested parties that the slot status has changed.
+     * 
+     * @return LocoNet message which "releases" the slot
+    */
+    public LocoNetMessage releaseSlot() {
+        LocoNetMessage l = new LocoNetMessage(4);
+        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
+        l.setElement(1, slot);
+        // set slot status to "Idle" - valid address in slot, but it's not refreshed on the track signal.
+        stat = stat & (~LnConstants.STAT1_SL_ACTIVE) | LnConstants.STAT1_SL_BUSY;
+        l.setElement(2, stat);
         return l;
     }
 
@@ -435,16 +480,16 @@ public class LocoNetSlot {
 
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
-    private int stat;	// <STAT> is the status of the slot
-    private int addr;	// full address of the loco, made from
+    private int stat; // <STAT> is the status of the slot
+    private int addr; // full address of the loco, made from
     //    <ADDR> is the low 7 (0-6) bits of the Loco address
     //    <ADD2> is the high 7 bits (7-13) of the 14-bit loco address
-    private int spd;	// <SPD> is the current speed (0-127)
-    private int dirf;	// <DIRF> is the current Direction and the setting for functions F0-F4
-    private int trk = 7;	// <TRK> is the global track status
-    private int ss2;	// <SS2> is the an additional slot status
-    private int snd; 	// <SND> is the settings for functions F5-F8
-    private int id;		// throttle id, made from
+    private int spd; // <SPD> is the current speed (0-127)
+    private int dirf; // <DIRF> is the current Direction and the setting for functions F0-F4
+    private int trk = 7; // <TRK> is the global track status
+    private int ss2; // <SS2> is the an additional slot status
+    private int snd;  // <SND> is the settings for functions F5-F8
+    private int id;  // throttle id, made from
     //     <ID1> and <ID2> normally identify the throttle controlling the loco
 
     private int _pcmd;  // hold pcmd and pstat for programmer
@@ -471,7 +516,7 @@ public class LocoNetSlot {
         return lastUpdateTime;
     }
 
-    protected void notifySlotListeners() {
+    public void notifySlotListeners() {
         // make a copy of the listener list to synchronized not needed for transmit
         List<SlotListener> v;
         synchronized (this) {
@@ -605,5 +650,5 @@ public class LocoNetSlot {
         stat = val & 0x7F;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetSlot.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetSlot.class);
 }

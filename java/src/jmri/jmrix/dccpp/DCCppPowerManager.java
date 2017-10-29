@@ -1,11 +1,11 @@
 /**
  * DCCppPowerManager.java
  *
- * Description:	PowerManager implementation for controlling layout power
+ * Description: PowerManager implementation for controlling layout power
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Paul Bender Copyright (C) 2003-2010
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Mark Underwood Copyright (C) 2015
   *
  * Based on XNetPowerManager by Bob Jacobsen and Paul Bender
  */
@@ -102,8 +102,8 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
                 power = OFF;
                 firePropertyChange("Power", null, null);
             }
-	}
-	
+ }
+ 
     }
 
     // listen for the messages to the LI100/LI101
@@ -120,7 +120,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
     }
 
     // Initialize logging information
-    private final static Logger log = LoggerFactory.getLogger(DCCppPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppPowerManager.class);
 
 }
 

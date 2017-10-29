@@ -6,6 +6,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
 import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -93,8 +94,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     SerialReply rcvdReply;
     SerialMessage rcvdMsg;
 
-    // internal class to simulate a PortController
-    class SerialPortControllerScaffold extends SerialPortController {
+    // internal class to simulate a PortAdapter
+    class SerialPortAdapterScaffold extends SerialPortAdapter {
 
         @Override
         public Vector<String> getPortNames() {
@@ -115,7 +116,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             return null;
         }
 
-        protected SerialPortControllerScaffold() throws Exception {
+        protected SerialPortAdapterScaffold() throws Exception {
             super(null);
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
@@ -162,9 +163,9 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

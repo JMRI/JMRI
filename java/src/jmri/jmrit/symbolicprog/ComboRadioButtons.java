@@ -13,22 +13,13 @@ import org.slf4j.LoggerFactory;
 
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
+ * @author   Bob Jacobsen   Copyright (C) 2001
  */
 public class ComboRadioButtons extends JPanel {
 
     ButtonGroup g = new ButtonGroup();
 
     ComboRadioButtons(JComboBox<String> box, EnumVariableValue var) {
-        super();
-        _var = var;
-        _value = var._value;
-        _box = box;
-
-        init();
-    }
-
-    ComboRadioButtons(JComboBox<String> box, IndexedEnumVariableValue var) {
         super();
         _var = var;
         _value = var._value;
@@ -153,6 +144,6 @@ public class ComboRadioButtons extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ComboRadioButtons.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ComboRadioButtons.class);
 
 }

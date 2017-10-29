@@ -10,6 +10,7 @@ import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.text.ParseException;
@@ -58,7 +59,9 @@ public class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
-        return this.doGet(type, null, locale);
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+        ArrayNode result = this.mapper.createArrayNode();
+        result.add(this.doGet(type, null, locale));
+        return result;
     }
 }

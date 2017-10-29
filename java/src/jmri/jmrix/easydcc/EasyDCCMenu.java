@@ -6,7 +6,7 @@ import javax.swing.JMenu;
 /**
  * Create a "Systems" menu containing the Jmri EasyDCC-specific tools
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class EasyDCCMenu extends JMenu {
 

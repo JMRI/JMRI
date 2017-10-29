@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author	Bob Jacobsen Copyright (C) 2003; D Miller Copyright 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003; D Miller Copyright 2003, 2005
  */
 public class PrintCvAction extends AbstractAction {
 
@@ -207,5 +207,5 @@ public class PrintCvAction extends AbstractAction {
         return sortVal;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCvAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintCvAction.class);
 }

@@ -3,15 +3,16 @@ package jmri.jmrit.operations.locations;
 
 import java.io.File;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations/Xml class Last manually cross-checked on
@@ -26,13 +27,13 @@ public class XmlTest extends OperationsTestCase {
      * that had to run in the order specified. Now changed on 8/29/2013 to be
      * one long test.
      *
-     * @throws Exception
+     * @throws Exception exception
      */
     public void testXMLCreate() throws Exception {
-        LocationManager manager = LocationManager.instance();
+        LocationManager manager = InstanceManager.getDefault(LocationManager.class);
         manager.dispose();
         // dispose kills instance, so reload manager
-        manager = LocationManager.instance();
+        manager = InstanceManager.getDefault(LocationManager.class);
 
         // now load locations
         List<Location> locationList = manager.getLocationsByIdList();
@@ -60,7 +61,7 @@ public class XmlTest extends OperationsTestCase {
         t2.setPool(pool);
         t2.setMinimumLength(123);
 
-        CarTypes ct = CarTypes.instance();
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
         ct.addName("boxCar");
         ct.addName("BoxCar");
@@ -68,7 +69,7 @@ public class XmlTest extends OperationsTestCase {
         ct.addName("Track 4 Type");
 
         // also test schedules
-        ScheduleManager sm = ScheduleManager.instance();
+        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
         Schedule s1 = sm.newSchedule("Schedule 1 Name");
         s1.setComment("Schedule 1 Comment");
         ScheduleItem s1i1 = s1.addItem("Boxcar");
@@ -184,27 +185,27 @@ public class XmlTest extends OperationsTestCase {
             }
         }
 
-        LocationManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(LocationManagerXml.class).writeOperationsFile();
 
         manager.newLocation("Test Location 4");
         manager.newLocation("Test Location 5");
         manager.newLocation("Test Location 6");
         manager.getLocationByName("Test Location 2").setComment("Test Location 2 Changed Comment");
 
-        LocationManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(LocationManagerXml.class).writeOperationsFile();
 
         locationList = manager.getLocationsByIdList();
         Assert.assertEquals("Number of Locations", 6, locationList.size());
 
         // Revert the main xml file back to the backup file.
-        LocationManagerXml.instance().revertBackupFile(
+        InstanceManager.getDefault(LocationManagerXml.class).revertBackupFile(
                 "temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName() + File.separator
-                + LocationManagerXml.instance().getOperationsFileName());
+                + InstanceManager.getDefault(LocationManagerXml.class).getOperationsFileName());
 
         // Need to dispose of the LocationManager's list and hash table
         manager.dispose();
         // delete all schedules
-        ScheduleManager.instance().dispose();
+        InstanceManager.getDefault(ScheduleManager.class).dispose();
 
         ct.addName("Boxcar");
         ct.addName("boxCar");
@@ -213,14 +214,14 @@ public class XmlTest extends OperationsTestCase {
         ct.addName("Track 4 Type");
 
         // The dispose has removed all locations from the Manager.
-        manager = LocationManager.instance();
+        manager = InstanceManager.getDefault(LocationManager.class);
         locationListByName = manager.getLocationsByNameList();
         Assert.assertEquals("Starting Number of Locations", 0, locationListByName.size());
 
         // Need to force a re-read of the xml file.
-        LocationManagerXml.instance().readFile(
+        InstanceManager.getDefault(LocationManagerXml.class).readFile(
                 "temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName() + File.separator
-                + LocationManagerXml.instance().getOperationsFileName());
+                + InstanceManager.getDefault(LocationManagerXml.class).getOperationsFileName());
 
         // check locations
         locationListByName = manager.getLocationsByNameList();
@@ -316,7 +317,7 @@ public class XmlTest extends OperationsTestCase {
         }
 
         // check Schedules
-        sm = ScheduleManager.instance();
+        sm = InstanceManager.getDefault(ScheduleManager.class);
         List<Schedule> list = sm.getSchedulesByNameList();
 
         Assert.assertEquals("There should be 2 schedules", 2, list.size());
@@ -367,14 +368,13 @@ public class XmlTest extends OperationsTestCase {
         // delete all schedules
         sm.dispose();
         // clear out the file
-        LocationManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(LocationManagerXml.class).writeOperationsFile();
     }
 
-	// TODO: Add tests for adding + deleting the same cars
+    // TODO: Add tests for adding + deleting the same cars
     // TODO: Add tests for track locations
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();

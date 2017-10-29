@@ -1,27 +1,31 @@
 package jmri.jmrix.cmri.serial.serialdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialPortController;
+import jmri.jmrix.cmri.serial.SerialPortAdapter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to C/MRI via a serial comm port. Normally controlled by the
  * cmri.serial.serialdriver.SerialDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
-public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super(new CMRISystemConnectionMemo());
@@ -43,7 +47,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             // try to set it for CMRI serial
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -161,9 +165,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException | TooManyListenersException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -191,7 +195,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
 
-    // base class methods for the SerialPortController interface
+    // base class methods for the SerialPortAdapter interface
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -222,7 +226,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * Local method to do specific port configuration
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -233,13 +237,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -281,6 +281,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     @Deprecated
     static SerialDriverAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
  * Table Action for dealing with all the tables in a single view with a list
  * option to the left hand side.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class ListedTableAction extends AbstractAction {
 
@@ -99,6 +99,6 @@ public class ListedTableAction extends AbstractAction {
         return "package.jmri.jmrit.beantable.ListedTableAction";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ListedTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListedTableAction.class);
 
 }

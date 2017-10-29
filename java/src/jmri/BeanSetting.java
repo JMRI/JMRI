@@ -11,9 +11,9 @@ package jmri;
  * <code><a href="#check()">check</a></code> method does change, because it's a
  * function of the current bean setting(s).
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2010
  */
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public class BeanSetting {
 
     public BeanSetting(jmri.NamedBean t, String pName, int setting) {

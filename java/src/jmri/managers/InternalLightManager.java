@@ -46,8 +46,8 @@ public class InternalLightManager extends AbstractLightManager {
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
     }
 
     @Override

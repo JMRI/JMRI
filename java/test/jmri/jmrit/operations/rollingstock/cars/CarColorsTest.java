@@ -1,15 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
- * Tests for the Operations RollingStock CarColors class Last manually cross-checked
- * on 20090131
- *
+ * Tests for the Operations RollingStock CarColors class Last manually
+ * cross-checked on 20090131
+ * <p>
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
@@ -17,7 +18,7 @@ import junit.framework.TestSuite;
 public class CarColorsTest extends OperationsTestCase {
 
     public void testCarColors() {
-        CarColors cc1 = CarColors.instance();
+        CarColors cc1 = InstanceManager.getDefault(CarColors.class);
         cc1.getNames();	// load predefined colors
 
         Assert.assertTrue("Car Color Predefined Red", cc1.containsName("Red"));
@@ -42,7 +43,7 @@ public class CarColorsTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception{
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
@@ -65,6 +66,6 @@ public class CarColorsTest extends OperationsTestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

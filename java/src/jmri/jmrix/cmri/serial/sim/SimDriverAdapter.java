@@ -9,12 +9,13 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Extends the serialdriver.SimDriverAdapter class to act as simulated
  * connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008, 2011
+ * @author Bob Jacobsen Copyright (C) 2002, 2008, 2011
  */
 @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Access to 'self' OK until multiple instance pattern installed")
@@ -56,11 +57,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener l) {
             }
-
-            // and make this the instance
-            {
-                self = this;
-            }
         };
 
         // connect to the traffic controller
@@ -99,7 +95,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
      * Local method to do specific port configuration
      */
     @Override
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
     }
 
     @Override
@@ -133,6 +129,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     }
     static SimDriverAdapter mInstance;
 
-    private final static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class);
 
 }

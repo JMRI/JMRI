@@ -1,0 +1,23 @@
+@startuml
+
+package jmri {
+}
+
+package apps {
+}
+
+
+package jmri.jmrit {}
+
+package jmri.jmrix {}
+package jmri.jmrix.loconet {}
+package jmri.jmrix.nce {}
+
+jmri +-- jmri.jmrit
+
+jmri +-- jmri.jmrix
+
+jmri.jmrix +-- jmri.jmrix.nce
+jmri.jmrix +-- jmri.jmrix.loconet
+
+@enduml

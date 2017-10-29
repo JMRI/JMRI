@@ -21,13 +21,14 @@
     <div id="mainContent">
       <h1>Adding/Editing Sensors</h1>
 
-      <p>When adding a Sensor, you select from the drop down list
-      the system to which the Sensor is attached to.</p><img src=
-      "images/AddSensor.png">
+      <p>When adding a Sensor, from the "System connection:" drop down
+      list select the hardware connection this Sensor is
+      attached to.</p><img src="images/AddSensor.png">
 
-      <p>Enter a valid address for that Sensor and if desired enter
-      a User Name which can be anything you wish to describe the
-      Sensor.<br>
+      <p>Enter a valid address for the Sensor (look at
+      the Tooltip for accepted input options per system).
+      If desired, enter a User Name which can be anything you
+      wish to describe the Sensor.<br>
       Finish by clicking the "OK" button.</p>
 
       <h2>Creating A Number of Sensors</h2>
@@ -48,7 +49,12 @@
 
       <h2>Hardware Specific Information</h2>
 
-      <h3>NCE AIU Number to JMRI Sensor Mapping</h3>The NCE
+      <p>Please refer to our
+      <a href="../../../../html/doc/Technical/Names.shtml#entrysummary">summary of allowed entry patterns</a>
+      per connection.</p>
+
+      <h3>NCE AIU Number to JMRI Sensor Mapping</h3>
+      The NCE
       Auxiliary Input Unit (or AIU) allows the NCE command station
       to check the status of inputs from the layout. These are
       referenced in JMRI as Sensors with names like "NS785". "NS"
@@ -81,7 +87,7 @@
 
           <p>Sensor ID = 785</p>
         </dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
 
       <h3>LocoNet Sensor to JMRI Sensor Mapping</h3>
 
@@ -257,7 +263,8 @@
       </dl>
 
       <p>Back to the <a href="SensorTable.shtml">Sensor Table help
-      page</a>.</p><!--#include virtual="/Footer" -->
+      page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

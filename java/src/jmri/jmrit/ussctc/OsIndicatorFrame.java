@@ -6,7 +6,7 @@ import javax.swing.BoxLayout;
  * User interface frame for creating and editing "OS Indicator" logic on USS CTC
  * machines.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class OsIndicatorFrame extends jmri.util.JmriJFrame {
 
@@ -15,7 +15,7 @@ public class OsIndicatorFrame extends jmri.util.JmriJFrame {
     }
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         addHelpMenu("package.jmri.jmrit.ussctc.OsIndicatorFrame", true);
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

@@ -7,7 +7,7 @@ package jmri.jmrit.symbolicprog;
  * The "qualifier" variable is the one being watched; its properties control
  * whether the "qualified" Object is available or not.
  *
- * @author	Bob Jacobsen Copyright (C) 2010, 2014
+ * @author Bob Jacobsen Copyright (C) 2010, 2014
  *
  */
 public abstract class AbstractQualifier implements Qualifier, java.beans.PropertyChangeListener {

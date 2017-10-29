@@ -129,7 +129,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                         if (stream != null) {
                             return new InputSource(stream);
                         } else {
-                            log.error("did not find direct entity path: " + path);
+                            log.error("did not find direct entity path: {}", path);
                             return null;
                         }
                     }
@@ -138,28 +138,21 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     try {
                         return new InputSource(new FileReader(new File(source)));
                     } catch (FileNotFoundException e2) {
-                        log.error("did not find direct entity file: " + source);
+                        log.error("did not find direct entity file: {}", source);
                         return null;
                     }
                 }
             } else {
                 // not recognized type, return null to use default
-                log.error("could not parse systemId: " + systemId);
+                log.error("could not parse systemId: {}", systemId);
                 return null;
             }
         } catch (URISyntaxException e1) {
             log.warn(e1.getLocalizedMessage(), e1);
             return null;
-        } catch (NoClassDefFoundError e2) { // working on an old version of java, go with default quietly
-            if (!toldYouOnce) {
-                log.info("Falling back to defailt resolver due to JVM version");
-            }
-            toldYouOnce = true;
-            return null;
         }
     }
 
-    static private boolean toldYouOnce = false;
-    private static final Logger log = LoggerFactory.getLogger(JmriLocalEntityResolver.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JmriLocalEntityResolver.class);
 
 }

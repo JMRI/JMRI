@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.event.ActionEvent;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a new VSDecoder Pane.
  *
- * @author	Mark Underwood
+ * @author Mark Underwood
  */
 @SuppressWarnings("serial")
 public class VSDecoderCreationAction extends AbstractAction {
@@ -75,5 +75,5 @@ public class VSDecoderCreationAction extends AbstractAction {
         tf.toFront();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class);
 }

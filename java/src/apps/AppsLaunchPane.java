@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * This is for launching after the system is initialized, so it does none of
  * that.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -349,5 +349,5 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      */
     protected abstract String windowHelpID();
 
-    private final static Logger log = LoggerFactory.getLogger(AppsLaunchPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AppsLaunchPane.class);
 }

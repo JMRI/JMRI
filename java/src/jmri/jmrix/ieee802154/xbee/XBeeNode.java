@@ -1,11 +1,14 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -32,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeNode extends IEEE802154Node {
 
-    private String Identifier;
+    private String identifier;
     private HashMap<Integer, NamedBean> pinObjects = null;
     private boolean isPolled;
     private XBeeTrafficController tc = null;
@@ -46,14 +49,14 @@ public class XBeeNode extends IEEE802154Node {
      * Creates a new instance of XBeeNode
      */
     public XBeeNode() {
-        Identifier = "";
+        identifier = "";
         pinObjects = new HashMap<Integer, NamedBean>();
         isPolled = false;
     }
 
     public XBeeNode(byte pan[], byte user[], byte global[]) {
         super(pan, user, global);
-        Identifier = "";
+        identifier = "";
         if (log.isDebugEnabled()) {
             log.debug("Created new node with panId: "
                     + StringUtil.arrayToString(pan)
@@ -68,7 +71,7 @@ public class XBeeNode extends IEEE802154Node {
 
     public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
         super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
-        Identifier = rxd.getNodeID();
+        identifier = rxd.getNodeID();
        
         try{
            setPANAddress(rxd.getPANID());
@@ -87,7 +90,7 @@ public class XBeeNode extends IEEE802154Node {
         globalAddress = device.get64BitAddress();
     }
 
-    /*
+    /**
      * Set the traffic controller associated with this node.
      */
     public void setTrafficController(XBeeTrafficController controller) {
@@ -127,8 +130,8 @@ public class XBeeNode extends IEEE802154Node {
         return false;
     }
 
-    /*
-     *  get/set the isPolled attribute;
+    /**
+     * Get/set the isPolled attribute;
      */
     public void setPoll(boolean poll) {
         isPolled = poll;
@@ -158,7 +161,7 @@ public class XBeeNode extends IEEE802154Node {
         return;
     }
 
-    /*
+    /**
      *  Convert the 16 bit user address to an XBee16BitAddress object.
      */
     public XBee16BitAddress getXBeeAddress16() {
@@ -169,7 +172,7 @@ public class XBeeNode extends IEEE802154Node {
         }
     }
 
-    /*
+    /**
      *  Convert the 64 bit address to an XBee64BitAddress object.
      */
     public XBee64BitAddress getXBeeAddress64() {
@@ -183,6 +186,7 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * XBee Nodes store an identifier. we want to be able to store and retrieve
      * this information.
+     * @param id text id for node
      */
     public void setIdentifier(String id) {
         try {
@@ -256,14 +260,13 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * Get the prefered name for this XBee Node.
      *
-     * @return the Identifier string if it is not blank then a string
-     *         representation of the bytes of the 16 bit address if it is not a
-     *         broadcast address. Otherwise return the 64 bit GUID.
-     *
+     * @return the identifier string if it is not blank then a string
+         representation of the bytes of the 16 bit address if it is not a
+         broadcast address. Otherwise return the 64 bit GUID.
      */
     public String getPreferedName() {
-        if (!Identifier.equals("")) {
-            return Identifier;
+        if (!identifier.equals("")) {
+            return identifier;
         } else if (!(getXBeeAddress16().equals(XBee16BitAddress.BROADCAST_ADDRESS))
                 && !(getXBeeAddress16().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {
             return jmri.util.StringUtil.hexStringFromBytes(useraddress);
@@ -278,7 +281,6 @@ public class XBeeNode extends IEEE802154Node {
      *
      * @return the 16 bit address if it is not a broadcast address. Otherwise
      *         return the 64 bit GUID.
-     *
      */
     @Deprecated
     public Object getPreferedTransmitAddress() {
@@ -290,22 +292,22 @@ public class XBeeNode extends IEEE802154Node {
         }
     }
 
-    /*
-     * @return RemoteXBeeDevice associated with this node.
+    /**
+     * @return RemoteXBeeDevice associated with this node
      */
     public RemoteXBeeDevice getXBee() {
            if( device == null && tc !=null) {
                device = new RemoteXBeeDevice(tc.getXBee(),globalAddress,
-                                    userAddress,Identifier);
+                                    userAddress,identifier);
            }
            return device;
     }
 
-    /*
-     * set the RemoteXBeeDevice associated with this node and
+    /**
+     * Set the RemoteXBeeDevice associated with this node and
      * configure address information.
      *
-     * @param RemoteXBeeDevice associated with this node.
+     * @param rxd the RemoteXBeeDevice associated with this node.
      */
     public void setXBee(RemoteXBeeDevice rxd) {
            device=rxd;
@@ -313,12 +315,12 @@ public class XBeeNode extends IEEE802154Node {
            globalAddress = device.get64BitAddress();
            setUserAddress(rxd.get16BitAddress().getValue());
            setGlobalAddress(rxd.get64BitAddress().getValue());
-           Identifier = rxd.getNodeID();
+           identifier = rxd.getNodeID();
 
     }
 
-    /*
-     * get the stream object associated with this node.  Create it if it does
+    /**
+     * Get the stream object associated with this node.  Create it if it does
      * not exist.
      */
     public XBeeIOStream getIOStream() {
@@ -330,19 +332,20 @@ public class XBeeNode extends IEEE802154Node {
 
     private XBeeIOStream mStream = null;
 
-    /*
+    /**
      * Connect a StreamPortController object to the XBeeIOStream
-     * associated with this node
+     * associated with this node.
+     *
      * @param cont AbstractSTreamPortController object to connect.
      */
     public void connectPortController(jmri.jmrix.AbstractStreamPortController cont) {
         connectedController = cont;
     }
-    /*
+
+    /**
      * Create a new object derived from AbstractStreamPortController and
      * connect it to the IOStream associated with this object.
      */
-
     public void connectPortController(Class<jmri.jmrix.AbstractStreamPortController> T) {
         try {
             java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
@@ -363,10 +366,10 @@ public class XBeeNode extends IEEE802154Node {
         }
     }
 
-    /*
-     * return the StreamPortController ojbect associated with the XBeeIOStream
+    /**
+     * Get the StreamPortController ojbect associated with the XBeeIOStream
      * associated with this node.
-     * @return jmri.jmrix.AbstractStreamPortController
+     * @return connected {@link jmri.jmrix.AbstractStreamPortController}
      */
     public jmri.jmrix.AbstractStreamPortController getPortController() {
         return connectedController;
@@ -374,8 +377,8 @@ public class XBeeNode extends IEEE802154Node {
 
     private jmri.jmrix.AbstractStreamPortController connectedController = null;
 
-    /*
-     * provide a string representation of this XBee Node
+    /**
+     * Provide a string representation of this XBee Node
      */
     @Override
     public String toString(){
@@ -384,5 +387,189 @@ public class XBeeNode extends IEEE802154Node {
               "," + getIdentifier() + ")";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
+
+    private byte PRValue[] = null;
+    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    private final Lock readLock = readWriteLock.readLock();
+    private final Lock writeLock = readWriteLock.writeLock();
+
+    /**
+     * Package protected method to set the PR (Pull Resistance) parameter of the node.
+     *
+     * @param pin the pin number to change.
+     * @param pr a jmri.Sensor.PullResistance value used to configure the pin.
+     * @throws TimeoutException lock timed out
+     * @throws XBeeException invalid Xbee values, pins
+     */
+    void setPRParameter(int pin, jmri.Sensor.PullResistance pr) throws TimeoutException,XBeeException {
+       // flip the bits in the PR data byte, and then send to the node.
+       if(pin>7 || pin < 0){
+          throw new IllegalArgumentException("Invalid pin specified");
+       }
+       try {
+          // always try to get the PR value when writing.
+          writeLock.lock();
+          PRValue = device.getParameter("PR");
+          switch(pin){
+          case 0:
+              if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+                PRValue[0]=(byte) (PRValue[0] | 0x01);
+              } else {
+                PRValue[0]=(byte) (PRValue[0] & 0xFE);
+              }
+              break;
+          case 1:
+              if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+                PRValue[0]=(byte) (PRValue[0] | 0x02);
+              } else {
+                PRValue[0]=(byte) (PRValue[0] & 0xFD);
+              }
+              break;
+          case 2:
+              if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+                PRValue[0]=(byte) (PRValue[0] | 0x04);
+              } else {
+                PRValue[0]=(byte) (PRValue[0] & 0xFB);
+              }
+              break;
+          case 3:
+              if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+                PRValue[0]=(byte) (PRValue[0] | 0x08);
+              } else {
+                PRValue[0]=(byte) (PRValue[0] & 0xF7);
+              }
+              break;
+          case 4:
+              if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+                PRValue[0]=(byte) (PRValue[0] | 0x10);
+              } else {
+                PRValue[0]=(byte) (PRValue[0] & 0xEF);
+              }
+              break;
+          case 5:
+              if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+                PRValue[0]=(byte) (PRValue[0] | 0x20);
+              } else {
+                PRValue[0]=(byte) (PRValue[0] & 0xDF);
+              }
+              break;
+          case 6:
+              if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+                PRValue[0]=(byte) (PRValue[0] | 0x40);
+              } else {
+                PRValue[0]=(byte) (PRValue[0] & 0xBF);
+              }
+              break;
+          case 7:
+              if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+                PRValue[0]=(byte) (PRValue[0] |  (byte) 0x80);
+              } else {
+                PRValue[0]=(byte) (PRValue[0] & (byte) 0x7F);
+              }
+                break;
+            default:
+                log.warn("Unhandled pin value: {}", pin);
+                break;
+              
+          }
+          device.setParameter("PR",PRValue);
+          device.applyChanges();  // force the XBee to start using the new value.
+                                  // we may also want to use writeChanges to set
+                                  // the value on the device perminantly.
+       } finally {
+           writeLock.unlock();
+       }
+    }
+
+   /**
+    * Package protected method to check to see if the PR parameter indicates 
+    * the specified pin has the pull-up resistor enabled.
+    *
+    * @param pin the pin number
+    * @return a jmri.Sensor.PullResistance value indicating the current state of
+    * the pullup resistor.
+    * @throws TimeoutException lock timeout
+    * @throws XBeeException invalid pins or values
+    */
+    jmri.Sensor.PullResistance getPRValueForPin(int pin) throws TimeoutException, XBeeException {
+       if(pin>7 || pin < 0){
+          throw new IllegalArgumentException("Invalid pin specified");
+       }
+       // when reading, used the cached PRValue, if it is available
+       byte prbyte;
+       try {
+          readLock.lock();
+          if(PRValue == null){ 
+             PRValue = device.getParameter("PR");
+          } 
+          prbyte = PRValue[0];
+       } finally {
+          readLock.unlock();
+       }
+       jmri.Sensor.PullResistance retval = jmri.Sensor.PullResistance.PULL_OFF;
+       switch(pin){
+       case 0:
+           if((prbyte & 0x01)==0x01){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 1:
+           if((prbyte & 0x02)==0x02){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 2:
+           if((prbyte & 0x04)==0x04){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 3:
+           if((prbyte & 0x08)==0x08){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 4:
+           if((prbyte & 0x10)==0x10){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 5:
+           if((prbyte & 0x20)==0x20){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 6:
+           if((prbyte & 0x40)==0x40){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 7:
+           if((prbyte & 0x80)==0x80){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       default: 
+          retval = jmri.Sensor.PullResistance.PULL_OFF;
+       }
+       return retval;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(XBeeNode.class);
+
 }

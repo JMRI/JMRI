@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.locoio;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,21 +28,23 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locoio.LocoIOTest");  // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(LocoIOPanelTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOPanelTest.class));
         suite.addTest(LocoIOTableModelTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIODataTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

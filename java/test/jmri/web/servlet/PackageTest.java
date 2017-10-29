@@ -14,6 +14,7 @@ import org.junit.runners.Suite;
    jmri.web.servlet.panel.PackageTest.class,
    jmri.web.servlet.roster.PackageTest.class,
    jmri.web.servlet.simple.PackageTest.class,
+   jmri.web.servlet.about.PackageTest.class,
    BundleTest.class,
    DenialServletTest.class,
    RedirectionServletTest.class,

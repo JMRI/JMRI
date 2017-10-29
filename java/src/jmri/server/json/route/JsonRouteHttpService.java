@@ -1,5 +1,7 @@
 package jmri.server.json.route;
 
+import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -11,9 +13,6 @@ import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
-
-import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
-
 import jmri.server.json.JsonNamedBeanHttpService;
 
 /**
@@ -123,7 +122,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
     }
      */
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(RouteManager.class).getSystemNameList()) {
             root.add(this.doGet(ROUTE, name, locale));

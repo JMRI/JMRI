@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.locations;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -16,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Yardmaster frame by track. Shows work at one location listed by track.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * 
+ *
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
@@ -69,7 +69,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         initComponents();
 
         // this window doesn't use the set button
-        setButton.setVisible(false);
+        modifyButton.setVisible(false);
 
         _location = location;
 
@@ -180,7 +180,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         });
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void runUpdate() {
         log.debug("run update");
         removePropertyChangeListerners();
@@ -359,12 +358,12 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
             }
             // now do car holds
             // we only need the cars on this track
-            List<RollingStock> rsList = carManager.getByTrainList();
+            List<Car> rsList = carManager.getByTrainList();
             List<Car> carList = new ArrayList<Car>();
-            for (RollingStock rs : rsList) {
+            for (Car rs : rsList) {
                 if (rs.getTrack() != _track || rs.getRouteLocation() != null)
                     continue;
-                carList.add((Car) rs);
+                carList.add(rs);
             }
             JPanel pHoldCars = new JPanel();
             pHoldCars.setLayout(new BoxLayout(pHoldCars, BoxLayout.Y_AXIS));
@@ -378,13 +377,13 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     text = TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim();
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
-                            new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
+                            new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
                                     TrainCommon.padAndTruncateString(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
-                                    TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
+                                    TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
                                     TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
-                                    TrainCommon.padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(_track.getName(), LocationManager.instance().getMaxTrackNameLength()),
-                                    TrainCommon.padAndTruncateString(car.getColor(), CarColors.instance().getMaxNameLength())});
+                                    TrainCommon.padAndTruncateString(car.getLoadName(), InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateString(_track.getName(), InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
+                                    TrainCommon.padAndTruncateString(car.getColor(), InstanceManager.getDefault(CarColors.class).getMaxNameLength())});
 
                 }
                 JCheckBox checkBox = new JCheckBox(text);
@@ -444,5 +443,5 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(YardmasterByTrackPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(YardmasterByTrackPanel.class);
 }

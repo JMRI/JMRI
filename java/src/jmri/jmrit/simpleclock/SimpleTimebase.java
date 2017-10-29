@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * The pauseTime member is used to indicate that the Timebase was paused. If
  * non-null, it indicates the current fast time when the clock was paused.
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007 Dave Duchamp - 2007
+ * @author Bob Jacobsen Copyright (C) 2004, 2007 Dave Duchamp - 2007
  * additions/revisions for handling one hardware clock
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
@@ -50,11 +50,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             clockSensor.setKnownState(Sensor.ACTIVE);
             clockSensor.addPropertyChangeListener(
                     new PropertyChangeListener() {
-                        @Override
-                        public void propertyChange(PropertyChangeEvent e) {
-                            clockSensorChanged();
-                        }
-                    });
+                @Override
+                public void propertyChange(PropertyChangeEvent e) {
+                    clockSensorChanged();
+                }
+            });
         } catch (jmri.JmriException e) {
             log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
         }
@@ -81,7 +81,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         // is clock stopped?
         if (pauseTime != null) {
             return new Date(pauseTime.getTime()); // to ensure not modified outside
-        }    	// clock running
+        }     // clock running
         long elapsedMSec = (new Date()).getTime() - startAtTime.getTime();
         long nowMSec = setTimeValue.getTime() + (long) (mFactor * elapsedMSec);
         return new Date(nowMSec);
@@ -89,7 +89,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     @Override
     public void setTime(Date d) {
-        startAtTime = new Date();	// set now in wall clock time
+        startAtTime = new Date(); // set now in wall clock time
         setTimeValue = new Date(d.getTime());   // to ensure not modified from outside
         if (synchronizeWithHardware) {
             // send new time to all hardware clocks, except the hardware time source if there is one
@@ -110,15 +110,14 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      * @param i java.time.Instant
      */
     @Override
-    public void setTime(Instant i){
-       setTime(Date.from(i));
+    public void setTime(Instant i) {
+        setTime(Date.from(i));
     }
-
 
     @Override
     public void userSetTime(Date d) {
         // this call only results from user changing fast clock time in Setup Fast Clock
-        startAtTime = new Date();	// set now in wall clock time
+        startAtTime = new Date(); // set now in wall clock time
         setTimeValue = new Date(d.getTime());   // to ensure not modified from outside
         if (synchronizeWithHardware) {
             // send new time to all hardware clocks, including the hardware time source if there is one
@@ -216,7 +215,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     @Override
     public void userSetRate(double factor) {
-        // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl  
+        // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl
         // implementation
         if (factor < 0.1 || factor > 100) {
             log.error("rate of " + factor + " is out of reasonable range, set to 1");
@@ -481,13 +480,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         return (!notInitialized);
     }
 
-    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     /**
      * Handle a change in the clock running sensor
      */
@@ -505,26 +497,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             }
             setRun(false);
         }
-    }
-
-    /**
-     * Request a call-back when the bound Rate or Run property changes.
-     * <P>
-     * Not yet implemented.
-     */
-    @Override
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    /**
-     * Remove a request for a call-back when a bound property changes.
-     * <P>
-     * Not yet implemented.
-     */
-    @Override
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     /**
@@ -550,7 +522,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private Memory factorMemory = null;  // contains the rate factor for the fast clock
 
     private boolean internalMaster = true;     // false indicates a hardware clock is the master
-    private String masterName = "";		// name of hardware time source, if not internal master
+    private String masterName = "";  // name of hardware time source, if not internal master
     private ClockControl hardwareTimeSource = null;  // ClockControl instance of hardware time source
     private boolean synchronizeWithHardware = false;  // true indicates need to synchronize
     private boolean correctHardware = false;    // true indicates hardware correction requested
@@ -558,8 +530,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private boolean startStopped = false;    // true indicates start up with clock stopped requested
     private boolean startSetTime = false;    // true indicates set fast clock to specified time at
     //start up requested
-    private Date startTime = new Date();	// specified time for setting fast clock at start up
-    private int startClockOption = NONE;	// request start of a clock at start up
+    private Date startTime = new Date(); // specified time for setting fast clock at start up
+    private int startClockOption = NONE; // request start of a clock at start up
     private boolean notInitialized = true;  // true before initialization received from start up
     private boolean showStopButton = false; // true indicates start up with start/stop button displayed
 
@@ -667,6 +639,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTimebase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTimebase.class);
 
 }

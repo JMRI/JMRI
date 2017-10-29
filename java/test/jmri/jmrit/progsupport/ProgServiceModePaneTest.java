@@ -5,7 +5,10 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import jmri.InstanceManager;
 import jmri.ProgrammerScaffold;
+import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -23,52 +26,53 @@ public class ProgServiceModePaneTest {
     public void testCreateHorizontalNone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create and show
-        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal None");
+        JmriJFrame f = new JmriJFrame("Horizontal None");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.X_AXIS));
         f.pack();
         f.setLocation(0, 0);
         f.setVisible(true);
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testCreateHorizontalDIRECTBYTEMODE() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // add dummy DCC
-        InstanceManager.setProgrammerManager(new DefaultProgrammerManager(
-                (new ProgrammerScaffold(DefaultProgrammerManager.DIRECTBYTEMODE))));
-        Assert.assertTrue("programer manager available", InstanceManager.getDefault(jmri.ProgrammerManager.class) != null);
+        InstanceManager.setAddressedProgrammerManager(new DefaultProgrammerManager(
+                (new ProgrammerScaffold(ProgrammingMode.DIRECTBYTEMODE))));
+        Assert.assertNotNull("programer manager available", InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
         // create and show
-        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal DIRECTBYTEMODE");
+        JmriJFrame f = new JmriJFrame("Horizontal DIRECTBYTEMODE");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.X_AXIS));
         f.pack();
         f.setLocation(0, 100);
         f.setVisible(true);
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testCreateVerticalNone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create and show
-        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Vertical None");
+        JmriJFrame f = new JmriJFrame("Vertical None");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.Y_AXIS,
                         new ButtonGroup()));
         f.pack();
         f.setLocation(0, 200);
         f.setVisible(true);
+        JUnitUtil.dispose(f);
     }
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        // clear InstanceManager
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

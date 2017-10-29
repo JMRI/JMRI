@@ -83,7 +83,7 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(SignalHeadManager.class).getSystemNameList()) {
             root.add(this.doGet(SIGNAL_HEAD, name, locale));

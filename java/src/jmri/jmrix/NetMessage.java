@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Different implementations will map the opcode and length into the contents in
  * different ways. They may not appear at all...
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public abstract class NetMessage implements Serializable {
 
@@ -120,6 +120,6 @@ public abstract class NetMessage implements Serializable {
     private int mOpCode = 0;
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NetMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetMessage.class);
 
 }

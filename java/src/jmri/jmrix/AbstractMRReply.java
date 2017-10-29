@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * This is a variable length reply, which can grow as needed. The length is
  * given by the largest index written so far.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
@@ -121,7 +121,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
         int val = -1;
         try {
             val = Integer.parseInt(s);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Unable to get number from reply: \"" + s + "\" index: " + index
                     + " message: \"" + toString() + "\"");
         }
@@ -138,7 +138,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
         int val = -1;
         try {
             val = Integer.parseInt(s, 16);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Unable to get number from reply: \"" + s + "\" index: " + index
                     + " message: \"" + toString() + "\"");
         }
@@ -179,6 +179,6 @@ abstract public class AbstractMRReply extends AbstractMessage {
     // contents (private)
     private boolean unsolicited;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class);
 
 }

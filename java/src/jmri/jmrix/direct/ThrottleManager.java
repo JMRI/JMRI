@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * time. It also is missing logic to alternate sending speed and function
  * commands; right now it only sends the first group of function packets.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
@@ -25,10 +25,7 @@ public class ThrottleManager extends AbstractThrottleManager {
      */
     public ThrottleManager() {
         super();
-        if (mInstance != null) {
-            log.warn("Creating too many objects");
-        }
-        mInstance = this;
+        jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class,this);
     }
 
     /**
@@ -42,7 +39,7 @@ public class ThrottleManager extends AbstractThrottleManager {
      */
     @Deprecated
     static public ThrottleManager instance() {
-        return mInstance;
+        return jmri.InstanceManager.getDefault(jmri.jmrix.direct.ThrottleManager.class);
     }
 
     Throttle currentThrottle = null;
@@ -90,6 +87,6 @@ public class ThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleManager.class);
 
 }

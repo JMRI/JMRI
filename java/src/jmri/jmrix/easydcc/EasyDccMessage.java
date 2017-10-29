@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The {@link EasyDccReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2004
   */
 public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -215,7 +215,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
     static protected final int LONG_TIMEOUT = 180000;  // e.g. for programming options
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccMessage.class);
 
 }
 

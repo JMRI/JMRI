@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin.swing.monitor;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,24 +13,16 @@ import org.junit.Test;
  */
 public class MarklinMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane );
-    }
-
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
-        pane = new MarklinMonPane();
+        JUnitUtil.setUp();
+        // pane for AbstractMonPaneTestBase, panel for JmriJPanelTest
+        panel = pane = new MarklinMonPane();
+        title=Bundle.getMessage("MarklinMonitorTitle");
     }
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

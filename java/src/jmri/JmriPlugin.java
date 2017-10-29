@@ -9,7 +9,7 @@ import javax.swing.JMenuBar;
  * This class provides a null static member. By replacing it with another
  * implementation, the user can update configuration, etc at startup time.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2012
+ * @author Bob Jacobsen Copyright (C) 2003, 2012
  */
 public class JmriPlugin {
 

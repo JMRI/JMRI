@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    CarManager manager = CarManager.instance(); // There is only one manager
+    CarManager manager = InstanceManager.getDefault(CarManager.class); // There is only one manager
 
     // Defines the columns
     private static final int SELECT_COLUMN = 0;
@@ -79,7 +79,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     private int _sort = SORTBY_NUMBER;
 
-    List<RollingStock> sysList = null; // list of cars
+    List<Car> sysList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
     String locationName = null; // only show cars with this location
     String trackName = null; // only show cars with this track
@@ -210,7 +210,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public void resetCheckboxes() {
-        for (RollingStock car : sysList) {
+        for (Car car : sysList) {
             car.setSelected(false);
         }
     }
@@ -240,7 +240,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     private int getIndex(int start, String roadNumber) {
         for (int index = start; index < sysList.size(); index++) {
-            Car c = (Car) sysList.get(index);
+            Car c = sysList.get(index);
             if (c != null) {
                 String[] number = c.getNumber().split("-");
                 // check for wild card '*'
@@ -270,7 +270,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public Car getCarAtIndex(int index) {
-        return (Car) sysList.get(index);
+        return sysList.get(index);
     }
 
     private void updateList() {
@@ -281,14 +281,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         addPropertyChangeCars();
     }
 
-    public List<RollingStock> getSelectedCarList() {
+    public List<Car> getSelectedCarList() {
         return getCarList(_sort);
     }
 
     @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
             justification = "default case is sort by number") // NOI18N
-    public List<RollingStock> getCarList(int sort) {
-        List<RollingStock> list;
+    public List<Car> getCarList(int sort) {
+        List<Car> list;
         switch (sort) {
             case SORTBY_NUMBER:
                 list = manager.getByNumberList();
@@ -354,12 +354,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         return list;
     }
 
-    private void filterList(List<RollingStock> list) {
+    private void filterList(List<Car> list) {
         if (showAllCars) {
             return;
         }
         for (int i = 0; i < list.size(); i++) {
-            Car car = (Car) list.get(i);
+            Car car = list.get(i);
             if (car.getLocation() == null) {
                 list.remove(i--);
                 continue;
@@ -537,7 +537,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Car car = (Car) sysList.get(row);
+        Car car = sysList.get(row);
         if (car == null) {
             return "ERROR car unknown " + row; // NOI18N
         }
@@ -640,7 +640,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        Car car = (Car) sysList.get(row);
+        Car car = sysList.get(row);
         switch (col) {
             case SELECT_COLUMN:
                 car.setSelected(((Boolean) value).booleanValue());
@@ -721,13 +721,13 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     private void addPropertyChangeCars() {
-        for (RollingStock car : manager.getList()) {
+        for (Car car : manager.getList()) {
             car.addPropertyChangeListener(this);
         }
     }
 
     private void removePropertyChangeCars() {
-        for (RollingStock car : manager.getList()) {
+        for (Car car : manager.getList()) {
             car.removePropertyChangeListener(this);
         }
     }
@@ -758,5 +758,5 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class);
 }

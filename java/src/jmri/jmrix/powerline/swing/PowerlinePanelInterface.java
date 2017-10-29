@@ -17,7 +17,8 @@ public interface PowerlinePanelInterface {
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * @param memo Connection details memo
      */
-    public void initComponents(SerialSystemConnectionMemo memo) throws Exception;
+    public void initComponents(SerialSystemConnectionMemo memo);
 
 }

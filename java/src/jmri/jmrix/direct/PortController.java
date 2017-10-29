@@ -5,7 +5,7 @@ import jmri.jmrix.SystemConnectionMemo;
 
 /*
  * Identifying class representing a direct-drive communications port
- * @author			Bob Jacobsen    Copyright (C) 2001, 2004
+ * @author   Bob Jacobsen    Copyright (C) 2001, 2004
  */
 public abstract class PortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * implements a single-slot command station.
  *
  * @see AbstractThrottleManager
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
@@ -102,5 +102,5 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManager.class);
 }

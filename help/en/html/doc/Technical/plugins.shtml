@@ -37,7 +37,7 @@
       </p>
       <ul>
         <li><a href="#script">Script JMRI</a></li>
-        <li><a href="#service">Implement a Service Loader</a></li>
+        <li><a href="#service">Implement a Service Provider</a></li>
         <li><a href="#jmriPlugin">Override jmri.JmriPlugin</a></li>
       </ul>
 
@@ -72,7 +72,7 @@
         </li>
       </ul>
 
-      <h2 id="service">Implement a Service Loader</h2>
+      <h2 id="service">Implement a Service Provider</h2>
 
       <p>Java contains a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Service Loader</a>
         that allows classes implementing a specific API to provide a service to
@@ -94,6 +94,10 @@
           defined by a ConnectionTypeList service. Implement this (and other
           required classes) to create a new system connection type. See
           <a href="NewSystem.shtml">Adding a New System</a> for details.
+        </dd>
+        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
+        <dd>Add new factories for creating default instances of objects
+          managed by the <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">InstanceManager</a>.
         </dd>
         <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
         <dd>The JMRI JSON services used in the JMRI web services can be extended

@@ -71,7 +71,7 @@ public class IconDialog extends ItemDialog {
             ItemPanel.checkIconMap(type, _iconMap);
         }
         _iconPanel = makeIconPanel(_iconMap);
-        panel.add(_iconPanel);	// put icons above buttons
+        panel.add(_iconPanel); // put icons above buttons
         panel.add(buttonPanel);
         //panel.setMaximumSize(panel.getPreferredSize());
 
@@ -247,5 +247,5 @@ public class IconDialog extends ItemDialog {
         pack();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IconDialog.class);
 }

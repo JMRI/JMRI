@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <a href="http://jmri.org/help/en/html/tools/automation/viaJava.shtml">JMRI
  * Layout Automation in Java page</a>.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @see jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
@@ -59,7 +59,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
         sensor = InstanceManager.sensorManagerInstance().
                 provideSensor(sensorName);
 
-        programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        programmer = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(locoLong, locoNumber);
 
         // set up the initial correlation
@@ -111,5 +111,5 @@ public class SampleAutomaton2 extends AbstractAutomaton {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SampleAutomaton2.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SampleAutomaton2.class);
 }

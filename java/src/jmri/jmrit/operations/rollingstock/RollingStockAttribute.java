@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * color, type, load, road, owner, model etc.
  *
  * @author Daniel Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class RollingStockAttribute {
 
@@ -29,8 +29,8 @@ public class RollingStockAttribute {
         // Need to reload all listeners for the tests to work.
         // Only tests currently call dispose()
         // remove all listeners
-//		for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners())
-//			pcs.removePropertyChangeListener(p);
+//  for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners())
+//   pcs.removePropertyChangeListener(p);
     }
 
     protected List<String> list = new ArrayList<String>();
@@ -212,6 +212,6 @@ public class RollingStockAttribute {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);
 
 }

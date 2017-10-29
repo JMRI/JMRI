@@ -20,7 +20,10 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     //private Mx1Interface network;
 
     /**
-     * Constructor.
+     * Create a new throttle.
+     *
+     * @param memo    the system connection the throttle is associated with
+     * @param address the address for the throttle
      */
     public Mx1Throttle(Mx1SystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
@@ -92,7 +95,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
          ( f4 ? 0x08 : 0);
         
          data = data + 0x80;*/
-        /*Mx1Message m = Mx1Message.getSendFunction(1, addressLo, addressHi, data);
+ /*Mx1Message m = Mx1Message.getSendFunction(1, addressLo, addressHi, data);
          if(m!=null)
          tc.sendMx1Message(m);*/
     }
@@ -147,7 +150,6 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         /*Mx1Message m = Mx1Message.getSendFunction(4, addressLo, addressHi, data);
          if(m!=null)
          tc.sendMx1Message(m);*/
-
 //         data = 0x00
 //                 | (f20 ? 0x08 : 0)
 //                 | (f19 ? 0x04 : 0)
@@ -175,7 +177,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
          (f22 ? 0x02 : 0) |
          (f21 ? 0x01 : 0); */
 
-        /*Mx1Message m = Mx1Message.getSendFunction(6, addressLo, addressHi, data);
+ /*Mx1Message m = Mx1Message.getSendFunction(6, addressLo, addressHi, data);
          if(m!=null)
          tc.sendMx1Message(m);   */
     }
@@ -286,6 +288,6 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Mx1Throttle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Throttle.class);
 
 }

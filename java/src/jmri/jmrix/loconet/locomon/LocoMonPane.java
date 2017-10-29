@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * LocoNet Monitor pane displaying (and logging) LocoNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
 
@@ -70,7 +70,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     }
 
     @Override
-    public void initComponents(LocoNetSystemConnectionMemo memo) {
+    public synchronized void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the LnTrafficController
         if (memo.getLnTrafficController() == null) {
@@ -127,5 +127,5 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoMonPane.class);
 }

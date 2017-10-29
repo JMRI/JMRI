@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table model for the pin assignment table.
  *
- * @author	Paul Bender Copyright (C) 2013,2016
+ * @author Paul Bender Copyright (C) 2013,2016
  */
 public class AssignmentTableModel extends AbstractTableModel {
 
@@ -115,6 +115,6 @@ public class AssignmentTableModel extends AbstractTableModel {
      // nothing is stored here
   }
 
-    private final static Logger log = LoggerFactory.getLogger(AssignmentTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AssignmentTableModel.class);
 
 }

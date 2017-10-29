@@ -57,6 +57,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
     }
 
     /**
+     * @return current connection instance
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
@@ -68,6 +69,6 @@ public class SerialThrottleManager extends AbstractThrottleManager {
     }
     static private SerialThrottleManager _instance;
     
-    private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);
 
 }

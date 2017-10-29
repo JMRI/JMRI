@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <li>(IT1)(IT2) - colon-separated list of names for Turnouts
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2014
+ * @author Bob Jacobsen Copyright (C) 2009, 2014
  */
 public class TurnoutSignalMast extends AbstractSignalMast {
 
@@ -204,7 +204,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return resetPreviousStates;
     }
 
-    static class TurnoutAspect implements java.io.Serializable {
+    static class TurnoutAspect {
 
         NamedBeanHandle<Turnout> namedTurnout;
         int state;
@@ -267,8 +267,6 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                     throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-            //Do nothing at this stage
         }
     }
 
@@ -277,5 +275,5 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class);
 }

@@ -5,7 +5,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    LayoutBlockRouteTableModelTest.class,
+    LayoutBlockRouteTableTest.class,
+    LayoutBlockThroughPathsTableModelTest.class,
+    LayoutBlockRouteTableActionTest.class,
+    LayoutBlockNeighbourTableModelTest.class
 })
 
 

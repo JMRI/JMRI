@@ -13,13 +13,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p port adapter for connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -38,7 +39,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         // add another button
         //JButton b = new JButton("Configure nodes");
         //details.add(b);
-        //b.addActionListener(new NodeConfigAction());		
+        //b.addActionListener(new NodeConfigAction());  
     }
 
     @Override

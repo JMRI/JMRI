@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Mrc Inc
  * for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
 public class MrcPowerManager
@@ -98,7 +98,7 @@ public class MrcPowerManager
     @Override
     public void notifyFailedXmit(Date timestamp, MrcMessage m) { /*message(m);*/ }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcPowerManager.class);
 }
 
 

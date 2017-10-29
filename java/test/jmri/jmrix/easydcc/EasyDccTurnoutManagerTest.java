@@ -1,6 +1,7 @@
 package jmri.jmrix.easydcc;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,14 +17,13 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Override
-    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+
         // create and register the manager object
         l = new EasyDccTurnoutManager();
         jmri.InstanceManager.setTurnoutManager(l);
@@ -57,6 +57,6 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerTest.class);
 
 }

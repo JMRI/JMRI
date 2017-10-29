@@ -230,15 +230,15 @@
         elements.
       </div>
 
-      <div style="font-weight: bold; margin-left: 2em">
+      <div style="margin-left: 2em">
         <ul>
-          <li>VSDecocer Preferences</li>
+          <li><a href="Main_VSD.shtml#preferences"><strong>VSDecoder 
+		  Preferences</strong></a></li>
         </ul>
       </div>
 
-      <div style="margin-left: 40px;">
-        <img style="width: 828px; height: 222px;" alt=
-        "VSD Preferences" src="images/VSD_Preferences.png">
+      <div style="margin-left: 120px;">
+        Manage VSD Preferences elements.
       </div>
 
       <p><img src="images/separator.png" alt="sep" height="4"

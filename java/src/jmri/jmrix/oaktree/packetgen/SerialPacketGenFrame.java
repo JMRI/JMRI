@@ -14,7 +14,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of serial messages
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.oaktree.SerialListener {
 
@@ -30,8 +30,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         super();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");
@@ -109,11 +112,19 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
+    /** 
+     * {@inheritDoc}
+     * Ignores messages.
+     */
     @Override
     public void message(SerialMessage m) {
-    }  // ignore replies
+    }
 
+    /** 
+     * {@inheritDoc}
+     * Ignore replies.
+     */
     @Override
     public void reply(SerialReply r) {
-    } // ignore replies
+    }
 }

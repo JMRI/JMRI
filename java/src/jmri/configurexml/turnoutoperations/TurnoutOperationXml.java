@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Superclass for save/restore of TurnoutOperation subclasses in XML.
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlAdapter {
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         loadOne(shared);
         return true;
     }
@@ -25,7 +25,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
     /**
      * Load one operation, using the appropriate adapter
      *
-     * @param e	element for operation
+     * @param e element for operation
      * @return the loaded TurnoutOperation or null if unable to load from e
      */
     public static TurnoutOperation loadOperation(Element e) {
@@ -62,8 +62,8 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      * common part of store - create the element and store the name and the
      * class
      *
-     * @param	o	TurnoutOperation object
-     * @return	partially filled element
+     * @param o TurnoutOperation object
+     * @return partially filled element
      */
     @Override
     public Element store(Object o) {
@@ -80,8 +80,8 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      * anything goes wrong (no such class, wrong constructors, instantiation
      * error, ....) just return null
      *
-     * @param op	operation for which configurator is required
-     * @return	the configurator
+     * @param op operation for which configurator is required
+     * @return the configurator
      */
     static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
         TurnoutOperationXml adapter = null;
@@ -105,5 +105,5 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         return adapter;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationXml.class);
 }

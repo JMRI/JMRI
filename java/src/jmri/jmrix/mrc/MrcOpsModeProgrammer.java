@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  */
 public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.AddressedProgrammer {
@@ -92,7 +92,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -133,6 +133,6 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammer.class);
 
 }

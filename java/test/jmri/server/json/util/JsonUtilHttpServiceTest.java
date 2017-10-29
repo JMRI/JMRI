@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilHttpServiceTest {
 
-    public final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
 
     public JsonUtilHttpServiceTest() {
     }
@@ -115,6 +115,7 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(instance.getMetadata(locale), instance.doGetList(JSON.METADATA, locale));
         Assert.assertEquals(instance.getNetworkServices(locale), instance.doGetList(JSON.NETWORK_SERVICES, locale));
         Assert.assertEquals(instance.getSystemConnections(locale), instance.doGetList(JSON.SYSTEM_CONNECTIONS, locale));
+        Assert.assertEquals(instance.getConfigProfiles(locale), instance.doGetList(JSON.CONFIG_PROFILES, locale));
     }
 
     /**
@@ -150,7 +151,7 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(jmri.Version.name(), data.path(JSON.JMRI).asText());
         Assert.assertEquals(JSON.JSON_PROTOCOL_VERSION, data.path(JSON.JSON).asText());
         Assert.assertEquals(Math.round(heartbeat * 0.9f), data.path(JSON.HEARTBEAT).asInt());
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), data.path(JSON.RAILROAD).asText());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), data.path(JSON.RAILROAD).asText());
         Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
         Assert.assertEquals(ProfileManager.getDefault().getActiveProfile().getName(), data.path(JSON.ACTIVE_PROFILE).asText());
     }
@@ -225,7 +226,7 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.get(0).path(JSON.TYPE).asText());
         JsonNode data = result.get(0).path(JSON.DATA);
         Assert.assertFalse(data.isMissingNode());
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), data.path(JSON.NAME).asText());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), data.path(JSON.NAME).asText());
         Assert.assertEquals(9999, data.path(JSON.PORT).asInt());
         Assert.assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
         Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
@@ -298,7 +299,7 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         Assert.assertFalse(data.isMissingNode());
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), data.path(JSON.NAME).asText());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), data.path(JSON.NAME).asText());
         Assert.assertEquals(9999, data.path(JSON.PORT).asInt());
         Assert.assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
         Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
@@ -317,7 +318,7 @@ public class JsonUtilHttpServiceTest {
         JsonNode result = instance.getRailroad(locale);
         Assert.assertEquals(JSON.RAILROAD, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), data.path(JSON.NAME).asText());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), data.path(JSON.NAME).asText());
     }
 
 }

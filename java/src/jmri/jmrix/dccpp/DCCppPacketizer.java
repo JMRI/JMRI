@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
  * <LI> (everything else)
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Based on XNetPacketizer by Bob Jacobsen
  *
@@ -108,7 +108,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * ready, false otherwise May throw an Exception.
      */
     @Override
-    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
+    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) {
         if (p != null && ((DCCppPortController) p).okToSend()) {
             ((DCCppPortController) p).setOutputBufferEmpty(false);
             return true;
@@ -169,5 +169,5 @@ public class DCCppPacketizer extends DCCppTrafficController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);
 }

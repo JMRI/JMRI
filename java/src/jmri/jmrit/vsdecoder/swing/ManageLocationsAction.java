@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 public class ManageLocationsAction extends AbstractAction {
@@ -137,6 +137,6 @@ public class ManageLocationsAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(ManageLocationsAction.class.getName());
+            .getLogger(ManageLocationsAction.class);
 
 }

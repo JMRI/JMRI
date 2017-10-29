@@ -13,7 +13,7 @@ import jmri.util.JmriJFrame;
 /**
  * Swing action to display the file revision history
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class FileHistoryAction extends AbstractAction {
 

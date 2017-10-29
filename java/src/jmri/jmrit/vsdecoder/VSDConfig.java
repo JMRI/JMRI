@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import jmri.DccLocoAddress;
@@ -53,7 +53,7 @@ public class VSDConfig {
         roster = null;
     }
 
-    public String getID() {
+    public String getId() {
         return (my_id);
     }
 
@@ -85,7 +85,7 @@ public class VSDConfig {
         return (roster);
     }
 
-    public void setID(String id) {
+    public void setId(String id) {
         my_id = id;
     }
 

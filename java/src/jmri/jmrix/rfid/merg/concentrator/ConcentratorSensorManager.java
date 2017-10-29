@@ -82,6 +82,6 @@ public class ConcentratorSensorManager extends RfidSensorManager {
         super.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ConcentratorSensorManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorSensorManager.class);
 
 }

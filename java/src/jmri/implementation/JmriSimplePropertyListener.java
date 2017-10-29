@@ -21,7 +21,7 @@ import jmri.NamedBeanHandle;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  * @since 2.5.1
  */
 public class JmriSimplePropertyListener implements PropertyChangeListener {
@@ -60,7 +60,7 @@ public class JmriSimplePropertyListener implements PropertyChangeListener {
 
     public NamedBean getBean() {
         if (_namedBean != null) {
-            return (NamedBean) _namedBean.getBean();
+            return  _namedBean.getBean();
         }
         return null;
     }

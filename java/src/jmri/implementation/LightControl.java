@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Dave Duchamp Copyright (C) 2010
+ * @author Dave Duchamp Copyright (C) 2010
  */
 public class LightControl {
 
@@ -169,7 +169,7 @@ public class LightControl {
     }
 
     // operational instance variables - not saved between runs
-    protected Light _parentLight = null;        // Light that is being controlled			
+    protected Light _parentLight = null;        // Light that is being controlled   
     private boolean _active = false;
     protected NamedBeanHandle<Sensor> _namedControlSensor = null;
     private java.beans.PropertyChangeListener _sensorListener = null;
@@ -603,5 +603,5 @@ public class LightControl {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightControl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightControl.class);
 }

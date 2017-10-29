@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 // JMRI and Java stuff
@@ -354,6 +354,6 @@ class ConfigurableSound extends VSDSound {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigurableSound.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigurableSound.class);
 
 }

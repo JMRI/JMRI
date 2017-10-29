@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?> 
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd"> 
+<!-- See JMRI/JMRI PR 3214 https://github.com/JMRI/JMRI/issues/3214 -->
+<!-- This is a panel file, which isn't stored, so can't do load-and-store test -->
+<jmriversion> 
+<major>4</major> 
+<minor>5</minor> 
+<test>7</test> 
+<modifier>.7</modifier> 
+</jmriversion> 
+<sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml"> 
+<defaultInitialState>unknown</defaultInitialState> 
+<sensor systemName="ISCLOCKRUNNING" inverted="false"> 
+<systemName>ISCLOCKRUNNING</systemName> 
+</sensor> 
+</sensors> 
+<turnouts class="jmri.jmrix.nce.configurexml.NceTurnoutManagerXml"> 
+<operations automate="false"> 
+<operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" /> 
+<operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" /> 
+<operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" /> 
+</operations> 
+<defaultclosedspeed>Normal</defaultclosedspeed> 
+<defaultthrownspeed>Restricted</defaultthrownspeed> 
+<turnout systemName="IT607" feedback="DIRECT" inverted="false" automate="Off"> 
+<systemName>IT607</systemName> 
+</turnout> 
+<turnout systemName="IT608" feedback="DIRECT" inverted="false" automate="Off"> 
+<systemName>IT608</systemName> 
+</turnout> 
+<turnout systemName="IT609" feedback="DIRECT" inverted="false" automate="Off"> 
+<systemName>IT609</systemName> 
+</turnout> 
+<turnout systemName="IT610" feedback="DIRECT" inverted="false" automate="Off"> 
+<systemName>IT610</systemName> 
+</turnout> 
+</turnouts> 
+<memories class="jmri.managers.configurexml.DefaultMemoryManagerXml"> 
+<memory systemName="IMCURRENTTIME" value="10:11 PM"> 
+<systemName>IMCURRENTTIME</systemName> 
+</memory> 
+<memory systemName="IMRATEFACTOR" value="1.0"> 
+<systemName>IMRATEFACTOR</systemName> 
+</memory> 
+</memories> 
+<signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" /> 
+<signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" /> 
+<oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" /> 
+<warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" /> 
+<signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml"> 
+<logicDelay>500</logicDelay> 
+</signalmastlogics> 
+<timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Mar 08 22:05:31 PST 2017" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" /> 
+<entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" /> 
+<paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="-1004" y="361" height="554" width="790" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both"> 
+
+<slipturnouticon turnoutType="scissor" x="284" y="104" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" class="jmri.jmrit.display.configurexml.SlipTurnoutIconXml"> 
+<turnoutEast>IT608</turnoutEast> 
+<turnoutWest>IT607</turnoutWest> 
+<lowerWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-closed.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+  <text>Lower West To Lower East</text> 
+</lowerWestToLowerEast> 
+<tooltip>IT607 IT608</tooltip> 
+<lowerWestToUpperEast url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-lower-west-upper-east.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+  <text>Lower West To Upper East</text> 
+</lowerWestToUpperEast> 
+<upperWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-upper-west-lower-east.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+  <text>Upper West To Lower East</text> 
+</upperWestToLowerEast> 
+<unknown url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-unknown.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+  </unknown> 
+<inconsistent url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-error.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+</inconsistent> 
+</slipturnouticon> 
+
+<slipturnouticon turnoutType="threeWay" firstTurnoutExit="lower" x="0" y="0" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" class="jmri.jmrit.display.configurexml.SlipTurnoutIconXml">
+<turnoutEast>IT608</turnoutEast> 
+<turnoutWest>IT607</turnoutWest> 
+<lowerWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-closed.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+  <text>Lower West To Lower East</text> 
+</lowerWestToLowerEast> 
+<tooltip>IT607 IT608</tooltip> 
+<lowerWestToUpperEast url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-lower-west-upper-east.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+  <text>Lower West To Upper East</text> 
+</lowerWestToUpperEast> 
+<upperWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-upper-west-lower-east.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+  <text>Upper West To Lower East</text> 
+</upperWestToLowerEast> 
+<unknown url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-unknown.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+  </unknown> 
+<inconsistent url="program:resources/icons/smallschematics/tracksegments/os-double-crossover-error.gif" degrees="0" scale="1.0"> 
+  <rotation>0</rotation> 
+</inconsistent> 
+</slipturnouticon> 
+
+<turnouticon turnout="IT609" x="199" y="72" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml"> 
+<tooltip>IT609</tooltip> 
+<icons> 
+<closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0"> 
+<rotation>0</rotation> 
+</closed> 
+<thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0"> 
+<rotation>0</rotation> 
+</thrown> 
+<unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0"> 
+<rotation>0</rotation> 
+</unknown> 
+<inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0"> 
+<rotation>0</rotation> 
+</inconsistent> 
+</icons> 
+<iconmaps /> 
+</turnouticon> 
+<turnouticon turnout="IT610" x="363" y="71" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml"> 
+<tooltip>IT610</tooltip> 
+<icons> 
+<closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0"> 
+<rotation>0</rotation> 
+</closed> 
+<thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0"> 
+<rotation>0</rotation> 
+</thrown> 
+<unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0"> 
+<rotation>0</rotation> 
+</unknown> 
+<inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0"> 
+<rotation>0</rotation> 
+</inconsistent> 
+</icons> 
+<iconmaps /> 
+</turnouticon> 
+</paneleditor> 
+<filehistory> 
+<operation> 
+<type>app</type> 
+<date>Wed Mar 08 22:05:31 PST 2017</date> 
+<filename>JMRI program</filename> 
+</operation> 
+<operation> 
+<type>Store</type> 
+<date>Wed Mar 08 22:11:46 PST 2017</date> 
+<filename /> 
+</operation> 
+</filehistory> 
+<!--Written by JMRI version 4.5.7-R3265cd6 on Wed Mar 08 22:11:46 PST 2017 $Id$--> 
+</layout-config> 

@@ -1,9 +1,6 @@
 package jmri.jmrix.ncemonitor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.DataInputStream;
@@ -26,6 +23,11 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Simple GUI for access to an NCE monitor card
@@ -33,8 +35,8 @@ import org.slf4j.LoggerFactory;
  * When opened, the user must first select a serial port and click "Start". The
  * rest of the GUI then appears.
  *
- * @author	Ken Cameron Copyright (C) 2010 derived from -
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Ken Cameron Copyright (C) 2010 derived from -
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
@@ -53,26 +55,34 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void init() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
-            try {
-                initComponents((NceSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            initComponents((NceSystemConnectionMemo) context);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -86,8 +96,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
 
         // populate the GUI, invoked as part of startup
@@ -241,7 +254,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end hex/verbose group
 
-        {	// start acc off/on
+        { // start acc off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -269,7 +282,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end acc off/on
 
-        {	// start idle off/on
+        { // start idle off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -297,7 +310,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end idle off/on
 
-        {	// start loco off/on
+        { // start loco off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -324,7 +337,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end loco off/on
 
-        {	// start reset off/on
+        { // start reset off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -352,7 +365,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end reset off/on
 
-        {	// start signal on/off
+        { // start signal on/off
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -380,7 +393,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end signal off/on
 
-        {	// Monitor command acc single/double
+        { // Monitor command acc single/double
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             JLabel t = new JLabel("Monitor Command");
@@ -447,6 +460,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     /**
      * Open button has been pushed, create the actual display connection
+     * @param e open button event
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
@@ -512,6 +526,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         return portNameVector;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
     public synchronized String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -528,14 +544,14 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             try {
                 // Doc says 7 bits, but 8 seems needed
                 activeSerialPort.setSerialPortParams(38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -573,24 +589,24 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         } catch (java.io.IOException ex) {
             log.error("IO error while opening port " + portName, ex);
             return "IO error while opening port " + portName + ": " + ex;
-        } catch (gnu.io.UnsupportedCommOperationException ex) {
+        } catch (UnsupportedCommOperationException ex) {
             log.error("Unsupported communications operation while opening port " + portName, ex);
             return "Unsupported communications operation while opening port " + portName + ": " + ex;
-        } catch (gnu.io.NoSuchPortException ex) {
+        } catch (NoSuchPortException ex) {
             log.error("No such port: " + portName, ex);
             return "No such port: " + portName + ": " + ex;
         }
         return null; // indicates OK return
     }
 
-    void handlePortBusy(gnu.io.PortInUseException p, String port) {
+    void handlePortBusy(PortInUseException p, String port) {
         log.error("Port " + p + " in use, cannot open");
     }
 
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class);
 
     /**
      * Internal class to handle the separate character-receive thread

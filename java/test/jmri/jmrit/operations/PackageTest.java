@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
         suite.addTest(jmri.jmrit.operations.automation.PackageTest.suite());
 
-        suite.addTest(XmlLoadTests.suite()); // no tests in class itself
+        suite.addTest(XmlLoadTest.suite()); // no tests in class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class)); 
         suite.addTest(new junit.framework.JUnit4TestAdapter(CommonConductorYardmasterPanelTest.class)); 
         suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
@@ -41,6 +41,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OpsPropertyChangeListenerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExceptionContextTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExceptionDisplayFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(UnexpectedExceptionContextTest.class));
 
         return suite;
     }

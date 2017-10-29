@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
     Log4JTreePaneTest.class,
     LogActionTest.class,
     LogFrameTest.class,
-    LogPanelTest.class
+    LogPanelTest.class,
+    LogOutputWindowActionTest.class
 })
 /**
  * Invokes complete set of tests in the jmri.jmrit.log tree

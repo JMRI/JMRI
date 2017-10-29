@@ -33,7 +33,6 @@
 
       <ul class="snav">
         <!-- h2 TOC -->
-
         <li><a href="#turnouts">Turnouts</a></li>
 
         <li><a href="#sensor">Sensors</a></li>
@@ -41,11 +40,57 @@
         <li><a href="#transponding">Transponding</a></li>
 
         <li><a href="#SVs">SVs</a></li>
-      </ul>LocoNet&reg; systems address input Sensors and output
+      </ul>
+
+      LocoNet&reg; systems address input Sensors and output
       Turnouts using numbers. This page describes how those numbers
       are defined in JMRI, and how they relate to the numbers in
-      other (hardware) systems. <a name="turnout" id="turnout"></a>
+      other (hardware) systems.
 
+      <h2>Adding an item to the table</h2>
+      <p>When you add an item to one of the tables, you only
+            have to enter the numbers to have JMRI construct
+            the complete system name.<br>
+            Here's a summary, split up for
+            outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+
+      <table>
+        <tbody><tr>
+            <th>In/Out</th>
+            <th>Entry</th>
+            <th>Meaning</th>
+            <th>makes System Name</th>
+            <th>Mask</th>
+            <th>Equivalent</th>
+            <th>Minimum</th>
+            <th>Maximum</th>
+        </tr>
+        <tr>
+            <td>i</td>
+            <td>34</td>
+            <td>Sensor 34</td>
+            <td>LS34</td>
+            <td>integer</td>
+            <td>N/A</td>
+            <td>1</td>
+            <td>4096</td>
+        </tr>
+        <tr>
+            <td>o</td>
+            <td>34</td>
+            <td>Turnout 34</td>
+            <td>LT34</td>
+            <td>integer</td>
+            <td>N/A</td>
+            <td>1</td>
+            <td>4096</td>
+        </tr>
+        </tbody></table>
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+
+      <a name="turnout" id="turnout"></a>
       <h2>Addressing LocoNet Turnouts</h2>
 
       <p>Inside packets on the LocoNet, output Turnouts are
@@ -79,7 +124,8 @@
       may be found at the <a href="../../tools/Turnouts.shtml">main
       Turnouts page</a>.</p><a name="sensor" id="sensor"></a>
 
-      <h2>Addressing LocoNet Sensors</h2>Inside packets on the
+      <h2>Addressing LocoNet Sensors</h2>
+      Inside packets on the
       LocoNet, Sensors are addressed with numbers from 0 to 4095.
       Digitrax documentation refers to these as 1 to 4096, however.
       Just like Turnouts, we use the documentation numbering to
@@ -92,9 +138,10 @@
       looks something like this:</p>
       <pre>
    General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi 
-</pre>The contact number, 161 in this case, is the address of the
-Sensor. Prefix that with LS to get the Sensor System Name, e.g.
-LS161 in this case.
+</pre>
+      The contact number, 161 in this case, is the address of the
+      Sensor. Prefix that with LS to get the Sensor System Name, e.g.
+      LS161 in this case.
 
       <p>If you wish to manually enter in the hardware address to
       the system you can do it by enter in the board number,
@@ -361,12 +408,13 @@ LS161 in this case.
       <p>Additional information on Reporters and the Reporter Table
       may be found at the <a href=
       "../../tools/Reporters.shtml">main Reporter
-      page</a>.</p><a name="SVs" id="SVs"></a>
+      page</a>.</p>
 
-      <h2>Addressing LocoNet device System Variables (SVs)</h2>(The
-      following was first fully available in <a href=
+      <a name="SVs" id="SVs"></a>
+      <h2>Addressing LocoNet device System Variables (SVs)</h2>
+      <p>(The following was first fully available in <a href=
       "http://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI
-      4.1.2</a>. Versions before that may not be complete).
+      4.1.2</a>. Versions before that may not be complete).</p>
 
       <p>Like decoders store Configuration Variables (CVs) to hold
       their settings, some LocoNet-compatible devices have System

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This maintains a list of nodes, but doesn't currently do anything with it.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */
@@ -157,7 +157,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             if (msg.getNumDataElements() >= 3) {
                 return true;
             } else {
-                return false;	// waiting for high-low addr
+                return false; // waiting for high-low addr
             }
         }
         // if the interlock is present, send it
@@ -177,7 +177,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class);
 }
 
 

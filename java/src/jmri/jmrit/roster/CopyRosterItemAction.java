@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.XmlFile
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
@@ -90,7 +90,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CopyRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CopyRosterItemAction.class);
 
     // never invoked, because we overrode actionPerformed above
     @Override

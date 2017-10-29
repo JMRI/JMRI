@@ -9,14 +9,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * MRC implementation of a ThrottleManager.
- * <P>
+ *
  * @author	Bob Jacobsen Copyright (C) 2001
- * 
+ *
  */
 public class Mx1ThrottleManager extends AbstractThrottleManager {
 
     /**
-     * Constructor.
+     * Create a new manager.
+     *
+     * @param memo the system connection this manager is associated with
      */
     public Mx1ThrottleManager(Mx1SystemConnectionMemo memo) {
         super(memo);
@@ -76,6 +78,6 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1ThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1ThrottleManager.class);
 
 }

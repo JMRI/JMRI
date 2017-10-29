@@ -14,9 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Make sure an XML file is readable, without doing a Schema validation.
+ * Make sure an XML file is readable, without doing a DTD or Schema validation.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2005, 2007
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileValidateAction
  */
@@ -34,6 +34,8 @@ public class XmlFileCheckAction extends JmriAbstractAction {
     JFileChooser fci;
 
     Component _who;
+    
+    XmlFile xmlfile = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -48,15 +50,12 @@ public class XmlFileCheckAction extends JmriAbstractAction {
             File file = fci.getSelectedFile();
             log.debug("located file {} for XML processing", file);
             // handle the file (later should be outside this thread?)
-            boolean original = XmlFile.verify;
             try {
-                XmlFile.verify = false;
+                xmlfile.setValidate(XmlFile.Validate.None);
                 readFile(file);
                 JOptionPane.showMessageDialog(_who, "OK");
             } catch (IOException | JDOMException ex) {
                 JOptionPane.showMessageDialog(_who, "Error: " + ex);
-            } finally {
-                XmlFile.verify = original;
             }
             log.debug("parsing complete");
 
@@ -73,10 +72,7 @@ public class XmlFileCheckAction extends JmriAbstractAction {
      * @throws java.io.IOException     if unable to read file
      */
     void readFile(File file) throws JDOMException, IOException {
-        XmlFile xf = new XmlFile() {
-        };   // odd syntax is due to XmlFile being abstract
-
-        xf.rootFromFile(file);
+        xmlfile.rootFromFile(file);
 
     }
 
@@ -87,5 +83,5 @@ public class XmlFileCheckAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XmlFileCheckAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XmlFileCheckAction.class);
 }

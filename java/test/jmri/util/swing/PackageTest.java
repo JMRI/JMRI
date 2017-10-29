@@ -1,5 +1,6 @@
 package jmri.util.swing;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -48,6 +49,14 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(VerticalLabelUITest.class));
         suite.addTest(new JUnit4TestAdapter(XTableColumnModelTest.class));
         suite.addTest(new JUnit4TestAdapter(JFrameInterfaceTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriNamedPaneActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(BusyDialogTest.class));
+        suite.addTest(new JUnit4TestAdapter(TextFilterTest.class));
+        suite.addTest(new JUnit4TestAdapter(BeanSelectCreatePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ValidatedTextFieldTest.class));
+        suite.addTest(new JUnit4TestAdapter(ComboBoxColorChooserPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ButtonGroupColorChooserPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ButtonSwatchColorChooserPanelTest.class));
 
         return suite;
     }
@@ -55,12 +64,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

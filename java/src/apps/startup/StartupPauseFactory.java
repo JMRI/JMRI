@@ -8,12 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Factory for {@link apps.startup.StartupPauseModel} objects.
  *
  * @author Randall Wood (c) 2016
  */
+@ServiceProvider(service = StartupModelFactory.class)
 public class StartupPauseFactory implements StartupModelFactory {
 
     @Override
@@ -38,7 +40,7 @@ public class StartupPauseFactory implements StartupModelFactory {
 
     @Override
     public void editModel(StartupModel model, Component parent) {
-        if (this.getModelClass().isInstance(model)) {
+        if (model instanceof StartupPauseModel && this.getModelClass().isInstance(model)) {
             int delay = ((StartupPauseModel) model).getDelay();
             SpinnerNumberModel snm = new SpinnerNumberModel(
                     delay >= 0 ? delay : StartupPauseModel.DEFAULT_DELAY,

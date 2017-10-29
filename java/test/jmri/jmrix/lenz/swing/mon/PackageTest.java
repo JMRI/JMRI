@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     XNetMonPaneTest.class,
-    XNetMonActionTest.class
+    XNetMonActionTest.class,
+    BundleTest.class
 })
 
 /**

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide an abstract StartupModelFactory with common methods for factories
- * that manipulate models that extend {@link apps.AbstractActionModel}.
+ * that manipulate models that extend {@link apps.startup.AbstractActionModel}.
  *
  * @author Randall Wood
  */
@@ -49,7 +49,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
 
     @Override
     public void editModel(StartupModel model, Component parent) {
-        if (this.getModelClass().isInstance(model)) {
+        if (model instanceof AbstractActionModel && this.getModelClass().isInstance(model)) {
             JList<String> actions = new JList<>(StartupActionModelUtil.getDefault().getNames());
             JComboBox<String> connections = new JComboBox<>();
             JPanel message = this.getDialogMessage(actions, connections);

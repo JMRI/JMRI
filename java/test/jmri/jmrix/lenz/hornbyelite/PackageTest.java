@@ -30,12 +30,14 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(EliteConnectionTypeListTest.class));
         suite.addTest(new TestSuite(EliteXNetInitializationManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EliteXNetThrottleManagerTest.class));
-        suite.addTest(new TestSuite(EliteXNetThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EliteXNetThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EliteXNetTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EliteXNetTurnoutManagerTest.class));
         suite.addTest(new TestSuite(EliteXNetProgrammerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.hornbyelite.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EliteXNetSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

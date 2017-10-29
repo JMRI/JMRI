@@ -1,13 +1,16 @@
 package jmri.jmrit.operations.trains.timetable;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
@@ -25,32 +28,25 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2010
  */
-public class TrainScheduleManager implements java.beans.PropertyChangeListener {
+public class TrainScheduleManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength"; // NOI18N
 
     public TrainScheduleManager() {
-
     }
 
-    /**
-     * record the single instance *
-     */
     private int _id = 0;
 
+    /**
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static synchronized TrainScheduleManager instance() {
-        TrainScheduleManager instance = jmri.InstanceManager.getNullableDefault(TrainScheduleManager.class);;
-        if (instance == null) {
-            log.debug("TrainScheduleManager creating instance");
-            // create and load
-            instance = new TrainScheduleManager();
-            jmri.InstanceManager.setDefault(TrainScheduleManager.class,instance);
-            TrainManagerXml.instance(); // load trains
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("TrainScheduleManager returns instance " + instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(TrainScheduleManager.class);
     }
 
     public void dispose() {
@@ -68,7 +64,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * @param name The schedule string name to search for. 
+     * @param name The schedule string name to search for.
      * @return requested TrainSchedule object or null if none exists
      */
     public TrainSchedule getScheduleByName(String name) {
@@ -90,6 +86,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
+     *
      * @param name The string name of the schedule.
      *
      *
@@ -110,6 +107,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
      * @param schedule The TrainSchedule to add.
      */
     public void register(TrainSchedule schedule) {
@@ -125,6 +123,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     *
      * @param schedule The TrainSchedule to delete.
      */
     public void deregister(TrainSchedule schedule) {
@@ -231,8 +230,8 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      * @throws IllegalArgumentException if box is null
      */
     public void updateComboBox(JComboBox<TrainSchedule> box) {
-        if(box==null) {
-           throw new IllegalArgumentException("Attempt to update non-existant comboBox");
+        if (box == null) {
+            throw new IllegalArgumentException("Attempt to update non-existant comboBox");
         }
         box.removeAllItems();
         for (TrainSchedule sch : getSchedulesByNameList()) {
@@ -243,23 +242,24 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     public void buildSwitchLists() {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         String locationName = ""; // only create switch lists once for locations with similar names
-        for (Location location : LocationManager.instance().getLocationsByNameList()) {
+        for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
             if (location.isSwitchListEnabled() && !locationName.equals(TrainCommon.splitString(location.getName()))) {
                 trainSwitchLists.buildSwitchList(location);
                 // print switch lists for locations that have changes
                 if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.MODIFIED)) {
-                    trainSwitchLists.printSwitchList(location, TrainManager.instance().isPrintPreviewEnabled());
+                    trainSwitchLists.printSwitchList(location, InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
                     locationName = TrainCommon.splitString(location.getName());
                 }
             }
         }
         // set trains switch lists printed
-        TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
+        InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
     }
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
+     *
      * @param root The common Element for operations-trains.dtd.
      *
      */
@@ -313,12 +313,15 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        TrainManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class);
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(TrainManagerXml.class); // load trains
+    }
 
 }
-
-

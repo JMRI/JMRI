@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NceThrottle extends AbstractThrottle {
 
@@ -27,6 +27,8 @@ public class NceThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param memo system connection memo to use
+     * @param address DCC loco address
      */
     public NceThrottle(NceSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
@@ -296,7 +298,7 @@ public class NceThrottle extends AbstractThrottle {
             value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
             if (value > 126) {
                 value = 126;    // max possible speed, 127 can crash PowerCab! 
-            }			// emergency stop?
+            }   // emergency stop?
             if (value < 0) {
 
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
@@ -351,11 +353,11 @@ public class NceThrottle extends AbstractThrottle {
                  *
                  * Suggested correct code is
                  *   value = (int) ((31-3) * speed); // -3 for rescale to avoid stop and estop x2
-                 * 		if (value > 0) value = value + 3; // skip stop and estop x2
-                 * 		if (value > 31) value = 31; // max possible speed
-                 * 		if (value < 0)	value = 2; // emergency stop
-                 * 		bl = jmri.NmraPacket.speedStep28Packet(true, address.getNumber(),
-                 * 				address.isLongAddress(), value, isForward);
+                 *   if (value > 0) value = value + 3; // skip stop and estop x2
+                 *   if (value > 31) value = 31; // max possible speed
+                 *   if (value < 0) value = 2; // emergency stop
+                 *   bl = jmri.NmraPacket.speedStep28Packet(true, address.getNumber(),
+                 *     address.isLongAddress(), value, isForward);
                  */
                 value = (int) ((28) * speed); // -1 for rescale to avoid estop
                 if (value > 0) {
@@ -399,6 +401,6 @@ public class NceThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceThrottle.class);
 
 }

@@ -43,11 +43,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
 //    private HashMap<String, HashMap<String, NamedIcon>> _updateGroupsMap;
 
-    /**
-     * Constructor for all table types. When item is a bean, the itemType is the
-     * name key for the item in jmri.NamedBeanBundle.properties
-     */
-    public IndicatorTOItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public IndicatorTOItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Turnout> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -81,6 +77,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /**
      * Init for update of existing indicator turnout _bottom3Panel has "Update
      * Panel" button put into _bottom1Panel
+     * @param doneAction doneAction
+     * @param iconMaps iconMaps
      */
     public void initUpdate(ActionListener doneAction, HashMap<String, HashMap<String, NamedIcon>> iconMaps) {
         _iconGroupsMap = iconMaps;
@@ -241,6 +239,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             String stateName = entry.getKey();
             JPanel panel = new JPanel();
             panel.add(new JLabel(ItemPalette.convertText(stateName)));
+            panel.setBackground(_editor.getTargetPanel().getBackground());
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
             c.gridx++;
@@ -253,6 +252,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 NamedIcon icon = new NamedIcon(ent.getValue());    // make copy for possible reduction
                 icon.reduceTo(100, 100, 0.2);
                 panel = new JPanel();
+                panel.setBackground(_editor.getTargetPanel().getBackground());
                 panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                         borderName));
                 //if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon at ("
@@ -272,6 +272,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 c.gridx++;
             }
             panel = new JPanel();
+            panel.setBackground(_editor.getTargetPanel().getBackground());
             JButton button = new JButton(Bundle.getMessage("ButtonEditIcons"));
             button.addActionListener(new ActionListener() {
                 String key;
@@ -417,11 +418,14 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
         _iconFamilyPanel.remove(_iconPanel);
         _iconPanel = new JPanel();
+        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
         _iconFamilyPanel.add(_iconPanel, 0);
         if (!_supressDragging) {
             _iconFamilyPanel.remove(_dragIconPanel);
-            _dragIconPanel = new JPanel();
-            _iconFamilyPanel.add(_dragIconPanel, 0);
+            makeDragIconPanel(1);
+//            _dragIconPanel = new JPanel();
+//            _iconFamilyPanel.add(_dragIconPanel, 0);
         }
         _iconGroupsMap = ItemPalette.getLevel4Family(_itemType, _family);
         addIcons2Panel(_iconGroupsMap);
@@ -567,5 +571,5 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanel.class);
 }

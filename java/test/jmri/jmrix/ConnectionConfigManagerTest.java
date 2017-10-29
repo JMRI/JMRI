@@ -22,8 +22,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for ConnectionConfigManager.
@@ -40,7 +38,7 @@ public class ConnectionConfigManagerTest {
     public final static String TYPE_B = "TypeB";
     public final static String TYPE_C = "TypeC";
     public final static String TYPE_D = "TypeD";
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
 
     @BeforeClass
     public static void setUpClass() throws Exception {

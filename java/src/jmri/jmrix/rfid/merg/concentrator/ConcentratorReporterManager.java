@@ -80,6 +80,6 @@ public class ConcentratorReporterManager extends RfidReporterManager {
         report.notify(idTag);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ConcentratorReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorReporterManager.class);
 
 }

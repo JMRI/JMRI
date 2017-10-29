@@ -17,7 +17,7 @@ import jmri.Turnout;
  * This class doesn't currently listen to the Turnout's to see if they've been
  * changed via some other mechanism.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
 

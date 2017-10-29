@@ -51,8 +51,8 @@ public final class JmriPreferencesProvider {
     private final boolean shared;
     private boolean backedUp = false;
 
-    private static final HashMap<File, JmriPreferencesProvider> sharedProviders = new HashMap<>();
-    private static final HashMap<File, JmriPreferencesProvider> privateProviders = new HashMap<>();
+    private static final HashMap<File, JmriPreferencesProvider> SHARED_PROVIDERS = new HashMap<>();
+    private static final HashMap<File, JmriPreferencesProvider> PRIVATE_PROVIDERS = new HashMap<>();
     //private static final String INVALID_KEY_CHARACTERS = "_.";
     private static final Logger log = LoggerFactory.getLogger(JmriPreferencesProvider.class);
 
@@ -68,17 +68,18 @@ public final class JmriPreferencesProvider {
      * @return The shared or private JmriPreferencesProvider for the project at
      *         path.
      */
-    static synchronized JmriPreferencesProvider findProvider(File path, boolean shared) {
+    @Nonnull
+    static synchronized JmriPreferencesProvider findProvider(@Nullable File path, boolean shared) {
         if (shared) {
-            if (sharedProviders.get(path) == null) {
-                sharedProviders.put(path, new JmriPreferencesProvider(path, shared));
+            if (SHARED_PROVIDERS.get(path) == null) {
+                SHARED_PROVIDERS.put(path, new JmriPreferencesProvider(path, shared));
             }
-            return sharedProviders.get(path);
+            return SHARED_PROVIDERS.get(path);
         } else {
-            if (privateProviders.get(path) == null) {
-                privateProviders.put(path, new JmriPreferencesProvider(path, shared));
+            if (PRIVATE_PROVIDERS.get(path) == null) {
+                PRIVATE_PROVIDERS.put(path, new JmriPreferencesProvider(path, shared));
             }
-            return privateProviders.get(path);
+            return PRIVATE_PROVIDERS.get(path);
         }
     }
 
@@ -99,7 +100,8 @@ public final class JmriPreferencesProvider {
      * @return The shared or private Preferences node for the package containing
      *         clazz for project.
      */
-    public static Preferences getPreferences(final Profile project, final Class<?> clazz, final boolean shared) {
+    @Nonnull
+    public static Preferences getPreferences(@Nullable final Profile project, @Nullable final Class<?> clazz, final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(clazz);
         } else {
@@ -125,7 +127,8 @@ public final class JmriPreferencesProvider {
      * is preferred and recommended unless reading preferences for a
      * non-existent package or class.
      */
-    public static Preferences getPreferences(final Profile project, final String pkg, final boolean shared) {
+    @Nonnull
+    public static Preferences getPreferences(@Nullable final Profile project, @Nullable final String pkg, final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(pkg);
         } else {
@@ -151,7 +154,7 @@ public final class JmriPreferencesProvider {
      * is preferred and recommended unless being used to during the construction
      * of a Profile object.
      */
-    public static Preferences getPreferences(final @Nonnull File path, @Nullable final Class<?> clazz, final boolean shared) {
+    public static Preferences getPreferences(@Nullable final File path, @Nullable final Class<?> clazz, final boolean shared) {
         return findProvider(path, shared).getPreferences(clazz);
     }
 
@@ -163,7 +166,7 @@ public final class JmriPreferencesProvider {
      * @return The shared or private Preferences node for the package containing
      *         clazz.
      */
-    Preferences getPreferences(final Class<?> clazz) {
+    Preferences getPreferences(@Nullable final Class<?> clazz) {
         if (clazz == null) {
             return this.root;
         }
@@ -176,14 +179,14 @@ public final class JmriPreferencesProvider {
      * @param pkg The package for which preferences are needed.
      * @return The shared or private Preferences node for the package.
      */
-    Preferences getPreferences(final String pkg) {
+    Preferences getPreferences(@Nullable final String pkg) {
         if (pkg == null) {
             return this.root;
         }
         return this.root.node(pkg);
     }
 
-    JmriPreferencesProvider(File path, boolean shared) {
+    JmriPreferencesProvider(@Nullable File path, boolean shared) {
         this.path = path;
         this.shared = shared;
         this.firstUse = !this.getPreferencesFile().exists();
@@ -239,6 +242,7 @@ public final class JmriPreferencesProvider {
         return absolutePath.replace('.', '-');
     }
 
+    @Nonnull
     File getPreferencesFile() {
         if (this.path == null) {
             return new File(this.getPreferencesDirectory(), "preferences.properties");
@@ -247,6 +251,7 @@ public final class JmriPreferencesProvider {
         }
     }
 
+    @Nonnull
     private File getPreferencesDirectory() {
         File dir;
         if (this.path == null) {
@@ -292,7 +297,7 @@ public final class JmriPreferencesProvider {
             children = new TreeMap<>();
 
             try {
-                sync();
+                super.sync();
             } catch (BackingStoreException e) {
                 log.error("Unable to sync on creation of node {}", name, e);
             }

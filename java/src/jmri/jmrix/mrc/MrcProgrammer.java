@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
  * This has two states: NOTPROGRAMMING, and COMMANDSENT. The transitions to and
  * from programming mode are now handled in the TrafficController code.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  */
 public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListener {
@@ -67,12 +67,12 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int READCOMMANDSENT = 2; 	// read command sent, waiting reply
+    static final int READCOMMANDSENT = 2;  // read command sent, waiting reply
     static final int WRITECOMMANDSENT = 4; // POM write command sent 
-    static final int POMCOMMANDSENT = 6;	// ops programming mode, send msg twice
+    static final int POMCOMMANDSENT = 6; // ops programming mode, send msg twice
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override
@@ -233,5 +233,5 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         temp.programmingOpReply(value, status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcProgrammer.class);
 }

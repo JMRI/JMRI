@@ -3,10 +3,12 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +35,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f,Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced Pink with Pinker", "Pinker", f.comboBox.getItemAt(0));
 
@@ -41,14 +43,14 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         // black is the first default color
         Assert.assertEquals("old color", "Black", f.comboBox.getItemAt(0));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testCarAttributeEditFrameKernel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // remove all kernels
-        CarManager cm = CarManager.instance();
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
         List<String> kList = cm.getKernelNameList();
         for (int i = 0; i < kList.size(); i++) {
             cm.deleteKernel(kList.get(i));
@@ -73,7 +75,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f,Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced TestKernel with TestKernel2", "TestKernel2", f.comboBox.getItemAt(1));
 
@@ -84,7 +86,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("space 2", "", f.comboBox.getItemAt(0));
         Assert.assertEquals("previous kernel 2", "TwoCars", f.comboBox.getItemAt(1));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -92,16 +94,16 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.LENGTH);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.OWNER);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.ROAD);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.TYPE);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J

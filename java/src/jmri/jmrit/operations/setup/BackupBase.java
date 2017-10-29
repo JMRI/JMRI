@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BackupBase {
 
-    private final static Logger log = LoggerFactory.getLogger(BackupBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BackupBase.class);
 
     // Just for testing......
     // If this is not null, it will be thrown to simulate various IO exceptions
@@ -356,13 +356,13 @@ public abstract class BackupBase {
                 return fullName;
             }
 
-            //			This should also work, commented out by D. Boudreau
-            //			The Linux problem turned out to be related to the order
-            //			files names are returned by list().
-            //			File testPath = new File(_backupRoot, fullName);
+            //   This should also work, commented out by D. Boudreau
+            //   The Linux problem turned out to be related to the order
+            //   files names are returned by list().
+            //   File testPath = new File(_backupRoot, fullName);
             //
-            //			if (!testPath.exists()) {
-            //				return fullName; // Found an unused name
+            //   if (!testPath.exists()) {
+            //    return fullName; // Found an unused name
             // Otherwise complain and keep trying...
             log.debug("Operations backup directory: {} already exists", fullName); // NOI18N
         }

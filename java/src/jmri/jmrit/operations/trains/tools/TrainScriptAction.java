@@ -18,7 +18,7 @@ public class TrainScriptAction extends AbstractAction {
         this.frame = frame;
     }
 
-    TrainEditFrame frame;	// the parent frame that is launching the TrainScriptFrame.
+    TrainEditFrame frame; // the parent frame that is launching the TrainScriptFrame.
 
     TrainScriptFrame f = null;
 

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
+        <email>gpmccartney@gmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2017-03-16</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Original Edition</revremark>
+    </revision>    
+  </revhistory>
+  
+  <aspecttable>SOU 1981</aspecttable>
+  <name>1 Light Dwarf Signal</name>
+  <reference>As described in the 1981 version of the Southern Railway Signal Rules.</reference>
+  <description>Appearances for 1 arm color light absolute dwarf signals.</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>yellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-1-light-dwarf/rule-309.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-1-light-dwarf/rule-310.gif</imagelink>
+    </appearance>
+	
+  </appearances>
+	
+   <specificappearances>
+   
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+	
+	<permissive>
+	  <aspect>Restricted Proceed</aspect>
+	</permissive>
+	
+	<held>
+      <aspect>Stop</aspect>
+    </held>
+	
+  </specificappearances>
+	
+  <aspectMappings>
+  
+	<aspectMapping>
+	  <advancedAspect>Clear</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Approach Diverging</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Advance Approach</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Approach Slow</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Approach</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Restricted Proceed</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>
+	
+	<aspectMapping>
+	  <advancedAspect>Stop</advancedAspect>
+	  <ourAspect>Restricted Proceed</ourAspect>
+	</aspectMapping>	
+	
+  </aspectMappings>
+		
+</appearancetable>  

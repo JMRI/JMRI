@@ -22,7 +22,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -66,8 +67,8 @@
 
       <p>NetBeans 8 (available at <a href=
       "http://www.netbeans.org">www.netbeans.org</a>) makes a great
-      platform for working with JMRI. The JMRI code is setup to
-      work with NetBeans with almost no additional setup. (The
+      platform for working with JMRI. The JMRI code is set up to
+      work with NetBeans with almost no additional set-up. (The
       description below is accurate for the Windows version of
       NetBeans 8. NetBeans is <i>supposed</i> to be identical
       across platforms, but this hasn't been checked on anything
@@ -144,9 +145,8 @@
       Installed</code>, where you should see something like this
       (versions might differ):</p>
 
-      <p><a href=
-      "images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png"
-      align="center" height="102" width="224"></a></p>
+      <p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png">
+        <img src="images/NetbeansChangeLineEndingsPluginInstalled.png" height="102" width="224"></a></p>
 
       <p>Once the plug-in has been installed and activated, it is
       necessary to configure it for the desired line ending
@@ -156,30 +156,24 @@
       <p>For JMRI, we want to use the Unix-style line ending
       character, <code>LF</code>.</p>
 
-      <p><a href=
-      "images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png"
-      align="center" height="168" width="237"></a></p>
+      <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png">
+        <img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" height="168" width="237"></a></p>
 
       <p>The plug-in may be enabled via a button in the toolbar.
-      <a href=
-      "images/NetbeansChangeLineEndingsPluginEnabled.png"><img src=
-      "images/NetbeansChangeLineEndingsPluginEnabled.png" align=
-      "center" height="19" width="55"></a></p>
+      <a href="images/NetbeansChangeLineEndingsPluginEnabled.png">
+        <img src="images/NetbeansChangeLineEndingsPluginEnabled.png" height="19" width="55"></a></p>
 
-      <p>And the plug-in may be disabled via that button. <a href=
-      "images/NetbeansChangeLineEndingsPluginDisabled.png"><img src="images/NetbeansChangeLineEndingsPluginDisabled.png"
-      align="center" height="19" width="55"></a></p>
+      <p>And the plug-in may be disabled via that button. 
+      <a href="images/NetbeansChangeLineEndingsPluginDisabled.png">
+        <img src="images/NetbeansChangeLineEndingsPluginDisabled.png" height="19" width="55"></a></p>
 
       <p>When a file is saved (assuming the the plug-in is
       configured and is enabled) and that file has line-endings
       which do not match the type configured for the plug-in, the
       following message pops up.</p>
 
-      <p><a href=
-      "images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png">
-      <img src=
-      "images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"
-      align="center" height="50" width="174"></a></p>
+      <p><a href="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png">
+        <img src="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png" height="50" width="174"></a></p>
 
       <p>When "OK" is selected, the plug-in updates the
       line-endings to the configured form and saves the file. If
@@ -201,23 +195,22 @@
       "https://netbeans.org/kb/docs/ide/git.html">NetBeans Git help
       page</a></p>
 
-      <h3><a id="setup" name="setup"></a>Checking out code</h3>
+      <h3><a id="checkout" name="checkout"></a>Checking out code</h3>
 
-      <ul>
-        <li>In NetBeans, under the "Team" menu, select Git, then
-        Clone Repository. Enter the
-        https://github.com/JMRI/JMRI.git repository URL from the
-        <a href="https://github.com/JMRI/JMRI">JMRI GitHub page</a>
-        on the NetBeans form under "Repository URL". We recommend
-        that you also enter your GitHub user name and password on
-        the form, so we can attribute your contributions to you
-        later. Click "Next". Make sure that the "master*" box is
-        checked to pull down the main version of the code. Click
-        "Next", and then click "Finish".
+      In NetBeans, under the "Team" menu, select Git, then
+      Clone Repository. Enter the
+      https://github.com/JMRI/JMRI.git repository URL from the
+      <a href="https://github.com/JMRI/JMRI">JMRI GitHub page</a>
+      on the NetBeans form under "Repository URL". We recommend
+      that you also enter your GitHub user name and password on
+      the form, so we can attribute your contributions to you
+      later. Click "Next". Make sure that the "master*" box is
+      checked to pull down the main version of the code. Click
+      "Next", and then click "Finish".
 
-          <p>It'll take a long time to pull down a copy of the code
-          (note the progress bar in the lower right), but then
-          you're good to go.</p>
+      <p>It'll take a long time to pull down a copy of the code
+      (note the progress bar in the lower right), but then
+      you're good to go.</p>
 
           <h3>Local Commits</h3>When using Git, the "commit"
           operation is local to your computer. It doesn't make any
@@ -225,8 +218,9 @@
 
           <p>You're encouraged to commit often, so that your
           changes are safely stored away from your working
-          directory and that each small change is separately
-          recorded.</p>
+          directory. Having each small change separately
+          recorded can be incredibly helpful later on if you
+          have to track down where a problem was introduced.</p>
 
           <h3><a id="updating" name="updating"></a>Updating the
           code from Git</h3>
@@ -367,9 +361,9 @@
           <p>Once NSIS is installed on the computer, it is
           necessary to create a file called local.properties in the
           same directory as JMRI's build.xml file. This file is
-          specifically <i>not</i> checked in via SVN, so that your
+          specifically <i>not</i> checked in via GitHub, so that your
           machine-specific tool installation paths are <i>not</i>
-          checked in to SVN. Create the file, and add a variable
+          checked in to GitHub. Create the file, and add a variable
           definition with the correct path to the directory which
           includes the NSIS executable, such as:</p>
 
@@ -503,9 +497,11 @@
 
           <p>A "diff patch file" was an easy way with SVN to gather
           up all your changes, even if they span multiple files,
-          into one file. This can be used to e.g. submit a patch.
-          Now that we're using Git and GitHub, however, we prefer
-          that you contribute your code changes as a <a href=
+          into one file. This can be used to store a set of local
+          changes in a separate file to try them on a new
+          branch or to send the patch to someone else.
+          Now that we're using Git and GitHub, we ask you
+          to only contribute your code changes as a <a href=
           "gitdeveloper.shtml">GitHub Pull Requests</a>.</p>
 
           <p>To create the "diff patch file"
@@ -523,8 +519,7 @@
             you selected will contain the patches, along with an
             information header.</li>
           </ul><!--#include virtual="/Footer" -->
-        </li>
-      </ul>
+
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

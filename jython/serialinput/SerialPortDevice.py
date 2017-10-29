@@ -19,7 +19,7 @@
 
 import jarray
 import jmri
-import gnu.io
+import purejavacomm
 
 class SerialPortDevice(jmri.jmrit.automat.AbstractAutomaton) :
     
@@ -34,13 +34,13 @@ class SerialPortDevice(jmri.jmrit.automat.AbstractAutomaton) :
     def open(self, portname) : 
         # find the port info and open the port
         print "Opening ",portname
-        self.portID = gnu.io.CommPortIdentifier.getPortIdentifier(portname)
+        self.portID = purejavacomm.CommPortIdentifier.getPortIdentifier(portname)
         self.port = self.portID.open("JMRI", 50)
         
         # set options on port
         baudrate = 19200
-        self.port.setSerialPortParams(baudrate, gnu.io.SerialPort.DATABITS_8, 
-                                    gnu.io.SerialPort.STOPBITS_1, gnu.io.SerialPort.PARITY_NONE)
+        self.port.setSerialPortParams(baudrate, purejavacomm.SerialPort.DATABITS_8, 
+                                    purejavacomm.SerialPort.STOPBITS_1, purejavacomm.SerialPort.PARITY_NONE)
         
         # get I/O connections for later
         self.inputStream = self.port.getInputStream()

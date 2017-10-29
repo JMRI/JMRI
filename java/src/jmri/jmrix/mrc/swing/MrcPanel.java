@@ -20,13 +20,19 @@ abstract public class MrcPanel extends jmri.util.swing.JmriPanel implements MrcP
      */
     protected MrcSystemConnectionMemo memo;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(MrcSystemConnectionMemo memo) throws Exception {
+    public void initComponents(MrcSystemConnectionMemo memo) {
         this.memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof MrcSystemConnectionMemo) {
             try {
                 initComponents((MrcSystemConnectionMemo) context);

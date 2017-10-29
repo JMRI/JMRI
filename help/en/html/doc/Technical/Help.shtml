@@ -27,11 +27,13 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Use of JavaHelp</h1>This page talks about technical
+      <h1>JMRI: Use of JavaHelp</h1>
+      
+      This page talks about technical
       aspects of how JMRI provides help information using <a href=
       "https://javahelp.java.net">JavaHelp</a> and <a href=
-      "http://jhelpdev.sourceforge.net/">JHelpDev</a>.
-
+      "http://jhelpdev.sourceforge.net/">JHelpDev</a>.      
+      
       <h2>Organization of the help files</h2>The help files are
       located in the "help" directory within the JMRI distribution
       directory.
@@ -65,7 +67,8 @@
         al manuals reformatted for use in the help system. (Older
         ones are stored in the <a href="WebSite.shtml">main web
         site</a>)</li>
-      </ul>In the long run, we want only two branches to this
+      </ul>
+      In the long run, we want only two branches to this
       structure: the "package" part of the tree for help
       information that is specific to a particular piece of code,
       and another part of the tree for more general information.
@@ -77,10 +80,23 @@
       links to connect them as needed. <a name="limitations" id=
       "limitations"></a>
 
-      <h3>Limitations of JavaHelp HTML</h3>JavaHelp displays "plain
+      <p>All the page formatting on JMRI help and other web
+      pages is done through included CSS files, originally created by
+      John Plocher. These are included from "/css" via 
+      Server-Side Includes (SSI).  The main file is at
+      <a href="http://jmri.org/css/default.css">/css/default.css</a>
+      and works with a few other files in that same directory.
+      Because JavaHelp ignores SSI, the CSS formatting
+      is ignored when JavaHelp is displaying the pages within the JMRI itself.
+      In that case, JavaHelp provides the formatting.
+
+      <h3>Limitations of JavaHelp HTML</h3>
+      JavaHelp displays "plain
       old HTML 4.0", without providing some of the syntactic sugar
-      provided by many browsers to allow poor HTML to render. In
-      particular, there are a couple things to watch for.
+      provided by many browsers to allow poor HTML to render. 
+      Do not include any particular formatting options, specifically
+      including embedded CSS commands. 
+      There are a couple of specific things to watch for:
 
       <ul>
         <li>Anchor tags need a specific format. Specifically, they
@@ -123,7 +139,8 @@ confuses JavaHelp.
         web browser.</li>
       </ul><a name="web" id="web"></a>
 
-      <h2>Web access to help</h2>It's inconvenient to have to
+      <h2>Web access to help</h2>
+      It's inconvenient to have to
       maintain two separate web pages for the main web site and the
       help system. To reduce the need for that, we use a particular
       form for the web pages in the help system.
@@ -142,7 +159,8 @@ confuses JavaHelp.
         matter in place to get the page properly displayed.</li>
       </ul><a name="code" id="code"></a>
 
-      <h2>Access in the code</h2>Within the JMRI code, access the
+      <h2>Access in the code</h2>
+      Within the JMRI code, access the
       help system comes via the jmri.util.HelpUtil class. (For
       historical reasons, there's a little bit of code in
       apps.Apps, but you should ignore that).
@@ -160,12 +178,14 @@ confuses JavaHelp.
   addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
 </pre>The help file is then located at
 <code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
-
+      <p>You should add the new page to the JHelpDev index to have JMRI
+      accept it as a Help target (see next the heading).</p>
       <p>A number of help files have been put in place without any
       contents; hopefully some users will edit them and contribute
       them back. <a name="jhelpdev" id="jhelpdev"></a></p>
 
-      <h2>Creating the control files with JHelpDev</h2>JavaHelp
+      <h2>Creating the control files with JHelpDev</h2>
+      JavaHelp
       uses various XML files to control how the table of contents
       and index are displayed. We create those with <a href=
       "http://jhelpdev.sourceforge.net/">JHelpDev</a>. Please don't
@@ -186,7 +206,7 @@ confuses JavaHelp.
         <li>If you'd like to operate it manually, please 
         follow the rest of these bullets.
         (Or if using Eclipse, right-click on the
-        help/en/build.xml file and select Run As Ant Build.)<li>
+        help/en/build.xml file and select Run As Ant Build.)</li>
         
         <li>Start the tool by clicking on the jhelpdev.jar file.
         (If that doesn't work, try running either JHelpDev.csh or

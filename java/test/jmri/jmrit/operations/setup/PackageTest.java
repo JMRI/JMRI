@@ -62,6 +62,13 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(RestoreDialogTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SetupTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BackupFilesActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LoadDemoActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ManageBackupsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OptionActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ResetActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RestoreFilesActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BackupSetTest.class));
         return suite;
     }
 

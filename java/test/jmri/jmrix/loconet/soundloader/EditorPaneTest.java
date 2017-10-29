@@ -1,38 +1,33 @@
 package jmri.jmrix.loconet.soundloader;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class EditorPaneTest {
-
-    @Test
-    public void testCTor() {
-        EditorPane t = new EditorPane();
-        Assert.assertNotNull("exists",t);
-    }
+public class EditorPaneTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        panel = new EditorPane();
+        helpTarget = "package.jmri.jmrix.loconet.soundloader.EditorFrame";
+        title = Bundle.getMessage("MenuItemSoundEditor");
     }
 
+    @Override
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditorPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditorPaneTest.class);
 
 }

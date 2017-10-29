@@ -129,8 +129,9 @@ public class SimulatorAdapter extends TamsPortController implements
                 synchronized (this) {
                     wait(50);
                 }
-            } catch (Exception e) {
-
+            } catch (InterruptedException e) {
+                log.debug("interrupted, ending");
+                return;
             }
             TamsMessage m = readMessage();
             TamsReply r;
@@ -295,6 +296,6 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

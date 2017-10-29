@@ -9,7 +9,7 @@ import jmri.implementation.AbstractSensor;
  * should be the only object that is sending messages for this sensor; more than
  * one Sensor object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Kevin Dickerson (C) 2012
  */
 public class Dcc4PcSensor extends AbstractSensor {

@@ -186,17 +186,17 @@ public class ThrottlesPreferences {
 
         try {
             Element root = new Element("throttles-preferences");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "throttles-preferences.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttles-preferences.dtd");
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-/*TODO    		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*TODO      java.util.Map<String,String> m = new java.util.HashMap<String,String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttles-preferences.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0,p);*/
             root.setContent(store());
             xf.writeXML(file, doc);
-        } catch (Exception ex) {
+        } catch (java.io.IOException ex) {
             log.warn("Exception in storing throttles preferences xml: " + ex);
         }
         this.dirty = false;
@@ -328,5 +328,5 @@ public class ThrottlesPreferences {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);
 }

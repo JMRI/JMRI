@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2014
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -121,5 +121,5 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgDeferredServiceModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgDeferredServiceModePane.class);
 }

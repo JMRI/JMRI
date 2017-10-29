@@ -7,19 +7,21 @@ import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
  * Test the SignalMastIcon.
- *
+ * <p>
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
  */
 public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel = null;
+    PanelEditor panel = null;
 
     public void testShowText() {
         if (GraphicsEnvironment.isHeadless()) {
@@ -37,7 +39,6 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(to);
 
         // reset instance manager & create test heads
-        jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
             @Override
@@ -72,7 +73,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.setVisible(true);
 
         // close
-        jf.dispose();
+        JUnitUtil.dispose(jf);
 
     }
 
@@ -90,7 +91,6 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(to);
 
         // reset instance manager & create test heads
-        jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
             @Override
@@ -127,7 +127,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.setVisible(true);
 
         // close
-        jf.dispose();
+        JUnitUtil.dispose(jf);
     }
 
     // from here down is testing infrastructure
@@ -150,9 +150,9 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
+            panel = new PanelEditor("Test SignalMastIcon Panel");
         }
     }
 
@@ -160,14 +160,15 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     protected void tearDown() {
         // now close panel window
         if (panel != null) {
-            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+            WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            panel.getTargetFrame().dispose();
+            JUnitUtil.dispose(panel);
         }
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class);
 }

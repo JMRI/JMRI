@@ -245,7 +245,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
             if (_pool != null) {
                 _pool.addPropertyChangeListener(this);
             }
-            _track.setPool(_pool);	// this causes a property change to this frame
+            _track.setPool(_pool); // this causes a property change to this frame
 
             // save location file
             OperationsXml.save();
@@ -288,5 +288,5 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PoolTrackFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PoolTrackFrame.class);
 }

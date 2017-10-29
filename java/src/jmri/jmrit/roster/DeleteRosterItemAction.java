@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * posts a dialog box to select the loco to be deleted, and then posts an "are
  * you sure" dialog box before acting.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends JmriAbstractAction {
@@ -155,7 +155,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                         JOptionPane.YES_NO_OPTION));
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DeleteRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeleteRosterItemAction.class);
 
     // never invoked, because we overrode actionPerformed above
     @Override

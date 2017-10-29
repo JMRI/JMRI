@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
  * JMRIClient implementation of the Light interface.
  * <P>
  *
- * Description:	extend jmri.AbstractLight for JMRIClient layouts
+ * Description: extend jmri.AbstractLight for JMRIClient layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2010
  */
 public class JMRIClientLight extends AbstractLight implements JMRIClientListener {
 
@@ -53,7 +53,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
     public synchronized void doNewState(int oldState, int s) {
         if (oldState == s) {
             return; //no change, just quit.
-        }		// sort out states
+        }  // sort out states
         if ((s & Light.ON) != 0) {
             // first look for the double case, which we can't handle
             if ((s & Light.OFF) != 0) {
@@ -107,7 +107,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
     public void message(JMRIClientMessage m) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientLight.class);
 
 }
 

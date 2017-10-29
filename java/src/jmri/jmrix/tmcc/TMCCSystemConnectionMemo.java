@@ -1,16 +1,17 @@
 package jmri.jmrix.tmcc;
 
 import java.util.ResourceBundle;
-
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.ThrottleManager;
+import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Provide the minimal required SystemConnectionMemo.
- * 
- * This is still single-system code, using the turnout and throttle
- * instance() methods. To migrate to multiple systems, add a configureManagers()
- * method that creates local objects and remove the instance() variables.
+ *
+ * This is still single-system code, using the turnout and throttle instance()
+ * methods. To migrate to multiple systems, add a configureManagers() method
+ * that creates local objects and remove the instance() variables.
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
@@ -29,6 +30,8 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
+     * @return the traffic controller for this connection
      */
     public SerialTrafficController getTrafficController() {
         return trafficController;
@@ -46,10 +49,10 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
     @SuppressWarnings("deprecation")
     public void configureManagers() {
         log.debug("configureManagers");
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.tmcc.SerialTurnoutManager.instance());
-        jmri.InstanceManager.setThrottleManager(jmri.jmrix.tmcc.SerialThrottleManager.instance());
+        InstanceManager.setTurnoutManager(SerialTurnoutManager.instance());
+        InstanceManager.setThrottleManager(SerialThrottleManager.instance());
     }
-    
+
     /**
      * Tells which managers this provides by class
      */
@@ -60,11 +63,11 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
             return false;
         }
 
-        if (type.equals(jmri.ThrottleManager.class)) {
+        if (type.equals(ThrottleManager.class)) {
             return true;
         }
 
-        if (type.equals(jmri.TurnoutManager.class)) {
+        if (type.equals(TurnoutManager.class)) {
             return true;
         }
 
@@ -81,11 +84,11 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
             return null;
         }
 
-        if (T.equals(jmri.ThrottleManager.class)) {
+        if (T.equals(ThrottleManager.class)) {
             return (T) getThrottleManager();
         }
 
-        if (T.equals(jmri.TurnoutManager.class)) {
+        if (T.equals(TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
         return null; // nothing, by default
@@ -106,6 +109,6 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
 
         super.dispose();
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TMCCSystemConnectionMemo.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TMCCSystemConnectionMemo.class);
 
 }

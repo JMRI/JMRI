@@ -32,8 +32,8 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2007
  * @author Simon Reader Copyright (C) 2008
  */
 public interface Route extends NamedBean {

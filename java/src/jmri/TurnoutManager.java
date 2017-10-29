@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.List;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -37,12 +38,12 @@ import javax.annotation.Nullable;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.Turnout
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface TurnoutManager extends Manager {
+public interface TurnoutManager extends Manager<Turnout> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -264,4 +265,5 @@ public interface TurnoutManager extends Manager {
     public String getDefaultThrownSpeed();
 
     public String getDefaultClosedSpeed();
+
 }

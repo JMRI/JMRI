@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,6 +19,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import jmri.Throttle;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2010
+ * @author Dave Duchamp Copyright (C) 2010
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
@@ -50,9 +50,6 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         _dispatcher = disp;
         initializeAutoTrainsWindow();
     }
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     // instance variables
     private DispatcherFrame _dispatcher = null;
@@ -121,7 +118,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         displayAutoTrains();
     }
 
-    private void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
+    private synchronized void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
         for (AutoActiveTrain aat : _autoTrainsList) {
             if (aat.getActiveTrain() == e.getSource()) {
                 int newValue = ((Integer) e.getNewValue()).intValue();
@@ -144,6 +141,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 addThrottleListener(aat);
             }
         }
+        else {
+            log.info("No Throttle[{}]",aat.getActiveTrain().getActiveTrainName());
+        }
     }
 
     private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
@@ -152,8 +152,24 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         }
         int index = _throttles.indexOf(e.getSource());
         if (index == -1) {
-            log.warn("handleThrottleChange - cannot find throttle index");
-            return;
+            jmri.Throttle waThrottle1 =  (Throttle) e.getSource();
+            int DDCAddress =  waThrottle1.getLocoAddress().getNumber() ;
+            log.warn("handleThrottleChange - using locoaddress [" + DDCAddress + "]");
+            for (jmri.Throttle waThrottle  : _throttles ) {
+                if (waThrottle != null) {
+                    if ( DDCAddress == waThrottle.getLocoAddress().getNumber()) {
+                        index = _throttles.indexOf(waThrottle);
+                        if (index == -1) {
+                            log.warn("handleThrottleChange - cannot find throttle DCCAddress");
+                            return;
+                        }
+                    }
+                }
+            }
+            if (index == -1) {
+                log.warn("handleThrottleChange - cannot find throttle index");
+                return;
+            }
         }
         JLabel status = _throttleStatus.get(index);
         if (!status.isVisible()) {
@@ -224,7 +240,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
     private void initializeAutoTrainsWindow() {
         autoTrainsFrame = this;
-        autoTrainsFrame.setTitle(rb.getString("TitleAutoTrains"));
+        autoTrainsFrame.setTitle(Bundle.getMessage("TitleAutoTrains"));
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         autoTrainsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.AutoTrains", true);
@@ -241,7 +257,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         contentPane.add(new JSeparator());
         JPanel pB = new JPanel();
         pB.setLayout(new FlowLayout());
-        JButton stopAllButton = new JButton(rb.getString("StopAll"));
+        JButton stopAllButton = new JButton(Bundle.getMessage("StopAll"));
         pB.add(stopAllButton);
         stopAllButton.addActionListener(new ActionListener() {
             @Override
@@ -249,7 +265,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 stopAllPressed(e);
             }
         });
-        stopAllButton.setToolTipText(rb.getString("StopAllButtonHint"));
+        stopAllButton.setToolTipText(Bundle.getMessage("StopAllButtonHint"));
         contentPane.add(pB);
         autoTrainsFrame.pack();
         placeWindow();
@@ -274,7 +290,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         px.add(tLabel);
         px.add(tLabel);
         _trainLabels.add(tLabel);
-        JButton tStop = new JButton(rb.getString("ResumeButton"));
+        JButton tStop = new JButton(Bundle.getMessage("ResumeButton"));
         px.add(tStop);
         _stopButtons.add(tStop);
         tStop.addActionListener(new ActionListener() {
@@ -283,7 +299,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 stopResume(s);
             }
         });
-        JButton tManual = new JButton(rb.getString("ToManualButton"));
+        JButton tManual = new JButton(Bundle.getMessage("ToManualButton"));
         px.add(tManual);
         _manualButtons.add(tManual);
         tManual.addActionListener(new ActionListener() {
@@ -292,7 +308,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 manualAuto(s);
             }
         });
-        JButton tResumeAuto = new JButton(rb.getString("ResumeAutoButton"));
+        JButton tResumeAuto = new JButton(Bundle.getMessage("ResumeAutoButton"));
         px.add(tResumeAuto);
         _resumeAutoRunningButtons.add(tResumeAuto);
         tResumeAuto.addActionListener(new ActionListener() {
@@ -302,9 +318,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             }
         });
         tResumeAuto.setVisible(false);
-        tResumeAuto.setToolTipText(rb.getString("ResumeAutoButtonHint"));
+        tResumeAuto.setToolTipText(Bundle.getMessage("ResumeAutoButtonHint"));
         ButtonGroup directionGroup = new ButtonGroup();
-        JRadioButton fBut = new JRadioButton(rb.getString("ForwardRadio"));
+        JRadioButton fBut = new JRadioButton(Bundle.getMessage("ForwardRadio"));
         px.add(fBut);
         _forwardButtons.add(fBut);
         fBut.addActionListener(new ActionListener() {
@@ -314,7 +330,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             }
         });
         directionGroup.add(fBut);
-        JRadioButton rBut = new JRadioButton(rb.getString("ReverseRadio"));
+        JRadioButton rBut = new JRadioButton(Bundle.getMessage("ReverseRadio"));
         px.add(rBut);
         _reverseButtons.add(rBut);
         rBut.addActionListener(new ActionListener() {
@@ -522,24 +538,24 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 tName.setText(at.getTrainName());
                 JButton stopButton = _stopButtons.get(i);
                 if (at.getStatus() == ActiveTrain.STOPPED) {
-                    stopButton.setText(rb.getString("ResumeButton"));
-                    stopButton.setToolTipText(rb.getString("ResumeButtonHint"));
+                    stopButton.setText(Bundle.getMessage("ResumeButton"));
+                    stopButton.setToolTipText(Bundle.getMessage("ResumeButtonHint"));
                     _resumeAutoRunningButtons.get(i).setVisible(false);
                 } else if (at.getStatus() == ActiveTrain.DONE) {
-                    stopButton.setText(rb.getString("RestartButton"));
-                    stopButton.setToolTipText(rb.getString("RestartButtonHint"));
+                    stopButton.setText(Bundle.getMessage("RestartButton"));
+                    stopButton.setToolTipText(Bundle.getMessage("RestartButtonHint"));
                     _resumeAutoRunningButtons.get(i).setVisible(false);
                 } else if (at.getStatus() == ActiveTrain.WORKING) {
                     stopButton.setVisible(false);
                 } else {
-                    stopButton.setText(rb.getString("StopButton"));
-                    stopButton.setToolTipText(rb.getString("StopButtonHint"));
+                    stopButton.setText(Bundle.getMessage("StopButton"));
+                    stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
                     stopButton.setVisible(true);
                 }
                 JButton manualButton = _manualButtons.get(i);
                 if (at.getMode() == ActiveTrain.AUTOMATIC) {
-                    manualButton.setText(rb.getString("ToManualButton"));
-                    manualButton.setToolTipText(rb.getString("ToManualButtonHint"));
+                    manualButton.setText(Bundle.getMessage("ToManualButton"));
+                    manualButton.setToolTipText(Bundle.getMessage("ToManualButtonHint"));
                     manualButton.setVisible(true);
                     _resumeAutoRunningButtons.get(i).setVisible(false);
                     _forwardButtons.get(i).setVisible(false);
@@ -555,8 +571,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     _speedSliders.get(i).setVisible(true);
                     _throttleStatus.get(i).setVisible(true);
                 } else {
-                    manualButton.setText(rb.getString("ToAutoButton"));
-                    manualButton.setToolTipText(rb.getString("ToAutoButtonHint"));
+                    manualButton.setText(Bundle.getMessage("ToAutoButton"));
+                    manualButton.setToolTipText(Bundle.getMessage("ToAutoButtonHint"));
                     _forwardButtons.get(i).setVisible(true);
                     _reverseButtons.get(i).setVisible(true);
                     _speedSliders.get(i).setVisible(true);
@@ -580,7 +596,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         autoTrainsFrame.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 
 }
 

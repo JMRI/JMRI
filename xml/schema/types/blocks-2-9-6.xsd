@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -42,10 +40,50 @@
         <xs:element name="defaultspeed" minOccurs="0" maxOccurs="1" />
         <xs:element name="block" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
-            <xs:sequence>
+            <!-- The following is really ugly duplication caused by writing some elements out of order, and should be fixed by
+                     1) Moving to XML Schema 1.1
+                     2) Then converting the "sequence" element in NamedBeanType into an "all" element
+                     3) Then having this "sensor" element extend from NamedBeanType
+                    The problem is that (a) XML Schema 1.0 "all" elements can't be extended, but
+                    (b) we want to insert something _inside_ the order of elements in NamedBeanType.
+                    So we recreate those here.  (The code in SensorManager has had the order fixed in 4.7.7
+                    but old files still exist)
+                    -->
+            <xs:sequence maxOccurs="unbounded">
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="properties" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="property" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="key" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute name="class" type="classType" use="optional" />
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="value" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute name="class" type="classType" use="required" />
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <!-- end of ugly duplication -->
               <xs:element name="speed" minOccurs="0" maxOccurs="1" />
               <xs:element name="permissive" minOccurs="0" maxOccurs="1" />
               <xs:element name="occupancysensor" type="beanNameType" minOccurs="0" maxOccurs="1" />
@@ -54,10 +92,10 @@
                   <xs:attribute name="systemName" type="beanNameType" /><!-- This will now store either a user or system name -->
                 </xs:complexType>
               </xs:element>
-              <xs:element name="reporter" minOccurs="0" maxOccurs="unbounded" >
+              <xs:element name="reporter" minOccurs="0" maxOccurs="1" >
                 <xs:complexType>
-                  <xs:attribute name="systemName" type="systemNameType" />
-                  <xs:attribute name="useCurrent" type="yesNoType" />
+                <xs:attribute name="systemName" type="systemNameType" />
+                <xs:attribute name="useCurrent" type="yesNoType" />
                 </xs:complexType>
               </xs:element>
               <xs:element name="deniedBlocks" minOccurs="0" maxOccurs="1" >
@@ -89,7 +127,7 @@
                   <xs:attribute name="block" type="xs:string" />
                 </xs:complexType>
               </xs:element>
-            </xs:sequence>
+            </xs:sequence> <!-- secretly still part of ugly duplication due to "unbounded" -->
             <xs:attribute name="systemName" type="systemNameType">
                 <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
             </xs:attribute>

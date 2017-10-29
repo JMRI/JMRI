@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This connects a JMRI server (daemon) via a telnet connection.
  *
- * @author	Paul Bender Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010
  */
 public class NetworkDriverAdapter extends JMRIClientPortController {
 
@@ -130,6 +130,6 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         return rb.getString("defaultMDNSServiceType");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class BackupDialog extends JDialog {
 
     private final static Logger log = LoggerFactory
-            .getLogger(BackupDialog.class.getName());
+            .getLogger(BackupDialog.class);
 
     private final JPanel contentPanel = new JPanel();
     private JLabel captionLabel;
@@ -36,7 +36,7 @@ public class BackupDialog extends JDialog {
     private JLabel infoLabel1;
     private JLabel infoLabel2;
     private JButton backupButton;
-    //	private JButton helpButton;
+    // private JButton helpButton;
 
     private DefaultBackup backup;
 
@@ -155,16 +155,16 @@ public class BackupDialog extends JDialog {
                 buttonPane.add(cancelButton);
             }
             // Help button isn't used yet
-            //			{
-            //				helpButton = new JButton(Bundle.getMessage("BackupDialog.helpButton.text"));
-            //				helpButton.addActionListener(new ActionListener() {
-            //					public void actionPerformed(ActionEvent e) {
-            //						do_helpButton_actionPerformed(e);
-            //					}
-            //				});
-            //				helpButton.setEnabled(false);
-            //				buttonPane.add(helpButton);
-            //			}
+            //   {
+            //    helpButton = new JButton(Bundle.getMessage("BackupDialog.helpButton.text"));
+            //    helpButton.addActionListener(new ActionListener() {
+            //     public void actionPerformed(ActionEvent e) {
+            //      do_helpButton_actionPerformed(e);
+            //     }
+            //    });
+            //    helpButton.setEnabled(false);
+            //    buttonPane.add(helpButton);
+            //   }
         }
     }
 

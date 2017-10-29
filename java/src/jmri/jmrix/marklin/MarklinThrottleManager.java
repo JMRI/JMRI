@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class MarklinThrottleManager extends AbstractThrottleManager implements MarklinListener {
 
@@ -133,6 +133,6 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinThrottleManager.class);
 
 }

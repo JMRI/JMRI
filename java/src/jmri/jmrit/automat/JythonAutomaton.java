@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * without the jython-standalone-2.7.0.jar file in the classpath. To make it easier to read the
  * code, the "non-reflection" statements are in the comments
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class JythonAutomaton extends AbstractAutomaton {
 
@@ -99,6 +99,6 @@ public class JythonAutomaton extends AbstractAutomaton {
     java.lang.reflect.Method exec;
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JythonAutomaton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JythonAutomaton.class);
 
 }

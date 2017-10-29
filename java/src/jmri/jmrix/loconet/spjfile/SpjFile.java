@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Four-byte quantities in SPJ files are little-endian.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2009
+ * @author Bob Jacobsen Copyright (C) 2006, 2009
  */
 public class SpjFile {
 
@@ -283,8 +283,10 @@ public class SpjFile {
         for (int i = 1; i < n; i++) {
             s.close();
             s = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
-            s.skip(headers[i].getRecordStart());
-
+            long count = s.skip(headers[i].getRecordStart());
+            if (count != headers[i].getRecordStart()) {
+                log.warn("Only skipped {} characters, should have skipped {}", count, headers[i].getRecordStart());
+            }
             byte[] array = new byte[headers[i].getRecordLength()];
             int read = s.read(array);
             if (read != headers[i].getRecordLength()) {
@@ -724,6 +726,6 @@ public class SpjFile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpjFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpjFile.class);
 
 }

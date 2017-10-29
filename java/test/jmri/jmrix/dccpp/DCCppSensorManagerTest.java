@@ -2,12 +2,13 @@ package jmri.jmrix.dccpp;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppSensorManager class.
@@ -23,7 +24,7 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
     public String getSystemName(int i) {
         return "DCCPPS" + i;
     }
-    
+
     @Test
     public void testDCCppSensorCreate() {
         Assert.assertNotNull("exists", l);
@@ -64,7 +65,7 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
 
         // see if sensor exists
         Assert.assertTrue(null != l.getBySystemName("DCCPPS22"));
-        
+
     }
 
     @Test
@@ -92,14 +93,14 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManagerTest.class);
 
     // The minimal setup for log4J
     @Override
     @Before
-    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+
         // prepare an interface
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         Assert.assertNotNull("exists", xnis);
@@ -108,10 +109,9 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

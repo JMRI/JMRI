@@ -59,7 +59,7 @@ public class AbstractMRTrafficControllerTest {
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRTrafficController(){
            @Override
-           protected void setInstance() {};
+           protected void setInstance() {}
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }
@@ -83,8 +83,7 @@ public class AbstractMRTrafficControllerTest {
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown(); 
+        JUnitUtil.tearDown(); 
     }
 
 }

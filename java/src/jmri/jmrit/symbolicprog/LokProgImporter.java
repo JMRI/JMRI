@@ -23,12 +23,12 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Alex Shepherd Copyright (C) 2003
- * @author	Dave Heap Copyright (C) 2014
+ * @author Alex Shepherd Copyright (C) 2003
+ * @author Dave Heap Copyright (C) 2014
  */
 public class LokProgImporter {
 
-    private final static Logger log = LoggerFactory.getLogger(LokProgImporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LokProgImporter.class);
     private static final String INDEX_PREFIX = "Index:";
     private static final String INDEX_1 = "CV31=";
     private static final String INDEX_1_TERMINATOR = ",";

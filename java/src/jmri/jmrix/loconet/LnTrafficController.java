@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation and some statistics support.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class LnTrafficController implements LocoNetInterface {
 
@@ -144,5 +144,5 @@ public abstract class LnTrafficController implements LocoNetInterface {
     }
     protected int transmittedMsgCount = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(LnTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTrafficController.class);
 }

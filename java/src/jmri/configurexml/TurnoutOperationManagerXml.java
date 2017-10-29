@@ -59,7 +59,7 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
             TurnoutOperation[] operations = manager.getTurnoutOperations();
             for (int i = 0; i < operations.length; ++i) {
                 TurnoutOperation op = operations[i];
-                if (!op.isNonce()) {		// nonces are stored with their respective turnouts
+                if (!op.isNonce()) {  // nonces are stored with their respective turnouts
                     TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
                     if (adapter != null) {
                         Element opElem = adapter.store(op);
@@ -73,5 +73,5 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
         return elem;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXml.class);
 }

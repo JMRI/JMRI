@@ -18,7 +18,7 @@ public class TrainsTableAction extends AbstractAction {
     }
 
     public TrainsTableAction() {
-        this(Bundle.getMessage("MenuTrains"));	// NOI18N
+        this(Bundle.getMessage("MenuTrains")); // NOI18N
     }
 
     static TrainsTableFrame trainsTableFrame = null;
@@ -31,7 +31,7 @@ public class TrainsTableAction extends AbstractAction {
             trainsTableFrame = new TrainsTableFrame();
         }
         trainsTableFrame.setExtendedState(Frame.NORMAL);
-        trainsTableFrame.setVisible(true);	// this also brings the frame into focus
+        trainsTableFrame.setVisible(true); // this also brings the frame into focus
     }
 }
 

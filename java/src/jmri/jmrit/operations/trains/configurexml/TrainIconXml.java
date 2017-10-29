@@ -45,7 +45,7 @@ public class TrainIconXml extends LocoIconXml {
         element.setAttribute(Xml.ICON, Xml.YES);
         element.setAttribute(Xml.DOCK_X, "" + p.getDockX());
         element.setAttribute(Xml.DOCK_Y, "" + p.getDockY());
-//		element.setAttribute("iconId", p.getIconId());
+//  element.setAttribute("iconId", p.getIconId());
         element.addContent(storeIcon(Xml.ICON, (NamedIcon) p.getIcon()));
         RosterEntry entry = p.getRosterEntry();
         if (entry != null) {
@@ -72,5 +72,5 @@ public class TrainIconXml extends LocoIconXml {
         log.debug("Warning: loading of TrainIcon not implemented, TrainIcons will be placed by Operations");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainIconXml.class);
 }

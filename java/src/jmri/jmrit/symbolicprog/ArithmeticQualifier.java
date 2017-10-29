@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * You can also check whether the value "exists" (value of 1) or not (value of
  * 0). Comparisons with the value of a non-existant variable always fail.
  *
- * @author	Bob Jacobsen Copyright (C) 2010, 2014
+ * @author Bob Jacobsen Copyright (C) 2010, 2014
  *
  */
 public abstract class ArithmeticQualifier extends AbstractQualifier {
@@ -127,5 +127,5 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
         return false;  // should never be reached, because should only be invoked after returnFromExistsLogic() == true
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class);
 }

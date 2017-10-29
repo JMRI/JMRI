@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * They are not (currently) NamedBean objects.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
   */
 public class SensorGroup {
 
@@ -95,6 +95,6 @@ public class SensorGroup {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorGroup.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorGroup.class);
 
 }

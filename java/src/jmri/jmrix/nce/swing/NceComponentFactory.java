@@ -5,8 +5,8 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 /**
  * Provide access to Swing components for the Nce subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	kcameron Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author kcameron Copyright (C) 2010
  */
 public class NceComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 

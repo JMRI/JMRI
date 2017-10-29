@@ -1,6 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver;
 
-import gnu.io.SerialPort;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
@@ -8,6 +7,8 @@ import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.GridConnectDoubledMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for GridConnect adapters.
@@ -16,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * controlled by the SerialDriverFrame class.
  * <P>
  *
- * @author	Andrew Crosland Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2009, 2012
+ * @author Andrew Crosland Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2009, 2012
  * 
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.jmrix.SerialPortAdapter {
@@ -51,7 +52,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
             activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_XONXOFF_OUT);
             activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_XONXOFF_IN);
             return retval;
-        } catch (gnu.io.UnsupportedCommOperationException e) {
+        } catch (UnsupportedCommOperationException e) {
             log.error("error configuring port", e);
             return null;
         }
@@ -68,6 +69,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
         };
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Note this is a concrete class, unlike the interface/implementation pairs of
  * most Managers, because there are currently only one implementation for
  * Blocks.
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -37,7 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class BlockManager extends AbstractManager implements PropertyChangeListener, VetoableChangeListener {
+public class BlockManager extends AbstractManager<Block> implements PropertyChangeListener, VetoableChangeListener, InstanceManagerAutoDefault {
 
     public BlockManager() {
         super();
@@ -53,8 +52,8 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
 
     @Override
     @CheckReturnValue
-    @Nonnull public
-    String getSystemPrefix() {
+    @Nonnull
+    public String getSystemPrefix() {
         return "I";
     }
 
@@ -102,8 +101,8 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
         r = new Block(sName, userName);
         // save in the maps
         register(r);
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
+        /*The following keeps trace of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IB:AUTO:")) {
             try {
@@ -112,7 +111,7 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
                     lastAutoBlockRef = autoNumber;
                 }
             } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
         }
         try {
@@ -148,6 +147,8 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
      *
      * @param name the system name or the user name for the block
      * @return a new or existing Block
+     * @throws IllegalArgumentException if cannot create block; never returns
+     *                                  null
      */
     @Nonnull
     public Block provideBlock(@Nonnull String name) {
@@ -160,6 +161,9 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
         } else {
             b = createNewBlock(makeSystemName(name), null);
         }
+        if (b == null) {
+            throw new IllegalArgumentException("Could not create block \"" + name + "\"");
+        }
         return b;
     }
 
@@ -171,6 +175,7 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
      * Method to get an existing Block. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
+     *
      * @param name the name of an existing block
      * @return a Block or null if none found
      */
@@ -185,21 +190,21 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
     }
 
     @CheckReturnValue
-    @CheckForNull public
-    Block getBySystemName(@Nonnull String name) {
+    @CheckForNull
+    public Block getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
-        return (Block) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     @CheckReturnValue
-    @CheckForNull public
-    Block getByUserName(@Nonnull String key) {
-        return (Block) _tuser.get(key);
+    @CheckForNull
+    public Block getByUserName(@Nonnull String key) {
+        return _tuser.get(key);
     }
 
     @CheckReturnValue
-    @CheckForNull public
-    Block getByDisplayName(@Nonnull String key) {
+    @CheckForNull
+    public Block getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Block retv = this.getByUserName(key);
@@ -210,14 +215,15 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
         return (retv);
     }
 
-    static BlockManager _instance = null;
-
-    static @CheckForNull public
-    BlockManager instance() {
-        if (_instance == null) {
-            _instance = new BlockManager();
-        }
-        return (_instance);
+    /**
+     * @return the default BlockManager instance
+     * @deprecated since 4.9.1; use
+     * {@link InstanceManager#getDefault(Class)} instead
+     */
+    @Deprecated
+    @CheckForNull
+    static public BlockManager instance() {
+        return InstanceManager.getDefault(BlockManager.class);
     }
 
     String defaultSpeed = "Normal";
@@ -246,15 +252,15 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
     }
 
     @CheckReturnValue
-    @Nonnull public
-    String getDefaultSpeed() {
+    @Nonnull
+    public String getDefaultSpeed() {
         return defaultSpeed;
     }
 
     @Override
     @CheckReturnValue
-    @Nonnull public
-    String getBeanTypeHandled() {
+    @Nonnull
+    public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameBlock");
     }
 
@@ -268,15 +274,15 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
      * @return list of block system names
      */
     @CheckReturnValue
-    @Nonnull public
-    List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
+    @Nonnull
+    public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
 
         getSystemNameList().stream().forEach((sysName) -> {
             Block b = getBySystemName(sysName);
             Object o = b.getValue();
             if (o != null) {
-                if (o instanceof jmri.jmrit.roster.RosterEntry && o == re) {
+                if (o instanceof RosterEntry && o == re) {
                     blockList.add(b);
                 } else if (o.toString().equals(re.getId()) || o.toString().equals(re.getDccAddress())) {
                     blockList.add(b);
@@ -287,5 +293,5 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
         return blockList;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockManager.class);
 }

@@ -2,13 +2,19 @@ version: '{build}'
 clone_depth: 50
 install:
   - SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
-  - SET PATH=%JAVA_HOME%\bin;%PATH%
+  - SET GECKODRIVER=C:\Tools\WebDriver
+  - SET CHROMEDRIVER=C:\Tools\WebDriver\chromedriver.exe
+  - SET PATH=%JAVA_HOME%\bin;%GECKODRIVER%;%CHROMEDRIVER%;%PATH%
 #  - echo PATH %PATH%
 #  - echo JAVA_HOME %JAVA_HOME%
   - java -version
 #  - javac -version
   - mvn -version
 build: off
+
+environment:
+  global:
+    MAVEN_OPTS: "-Xmx2048M"
 
 before_test:
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/set-screenresolution.ps1'))
@@ -26,6 +32,9 @@ on_finish:
     )
 
 deploy: off
+
+artifacts:
+  - path: instanceManagerSequence.txt
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml

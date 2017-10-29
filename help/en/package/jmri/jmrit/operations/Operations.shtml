@@ -288,16 +288,22 @@
 
       <li><a href="#TrainReset">Reset Train</a></li>
 
-      <li><a href="#TrainBuildOptions">Train Build Options</a></li>
+      <li><a href="#EditTrainTools">Edit Train Tools</a>
 
-      <li><a href="#TrainLoadOptions">Train Load Options</a></li>
+       <ul>
+        <li><a href="#TrainBuildOptions">Train Build Options</a></li>
 
-      <li><a href="#TrainRoadOptions">Train Road Options</a></li>
+        <li><a href="#TrainLoadOptions">Train Load Options</a></li>
 
-      <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
+        <li><a href="#TrainRoadOptions">Train Road Options</a></li>
 
-      <li><a href="#TrainScripts">Scripts</a></li>
+        <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
 
+        <li><a href="#TrainScripts">Scripts</a></li>
+        
+        <li><a href="#TrainConductor">Train Conductor</a></li>
+       </ul>
+       
       <li><a href="#TrainsTools">Trains Tools</a>
 
        <ul>
@@ -1416,6 +1422,11 @@
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under
    tools in the <a href="#Trains">Trains</a> window.
+   <p>
+   This option also makes backup copies of any switch list that you create.  They are stored in a 
+   directory called "switchListBackups" located in the "operations" directory. A separate directory
+   is created for each location's switch list that you create.
+   </p>
 
    <h4>Enable Value Fields and Identification Tag Fields</h4>
 
@@ -1575,6 +1586,7 @@
     using when building your trains.
    </p>
 
+   <a name="SortByTrack" id="SortByTrack"></a>
    <p>
     The next option is "Sort by Track". The program when creating a train Manifest normally lists
     the cars in the order they need to be placed into the train for proper blocking. The normal
@@ -1836,10 +1848,16 @@
    trains, and higher numbered tracks are printed first for Eastbound and Southbound trains. Use any
    blocking order number greater than zero when using this feature.
 
+   <p>Note that this feature controls the set outs for a location. Car pick ups at a location
+    are blocked by their next destination and then alphabetically by track name or by the track blocking
+    order at the destination if one was created for that destination.</p>
+
    <p>The "Reset" button returns the blocking order to the original defaults which is an
     alphabetical listing of tracks at a location. The "Set Order" button gives each track a unique
     order number, and will also reorder existing order numbers if there are any that aren't unique.
     The "Up" and "Down" buttons in the table require unique track blocking numbers for them to work.</p>
+    
+    <p>This feature is disabled if the option to show <a href="#SortByTrack">Sort by Track</a> is enabled.</p>
 
    <a name="ShowTrainsServicingThisLocation" id="ShowTrainsServicingThisLocation"></a>
    <h4>Show Trains Servicing this Location</h4>
@@ -3432,7 +3450,10 @@
    <p>The "Routes" window shows for every route created the id, name, comment, shortest route
     length, longest route length, and status of the route. If there's a problem with the route, the
     status will be reported as "Error". If the route hasn't been assigned to a train, the status for
-    the route is reported as "Orphan". Use the "Edit" button to modify an existing route.</p>
+    the route is reported as "Orphan". If a route has been assigned to a train or trains, and one of
+    the trains is built, the status becomes "Train Built". You can not modify a route that is
+    assigned to a built train. Reset or terminate a built train if you want to modify the route. Use
+    the "Edit" button to modify a route.</p>
 
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
@@ -3794,6 +3815,12 @@
     (OperationsTrainRoster.xml) in your JMRI directory in a folder called "operations". A backup
     file with the last settings for all of your trains is also created each time the "Save Train"
     button is pressed.</p>
+    
+    <a name="EditTrainTools" id="EditTrainTools"></a>
+   <h3>Edit Train Tools</h3>
+   <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">
+
+   <p>In the upper left side of each "Edit Train" window is the "Tools" menu for that train.</p>
 
    <a name="TrainBuildOptions" id="TrainBuildOptions"></a>
    <h3>Train Build Options</h3>
@@ -4246,7 +4273,44 @@
    </table>
 
    <p>
-    FD = Final Destination <a name="TrainsTools" id="TrainsTools"></a>
+    FD = Final Destination
+    </p>
+
+   <a name="TrainConductor" id="TrainConductor"></a>
+   <h3>Train Conductor</h3>
+
+   The train conductor window provides a train manifest for each location that the train visits.
+   This real time window allows you to see the work needed at a location for a built train, and once
+   the work is completed by selected all of the work checkboxes, allows you to move the train to the
+   next location in the train's route.
+
+   <h4>Modifying a built train</h4>
+
+   <p>You can also modify the train's manifest by pressing the "Modify" button. The modify
+    button once pressed will ask you if you want to add cars to the train. If you answer yes a
+    "Cars" window will appear for the location being serviced. Press the "Set" button for the car
+    you want to add, and in the "Set Car" window under the section "Optional -- Normally Set by
+    Program" enter a destination, destination track, and train for that car. Note that by default, a
+    car's destination and track is disabled, but you can enable it under the "Tools" menu in the set
+    car window. Pressing "Save" should cause the program to ask you if you want to add the car to
+    the train.</p>
+
+   <p>To remove a car from the train, press the "Set" button, and the "Set Car" window should
+    appear. Pressing the set car "Save" button will ask you if you really want to remove the car
+    from the train.</p>
+
+   <h4>Yardmaster</h4>
+
+   <p>
+    The Yardmaster window provides the real time version of a <a href="#SwitchList">switch list</a>. To
+    see the work for all trains visiting a location, press the "Yardmaster" button in the <a
+     href="#Locations">locations</a> window. The Yardmaster window also allows you to modify a built
+    train.
+   </p>
+
+
+   <a name="TrainsTools" id="TrainsTools"></a>
+   
    <h3>Trains Tools</h3>
    <img src="images/TrainsPaneMenu.png" alt="Operations Trains window Tools Menu">
 
@@ -4316,6 +4380,10 @@
     Pickup) when building trains. You can also add or change the days of the week by using the "Edit
     Timetable" window found under "Tools". You can change the order by dragging the column with your
     mouse pointer. Press the "Save" button to complete your changes.</p>
+
+   <p>When the "None" radio button is selected, cars with a scheduled pick up day will not be
+    serviced. The "Any" radio button allows you to service all cars, even ones those that have a
+    scheduled pick up day.</p>
 
    <p>
     There are four buttons labeled "Build", "Print/Preview", "Print Switch Lists/Update Switch

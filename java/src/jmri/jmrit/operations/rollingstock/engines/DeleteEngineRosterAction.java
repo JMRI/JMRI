@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DeleteEngineRosterAction extends AbstractAction {
 
-    EngineManager manager = EngineManager.instance();
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
     public DeleteEngineRosterAction(String actionName, Component frame) {
         super(actionName);
@@ -30,5 +31,5 @@ public class DeleteEngineRosterAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(DeleteEngineRosterAction.class.getName());
+            .getLogger(DeleteEngineRosterAction.class);
 }

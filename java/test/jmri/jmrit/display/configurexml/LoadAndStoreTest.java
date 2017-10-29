@@ -27,6 +27,6 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     }
 
     public LoadAndStoreTest(File file, boolean pass) {
-        super(file, pass);
+        super(file, pass, SaveType.Config, false);
     }
 }

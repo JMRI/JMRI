@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to implement filtering of CBUS events.
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class CbusEventFilter {
 
@@ -116,5 +116,5 @@ public class CbusEventFilter {
     private int _type;
     private Color _color;
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventFilter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusEventFilter.class);
 }

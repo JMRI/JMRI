@@ -22,14 +22,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Make sure an XML file is readable, and validates OK.
+ * Make sure an XML file is readable, and validates OK against its schema and DTD.
  * <p>
  * Can also be run from the command line with e.g. ./runtest.csh
  * jmri/jmrit/XmlFileValidateAction foo.xml in which case if there's a filename
  * argument, it checks that directly, otherwise it pops a file selection dialog.
  * (The dialog form has to be manually canceled when done)
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2007
+ * @author Bob Jacobsen Copyright (C) 2005, 2007
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileCheckAction
  */
@@ -52,6 +52,8 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
 
     Component _who;
 
+    XmlFile xmlfile = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {
@@ -73,15 +75,13 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
             log.debug("located file " + file + " for XML processing");
         }
         // handle the file (later should be outside this thread?)
-        boolean original = XmlFile.verify;
         try {
-            XmlFile.verify = true;
+            xmlfile.setValidate(XmlFile.Validate.CheckDtdThenSchema);
             readFile(file);
         } catch (Exception ex) {
             // because of XInclude, we're doing this
             // again to validate the entire file
             // without losing the error message
-            XmlFile.verify = false;
             Document doc;
             try {
                 InputStream stream = new BufferedInputStream(new FileInputStream(file));
@@ -117,7 +117,6 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
             builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", true);
             builder.setFeature("http://xml.org/sax/features/namespaces", true);
             try {
-                XmlFile.verify = true;
                 builder.build(input).getRootElement();
             } catch (JDOMException | IOException ex2) {
                 showFailResults(_who, "Err(2): " + ex2);
@@ -126,8 +125,6 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
 
             showFailResults(_who, "Err(3): " + ex);
             return;
-        } finally {
-            XmlFile.verify = original;
         }
         showOkResults(_who, "OK");
         if (log.isDebugEnabled()) {
@@ -151,10 +148,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
      * @throws java.io.IOException     if unable to read file
      */
     void readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
-        XmlFile xf = new XmlFile() {
-        };   // odd syntax is due to XmlFile being abstract
-
-        xf.rootFromFile(file);
+        xmlfile.rootFromFile(file);
 
     }
 
@@ -186,5 +180,5 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class);
 }

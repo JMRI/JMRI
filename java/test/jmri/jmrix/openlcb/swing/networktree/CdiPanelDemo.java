@@ -1,35 +1,36 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
+import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromFile;
+import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromSample;
+
+import java.awt.GraphicsEnvironment;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import jmri.jmrix.openlcb.SampleFactory;
+import jmri.util.JUnitUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
-import org.openlcb.cdi.swing.CdiPanel;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-
-import jmri.jmrix.openlcb.SampleFactory;
-
-import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromFile;
-import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromSample;
+import org.openlcb.cdi.swing.CdiPanel;
 
 /**
  * NOTE: This file actually Demonstrates the openLCB CdiPanel class.
+ *
  * @author Bob Jacobsen Copyright 2012
- * 
+ *
  */
 public class CdiPanelDemo {
 
-    public void testCtor(){
+    public void testCtor() {
         CdiPanel m = new CdiPanel();
         Assert.assertNotNull(m);
     }
@@ -43,13 +44,13 @@ public class CdiPanelDemo {
 
         m.initComponents(demoRepFromSample(SampleFactory.getBasicSample()),
                 new CdiPanel.GuiItemFactory() {
-                    @Override
-                    public JButton handleReadButton(JButton button) {
-                        //System.out.println("process button");
-                        button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));
-                        return button;
-                    }
-                }
+            @Override
+            public JButton handleReadButton(JButton button) {
+                //System.out.println("process button");
+                button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));
+                return button;
+            }
+        }
         );
 
         f.add(m);
@@ -57,6 +58,7 @@ public class CdiPanelDemo {
         // show
         f.pack();
         f.setVisible(true);
+        f.dispose();
     }
 
     @Test
@@ -65,6 +67,7 @@ public class CdiPanelDemo {
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample1.xml");
         f.setTitle("Sample1 XML");
         f.setVisible(true);
+        f.dispose();
     }
 
     @Test
@@ -73,6 +76,7 @@ public class CdiPanelDemo {
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample2.xml");
         f.setTitle("Sample 2 XML");
         f.setVisible(true);
+        f.dispose();
     }
 
     @Test
@@ -81,6 +85,7 @@ public class CdiPanelDemo {
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml");
         f.setTitle("Locomotive CDI Demonstration");
         f.setVisible(true);
+        f.dispose();
     }
 
     Element getRootFromFile(String name) {
@@ -101,13 +106,13 @@ public class CdiPanelDemo {
 
         m.initComponents(demoRepFromFile(new File(fileName)),
                 new CdiPanel.GuiItemFactory() {
-                    @Override
-                    public JButton handleReadButton(JButton button) {
-                        //System.out.println("process button");
-                        button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));
-                        return button;
-                    }
-                }
+            @Override
+            public JButton handleReadButton(JButton button) {
+                //System.out.println("process button");
+                button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));
+                return button;
+            }
+        }
         );
 
         f.add(m);
@@ -118,14 +123,13 @@ public class CdiPanelDemo {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public  void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.tearDown();
     }
 
 }

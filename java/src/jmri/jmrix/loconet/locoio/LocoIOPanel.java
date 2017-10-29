@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Panel displaying and programming a LocoIO configuration.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
   */
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
@@ -247,7 +247,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                     + ", was " + subAddress); // NOI18N
         }
         address = 0x0100 | (address & 0x07F);  // range is [1..79, 81..127]
-        subAddress = subAddress & 0x07F;	// range is [1..126]
+        subAddress = subAddress & 0x07F; // range is [1..126]
         LocoIO.programLocoIOAddress(address, subAddress, ln);
     }
 
@@ -334,6 +334,6 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         openButton = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIOPanel.class);
 
 }

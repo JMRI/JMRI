@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
 public class AudioTableAction extends AbstractTableAction {
@@ -255,7 +255,7 @@ public class AudioTableAction extends AbstractTableAction {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioTableAction.class);
 
     /**
      * Define abstract AudioTableDataModel

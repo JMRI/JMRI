@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * type.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class PaneEditAction extends AbstractAction {
     Object o1, o2, o3, o4;
@@ -89,6 +89,6 @@ public class PaneEditAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class);
 
 }

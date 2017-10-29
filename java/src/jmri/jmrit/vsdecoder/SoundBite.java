@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.util.ArrayList;
 import jmri.AudioException;
@@ -323,7 +323,7 @@ class SoundBite extends VSDSound {
     }
 
     public static long calcLength(AudioBuffer buf) {
-	// Assumes later getBuffer() will find the buffer from AudioManager instead
+ // Assumes later getBuffer() will find the buffer from AudioManager instead
         // of the current local reference... that's why I'm not directly using sound_buf here.
 
         // Required buffer functions not yet implemented
@@ -351,5 +351,5 @@ class SoundBite extends VSDSound {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SoundBite.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SoundBite.class);
 }

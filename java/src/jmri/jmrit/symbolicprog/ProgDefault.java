@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * not fix the problem. What did fix it was an ugly hack in the
  * {@link CombinedLocoSelPane} class; see comments there for more information.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class ProgDefault {
 

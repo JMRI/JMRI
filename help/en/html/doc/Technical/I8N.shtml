@@ -23,6 +23,7 @@
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
     <div id="mBody">
 <!--#include virtual="Sidebar" -->
@@ -133,7 +134,7 @@ There are several .properties files that are used for internal control,
 and should not be translated. These are marked by a comment at the top
 of the file. An example is the <code>apps/AppsStructureBundle.properties</code> file.
 
-<a name="commonkeys"><p>
+<a name="commonkeys"></a><p>
 You are advised to start a new language translation by completing the highest level bundles, starting with the
 <em>NamedBeanBundle</em> in the src/jmri directory end working your way down the folder hierarchy, of course following your personal
 interest in certain modules. By following this order, you will see your initial work all the way down inside the user interface for tools such as
@@ -171,7 +172,6 @@ share it with us <a href="index.shtml#contributing">contributing via GitHub</a>.
 By using a GitHub Pull Request, it's easy for us to merge your new and/or changed
 files into the code repository. If anything goes wrong, please don't hesitate to 
 ask for help with this.
-</ul>
 
 <h4>Non-Roman characters</h4>
 <p>Languages that involve non-roman letters require some
@@ -190,7 +190,7 @@ by converting special characters to the right sequences, but you must run your f
 Special characters are somewhat machine-specific, so to make they're properly handled, they have to be converted to
 ISO 8859-1 sequences on your computer before submission.
 
-<a name="xml"><h3>Translating XML files</h3>
+<a name="xml"></a><h3>Translating XML files</h3>
 XML files can also be internationalized.  There are examples in the 
 decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 
@@ -214,7 +214,7 @@ edit in new XML elements, make sure the structure is correct, etc.
 For more information, see the <a href="http://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
 or ask on the jmri-developers list.
 
-<a id="help"><h3>Translating Help files</h3>
+<a id="help"></a><h3>Translating Help files</h3>
 (This has only been done once, so these instructions may not be complete)
 <p>
 The English help files are found in the help/en directory.
@@ -231,8 +231,7 @@ any <code>.xml</code> and <code>.jhm</code> files or the <code>web*.shtml</code>
 are automatically produced.
 </ul>
 
-<a name="dev"><h2>Internationalization for Developers</h2>
-<p>
+<a name="dev"></a><h2>Internationalization for Developers</h2>
 For internationalization to work, you have to do a few things in the code 
 you write. Some web references on how to do this:
 <ul>
@@ -260,7 +259,7 @@ Cross-package references, e.g. between <code>jmri.jmrit</code> and <code>jmri.jm
 and existing ones are being removed.
 <p>
 Access is via a Bundle class local to each package.  A typical one is
-<code><href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
+<code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
 It provides two key methods you use to access (translated) resource
 strings:<br>
 <code>
@@ -301,11 +300,21 @@ than providing multiple lines in the code itself.
 Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
 English, as should messages sent to the logging system. Keys for 
-the translation bundles are another example. 
+the translation bundles should also stay in English. 
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
 comment at the end of the line. If needed, put that after another comment:
 <pre style="font-family: monospace;">
-  firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
+           Sensor thisSensorVariableNameIsInEnglish;
+
+           String message = "THAT_ONE_MESSAGE";  // NOI18N
+           JLabel jl1 = new JLabel(Bundle.getMessage(message));
+
+           JLabel jl2 = new JLabel(Bundle.getMessage("LABELKEY"));  // NOI18N
+
+           log.debug("The process failed account of user error"); // NOI18N
+
+           // This comment is in English and need not be annotated w.r.t. internationalization
+
 </pre>
 
 <h3>Adding a new Bundle</h3>
@@ -397,9 +406,8 @@ For output:
 without using these formatting tools. That way, the files can be moved
 from one user to another without worrying about whether they are using the same Locale.</strong>
 
-<a name="testing">
+<a name="testing"></a>
 <h3>Testing</h3>
-<p>
 You should check that you've properly internationalized 
 your code.  We provide a tool for doing this which creates
 an automatically translated version of your properties files,

@@ -3,30 +3,23 @@
  *
  * Description:	tests for the jmri.jmrix.nce.EasyDccConsistManager class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2017
  */
 package jmri.jmrix.easydcc;
 
-import java.util.Vector;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.Before;
+import org.junit.Test;
 
-public class EasyDccConsistManagerTest extends TestCase {
+public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase{
 
-    public void testCtor() {
-        EasyDccConsistManager m = new EasyDccConsistManager();
-        Assert.assertNotNull(m);
-    }
+    private EasyDccTrafficControlScaffold t = null;
 
     // test the initilization loop
+    @Test
     public void testInitSequence() {
-        EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
-        new EasyDccListenerScaffold();
-        EasyDccConsistManager m = new EasyDccConsistManager();
+        EasyDccConsistManager m = (EasyDccConsistManager)cm;
         // we need to call requestUpdateFromLayout() to trigger the 
         // init sequence.
         m.requestUpdateFromLayout();
@@ -103,94 +96,22 @@ public class EasyDccConsistManagerTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public EasyDccConsistManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EasyDccConsistManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EasyDccConsistManagerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() {
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        t = new EasyDccTrafficControlScaffold();
+        cm = new EasyDccConsistManager();
     }
 
+    @After
     @Override
-    protected void tearDown() {
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        cm = null;
     }
 
-    // service internal class to handle transmit/receive for tests
-    class EasyDccInterfaceScaffold extends EasyDccTrafficController {
-
-        public EasyDccInterfaceScaffold() {
-        }
-
-        // override some EasyDccInterfaceController methods for test purposes
-        @Override
-        public boolean status() {
-            return true;
-        }
-
-        /**
-         * record messages sent, provide access for making sure they are OK
-         */
-        public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
-
-        @Override
-        public void sendEasyDccMessage(EasyDccMessage m, jmri.jmrix.easydcc.EasyDccListener l) {
-            if (log.isDebugEnabled()) {
-                log.debug("sendEasyDccMessage [" + m + "]");
-            }
-            // save a copy
-            outbound.addElement(m);
-            lastSender = l;
-        }
-
-        jmri.jmrix.easydcc.EasyDccListener lastSender;
-        // test control member functions
-
-        /**
-         * forward a message to the listeners, e.g. test receipt
-         */
-        protected void sendTestMessage(EasyDccMessage m) {
-            // forward a test message to Listeners
-            if (log.isDebugEnabled()) {
-                log.debug("sendTestMessage    [" + m + "]");
-            }
-            notifyMessage(m, null);
-            return;
-        }
-
-        protected void sendTestReply(EasyDccReply m) {
-            // forward a test message to Listeners
-            if (log.isDebugEnabled()) {
-                log.debug("sendTestReply    [" + m + "]");
-            }
-            notifyReply(m, lastSender);
-            return;
-        }
-
-        /*
-         * Check number of listeners, used for testing dispose()
-         */
-        public int numListeners() {
-            return cmdListeners.size();
-        }
-
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class);
 
 }

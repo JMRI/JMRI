@@ -16,7 +16,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to display the JMRI license
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2010
+ * @author Bob Jacobsen Copyright (C) 2004, 2010
  */
 public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 

@@ -155,9 +155,10 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     /**
-     * Do the GUI contents agree with a RosterEntry?
+     * Check if panel contents differ with a RosterEntry.
      *
-     * @return true if GUI differs from RosterEntry
+     * @param r the roster entry to check
+     * @return true if panel contents differ; false otherwise
      */
     public boolean guiChanged(RosterEntry r) {
         if (labels != null) {
@@ -223,9 +224,10 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     /**
-     * Fill a RosterEntry object from GUI contents
+     * Update a RosterEntry object from panel contents.
      *
      *
+     * @param r the roster entry to update
      */
     public void update(RosterEntry r) {
         if (labels != null) {
@@ -388,6 +390,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FunctionLabelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionLabelPane.class);
 
 }

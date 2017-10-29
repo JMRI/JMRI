@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * information on the various types of information stored in configuration
  * files.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends LoadStoreBaseAction {
@@ -110,5 +110,5 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(StoreXmlConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlConfigAction.class);
 }

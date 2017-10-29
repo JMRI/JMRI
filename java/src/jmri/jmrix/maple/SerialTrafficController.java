@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from C/MRI serial messages.
+ * Converts Stream-based I/O to/from Maple serial messages.
  * <P>
  * The "SerialInterface" side sends/receives message objects.
  * <P>
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009, 2010
  *
@@ -77,7 +77,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for Maple serial");
+        log.warn("enterProgMode doesn't make sense for Maple serial");
         return null;
     }
 
@@ -117,7 +117,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     // With the Maple Systems Protocol, output packets are limited to 99 bits.  If there are more than 
     //    99 bits configured, multiple output packets must be sent.  The following cycle through that
-    //	  process.
+    //   process.
     private boolean mNeedSend = true;
     private int mStartBitNumber = 1;
     // Similarly the poll command can only poll 99 input bits at a time, so more packets may be needed.
@@ -206,10 +206,10 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             wrTimeoutCount++;    // should not happen
         } else if (m.getElement(3) == 'R' && m.getElement(4) == 'C') {
             if (mNeedAdditionalPollPacket) {
-//				log.warn("Timeout of poll message, node = "+curSerialNodeIndex+" beg addr = "+mSavedPollAddress);
+//    log.warn("Timeout of poll message, node = "+curSerialNodeIndex+" beg addr = "+mSavedPollAddress);
                 getNode(curSerialNodeIndex).handleTimeout(m, l);
             } else {
-//				log.warn("Timeout of poll message, node = "+(curSerialNodeIndex-1)+" beg addr = "+mSavedPollAddress);
+//    log.warn("Timeout of poll message, node = "+(curSerialNodeIndex-1)+" beg addr = "+mSavedPollAddress);
                 getNode(curSerialNodeIndex - 1).handleTimeout(m, l);
             }
         } else {
@@ -377,5 +377,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return len;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+
 }

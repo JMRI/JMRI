@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -28,7 +29,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SetPhysicalLocationFrame extends OperationsFrame {
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     Location _location;
 
@@ -39,7 +40,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
-    JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
     // Spinners
     PhysicalLocationPanel physicalLocation;
@@ -151,7 +152,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 
     // Unused. Carried over from SetTrainIconPosition or whatever it was
     // called...
-	/*
+ /*
      * private void spinnersEnable(boolean enable){ physicalLocation.setEnabled(enable); }
      */
     private void saveSpinnerValues(Location l) {
@@ -165,5 +166,5 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SetPhysicalLocationFrame.class.getName());
+            .getLogger(SetPhysicalLocationFrame.class);
 }

@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = JsonServiceFactory.class)
 public class JsonUtilServiceFactory implements JsonServiceFactory {
 
     @Override
@@ -23,7 +25,8 @@ public class JsonUtilServiceFactory implements JsonServiceFactory {
             JSON.PANELS,
             JSON.PING,
             JSON.RAILROAD,
-            JSON.SYSTEM_CONNECTIONS};
+            JSON.SYSTEM_CONNECTIONS,
+            JSON.CONFIG_PROFILES};
     }
 
     @Override

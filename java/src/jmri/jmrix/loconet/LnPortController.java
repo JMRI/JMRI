@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for classes representing a LocoNet communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -108,5 +108,5 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-    private final static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPortController.class);
 }

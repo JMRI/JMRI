@@ -26,6 +26,8 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
     /**
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
+     * @param m msg to send
+     * @param l length of expected response (not used)
      *
      */
     public IEEE802154Message(String m, int l) {
@@ -52,6 +54,7 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l length of expected response
      */
     public IEEE802154Message(byte[] a, int l) {
         super(String.valueOf(a));
@@ -61,8 +64,9 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * check whether the message has a valid parity IEEE 802.15.4 messages have
+     * Check whether the message has a valid parity IEEE 802.15.4 messages have
      * a two byte parity.
+     * @return true if parity is valid
      */
     public boolean checkParity() {
         int len = getNumDataElements();

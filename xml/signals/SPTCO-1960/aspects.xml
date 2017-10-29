@@ -77,8 +77,8 @@
       <rule>Rule 281</rule>
       <indication>Proceed</indication>
       <reference>Page 90</reference>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>20</dccAspect>
     </aspect>
@@ -87,8 +87,8 @@
       <rule>Rule 282</rule>
       <indication>Proceed except on diverging route</indication>
       <reference>Page 91</reference>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Normal</route>
       <dccAspect>20</dccAspect>
     </aspect>
@@ -97,8 +97,8 @@
       <rule>Rule 283</rule>
       <indication>Proceed on diverging route</indication>
       <reference>Page 92</reference>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Diverging</route>
       <dccAspect>12</dccAspect>
     </aspect>
@@ -118,7 +118,7 @@
       <indication>Proceed not exceeding medium speed, prepared to stop short of next home signal.</indication>
       <reference>Page 94</reference>
       <speed>Medium</speed>
-      <speed2>Approach</speed2>
+      <speed2>Medium</speed2>
       <route>Either</route>
       <dccAspect>8</dccAspect>
     </aspect>
@@ -138,7 +138,7 @@
       <indication>Proceed not exceeding medium speed, prepared to stop short of next home signal.</indication>
       <reference>Page 96</reference>
       <speed>Medium</speed>
-      <speed2>Approach</speed2>
+      <speed2>Medium</speed2>
       <route>Either</route>
       <dccAspect>8</dccAspect>
     </aspect>
@@ -157,8 +157,8 @@
       <rule>Rule 288</rule>
       <indication>Proceed on diverging route at restricted speed.</indication>
       <reference>Page 98</reference>
-      <speed>Approach</speed>
-      <speed2>Approach</speed2>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
       <dccAspect>6</dccAspect>
     </aspect>

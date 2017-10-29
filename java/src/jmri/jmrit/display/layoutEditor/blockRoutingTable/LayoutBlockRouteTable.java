@@ -16,25 +16,25 @@ import jmri.swing.RowSorterUtil;
 /**
  * Provide a table of block route entries as a JmriJPanel
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
     //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    LayoutBlockRouteTableModel dataModel;
-    LayoutBlockNeighbourTableModel neighbourDataModel;
-    TableRowSorter<LayoutBlockNeighbourTableModel> neighbourSorter;
-    JTable neighbourDataTable;
-    JScrollPane neighbourDataScroll;
-    TableRowSorter<LayoutBlockRouteTableModel> sorter;
-    JTable dataTable;
-    JScrollPane dataScroll;
+    private LayoutBlockRouteTableModel dataModel;
+    private LayoutBlockNeighbourTableModel neighbourDataModel;
+    private TableRowSorter<LayoutBlockNeighbourTableModel> neighbourSorter;
+    private JTable neighbourDataTable;
+    private JScrollPane neighbourDataScroll;
+    private TableRowSorter<LayoutBlockRouteTableModel> sorter;
+    private JTable dataTable;
+    private JScrollPane dataScroll;
 
-    LayoutBlockThroughPathsTableModel throughPathsDataModel;
-    TableRowSorter<LayoutBlockThroughPathsTableModel> throughPathsSorter;
-    JTable throughPathsDataTable;
-    JScrollPane throughPathsDataScroll;
+    private LayoutBlockThroughPathsTableModel throughPathsDataModel;
+    private TableRowSorter<LayoutBlockThroughPathsTableModel> throughPathsSorter;
+    private JTable throughPathsDataTable;
+    private JScrollPane throughPathsDataScroll;
 
     public LayoutBlockRouteTable(boolean editable, LayoutBlock block) {
         super();

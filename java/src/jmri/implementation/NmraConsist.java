@@ -39,13 +39,13 @@ public class NmraConsist extends DccConsist implements Consist {
         if (log.isDebugEnabled()) {
             log.debug("Add Locomotive {} to advanced consist {} With Direction Normal {}.",
                     LocoAddress.toString(),
-                    ConsistAddress.toString(),
+                    consistAddress.toString(),
                     directionNormal);
         }
         // create the message and fill it,
         byte[] contents = jmri.NmraPacket.consistControl(LocoAddress.getNumber(),
                 LocoAddress.isLongAddress(),
-                ConsistAddress.getNumber(),
+                consistAddress.getNumber(),
                 directionNormal);
         InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(contents, 4);
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
@@ -61,7 +61,7 @@ public class NmraConsist extends DccConsist implements Consist {
         if (log.isDebugEnabled()) {
             log.debug("Remove Locomotive {} from advanced consist {}.",
                     LocoAddress.toString(),
-                    ConsistAddress.toString());
+                    consistAddress.toString());
         }
         // create the message and fill it,
         byte[] contents = jmri.NmraPacket.consistControl(LocoAddress.getNumber(),
@@ -71,5 +71,5 @@ public class NmraConsist extends DccConsist implements Consist {
         InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(contents, 4);
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
     }
-    private final static Logger log = LoggerFactory.getLogger(NmraConsist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NmraConsist.class);
 }

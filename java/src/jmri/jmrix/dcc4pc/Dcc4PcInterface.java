@@ -5,7 +5,7 @@ package jmri.jmrix.dcc4pc;
  * interface device.
  *
  * @author Kevin Dickerson Copyright 2012
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
 public interface Dcc4PcInterface {

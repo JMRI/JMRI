@@ -1,16 +1,10 @@
 package jmri.jmrit.picker;
 
-import jmri.*;
-
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.*;
 
 /**
  * Container with a single PickList table
@@ -43,8 +37,10 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
                 int row = getTable().getSelectedRow();
                 int col = getTable().getSelectedColumn(); // might be -1 if just inserted
                 if (col != 1) return;
-                String username = (String) _model.getTable().getValueAt(row, 1);
-                if (username != null) return;
+                if (row >= 0) {
+                    String username = (String) _model.getTable().getValueAt(row, 1);
+                    if (username != null) return;
+                }
                 // have to set selection to col 0
                 _model.getTable().setColumnSelectionInterval(0,0);
             }
@@ -131,5 +127,5 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PickSinglePanel.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PickSinglePanel.class);
 }

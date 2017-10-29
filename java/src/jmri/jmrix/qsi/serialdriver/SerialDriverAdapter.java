@@ -1,16 +1,19 @@
 package jmri.jmrix.qsi.serialdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import jmri.jmrix.qsi.QsiPortController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QsiTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the QSI system.
@@ -48,17 +51,13 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
             // try to set it for comunication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
@@ -85,9 +84,9 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -181,6 +180,6 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     }
     SerialDriverAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

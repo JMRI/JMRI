@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * At least one of Short Address and Long Address must be present!
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2012
  */
 public class DccAddressPanel extends JPanel {
 
@@ -264,6 +264,6 @@ public class DccAddressPanel extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DccAddressPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccAddressPanel.class);
 
 }

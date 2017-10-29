@@ -6,7 +6,7 @@ import jmri.implementation.AbstractVariableLight;
 /**
  * Implement a light manager for "Internal" (virtual) lights.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class InternalLightManager extends jmri.managers.AbstractLightManager {
 
@@ -44,8 +44,8 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
     }
 
     @Override
@@ -56,6 +56,15 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
 }

@@ -12,7 +12,11 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.loconet.locormi.configurexml.PackageTest.class,
    LnMessageBufferTest.class,
    LnMessageClientTest.class,
-   LnMessageServerActionTest.class
+   LnMessageServerActionTest.class,
+   LnMessageClientActionTest.class,
+   LnMessageClientPollThreadTest.class,
+   LnMessageServerTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.loconet.locormi package.
@@ -34,6 +38,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

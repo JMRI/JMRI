@@ -4,7 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2010
+ * @author Bob Jacobsen Copyright (C) 2007, 2010
  */
 @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants
 public interface SdfConstants {
@@ -20,9 +20,9 @@ public interface SdfConstants {
 
 // TRIGGER values
 // sound TRIGGER PREMPT control bits
-// SPECIAL trigs:	POL,0,0,0-0,s,s,s 	0-7 are special trigs
-// FN trigger format:	POL,0,0,B-B,b,b,b   	BB 1 of 3 bytes 01,10,11 (24 fns), bbb is bit adr#
-    final static int NORMAL = 0;	  // (complete .WAV frag/preempt higher/trigger true)
+// SPECIAL trigs: POL,0,0,0-0,s,s,s  0-7 are special trigs
+// FN trigger format: POL,0,0,B-B,b,b,b    BB 1 of 3 bytes 01,10,11 (24 fns), bbb is bit adr#
+    final static int NORMAL = 0;   // (complete .WAV frag/preempt higher/trigger true)
 
     final static int ZAP = 0x01; // value for ZAP on PREMPT
     final static int RUN_WHILE_TRIG = 0x02; // mask/binary values
@@ -363,7 +363,7 @@ public interface SdfConstants {
 
 //=====================================================================
 // load MODIFY COMMAND arg/VALUES- allows USER maximal configurability/customization in SDF files
-// 4byte CMD 	1110-mmmm, ARG1,ARG2,ARG3
+// 4byte CMD  1110-mmmm, ARG1,ARG2,ARG3
 //---------------------
 // modifier control REG command types
 // mmmm target embedded in LOAD MODIFY CMD to direct what following 3 ARG bytes will be loaded TO
@@ -394,8 +394,8 @@ public interface SdfConstants {
     final static int FMATH_OR = 0x40; // use to SET  bit(S), MATH FLAG SET shows whole WORK is 1's
     final static int FMATH_XOR = 0x60; // use to flip bit(s), MATH FLAG SET if all flipped bits are now 0 
 
-//;FMATH_ADD	EQU	0x80	;add signed value  (commented out in original Digitrax file)
-    final static int FMATH_INTEGRATE = 0xA0; // add signed value to WORK,MATH_FLAG SET if over/underflo,or clamp LIMIT 		
+//;FMATH_ADD EQU 0x80 ;add signed value  (commented out in original Digitrax file)
+    final static int FMATH_INTEGRATE = 0xA0; // add signed value to WORK,MATH_FLAG SET if over/underflo,or clamp LIMIT   
     final static int FMATH_TEST_ZERO = 0xC0; // see if WORK under MASK is ZERO, if ZERO set MATH bit
 
 // -----1111----------------
@@ -414,7 +414,7 @@ public interface SdfConstants {
 // TYPE 8 GAIN
     final static int IMMED_GAIN_MODIFY = 0x80; // set new GAIN to [CV# 6 bit offset in ARG1] *CV58 , CV120 base
     final static int ANALOG_GAIN_MODIFY = 0xA0; // modify INIT GAIN by analog chnl in 5 ls bits
-    // AUX1=		AUX2=dither coding
+    // AUX1=  AUX2=dither coding
 
     final static int FCMD_NONE = 0x00; // NO PITCH MODIFY task RUN
     final static int FCMD_MASK = 0xE0; // 3 ms bits 1st CMD decode
@@ -422,7 +422,7 @@ public interface SdfConstants {
 // type 8 PITCH
     final static int CV_PITCH_MODIFY = 0x80; // set new PITCH to [CV# 6 bit offset in ARG1] , CV120 base
     final static int ANALOG_PITCH_MODIFY = 0xA0; // modify INIT PITCH by analog chnl in 5 ls bits
-    // AUX1=		AUX2=dither coding
+    // AUX1=  AUX2=dither coding
 
 //==================
 // 32 predefined user visible WORK/STATE regs, use these defined values
@@ -572,7 +572,7 @@ public interface SdfConstants {
 
 // ----3333--------------
 // 3RD modify ARG
-//;MPUSH		EQU	0x80		;this bit forces LEVEL OVERIDE
+//;MPUSH  EQU 0x80  ;this bit forces LEVEL OVERIDE
     final static int DITHER = 0x80; // value to change to DITHER mode
     final static int SUMG = 0x40;
 
@@ -581,7 +581,7 @@ public interface SdfConstants {
     final static int MID_DITH = 0x40;
     final static int MAX_DITH = 0x60;
 
-// ;MPUSH_BIT	EQU	7  (commendted out in the original Digitrax file)
+// ;MPUSH_BIT EQU 7  (commendted out in the original Digitrax file)
     final static int DITHER_BIT = 7;
     final static int SUM_BIT = 6; // 1=add ARG1/2 variation,0=multiply
     final static int MG1_BIT = 5; // these code meaning of LO nibble
@@ -730,10 +730,10 @@ public interface SdfConstants {
 // =======end of FIXED DATA assignments==============
 // =================
 // USER choices
-// SCAT_AIRCOMP_RATE	EQU	25		;AIR compressor about 2 mins, above 128 is SNDCV foR RATE ARG
-// SCAT_DRIER_RATE		EQU	10		;about 10 secs for DRIER
-// SCAT_WATERPUMP_RATE	EQU	100
-// SCAT_COAL_RATE		EQU	120
+// SCAT_AIRCOMP_RATE EQU 25  ;AIR compressor about 2 mins, above 128 is SNDCV foR RATE ARG
+// SCAT_DRIER_RATE  EQU 10  ;about 10 secs for DRIER
+// SCAT_WATERPUMP_RATE EQU 100
+// SCAT_COAL_RATE  EQU 120
 // specific DFLT values to scale MAX ranges
     final static int MAXG_WHISTLE = 0x6A;
     final static int MAXP_WHISTLE = 0x07;

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * specific panel details for class Must have exactly one constructor like the
  * one shown below
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  */
 public class TurnoutOperationConfig extends JPanel {
 
@@ -37,8 +37,8 @@ public class TurnoutOperationConfig extends JPanel {
      * If anything goes wrong (no such class, wrong constructors, instantiation
      * error, ....) just return null
      *
-     * @param op	operation for which configurator is required
-     * @return	the configurator
+     * @param op operation for which configurator is required
+     * @return the configurator
      */
     static public TurnoutOperationConfig getConfigPanel(TurnoutOperation op) {
         TurnoutOperationConfig config = null;
@@ -62,5 +62,5 @@ public class TurnoutOperationConfig extends JPanel {
         }
         return config;
     }
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationConfig.class);
 }

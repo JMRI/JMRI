@@ -1,9 +1,10 @@
-/* ProgrammerScaffold.java */
 package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 
 /**
  * Scaffold implementation of Programmer interface for testing.
@@ -96,6 +97,10 @@ public class ProgrammerScaffold implements Programmer {
     public boolean getCanWrite(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }
+
+    @Override
+    @Nonnull
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener p) {

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * is somewhat different here. The LocoNet version waited for the sent (LocoNet)
  * packet to be echo'd, while this starts the timeout immediately.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
@@ -43,7 +43,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     JToggleButton mRunButton = new JToggleButton("Go");
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         setTitle("Send DCC Packet");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -251,6 +251,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     // private data
     private CommandStation cs = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class);
 
 }

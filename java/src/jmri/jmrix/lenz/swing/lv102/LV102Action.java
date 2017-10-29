@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * The {@link LV102Frame} is a configuration tool for the LV102 booster, and the
  * booster portion of an LZV100 command station.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
   */
 public class LV102Action extends AbstractAction {
 
@@ -19,13 +19,13 @@ public class LV102Action extends AbstractAction {
 
     public LV102Action() {
 
-        this(Bundle.getMessage("LV102Config"));
+        this(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create an LV102Frame
-        LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
+        LV102Frame f = new LV102Frame(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
         f.setVisible(true);
     }
 }

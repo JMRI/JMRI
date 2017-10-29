@@ -3,9 +3,9 @@ package jmri.jmrix.can.cbus.swing;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
- * Provide access to Swing components for the LocoNet subsystem.
+ * Provide access to Swing components for the Cbus subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * 
  * @since 2.99.2
  */
@@ -27,7 +27,5 @@ public class CbusComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new CbusMenu(memo);
     }
+
 }
-
-
-

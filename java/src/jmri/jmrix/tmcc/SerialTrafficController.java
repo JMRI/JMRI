@@ -49,7 +49,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for TMCC serial");
+        log.warn("enterProgMode doesn't make sense for TMCC serial");
         return null;
     }
 
@@ -102,7 +102,8 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public SerialTrafficController instance() {
@@ -116,7 +117,8 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static volatile protected SerialTrafficController self = null;
@@ -146,7 +148,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         char1 = readByteProtected(istream);
         msg.setElement(0, char1 & 0xFE);
         if ((char1 & 0xFF) != 0xFE) {
-            log.warn("return short message as 1st byte is " + (char1 & 0xFF));
+            log.warn("return short message as 1st byte is {}", char1 & 0xFF);
             return;
         }
 
@@ -197,14 +199,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Actually transmits the next message to the port
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used in debug log, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [" + m + "]");
-        }
+        log.debug("forwardToPort message: [{}]", m);
         // remember who sent this
         mLastSender = reply;
 
@@ -232,11 +229,11 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    String f = "write message: ";
+                    StringBuilder f = new StringBuilder("");
                     for (int i = 0; i < msg.length; i++) {
-                        f = f + Integer.toHexString(0xFF & msg[i]) + " ";
+                        f.append(Integer.toHexString(0xFF & msg[i])).append(" ");
                     }
-                    log.debug(f);
+                    log.debug("write message: {}", f);
                 }
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
@@ -253,9 +250,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                         }
                         break;
                     } else if (m.getRetries() >= 0) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Retry message: " + m.toString() + " attempts remaining: " + m.getRetries());
-                        }
+                        log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
                             synchronized (xmtRunnable) {
@@ -265,17 +260,17 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                             log.error("retry wait interupted");
                         }
                     } else {
-                        log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
+                        log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));
                     }
                 }
             } else {
                 // no stream connected
                 log.warn("sendMessage: no connection established");
             }
-        } catch (Exception e) {
-            log.warn("sendMessage: Exception: " + e.toString());
+        } catch (java.io.IOException | RuntimeException e) {
+            log.warn("sendMessage: Exception:", e);
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
 }

@@ -1,10 +1,8 @@
 /**
- * PacketGenAction.java
- *
- * Description:	Swing action to create and register a XpressNet PacketGenFrame
+ * Swing action to create and register a XpressNet PacketGenFrame
  * object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
   */
 package jmri.jmrix.lenz.swing.packetgen;
 
@@ -20,7 +18,7 @@ public class PacketGenAction extends AbstractXPressNetAction {
     }
 
     public PacketGenAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("Generate XPressNet message", memo);
+        this(Bundle.getMessage("PacketGenFrameTitle"), memo);
     }
 
     @Override
@@ -37,6 +35,7 @@ public class PacketGenAction extends AbstractXPressNetAction {
         // connect to the TrafficController
         f.connect(_memo.getXNetTrafficController());
     }
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
-}
 
+    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
+
+}

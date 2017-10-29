@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Value to put in text field = ((value in CVs) * Factor) + Offset
  * </PRE> decoders.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2004, 2013
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2004, 2013
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -527,7 +527,7 @@ public class SplitVariableValue extends VariableValue
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable
      *
-     * @author	Bob Jacobsen   Copyright (C) 2001
+     * @author Bob Jacobsen   Copyright (C) 2001
      * 
      */
     public class VarTextField extends JTextField {
@@ -603,6 +603,6 @@ public class SplitVariableValue extends VariableValue
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SplitVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SplitVariableValue.class);
 
 }

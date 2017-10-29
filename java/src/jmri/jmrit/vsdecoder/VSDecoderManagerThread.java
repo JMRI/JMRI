@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 class VSDecoderManagerThread extends Thread {
@@ -38,6 +38,7 @@ class VSDecoderManagerThread extends Thread {
     public static VSDecoderManagerThread instance() {
         if (instance == null) {
             VSDecoderManagerThread temp = new VSDecoderManagerThread();
+            temp.setName("VSDecoderManagerThread");
             temp.start();
             instance = temp; // don't allow escape of VSDecoderManagerThread object until running
 

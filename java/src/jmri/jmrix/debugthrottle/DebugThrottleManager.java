@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of a ThrottleManager for debugging.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
 
@@ -82,6 +82,6 @@ public class DebugThrottleManager extends AbstractThrottleManager {
                 | DccThrottle.SpeedStepMode14);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class);
 
 }

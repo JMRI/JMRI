@@ -7,7 +7,7 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
 /**
  * Create a menu containing the JMRI OpenLCB-specific tools
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class OpenLcbMenu extends JMenu {
 
@@ -20,7 +20,7 @@ public class OpenLcbMenu extends JMenu {
         if (memo != null) {
             title = memo.getUserName();
         } else {
-            title = rb.getString("MenuItemCAN");
+            title = rb.getString("MenuItemCAN"); // would expect this to be MenuItemOpenLCB
         }
 
         setText(title);

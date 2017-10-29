@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of DccThrottle for debugging use.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class DebugThrottle extends AbstractThrottle {
 
@@ -128,6 +128,6 @@ public class DebugThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DebugThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugThrottle.class);
 
 }

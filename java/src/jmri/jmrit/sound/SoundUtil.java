@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * jmri.jmrix.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2006
  */
 public class SoundUtil {
 
@@ -108,5 +108,5 @@ public class SoundUtil {
         return abAudioData;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SoundUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SoundUtil.class);
 }

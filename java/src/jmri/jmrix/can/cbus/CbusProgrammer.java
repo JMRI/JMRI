@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener, AddressedProgrammer {
 
@@ -51,9 +51,9 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
     boolean programmerReadOperation = false;  // true reading, false if writing
-    int operationValue;	 // remember the value being read/written for confirmative reply
+    int operationValue;  // remember the value being read/written for confirmative reply
     int operationVariableNumber; // remember the variable number being read/written
 
     // programming interface
@@ -210,5 +210,5 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         temp.programmingOpReply(value, status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class);
 }

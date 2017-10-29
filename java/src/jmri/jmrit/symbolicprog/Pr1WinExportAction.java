@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Note that this format is somewhat different from the PR1DOS format, and it's
  * not clear they will interoperate.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class Pr1WinExportAction extends AbstractAction {
 
@@ -93,5 +93,5 @@ public class Pr1WinExportAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Pr1ExportAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Pr1ExportAction.class);
 }

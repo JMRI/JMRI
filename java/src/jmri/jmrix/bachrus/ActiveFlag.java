@@ -8,7 +8,7 @@ package jmri.jmrix.bachrus;
  * This is a very light-weight class, carrying only the flag, so as to limit the
  * number of unneeded class loadings.
  *
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Andrew Crosland Copyright (C) 2010
  * @deprecated since 4.5.1
  */
 @Deprecated

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a EasyDccPacketGenFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccPacketGenAction extends AbstractAction {
 
@@ -30,5 +30,5 @@ public class EasyDccPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(EasyDccPacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccPacketGenAction.class);
 }

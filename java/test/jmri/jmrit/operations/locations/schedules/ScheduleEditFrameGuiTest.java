@@ -4,13 +4,15 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +28,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
     @Test
     public void testScheduleEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l2 = lManager.newLocation("Test Loc C");
         l2.setLength(1003);
 
@@ -41,7 +43,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.addScheduleButton);
 
         // was the schedule created?
-        ScheduleManager m = ScheduleManager.instance();
+        ScheduleManager m = InstanceManager.getDefault(ScheduleManager.class);
         Schedule s = m.getScheduleByName("Test Schedule A");
         Assert.assertNotNull("Test Schedule A exists", s);
 
@@ -72,24 +74,24 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
         enterClickAndLeave(f.deleteScheduleButton);
         // Yes to pop up
-        pressDialogButton(f,Bundle.getMessage("DeleteSchedule?"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("DeleteSchedule?"), Bundle.getMessage("ButtonYes"));
         s = m.getScheduleByName("Test Schedule A");
         Assert.assertNull("Test Schedule A exists", s);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testScheduleComboBoxes() {
-        LocationManager lm = LocationManager.instance();
+        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
         Location l = lm.newLocation("new test location");
         Track t = l.addTrack("track 1", Track.SPUR);
 
-        ScheduleManager sm = ScheduleManager.instance();
+        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
 
         // clear out any previous schedules
         sm.dispose();
-        sm = ScheduleManager.instance();
+        sm = InstanceManager.getDefault(ScheduleManager.class);
 
         Schedule s1 = sm.newSchedule("new schedule");
         Schedule s2 = sm.newSchedule("newer schedule");
@@ -141,7 +143,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");

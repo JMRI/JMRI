@@ -10,6 +10,7 @@ import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,15 +18,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class ProgrammerConfigManager extends AbstractPreferencesManager {
 
     private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);
     public final static String DEFAULT_FILE = "defaultFile";
     public final static String SHOW_EMPTY_PANES = "showEmptyPanes";
     public final static String SHOW_CV_NUMBERS = "showCvNumbers";
+    public final static String CAN_CACHE_DEFAULT = "canCacheDefault";
+    public final static String DO_CONFIRM_READ = "doConfirmRead";
     private String defaultFile = null;
     private boolean showEmptyPanes = true;
     private boolean showCvNumbers = false;
+    private boolean canCacheDefault = false;
+    private boolean doConfirmRead = false;
 
     @Override
     public void initialize(Profile profile) throws InitializationException {
@@ -35,10 +41,19 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
                 this.setDefaultFile(preferences.get(DEFAULT_FILE, this.getDefaultFile()));
                 ProgDefault.setDefaultProgFile(this.getDefaultFile());
             }
+            
             this.setShowEmptyPanes(preferences.getBoolean(SHOW_EMPTY_PANES, this.isShowEmptyPanes()));
             PaneProgFrame.setShowEmptyPanes(this.isShowEmptyPanes());
+            
             this.setShowCvNumbers(preferences.getBoolean(SHOW_CV_NUMBERS, this.isShowCvNumbers()));
             PaneProgFrame.setShowCvNumbers(this.isShowCvNumbers());
+            
+            this.setCanCacheDefault(preferences.getBoolean(CAN_CACHE_DEFAULT, this.isCanCacheDefault()));
+            PaneProgFrame.setCanCacheDefault(this.isCanCacheDefault());
+            
+            this.setDoConfirmRead(preferences.getBoolean(DO_CONFIRM_READ, this.isDoConfirmRead()));
+            PaneProgFrame.setDoConfirmRead(this.isDoConfirmRead());
+            
             this.setInitialized(profile, true);
         }
     }
@@ -69,6 +84,8 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
         }
         preferences.putBoolean(SHOW_EMPTY_PANES, this.showEmptyPanes);
         preferences.putBoolean(SHOW_CV_NUMBERS, this.showCvNumbers);
+        preferences.putBoolean(CAN_CACHE_DEFAULT, this.canCacheDefault);
+        preferences.putBoolean(DO_CONFIRM_READ, this.doConfirmRead);
         try {
             preferences.sync();
         } catch (BackingStoreException ex) {
@@ -122,6 +139,38 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
         boolean oldShowCvNumbers = this.showCvNumbers;
         this.showCvNumbers = showCvNumbers;
         firePropertyChange(SHOW_CV_NUMBERS, oldShowCvNumbers, showCvNumbers);
+    }
+
+    /**
+     * @return the canCacheDefault
+     */
+    public boolean isCanCacheDefault() {
+        return canCacheDefault;
+    }
+
+    /**
+     * @param canCacheDefault new value
+     */
+    public void setCanCacheDefault(boolean canCacheDefault) {
+        boolean oldCanCacheDefault = this.canCacheDefault;
+        this.canCacheDefault = canCacheDefault;
+        firePropertyChange(CAN_CACHE_DEFAULT, oldCanCacheDefault, canCacheDefault);
+    }
+
+    /**
+     * @return the doConfirmRead
+     */
+    public boolean isDoConfirmRead() {
+        return doConfirmRead;
+    }
+
+    /**
+     * @param doConfirmRead new value
+     */
+    public void setDoConfirmRead(boolean doConfirmRead) {
+        boolean oldDoConfirmRead = this.doConfirmRead;
+        this.doConfirmRead = doConfirmRead;
+        firePropertyChange(DO_CONFIRM_READ, oldDoConfirmRead, doConfirmRead);
     }
 
 }

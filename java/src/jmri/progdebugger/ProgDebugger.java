@@ -5,8 +5,10 @@ import java.beans.PropertyChangeSupport;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
@@ -26,13 +28,13 @@ import org.slf4j.LoggerFactory;
 public class ProgDebugger implements AddressedProgrammer {
 
     public ProgDebugger() {
-        mode = DefaultProgrammerManager.PAGEMODE;
+        mode = ProgrammingMode.PAGEMODE;
     }
 
     public ProgDebugger(boolean pLongAddress, int pAddress) {
         longAddr = pLongAddress;
         address = pAddress;
-        mode = DefaultProgrammerManager.OPSBITMODE;
+        mode = ProgrammingMode.OPSBITMODE;
     }
 
     // write CV is recorded for later use
@@ -229,8 +231,6 @@ public class ProgDebugger implements AddressedProgrammer {
 
             @Override
             public void run() {
-                // log.debug("read CV reply - start sleep");
-                // try { Thread.sleep(100); } catch (Exception e) {}
                 log.debug("read CV reply");
                 l.programmingOpReply(retval, 0);
             }  // 0 is OK status
@@ -265,18 +265,18 @@ public class ProgDebugger implements AddressedProgrammer {
             // addressed programmer
             return Arrays.asList(
                     new ProgrammingMode[]{
-                        DefaultProgrammerManager.OPSBITMODE,
-                        DefaultProgrammerManager.OPSBYTEMODE
+                        ProgrammingMode.OPSBITMODE,
+                        ProgrammingMode.OPSBYTEMODE
                     }
             );
         } else {
             // global programmer
             return Arrays.asList(
                     new ProgrammingMode[]{
-                        DefaultProgrammerManager.PAGEMODE,
-                        DefaultProgrammerManager.DIRECTBITMODE,
-                        DefaultProgrammerManager.DIRECTBYTEMODE,
-                        DefaultProgrammerManager.DIRECTMODE
+                        ProgrammingMode.PAGEMODE,
+                        ProgrammingMode.DIRECTBITMODE,
+                        ProgrammingMode.DIRECTBYTEMODE,
+                        ProgrammingMode.DIRECTMODE
                     }
             );
         }
@@ -319,6 +319,16 @@ public class ProgDebugger implements AddressedProgrammer {
         log.debug("getCanWrite(" + addr + ") returns " + (Integer.parseInt(addr) <= writeLimit));
         return Integer.parseInt(addr) <= writeLimit;
     }
+
+    /**
+     * By default, say that no verification is done.
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return Always WriteConfirmMode.NotVerified
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
 
     /**
      * Provide a {@link java.beans.PropertyChangeSupport} helper.
@@ -397,5 +407,5 @@ public class ProgDebugger implements AddressedProgrammer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class);
 }

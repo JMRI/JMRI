@@ -5,7 +5,7 @@ import javax.swing.BoxLayout;
 /**
  * Frame for adding to the log file.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class LogFrame extends jmri.util.JmriJFrame {
 
@@ -14,7 +14,7 @@ public class LogFrame extends jmri.util.JmriJFrame {
     }
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         setTitle("Make Log Entry");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

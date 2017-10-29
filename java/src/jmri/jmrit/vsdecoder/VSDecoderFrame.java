@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.BorderLayout;
@@ -94,5 +94,5 @@ class VSDecoderFrame extends JmriJFrame {
         return menuList;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDecoderFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderFrame.class);
 }

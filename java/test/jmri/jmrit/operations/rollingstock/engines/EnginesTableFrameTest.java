@@ -3,17 +3,18 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ import org.junit.Test;
  * Tests for the Operations EnginesTableFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2010
- * 
+ *
  */
 public class EnginesTableFrameTest extends OperationsSwingTestCase {
 
@@ -34,7 +35,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         EnginesTableFrame etf = new EnginesTableFrame();
         Assert.assertEquals("number of Engines 1", "5", etf.numEngines.getText());
 
-        EngineManager eManager = EngineManager.instance();
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         // 5 Engines to check
         Engine e1 = eManager.getByRoadAndNumber("NH", "1");
         Engine e2 = eManager.getByRoadAndNumber("UP", "2");
@@ -43,7 +44,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Engine e5 = eManager.getByRoadAndNumber("NH", "5");
 
         // default is sort by number
-        List<RollingStock> Engines = etf.enginesModel.getSelectedEngineList();
+        List<Engine> Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by number list", e1.getId(), Engines.get(0).getId());
         Assert.assertEquals("2nd Engine in sort by number list", e4.getId(), Engines.get(1).getId());
         Assert.assertEquals("3rd Engine in sort by number list", e2.getId(), Engines.get(2).getId());
@@ -125,7 +126,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         //TODO add trains
 
         enterClickAndLeave(etf.sortByConsist);
-		//TODO add consists
+        //TODO add consists
 
         // test sort by model
         enterClickAndLeave(etf.sortByModel);
@@ -147,7 +148,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         // create the EngineEditFrame
         enterClickAndLeave(etf.addButton);
 
-        etf.dispose();
+        JUnitUtil.dispose(etf);
     }
 
     // Ensure minimal setup for log4J
@@ -162,17 +163,17 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
     private void loadEngines() {
 
         // add Owner1 and Owner2
-        CarOwners co = CarOwners.instance();
+        CarOwners co = InstanceManager.getDefault(CarOwners.class);
         co.addName("Owner1");
         co.addName("Owner2");
         // add road names
-        CarRoads cr = CarRoads.instance();
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.addName("NH");
         cr.addName("UP");
         cr.addName("AA");
         cr.addName("SP");
         // add locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location westford = lManager.newLocation("Westford");
         Track westfordYard = westford.addTrack("Yard", Track.YARD);
         westfordYard.setLength(300);
@@ -188,7 +189,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Track boxfordHood = boxford.addTrack("Hood", Track.SPUR);
         boxfordHood.setLength(300);
 
-        EngineManager eManager = EngineManager.instance();
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         // add 5 Engines to table
         Engine e1 = eManager.newEngine("NH", "1");
         e1.setModel("RS1");

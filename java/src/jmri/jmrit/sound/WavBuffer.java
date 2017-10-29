@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Wrap a byte array to provide WAV file functionality
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class WavBuffer {
 
@@ -162,5 +162,5 @@ public class WavBuffer {
         return Arrays.copyOf(buffer, buffer.length);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WavBuffer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WavBuffer.class);
 }

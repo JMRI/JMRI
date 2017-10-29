@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import jmri.IdTag;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -38,9 +39,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     
     private static final boolean IS_SAVE = true;
 
-    CarManager carManager = CarManager.instance();
-    CarManagerXml managerXml = CarManagerXml.instance();
-    LocationManager locationManager = LocationManager.instance();
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    CarManagerXml managerXml = InstanceManager.getDefault(CarManagerXml.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     Car _car;
 
@@ -82,14 +83,14 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     JTextField valueTextField = new JTextField(8);
 
     // combo boxes
-    JComboBox<String> roadComboBox = CarRoads.instance().getComboBox();
-    JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
-    JComboBox<String> colorComboBox = CarColors.instance().getComboBox();
-    JComboBox<String> lengthComboBox = CarLengths.instance().getComboBox();
-    JComboBox<String> ownerComboBox = CarOwners.instance().getComboBox();
+    JComboBox<String> roadComboBox = InstanceManager.getDefault(CarRoads.class).getComboBox();
+    JComboBox<String> typeComboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
+    JComboBox<String> colorComboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
+    JComboBox<String> lengthComboBox = InstanceManager.getDefault(CarLengths.class).getComboBox();
+    JComboBox<String> ownerComboBox = InstanceManager.getDefault(CarOwners.class).getComboBox();
     JComboBox<Location> locationBox = locationManager.getComboBox();
     JComboBox<Track> trackLocationBox = new JComboBox<>();
-    JComboBox<String> loadComboBox = CarLoads.instance().getComboBox(null);
+    JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
     JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
     JComboBox<IdTag> rfidComboBox = new JComboBox<IdTag>();
 
@@ -294,7 +295,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
-            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList().forEach((tag) -> rfidComboBox.addItem((jmri.IdTag) tag));
+            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList().forEach((tag) -> rfidComboBox.addItem(tag));
             rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank entry, for no ID tag, and make it the default.
             rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
@@ -355,12 +356,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true); // NOI18N
 
         // get notified if combo box gets modified
-        CarRoads.instance().addPropertyChangeListener(this);
-        CarLoads.instance().addPropertyChangeListener(this);
-        CarTypes.instance().addPropertyChangeListener(this);
-        CarLengths.instance().addPropertyChangeListener(this);
-        CarColors.instance().addPropertyChangeListener(this);
-        CarOwners.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarLengths.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         locationManager.addPropertyChangeListener(this);
         carManager.addPropertyChangeListener(this);
 
@@ -374,36 +375,36 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         deleteButton.setEnabled(true);
         saveButton.setEnabled(true);
 
-        if (!CarRoads.instance().containsName(car.getRoadName())) {
+        if (!InstanceManager.getDefault(CarRoads.class).containsName(car.getRoadName())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("roadNameNotExist"),
                     new Object[]{car.getRoadName()}), Bundle.getMessage("rsAddRoad"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                CarRoads.instance().addName(car.getRoadName());
+                InstanceManager.getDefault(CarRoads.class).addName(car.getRoadName());
             }
         }
         roadComboBox.setSelectedItem(car.getRoadName());
 
         roadNumberTextField.setText(car.getNumber());
 
-        if (!CarTypes.instance().containsName(car.getTypeName())) {
+        if (!InstanceManager.getDefault(CarTypes.class).containsName(car.getTypeName())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("typeNameNotExist"),
                     new Object[]{car.getTypeName()}), Bundle.getMessage("carAddType"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                CarTypes.instance().addName(car.getTypeName());
+                InstanceManager.getDefault(CarTypes.class).addName(car.getTypeName());
             }
         }
         typeComboBox.setSelectedItem(car.getTypeName());
 
-        if (!CarLengths.instance().containsName(car.getLength())) {
+        if (!InstanceManager.getDefault(CarLengths.class).containsName(car.getLength())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("lengthNameNotExist"),
                     new Object[]{car.getLength()}), Bundle.getMessage("carAddLength"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                CarLengths.instance().addName(car.getLength());
+                InstanceManager.getDefault(CarLengths.class).addName(car.getLength());
             }
         }
         lengthComboBox.setSelectedItem(car.getLength());
 
-        if (!CarColors.instance().containsName(car.getColor())) {
+        if (!InstanceManager.getDefault(CarColors.class).containsName(car.getColor())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("colorNameNotExist"),
                     new Object[]{car.getColor()}), Bundle.getMessage("carAddColor"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                CarColors.instance().addName(car.getColor());
+                InstanceManager.getDefault(CarColors.class).addName(car.getColor());
             }
         }
         colorComboBox.setSelectedItem(car.getColor());
@@ -422,23 +423,23 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
         builtTextField.setText(car.getBuilt());
 
-        if (!CarOwners.instance().containsName(car.getOwner())) {
+        if (!InstanceManager.getDefault(CarOwners.class).containsName(car.getOwner())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("ownerNameNotExist"),
                     new Object[]{car.getOwner()}), Bundle.getMessage("addOwner"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                CarOwners.instance().addName(car.getOwner());
+                InstanceManager.getDefault(CarOwners.class).addName(car.getOwner());
             }
         }
         ownerComboBox.setSelectedItem(car.getOwner());
 
-        if (!CarLoads.instance().containsName(car.getTypeName(), car.getLoadName())) {
+        if (!InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), car.getLoadName())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("loadNameNotExist"),
                     new Object[]{car.getLoadName()}), Bundle.getMessage("addLoad"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                CarLoads.instance().addName(car.getTypeName(), car.getLoadName());
+                InstanceManager.getDefault(CarLoads.class).addName(car.getTypeName(), car.getLoadName());
             }
         }
         // listen for changes in car load
         car.addPropertyChangeListener(this);
-        CarLoads.instance().updateComboBox(car.getTypeName(), loadComboBox);
+        InstanceManager.getDefault(CarLoads.class).updateComboBox(car.getTypeName(), loadComboBox);
         loadComboBox.setSelectedItem(car.getLoadName());
 
         kernelComboBox.setSelectedItem(car.getKernelName());
@@ -457,7 +458,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == typeComboBox && typeComboBox.getSelectedItem() != null) {
             log.debug("Type comboBox sees change, update car loads");
-            CarLoads.instance().updateComboBox((String) typeComboBox.getSelectedItem(), loadComboBox);
+            InstanceManager.getDefault(CarLoads.class).updateComboBox((String) typeComboBox.getSelectedItem(), loadComboBox);
             // turn off auto for location tracks
             autoTrackCheckBox.setSelected(false);
             autoTrackCheckBox.setEnabled(false);
@@ -803,7 +804,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                             new Object[]{_car.getKernelName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         // go through the entire list and change the loads for all cars
                         for (Car car : cars) {
-                            if (CarLoads.instance().containsName(car.getTypeName(), _car.getLoadName())) {
+                            if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), _car.getLoadName())) {
                                 car.setLoadName(_car.getLoadName());
                             }
                         }
@@ -927,12 +928,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     }
 
     private void removePropertyChangeListeners() {
-        CarRoads.instance().removePropertyChangeListener(this);
-        CarLoads.instance().removePropertyChangeListener(this);
-        CarTypes.instance().removePropertyChangeListener(this);
-        CarLengths.instance().removePropertyChangeListener(this);
-        CarColors.instance().removePropertyChangeListener(this);
-        CarOwners.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         locationManager.removePropertyChangeListener(this);
         carManager.removePropertyChangeListener(this);
         if (_car != null) {
@@ -947,25 +948,25 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                     .getNewValue());
         }
         if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
-            CarRoads.instance().updateComboBox(roadComboBox);
+            InstanceManager.getDefault(CarRoads.class).updateComboBox(roadComboBox);
             if (_car != null) {
                 roadComboBox.setSelectedItem(_car.getRoadName());
             }
         }
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
-            CarTypes.instance().updateComboBox(typeComboBox);
+            InstanceManager.getDefault(CarTypes.class).updateComboBox(typeComboBox);
             if (_car != null) {
                 typeComboBox.setSelectedItem(_car.getTypeName());
             }
         }
         if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)) {
-            CarColors.instance().updateComboBox(colorComboBox);
+            InstanceManager.getDefault(CarColors.class).updateComboBox(colorComboBox);
             if (_car != null) {
                 colorComboBox.setSelectedItem(_car.getColor());
             }
         }
         if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY)) {
-            CarLengths.instance().updateComboBox(lengthComboBox);
+            InstanceManager.getDefault(CarLengths.class).updateComboBox(lengthComboBox);
             if (_car != null) {
                 lengthComboBox.setSelectedItem(_car.getLength());
             }
@@ -978,14 +979,14 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             }
         }
         if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)) {
-            CarOwners.instance().updateComboBox(ownerComboBox);
+            InstanceManager.getDefault(CarOwners.class).updateComboBox(ownerComboBox);
             if (_car != null) {
                 ownerComboBox.setSelectedItem(_car.getOwner());
             }
         }
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(RollingStock.TRACK_CHANGED_PROPERTY)) {
-            LocationManager.instance().updateComboBox(locationBox);
+            InstanceManager.getDefault(LocationManager.class).updateComboBox(locationBox);
             updateTrackLocationBox();
             if (_car != null && _car.getLocation() != null) {
                 locationBox.setSelectedItem(_car.getLocation());
@@ -998,7 +999,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
         if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)) {
             if (_car != null) {
-                CarLoads.instance().updateComboBox((String) typeComboBox.getSelectedItem(), loadComboBox);
+                InstanceManager.getDefault(CarLoads.class).updateComboBox((String) typeComboBox.getSelectedItem(), loadComboBox);
                 loadComboBox.setSelectedItem(_car.getLoadName());
             }
         }
@@ -1007,5 +1008,5 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class);
 }

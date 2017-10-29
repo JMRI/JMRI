@@ -6,7 +6,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 /**
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2010
+ * @author Bob Jacobsen Copyright 2003, 2010
  */
 public class LocoNetMenu extends JMenu {
 
@@ -35,20 +35,20 @@ public class LocoNetMenu extends JMenu {
         }
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.loconet.locormi.LnMessageServerAction(Bundle.getMessage("MenuItemStartLocoNetServer")));
-        add(new jmri.jmrix.loconet.loconetovertcp.ServerAction(Bundle.getMessage("MenuItemLocoNetOverTCPServer")));
+        add(new jmri.jmrix.loconet.loconetovertcp.LnTcpServerAction(Bundle.getMessage("MenuItemLocoNetOverTCPServer")));
     }
 
     Item[] panelItems = new Item[]{
         new Item("MenuItemLocoNetMonitor", "jmri.jmrix.loconet.locomon.LocoMonPane"), // NOI18N
         new Item("MenuItemSlotMonitor", "jmri.jmrix.loconet.slotmon.SlotMonPane"), // NOI18N
         new Item("MenuItemClockMon", "jmri.jmrix.loconet.clockmon.ClockMonPane"), // NOI18N
-        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.LocoStatsPanel"), // NOI18N
+        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.swing.LocoStatsPanel"), // NOI18N
         null,
         new Item("MenuItemBDL16Programmer", "jmri.jmrix.loconet.bdl16.BDL16Panel"), // NOI18N
         new Item("MenuItemLocoIOProgrammer", "jmri.jmrix.loconet.locoio.LocoIOPanel"), // NOI18N
         new Item("MenuItemPM4Programmer", "jmri.jmrix.loconet.pm4.PM4Panel"), // NOI18N
         new Item("MenuItemSE8cProgrammer", "jmri.jmrix.loconet.se8.SE8Panel"), // NOI18N
-        new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.DS64Panel"), // NOI18N
+        new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.Ds64TabbedPanel"), // NOI18N
         new Item("MenuItemCmdStnConfig", "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"), // NOI18N
         new Item("MenuItemSetID", "jmri.jmrix.loconet.locoid.LocoIdPanel"), // NOI18N
         new Item("MenuItemDuplex", "jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel"), // NOI18N
@@ -73,4 +73,5 @@ public class LocoNetMenu extends JMenu {
         String name;
         String load;
     }
+
 }

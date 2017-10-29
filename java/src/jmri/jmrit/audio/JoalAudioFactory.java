@@ -187,14 +187,14 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * Enum Values are retrieved by string names. The following names are
      * defined for multi-channel wave formats ...
      * <ul>
-     * <li>"AL_FORMAT_QUAD8"	: 4 Channel, 8 bit data
-     * <li>"AL_FORMAT_QUAD16"	: 4 Channel, 16 bit data
-     * <li>"AL_FORMAT_51CHN8"	: 5.1 Channel, 8 bit data
-     * <li>"AL_FORMAT_51CHN16"	: 5.1 Channel, 16 bit data
-     * <li>"AL_FORMAT_61CHN8"	: 6.1 Channel, 8 bit data
-     * <li>"AL_FORMAT_61CHN16"	: 6.1 Channel, 16 bit data
-     * <li>"AL_FORMAT_71CHN8"	: 7.1 Channel, 8 bit data
-     * <li>"AL_FORMAT_71CHN16"	: 7.1 Channel, 16 bit data
+     * <li>"AL_FORMAT_QUAD8"   : 4 Channel, 8 bit data
+     * <li>"AL_FORMAT_QUAD16"  : 4 Channel, 16 bit data
+     * <li>"AL_FORMAT_51CHN8"  : 5.1 Channel, 8 bit data
+     * <li>"AL_FORMAT_51CHN16" : 5.1 Channel, 16 bit data
+     * <li>"AL_FORMAT_61CHN8"  : 6.1 Channel, 8 bit data
+     * <li>"AL_FORMAT_61CHN16" : 6.1 Channel, 16 bit data
+     * <li>"AL_FORMAT_71CHN8"  : 7.1 Channel, 8 bit data
+     * <li>"AL_FORMAT_71CHN16" : 7.1 Channel, 16 bit data
      * </ul>
      *
      * @return true, if initialisation successful
@@ -365,7 +365,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JoalAudioSource: " + audioName);
                 }
                 // Cast to JoalAudioSource and cleanup
-                ((JoalAudioSource) audio).cleanUp();
+                ((JoalAudioSource) audio).cleanup();
             }
         }
 
@@ -378,7 +378,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JoalAudioBuffer: " + audioName);
                 }
                 // Cast to JoalAudioBuffer and cleanup
-                ((JoalAudioBuffer) audio).cleanUp();
+                ((JoalAudioBuffer) audio).cleanup();
             }
         }
 
@@ -391,7 +391,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JoalAudioListener: " + audioName);
                 }
                 // Cast to JoalAudioListener and cleanup
-                ((JoalAudioListener) audio).cleanUp();
+                ((JoalAudioListener) audio).cleanup();
             }
         }
 
@@ -557,6 +557,6 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JoalAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioFactory.class);
 
 }

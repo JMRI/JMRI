@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register the Add Entry Exit Pair.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class AddEntryExitPairAction extends AbstractAction {
 
@@ -25,10 +25,10 @@ public class AddEntryExitPairAction extends AbstractAction {
         try {
             f.initComponents(panel);
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: " + ex.toString());  // NOI18N
             ex.printStackTrace();
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairAction.class);
 }

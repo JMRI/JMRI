@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 /**
  * PackageTest.java
- *
+ * <p>
  * Description:	Tests for the jmrit.display.configurexml package
  *
  * @author	Bob Jacobsen Copyright 2009, 2014
@@ -20,6 +20,7 @@ import org.junit.runners.Suite;
     LayoutBlockManagerXmlTest.class,
     LayoutTurnoutXmlTest.class,
     LayoutTurntableXmlTest.class,
+    LevelXingXmlTest.class,
     LightIconXmlTest.class,
     MemoryComboIconXmlTest.class,
     MemoryIconXmlTest.class,

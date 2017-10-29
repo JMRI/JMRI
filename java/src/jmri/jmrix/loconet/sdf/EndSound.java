@@ -5,11 +5,13 @@ package jmri.jmrix.loconet.sdf;
  *
  * This carries no additional information.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class EndSound extends SdfMacro {
 
     public EndSound(int byte1, int byte2) {
+        this.byte1 = byte1;
+        this.byte2 = byte2;
     }
 
     int byte1, byte2;

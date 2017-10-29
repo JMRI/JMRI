@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for classes representing a LocoNet communications port
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @author	Mark Underwoodn Copyright (C) 2015
+ * @author Kevin Dickerson Copyright (C) 2011
+ * @author Mark Underwoodn Copyright (C) 2015
  *
  * Based o LnNetworkPortController by Kevin Dickerson
  */
@@ -34,35 +34,35 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     protected boolean mTurnoutExtraSpace = false;
 
     protected int[] commandStationTypes = {
-	DCCppConstants.DCCPP_UNO_1_0,
-	DCCppConstants.DCCPP_ARDUINO_1_1
+        DCCppConstants.DCCPP_UNO_1_0,
+        DCCppConstants.DCCPP_ARDUINO_1_1
     };
-
+    
     protected String[] commandStationNames;
-
+    
     {
         commandStationNames = new String[commandStationTypes.length];
         for (int i = 0; i < commandStationTypes.length; i++) {
             commandStationNames[i] = DCCppConstants.CommandStationNames[i];
         }
     }
-
+    
     // There are also "PR3 standalone programmer" and "Stand-alone LocoNet"
     // in pr3/PR3Adapter
     /**
      * Set config info from a name, which needs to be one of the valid ones.
      */
     public void setCommandStationType(String name) {
-	for (int i = 0; i < commandStationNames.length; i++) {
-	    if (commandStationNames[i].matches(name)) {
-		commandStationType = i;
+        for (int i = 0; i < commandStationNames.length; i++) {
+            if (commandStationNames[i].matches(name)) {
+                commandStationType = i;
                 return;
-	    }
-	}
-	log.error("CommandStation Type not found: {}", name);
-	commandStationType = 0;
+            }
+        }
+        log.error("CommandStation Type not found: {}", name);
+        commandStationType = 0;
     }
-
+    
     /**
      * Set config info from the command station type enum.
      */
@@ -70,7 +70,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
         log.debug("setCommandStationType: {}" + Integer.toString(value));
         commandStationType = value;
     }
-
+    
     @Override
     public DCCppSystemConnectionMemo getSystemConnectionMemo() {
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();

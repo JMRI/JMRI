@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Sensor system names are always upper case.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2009
+ * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
-public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
+public abstract class AbstractSensor extends AbstractNamedBean implements Sensor {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
@@ -33,9 +33,9 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //					       Object oldValue,
-    //					       Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //            Object oldValue,
+    //            Object newValue)
     // _once_ if anything has changed state
     @Override
     public int getKnownState() {
@@ -78,7 +78,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     @Override
-    public void useDefaultTimerSettings(boolean boo) {
+    public void setUseDefaultTimerSettings(boolean boo) {
         if (boo == useDefaultTimerSettings) {
             return;
         }
@@ -91,9 +91,22 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     @Override
-    public boolean useDefaultTimerSettings() {
+    public boolean getUseDefaultTimerSettings() {
         return useDefaultTimerSettings;
     }
+    
+    @Override
+    @Deprecated
+    public void useDefaultTimerSettings(boolean boo) {
+        setUseDefaultTimerSettings(boo);
+    }
+    
+    @Override
+    @Deprecated
+    public boolean useDefaultTimerSettings() {
+        return getUseDefaultTimerSettings();
+    }
+    
 
     protected Thread thr;
     protected Runnable r;
@@ -312,5 +325,28 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public Reporter getReporter() {
         return reporter;
     }
+
+    /**
+     * Set the pull resistance
+     * <p>
+     * In this default implementation, the input value is ignored.
+     *
+     * @param r PullResistance value to use.
+     */
+    @Override
+    public void setPullResistance(PullResistance r){
+    }
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.  In this default 
+     * impelmetnation, PullResistance.PULL_OFF is always returned.
+     */
+    @Override
+    public PullResistance getPullResistance(){
+       return PullResistance.PULL_OFF;
+    }
+
 
 }

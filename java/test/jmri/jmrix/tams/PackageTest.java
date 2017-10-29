@@ -1,5 +1,6 @@
 package jmri.jmrix.tams;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -39,17 +40,27 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsConstantsTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsMessageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsReplyTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsOpsModeProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsProgrammerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsPowerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsSensorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsTurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

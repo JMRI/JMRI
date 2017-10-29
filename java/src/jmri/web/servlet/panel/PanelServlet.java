@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
@@ -15,6 +16,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
             "/panel/Panel",
             "/web/showPanel.html" // redirect to /panel/ since ~ 19 Jan 2014
         })
+@ServiceProvider(service = HttpServlet.class)
 public class PanelServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(PanelServlet.class);
@@ -53,7 +56,7 @@ public class PanelServlet extends AbstractPanelServlet {
             panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
             panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
 
-            panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
+            panel.setAttribute("showtooltips", (editor.showToolTip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
             if (editor.getBackgroundColor() != null) {
                 Element color = new Element("backgroundColor");
@@ -122,7 +125,7 @@ public class PanelServlet extends AbstractPanelServlet {
             panel.put("panelheight", frame.getContentPane().getHeight());
             panel.put("panelwidth", frame.getContentPane().getWidth());
 
-            panel.put("showtooltips", editor.showTooltip());
+            panel.put("showtooltips", editor.showToolTip());
             panel.put("controlling", editor.allControlling());
             if (editor.getBackgroundColor() != null) {
                 ObjectNode color = panel.putObject("backgroundColor");

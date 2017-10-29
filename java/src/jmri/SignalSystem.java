@@ -28,7 +28,7 @@ import java.util.Enumeration;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public interface SignalSystem extends NamedBean {
 

@@ -15,11 +15,11 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into powerline for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into powerline for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011 copied from powerline into IEEE802154
+ * @author Ken Cameron Copyright (C) 2011 copied from powerline into IEEE802154
  * for multiple connections by
- * @author	Paul Bender Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2013
  */
 public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo {
 
@@ -173,7 +173,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeConnectionMemo.class);
 
 }
 

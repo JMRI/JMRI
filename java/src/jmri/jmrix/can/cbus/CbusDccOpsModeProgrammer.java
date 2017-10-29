@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Andrew Crosland Copyright (C) 2009
+ * @author Andrew Crosland Copyright (C) 2009
  */
 public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements AddressedProgrammer {
 
@@ -75,7 +75,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 

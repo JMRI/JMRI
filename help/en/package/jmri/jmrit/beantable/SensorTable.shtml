@@ -25,17 +25,23 @@
       for this Panel.</p>
 
       <h2>Sensor Table Columns</h2>
-
+      (You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to a column title)
       <dl>
         <dt>User Name</dt>
 
         <dd>You can directly enter or change the "User Name" for an
-        existing Sensor.</dd>
+        existing Sensor (double click in the cell).</dd>
 
         <dt>State</dt>
 
-        <dd>Pushing the "State" command button will change the
-        state of an existing Sensor.</dd>
+        <dd>Pushing the "State" button/icon will change the
+        state of an existing Sensor.
+        <img src="images/SensorTableGraphic.png" height="187" width="307"
+        align="right" alt="Graphic Sensor state column">
+        Choose between textual and graphic display of the Sensor state
+        in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+        </dd>
 
         <dt>Delete</dt>
 

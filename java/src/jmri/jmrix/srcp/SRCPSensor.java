@@ -17,12 +17,15 @@ import org.slf4j.LoggerFactory;
 public class SRCPSensor extends AbstractSensor implements SRCPListener {
 
     // data members
-    private int _number;   // sensor number
-    private int _bus;      // bus number
+    private final int _number;   // sensor number
+    private final int _bus;      // bus number
     private SRCPTrafficController tc = null;
 
     /**
      * SRCP sensors use the sensor number on the remote host.
+     *
+     * @param number sensor number on remote host
+     * @param memo   associated connection memo
      */
     public SRCPSensor(int number, SRCPBusConnectionMemo memo) {
         super(memo.getSystemPrefix() + "s" + number);
@@ -44,7 +47,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
         // sort out states
-        if ((s & Sensor.ACTIVE) !=  0) {
+        if ((s & Sensor.ACTIVE) != 0) {
             // first look for the double case, which we can't handle
             if ((s & Sensor.INACTIVE) != 0) {
                 // this is the disaster case!
@@ -61,7 +64,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
+            firePropertyChange("KnownState", oldState, _knownState);
         }
     }
 
@@ -118,9 +121,6 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
     public void message(SRCPMessage m) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPSensor.class);
 
 }
-
-
-

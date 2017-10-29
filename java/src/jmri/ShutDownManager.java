@@ -1,6 +1,7 @@
 package jmri;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Manage tasks to be completed when the program shuts down normally.
@@ -47,9 +48,8 @@ public interface ShutDownManager {
      * registered are silently ignored.
      *
      * @param task the task not to execute
-     * @throws NullPointerException if the task is null
      */
-    public void deregister(@Nonnull ShutDownTask task);
+    public void deregister(@Nullable ShutDownTask task);
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if

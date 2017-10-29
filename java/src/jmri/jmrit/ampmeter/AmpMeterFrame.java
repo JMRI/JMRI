@@ -15,7 +15,6 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Frame providing a simple lcd-based display of track current.
  * <P>
@@ -23,12 +22,12 @@ import org.slf4j.LoggerFactory;
  * looks, it's not currently displayed in the GUI.
  *
  *
- * @author	Ken Cameron Copyright (C) 2007
- * @author	Mark Underwood Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2007
+ * @author Mark Underwood Copyright (C) 2007
  *
- * This was a direct steal form the LCDClock code by Ken Cameron,
- * which was a direct steal from the Nixie clock code, ver 1.2. 
- * Thank you Bob Jacobsen and Ken Cameron.
+ * This was a direct steal form the LCDClock code by Ken Cameron, which was a
+ * direct steal from the Nixie clock code, ver 1.2. Thank you Bob Jacobsen and
+ * Ken Cameron.
  *
  */
 public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -56,7 +55,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     public AmpMeterFrame() {
         super(Bundle.getMessage("MenuItemAmpMeter"));
 
-	meter = InstanceManager.getDefault(MultiMeter.class);
+        meter = InstanceManager.getDefault(MultiMeter.class);
 
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
@@ -86,7 +85,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         aspect = (4.5 * 24.) / 32.; // used to be 4.5??
 
         // listen for changes to the Timebase parameters
-	meter.addPropertyChangeListener(this);
+        meter.addPropertyChangeListener(this);
         //clock.addPropertyChangeListener(this);
 
         // init GUI
@@ -94,43 +93,43 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         d2 = new JLabel(digits[0]);
         d3 = new JLabel(digits[0]);
         percent = new JLabel(percentIcon);
-	decimal = new JLabel(decimalIcon);
+        decimal = new JLabel(decimalIcon);
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         getContentPane().add(d1);
         getContentPane().add(d2);
         getContentPane().add(decimal);
         getContentPane().add(d3);
-	getContentPane().add(percent);
+        getContentPane().add(percent);
 
-        getContentPane().add(b = new JButton("Stop"));
+        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonStop")));
         b.addActionListener(new ButtonListener());
         // since Run/Stop button looks crummy, don't display for now
         b.setVisible(false);
 
-	meter.enable();
+        meter.enable();
 
         update();
         pack();
 
         // request callback to update time
-	// Again, adding updates.
-	java.beans.PropertyChangeListener du_listener = new java.beans.PropertyChangeListener() {
+        // Again, adding updates.
+        java.beans.PropertyChangeListener du_listener = new java.beans.PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 update();
             }
-	    };
+        };
         meter.addPropertyChangeListener(MultiMeter.CURRENT, du_listener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(
                 new ComponentAdapter() {
-                    @Override
-                    public void componentResized(ComponentEvent e) {
-                        scaleImage();
-                    }
-                });
+            @Override
+            public void componentResized(ComponentEvent e) {
+                scaleImage();
+            }
+        });
 
     }
 
@@ -158,7 +157,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         percentIcon.setImage(scaledImage);
         scaledImage = baseDecimal.getImage().getScaledInstance(iconWidth / 2, iconHeight, Image.SCALE_SMOOTH);
         decimalIcon.setImage(scaledImage);
-	
 
 //      Ugly hack to force frame to redo the layout.
 //      Without this the image is scaled but the label size and position doesn't change.
@@ -172,14 +170,13 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
     @SuppressWarnings("deprecation")
     void update() {
-	float val = meter.getCurrent(); // should be a value between 0-99%
+        float val = meter.getCurrent(); // should be a value between 0-99%
 
+        int v1 = (int) (val * 10); // first decimal digit
+        int v2 = ((int) (val * 100)) % 10; // second decimal digit.
+        int v3 = ((int) (val * 1000)) % 10; // third decimal digit.
 
-	int v1 = (int)(val*10); // first decimal digit
-	int v2 = ((int)(val*100)) % 10; // second decimal digit.
-	int v3 = ((int)(val *1000)) % 10; // third decimal digit.
-
-	log.debug("Current update: val {} v1 {} v2 {} v3 {}", val, v1, v2, v3);
+        log.debug("Current update: val {} v1 {} v2 {} v3 {}", val, v1, v2, v3);
 
         d1.setIcon(digits[v1]);
         d2.setIcon(digits[v2]);
@@ -188,9 +185,9 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
     @Override
     public void dispose() {
-	meter.disable();
-	meter.removePropertyChangeListener(this);
-	meter.removeDataUpdateListener(this);
+        meter.disable();
+        meter.removePropertyChangeListener(this);
+        meter.removeDataUpdateListener(this);
         super.dispose();
     }
 
@@ -199,14 +196,14 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-	/*
+        /*
         boolean now = clock.getRun();
         if (now) {
             b.setText("Stop");
         } else {
             b.setText("Run");
         }
-	*/
+         */
     }
 
     JButton b;
@@ -215,7 +212,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
         @Override
         public void actionPerformed(ActionEvent a) {
-	    /*
+            /*
             boolean next = !clock.getRun();
             clock.setRun(next);
             if (next) {
@@ -223,9 +220,9 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
             } else {
                 b.setText("Run ");
             }
-	    */
+             */
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class);
 }

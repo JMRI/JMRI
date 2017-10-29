@@ -7,7 +7,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 /**
  * Does configuration for Nmra Net communications implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
@@ -59,5 +59,3 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
 }
-
-

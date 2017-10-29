@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Install decoder definition from local file.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {
@@ -68,6 +68,6 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InstallDecoderFileAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstallDecoderFileAction.class);
 
 }

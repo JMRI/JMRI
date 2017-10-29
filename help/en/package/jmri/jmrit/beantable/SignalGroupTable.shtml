@@ -24,8 +24,8 @@
       <h1>The Signal Group Table</h1>
 
       <p>The Signal Group Table displays a list of your Signal
-      Groups.</p><a href="SignalGroupTable.png"><img src=
-      "SignalGroupTable.png" align="right" width="386" height=
+      Groups.</p><a href="images/SignalGroupTable.png"><img src=
+      "images/SignalGroupTable.png" align="right" width="386" height=
       "168"></a>
 
       <p>There are six columns in the Signal Group Table:</p>
@@ -64,7 +64,7 @@
       buttons at the right of the Signal Group Table to open
       the</a> <a href="SignalGroupAddEdit.shtml">Edit Signal
       Group</a> window for the corresponding Signal Group. <a href=
-      "SignalGroup.png"><img src="SignalGroup.png" align="right"
+      "images/SignalGroup.png"><img src="images/SignalGroup.png" align="right"
       height="223" width="309"></a></p>
 
       <h2><a name="example" id="example">Signal Group Example -
@@ -72,8 +72,8 @@
 
       <p>Consider the following track diagram, with 6 possible
       junctions off the main running line.<br>
-      <a href="SignalGroupTrackDiagram.png"><img src=
-      "SignalGroupTrackDiagram.png" height="90" width=
+      <a href="images/SignalGroupTrackDiagram.png"><img src=
+      "images/SignalGroupTrackDiagram.png" height="90" width=
       "233"></a></p>
 
       <p>The Signal facing this junction will have a Junction
@@ -84,8 +84,8 @@
 
       <p>If the route is set for position 1, then the position 1
       indicator will be shown (pictured below).<br>
-      <a href="SignalGroupTrackDiagram1.png"><img src=
-      "SignalGroupTrackDiagram1.png" height="90" width=
+      <a href="images/SignalGroupTrackDiagram1.png"><img src=
+      "images/SignalGroupTrackDiagram1.png" height="90" width=
       "262"></a></p>
 
       <p>With this configuration, you would create a single Turnout
@@ -171,7 +171,8 @@
 
       <p>Back to the <a href=
       "../../../../html/tools/signaling/SignalGroups.shtml">Signal
-      Groups help page</a>. <!--#include virtual="/Footer" --></p>
+        Groups help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

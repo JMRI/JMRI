@@ -113,7 +113,7 @@ public class PositionFile extends XmlFile {
     Element readingElement(Reading r) {
         Element e = new Element("reading");
         Element c = new Element("id");
-        c.addContent("" + r.getID());
+        c.addContent("" + r.getId());
         e.addContent(c);
         for (int i = 1; i <= r.getNValues(); i++) {
             e.addContent(timeElement(r.getValue(i)));
@@ -361,5 +361,5 @@ public class PositionFile extends XmlFile {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PositionFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionFile.class);
 }

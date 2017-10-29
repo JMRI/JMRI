@@ -1,10 +1,3 @@
-/**
- * PackageTest.java
- *
- * Description:	tests for the jmri.implementation package
- *
- * @author	Bob Jacobsen 2009
- */
 package jmri.implementation;
 
 import junit.framework.JUnit4TestAdapter;
@@ -12,6 +5,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+/**
+ * PackageTest.java
+ *
+ * Description:	tests for the jmri.implementation package
+ *
+ * @author	Bob Jacobsen 2009, 2017
+ */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -45,6 +45,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(DefaultSignalSystemTest.class));
         suite.addTest(new JUnit4TestAdapter(DefaultSignalAppearanceMapTest.class));
         suite.addTest(MultiIndexProgrammerFacadeTest.suite());
+        suite.addTest(VerifyWriteProgrammerFacadeTest.suite());
         suite.addTest(OffsetHighCvProgrammerFacadeTest.suite());
         suite.addTest(ResettingOffsetHighCvProgrammerFacadeTest.suite());
         suite.addTest(RouteTest.suite());
@@ -52,7 +53,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SignalHeadSignalMastTest.class));
         suite.addTest(SignalSpeedMapTest.suite());
         suite.addTest(new JUnit4TestAdapter(SignalSystemFileCheckTest.class));
-        suite.addTest(SingleTurnoutSignalHeadTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SingleTurnoutSignalHeadTest.class));
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(DccConsistTest.class));
@@ -92,6 +93,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TripleTurnoutSignalHeadTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutSignalMastTest.class));
         suite.addTest(new JUnit4TestAdapter(VirtualSignalMastTest.class));
+        suite.addTest(new JUnit4TestAdapter(AbstractInstanceInitializerTest.class));
 
 
         return suite;

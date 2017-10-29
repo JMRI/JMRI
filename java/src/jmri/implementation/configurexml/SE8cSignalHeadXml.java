@@ -34,9 +34,6 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
-
         storeCommon(p, element);
 
         element.addContent(addTurnoutElement(p.getLow(), "low"));
@@ -129,5 +126,5 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class);
 }

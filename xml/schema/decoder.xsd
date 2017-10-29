@@ -3,8 +3,6 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009, 2010, 2015                -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -493,13 +491,18 @@
   <xs:complexType name="functionlabelsType">
     <xs:sequence>
       <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:simpleContent>
-            <xs:extension base="xs:string">
-              <xs:attribute name="num" type="xs:string"/>
-              <xs:attribute name="lockable" type="xs:string"/>
-            </xs:extension>
-          </xs:simpleContent>
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="text" minOccurs="0" maxOccurs="unbounded" >
+              <xs:unique name="UniqueFunctionText1">
+                <xs:annotation><xs:documentation>Insist that there's only one text per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="text"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="num" type="xs:string"/>
+          <xs:attribute name="lockable" type="xs:string"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -508,12 +511,17 @@
   <xs:complexType name="soundlabelsType">
     <xs:sequence>
       <xs:element name="soundlabel" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:simpleContent>
-            <xs:extension base="xs:string">
-              <xs:attribute name="num" type="xs:string"/>
-            </xs:extension>
-          </xs:simpleContent>
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="text" minOccurs="0" maxOccurs="unbounded" >
+              <xs:unique name="UniqueSoundText1">
+                <xs:annotation><xs:documentation>Insist that there's only one text per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="text"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="num" type="xs:string"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -801,29 +809,6 @@
           <xs:selector xpath="label"/>
           <xs:field xpath="@xml:lang"/>
         </xs:unique>
-      </xs:element>
-      <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
-              <xs:annotation><xs:documentation>
-                Specifies programmer mode(s) for use during reset
-              </xs:documentation></xs:annotation>
-            </xs:element>
-            <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" >
-              <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-            </xs:element>
-          </xs:sequence>
-          <xs:attribute name="label" type="xs:string"/>
-          <xs:attribute name="CVname" type="cvNameType"/>
-          <xs:attribute name="CV" type="xs:string"/>
-          <xs:attribute name="PI" type="xs:string"/>
-          <xs:attribute name="SI" type="xs:string"/>
-          <xs:attribute name="default" type="xs:string"/>
-          <xs:attribute name="comment" type="xs:string"/>
-          <xs:attribute name="item" type="xs:string"/>
-          <xs:attribute ref="xml:base" />
-        </xs:complexType>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="mode" type="modeType"/>

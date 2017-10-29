@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    MdiWindowTest.class
+    MdiMainFrameTest.class,
+    JmriJInternalFrameInterfaceTest.class
 })
 public class PackageTest {
 }

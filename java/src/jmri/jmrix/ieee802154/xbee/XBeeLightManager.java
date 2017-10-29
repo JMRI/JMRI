@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for XBee connections
+ * Implement light manager for XBee connections.
  * <p>
  *
  * @author Paul Bender Copyright (C) 2014
@@ -27,8 +27,8 @@ public class XBeeLightManager extends AbstractLightManager {
         return prefix;
     }
 
-    // for now, set this to false. multiple additions currently works 
-    // partially, but not for all possible cases.
+    // Multiple additions currently works partially, but not for all possible cases;
+    // for now, return 'false'.
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
@@ -63,30 +63,31 @@ public class XBeeLightManager extends AbstractLightManager {
     }
 
     /**
-     * Validate system name for the current hardware configuration returns
-     * 'true' if system name has a valid meaning in current configuration, else
-     * returns 'false'
+     * Public method to validate system name format.
+     *
+     * @param systemName Xbee id format with pins to be checked
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
                 if (tc.getNodeFromAddress(Integer.parseInt(addressFromSystemName(systemName))) == null) {
-                    return false;
+                    return NameValidity.INVALID;
                 } else {
                     return (pinFromSystemName(systemName) >= 0
-                            && pinFromSystemName(systemName) <= 7);
+                            && pinFromSystemName(systemName) <= 7) ? NameValidity.VALID : NameValidity.INVALID;
                 }
             } catch (java.lang.NumberFormatException nfe) {
-                // if there was a number format exception, we couldn't
-                // find the node.
-                return false;
+                // if there was a number format exception, we couldn't find the node.
+                log.error("Unable to convert " + systemName + " into the Xbee node and pin format of nn:xx");
+                return NameValidity.INVALID;
             }
 
         } else {
             return (pinFromSystemName(systemName) >= 0
-                    && pinFromSystemName(systemName) <= 7);
+                    && pinFromSystemName(systemName) <= 7) ? NameValidity.VALID : NameValidity.INVALID;
         }
     }
 
@@ -118,7 +119,7 @@ public class XBeeLightManager extends AbstractLightManager {
             try {
                 input = Integer.valueOf(systemName.substring(seperator + 1)).intValue();
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert {} into the cab and input format of nn:xx", systemName);
+                log.debug("Unable to convert {} into the XBee node and pin format of nn:xx", systemName);
                 return -1;
             }
         } else {
@@ -126,7 +127,7 @@ public class XBeeLightManager extends AbstractLightManager {
                 iName = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
                 input = iName % 10;
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert {} Hardware Address to a number", systemName);
+                log.debug("Unable to convert {} system name to a number", systemName);
                 return -1;
             }
         }
@@ -135,9 +136,10 @@ public class XBeeLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false' for now, this method always returns 'true'; it is needed for the
+     * Public method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration, else returns
+     * 'false'. For now, this method always returns 'true'; it is needed for the
      * Abstract Light class
      */
     @Override
@@ -146,7 +148,7 @@ public class XBeeLightManager extends AbstractLightManager {
     }
 
     @Override
-    public void deregister(jmri.NamedBean s) {
+    public void deregister(jmri.Light s) {
         super.deregister(s);
         // remove the specified sensor from the associated XBee pin.
         String systemName = s.getSystemName();
@@ -174,6 +176,15 @@ public class XBeeLightManager extends AbstractLightManager {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class);
 
 }

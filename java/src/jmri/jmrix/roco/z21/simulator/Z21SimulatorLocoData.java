@@ -2,7 +2,7 @@ package jmri.jmrix.roco.z21.simulator;
 
 /*
  *  This class stores some information for
- *  passing data between the Throttle and the
+ *  passing data between the Throttle and the Z21
  *   
  *  @author      Paul Bender, Copyright (C) 2016
  */
@@ -12,8 +12,10 @@ class Z21SimulatorLocoData {
     byte address_lsb;
     byte speed_byte;
 
-    // construct an object of this type with all the data we are recording.
-    public Z21SimulatorLocoData(byte addr_msb,byte addr_lsb,byte speed){
+    /**
+     * Construct an object of this type with all the data we are recording.
+     */
+    public Z21SimulatorLocoData(byte addr_msb, byte addr_lsb, byte speed){
        address_msb = addr_msb;
        address_lsb = addr_lsb;
        speed_byte = speed;

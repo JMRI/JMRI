@@ -48,11 +48,11 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
         } else {
-	    if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
-		// TODO: Eventually add something more robust here.
-		log.error("No Register available for Throttle. Address = {}", address);
-		return;
-	    }
+     if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
+  // TODO: Eventually add something more robust here.
+  log.error("No Register available for Throttle. Address = {}", address);
+  return;
+     }
             throttle = new DCCppThrottle((DCCppSystemConnectionMemo) adapterMemo, address, tc);
             throttles.put(address, throttle);
             notifyThrottleKnown(throttle, address);
@@ -113,7 +113,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
 
     /**
      * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface XPressNet supports
+     * possible modes specifed by the DccThrottle interface DCC++ supports
      * 14,27,28 and 128 speed step modes
      */
     @Override
@@ -123,11 +123,11 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
     // Handle incoming messages for throttles.
     @Override
     public void message(DCCppReply r) {
-	// Guts of how a throttle handles replies...
-	//
-	// What should this be??
-	// For now, drop the message.
-	/*
+ // Guts of how a throttle handles replies...
+ //
+ // What should this be??
+ // For now, drop the message.
+ /*
         // We want to check to see if a throttle has taken over an address
         if (r.getElement(0) == DCCppConstants.LOCO_INFO_RESPONSE) {
             if (r.getElement(1) == DCCppConstants.LOCO_NOT_AVAILABLE) {
@@ -140,7 +140,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
                 }
             }
         }
-	*/
+ */
 
     }
 
@@ -161,7 +161,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-	    tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
+     tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
             DCCppThrottle lnt = (DCCppThrottle) t;
             lnt.throttleDispose();
             return true;
@@ -169,6 +169,6 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManager.class);
 
 }

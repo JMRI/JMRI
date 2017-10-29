@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements AddressedProgrammer {
 
@@ -91,7 +91,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -132,6 +132,6 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammer.class);
 
 }

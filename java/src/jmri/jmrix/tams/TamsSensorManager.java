@@ -3,6 +3,7 @@ package jmri.jmrix.tams;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
+import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -87,7 +88,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         TamsSensor s = new TamsSensor(systemName, userName);
-        //log.info("Creating new TamsSensor: " + systemName);
+        log.debug("Creating new TamsSensor: {}", systemName);
         if (systemName.contains(":")) {
             int board = 0;
             int channel = 0;
@@ -107,7 +108,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     }*/
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
                 return null;
             }
             Hashtable<Integer, TamsSensor> sensorList = _ttams.get(board);
@@ -117,7 +118,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
                 return null;
             }
             if ((board * 2) > maxSE) {//Check if newly defined board number is higher than what we know
@@ -138,7 +139,10 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
-            log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+            log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            // TODO prevent further execution, ruturn error flag
             throw new JmriException("Hardware Address passed should be past in the form 'Module:port'");
         }
 
@@ -147,18 +151,21 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         try {
             board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+            log.error("First part of {} in front of : should be a number", curAddress);
             throw new JmriException("Module Address passed should be a number");
         }
         try {
             port = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+            log.error("Second part of {} after : should be a number", curAddress);
             throw new JmriException("Port Address passed should be a number");
         }
 
         if (port == 0 || port > 16) {
             log.error("Port number must be between 1 and 16");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningPortRangeXY", 1, 16),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            // TODO prevent further execution, ruturn error flag
             throw new JmriException("Port number must be between 1 and 16");
         }
         StringBuilder sb = new StringBuilder();
@@ -182,9 +189,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage("Error", "Unable to convert " +
-                    curAddress +
-                    " to a valid Hardware Address", "" + ex, "", true, false);
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"),
+                    Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -196,7 +202,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             while (port < 17) {
                 try {
                     tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (Exception e) {
+                } catch (JmriException e) {
                     log.error("Error creating system name for " + board + ":" + port);
                 }
                 s = getBySystemName(tmpSName);
@@ -279,7 +285,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
-    Thread PollThread;
+    Thread pollThread;
     boolean stopPolling = true;
 
     protected Runnable pollHandler;

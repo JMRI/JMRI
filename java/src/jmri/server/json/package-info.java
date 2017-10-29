@@ -2,6 +2,8 @@
  * The JMRI JSON Services provide access to JMRI layout, operations and roster
  * elements.
  *
+ * <h2>Requests</h2>
+ *
  * JSON messages in four different forms from the client are handled by the JSON
  * services:
  * <ul>
@@ -32,14 +34,26 @@
  * <li>a sign off in the form: <code>{"type":"goodbye"}</code> to which an
  * identical response is sent before the connection gets closed.</li></ul>
  *
+ * <h2>Responses</h2>
+ *
  * JSON messages sent to the client will be in the form:
  * <ul>
- * <li><code>{"type":"<em>type</em>","data":{"name":"<em>name</em>",...}}</code></li>
- * <li><code>{"type":"pong"}</code> in response to a <code>{"type":"ping"}</code> message.</li>
- * <li>a sign off in the form: <code>{"type":"goodbye"}</code> before the connection gets closed.</li>
- * <li><code>[<em>message</em>,<em>message</em>]</code>, an array of any of the above message types.</li>
+ * <li><code>{"type":"<em>type</em>","data":{"name":"<em>name</em>",...}}</code>
+ * an object, either in response to a request or sent because an object
+ * requested earlier was updated within JMRI (updates are not available using
+ * the HTTP transport)</li>
+ * <li><code>{"type":"pong"}</code> in response to a
+ * <code>{"type":"ping"}</code> message.</li>
+ * <li>a sign off in the form: <code>{"type":"goodbye"}</code> before the
+ * connection gets closed.</li>
+ * <li><code>[<em>message</em>,<em>message</em>]</code>, an array of object
+ * message types. There is no guarantee that an array contains all objects of a
+ * single type, or that an array contains all of the objects of a single
+ * type.</li>
  * </ul>
  *
  * @since 4.3.4
+ * @see jmri.web.servlet.json.JsonServlet
+ * @see jmri.jmris.json.JsonServer
  */
 package jmri.server.json;

@@ -14,7 +14,7 @@ import jmri.InstanceManager;
  * not needed in the hardware implementation if one exists, or for those systems
  * with no hardware fast clock.
  *
- * @author	Dave Duchamp Copyright (C) 2007
+ * @author Dave Duchamp Copyright (C) 2007
  */
 public class DefaultClockControl implements ClockControl {
 

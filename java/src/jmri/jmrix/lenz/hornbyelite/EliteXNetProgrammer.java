@@ -1,12 +1,12 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,9 +42,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
     // programming interface
     @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " listens " + p);
-        }
+        log.debug("writeCV {} listens {}", CV, p);
         useProgrammer(p);
         _progRead = false;
         // set new state & save values
@@ -57,12 +55,12 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             restartTimer(EliteXNetProgrammerTimeout);
 
             // format and send message to go to program mode
-            if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV, val);
                 msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                 msg.setTimeout(ELITEMESSAGETIMEOUT);
                 controller().sendXNetMessage(msg, this);
-            } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV, val);
                 msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                 msg.setTimeout(ELITEMESSAGETIMEOUT);
@@ -97,9 +95,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 
     @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " listens " + p);
-        }
+        log.debug("readCV {} listens {}", CV, p);
 
         if (!getCanRead()) {
             // should not invoke this if cant read, but if done anyway set NotImplemented error
@@ -117,12 +113,12 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             restartTimer(EliteXNetProgrammerTimeout);
 
             // format and send message to go to program mode
-            if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 XNetMessage msg = XNetMessage.getReadPagedCVMsg(CV);
                 msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                 msg.setTimeout(ELITEMESSAGETIMEOUT);
                 controller().sendXNetMessage(msg, this);
-            } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 XNetMessage msg = XNetMessage.getReadDirectCVMsg(CV);
                 msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                 msg.setTimeout(ELITEMESSAGETIMEOUT);
@@ -186,9 +182,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             return;
 
         } else if (progState == REQUESTSENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in REQUESTSENT state");
-            }
+            log.debug("reply in REQUESTSENT state");
             // see if reply is the acknowledge of program mode; if not, wait for next
             if ((_service_mode && m.isOkMessage())
                     || (m.getElement(0) == XNetConstants.CS_INFO
@@ -198,9 +192,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 
                 if (!getCanRead()) {
                     // should not read here if cant read, because read shouldnt be invoked, but still attempt to handle
-                    if (log.isDebugEnabled()) {
-                        log.debug("CV reading not supported, exiting REQUESTSENT state");
-                    }
+                    log.debug("CV reading not supported, exiting REQUESTSENT state");
                     stopTimer();
                     notifyProgListenerEnd(_val, jmri.ProgListener.OK);
                     return;
@@ -249,21 +241,18 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
             }
         } else if (progState == INQUIRESENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in INQUIRESENT state");
-            }
+            log.debug("reply in INQUIRESENT state");
             // check for right message, else return
             if (m.isPagedModeResponse()) {
                 // valid operation response, but does it belong to us?
                 try {
-                    // we always save the cv number, but if 
-                    // we are using register mode, there is 
+                    // we always save the cv number, but if
+                    // we are using register mode, there is
                     // at least one case (CV29) where the value
                     // returned does not match the value we saved.
                     if (m.getServiceModeCVNumber() != _cv
                             && m.getServiceModeCVNumber() != registerFromCV(_cv)) {
-                        log.debug(" result for CV " + m.getServiceModeCVNumber()
-                                + " expecting " + _cv);
+                        log.debug(" result for CV {} expecting {}", m.getServiceModeCVNumber(), _cv);
                         return;
                     }
                 } catch (jmri.ProgrammerException e) {
@@ -278,15 +267,14 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 }
                 progState = NOTPROGRAMMING;
                 stopTimer();
-                // if this was a read, we cached the value earlier.  
+                // if this was a read, we cached the value earlier.
                 // If its a write, we're to return the original write value
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
                 return;
             } else if (m.isDirectModeResponse()) {
                 // valid operation response, but does it belong to us?
                 if (m.getServiceModeCVNumber() != _cv) {
-                    log.debug(" result for CV " + m.getServiceModeCVNumber()
-                            + " expecting " + _cv);
+                    log.debug(" result for CV {} expecting {}", m.getServiceModeCVNumber(), _cv);
                     return;
                 }
                 // see why waiting
@@ -331,9 +319,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             }
 
         } else if (progState == RETURNSENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in RETURNSENT state");
-            }
+            log.debug("reply in RETURNSENT state");
             if (m.getElement(0) == XNetConstants.CS_INFO
                     && m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS) {
                 progState = NOTPROGRAMMING;
@@ -342,17 +328,15 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 return;
             }
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in un-decoded state");
-            }
+            log.debug("reply in un-decoded state");
         }
     }
 
-    // listen for the messages to the Elite 
+    // listen for the messages to the Elite
     @Override
     synchronized public void message(XNetMessage l) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetProgrammer.class);
 
 }

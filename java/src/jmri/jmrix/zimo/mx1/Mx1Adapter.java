@@ -1,9 +1,5 @@
 package jmri.jmrix.zimo.mx1;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -16,6 +12,12 @@ import jmri.jmrix.zimo.Mx1PortController;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to Zimo's MX-1 on an attached serial comm port. Adapted for
@@ -27,7 +29,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
     public Mx1Adapter() {
         super(new Mx1SystemConnectionMemo());
-        option1Name = "FlowControl";
+        option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option("MX-1 connection uses : ", validOption1));
         this.manufacturerName = jmri.jmrix.zimo.Mx1ConnectionTypeList.ZIMO;
     }
@@ -48,7 +50,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
             // try to set it for Can Net
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -148,7 +150,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException | TooManyListenersException ex) {
             log.error("Unexpected exception while opening port {} trace follows: ", portName, ex);
@@ -221,10 +223,11 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     /**
      * Local method to do specific configuration.
      *
-     * @throws gnu.io.UnsupportedCommOperationException if unable to configure
-     *                                                  the serial port
+     * @throws purejavacomm.UnsupportedCommOperationException if unable to
+     *                                                        configure the
+     *                                                        serial port
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -234,16 +237,12 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         }
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = 0;
         }
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -256,7 +255,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     protected int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
     protected String[] validOption2 = new String[]{"3", "5"};
     //protected String selectedOption1=validOption1[0];
 
@@ -276,6 +275,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     }
     static Mx1Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class);
 
 }

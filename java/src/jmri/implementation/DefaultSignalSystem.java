@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * makes creation a little more heavy-weight, but speeds operation.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem {
 
@@ -200,6 +200,6 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         return Bundle.getMessage("BeanNameSignalSystem");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class);
 }
 

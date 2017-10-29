@@ -15,7 +15,7 @@ package jmri.jmrit.beantable.oblock;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
@@ -190,14 +190,14 @@ public class SignalTableModel extends AbstractTableModel {
             if (pToBlk.equals(toBlock)) {
                 if (fromBlock == null) {
                     sr.setFromBlock(pFromBlk);
-                    /*    			} else if (!fromBlock.equals(pFromBlk)) {
+                    /*       } else if (!fromBlock.equals(pFromBlk)) {
                      msg = Bundle.getMessage("PortalBlockConflict", portal.getName(), 
                      fromBlock.getDisplayName());    */
                 }
             } else if (pFromBlk.equals(toBlock)) {
                 if (fromBlock == null) {
                     sr.setFromBlock(pToBlk);
-                    /*    			} else if (!toBlock.equals(pToBlk)) {
+                    /*       } else if (!toBlock.equals(pToBlk)) {
                      msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
                      toBlock.getDisplayName()); */
                 }
@@ -322,6 +322,9 @@ public class SignalTableModel extends AbstractTableModel {
                 return Bundle.getMessage("Offset");
             case UNITSCOL:
                 return "  ";
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -372,6 +375,9 @@ public class SignalTableModel extends AbstractTableModel {
                 return signalRow.isMetric();
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -494,7 +500,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                 }
             }
-        } else {	// Editing existing signal configurations
+        } else { // Editing existing signal configurations
             SignalRow signalRow = _signalList.get(row);
             OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
             switch (col) {
@@ -502,7 +508,7 @@ public class SignalTableModel extends AbstractTableModel {
                     NamedBean signal = Portal.getSignal((String) value);
                     if (signal == null) {
                         msg = Bundle.getMessage("NoSuchSignal", (String) value);
-//                        signalRow.setSignal(null);                            		
+//                        signalRow.setSignal(null);                              
                         break;
                     }
                     Portal portal = signalRow.getPortal();
@@ -643,7 +649,10 @@ public class SignalTableModel extends AbstractTableModel {
                     deleteSignal(signalRow);
                     _signalList.remove(signalRow);
                     fireTableDataChanged();
-
+                    break;
+                default:
+                    // fall through
+                    break;
             }
         }
 
@@ -705,6 +714,8 @@ public class SignalTableModel extends AbstractTableModel {
         return String.class;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
     static public int getPreferredWidth(int col) {
         switch (col) {
             case NAME_COLUMN:
@@ -721,6 +732,9 @@ public class SignalTableModel extends AbstractTableModel {
                 return new JTextField(2).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }
@@ -734,5 +748,5 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalTableModel.class);
 }

@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp.swing.mon;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,27 +15,21 @@ public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane );
-    }
-
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.jmrix.dccpp.DCCppInterfaceScaffold t = new jmri.jmrix.dccpp.DCCppInterfaceScaffold(new jmri.jmrix.dccpp.DCCppCommandStation());
         memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo(t);
 
         jmri.InstanceManager.store(memo, jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class);
-        pane = new DCCppMonPane();
+        // pane for AbstractMonPaneTestBase; panel for JmriPanelTest 
+        panel = pane = new DCCppMonPane();
+        helpTarget = "package.jmri.jmrix.AbstractMonFrame";
+        title = "DCC++ Traffic Monitor";
     }
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.beans.PropertyChangeEvent;
@@ -399,6 +399,6 @@ public class SoundEvent implements PropertyChangeListener {
 
     }  // end setXml()
 
-    private static final Logger log = LoggerFactory.getLogger(SoundEvent.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SoundEvent.class);
 
 }

@@ -80,10 +80,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             int senddelay = Integer.parseInt(findParmValue(n, "senddelay"));
             int numinput = Integer.parseInt(findParmValue(n, "inputbits"));
             int numoutput = Integer.parseInt(findParmValue(n, "outputbits"));
-//			int pulseWidth = 500;
-//			if ((findParmValue(n,"pulsewidth")) != null) {
-//				pulseWidth = Integer.parseInt(findParmValue(n,"pulsewidth"));
-//			}
+//   int pulseWidth = 500;
+//   if ((findParmValue(n,"pulsewidth")) != null) {
+//    pulseWidth = Integer.parseInt(findParmValue(n,"pulsewidth"));
+//   }
 
             // create node (they register themselves)
             SerialNode node = new SerialNode(addr, 0);
@@ -91,7 +91,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             InputBits.setNumInputBits(numinput);
             OutputBits.setSendDelay(senddelay);
             OutputBits.setNumOutputBits(numoutput);
-//			node.setPulseWidth(pulseWidth);
+//   node.setPulseWidth(pulseWidth);
 
             // Trigger initialization of this Node to reflect these parameters
             SerialTrafficController.instance().initializeSerialNode(node);

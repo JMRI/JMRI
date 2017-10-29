@@ -18,10 +18,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public class Bundle extends jmri.jmrit.Bundle {
 
-    private final static String name = "jmri.jmrit.consisttool.ConsistTool"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrit.consisttool.ConsistTool"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public class DefaultRouteManager extends AbstractManager
+public class DefaultRouteManager extends AbstractManager<Route>
         implements RouteManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
 
     public DefaultRouteManager() {
@@ -111,12 +111,12 @@ public class DefaultRouteManager extends AbstractManager
 
     @Override
     public Route getBySystemName(String name) {
-        return (Route) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Route getByUserName(String key) {
-        return (Route) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     static DefaultRouteManager _instance = null;
@@ -133,5 +133,5 @@ public class DefaultRouteManager extends AbstractManager
         return Bundle.getMessage("BeanNameRoute");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
 }

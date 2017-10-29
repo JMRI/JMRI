@@ -25,4 +25,5 @@ public class Z21ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new Z21Menu(memo);
     }
+
 }

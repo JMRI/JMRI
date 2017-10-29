@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of a ThrottleManager for OpenLCB
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2005, 2012
+ * @author Bob Jacobsen Copyright (C) 2003, 2005, 2012
  */
 public class OlcbThrottleManager extends AbstractThrottleManager {
 
@@ -20,6 +20,8 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection memo
+     * @param mgr config manager
      */
     public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
         super(memo);
@@ -99,6 +101,6 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbThrottleManager.class);
 
 }

@@ -6,23 +6,27 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * Frame for user input of XpressNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2002
+ * @author Bob Jacobsen Copyright (C) 2001,2002
   */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
 
         // all we need to do is set the title 
-        setTitle(rb.getString("PacketGenFrameTitle"));
+        setTitle(Bundle.getMessage("PacketGenFrameTitle"));
 
         // pack to cause display
         pack();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendXNetMessage(createPacket(packetTextField.getSelectedItem().toString()), null);

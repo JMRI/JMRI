@@ -538,5 +538,5 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         return InstanceManager.getDefault(jmri.AudioManager.class).getXMLOrder();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class);
 }

@@ -1,9 +1,9 @@
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -23,9 +23,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SortOrder;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
@@ -43,6 +45,7 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
@@ -55,7 +58,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based in part on SignalHeadTableAction.java by Bob Jacobsen
  *
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
@@ -192,77 +195,86 @@ public class RouteTableAction extends AbstractTableAction {
 
             @Override
             public Object getValueAt(int row, int col) {
-                if (col == SETCOL) {
-                    return Bundle.getMessage("ButtonEdit");
-                } else if (col == ENABLECOL) {
-                    return Boolean.valueOf(((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled());
-                } else if (col == LOCKCOL) {
-                    Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
-                    if (r.canLock()) {
-                        return Boolean.valueOf(((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getLocked());
-                    } else {
-                        // this covers the case when route was locked and lockable turnouts were removed from the route 
-                        r.setLocked(false);
-                        return Boolean.valueOf(false);
-                    }
-                } else {
-                    return super.getValueAt(row, col);
+                switch (col) {
+                    case SETCOL:
+                        return Bundle.getMessage("ButtonEdit");
+                    case ENABLECOL:
+                        return ((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled();
+                    case LOCKCOL:
+                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        if (r.canLock()) {
+                            return ((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getLocked();
+                        } else {
+                            // this covers the case when route was locked and lockable turnouts were removed from the route
+                            r.setLocked(false);
+                            return false;
+                        }
+                    default:
+                        return super.getValueAt(row, col);
                 }
             }
 
             @Override
             public void setValueAt(Object value, int row, int col) {
-                if (col == USERNAMECOL) {
-                    //Directly changing the username should only be possible if the username was previously null or ""
-                    // check to see if user name already exists
-                    if (((String) value).equals("")) {
-                        value = null;
-                    } else {
-                        NamedBean nB = getByUserName((String) value);
-                        if (nB != null) {
-                            log.error("User Name is not unique " + value);
-                            String msg;
-                            msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
-                            JOptionPane.showMessageDialog(null, msg,
-                                    Bundle.getMessage("WarningTitle"),
-                                    JOptionPane.ERROR_MESSAGE);
-                            return;
+                switch (col) {
+                    case USERNAMECOL:
+                        //Directly changing the username should only be possible if the username was previously null or ""
+                        // check to see if user name already exists
+                        if (((String) value).equals("")) {
+                            value = null;
+                        } else {
+                            NamedBean nB = getByUserName((String) value);
+                            if (nB != null) {
+                                log.error("User Name is not unique " + value);
+                                String msg;
+                                msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                                JOptionPane.showMessageDialog(null, msg,
+                                        Bundle.getMessage("WarningTitle"),
+                                        JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
                         }
+                        NamedBean nBean = getBySystemName(sysNameList.get(row));
+                        nBean.setUserName((String) value);
+                        fireTableRowsUpdated(row, row);
+                        break;
+                    case SETCOL:
+                        // set up to edit. Use separate Runnable so window is created on top
+                        class WindowMaker implements Runnable {
+
+                            int row;
+
+                            WindowMaker(int r) {
+                                row = r;
+                            }
+
+                            @Override
+                            public void run() {
+                                addPressed(null);
+                                _systemName.setText((String) getValueAt(row, SYSNAMECOL));
+                                editPressed(null); // don't really want to stop Route w/o user action
+                            }
+                        }
+                        WindowMaker t = new WindowMaker(row);
+                        javax.swing.SwingUtilities.invokeLater(t);
+                        break;
+                    case ENABLECOL: {
+                        // alternate
+                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        boolean v = r.getEnabled();
+                        r.setEnabled(!v);
+                        break;
                     }
-                    NamedBean nBean = getBySystemName(sysNameList.get(row));
-                    nBean.setUserName((String) value);
-                    fireTableRowsUpdated(row, row);
-                } else if (col == SETCOL) {
-                    // set up to edit. Use separate Runnable so window is created on top
-                    class WindowMaker implements Runnable {
-
-                        int row;
-
-                        WindowMaker(int r) {
-                            row = r;
-                        }
-
-                        @Override
-                        public void run() {
-                            addPressed(null);
-                            _systemName.setText((String) getValueAt(row, SYSNAMECOL));
-                            editPressed(null); // don't really want to stop Route w/o user action
-                        }
+                    case LOCKCOL: {
+                        // alternate
+                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        boolean v = r.getLocked();
+                        r.setLocked(!v);
+                        break;
                     }
-                    WindowMaker t = new WindowMaker(row);
-                    javax.swing.SwingUtilities.invokeLater(t);
-                } else if (col == ENABLECOL) {
-                    // alternate
-                    Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
-                    boolean v = r.getEnabled();
-                    r.setEnabled(!v);
-                } else if (col == LOCKCOL) {
-                    // alternate
-                    Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
-                    boolean v = r.getLocked();
-                    r.setLocked(!v);
-                } else {
-                    super.setValueAt(value, row, col);
+                    default:
+                        super.setValueAt(value, row, col);
+                        break;
                 }
             }
 
@@ -341,7 +353,6 @@ public class RouteTableAction extends AbstractTableAction {
             /*Routes do not get references by other parts of the code, we therefore 
              do not need to worry about controlling how the username is changed
              */
-
             @Override
             protected void showPopup(MouseEvent e) {
             }
@@ -408,18 +419,18 @@ public class RouteTableAction extends AbstractTableAction {
 
     JmriBeanComboBox sensor1;
 
-    JComboBox<String> sensor1mode = new JComboBox<String>(sensorInputModes);
+    JComboBox<String> sensor1mode = new JComboBox<>(sensorInputModes);
     JmriBeanComboBox sensor2;
-    JComboBox<String> sensor2mode = new JComboBox<String>(sensorInputModes);
+    JComboBox<String> sensor2mode = new JComboBox<>(sensorInputModes);
     JmriBeanComboBox sensor3;
-    JComboBox<String> sensor3mode = new JComboBox<String>(sensorInputModes);
+    JComboBox<String> sensor3mode = new JComboBox<>(sensorInputModes);
 
     JmriBeanComboBox cTurnout;
     JmriBeanComboBox cLockTurnout;
-    JTextField timeDelay = new JTextField(5);
+    JSpinner timeDelay = new JSpinner();
 
-    JComboBox<String> cTurnoutStateBox = new JComboBox<String>(turnoutInputModes);
-    JComboBox<String> cLockTurnoutStateBox = new JComboBox<String>(lockTurnoutInputModes);
+    JComboBox<String> cTurnoutStateBox = new JComboBox<>(turnoutInputModes);
+    JComboBox<String> cLockTurnoutStateBox = new JComboBox<>(lockTurnoutInputModes);
 
     ButtonGroup selGroup = null;
     JRadioButton allButton = null;
@@ -460,7 +471,7 @@ public class RouteTableAction extends AbstractTableAction {
         }
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         List<String> systemNameList = tm.getSystemNameList();
-        _turnoutList = new ArrayList<RouteTurnout>(systemNameList.size());
+        _turnoutList = new ArrayList<>(systemNameList.size());
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
@@ -470,7 +481,7 @@ public class RouteTableAction extends AbstractTableAction {
 
         jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
         systemNameList = sm.getSystemNameList();
-        _sensorList = new ArrayList<RouteSensor>(systemNameList.size());
+        _sensorList = new ArrayList<>(systemNameList.size());
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
@@ -492,7 +503,7 @@ public class RouteTableAction extends AbstractTableAction {
             sensor3 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
             cTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
             cLockTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
-            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddRoute"), false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddRoute"), false, true); // title later changed for Edit
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
             addFrame.setLocation(100, 30);
 
@@ -504,11 +515,8 @@ public class RouteTableAction extends AbstractTableAction {
             ps.add(nameLabel);
             ps.add(_systemName);
             ps.add(_autoSystemName);
-            _autoSystemName.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    autoSystemName();
-                }
+            _autoSystemName.addActionListener((ActionEvent e1) -> {
+                autoSystemName();
             });
             if (pref.getSimplePreferenceState(systemNameAuto)) {
                 _autoSystemName.setSelected(true);
@@ -531,30 +539,24 @@ public class RouteTableAction extends AbstractTableAction {
             allButton = new JRadioButton(Bundle.getMessage("All"), true);
             selGroup.add(allButton);
             py.add(allButton);
-            allButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Setup for display of all Turnouts, if needed
-                    if (!showAll) {
-                        showAll = true;
-                        _routeTurnoutModel.fireTableDataChanged();
-                        _routeSensorModel.fireTableDataChanged();
-                    }
+            allButton.addActionListener((ActionEvent e1) -> {
+                // Setup for display of all Turnouts, if needed
+                if (!showAll) {
+                    showAll = true;
+                    _routeTurnoutModel.fireTableDataChanged();
+                    _routeSensorModel.fireTableDataChanged();
                 }
             });
             includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
             selGroup.add(includedButton);
             py.add(includedButton);
-            includedButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Setup for display of included Turnouts only, if needed
-                    if (showAll) {
-                        showAll = false;
-                        initializeIncludedList();
-                        _routeTurnoutModel.fireTableDataChanged();
-                        _routeSensorModel.fireTableDataChanged();
-                    }
+            includedButton.addActionListener((ActionEvent e1) -> {
+                // Setup for display of included Turnouts only, if needed
+                if (showAll) {
+                    showAll = false;
+                    initializeIncludedList();
+                    _routeTurnoutModel.fireTableDataChanged();
+                    _routeSensorModel.fireTableDataChanged();
                 }
             });
             py.add(new JLabel(Bundle.getMessage("_and_", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors"))));
@@ -577,12 +579,14 @@ public class RouteTableAction extends AbstractTableAction {
             TableRowSorter<RouteTurnoutModel> rtSorter = new TableRowSorter<>(_routeTurnoutModel);
             rtSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
+            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
             routeTurnoutTable.setRowSorter(rtSorter);
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
 
             ROW_HEIGHT = routeTurnoutTable.getRowHeight();
-            JComboBox<String> stateTCombo = new JComboBox<String>();
+            JComboBox<String> stateTCombo = new JComboBox<>();
             stateTCombo.addItem(SET_TO_CLOSED);
             stateTCombo.addItem(SET_TO_THROWN);
             stateTCombo.addItem(SET_TO_TOGGLE);
@@ -629,10 +633,12 @@ public class RouteTableAction extends AbstractTableAction {
             TableRowSorter<RouteSensorModel> rsSorter = new TableRowSorter<>(_routeSensorModel);
             rsSorter.setComparator(RouteSensorModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(rsSorter, RouteSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
+            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
             routeSensorTable.setRowSorter(rsSorter);
             routeSensorTable.setRowSelectionAllowed(false);
             routeSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
-            JComboBox<String> stateSCombo = new JComboBox<String>();
+            JComboBox<String> stateSCombo = new JComboBox<>();
             stateSCombo.addItem(SET_TO_ACTIVE);
             stateSCombo.addItem(SET_TO_INACTIVE);
             stateSCombo.addItem(SET_TO_TOGGLE);
@@ -669,22 +675,16 @@ public class RouteTableAction extends AbstractTableAction {
             p25.add(new JLabel(Bundle.getMessage("LabelPlaySound")));
             p25.add(soundFile);
             JButton ss = new JButton("..."); //NO18N
-            ss.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setSoundPressed();
-                }
+            ss.addActionListener((ActionEvent e1) -> {
+                setSoundPressed();
             });
             ss.setToolTipText(Bundle.getMessage("TooltipOpenFile", Bundle.getMessage("BeanNameAudio")));
             p25.add(ss);
             p25.add(new JLabel(Bundle.getMessage("LabelRunScript")));
             p25.add(scriptFile);
             ss = new JButton("..."); //NO18N
-            ss.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setScriptPressed();
-                }
+            ss.addActionListener((ActionEvent e1) -> {
+                setScriptPressed();
             });
             ss.setToolTipText(Bundle.getMessage("TooltipOpenFile", Bundle.getMessage("Script")));
             p25.add(ss);
@@ -742,22 +742,24 @@ public class RouteTableAction extends AbstractTableAction {
             p33.add(new JLabel(Bundle.getMessage("LabelEnterTurnout")));
             p3.add(p33);
             JPanel p34 = new JPanel();
-            p34.add(new JLabel(Bundle.getMessage("BeanNameTurnout") + ":"));
+            p34.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))));
             p34.add(cTurnout);
             cTurnout.setFirstItemBlank(true);
             cTurnout.setSelectedBean(null);
             cTurnout.setToolTipText(Bundle.getMessage("TooltipEnterTurnout"));
-            p34.add(new JLabel("   " + Bundle.getMessage("LabelCondition") + ":"));
+            p34.add(new JLabel("   " + Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelCondition"))));
             cTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipTurnoutCondition"));
             p34.add(cTurnoutStateBox);
             p3.add(p34);
             // add added delay
             JPanel p36 = new JPanel();
-            p36.add(new JLabel(Bundle.getMessage("LabelTurnoutDelay") + ":"));
+            p36.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelTurnoutDelay"))));
+            timeDelay.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
+//            timeDelay.setValue(0); // reset from possible previous use
+            timeDelay.setPreferredSize(new JTextField(5).getPreferredSize());
             p36.add(timeDelay);
-            timeDelay.setText("0");
             timeDelay.setToolTipText(Bundle.getMessage("TooltipTurnoutDelay"));
-            p36.add(new JLabel(" " + Bundle.getMessage("LabelMilliseconds")));
+            p36.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             p3.add(p36);
             // complete this panel
             Border p3Border = BorderFactory.createEtchedBorder();
@@ -772,12 +774,12 @@ public class RouteTableAction extends AbstractTableAction {
             p43.add(new JLabel(Bundle.getMessage("LabelLockTurnout")));
             p4.add(p43);
             JPanel p44 = new JPanel();
-            p44.add(new JLabel(Bundle.getMessage("BeanNameTurnout") + ":"));
+            p44.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))));
             p44.add(cLockTurnout);
             cLockTurnout.setFirstItemBlank(true);
             cLockTurnout.setSelectedBean(null);
             cLockTurnout.setToolTipText(Bundle.getMessage("TooltipEnterTurnout"));
-            p44.add(new JLabel("   " + Bundle.getMessage("LabelCondition") + ":"));
+            p44.add(new JLabel("   " + Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelCondition"))));
             cLockTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipLockTurnout"));
             p44.add(cLockTurnoutStateBox);
             p4.add(p44);
@@ -791,9 +793,13 @@ public class RouteTableAction extends AbstractTableAction {
             pa.setLayout(new BoxLayout(pa, BoxLayout.Y_AXIS));
             JPanel p1 = new JPanel();
             p1.setLayout(new FlowLayout());
+            status1.setFont(status1.getFont().deriveFont(0.9f * nameLabel.getFont().getSize())); // a bit smaller
+            status1.setForeground(Color.gray);
             p1.add(status1);
             JPanel p2 = new JPanel();
             p2.setLayout(new FlowLayout());
+            status2.setFont(status1.getFont().deriveFont(0.9f * nameLabel.getFont().getSize())); // a bit smaller
+            status2.setForeground(Color.gray);
             p2.add(status2);
             pa.add(p1);
             pa.add(p2);
@@ -805,65 +811,32 @@ public class RouteTableAction extends AbstractTableAction {
             pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
             // Cancel (Add) button
             pb.add(cancelButton);
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelAddPressed(e);
-                }
-            });
+            cancelButton.addActionListener(this::cancelAddPressed);
             // CancelEdit button
             pb.add(cancelEditButton);
-            cancelEditButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
-                }
-            });
+            cancelEditButton.addActionListener(this::cancelPressed);
             cancelEditButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
             // Add Create Route button
             pb.add(createButton);
-            createButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    createPressed(e);
-                }
-            });
+            createButton.addActionListener(this::createPressed);
             createButton.setToolTipText(Bundle.getMessage("TooltipCreateRoute"));
             // Edit Route button 
             pb.add(editButton);
-            editButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    editPressed(e);
-                }
-            });
+            editButton.addActionListener(this::editPressed);
             editButton.setToolTipText(Bundle.getMessage("TooltipEditRoute"));
             // Delete Route button
             pb.add(deleteButton);
-            deleteButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    deletePressed(e);
-                }
-            });
+            deleteButton.addActionListener(this::deletePressed);
             deleteButton.setToolTipText(Bundle.getMessage("TooltipDeleteRoute"));
             // Update Route button
             pb.add(updateButton);
-            updateButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    updatePressed(e, false);
-                }
+            updateButton.addActionListener((ActionEvent e1) -> {
+                updatePressed(e1, false);
             });
             updateButton.setToolTipText(Bundle.getMessage("TooltipUpdateRoute"));
             // Export button
             pb.add(exportButton);
-            exportButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    exportPressed(e);
-                }
-            });
+            exportButton.addActionListener(this::exportPressed);
             exportButton.setToolTipText(Bundle.getMessage("TooltipExportRoute"));
 
             // Show the initial buttons, and hide the others
@@ -928,13 +901,13 @@ public class RouteTableAction extends AbstractTableAction {
      * Initialize list of included turnout positions
      */
     void initializeIncludedList() {
-        _includedTurnoutList = new ArrayList<RouteTurnout>();
+        _includedTurnoutList = new ArrayList<>();
         for (int i = 0; i < _turnoutList.size(); i++) {
             if (_turnoutList.get(i).isIncluded()) {
                 _includedTurnoutList.add(_turnoutList.get(i));
             }
         }
-        _includedSensorList = new ArrayList<RouteSensor>();
+        _includedSensorList = new ArrayList<>();
         for (int i = 0; i < _sensorList.size(); i++) {
             if (_sensorList.get(i).isIncluded()) {
                 _includedSensorList.add(_sensorList.get(i));
@@ -943,7 +916,9 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Add button
+     * Responds to the Add button.
+     *
+     * @param e the action event
      */
     void createPressed(ActionEvent e) {
 
@@ -963,10 +938,10 @@ public class RouteTableAction extends AbstractTableAction {
         String sName = _systemName.getText();
         String uName = _userName.getText();
         if (sName.length() == 0) {
-            status1.setText(Bundle.getMessage("RouteAddStatusEnter"));
+            status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
             return false;
         }
-        Route g = null;
+        Route g;
         // check if a Route with the same user name exists
         if (!uName.equals("")) {
             g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
@@ -998,7 +973,7 @@ public class RouteTableAction extends AbstractTableAction {
             g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
         } else {
             if (sName.length() == 0) {
-                status1.setText(Bundle.getMessage("RouteAddStatusEnter"));
+                status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
                 return null;
             }
             try {
@@ -1017,7 +992,10 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Sets the Turnout information for adding or editting
+     * Sets the Turnout information for adding or editing.
+     *
+     * @param g the route to add the turnout to
+     * @return number of turnouts in route
      */
     int setTurnoutInformation(Route g) {
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
@@ -1028,7 +1006,10 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Sets the Sensor information for adding or editting
+     * Sets the Sensor information for adding or editing.
+     *
+     * @param g the route to add the sensor to
+     * @return number of sensors in route
      */
     int setSensorInformation(Route g) {
         for (int i = 0; i < _includedSensorList.size(); i++) {
@@ -1040,7 +1021,9 @@ public class RouteTableAction extends AbstractTableAction {
 
     /**
      * Sets the Sensor, Turnout, and delay control information for adding or
-     * editting if any
+     * editing.
+     *
+     * @param g the route to configure
      */
     void setControlInformation(Route g) {
         // Get sensor control information if any
@@ -1082,18 +1065,7 @@ public class RouteTableAction extends AbstractTableAction {
             g.setControlTurnout("");
         }
         // set Delay information
-        int addDelay = 0;
-        try {
-            addDelay = Integer.parseInt(timeDelay.getText());
-        } catch (NumberFormatException e) {
-            addDelay = 0;
-            timeDelay.setText("0");
-        }
-        if (addDelay < 0) {
-            // added delay must be a positive integer
-            addDelay = 0;
-            timeDelay.setText("0");
-        }
+        int addDelay = (Integer) timeDelay.getValue(); // from a JSpinner with 0 set as minimum
         g.setRouteCommandDelay(addDelay);
 
         // Set Lock Turnout information if there is any
@@ -1151,7 +1123,9 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Edit button
+     * Responds to the Edit button.
+     *
+     * @param e the action event
      */
     void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
@@ -1251,7 +1225,7 @@ public class RouteTableAction extends AbstractTableAction {
         setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
 
         // set up additional Delay
-        timeDelay.setText(Integer.toString(g.getRouteCommandDelay()));
+        timeDelay.setValue(g.getRouteCommandDelay());
         // begin with showing all Turnouts   
         // set up buttons and notes
         status1.setText(updateInst);
@@ -1266,11 +1240,14 @@ public class RouteTableAction extends AbstractTableAction {
         createButton.setVisible(false);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
+        addFrame.setTitle(Bundle.getMessage("TitleEditRoute"));
         editMode = true;
     }   // editPressed
 
     /**
-     * Responds to the Delete button
+     * Responds to the Delete button.
+     *
+     * @param e the action event
      */
     void deletePressed(ActionEvent e) {
         // route is already deactivated, just delete it
@@ -1281,7 +1258,10 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Update button - update to Route Table
+     * Responds to the Update button - update to Route Table.
+     *
+     * @param e        the action event
+     * @param newRoute true if a new route; false otherwise
      */
     void updatePressed(ActionEvent e, boolean newRoute) {
         // Check if the User Name has been changed
@@ -1331,8 +1311,9 @@ public class RouteTableAction extends AbstractTableAction {
         fixedSystemName.setVisible(false);
         _autoSystemName.setVisible(true);
         autoSystemName();
-        clearPage();
         _systemName.setVisible(true);
+        addFrame.setTitle(Bundle.getMessage("TitleAddRoute"));
+        clearPage();
         // reactivate the Route
         routeDirty = true;
         // get out of edit mode
@@ -1343,7 +1324,6 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     void clearPage() {
-        _systemName.setVisible(true);
         _systemName.setText("");
         _userName.setText("");
         sensor1.setSelectedBean(null);
@@ -1364,7 +1344,9 @@ public class RouteTableAction extends AbstractTableAction {
 
 /////////////////////// Export to Logix ////////////////////////////
     /**
-     * Responds to the Export button - export to Logix
+     * Responds to the Export button - export to Logix.
+     *
+     * @param e the action event
      */
     void exportPressed(ActionEvent e) {
         curRoute = checkNamesOK();
@@ -1386,7 +1368,7 @@ public class RouteTableAction extends AbstractTableAction {
         initializeIncludedList();
 
         /////////////////// Construct output actions for change to true //////////////////////
-        ArrayList<ConditionalAction> actionList = new ArrayList<ConditionalAction>();
+        ArrayList<ConditionalAction> actionList = new ArrayList<>();
 
         for (int i = 0; i < _includedSensorList.size(); i++) {
             RouteSensor rSensor = _includedSensorList.get(i);
@@ -1409,16 +1391,16 @@ public class RouteTableAction extends AbstractTableAction {
         String file = soundFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_RUN_SCRIPT, "", -1, file));
+                    Conditional.ACTION_PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
         }
         file = scriptFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_PLAY_SOUND, "", -1, file));
+                    Conditional.ACTION_RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
         }
 
         ///// Construct 'AND' clause from 'VETO' controls ////////
-        ArrayList<ConditionalVariable> vetoList = new ArrayList<ConditionalVariable>();
+        ArrayList<ConditionalVariable> vetoList = new ArrayList<>();
 
         // String andClause = null;
         ConditionalVariable cVar = makeCtrlSensorVar(sensor1, sensor1mode, true, false);
@@ -1466,10 +1448,10 @@ public class RouteTableAction extends AbstractTableAction {
         cSystemName = logixSystemName + "L";
         removeConditionals(cSystemName, logix);
 
-        String cUserName = null;
+        String cUserName;
 
         ///////////////// Make Trigger Conditionals //////////////////////
-        //ArrayList <ConditionalVariable> onChangeList = new ArrayList<ConditionalVariable>();
+        //ArrayList <ConditionalVariable> onChangeList = new ArrayList<>();
         int numConds = 1; // passed through all these, with new value returned each time
         numConds = makeSensorConditional(sensor1, sensor1mode, numConds, false,
                 actionList, vetoList, logix, logixSystemName, uName);
@@ -1504,7 +1486,7 @@ public class RouteTableAction extends AbstractTableAction {
             cSystemName = logixSystemName + "1A"; // NOI18N
             cUserName = turnoutsAlignedSensor.getSelectedDisplayName() + "A " + uName; // NOI18N
 
-            ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
+            ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             for (int i = 0; i < _includedTurnoutList.size(); i++) {
                 RouteTurnout rTurnout = _includedTurnoutList.get(i);
                 String name = rTurnout.getUserName();
@@ -1525,7 +1507,7 @@ public class RouteTableAction extends AbstractTableAction {
                         log.warn("Turnout {} was {}, neither CLOSED nor THROWN; not handled", name, rTurnout.getState()); // NOI18N
                 }
             }
-            actionList = new ArrayList<ConditionalAction>();
+            actionList = new ArrayList<>();
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                     Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.ACTIVE, ""));
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
@@ -1546,7 +1528,7 @@ public class RouteTableAction extends AbstractTableAction {
             // verify name (logix doesn't use "provideXXX") 
             cSystemName = logixSystemName + "1L"; // NOI18N
             cUserName = turnoutLockSystemName + "L " + uName; // NOI18N
-            ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
+            ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             //String devName = cTurnout.getText();
             int mode = turnoutModeFromBox(cTurnoutStateBox);
             int type = Conditional.TYPE_TURNOUT_CLOSED;
@@ -1556,7 +1538,7 @@ public class RouteTableAction extends AbstractTableAction {
             variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
                     type, turnoutLockSystemName, true));
 
-            actionList = new ArrayList<ConditionalAction>();
+            actionList = new ArrayList<>();
             int option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
             type = Turnout.LOCKED;
             if (mode == Route.ONCHANGE) {
@@ -1616,15 +1598,29 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
+     * Create a new sensor conditional.
+     *
+     * @param jmriBox    control, the selection from which, will be used to
+     *                   determine which sensor to make a conditional for
+     * @param sensorbox  control, the selection from which, will be used to
+     *                   determine the mode for the conditional
+     * @param numConds   number of existing route conditionals
+     * @param onChange   ???
+     * @param actionList actions to take in conditional
+     * @param vetoList   conditionals that can veto an action
+     * @param logix      Logix to add the conditional to
+     * @param prefix     system prefix for conditional
+     * @param uName      user name for conditional
+     * @return number of conditionals after the creation
      * @throws IllegalArgumentException if "user input no good"
-     * @return The number of conditionals after the creation.
      */
+    // why are the controls being passed, and not their selections?
     int makeSensorConditional(JmriBeanComboBox jmriBox, JComboBox<String> sensorbox, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlSensorVar(jmriBox, sensorbox, false, onChange);
         if (cVar != null) {
-            ArrayList<ConditionalVariable> varList = new ArrayList<ConditionalVariable>();
+            ArrayList<ConditionalVariable> varList = new ArrayList<>();
             varList.add(cVar);
             for (int i = 0; i < vetoList.size(); i++) {
                 varList.add(cloneVariable(vetoList.get(i)));
@@ -1652,15 +1648,29 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
+     * Create a new turnout conditional.
+     *
+     * @param jmriBox    control, the selection from which, will be used to
+     *                   determine which sensor to make a conditional for
+     * @param box        control, the selection from which, will be used to
+     *                   determine the mode for the conditional
+     * @param numConds   number of existing route conditionals
+     * @param onChange   ???
+     * @param actionList actions to take in conditional
+     * @param vetoList   conditionals that can veto an action
+     * @param logix      Logix to add the conditional to
+     * @param prefix     system prefix for conditional
+     * @param uName      user name for conditional
+     * @return number of conditionals after the creation
      * @throws IllegalArgumentException if "user input no good"
-     * @return The number of conditionals after the creation.
      */
+    // why are the controls being passed, and not their selections?
     int makeTurnoutConditional(JmriBeanComboBox jmriBox, JComboBox<String> box, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlTurnoutVar(jmriBox, box, false, onChange);
         if (cVar != null) {
-            ArrayList<ConditionalVariable> varList = new ArrayList<ConditionalVariable>();
+            ArrayList<ConditionalVariable> varList = new ArrayList<>();
             varList.add(cVar);
             for (int i = 0; i < vetoList.size(); i++) {
                 varList.add(cloneVariable(vetoList.get(i)));
@@ -1688,12 +1698,10 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorLightAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorRouteAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     ConditionalVariable cloneVariable(ConditionalVariable v) {
@@ -1701,7 +1709,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     ArrayList<ConditionalAction> cloneActionList(ArrayList<ConditionalAction> actionList, int option) {
-        ArrayList<ConditionalAction> list = new ArrayList<ConditionalAction>();
+        ArrayList<ConditionalAction> list = new ArrayList<>();
         for (int i = 0; i < actionList.size(); i++) {
             ConditionalAction action = actionList.get(i);
             ConditionalAction clone = new DefaultConditionalAction();
@@ -1725,7 +1733,7 @@ public class RouteTableAction extends AbstractTableAction {
         int mode = sensorModeFromBox(sensorbox);
         boolean trigger = true;
         boolean negated = false;
-        int type = 0;
+        int type;
         switch (mode) {
             case Route.ONACTIVE:    // route fires if sensor goes active
                 if (makeVeto || onChange) {
@@ -1777,7 +1785,7 @@ public class RouteTableAction extends AbstractTableAction {
         String devName = jmriBox.getSelectedDisplayName();
         int mode = turnoutModeFromBox(box);
         int oper = Conditional.OPERATOR_AND;
-        int type = 0;
+        int type;
         boolean negated = false;
         boolean trigger = true;
         switch (mode) {
@@ -1823,14 +1831,16 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the CancelAdd button
+     * Respond to the CancelAdd button.
+     *
+     * @param e the action event
      */
     void cancelAddPressed(ActionEvent e) {
         cancelAdd();
     }
 
     /**
-     * Cancels Add mode
+     * Cancels Add mode.
      */
     void cancelAdd() {
         curRoute = null;
@@ -1848,7 +1858,9 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the CancelEdit button
+     * Respond to the CancelEdit button.
+     *
+     * @param e the action event
      */
     void cancelPressed(ActionEvent e) {
         cancelEdit();
@@ -1878,7 +1890,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Base table model for selecting outputs
+     * Base table model for selecting outputs.
      */
     public abstract class RouteOutputModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -1925,7 +1937,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for selecting Turnouts and Turnout State
+     * Table model for selecting Turnouts and Turnout State.
      */
     class RouteTurnoutModel extends RouteOutputModel {
 
@@ -1944,7 +1956,7 @@ public class RouteTableAction extends AbstractTableAction {
 
         @Override
         public Object getValueAt(int r, int c) {
-            ArrayList<RouteTurnout> turnoutList = null;
+            ArrayList<RouteTurnout> turnoutList;
             if (showAll) {
                 turnoutList = _turnoutList;
             } else {
@@ -1957,7 +1969,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return Boolean.valueOf(turnoutList.get(r).isIncluded());
+                    return turnoutList.get(r).isIncluded();
                 case SNAME_COLUMN:  // slot number
                     return turnoutList.get(r).getSysName();
                 case UNAME_COLUMN:  //
@@ -1971,7 +1983,7 @@ public class RouteTableAction extends AbstractTableAction {
 
         @Override
         public void setValueAt(Object type, int r, int c) {
-            ArrayList<RouteTurnout> turnoutList = null;
+            ArrayList<RouteTurnout> turnoutList;
             if (showAll) {
                 turnoutList = _turnoutList;
             } else {
@@ -1979,7 +1991,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    turnoutList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    turnoutList.get(r).setIncluded(((Boolean) type));
                     break;
                 case STATE_COLUMN:
                     turnoutList.get(r).setSetToState((String) type);
@@ -1991,7 +2003,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Set up table for selecting Sensors and Sensor State
+     * Set up table for selecting Sensors and Sensor State.
      */
     class RouteSensorModel extends RouteOutputModel {
 
@@ -2010,7 +2022,7 @@ public class RouteTableAction extends AbstractTableAction {
 
         @Override
         public Object getValueAt(int r, int c) {
-            ArrayList<RouteSensor> sensorList = null;
+            ArrayList<RouteSensor> sensorList;
             if (showAll) {
                 sensorList = _sensorList;
             } else {
@@ -2023,7 +2035,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return Boolean.valueOf(sensorList.get(r).isIncluded());
+                    return sensorList.get(r).isIncluded();
                 case SNAME_COLUMN:  // slot number
                     return sensorList.get(r).getSysName();
                 case UNAME_COLUMN:  //
@@ -2037,7 +2049,7 @@ public class RouteTableAction extends AbstractTableAction {
 
         @Override
         public void setValueAt(Object type, int r, int c) {
-            ArrayList<RouteSensor> sensorList = null;
+            ArrayList<RouteSensor> sensorList;
             if (showAll) {
                 sensorList = _sensorList;
             } else {
@@ -2045,7 +2057,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    sensorList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    sensorList.get(r).setIncluded(((Boolean) type));
                     break;
                 case STATE_COLUMN:
                     sensorList.get(r).setSetToState((String) type);
@@ -2179,6 +2191,9 @@ public class RouteTableAction extends AbstractTableAction {
                     return SET_TO_ACTIVE;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
+                default:
+                    log.warn("Unhandled route state: {}", _setToState);
+                    break;
             }
             return "";
         }
@@ -2210,6 +2225,9 @@ public class RouteTableAction extends AbstractTableAction {
                     return SET_TO_THROWN;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -2242,5 +2260,6 @@ public class RouteTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class);
+
 }

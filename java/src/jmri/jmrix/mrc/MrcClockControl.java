@@ -30,12 +30,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ken Cameron Copyright (C) 2014
  * @author Dave Duchamp Copyright (C) 2007
- * @author	Bob Jacobsen, Alex Shepherd
+ * @author Bob Jacobsen, Alex Shepherd
  */
 public class MrcClockControl extends DefaultClockControl implements MrcTrafficListener {
 
     /**
      * Create a ClockControl object for a Mrc clock
+     * @param tc traffic control for connection
+     * @param prefix system prefix for connection
      */
     public MrcClockControl(MrcTrafficController tc, String prefix) {
         super();
@@ -63,8 +65,8 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     private MrcTrafficController tc = null;
 
     /* constants, variables, etc */
-    private static final boolean DEBUG_SHOW_PUBLIC_CALLS = true;	// enable debug for each public interface
-    private static final boolean DEBUG_SHOW_SYNC_CALLS = false;	// enable debug for sync logic
+    private static final boolean DEBUG_SHOW_PUBLIC_CALLS = true; // enable debug for each public interface
+    private static final boolean DEBUG_SHOW_SYNC_CALLS = false; // enable debug for sync logic
 
     public static final int CS_CLOCK_SCALE = 0x00;
     public static final int CS_CLOCK_MINUTES = 0x03;
@@ -79,9 +81,9 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     public static final int CMD_MEM_SET_REPLY_SIZE = 0x01;
     public static final int MAX_ERROR_ARRAY = 4;
     public static final double TARGET_SYNC_DELAY = 55;
-    public static final int SYNCMODE_OFF = 0;				//0 - clocks independent
-    public static final int SYNCMODE_MRC_MASTER = 1;		//1 - Mrc sets Internal
-    public static final int SYNCMODE_INTERNAL_MASTER = 2;	//2 - Internal sets Mrc
+    public static final int SYNCMODE_OFF = 0;    //0 - clocks independent
+    public static final int SYNCMODE_MRC_MASTER = 1;  //1 - Mrc sets Internal
+    public static final int SYNCMODE_INTERNAL_MASTER = 2; //2 - Internal sets Mrc
     public static final int WAIT_CMD_EXECUTION = 1000;
 
     DecimalFormat fiveDigits = new DecimalFormat("0.00000");
@@ -98,8 +100,8 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     private boolean mrcLastAmPm;
     private boolean mrcLast1224;
 
-    private int mrcSyncInitStateCounter = 0;	// MRC master sync initialization state machine
-    private int mrcSyncRunStateCounter = 0;	// MRC master sync runtime state machine
+    private int mrcSyncInitStateCounter = 0; // MRC master sync initialization state machine
+    private int mrcSyncRunStateCounter = 0; // MRC master sync runtime state machine
 
     Timebase internalClock;
     javax.swing.Timer alarmSyncUpdate = null;
@@ -226,10 +228,10 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     public Date getTime() {
         Date now = internalClock.getTime();
         if (lastClockReadPacket != null) {
-            if (mrcLast1224) {	// is 24 hour mode
+            if (mrcLast1224) { // is 24 hour mode
                 now.setHours(mrcLastHour);
             } else {
-                if (mrcLastAmPm) {	// is AM
+                if (mrcLastAmPm) { // is AM
                     now.setHours(mrcLastHour);
                 } else {
                     now.setHours(mrcLastHour + 12);
@@ -322,10 +324,10 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
             mrcLastAmPm = false;
         }
         Date now = internalClock.getTime();
-        if (mrcLast1224) {	// is 24 hour mode
+        if (mrcLast1224) { // is 24 hour mode
             now.setHours(mrcLastHour);
         } else {
-            if (mrcLastAmPm) {	// is AM
+            if (mrcLastAmPm) { // is AM
                 now.setHours(mrcLastHour);
             } else {
                 now.setHours(mrcLastHour + 12);
@@ -378,5 +380,5 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         return (mrcTime);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcClockControl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcClockControl.class);
 }

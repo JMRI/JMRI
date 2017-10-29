@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * address; more than one Turnout object pointing to a single device is not
  * allowed.
  *
- * Description:	extend jmri.AbstractTurnout for powerline serial layouts
+ * Description: extend jmri.AbstractTurnout for powerline serial layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */
@@ -27,6 +27,9 @@ public class SerialTurnout extends AbstractTurnout {
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
+     * @param systemName system name
+     * @param tc traffic controller
+     * @param userName user name
      */
     public SerialTurnout(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, userName);
@@ -45,9 +48,9 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //                    Object oldValue,
+        //      Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -90,7 +93,7 @@ public class SerialTurnout extends AbstractTurnout {
         tc.sendX10Sequence(out, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
 }
 
 

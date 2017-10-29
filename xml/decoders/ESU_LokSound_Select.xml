@@ -12,872 +12,543 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!-- made from the ESU_LokSoundV3_5.file -->
-  <!-- ver1 new file -->
-  <version author="Michael Mosher" version="1" lastUpdated="20100301"/>
-  <!-- ver2 correction to CV124 definition -->
-  <version author="Matthew Harris" version="2" lastUpdated="20100329"/>
-  <!-- ver3 fix bug in sanding volume CV -->
-  <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
-  <!-- ver4 fixed range and default values CVs 5 and 6 -->
-  <version author="Dave Heap" version="4" lastUpdated="20120929"/>
-  <!-- ver5 add new models -->
-  <version author="Michael Mosher" version="5" lastUpdated="20121205"/>
-  <!-- ver6 fixed incorrect PI & SI in all indexed CVs -->
-  <version author="Dave Heap" version="6" lastUpdated="20121230"/>
-  <!-- ver7 added support for new mfx&reg; speed table -->
-  <version author="Dave Heap" version="7" lastUpdated="20130105"/>
-  <!-- ver8 created new xi:include /xml/decoders/esu/v4standardCVs.xml 
-            moved all non-indexed CVs to v4standardCVs.xml 
-            created new xi:include /xml/decoders/esu/v4cv21.22.xml 
-            created new pane xi:include /xml/decoders/esu/v4extraPane.xml 
-            added new items to /xml/programmers/parts/AnalogControlsPane.xml 
-            corrected minor problem in /xml/programmers/parts/ConsistPane.xml 
-            moved many items to more appropriate panes 
-            updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
-  <version author="Dave Heap" version="8" lastUpdated="20130429"/>
-  <!-- ver9 indexed CV fixes -->
-  <version author="Dave Heap" version="9" lastUpdated="20130606"/>
-  <!-- ver10 Add warning to CV reset -->
-  <version author="Dave Heap" version="10" lastUpdated="20130626"/>
-  <!-- ver11 new Function Outputs and Info panes, miscellaneous changes and corrections -->
-  <version author="Dave Heap" version="11" lastUpdated="20130910"/>
-  <!-- ver12 new Sound pane, many changes and corrections -->
-  <version author="Dave Heap" version="12" lastUpdated="20130926"/>
-  <!-- ver13 add new capability section to define high CV alternate write method -->
-  <version author="Dave Heap" version="13" lastUpdated="20131028"/>
-  <!-- ver14 new Function Map pane and supporting JMRI code, expanded Function Output pane -->
-  <version author="Dave Heap" version="14" lastUpdated="20140107"/>
-  <!-- ver15 changed all indexed CVs to new form -->
-  <version author="Dave Heap" version="15" lastUpdated="20140114"/>
-  <!-- ver16 fixed incorrect bell rates -->
-  <version author="Dave Heap" version="16" lastUpdated="20140324"/>
-  <!-- ver17 added a Diesel Generic model to use with as-yet undefined models -->
-  <version author="Dave Heap" version="17" lastUpdated="20140205"/>
-  <!-- ver18 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
-  <version author="Dave Heap" version="18" lastUpdated="20150427"/>
-  <!-- ver19 added new Product IDs -->
-  <version author="Dave Heap" version="19" lastUpdated="20160519"/>
-  <decoder>
-    <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-      <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527,33554569">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533,33554570">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select L" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554553">
-        <size length="51" width="26" height="14" units="mm"/>
-      </model>
-      <model model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <functionlabels>
-        <functionlabel num="0" lockable="true">Headlight</functionlabel>
-        <functionlabel num="1" lockable="true">Bell</functionlabel>
-        <functionlabel num="2" lockable="false">Horn</functionlabel>
-        <functionlabel num="3" lockable="true">Coupler</functionlabel>
-        <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
-        <functionlabel num="5" lockable="true">Mars Light</functionlabel>
-        <functionlabel num="6" lockable="true">Ditch Light</functionlabel>
-        <functionlabel num="7" lockable="true">Switching</functionlabel>
-        <functionlabel num="8" lockable="true">Sound On</functionlabel>
-        <functionlabel num="9" lockable="true">Notch Up</functionlabel>
-        <functionlabel num="10" lockable="true">Notch Down</functionlabel>
-        <functionlabel num="11" lockable="true">Radiator Fan</functionlabel>
-        <functionlabel num="12" lockable="true">Dimmer</functionlabel>
-        <functionlabel num="13" lockable="true">AUX4</functionlabel>
-        <functionlabel num="14" lockable="true">Detector</functionlabel>
-        <functionlabel num="15" lockable="true">Crossing</functionlabel>
-        <functionlabel num="16" lockable="true">Rail Clack</functionlabel>
-        <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
-        <functionlabel num="18" lockable="true">Sanding</functionlabel>
-        <functionlabel num="19" lockable="true">Air</functionlabel>
-        <functionlabel num="20" lockable="true">Compressor</functionlabel>
-        <functionlabel num="21" lockable="true">Spitter Valve</functionlabel>
-      </functionlabels>
-      <soundlabels>
-        <soundlabel num="1">Diesel</soundlabel>
-        <soundlabel num="3">Airhorn</soundlabel>
-        <soundlabel num="4">Bell</soundlabel>
-        <soundlabel num="5">Coupler</soundlabel>
-        <soundlabel num="6">Dynamic Brake</soundlabel>
-        <soundlabel num="7">Air Compressor</soundlabel>
-        <soundlabel num="8">Radiator Fan</soundlabel>
-        <soundlabel num="9">Detector</soundlabel>
-        <soundlabel num="10">Crossing Comm</soundlabel>
-        <soundlabel num="11">Rail Clack</soundlabel>
-        <soundlabel num="12">Brake Set/Release</soundlabel>
-        <soundlabel num="13">Sanding Valve</soundlabel>
-        <soundlabel num="14">Short Air Let Off</soundlabel>
-        <soundlabel num="15">Pop Valve</soundlabel>
-        <soundlabel num="16">Short Airhorn</soundlabel>
-        <soundlabel num="25">Random sounds</soundlabel>
-        <soundlabel num="26">Automatic brake sound</soundlabel>
-        <soundlabel num="27">Gear shift sound</soundlabel>
-      </soundlabels>
-    </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes">
-      <capability>
-        <name>High Access via Double Index</name>
-        <parameter name="Max Regular CV address">256</parameter>
-        <parameter name="High Address CV">96</parameter>
-        <parameter name="Low Address CV">97</parameter>
-        <parameter name="Access Register CV">99</parameter>
-        <parameter name="Modulo">100</parameter>
-      </capability>
-      <capability>
-        <name>Indexed CV access</name>
-        <parameter name="PI">31</parameter>
-        <parameter name="SI">32</parameter>
-        <parameter name="cvFirst">false</parameter>
-      </capability>
-    </programming>
-    <variables>
-      <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <variable CV="48" item="Sound Option 2" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic">
-        <decVal/>
-        <label>Sound Configuration Value</label>
-      </variable>
-      <variable CV="48" mask="XXXXVVVV" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro" item="Sound Select 1">
-        <decVal max="15"/>
-        <label>Horn/Whistle</label>
-      </variable>
-      <variable CV="48" mask="XXXXVVVV" default="0" include="Diesel Generic" item="Sound Select 1">
-        <decVal max="15"/>
-        <label>Airhorn</label>
-      </variable>
-      <variable CV="48" mask="XXXXVVVV" default="3" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 1">
-        <enumVal>
-          <enumChoice choice="Nathan K5LA">
-            <choice>Nathan K5LA</choice>
-          </enumChoice>
-          <enumChoice choice="Nathan K3">
-            <choice>Nathan K3</choice>
-          </enumChoice>
-          <enumChoice choice="Nathan M5">
-            <choice>Nathan M5</choice>
-          </enumChoice>
-          <enumChoice choice="Nathan P3">
-            <choice>Nathan P3</choice>
-          </enumChoice>
-          <enumChoice choice="Nathan P5A">
-            <choice>Nathan P5A</choice>
-          </enumChoice>
-          <enumChoice choice="Leslie S2B">
-            <choice>Leslie S2B</choice>
-          </enumChoice>
-          <enumChoice choice="Leslie A200">
-            <choice>Leslie A200</choice>
-          </enumChoice>
-          <enumChoice choice="Leslie S3">
-            <choice>Leslie S3</choice>
-          </enumChoice>
-          <enumChoice choice="Leslie S5">
-            <choice>Leslie S5</choice>
-          </enumChoice>
-          <enumChoice choice="Leslie M3">
-            <choice>Leslie M3</choice>
-          </enumChoice>
-          <enumChoice choice="Wabco A2">
-            <choice>Wabco A2</choice>
-          </enumChoice>
-          <enumChoice choice="Wabco E2">
-            <choice>Wabco E2</choice>
-          </enumChoice>
-          <enumChoice choice="Holden K5H">
-            <choice>Holden K5H</choice>
-          </enumChoice>
-          <enumChoice choice="Hancock Air Whistle">
-            <choice>Hancock Air Whistle</choice>
-          </enumChoice>
-          <enumChoice choice="Fairbanks Morse Trainmaster">
-            <choice>Fairbanks Morse Trainmaster</choice>
-          </enumChoice>
-          <enumChoice choice="Baldwin Switcher 3 Chime">
-            <choice>Baldwin Switcher 3 Chime</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Airhorn</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro" item="Sound Select 2">
-        <decVal max="3"/>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="Diesel Generic" item="Sound Select 2">
-        <decVal max="3"/>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73401" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Alco 244 V12">
-            <choice>Alco 244 V12</choice>
-          </enumChoice>
-          <enumChoice choice="Alco 244 V16">
-            <choice>Alco 244 V16</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73402" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Alco 251 V12">
-            <choice>Alco 251 V12</choice>
-          </enumChoice>
-          <enumChoice choice="Alco 251 V16">
-            <choice>Alco 251 V16</choice>
-          </enumChoice>
-          <enumChoice choice="Alco 251 6T">
-            <choice>Alco 251 6T</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73403" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="GE FDL 12">
-            <choice>GE FDL 12</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73404" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="GE 7FDL-12">
-            <choice>GE 7FDL-12</choice>
-          </enumChoice>
-          <enumChoice choice="GE 7FDL-12">
-            <choice>GE 7FDL-12</choice>
-          </enumChoice>
-          <enumChoice choice="GE 7FDL-16A">
-            <choice>GE 7FDL-16A</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73405" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Baldwin VO 6">
-            <choice>Baldwin VO 6</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73406" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 567 16">
-            <choice>EMD 567 16</choice>
-          </enumChoice>
-          <enumChoice choice="EMD 567 16T">
-            <choice>EMD 567 16T</choice>
-          </enumChoice>
-          <enumChoice choice="EMD 567 12">
-            <choice>EMD 567 12</choice>
-          </enumChoice>
-          <enumChoice choice="EMD 567 12T">
-            <choice>EMD 567 12T</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73407" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 8-645E">
-            <choice>EMD 8-645E</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73408" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 16-645E">
-            <choice>EMD 16-645E</choice>
-          </enumChoice>
-          <enumChoice choice="EMD 16-645F">
-            <choice>EMD 16-645F</choice>
-          </enumChoice>
-          <enumChoice choice="EMD 20-645E">
-            <choice>EMD 20-645E</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73410" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 12-710GB">
-            <choice>EMD 12-710GB</choice>
-          </enumChoice>
-          <enumChoice choice="EMD 16-710GB">
-            <choice>EMD 16-710GB</choice>
-          </enumChoice>
-          <enumChoice choice="EMD 20-710GB">
-            <choice>EMD 20-710GB</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73411" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Alco 539T">
-            <choice>Alco 539T</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73418" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="PCC trolley steetcar">
-            <choice>PCC trolley steetcar</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73425" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 16-710G3C-T2">
-            <choice>EMD 16-710G3C-T2</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73426" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="regular start">
-            <choice>regular start</choice>
-          </enumChoice>
-          <enumChoice choice="automatic start">
-            <choice>automatic start</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73427" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="air start">
-            <choice>air start</choice>
-          </enumChoice>
-          <enumChoice choice="normal start">
-            <choice>normal start</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73428" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 16-710GB">
-            <choice>EMD 16-710GB</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73430" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 16-645E3">
-            <choice>EMD 16-645E3</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73431" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 16-710GB">
-            <choice>EMD 16-710GB</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73439" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 12-645E3">
-            <choice>EMD 12-645E3</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73443" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 12-645 non turbo">
-            <choice>EMD 12-645 non turbo</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73444" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="GE Cat-44T">
-            <choice>GE Cat-44T</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73445" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="GE FDL-16cyl">
-            <choice>GE FDL-16cyl</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73446" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Baldwin 606_606NA">
-            <choice>Baldwin 606_606NA</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73447" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Baldwin 606SC_606A">
-            <choice>Baldwin 606SC_606A</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73450" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 16-645F">
-            <choice>EMD 16-645F</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73461" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="EMD 20-710G3B-ES">
-            <choice>EMD 20-710G3B-ES</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable CV="48" mask="XVXXXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 3">
-        <decVal max="1"/>
-        <label>Bell</label>
-      </variable>
-      <variable CV="48" mask="XVXXXXXX" default="0" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 3">
-        <enumVal>
-          <enumChoice choice="Slow">
-            <choice>Slow</choice>
-          </enumChoice>
-          <enumChoice choice="Fast">
-            <choice>Fast</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Bell</label>
-      </variable>
-      <variable CV="48" mask="VXXXXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 4">
-        <decVal max="1"/>
-        <label>Brake Squeal</label>
-      </variable>
-      <variable CV="48" mask="VXXXXXXX" default="0" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 4">
-        <enumVal>
-          <enumChoice choice="Squeal #1">
-            <choice>Squeal #1</choice>
-          </enumChoice>
-          <enumChoice choice="Squeal #2">
-            <choice>Squeal #2</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Squeal</label>
-      </variable>
-      <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
-    </variables>
-    <resets>
-      <factReset label="Reset All CVs." CV="8" default="8"/>
-    </resets>
-  </decoder>
-<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/>
+    <!-- made from the ESU_LokSoundV3_5.file -->
+    <!-- ver1 new file -->
+    <version author="Michael Mosher" version="1" lastUpdated="20100301"/>
+    <!-- ver2 correction to CV124 definition -->
+    <version author="Matthew Harris" version="2" lastUpdated="20100329"/>
+    <!-- ver3 fix bug in sanding volume CV -->
+    <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
+    <!-- ver4 fixed range and default values CVs 5 and 6 -->
+    <version author="Dave Heap" version="4" lastUpdated="20120929"/>
+    <!-- ver5 add new models -->
+    <version author="Michael Mosher" version="5" lastUpdated="20121205"/>
+    <!-- ver6 fixed incorrect PI & SI in all indexed CVs -->
+    <version author="Dave Heap" version="6" lastUpdated="20121230"/>
+    <!-- ver7 added support for new mfx&reg; speed table -->
+    <version author="Dave Heap" version="7" lastUpdated="20130105"/>
+    <!-- ver8 created new xi:include /xml/decoders/esu/v4standardCVs.xml
+    moved all non-indexed CVs to v4standardCVs.xml
+    created new xi:include /xml/decoders/esu/v4cv21.22.xml
+    created new pane xi:include /xml/decoders/esu/v4extraPane.xml
+    added new items to /xml/programmers/parts/AnalogControlsPane.xml
+    corrected minor problem in /xml/programmers/parts/ConsistPane.xml
+    moved many items to more appropriate panes
+    updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
+    <version author="Dave Heap" version="8" lastUpdated="20130429"/>
+    <!-- ver9 indexed CV fixes -->
+    <version author="Dave Heap" version="9" lastUpdated="20130606"/>
+    <!-- ver10 Add warning to CV reset -->
+    <version author="Dave Heap" version="10" lastUpdated="20130626"/>
+    <!-- ver11 new Function Outputs and Info panes, miscellaneous changes and corrections -->
+    <version author="Dave Heap" version="11" lastUpdated="20130910"/>
+    <!-- ver12 new Sound pane, many changes and corrections -->
+    <version author="Dave Heap" version="12" lastUpdated="20130926"/>
+    <!-- ver13 add new capability section to define high CV alternate write method -->
+    <version author="Dave Heap" version="13" lastUpdated="20131028"/>
+    <!-- ver14 new Function Map pane and supporting JMRI code, expanded Function Output pane -->
+    <version author="Dave Heap" version="14" lastUpdated="20140107"/>
+    <!-- ver15 changed all indexed CVs to new form -->
+    <version author="Dave Heap" version="15" lastUpdated="20140114"/>
+    <!-- ver16 fixed incorrect bell rates -->
+    <version author="Dave Heap" version="16" lastUpdated="20140324"/>
+    <!-- ver17 added a Diesel Generic model to use with as-yet undefined models -->
+    <version author="Dave Heap" version="17" lastUpdated="20140205"/>
+    <!-- ver18 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
+    <version author="Dave Heap" version="18" lastUpdated="20150427"/>
+    <!-- ver19 added new Product IDs -->
+    <version author="Dave Heap" version="19" lastUpdated="20160519"/>
+    <!-- ver20 concealed obsolete legacy definitions and removed obsolete functionlabels & soundlabels -->
+    <version author="Dave Heap" version="20" lastUpdated="20170819"/>
+    <decoder>
+        <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+            <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527,33554569">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model model="LokSound Select direct / micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533,33554570">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model model="LokSound Select L" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554553">
+                <size length="51" width="26" height="14" units="mm"/>
+            </model>
+            <model show="no" model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">Light</functionlabel>
+                <functionlabel num="2" lockable="false">Horn</functionlabel>
+            </functionlabels>
+            <soundlabels>
+                <soundlabel num="25">Random sounds</soundlabel>
+                <soundlabel num="26">Automatic brake sound</soundlabel>
+                <soundlabel num="27">Gear shift sound</soundlabel>
+            </soundlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>High Access via Double Index</name>
+                <parameter name="Max Regular CV address">256</parameter>
+                <parameter name="High Address CV">96</parameter>
+                <parameter name="Low Address CV">97</parameter>
+                <parameter name="Access Register CV">99</parameter>
+                <parameter name="Modulo">100</parameter>
+            </capability>
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
+            <variable CV="48" item="Sound Option 2" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic">
+                <decVal/>
+                <label>Sound Configuration Value</label>
+            </variable>
+            <variable CV="48" mask="XXXXVVVV" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro" item="Sound Select 1">
+                <decVal max="15"/>
+                <label>Horn/Whistle</label>
+            </variable>
+            <variable CV="48" mask="XXXXVVVV" default="0" include="Diesel Generic" item="Sound Select 1">
+                <decVal max="15"/>
+                <label>Airhorn</label>
+            </variable>
+            <variable CV="48" mask="XXXXVVVV" default="3" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 1">
+                <enumVal>
+                    <enumChoice choice="Nathan K5LA">
+                        <choice>Nathan K5LA</choice>
+                    </enumChoice>
+                    <enumChoice choice="Nathan K3">
+                        <choice>Nathan K3</choice>
+                    </enumChoice>
+                    <enumChoice choice="Nathan M5">
+                        <choice>Nathan M5</choice>
+                    </enumChoice>
+                    <enumChoice choice="Nathan P3">
+                        <choice>Nathan P3</choice>
+                    </enumChoice>
+                    <enumChoice choice="Nathan P5A">
+                        <choice>Nathan P5A</choice>
+                    </enumChoice>
+                    <enumChoice choice="Leslie S2B">
+                        <choice>Leslie S2B</choice>
+                    </enumChoice>
+                    <enumChoice choice="Leslie A200">
+                        <choice>Leslie A200</choice>
+                    </enumChoice>
+                    <enumChoice choice="Leslie S3">
+                        <choice>Leslie S3</choice>
+                    </enumChoice>
+                    <enumChoice choice="Leslie S5">
+                        <choice>Leslie S5</choice>
+                    </enumChoice>
+                    <enumChoice choice="Leslie M3">
+                        <choice>Leslie M3</choice>
+                    </enumChoice>
+                    <enumChoice choice="Wabco A2">
+                        <choice>Wabco A2</choice>
+                    </enumChoice>
+                    <enumChoice choice="Wabco E2">
+                        <choice>Wabco E2</choice>
+                    </enumChoice>
+                    <enumChoice choice="Holden K5H">
+                        <choice>Holden K5H</choice>
+                    </enumChoice>
+                    <enumChoice choice="Hancock Air Whistle">
+                        <choice>Hancock Air Whistle</choice>
+                    </enumChoice>
+                    <enumChoice choice="Fairbanks Morse Trainmaster">
+                        <choice>Fairbanks Morse Trainmaster</choice>
+                    </enumChoice>
+                    <enumChoice choice="Baldwin Switcher 3 Chime">
+                        <choice>Baldwin Switcher 3 Chime</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Airhorn</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro" item="Sound Select 2">
+                <decVal max="3"/>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="Diesel Generic" item="Sound Select 2">
+                <decVal max="3"/>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73401" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Alco 244 V12">
+                        <choice>Alco 244 V12</choice>
+                    </enumChoice>
+                    <enumChoice choice="Alco 244 V16">
+                        <choice>Alco 244 V16</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73402" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Alco 251 V12">
+                        <choice>Alco 251 V12</choice>
+                    </enumChoice>
+                    <enumChoice choice="Alco 251 V16">
+                        <choice>Alco 251 V16</choice>
+                    </enumChoice>
+                    <enumChoice choice="Alco 251 6T">
+                        <choice>Alco 251 6T</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73403" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="GE FDL 12">
+                        <choice>GE FDL 12</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73404" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="GE 7FDL-12">
+                        <choice>GE 7FDL-12</choice>
+                    </enumChoice>
+                    <enumChoice choice="GE 7FDL-12">
+                        <choice>GE 7FDL-12</choice>
+                    </enumChoice>
+                    <enumChoice choice="GE 7FDL-16A">
+                        <choice>GE 7FDL-16A</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73405" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Baldwin VO 6">
+                        <choice>Baldwin VO 6</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73406" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 567 16">
+                        <choice>EMD 567 16</choice>
+                    </enumChoice>
+                    <enumChoice choice="EMD 567 16T">
+                        <choice>EMD 567 16T</choice>
+                    </enumChoice>
+                    <enumChoice choice="EMD 567 12">
+                        <choice>EMD 567 12</choice>
+                    </enumChoice>
+                    <enumChoice choice="EMD 567 12T">
+                        <choice>EMD 567 12T</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73407" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 8-645E">
+                        <choice>EMD 8-645E</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73408" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 16-645E">
+                        <choice>EMD 16-645E</choice>
+                    </enumChoice>
+                    <enumChoice choice="EMD 16-645F">
+                        <choice>EMD 16-645F</choice>
+                    </enumChoice>
+                    <enumChoice choice="EMD 20-645E">
+                        <choice>EMD 20-645E</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73410" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 12-710GB">
+                        <choice>EMD 12-710GB</choice>
+                    </enumChoice>
+                    <enumChoice choice="EMD 16-710GB">
+                        <choice>EMD 16-710GB</choice>
+                    </enumChoice>
+                    <enumChoice choice="EMD 20-710GB">
+                        <choice>EMD 20-710GB</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73411" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Alco 539T">
+                        <choice>Alco 539T</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73418" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="PCC trolley steetcar">
+                        <choice>PCC trolley steetcar</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73425" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 16-710G3C-T2">
+                        <choice>EMD 16-710G3C-T2</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73426" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="regular start">
+                        <choice>regular start</choice>
+                    </enumChoice>
+                    <enumChoice choice="automatic start">
+                        <choice>automatic start</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73427" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="air start">
+                        <choice>air start</choice>
+                    </enumChoice>
+                    <enumChoice choice="normal start">
+                        <choice>normal start</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73428" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 16-710GB">
+                        <choice>EMD 16-710GB</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73430" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 16-645E3">
+                        <choice>EMD 16-645E3</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73431" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 16-710GB">
+                        <choice>EMD 16-710GB</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73439" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 12-645E3">
+                        <choice>EMD 12-645E3</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73443" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 12-645 non turbo">
+                        <choice>EMD 12-645 non turbo</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73444" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="GE Cat-44T">
+                        <choice>GE Cat-44T</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73445" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="GE FDL-16cyl">
+                        <choice>GE FDL-16cyl</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73446" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Baldwin 606_606NA">
+                        <choice>Baldwin 606_606NA</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73447" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Baldwin 606SC_606A">
+                        <choice>Baldwin 606SC_606A</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73450" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 16-645F">
+                        <choice>EMD 16-645F</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73461" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="EMD 20-710G3B-ES">
+                        <choice>EMD 20-710G3B-ES</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover</label>
+            </variable>
+            <variable CV="48" mask="XVXXXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 3">
+                <decVal max="1"/>
+                <label>Bell</label>
+            </variable>
+            <variable CV="48" mask="XVXXXXXX" default="0" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 3">
+                <enumVal>
+                    <enumChoice choice="Slow">
+                        <choice>Slow</choice>
+                    </enumChoice>
+                    <enumChoice choice="Fast">
+                        <choice>Fast</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Bell</label>
+            </variable>
+            <variable CV="48" mask="VXXXXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 4">
+                <decVal max="1"/>
+                <label>Brake Squeal</label>
+            </variable>
+            <variable CV="48" mask="VXXXXXXX" default="0" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 4">
+                <enumVal>
+                    <enumChoice choice="Squeal #1">
+                        <choice>Squeal #1</choice>
+                    </enumChoice>
+                    <enumChoice choice="Squeal #2">
+                        <choice>Squeal #2</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Brake Squeal</label>
+            </variable>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
+        </variables>
+        <resets>
+            <factReset label="Reset All CVs." CV="8" default="8"/>
+        </resets>
+    </decoder>
+    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/>
 </decoder-config>

@@ -104,8 +104,8 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
-	ret.add(DefaultProgrammerManager.OPSBITMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
+ ret.add(ProgrammingMode.OPSBITMODE);
         return ret;
     }
 
@@ -126,13 +126,13 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     // stations on which the Operations Mode Programmer is enabled.
     @Override
     synchronized public void message(DCCppReply l) {
-	progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);	    
+ progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);     
         if (progState == DCCppProgrammer.NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
             // request, so just ignore anything that comes in
             return;
         } else if (progState == DCCppProgrammer.REQUESTSENT) {
-	    
+     
             if (l.isProgramReply()) {
                 // Before we set the programmer state to not programming, 
                 // delay for a short time to give the decoder a chance to 
@@ -146,8 +146,8 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                 stopTimer();
                 progListener.programmingOpReply(value, jmri.ProgListener.OK);
             } else {
-		// This is a message we can (and/or should) ignore.
-		return;
+  // This is a message we can (and/or should) ignore.
+  return;
             }
         }
     }
@@ -188,6 +188,6 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DCCppOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppOpsModeProgrammer.class);
 
 }

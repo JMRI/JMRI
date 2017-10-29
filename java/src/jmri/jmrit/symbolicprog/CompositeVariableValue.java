@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * target variables on the same programming page.
  * </ol>
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2005, 2013
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -569,6 +569,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CompositeVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CompositeVariableValue.class);
 
 }

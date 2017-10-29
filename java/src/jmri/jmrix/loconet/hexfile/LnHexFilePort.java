@@ -24,11 +24,11 @@ import org.slf4j.LoggerFactory;
  * contain as many bytes as needed, each represented by two Hex characters and
  * separated by a space. Variable whitespace is not (yet) supported
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
 
-    BufferedReader sFile = null;
+    volatile BufferedReader sFile = null;
 
     public LnHexFilePort() {
         super(new LocoNetSystemConnectionMemo());
@@ -64,7 +64,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() {
         jmri.jmrix.loconet.hexfile.HexFileFrame f
                 = new jmri.jmrix.loconet.hexfile.HexFileFrame();
 
@@ -72,7 +72,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         try {
             f.initComponents();
         } catch (Exception ex) {
-            //log.error("starting HexFileFrame exception: "+ex.toString());
+            log.warn("starting HexFileFrame exception: "+ex.toString());
         }
         f.configure();
     }
@@ -198,7 +198,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         return true;
     }
     // define operation
-    private int delay = 100;  				// units are milliseconds; default is quiet a busy LocoNet
+    private int delay = 100;      // units are milliseconds; default is quiet a busy LocoNet
 
     @Override
     public java.util.Vector<String> getPortNames() {
@@ -252,5 +252,5 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         setTurnoutHandling(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class);
 }

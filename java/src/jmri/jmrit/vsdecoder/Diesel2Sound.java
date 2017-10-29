@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -312,6 +312,6 @@ class Diesel2Sound extends EngineSound {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EngineSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(EngineSound.class);
 
 }

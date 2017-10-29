@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame displaying (and logging) serial command messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
@@ -27,6 +27,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     protected void init() {
         // connect to TrafficController
         SerialTrafficController.instance().addSerialListener(this);
+    }
+
+    /**
+     * Define system-specific help item
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.grapevine.serialmon.SerialMonFrame", true);  // NOI18N
     }
 
     @Override
@@ -51,6 +58,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         nextLine("R: " + l.format() + "\n", l.toString());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonFrame.class);
 
 }

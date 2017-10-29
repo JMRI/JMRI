@@ -15,7 +15,7 @@ import javax.swing.SortOrder;
  * has selected in messages where they have selected "Remember this setting for
  * next time"
  *
- * @see jmri.managers.DefaultUserMessagePreferences
+ * @see jmri.managers.JmriUserPreferencesManager
  *
  * @author Kevin Dickerson Copyright (C) 2010
  */
@@ -766,7 +766,7 @@ public interface UserPreferencesManager {
     public List<String> getTablesColumnList(String table);
     /*
      Example informational message dialog box.
-        
+
      final UserPreferencesManager p;
      p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
      if (p.getRouteSaveMsg()){
@@ -777,22 +777,22 @@ public interface UserPreferencesManager {
      JPanel container = new JPanel();
      container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
      container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            
+
      JLabel question = new JLabel("Remember to save your Route information.", JLabel.CENTER);
      question.setAlignmentX(Component.CENTER_ALIGNMENT);
      container.add(question);
-            
+
      JButton okButton = new JButton("Okay");
      JPanel button = new JPanel();
      button.setAlignmentX(Component.CENTER_ALIGNMENT);
      button.add(okButton);
      container.add(button);
-            
+
      final JCheckBox remember = new JCheckBox("Do not remind me again?");
      remember.setAlignmentX(Component.CENTER_ALIGNMENT);
      remember.setFont(remember.getFont().deriveFont(10f));
      container.add(remember);
-            
+
      okButton.addActionListener(new ActionListener(){
      public void actionPerformed(ActionEvent e) {
      if(remember.isSelected()){
@@ -801,8 +801,8 @@ public interface UserPreferencesManager {
      dialog.dispose();
      }
      });
-            
-            
+
+
      dialog.getContentPane().add(container);
      dialog.pack();
      dialog.setModal(true);
@@ -813,7 +813,7 @@ public interface UserPreferencesManager {
 
  /*
      Example question message dialog box.
-        
+
      final DefaultUserMessagePreferences p;
      p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
      if (p.getQuitAfterSave()==0x00){
@@ -840,7 +840,7 @@ public interface UserPreferencesManager {
      button.add(yesButton);
      button.add(noButton);
      container.add(button);
-            
+
      noButton.addActionListener(new ActionListener(){
      public void actionPerformed(ActionEvent e) {
      if(remember.isSelected()){
@@ -849,7 +849,7 @@ public interface UserPreferencesManager {
      dialog.dispose();
      }
      });
-            
+
      yesButton.addActionListener(new ActionListener(){
      public void actionPerformed(ActionEvent e) {
      if(remember.isSelected()) {

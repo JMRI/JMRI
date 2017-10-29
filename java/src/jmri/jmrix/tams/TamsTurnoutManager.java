@@ -49,6 +49,11 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     boolean noWarnDelete = false;
 
     @Override
@@ -132,6 +137,6 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         ttu.setKnownStateFromCS(turnoutState);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class);
 
 }

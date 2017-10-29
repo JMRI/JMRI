@@ -29,6 +29,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import jmri.InstanceManager;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -58,12 +59,13 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener {
 
+    static final String ramp = Bundle.getMessage("Ramp");
     static final String halt = Bundle.getMessage("Halt");
-    static final String stop = Bundle.getMessage("Stop");
+    static final String stop = Bundle.getMessage("EStop");
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
     static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {halt, resume, retry, stop, abort};
+    static final String[] controls = {halt, resume, ramp, retry, stop, abort};
 
     public static int _maxHistorySize = 30;
 
@@ -73,29 +75,50 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     private JTextField _status = new JTextField(90);
     private ArrayList<String> _statusHistory = new ArrayList<String>();
     private JScrollPane _tablePane;
-    private int _rowHeight;
 
     private WarrantTableModel _model;
-    private static WarrantTableFrame _instance;
 
+    /**
+     * Get the default instance of a Warrant table window.
+     *
+     * @return the default instance; creating it if necessary
+     * @deprecated since 4.7.4; use {@link #getDefault() } instead
+     */
+    @Deprecated
     public static WarrantTableFrame getInstance() {
-        if (_instance == null) {
-            _instance = new WarrantTableFrame();
+        return getDefault();
+    }
+
+    /**
+     * Get the default instance of a Warrant table window.
+     *
+     * @return the default instance; creating it if necessary
+     */
+    public static WarrantTableFrame getDefault() {
+        WarrantTableFrame instance = InstanceManager.getOptionalDefault(WarrantTableFrame.class).orElseGet(() -> {
+            WarrantTableFrame newInstance = InstanceManager.setDefault(WarrantTableFrame.class, new WarrantTableFrame());
             try {
-                _instance.initComponents();
+                newInstance.initComponents();
+                if (log.isDebugEnabled()) log.debug("newInstance");
             } catch (Exception ex) {
                 log.error("Unable to initilize Warrant Table Frame", ex);
             }
-        }
-        _instance.setVisible(true);
-        _instance.pack();
-        return _instance;
+            return newInstance;
+        });
+        instance.setVisible(true);
+        instance.pack();
+        return instance;
     }
 
-    // for JUnit test
+    /**
+     * Reset the WarrantTableFrame default instance (for unit testing only).
+     * @return a new WarrantTableFrame instance
+     * @deprecated since 4.7.4 without direct replacement
+     */
+    @Deprecated
     protected static WarrantTableFrame reset() {
-        _instance = null;
-        return getInstance();
+        InstanceManager.reset(WarrantTableFrame.class);
+        return getDefault();
     }
 
     protected WarrantTableModel getModel() {
@@ -103,7 +126,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     private WarrantTableFrame() {
-        super(false, true);
+        super(true, true);
         setTitle(Bundle.getMessage("WarrantTable"));
         _model = new WarrantTableModel(this);
         _model.init();
@@ -115,9 +138,10 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * method, rather than in the ctor itself.
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
-        //Casts at getTableCellEditorComponent() now fails with 3.0 ??            
+        if (log.isDebugEnabled()) log.debug("initComponents");
+        //Casts at getTableCellEditorComponent() now fails with 3.0 ??
         JTable table = new JTable(_model);
         ComboBoxCellEditor comboEd;
         TableRowSorter<WarrantTableModel> sorter = new TableRowSorter<>(_model);
@@ -158,8 +182,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WarrantTableModel.MANUAL_RUN_COLUMN), false);
 
-        _rowHeight = box.getPreferredSize().height;
-        table.setRowHeight(_rowHeight);
+        int rowHeight = box.getPreferredSize().height;
+        table.setRowHeight(rowHeight);
         table.setDragEnabled(true);
         table.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _tablePane = new JScrollPane(table);
@@ -234,7 +258,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         addHelpMenu("package.jmri.jmrit.logix.WarrantTable", true);
 
         getContentPane().add(tablePanel);
-//        setLocation(50,0);
         pack();
     }
 
@@ -244,11 +267,15 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     protected static void nxAction() {
-        NXFrame nxFrame = NXFrame.getInstance();
-        if (nxFrame._controlPanel == null) {
-            nxFrame.init();
+        NXFrame nxFrame = WarrantTableAction.getNXFrame();
+        if (nxFrame == null) {
+            nxFrame = new NXFrame();
+            WarrantTableAction.setNXFrame(nxFrame);
+        } else {
+            nxFrame.setState(java.awt.Frame.NORMAL);
+            nxFrame.setVisible(true);
+            nxFrame.toFront();            
         }
-        nxFrame.setVisible(true);
     }
 
     private void haltAllAction() {
@@ -390,7 +417,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     /**
      * Return error message if warrant cannot be run.
      *
-     * @param w warrant
+     * @param w    warrant
+     * @param mode running type
      * @return null if warrant is started
      */
     public String runTrain(Warrant w, int mode) {
@@ -406,6 +434,12 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             setStatusText(msg, Color.red, false);
             return msg;
         }
+/*        if (w.commandsHaveTrackSpeeds()) {
+            w.getSpeedUtil().getValidSpeedProfile(this);            
+        } else {
+            setStatusText(Bundle.getMessage("NoTrackSpeeds", w.getDisplayName()), Color.red, true);
+        }*/
+        
         msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
         if (msg != null) {
             setStatusText(msg, Color.red, false);
@@ -414,14 +448,14 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         msg = w.checkStartBlock(mode);  // notify first block occupied by this train
         if (msg != null) {
             if (msg.equals("BlockDark")) {
-                msg = Bundle.getMessage("BlockDark", w.getCurrentBlockName(), w.getTrainName());                            
+                msg = Bundle.getMessage("BlockDark", w.getCurrentBlockName(), w.getTrainName());
             } else if (msg.equals("warnStart")) {
                 msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
             } else if (msg.equals("warnStartManual")) {
                 msg = Bundle.getMessage("warnStartManual", w.getTrainName(), w.getCurrentBlockName());
             }
+            setStatusText(msg, WarrantTableModel.myGold, false);
         }
-        setStatusText(msg, WarrantTableModel.myGold, false);
         // From here on messages are status information, not abort info
         msg = w.checkRoute();   // notify about occupation ahead
         if (msg != null) {
@@ -459,9 +493,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         /*      if (WarrantTableModel.myGold.equals(c)) {
             _status.setBackground(Color.lightGray);
         } else if (Color.red.equals(c)) {
-            _status.setBackground(Color.white);         
+            _status.setBackground(Color.white);
         } else {
-            _status.setBackground(Color.white);         
+            _status.setBackground(Color.white);
         }*/
         _status.setForeground(c);
         _status.setText(msg);
@@ -476,5 +510,5 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
     static String BLANK = "                                                                                                 ";
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantTableFrame.class);
 }

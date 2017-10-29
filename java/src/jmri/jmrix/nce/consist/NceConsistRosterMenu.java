@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Provides a context-specific menu for handling the Roster.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007
  * @see NceConsistRosterEntry
@@ -100,6 +100,6 @@ public class NceConsistRosterMenu extends JMenu {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceConsistRosterMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistRosterMenu.class);
 
 }

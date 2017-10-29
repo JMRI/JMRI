@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.zimo.mx1.configurexml.PackageTest.class,
-   Mx1AdapterTest.class
+   Mx1AdapterTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.zimo.mx1 package.
@@ -32,6 +33,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

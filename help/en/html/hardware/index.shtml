@@ -138,6 +138,13 @@
             Station</a>.</p>
           </dd>
 
+          <dt><a href="dcc4pc/index.shtml">Dcc4Pc</a></dt>
+
+          <dd>
+            <p class="dl">Configure: <a href=
+            "dcc4pc/index.shtml">DCC 4 PC detection boards</a></p>
+          </dd>
+
           <dt class="im"><a href=
           "http://www.dccspecialties.com"><img src=
           "http://www.dccspecialties.com/common/top-logo.gif"
@@ -423,8 +430,8 @@
             "openlcb/index.shtml">OpenLCB networks</a></p>
           </dd>
 
-          <dt class="im"><a href="http://www.protrak.cc"><img src=
-          "http://www.protrak.cc/ptgif.gif"></a></dt>
+          <dt class="im"><a href="http://protrak.org"><img src=
+          "http://protrak.org/wpt/wp-content/uploads/2015/05/ProTrak_Login2.png"></a></dt>
 
           <dt><a href="grapevine/index.shtml">ProTrak
           Grapevine</a></dt>

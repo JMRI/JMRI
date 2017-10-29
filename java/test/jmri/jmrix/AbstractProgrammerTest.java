@@ -4,10 +4,11 @@ import java.util.List;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the AbstractProgrammer class
@@ -21,7 +22,7 @@ public class AbstractProgrammerTest extends TestCase {
     AbstractProgrammer abstractprogrammer;
 
     public void testDefault() {
-        Assert.assertEquals("Check Default", DefaultProgrammerManager.DIRECTMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
                 abstractprogrammer.getMode());        
     }
     
@@ -33,15 +34,15 @@ public class AbstractProgrammerTest extends TestCase {
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
                 
-                retval.add(DefaultProgrammerManager.DIRECTMODE);
-                retval.add(DefaultProgrammerManager.PAGEMODE);
-                retval.add(DefaultProgrammerManager.REGISTERMODE);
+                retval.add(ProgrammingMode.DIRECTMODE);
+                retval.add(ProgrammingMode.PAGEMODE);
+                retval.add(ProgrammingMode.REGISTERMODE);
 
                 return retval;
             }
 
             @Override
-            public ProgrammingMode getBestMode() { return DefaultProgrammerManager.REGISTERMODE; }
+            public ProgrammingMode getBestMode() { return ProgrammingMode.REGISTERMODE; }
             
             @Override
             public void writeCV(int i, int j, ProgListener l) {}
@@ -55,13 +56,13 @@ public class AbstractProgrammerTest extends TestCase {
             public boolean getCanRead() { return true;}
         };
 
-        Assert.assertEquals("Check Default", DefaultProgrammerManager.REGISTERMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.REGISTERMODE,
                 abstractprogrammer.getMode());        
     }
     
     public void testSetGetMode() {
-        abstractprogrammer.setMode(DefaultProgrammerManager.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", DefaultProgrammerManager.REGISTERMODE,
+        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
                 abstractprogrammer.getMode());        
     }
     
@@ -104,6 +105,7 @@ public class AbstractProgrammerTest extends TestCase {
                 abstractprogrammer.registerFromCV(cv1); // should assert
                 Assert.fail("did not throw as expected for cv = " + cv1);
             } catch (Exception e) {
+                jmri.util.JUnitAppender.assertWarnMessage("Unhandled register from cv:  "+cv1);
             }
         }
     }
@@ -136,9 +138,9 @@ public class AbstractProgrammerTest extends TestCase {
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
                 
-                retval.add(DefaultProgrammerManager.DIRECTMODE);
-                retval.add(DefaultProgrammerManager.PAGEMODE);
-                retval.add(DefaultProgrammerManager.REGISTERMODE);
+                retval.add(ProgrammingMode.DIRECTMODE);
+                retval.add(ProgrammingMode.PAGEMODE);
+                retval.add(ProgrammingMode.REGISTERMODE);
 
                 return retval;
             }
@@ -158,7 +160,7 @@ public class AbstractProgrammerTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

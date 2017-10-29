@@ -10,6 +10,10 @@ import javax.swing.AbstractAction;
  * @author Daniel Boudreau Copyright (C) 2010
  */
 public class TrainsScheduleAction extends AbstractAction {
+    
+    public TrainsScheduleAction() {
+        super(Bundle.getMessage("TitleTimeTableTrains"));
+    }
 
     public TrainsScheduleAction(String s) {
         super(s);
@@ -24,7 +28,7 @@ public class TrainsScheduleAction extends AbstractAction {
             f = new TrainsScheduleTableFrame();
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 

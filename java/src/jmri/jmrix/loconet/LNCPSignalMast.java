@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * more general implementation, which can work with any system(s), is available
  * in {@link jmri.implementation.DccSignalMast}.
  *
- * @author	Kevin Dickerson Copyright (C) 2002
+ * @author Kevin Dickerson Copyright (C) 2002
  */
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
@@ -57,9 +57,9 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //						Object oldValue,
-    //						Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //      Object oldValue,
+    //      Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
     @Override
     public void message(LocoNetMessage l) {
@@ -134,6 +134,6 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class);
 
 }

@@ -19,7 +19,7 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public class LoadDemoAction extends AbstractAction {
 
-//    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class);
 
     public LoadDemoAction(String s) {
         super(s);

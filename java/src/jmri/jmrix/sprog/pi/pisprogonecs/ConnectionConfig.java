@@ -27,7 +27,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "Pi-SPROG One Command Station";
+        return Bundle.getMessage("PiSprog1CSTitle");
     }
 
     @Override
@@ -65,5 +65,3 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         }
     }
 }
-
-

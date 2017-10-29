@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.network;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -17,13 +18,17 @@ public class DCCppEthernetPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketize
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new DCCppEthernetPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation());
+        tc = new DCCppEthernetPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation()) {
+            @Override
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
+            }
+        };
     }
 
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

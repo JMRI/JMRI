@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
- * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author kcameron Copyright (C) 2011 copied from SerialMonPane.java
+ * @author Daniel Boudreau Copyright (C) 2012 added human readable format
  */
 public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTrafficListener, MrcPanelInterface {
 
@@ -135,6 +135,6 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcMonPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcMonPanel.class);
 
 }

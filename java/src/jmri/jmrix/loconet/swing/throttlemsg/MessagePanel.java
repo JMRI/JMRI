@@ -9,12 +9,12 @@ import javax.swing.JTextField;
 /**
  * Panel for sending messages to throttles.
  *
- * @author	Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
 public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
 
     // GUI member declarations
-    JButton button = new JButton("Send");
+    JButton button = new JButton(Bundle.getMessage("ButtonSend"));
     JTextField text = new JTextField(10);
 
     public MessagePanel() {

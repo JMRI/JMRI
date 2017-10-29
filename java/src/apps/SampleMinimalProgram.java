@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2003, 2005, 2007, 2010
+ * @author Bob Jacobsen Copyright 2003, 2005, 2007, 2010
  */
 public class SampleMinimalProgram {
 
@@ -121,10 +121,14 @@ public class SampleMinimalProgram {
         // start web server
         final int port = 12080;
         WebServerPreferences.getDefault().setPort(port);
-        WebServer.getDefault().start();
+        try {
+            WebServer.getDefault().start();
+        } catch (Exception ex) {
+            log.error("Unable to start web server.", ex);
+        }
 
         log.info("Up!");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SampleMinimalProgram.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SampleMinimalProgram.class);
 }

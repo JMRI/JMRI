@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +17,7 @@ public class SprogCommandStationTest {
    @Test
    public void ConstructorTest(){
        SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
-       SprogTrafficController tc = new SprogTrafficController(m);
+       SprogTrafficController tc = new SprogTrafficControlScaffold(m);
        SprogCommandStation cs = new SprogCommandStation(tc);
        Assert.assertNotNull(cs);
    }
@@ -24,12 +25,12 @@ public class SprogCommandStationTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

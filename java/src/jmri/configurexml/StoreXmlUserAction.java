@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * for information on the various types of information stored in configuration
  * files.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.XmlFile
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
@@ -34,9 +34,11 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //TODO: Add code to set default save file name to name of currently loaded config/panel
+        // (need to setSelectedFile)
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        userFileChooser.setApproveButtonText(rb.getString("StorePanelTitle"));
+        userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonSave")); // is in jmri.NBBundle
         userFileChooser.setDialogTitle(rb.getString("StorePanelTitle"));
         java.io.File file = getFileCustom(userFileChooser);
 
@@ -64,5 +66,5 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(StoreXmlUserAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlUserAction.class);
 }

@@ -1,38 +1,33 @@
 package jmri.jmrix.mrc.swing.packetgen;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class MrcPacketGenPanelTest {
-
-    @Test
-    public void testCTor() {
-        MrcPacketGenPanel t = new MrcPacketGenPanel();
-        Assert.assertNotNull("exists",t);
-    }
+public class MrcPacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        panel = new MrcPacketGenPanel();
+        helpTarget = "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel";
+        title = "MRC_: Send MRC command";
     }
 
+    @Override
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcPacketGenPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcPacketGenPanelTest.class);
 
 }

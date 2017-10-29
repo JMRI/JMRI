@@ -34,7 +34,7 @@ public class LocationTrackBlockingOrderAction extends AbstractAction {
             _frame.initComponents(_location);
         }
         _frame.setExtendedState(Frame.NORMAL);
-        _frame.setVisible(true);	// this also brings the frame into focus
+        _frame.setVisible(true); // this also brings the frame into focus
     }
 }
 

@@ -286,7 +286,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         _iconFamily = _itemPanel.getFamilyName();
         _itemPanel.clearSelections();
         setUpDown(_itemPanel.getUpDown());
-//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();
@@ -444,24 +444,27 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
     public void performMouseClicked(java.awt.event.MouseEvent e, int xx, int yy) {
         if (log.isDebugEnabled()) {
-            log.debug("performMouseClicked: buttonLive= " + buttonLive() + ", click from ("
+            log.debug("performMouseClicked: location ("+ getX() + ", " + getY() +"), click from ("
                     + xx + ", " + yy + ") displaying=" + displaying);
         }
-        if (!buttonLive()) {
-            return;
-        }
-        if (entries == null || entries.size() < 1) {
+        if (!buttonLive() || (entries == null || entries.size() < 1)) {
+            if (log.isDebugEnabled()) {
+                log.debug("performMouseClicked: buttonLive="+buttonLive()+", entries="+entries.size());
+            }
             return;
         }
 
         // find if we want to increment or decrement
+        // regardless of the zooming scale, (getX(), getY()) is the un-zoomed position in _editor._contents
+        // but the click is at the zoomed position
+        double ratio = _editor.getPaintScale();
         boolean dec = false;
         if (updown) {
-            if ((yy - getY()) > maxHeight() / 2) {
+            if ((yy/ratio - getY()) > (double)(maxHeight()) / 2) {
                 dec = true;
             }
         } else {
-            if ((xx - getX()) < maxWidth() / 2) {
+           if ((xx/ratio - getX()) < (double)(maxWidth()) / 2) {
                 dec = true;
             }
         }
@@ -521,5 +524,5 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         NamedIcon icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIcon.class);
 }

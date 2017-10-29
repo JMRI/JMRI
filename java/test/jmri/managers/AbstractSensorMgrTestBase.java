@@ -1,7 +1,7 @@
 /**
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
- * common tests
+ * common tests.
  */
 package jmri.managers;
 
@@ -34,7 +34,6 @@ public abstract class AbstractSensorMgrTestBase {
     static protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
-
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
@@ -73,7 +72,7 @@ public abstract class AbstractSensorMgrTestBase {
 
     @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        Sensor t = l.provideSensor("");
+        l.provideSensor("");
     }
 
     @Test
@@ -92,7 +91,7 @@ public abstract class AbstractSensorMgrTestBase {
 
     @Test
     public void testMisses() {
-        // try to get nonexistant lights
+        // try to get nonexistant sensors
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
@@ -103,7 +102,7 @@ public abstract class AbstractSensorMgrTestBase {
         Sensor t2 = l.provideSensor("" + getNumToTest2());
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
@@ -119,13 +118,18 @@ public abstract class AbstractSensorMgrTestBase {
 
     @Test
     public void testRename() {
-        // get light
+        // get sensor
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");
         Sensor t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
+    }
+
+    @Test
+    public void testPullResistanceConfigurable(){
+       Assert.assertFalse("Pull Resistance Configurable",l.isPullResistanceConfigurable());
     }
 
     /**

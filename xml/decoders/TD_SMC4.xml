@@ -77,21 +77,21 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable item="Servo 1 Center Posiion" CV="10" mask="XVVVVVVV" default="62">
+      <variable item="Servo 1 Center Position" CV="10" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
-        <label>Servo 1 Center Posiion</label>
+        <label>Servo 1 Center Position</label>
       </variable>
-      <variable item="Servo 2 Center Posiion" CV="11" mask="XVVVVVVV" default="62">
+      <variable item="Servo 2 Center Position" CV="11" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
-        <label>Servo 2 Center Posiion</label>
+        <label>Servo 2 Center Position</label>
       </variable>
-      <variable item="Servo 3 Center Posiion" CV="12" mask="XVVVVVVV" default="62">
+      <variable item="Servo 3 Center Position" CV="12" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
-        <label>Servo 3 Center Posiion</label>
+        <label>Servo 3 Center Position</label>
       </variable>
-      <variable item="Servo 4 Center Posiion" CV="13" mask="XVVVVVVV" default="62">
+      <variable item="Servo 4 Center Position" CV="13" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
-        <label>Servo 4 Center Posiion</label>
+        <label>Servo 4 Center Position</label>
       </variable>
       <variable item="Servo 2 Address" CV="14" mask="VVVVVVVV" default="2" tooltip="Range 1-2040">
         <splitVal highCV="15" upperMask="XXXXVVVV"/>
@@ -3665,7 +3665,7 @@
   <pane>
     <column>
       <label>
-        <text>---- Sets the SMC4 to a paricular test state - Use to help adjust servos ----</text>
+        <text>---- Sets the SMC4 to a particular test state - Use to help adjust servos ----</text>
       </label>
       <label>
         <text>            Only works in Ops mode</text>
@@ -3867,14 +3867,14 @@
       <row>
         <column>
           <display item="Servo 1 Move Range" tooltip="Range 1-127"/>
-          <display item="Servo 1 Center Posiion" tooltip="Range 1-127"/>
+          <display item="Servo 1 Center Position" tooltip="Range 1-127"/>
           <display item="Servo 1 Move Speed" tooltip="Range 1-127"/>
           <row>
             <column>
               <display item="Servo 1 Behavior"/>
             </column>
             <column>
-              <display item="Rev1" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev1" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3885,14 +3885,14 @@
       <row>
         <column>
           <display item="Servo 2 Move Range" tooltip="Range 1-127"/>
-          <display item="Servo 2 Center Posiion" tooltip="Range 1-127"/>
+          <display item="Servo 2 Center Position" tooltip="Range 1-127"/>
           <display item="Servo 2 Move Speed" tooltip="Range 1-127"/>
           <row>
             <column>
               <display item="Servo 2 Behavior"/>
             </column>
             <column>
-              <display item="Rev2" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev2" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3903,14 +3903,14 @@
       <row>
         <column>
           <display item="Servo 3 Move Range" tooltip="Range 1-127"/>
-          <display item="Servo 3 Center Posiion" tooltip="Range 1-127"/>
+          <display item="Servo 3 Center Position" tooltip="Range 1-127"/>
           <display item="Servo 3 Move Speed" tooltip="Range 1-127"/>
           <row>
             <column>
               <display item="Servo 3 Behavior"/>
             </column>
             <column>
-              <display item="Rev3" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev3" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3921,14 +3921,14 @@
       <row>
         <column>
           <display item="Servo 4 Move Range" tooltip="Range 1-127"/>
-          <display item="Servo 4 Center Posiion" tooltip="Range 1-127"/>
+          <display item="Servo 4 Center Position" tooltip="Range 1-127"/>
           <display item="Servo 4 Move Speed" tooltip="Range 1-127"/>
           <row>
             <column>
               <display item="Servo 4 Behavior"/>
             </column>
             <column>
-              <display item="Rev4" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev4" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>

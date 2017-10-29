@@ -1,0 +1,61 @@
+@startuml
+participant Layout
+participant CodeButton
+participant CodeLine
+participant Station
+participant TurnoutSection
+participant Locking
+
+Layout o-> CodeButton: Button Pressed\nSensor ACTIVE
+activate CodeButton
+CodeButton ->o Layout : Code Indicator\nON
+
+CodeButton -> Station : codeSendRequest()
+activate Station
+Station -> TurnoutSection : codeSendStart()
+activate TurnoutSection
+TurnoutSection ->o Layout : TO Indicators\nOFF
+deactivate TurnoutSection
+Station -> CodeLine : requestSendCode()
+activate CodeLine
+CodeLine -> CodeLine : queue then checkForWork()
+deactivate Station
+...
+CodeLine -> CodeLine : startSendCode()
+CodeLine o-> Layout : start code sending
+...
+Layout o-> CodeLine : (Timeout)
+CodeLine -> Station : codeValueDelivered()
+
+Station -> TurnoutSection : codeSendStart()
+activate TurnoutSection
+TurnoutSection -> Locking : opOK()
+activate Locking
+note over Locking : Checks multiple modes, OK
+deactivate Locking
+deactivate TurnoutSection
+
+deactivate CodeLine
+deactivate Station
+
+note over Layout : hardware or software\n          delay
+
+Layout o-> CodeLine: Code sequence\nCOMPLETE
+activate CodeLine
+CodeLine -> Station : codeValueDelivered()
+activate Station
+Station -> TurnoutSection : codeValueDelivered()
+activate TurnoutSection
+TurnoutSection ->o Layout : Set Turnout
+deactivate TurnoutSection
+Station -> CodeButton : codeSendComplete()
+activate CodeButton
+CodeButton ->o Layout : Code Indicator\nOFF
+deactivate CodeButton
+deactivate CodeLine
+deactivate Station
+
+note over Station: After this, the Station may initiate an return indication transfer
+
+@enduml
+

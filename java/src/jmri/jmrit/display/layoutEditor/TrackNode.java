@@ -28,11 +28,11 @@ import jmri.Block;
  * search, Track Segment is returned, Reached End Bumper is set true, and Node
  * Object and Node Type, are not returned.
  *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  */
 public class TrackNode {
 
-    public TrackNode(Object node, int nodeType, TrackSegment segment, boolean endBumper,
+    public TrackNode(LayoutTrack node, int nodeType, TrackSegment segment, boolean endBumper,
             int nodeState) {
         _Node = node;
         _NodeType = nodeType;
@@ -42,7 +42,7 @@ public class TrackNode {
     }
 
     // instance variables
-    Object _Node = null;
+    LayoutTrack _Node = null;
     int _NodeType = LayoutTrack.NONE;
     TrackSegment _TrackSegment = null;
     boolean _ReachedEndBumper = false;
@@ -52,11 +52,11 @@ public class TrackNode {
     /**
      * Access methods
      */
-    public void setNode(Object node) {
+    public void setNode(LayoutTrack node) {
         _Node = node;
     }
 
-    public Object getNode() {
+    public LayoutTrack getNode() {
         return _Node;
     }
 

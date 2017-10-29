@@ -7,7 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.util.JmriJFrame;
@@ -33,13 +32,13 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen Copyright 2003, 2004, 2007
+ * @author Bob Jacobsen Copyright 2003, 2004, 2007
  * @author Matthew Harris copyright (c) 2009
  */
 public class SoundPro extends Apps {
 
-    SoundPro(JFrame p) {
-        super(p);
+    SoundPro() {
+        super();
     }
 
     @Override
@@ -107,12 +106,13 @@ public class SoundPro extends Apps {
         Apps.setStartupInfo("SoundPro");
 
         setConfigFilename("SoundProConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("SoundPro");
-        createFrame(new SoundPro(f), f);
+        SoundPro sp = new SoundPro();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
+        createFrame(sp, f);
 
         log.debug("main initialization done");
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SoundPro.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SoundPro.class);
 }

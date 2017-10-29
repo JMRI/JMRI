@@ -10,12 +10,13 @@ import org.slf4j.LoggerFactory;
 /**
  * NCE implementation of a ThrottleManager.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NceThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection memo
      */
     public NceThrottleManager(NceSystemConnectionMemo memo) {
         super(memo);
@@ -76,6 +77,6 @@ public class NceThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceThrottleManager.class);
 
 }

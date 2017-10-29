@@ -25,7 +25,7 @@ public class SetTrainIconPositionAction extends AbstractAction {
             f = new SetTrainIconPositionFrame();
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 

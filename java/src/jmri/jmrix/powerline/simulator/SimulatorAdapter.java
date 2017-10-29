@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This is based on the NCE simulator.
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class SimulatorAdapter extends SerialPortController implements
@@ -125,6 +125,6 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

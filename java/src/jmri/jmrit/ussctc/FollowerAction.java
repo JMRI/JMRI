@@ -3,7 +3,7 @@ package jmri.jmrit.ussctc;
 /**
  * JmriJFrameAction to create and register a FollowerFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007
  */
 public class FollowerAction extends jmri.util.JmriJFrameAction {
 

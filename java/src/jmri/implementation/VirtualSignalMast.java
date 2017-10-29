@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * apart
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class VirtualSignalMast extends AbstractSignalMast {
 
@@ -80,5 +80,5 @@ public class VirtualSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class);
 }

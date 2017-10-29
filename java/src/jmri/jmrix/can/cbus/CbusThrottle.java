@@ -390,6 +390,9 @@ public class CbusThrottle extends AbstractThrottle {
             case 28:
                 this.f28 = state;
                 break;
+            default:
+                log.warn("Unhandled function number: {}", fn);
+                break;
         }
     }
 
@@ -497,7 +500,6 @@ public class CbusThrottle extends AbstractThrottle {
      */
     public void throttleTimedOut() {
         _handle = -1;
-        cs = null;
 
         // stop timeout
         mRefreshTimer.stop();
@@ -515,15 +517,14 @@ public class CbusThrottle extends AbstractThrottle {
     public void throttleDispose() {
         log.debug("dispose");
 
+        // stop timeout
+        mRefreshTimer.stop();
+
         cs.releaseSession(_handle);
         _handle = -1;
         cs = null;
 
-        // stop timeout
-        mRefreshTimer.stop();
-
         mRefreshTimer = null;
-        cs = null;
         finishRecord();
     }
 
@@ -545,13 +546,14 @@ public class CbusThrottle extends AbstractThrottle {
      * Internal routine to resend the speed on a timeout
      */
     synchronized protected void keepAlive() {
-        cs.sendKeepAlive(_handle);
+        if (cs != null) { // cs can be null if in process of terminating?
+            cs.sendKeepAlive(_handle);
 
-        // reset timeout
-        mRefreshTimer.stop();
-        mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
-        mRefreshTimer.start();
-
+            // reset timeout
+            mRefreshTimer.stop();
+            mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
+            mRefreshTimer.start();
+        } 
     }
 
     @Override
@@ -560,6 +562,6 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CbusThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusThrottle.class);
 
 }

@@ -8,7 +8,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * <P>
  * This nests until the next SKEME_START.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 class SkemeStartEditor extends SdfMacroEditor {
 

@@ -35,7 +35,9 @@
       <h2>Tabs</h2>
 
       <ul>
-        <li>Reporter Tab: Set locations for JMRI Reporters</li>
+        <li>Reporters Tab: Set locations for JMRI Reporters</li>
+
+        <li>Blocks Tab: Set locations for JMRI Blocks</li>
 
         <li>Operations Locations Tab: Set locations for JMRI
         Operations Locations</li>
@@ -50,7 +52,7 @@
         <li>If you add new Reporters, you must close and re-open
         the Manage VSD Locations window to have them appear.</li>
       </ul><a id="prefs" name="prefs">(This is the
-      jmri.jmrit.vsdecoder.ManageLocationsFrame help page) 
+      jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page) 
       <!--#include virtual="/Footer" --></a>
     </div>
   </div>

@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    jmri.jmrix.sprog.pi.pisprognano.PackageTest.class,
    jmri.jmrix.sprog.pi.pisprogone.PackageTest.class,
-   jmri.jmrix.sprog.pi.pisprogonecs.PackageTest.class
+   jmri.jmrix.sprog.pi.pisprogonecs.PackageTest.class,
+   BundleTest.class
 })
 public class PackageTest {
 }

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a NodeConfigFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class NodeConfigAction extends AbstractAction {
 
@@ -17,7 +17,7 @@ public class NodeConfigAction extends AbstractAction {
     }
 
     public NodeConfigAction() {
-        this("Configure Grapevine Nodes");
+        this(Bundle.getMessage("WindowTitle"));
     }
 
     @Override
@@ -31,5 +31,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class);
+
 }

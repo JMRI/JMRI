@@ -3,6 +3,7 @@ package jmri.jmrit.operations.routes;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -15,11 +16,11 @@ import org.junit.Assert;
 
 /**
  * Tests for the Operations Route class Last manually cross-checked on 20090131
- *
+ * <p>
  * Still to do: Route: Route Location <-- Need to verify Route: XML read/write
  * RouteLocation: get/set Staging Track RouteLocation: location <--Need to
  * verify RouteLocation: XML read/write
- *
+ * <p>
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class OperationsRoutesTest extends OperationsTestCase {
@@ -325,7 +326,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     public void testRouteManager() {
-        RouteManager rm = RouteManager.instance();
+        RouteManager rm = InstanceManager.getDefault(RouteManager.class);
         List<Route> listById = rm.getRoutesByIdList();
         List<Route> listByName = rm.getRoutesByNameList();
 
@@ -483,19 +484,19 @@ public class OperationsRoutesTest extends OperationsTestCase {
 
     // test route status
     public void testRouteStatus() {
-        RouteManager rm = RouteManager.instance();
+        RouteManager rm = InstanceManager.getDefault(RouteManager.class);
         Route r = rm.newRoute("TestRouteStatus");
         // note that the status strings are defined in JmritOperationsRoutesBundle.properties
         Assert.assertEquals("Route status error", "Error", r.getStatus());
 
         // now add a location to the route
-        Location l = LocationManager.instance().newLocation("TestRouteStatusLoc");
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestRouteStatusLoc");
         r.addLocation(l);
         // note that the status strings are defined in JmritOperationsRoutesBundle.properties
         Assert.assertEquals("Route status ophan", "Orphan", r.getStatus());
 
         // now connect route to a train
-        Train t = TrainManager.instance().newTrain("TestRouteStatusTrain");
+        Train t = InstanceManager.getDefault(TrainManager.class).newTrain("TestRouteStatusTrain");
         t.setRoute(r);
         // note that the status strings are defined in JmritOperationsRoutesBundle.properties
         Assert.assertEquals("Route status okay", "OK", r.getStatus());
@@ -505,12 +506,12 @@ public class OperationsRoutesTest extends OperationsTestCase {
      * Test route Xml create, read, and backup support. Originally written as
      * three separate tests, now combined into one as of 8/29/2013
      *
-     * @throws JDOMException
-     * @throws IOException
+     * @throws JDOMException exception
+     * @throws IOException exception
      */
     public void testXMLCreate() throws JDOMException, IOException {
 
-        RouteManager manager = RouteManager.instance();
+        RouteManager manager = InstanceManager.getDefault(RouteManager.class);
         List<Route> temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
 
@@ -521,7 +522,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("New Number of Routes", 3, temprouteList.size());
 
-        RouteManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(RouteManagerXml.class).writeOperationsFile();
 
         // Add some more routes and write file again
         // so we can test the backup facility
@@ -536,7 +537,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertNotNull("route r5 exists", r5);
         Assert.assertNotNull("route r6 exists", r6);
 
-        LocationManager lmanager = LocationManager.instance();
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location Acton = lmanager.newLocation("Acton");
         Location Bedford = lmanager.newLocation("Bedford");
         Location Chelmsford = lmanager.newLocation("Chelmsford");
@@ -598,15 +599,15 @@ public class OperationsRoutesTest extends OperationsTestCase {
         r5.setComment("r5 comment");
         r6.setComment("r6 comment");
 
-        RouteManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(RouteManagerXml.class).writeOperationsFile();
 
         // now perform read operation
         manager.dispose();
-        manager = RouteManager.instance();
+        manager = InstanceManager.getDefault(RouteManager.class);
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
 
-        RouteManagerXml.instance().readFile(RouteManagerXml.instance().getDefaultOperationsFilename());
+        InstanceManager.getDefault(RouteManagerXml.class).readFile(InstanceManager.getDefault(RouteManagerXml.class).getDefaultOperationsFilename());
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Number of Routes", 6, temprouteList.size());
 
@@ -682,13 +683,13 @@ public class OperationsRoutesTest extends OperationsTestCase {
         // now test backup file
         manager.dispose();
         // change default file name to backup
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml.bak");
+        InstanceManager.getDefault(RouteManagerXml.class).setOperationsFileName("OperationsJUnitTestRouteRoster.xml.bak");
 
-        manager = RouteManager.instance();
+        manager = InstanceManager.getDefault(RouteManager.class);
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
 
-        RouteManagerXml.instance().readFile(RouteManagerXml.instance().getDefaultOperationsFilename());
+        InstanceManager.getDefault(RouteManagerXml.class).readFile(InstanceManager.getDefault(RouteManagerXml.class).getDefaultOperationsFilename());
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Number of Routes", 3, temprouteList.size());
 
@@ -708,7 +709,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
 
     }
 
-	// TODO: Add tests for Route location track location
+    // TODO: Add tests for Route location track location
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     // from here down is testing infrastructure

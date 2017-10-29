@@ -5,7 +5,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 /**
  * Provide access to Swing components for the LocoNet subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
  */
 public class LnComponentFactory extends jmri.jmrix.swing.ComponentFactory {
@@ -17,7 +17,7 @@ public class LnComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     LocoNetSystemConnectionMemo memo;
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
      */
     @Override
     public javax.swing.JMenu getMenu() {
@@ -26,4 +26,5 @@ public class LnComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new LocoNetMenu(memo);
     }
+
 }

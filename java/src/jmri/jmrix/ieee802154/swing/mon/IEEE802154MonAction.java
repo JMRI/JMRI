@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a IEEE802154MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2013
  */
 public class IEEE802154MonAction extends AbstractAction {
 
@@ -46,12 +46,8 @@ public class IEEE802154MonAction extends AbstractAction {
             log.warn("IEEE802154MonAction starting IEEE802154MonFrame: Exception: " + ex.toString());
         }
         f.setVisible(true);
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(IEEE802154MonAction.class);
 
 }
-
-
-

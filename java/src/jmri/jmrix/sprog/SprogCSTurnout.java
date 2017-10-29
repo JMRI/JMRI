@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  */
 public class SprogCSTurnout extends AbstractTurnout {
@@ -20,10 +20,14 @@ public class SprogCSTurnout extends AbstractTurnout {
     private SprogSystemConnectionMemo _memo = null;
 
     /**
+     * Create SPROG Turnout object.
+     * <p>
      * Sprog turnouts use the NMRA number (0-511) as their numerical
      * identification.
+     * @param number address for turnout
+     * @param memo connection to get prefix from
      */
-    public SprogCSTurnout(int number,SprogSystemConnectionMemo memo) {
+    public SprogCSTurnout(int number, SprogSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "T" + number);
         _number = number;
         _memo = memo;
@@ -34,7 +38,11 @@ public class SprogCSTurnout extends AbstractTurnout {
         return _number;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * Handle a request to change state by sending a formatted DCC packet.
+     *
+     * @param s commanded state to set
+     */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
@@ -42,7 +50,7 @@ public class SprogCSTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -63,7 +71,10 @@ public class SprogCSTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ST" + _number);
+            log.debug("Send command to {} Pushbutton {}T{}",
+                    (_pushButtonLockout ? "Lock" : "Unlock"),
+                    _memo.getSystemPrefix(),
+                    _number);
         }
     }
 
@@ -72,9 +83,8 @@ public class SprogCSTurnout extends AbstractTurnout {
         return true;
     }
 
-    int _number;   // turnout number
+    int _number; // turnout number
 
-    private final static Logger log = LoggerFactory.getLogger(SprogCSTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogCSTurnout.class);
+
 }
-
-

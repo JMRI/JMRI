@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <li>IH1:IH2 - colon-separated list of names for SignalHeads
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
 
@@ -222,6 +222,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             };
             Thread thr = new Thread(r);
             thr.setName(getDisplayName() + " delayed set appearance");
+            thr.setDaemon(true);
             try {
                 thr.start();
             } catch (java.lang.IllegalThreadStateException ex) {
@@ -252,6 +253,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
             Thread thr = new Thread(r);
             thr.setName(getDisplayName());
+            thr.setDaemon(true);
             try {
                 thr.start();
                 thr.join();
@@ -304,10 +306,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
                     }
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {
-
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class);
 }

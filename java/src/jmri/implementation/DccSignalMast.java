@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System name specifies the creation information:
  * <pre>
- * IF$dsm:basic:one-searchlight:(123)
+ * IF$dsm:basic:one-searchlight(123)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$dsm - defines signal masts of this type

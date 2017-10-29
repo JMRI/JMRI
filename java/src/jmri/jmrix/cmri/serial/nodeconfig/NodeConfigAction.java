@@ -2,26 +2,26 @@ package jmri.jmrix.cmri.serial.nodeconfig;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a NodeConfigFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NodeConfigAction extends AbstractAction {
 
-    CMRISystemConnectionMemo _memo = null;
+    private CMRISystemConnectionMemo _memo = null;
 
-    public NodeConfigAction(String s,CMRISystemConnectionMemo memo) {
+    public NodeConfigAction(String s, CMRISystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
     public NodeConfigAction(CMRISystemConnectionMemo memo) {
-        this("Configure C/MRI Nodes",memo);
+        this(Bundle.getMessage("ConfigureNodesTitle"), memo);
     }
 
     @Override
@@ -35,5 +35,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class);
+
 }

@@ -8,18 +8,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represents information for a DCC Command Station Queue entry where each entry
- * is a DCC packet to be transmitted to the rails
- * <P>
+ * Represent information for a DCC Command Station Queue entry where each entry
+ * is a DCC packet to be transmitted to the rails.
+ * <p>
  * A SlotListener can be registered to hear of changes in this slot. All changes
  * in values will result in notification.
- * <P>
+ * <p>
  * Updated by Andrew Crosland February 2012 to allow slots to hold 28 step speed
- * packets</P>
+ * packets
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
  * @author	Andrew Berridge 2010
-  */
+ */
 public class SprogSlot {
 
     private boolean speedPacket = false;
@@ -83,7 +83,7 @@ public class SprogSlot {
     private boolean repeatF12 = false;
 
     /**
-     * Set the contents of the slot. Intended for accessory packets
+     * Set the contents of the slot. Intended for accessory packets.
      *
      * @param address int
      * @param payload byte[]
@@ -310,6 +310,7 @@ public class SprogSlot {
     }
 
     // Access methods
+
     public void clear() {
         status = SprogConstants.SLOT_FREE;
         addr = 0;
@@ -404,7 +405,7 @@ public class SprogSlot {
     /**
      * Get the payload of this slot. Note - if this slot has a number of
      * repeats, calling this method will also decrement the internal repeat
-     * counter
+     * counter.
      *
      * @return a byte array containing the payload of this slot
      */
@@ -440,9 +441,9 @@ public class SprogSlot {
     }
 
     /**
-     * Get the address from the packet
+     * Get the address from the packet.
      *
-     * @return int
+     * @return int address from payload
      */
     private int addressFromPacket() {
         if (isFree()) {
@@ -455,8 +456,5 @@ public class SprogSlot {
         return payload[0];
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogSlot.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogSlot.class);
 }
-
-
-

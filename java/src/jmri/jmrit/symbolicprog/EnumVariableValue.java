@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extends VariableValue to represent a enumerated variable.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -504,7 +504,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * value changes.  Those are handled automagically since we're sharing the same
      * model between this object and the real JComboBox value.
      *
-     * @author			Bob Jacobsen   Copyright (C) 2001
+     * @author   Bob Jacobsen   Copyright (C) 2001
          */
     public static class VarComboBox extends JComboBox<String> {
 
@@ -588,6 +588,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EnumVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnumVariableValue.class);
 
 }

@@ -35,6 +35,8 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
+     * @param m sequence to send
+     * @param l expected reply length
      *
      */
     public SerialMessage(String m, int l) {
@@ -58,6 +60,7 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l expected reply length
      */
     public SerialMessage(byte[] a, int l) {
         super(String.valueOf(a));

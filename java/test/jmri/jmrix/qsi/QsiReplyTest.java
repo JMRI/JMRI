@@ -1,9 +1,10 @@
 package jmri.jmrix.qsi;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the QsiReplyclass
@@ -81,8 +82,7 @@ public class QsiReplyTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         memo = new QsiSystemConnectionMemo();
         tc = new QsiTrafficControlScaffold(){
             @Override
@@ -95,8 +95,7 @@ public class QsiReplyTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
 }

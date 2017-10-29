@@ -51,9 +51,15 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 } else {
                     log.debug("Transit system name is " + sname);
                     Transit x = tm.getBySystemName(sname);
-                    Element elem = new Element("transit")
-                            .setAttribute("systemName", sname);
+                    Element elem = new Element("transit");
+                    elem.addContent(new Element("systemName").addContent(sname));
 
+                    // As a work-around for backward compatibility, store systemName and username as attribute.
+                    // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                    elem.setAttribute("systemName", sname);
+                    String uname = x.getUserName();
+                    if (uname!=null && !uname.equals("")) elem.setAttribute("userName", uname);
+                            
                     // store common part
                     storeCommon(x, elem);
 
@@ -73,6 +79,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                             tsElem.setAttribute("sequence", Integer.toString(ts.getSequenceNumber()));
                             tsElem.setAttribute("direction", Integer.toString(ts.getDirection()));
                             tsElem.setAttribute("alternate", "" + (ts.isAlternate() ? "yes" : "no"));
+                            tsElem.setAttribute("safe", "" + (ts.isSafe() ? "yes" : "no"));
                             // save child transitsectionaction entries if any
                             ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
                             if (tsaList.size() > 0) {
@@ -152,16 +159,9 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         TransitManager tm = InstanceManager.getDefault(jmri.TransitManager.class);
 
         for (int i = 0; i < transitList.size(); i++) {
-            if (transitList.get(i).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName " + transitList.get(i) + " "
-                        + transitList.get(i).getAttributes());
-                break;
-            }
-            String sysName = transitList.get(i).getAttribute("systemName").getValue();
-            String userName = null;
-            if (transitList.get(i).getAttribute("userName") != null) {
-                userName = transitList.get(i).getAttribute("userName").getValue();
-            }
+            String sysName = getSystemName(transitList.get(i));
+            String userName = getUserName(transitList.get(i));
+            
             Transit x = tm.createNewTransit(sysName, userName);
             if (x != null) {
                 // load common part
@@ -174,6 +174,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                     int seq = 0;
                     int dir = Section.UNKNOWN;
                     boolean alt = false;
+                    boolean safe = false;
                     String sectionName = elem.getAttribute("sectionname").getValue();
                     if (sectionName.equals("null")) {
                         log.warn("When loading configuration - missing Section in Transit " + sysName);
@@ -187,7 +188,12 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                     if (elem.getAttribute("alternate").getValue().equals("yes")) {
                         alt = true;
                     }
-                    TransitSection ts = new TransitSection(sectionName, seq, dir, alt);
+                    if (elem.getAttribute("safe") != null) {
+                        if (elem.getAttribute("safe").getValue().equals("yes")) {
+                            safe = true;
+                        }
+                    }
+                    TransitSection ts = new TransitSection(sectionName, seq, dir, alt, safe);
                     x.addTransitSection(ts);
                     // load transitsectionaction children, if any
                     List<Element> transitTransitSectionActionList = transitTransitSectionList.get(n).
@@ -224,5 +230,5 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         return InstanceManager.getDefault(jmri.TransitManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitManagerXml.class);
 }

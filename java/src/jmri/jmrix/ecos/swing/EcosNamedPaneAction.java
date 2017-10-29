@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
   */
 public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
      */
     public EcosNamedPaneAction(String s, WindowInterface wi, String paneClass, EcosSystemConnectionMemo memo) {
         super(s, wi, paneClass);
@@ -47,5 +47,6 @@ public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class);
+
 }

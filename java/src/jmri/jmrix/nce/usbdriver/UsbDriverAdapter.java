@@ -1,10 +1,8 @@
 package jmri.jmrix.nce.usbdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Vector;
@@ -13,6 +11,11 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements UsbPortAdapter for the NCE system.
@@ -33,7 +36,7 @@ public class UsbDriverAdapter extends NcePortController {
 
     public UsbDriverAdapter() {
         super(new NceSystemConnectionMemo());
-        option1Name = "System";
+        option1Name = "System"; // NOI18N
         options.put(option1Name, new Option("System:", option1Values, false));
         option2Name = "USB Version";
         options.put(option2Name, new Option("USB Version", option2Values, false));
@@ -63,17 +66,13 @@ public class UsbDriverAdapter extends NcePortController {
                     }
                 }
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            configureLeadsAndFlowControl(activeSerialPort, 0);
             activeSerialPort.enableReceiveTimeout(50);  // 50 mSec timeout before sending chars
 
             // set timeout
@@ -94,9 +93,9 @@ public class UsbDriverAdapter extends NcePortController {
             }
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (UnsupportedCommOperationException | IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -120,9 +119,9 @@ public class UsbDriverAdapter extends NcePortController {
         tc.setAdapterMemo(this.getSystemConnectionMemo());
 
         //set the system the USB is connected to
-        if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[1])) {	//if V7 (Nov 2012)
+        if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[1])) { //if V7 (Nov 2012)
             // is new firmware, determine functions available
-            if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {	//SB5
+            if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) { //SB5
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
                 tc.setCmdGroups(NceTrafficController.CMDS_MEM
                         | NceTrafficController.CMDS_AUI_READ
@@ -131,7 +130,7 @@ public class UsbDriverAdapter extends NcePortController {
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
 
-            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {	//TWIN
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) { //TWIN
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
                 tc.setCmdGroups(NceTrafficController.CMDS_MEM
                         | NceTrafficController.CMDS_AUI_READ
@@ -140,20 +139,20 @@ public class UsbDriverAdapter extends NcePortController {
                         | NceTrafficController.CMDS_USB
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
-            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {	//PowerPro
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) { //PowerPro
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
                 tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
                         | NceTrafficController.CMDS_AUI_READ
                         | NceTrafficController.CMDS_USB
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
-            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {	//SB3
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) { //SB3
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
                 tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
                         | NceTrafficController.CMDS_USB
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
-            } else {	//PowerCab
+            } else { //PowerCab
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
                 tc.setCmdGroups(NceTrafficController.CMDS_MEM
                         | NceTrafficController.CMDS_AUI_READ
@@ -247,6 +246,6 @@ public class UsbDriverAdapter extends NcePortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(UsbDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UsbDriverAdapter.class);
 
 }

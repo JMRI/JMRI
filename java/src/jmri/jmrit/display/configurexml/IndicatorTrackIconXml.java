@@ -47,7 +47,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
             element.addContent(storeNamedBean("occupancyblock", b));
         }
         NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
-        if (b == null && s != null) {		// only write sensor if no OBlock, don't write double sensing
+        if (b == null && s != null) {  // only write sensor if no OBlock, don't write double sensing
             element.addContent(storeNamedBean("occupancysensor", s));
         }
         /*
@@ -175,5 +175,5 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIconXml.class);
 }

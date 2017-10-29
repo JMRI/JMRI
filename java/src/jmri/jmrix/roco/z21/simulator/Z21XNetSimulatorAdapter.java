@@ -8,8 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to a simulated z21 XPressNet sub-system.
- * This shares some code with the XPressNet simulator, but it's 
+ * Provide access to a simulated z21 XpressNet sub-system.
+ * <p>
+ * This shares some code with the XpressNet simulator, but it's
  * not a derived class because it isn't a real connection.
  *
  * @author	Paul Bender, Copyright (C) 2015
@@ -60,7 +61,7 @@ public class Z21XNetSimulatorAdapter {
                         break;
                     case XNetConstants.SERVICE_MODE_CSRESULT:
                     default:
-                        log.debug("Unsupoorted requested received: {}", m.toString());
+                        log.debug("Unsupported requested received: {}", m.toString());
                         reply=notSupportedReply();
                 }
                 break;
@@ -90,7 +91,14 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         // save the address and speed information for
                         // the simulator's RailCom values.
@@ -101,7 +109,7 @@ public class Z21XNetSimulatorAdapter {
                         locoPosition = (locoPosition +1) %19;
                         break;
                      case XNetConstants.LOCO_SPEED_27:
-                        log.debug("Unsupoorted requested received: {}", m.toString());
+                        log.debug("Unsupported requested received: {}", m.toString());
                         reply = notSupportedReply();
                         break;
                      case XNetConstants.LOCO_SPEED_28:
@@ -118,7 +126,14 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
                         if(locoCount<19) // 19 is the limit, set by the protocol.
@@ -139,7 +154,15 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
+                        reply.setParity();         // set the parity correctly.
                         reply.setParity();         // set the parity correctly.
                         locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
                         if(locoCount<19) // 19 is the limit, set by the protocol.
@@ -160,38 +183,45 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP1:
-                        // XPressNet set Function Group 1.
+                        // XpressNet set Function Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP2:
-                        // XPressNet set Function Group 2. 
+                        // XpressNet set Function Group 2.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP3:
-                        // XPressNet set Function Group 3.
+                        // XpressNet set Function Group 3.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP4:
-                        // XPressNet set Function Group 4.
+                        // XpressNet set Function Group 4.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP5:
-                        // XPressNet set Function Group 5.
+                        // XpressNet set Function Group 5.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group1:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group2:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group3:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group4:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group5:
-                        // XPressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                           reply = okReply();
                           break;
@@ -200,7 +230,7 @@ public class Z21XNetSimulatorAdapter {
                      case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD:
                      case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD:
                      default:
-                        log.debug("Unsupoorted requested received: {}", m.toString());
+                        log.debug("Unsupported requested received: {}", m.toString());
                         reply = notSupportedReply();
                         break;
                 }
@@ -216,7 +246,7 @@ public class Z21XNetSimulatorAdapter {
                 reply = okReply();
                 break;
            case XNetConstants.ACC_OPER_REQ:
-                log.debug("Accessory Operations Request Received");
+                log.debug("Accessory Operations Request received");
                 reply = okReply();
                 break;
             case XNetConstants.LOCO_STATUS_REQ:
@@ -247,7 +277,14 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
                         reply.setElement(8, 0x00);  // set F21-F28 off
-                        reply.setElement(9, 0x00);  // set the parity byte to 0
+                        reply.setElement(9, 0x00);  // filler
+                        reply.setElement(10, 0x00);  // filler
+                        reply.setElement(11, 0x00);  // filler
+                        reply.setElement(12, 0x00);  // filler
+                        reply.setElement(13, 0x00);  // filler
+                        reply.setElement(14, 0x00);  // filler
+                        reply.setElement(15, 0x00);  // filler
+                        reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;
                     case XNetConstants.LOCO_INFO_REQ_FUNC:
@@ -300,7 +337,7 @@ public class Z21XNetSimulatorAdapter {
             case XNetConstants.OPS_MODE_PROG_REQ:
             case XNetConstants.LOCO_DOUBLEHEAD:
             default:
-                log.debug("Unsupoorted requested received: {}", m.toString());
+                log.debug("Unsupported requested received: {}", m.toString());
                 reply=notSupportedReply();
         }
         log.debug("generated reply {}",reply);
@@ -308,7 +345,10 @@ public class Z21XNetSimulatorAdapter {
     }
 
     // We have a few canned response messages.
-    // Create an Unsupported XNetReply message
+
+    /**
+     * Create an Unsupported XNetReply message.
+     */
     private XNetReply notSupportedReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.CS_INFO);
@@ -318,7 +358,9 @@ public class Z21XNetSimulatorAdapter {
         return r;
     }
 
-    // Create an OK XNetReply message
+    /**
+     * Create an OK XNetReply message.
+     */
     private XNetReply okReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.LI_MESSAGE_RESPONSE_HEADER);
@@ -328,7 +370,9 @@ public class Z21XNetSimulatorAdapter {
         return r;
     }
 
-    // Create a "Normal Operations Resumed" message
+    /**
+     * Create a "Normal Operations Resumed" message.
+     */
     private XNetReply normalOpsReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.CS_INFO);
@@ -338,7 +382,9 @@ public class Z21XNetSimulatorAdapter {
         return r;
     }
 
-    // Create a broadcast "Everything Off" reply
+    /**
+     * Create a broadcast "Everything Off" reply.
+     */
     private XNetReply everythingOffReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.CS_INFO);
@@ -348,7 +394,9 @@ public class Z21XNetSimulatorAdapter {
         return r;
     }
 
-    // Create a broadcast "Emergecy Stop" reply
+    /**
+     * Create a broadcast "Emergecy Stop" reply.
+     */
     private XNetReply emergencyStopReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.BC_EMERGENCY_STOP);
@@ -357,8 +405,10 @@ public class Z21XNetSimulatorAdapter {
         r.setParity();
         return r;
     }
-   
-    // Create a reply to a request for the XPressNet Version
+
+    /**
+     * Create a reply to a request for the XpressNet Version.
+     */
     private XNetReply xNetVersionReply(){
         XNetReply reply=new XNetReply();
         reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
@@ -370,7 +420,9 @@ public class Z21XNetSimulatorAdapter {
         return reply;
     }
 
-    // Create a reply to a request for the Command Station Status
+    /**
+     * Create a reply to a request for the Command Station Status.
+     */
     private XNetReply csStatusReply(){
         XNetReply reply=new XNetReply();
         reply.setOpCode(XNetConstants.CS_REQUEST_RESPONSE);
@@ -381,7 +433,9 @@ public class Z21XNetSimulatorAdapter {
         return reply;
     }
 
-    // create a LAN_X_TURNOUT_INFO reply
+    /**
+     * Create a LAN_X_TURNOUT_INFO reply.
+     */
     private XNetReply lanXTurnoutInfoReply(int FAdr_MSB,int FAdr_LSB,boolean thrown){
         XNetReply reply=new XNetReply();
         reply.setOpCode(Z21Constants.LAN_X_TURNOUT_INFO);
@@ -393,5 +447,5 @@ public class Z21XNetSimulatorAdapter {
         return reply;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetSimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21XNetSimulatorAdapter.class);
 }

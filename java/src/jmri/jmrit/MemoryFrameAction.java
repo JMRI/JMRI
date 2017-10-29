@@ -9,6 +9,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.util.JmriJFrame;
@@ -16,7 +17,7 @@ import jmri.util.JmriJFrame;
 /**
  * Display memory usage on request
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2012
  */
 public class MemoryFrameAction extends AbstractAction {
 
@@ -97,7 +98,7 @@ public class MemoryFrameAction extends AbstractAction {
             @Override
             public void actionPerformed(ActionEvent event) {
                 Roster.getDefault();
-                DecoderIndexFile.instance();
+                InstanceManager.getDefault(DecoderIndexFile.class);
                 updateDisplay();
             }
         });

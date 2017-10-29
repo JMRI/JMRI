@@ -91,8 +91,8 @@ import org.slf4j.LoggerFactory;
  * </dd>
  * </dl>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Dave Heap Copyright (C) 2016
  */
 public class FnMapPanel extends JPanel {
 
@@ -394,5 +394,5 @@ public class FnMapPanel extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(FnMapPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FnMapPanel.class);
 }

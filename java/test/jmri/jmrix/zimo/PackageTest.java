@@ -36,6 +36,16 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1MessageExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1CommandStationTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1ConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1MessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1PacketizerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1PowerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1ProgrammerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1ProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1ThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1ThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1TurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1TurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

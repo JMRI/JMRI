@@ -1,9 +1,8 @@
 package jmri.jmrix.tams;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
-//import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -15,7 +14,7 @@ import jmri.ProgrammerManager;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * 
+ *
  */
 public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -61,7 +60,8 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         powerManager = new jmri.jmrix.tams.TamsPowerManager(getTrafficController());
         jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
 
-        InstanceManager.setProgrammerManager(getProgrammerManager());
+        InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
 
         turnoutManager = new jmri.jmrix.tams.TamsTurnoutManager(this);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);
@@ -83,18 +83,18 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provides access to the Programmer for this particular connection. NOTE:
      * Programmer defaults to null
      */
-    public ProgrammerManager getProgrammerManager() {
+    public TamsProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
             programmerManager = new TamsProgrammerManager(new TamsProgrammer(getTrafficController()), this);
         }
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(TamsProgrammerManager p) {
         programmerManager = p;
     }
 
-    private ProgrammerManager programmerManager = null;
+    private TamsProgrammerManager programmerManager = null;
 
     private TamsSensorManager sensorManager;
     private TamsTurnoutManager turnoutManager;
@@ -131,9 +131,6 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.PowerManager.class)) {
             return true;
         }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
-        }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
         }
@@ -161,9 +158,6 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if (T.equals(jmri.PowerManager.class)) {
             return (T) getPowerManager();
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();

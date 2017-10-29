@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: accelDecel.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -39,7 +38,7 @@
     <decVal max="31"/>
     <label>Accel</label>
     <label xml:lang="it">Accellerazione</label>
-    <label xml:lang="fr">AccÃ©lÃ©ration</label>
+    <label xml:lang="fr">Accélération</label>
     <label xml:lang="de">Beschleunigungszeit</label>
   </variable>
   <!-- with label and item attribute same -->
@@ -47,7 +46,7 @@
     <decVal max="31"/>
     <label>Deceleration</label>
     <label xml:lang="it">Decellerazione</label>
-    <label xml:lang="fr">DÃ©cÃ©lÃ©ration</label>
+    <label xml:lang="fr">Décélération</label>
     <label xml:lang="de">Bremszeit</label>
   </variable>
   <!-- with item attribute, no label attribute or element -->
@@ -55,7 +54,7 @@
     <decVal/>
     <label>Decoder Version</label>
     <label xml:lang="it">Versione Decoder Costruttore: </label>
-    <label xml:lang="fr">Version dÃ©codeur: </label>
+    <label xml:lang="fr">Version décodeur: </label>
     <label xml:lang="de">Decoder Version: </label>
   </variable>
   <!-- with label attribute and element -->

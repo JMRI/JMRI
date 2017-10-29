@@ -5,10 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.jdom2.JDOMException;
+import org.junit.Assert;
 
 /**
  * Tests for the jmrit.roster.RosterEntry class.
@@ -105,6 +107,20 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("manufacturer ", "Athearn", r.getMfg());
         Assert.assertEquals("model ", "33", r.getDecoderModel());
         Assert.assertEquals("family ", "91", r.getDecoderFamily());
+    }
+
+    public void testFromFile() throws JDOMException, IOException {
+        
+        //create a RosterEntry from a test xml file
+        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+
+        // check for various values
+        Assert.assertEquals("file name ", "ACL1012.xml", r.getFileName());
+        Assert.assertEquals("DCC Address ", "1012", r.getDccAddress());
+        Assert.assertEquals("road name ", "Atlantic Coast Line", r.getRoadName());
+        Assert.assertEquals("road number ", "1012", r.getRoadNumber());
+        Assert.assertEquals("model ", "Synch Diesel Sound 1812 - N Scale Atlas Short Board Dropin", r.getDecoderModel());
+        Assert.assertEquals("family ", "Brilliance Sound Decoders", r.getDecoderFamily());
     }
 
     public void testStoreFunctionLabel() {
@@ -394,7 +410,7 @@ public class RosterEntryTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

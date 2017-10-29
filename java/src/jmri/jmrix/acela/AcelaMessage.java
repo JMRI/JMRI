@@ -6,9 +6,9 @@ import jmri.util.StringUtil;
  * Contains the data payload of an Acela packet.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2003
+ * @author Bob Jacobsen Copyright (C) 2001,2003
   *
- * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {

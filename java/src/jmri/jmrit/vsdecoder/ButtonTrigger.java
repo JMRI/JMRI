@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.event.ActionEvent;
@@ -147,6 +147,6 @@ public class ButtonTrigger extends Trigger implements PropertyChangeListener, Ac
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ButtonTrigger.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ButtonTrigger.class);
 
 }

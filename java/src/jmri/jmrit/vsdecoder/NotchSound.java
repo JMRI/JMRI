@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 class NotchSound extends SoundBite {
 
@@ -131,6 +131,6 @@ class NotchSound extends SoundBite {
         return (decel_sound);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NotchSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NotchSound.class);
 
 }

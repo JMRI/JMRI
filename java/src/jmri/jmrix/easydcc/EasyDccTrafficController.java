@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * This handles the state transistions, based on the necessary state in each
  * message.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EasyDccTrafficController extends AbstractMRTrafficController
         implements EasyDccInterface {
@@ -136,5 +136,5 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficController.class);
 }

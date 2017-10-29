@@ -8,7 +8,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 /**
  * Abstract base for classes representing a LAWICELL communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Andrew Crosland 2008
   */
 public abstract class PortController extends jmri.jmrix.AbstractSerialPortController {

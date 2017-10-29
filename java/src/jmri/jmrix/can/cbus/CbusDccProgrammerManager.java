@@ -8,8 +8,8 @@ import jmri.managers.DefaultProgrammerManager;
 /**
  * Extend DefaultProgrammerManager to provide programmers for CBUS systems
  *
- * @see jmri.ProgrammerManager
- * @author	Andrew crosland Copyright (C) 2009
+ * @see jmri.managers.DefaultProgrammerManager
+ * @author Andrew crosland Copyright (C) 2009
  */
 public class CbusDccProgrammerManager extends DefaultProgrammerManager {
 

@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * changed via some other mechanism.
  *
  * @author Suzie Tall based on Bob Jacobsen's work
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  */
 public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     public TripleOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> blue, NamedBeanHandle<Turnout> red) {
@@ -161,5 +161,11 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class.getName());
+    /**
+     * Disables the feedback mechanism of the DoubleTurnoutSignalHead.
+     */
+    @Override
+    void readOutput() { }
+
+    private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class);
 }

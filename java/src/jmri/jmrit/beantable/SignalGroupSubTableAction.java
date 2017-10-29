@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based in part on RouteTableAction.java and SignalGroupTableAction.java by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2010
+ * @author Kevin Dickerson Copyright (C) 2010
  * @author Egbert Broerse 2017
 
  */
@@ -968,6 +968,8 @@ public class SignalGroupSubTableAction {
 
         /**
          * Create a Sensor item for this Signal Head by the name of the Control Sensor
+         * @param sysName system name for new signal group sensor
+         * @param userName user name for new signal group sensor
          */
         SignalGroupSensor(String sysName, String userName) {
             super(sysName, userName);
@@ -984,6 +986,9 @@ public class SignalGroupSubTableAction {
                     return SET_TO_INACTIVE;
                 case Sensor.ACTIVE:
                     return SET_TO_ACTIVE;
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1021,6 +1026,8 @@ public class SignalGroupSubTableAction {
 
         /**
          * Create a Turnout item for this Signal Head by the name of the Control Turnout
+         * @param sysName system name for new signal group turnout
+         * @param userName user name for new signal group turnout
          */
         SignalGroupTurnout(String sysName, String userName) {
             super(sysName, userName);
@@ -1037,6 +1044,9 @@ public class SignalGroupSubTableAction {
                     return SET_TO_CLOSED;
                 case Turnout.THROWN:
                     return SET_TO_THROWN;
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1064,5 +1074,5 @@ public class SignalGroupSubTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class);
 }

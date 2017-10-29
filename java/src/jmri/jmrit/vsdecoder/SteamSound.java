@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -240,7 +240,7 @@ class SteamSound extends EngineSound {
             //log.debug("Num Cylinders: " + num_cylinders);
         }
         // For now, num_rpms is not used.  
-	/*
+ /*
          n = e.getChild("rpm-steps").getValue();
          if (n != null) {
          num_rpms = Integer.parseInt(n);
@@ -290,6 +290,6 @@ class SteamSound extends EngineSound {
          */
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SteamSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SteamSound.class);
 
 }

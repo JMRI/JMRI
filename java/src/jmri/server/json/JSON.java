@@ -5,7 +5,6 @@ package jmri.server.json;
  * protocol version 4.0.
  *
  * @author Randall Wood (C) 2013, 2014, 2016
- * @see jmri.jmris.json.JSON
  */
 public final class JSON {
 
@@ -106,7 +105,7 @@ public final class JSON {
     public static final String STATUS = "status"; // NOI18N
     /**
      * Numeric status value
-     *
+     * <p>
      * {@value #STATUS_CODE}
      */
     public static final String STATUS_CODE = "statusCode"; // NOI18N
@@ -114,6 +113,10 @@ public final class JSON {
      * {@value #PROPERTIES}
      */
     public static final String PROPERTIES = "properties"; // NOI18N
+    /**
+     * {@value #DEFAULT}
+     */
+    public static final String DEFAULT = "default"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -178,6 +181,26 @@ public final class JSON {
      * {@value #NETWORK_SERVICES}
      */
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
+    /**
+     * {@value #CONFIG_PROFILES}
+     */
+    public static final String CONFIG_PROFILES = "configProfiles"; // NOI18N
+    /**
+     * {@value #UNIQUE_ID}
+     */
+    public static final String CONFIG_PROFILE = "configProfile"; // NOI18N
+    /**
+     * {@value #UNIQUE_ID}
+     */
+    public static final String UNIQUE_ID = "uniqueId"; // NOI18N
+    /**
+     * {@value #IS_ACTIVE_PROFILE}
+     */
+    public static final String IS_ACTIVE_PROFILE = "isActiveProfile"; // NOI18N
+    /**
+     * {@value #IS_AUTO_START}
+     */
+    public static final String IS_AUTO_START = "isAutoStart"; // NOI18N
 
     /* JSON data types */
     /**
@@ -212,7 +235,7 @@ public final class JSON {
      * {@value #LENGTH}
      */
     public static final String LENGTH = "length"; // NOI18N
-    
+
     /* JSON panel tokens */
     /**
      * {@value #CONTROL_PANEL}
@@ -222,6 +245,10 @@ public final class JSON {
      * {@value #LAYOUT_PANEL}
      */
     public static final String LAYOUT_PANEL = "Layout"; // NOI18N
+    /**
+     * {@value #SWITCHBOARD_PANEL}
+     */
+    public static final String SWITCHBOARD_PANEL = "Switchboard"; // NOI18N
     /**
      * {@value #PANEL_PANEL}
      */
@@ -464,7 +491,7 @@ public final class JSON {
     public static final String OPTIONS = "options";
     /**
      * {@value #ADD}
-     *
+     * <p>
      * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
      * this is an entry that has been added to the roster.
      *
@@ -473,10 +500,10 @@ public final class JSON {
     public static final String ADD = "add";
     /**
      * {@value #REMOVE}
-     *
+     * <p>
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
-     *
+     * <p>
      * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
      * this is an entry that has been removed from the roster.
      *
@@ -554,7 +581,7 @@ public final class JSON {
      */
     public static final String LIT = "lit"; // NOI18N
 
-    /* JSON throttle tokens */
+    /* Shared JSON consist, roster, and throttle tokens */
     /**
      * {@value #ADDRESS}
      */
@@ -564,40 +591,11 @@ public final class JSON {
      */
     public static final String FORWARD = "forward"; // NOI18N
     /**
-     * {@value #RELEASE}
-     */
-    public static final String RELEASE = "release"; // NOI18N
-    /**
-     * {@value #ESTOP}
-     */
-    public static final String ESTOP = "eStop"; // NOI18N
-    /**
-     * {@value #IDLE}
-     */
-    public static final String IDLE = "idle"; // NOI18N
-    /**
-     * {@value #SPEED}
-     */
-    public static final String SPEED = "speed"; // NOI18N
-    /**
-     * {@value #SPEED_STEPS}
-     */
-    public static final String SPEED_STEPS = "speedSteps"; // NOI18N
-    /**
      * Prefix for the throttle function keys (F0-F28).
      * <p>
      * {@value #F}
      */
     public static final String F = "F"; // NOI18N
-    /**
-     * Used by a {@link jmri.jmris.json.JsonThrottle} to notify clients of the
-     * number of clients controlling the same throttle.
-     * <p>
-     * {@value #CLIENTS}
-     *
-     * @since 2.0
-     */
-    public static final String CLIENTS = "clients"; // NOI18N
 
     /* JSON Sensor and Turnout Tokens */
     /**

@@ -79,6 +79,9 @@
                   <li><a href="#ContentNotUnderstood">"Firmware
                   content in the file is not understood" Status
                   message</a></li>
+                  
+                  <li><a href="#InvalidParameterInFile">"Invalid Prog Blk 
+                  Size parameter in file" dialog box message</a></li>
                 </ul>
               </li>
 
@@ -87,6 +90,9 @@
 
               <li><a href="#UpdatableDevices">Some devices which
               support firmware update via this tool</a></li>
+
+              <li><a href="#NotUpdatableDevices">Devices which
+              are not supported by this tool</a></li>
 
               <li><a href="#Notes">Other Notes</a></li>
 
@@ -389,8 +395,16 @@
       file is not understood by this reader." in the status line at
       the bottom of the tool window. Consult the device
       manufacturer for support - usually this means that the
-      manufacturer must provide a new firmware file.</p><br clear=
-      "all">
+      manufacturer must provide a new firmware file.</p>
+      
+      <h3 id="InvalidParameterInFile">"Invalid Prog Blk Size parameter in file" dialog box message</h3>
+      <p>When the tool reads a firmware file and can determine that the file
+      requires a process which the tool cannot support, the tool will pop-up a dialog
+      box saying "Invalid Prog Blk Size parameter ...".  The tool will prevent 
+      itself from attempting to update the device.  This applies to firmware 
+      updates for some newer Digitrax hardware which requires a different firmware 
+      update process.  For these devices, the Digitrax <em>DigiIPLII</em> software
+      should be used.</p><br clear="all">
 
       <h2 id="WhatItDoes">What this tool does and does not do</h2>
 
@@ -503,7 +517,7 @@
         </thead>
 
         <tr>
-          <td rowspan="6" align="center">Digitrax</td>
+          <td rowspan="7" align="center">Digitrax</td>
 
           <td>UR92, UR92CE</td>
         </tr>
@@ -517,6 +531,10 @@
         </tr>
 
         <tr>
+          <td>DT500-series throttles</td>
+        </tr>
+
+        <tr>
           <td>LNRP</td>
         </tr>
 
@@ -526,17 +544,21 @@
 
         <tr>
           <td>RF24 (the radio module found in Duplex devices like
-          UR92, UR92CE and DT402D)</td>
+          UR92, UR92CE, DT402D and DT500D)</td>
         </tr>
 
         <tr>
-          <td rowspan="6" align="center">RR-CirKits</td>
+          <td rowspan="7" align="center">RR-CirKits</td>
 
           <td>LocoBuffer-USB</td>
         </tr>
 
         <tr>
           <td>LNCP</td>
+        </tr>
+
+        <tr>
+          <td>MotorMan</td>
         </tr>
 
         <tr>
@@ -569,17 +591,70 @@
 
         <tr>
           <td colspan="2" align="center"><strong>Table updated
-          June, 2014</strong></td>
+          June, 2017</strong></td>
         </tr>
       </table>
+
+
+
+      <h2 id="NotUpdatableDevices">Devices which are not supported by this tool</h2>
+
+      <p>The table below lists some devices which are known to be <em>unsupported
+          </em> by this tool.  The tool will not attempt to update these devices 
+          because this tool does not implement the correct protocol.  <em>Using the 
+          protocol implemented in this tool when a newer protocol is required 
+          would result in a corrupted firmware image in the device.</em>  Use 
+          the Digitrax program <em>DigitIPLII.exe</em> to update these devices.</p>
+      
+      <table border="2">
+        <thead>
+          <tr>
+            <td align="center"><strong>Manufacturer</strong></td>
+
+            <td align="center"><strong>Product</strong></td>
+          </tr>
+        </thead>
+
+        <tr>
+          <td rowspan="5" align="center">Digitrax</td>
+
+          <td>DB210</td>
+        </tr>
+
+        <tr>
+          <td>DB210 (Opto-isolated)</td>
+        </tr>
+
+        <tr>
+          <td>DB220</td>
+        </tr>
+
+        <tr>
+          <td>DCS210</td>
+        </tr>
+
+        <tr>
+          <td>DCS240</td>
+        </tr>
+
+
+        <tr>
+          <td colspan="2" align="center"><strong>Table updated
+          June, 2017</strong></td>
+        </tr>
+      </table>
+
+
+
 
       <h2 id="Notes">Other Notes</h2>
 
       <ul>
         <li>The LocoNet Firmware Download tool is similar to the
-        "DigiIPL.exe" which has been released by Digitrax and is
-        available from their web site. Support for the DigiIPL.exe
-        program is provided by Digitrax. Note that DigiIPL.exe is
+        "DigiIPL.exe" and "DigiIPLII.exe" which have been released 
+        by Digitrax.  "DigiIPLII.exe" is available from their web site as 
+        part of the SoundLoader2 package. Support for the DigiIPLII.exe
+        program is provided by Digitrax. Note that DigiIPLII.exe is
         intended for use with Digitrax products and is not able to
         perform firmware updates on at least some non-Digitrax
         hardware.</li>
@@ -603,13 +678,14 @@
         <li>This tool cannot be used to update the firmware in the
         LocoBuffer-II device.</li>
 
-        <li>While it is possible to update firmware on multiple
+        <li>It is possible to update firmware on multiple
         devices of the same type at the same time. If attempting
         this, ensure that the devices are all actively connected to
         LocoNet, properly powered, and properly configured before
         activating the "Download" button. The developers of this
         tool do not recommend this as any failure of the process
-        could result in all hardware becoming unusable.</li>
+        could result in all of the hardware being updated becoming 
+        unusable.</li>
 
         <li>Do not open multiple LocoNet Firmware Download tools at
         the same time. Do not perform firmware updates and/or

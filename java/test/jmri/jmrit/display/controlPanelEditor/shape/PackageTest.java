@@ -7,7 +7,20 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     SchemaTest.class,
     BundleTest.class,
-    jmri.jmrit.display.controlPanelEditor.shape.configurexml.PackageTest.class
+    jmri.jmrit.display.controlPanelEditor.shape.configurexml.PackageTest.class,
+    LocoLabelTest.class,
+    PositionableCircleTest.class,
+    PositionableEllipseTest.class,
+    PositionablePolygonTest.class,
+    PositionableRectangleTest.class,
+    PositionableRoundRectTest.class,
+    PositionableShapeTest.class,
+    ShapeDrawerTest.class,
+    DrawCircleTest.class,
+    DrawEllipseTest.class,
+    DrawPolygonTest.class,
+    DrawRectangleTest.class,
+    DrawRoundRectTest.class,
 })
 
 /**

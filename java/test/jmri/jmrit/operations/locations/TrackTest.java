@@ -1,23 +1,25 @@
 //TrackTest.java
 package jmri.jmrit.operations.locations;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
  * 20090131
- *
+ * <p>
  * Still to do: ScheduleItem: XML read/write Schedule: Register, List, XML
  * read/write Track: AcceptsDropTrain, AcceptsDropRoute Track:
  * AcceptsPickupTrain, AcceptsPickupRoute Track: CheckScheduleValid Track: XML
  * read/write Location: Track support <-- I am here Location: XML read/write
- *
+ * <p>
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class TrackTest extends OperationsTestCase {
@@ -284,7 +286,7 @@ public class TrackTest extends OperationsTestCase {
         Assert.assertEquals("Location Track Accepts Type Name defined", false, t.acceptsTypeName("TestTypeName"));
 
         // now add to car types
-        CarTypes ct = CarTypes.instance();
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("TestTypeName");
         t.addTypeName("TestTypeName");
         Assert.assertEquals("Location Track Accepts Type Name defined after ct", false, t
@@ -413,7 +415,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     public void testSpurTrackOrder() {
-        Location l = LocationManager.instance().newLocation("TestOrder");
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestOrder");
         Track t = l.addTrack("New track 1", Track.SPUR);
         Assert.assertEquals("Location", l, t.getLocation());
 
@@ -425,7 +427,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     public void testYardTrackOrder() {
-        Location l = LocationManager.instance().newLocation("TestOrder");
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestOrder");
         Track t = l.addTrack("New track 2", Track.YARD);
         Assert.assertEquals("Location", l, t.getLocation());
 
@@ -437,10 +439,10 @@ public class TrackTest extends OperationsTestCase {
     }
 
     public void testStagingTrackOrder() {
-        Location l = LocationManager.instance().newLocation("TestOrder");
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestOrder");
         Track t = l.addTrack("New track 3", Track.STAGING);
         Assert.assertEquals("Location", l, t.getLocation());
-        
+
         t.setServiceOrder(Track.FIFO);
         Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
         t.setServiceOrder(Track.LIFO);
@@ -448,16 +450,16 @@ public class TrackTest extends OperationsTestCase {
     }
 
     public void testInterchangeTrackOrder() {
-        Location l = LocationManager.instance().newLocation("TestOrder");
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestOrder");
         Track t = l.addTrack("New track 4", Track.INTERCHANGE);
         Assert.assertEquals("Location", l, t.getLocation());
-        
+
         // yards and interchanges do support this feature
         t.setServiceOrder(Track.FIFO);
         Assert.assertEquals("Track Order", Track.FIFO, t.getServiceOrder());
         t.setServiceOrder(Track.LIFO);
         Assert.assertEquals("Track Order", Track.LIFO, t.getServiceOrder());
-    }        
+    }
 
     @Override
     protected void setUp() throws Exception {
@@ -483,6 +485,6 @@ public class TrackTest extends OperationsTestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

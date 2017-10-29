@@ -24,7 +24,7 @@ import javax.swing.JPanel;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2003, 2014
+ * @author Bob Jacobsen Copyright 2003, 2014
  */
 public class PanelProPane extends apps.AppsLaunchPane {
 

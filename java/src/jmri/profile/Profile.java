@@ -1,6 +1,5 @@
 package jmri.profile;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -91,7 +90,7 @@ public class Profile implements Comparable<Profile> {
      * Create a Profile object given just a path to it. If isReadable is true,
      * the Profile must exist in storage on the computer. Generates a random id
      * for the profile.
-     *
+     * <p>
      * This method exists purely to support subclasses.
      *
      * @param path       The Profile's directory
@@ -107,7 +106,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Create a Profile object given just a path to it. If isReadable is true,
      * the Profile must exist in storage on the computer.
-     *
+     * <p>
      * This method exists purely to support subclasses.
      *
      * @param path       The Profile's directory
@@ -158,8 +157,8 @@ public class Profile implements Comparable<Profile> {
      * Set the name for this profile while constructing the profile.
      * <p>
      * Overriding classing must use this method to set the name in a constructor
-     * since this method passes this Profile object to an object excepting a
-     * completely constructed Profile.
+     * since {@link #setName(java.lang.String)} passes this Profile object to an
+     * object expecting a completely constructed Profile.
      *
      * @param name the new name
      */
@@ -252,7 +251,7 @@ public class Profile implements Comparable<Profile> {
 
     /**
      * Return the uniqueness portion of the Profile Id.
-     *
+     * <p>
      * This portion of the Id is automatically generated when the profile is
      * created.
      *
@@ -269,15 +268,17 @@ public class Profile implements Comparable<Profile> {
      * @return true if path or subdirectories contains a Profile.
      * @since 3.9.4
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "listFiles() is only null if path is not a directory")
     public static boolean containsProfile(File path) {
         if (path.isDirectory()) {
             if (Profile.isProfile(path)) {
                 return true;
             } else {
-                for (File file : path.listFiles()) {
-                    if (Profile.containsProfile(file)) {
-                        return true;
+                File[] files = path.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        if (Profile.containsProfile(file)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -316,7 +317,7 @@ public class Profile implements Comparable<Profile> {
                 return true;
             }
             // version 1
-            if ((new File(path, PROPERTIES)).canRead()) {
+            if ((new File(path, PROPERTIES)).canRead() && !path.getName().equals(PROFILE)) {
                 return true;
             }
         }

@@ -24,10 +24,10 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  *
  */
-public interface CatalogTreeManager extends Manager {
+public interface CatalogTreeManager extends Manager<CatalogTree> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, return

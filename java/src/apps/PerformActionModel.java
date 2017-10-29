@@ -17,7 +17,7 @@ import jmri.JmriException;
  * This class remains in the {@code apps} package for historical reasons related
  * to preferences storage.</p>
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  * @see apps.startup.PerformActionModelFactory
  */
 public class PerformActionModel extends AbstractActionModel {

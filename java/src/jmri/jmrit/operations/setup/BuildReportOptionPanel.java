@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import jmri.InstanceManager;
 
 /**
  * Frame for user edit of the build report options
@@ -152,7 +153,7 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 
     @Override
     protected void radioButtonActionPerformed(ActionEvent ae) {
-        setBuildReportRouterRadioButton();	// enable detailed and very detailed if needed
+        setBuildReportRouterRadioButton(); // enable detailed and very detailed if needed
     }
 
     private void setBuildReportRadioButton() {
@@ -221,7 +222,7 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
         Setup.setBuildReportIndentEnabled(buildReportIndentCheckBox.isSelected());
         Setup.setBuildReportAlwaysPreviewEnabled(buildReportAlwaysPreviewCheckBox.isSelected());
 
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
     }
 
     @Override

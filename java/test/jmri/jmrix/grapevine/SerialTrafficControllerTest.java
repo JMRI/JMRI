@@ -7,6 +7,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -307,17 +308,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         g.resetMustSend();
         Assert.assertNotNull("exists", a);
         Assert.assertTrue("must Send off", !(g.mustSend()));
-        c.setSerialOutput("GL5B2", false);
-        c.setSerialOutput("GL5B1", false);
-        c.setSerialOutput("GL5B7", false);
-        c.setSerialOutput("GL5B3", false);
-        c.setSerialOutput("GL5B5", false);
-        c.setSerialOutput("GL5B8", true);
-        c.setSerialOutput("GL5B11", false);
-        c.setSerialOutput("GL5B5", false);
-        c.setSerialOutput("GL5B10", false);
-        c.setSerialOutput("GL5B9", false);
-        Assert.assertTrue("must Send on", g.mustSend());
+        //c.setSerialOutput("GL5B2", false); // test and 12 year old method removed, called nowhere as of 4.9.4
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 4, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
@@ -442,9 +433,9 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

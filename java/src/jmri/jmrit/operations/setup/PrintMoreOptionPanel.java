@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,10 +113,10 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
             log.error("Tab wasn't a number");
         }
 
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
 
         // recreate all train manifests
-        TrainManager.instance().setTrainsModified();
+        InstanceManager.getDefault(TrainManager.class).setTrainsModified();
     }
 
     @Override

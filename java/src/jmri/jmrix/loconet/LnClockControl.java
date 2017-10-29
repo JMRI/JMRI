@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Dave Duchamp Copyright (C) 2007
- * @author	Bob Jacobsen, Alex Shepherd
+ * @author Bob Jacobsen, Alex Shepherd
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener {
 
@@ -221,7 +221,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             // get time from the internal clock
             Date now = clock.getTime();
             // skip the correction if minutes is 0 because Logic Rail Clock displays incorrectly
-            //		if a correction is sent at zero minutes.
+            //  if a correction is sent at zero minutes.
             if (now.getMinutes() != 0) {
                 // Set the Fast Clock Day to the current Day of the month 1-31
                 curDays = now.getDate();
@@ -333,6 +333,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnClockControl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnClockControl.class);
 }
 

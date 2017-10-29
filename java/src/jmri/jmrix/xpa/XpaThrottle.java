@@ -7,20 +7,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An XPA+Modem implementation of the Throttle for XPressNet Systems
+ * An XPA+Modem implementation of the Throttle for XpressNet Systems
  *
  * @author Paul Bender Copyright (C) 2004
  */
 public class XpaThrottle extends AbstractThrottle {
 
     private int speedvalue;
-    private int address;
-    private XpaTrafficController tc = null;
+    private final int address;
+    private final XpaTrafficController tc;
 
     /**
-     * Constructor
+     * Create a throttle.
+     *
+     * @param address the address for the throttle
+     * @param t the controller for the system connection
      */
-    public XpaThrottle(LocoAddress address,XpaTrafficController t) {
+    public XpaThrottle(LocoAddress address, XpaTrafficController t) {
         super(null);
         this.address = address.getNumber();
         this.speedIncrement = 1;
@@ -238,6 +241,6 @@ public class XpaThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XpaThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaThrottle.class);
 
 }

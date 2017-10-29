@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Concrete subclass to save/restore NoFeedbackTurnoutOperation object to/from
  * XML.
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
@@ -41,7 +41,7 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
     public TurnoutOperation loadOne(Element e, Constructor<?> constr, int di, int dmt) {
         int interval = di;
         int maxTries = dmt;
-//		boolean noDelete = false;
+//  boolean noDelete = false;
         TurnoutOperation result = null;
         if (e.getAttribute("name") == null) {
             log.warn("unexpected null in name " + e + " " + e.getAttributes());
@@ -73,5 +73,5 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationXml.class);
 }

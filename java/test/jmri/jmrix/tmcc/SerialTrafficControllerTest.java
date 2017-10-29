@@ -46,7 +46,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @Test
     @Ignore("this test is disabled until the threading can be worked out")
     public void testSendOK() throws Exception {
-        SerialTrafficController c = new SerialTrafficController() {
+        c = new SerialTrafficController() {
             // skip timeout message
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -80,7 +80,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
     @Test
     public void testRcvReplyOK() throws Exception {
-        SerialTrafficController c = new SerialTrafficController() {
+        c = new SerialTrafficController() {
             // skip timeout message
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -126,11 +126,12 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         Assert.assertTrue("reply received ", waitForReply());
         Assert.assertEquals("first char of reply ", 0xFE, rcvdReply.getOpCode() & 0xFF);
         Assert.assertEquals("length of reply ", 3, rcvdReply.getNumDataElements());
+        
     }
 
     @Test
     public void testRcvReplyShort() throws Exception {
-        SerialTrafficController c = new SerialTrafficController() {
+        c = new SerialTrafficController() {
             // skip timeout message
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -261,14 +262,18 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new SerialTrafficController();
+        c = null;
     }
 
+    SerialTrafficController c;
+    
     @After
     @Override
     public void tearDown() {
+        if (c != null) c.terminateThreads();
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

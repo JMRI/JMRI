@@ -54,9 +54,9 @@ public class Mx1Packetizer extends Mx1TrafficController {
     /**
      * Synchronized list used as a transmit queue
      */
-    LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
+    LinkedList<byte[]> xmtList = new LinkedList<>();
 
-    ConcurrentHashMap<Integer, MessageQueued> xmtPackets = new ConcurrentHashMap<Integer, MessageQueued>(16, 0.9f, 1);
+    ConcurrentHashMap<Integer, MessageQueued> xmtPackets = new ConcurrentHashMap<>(16, 0.9f, 1);
 
     /**
      * XmtHandler (a local class) object to implement the transmit thread
@@ -124,7 +124,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
     }
 
     void processPacketForSending(Mx1Message m) {
-        ArrayList<Byte> msgFormat = new ArrayList<Byte>();
+        ArrayList<Byte> msgFormat = new ArrayList<>();
         //Add <SOH>
         msgFormat.add((byte) SOH);
         msgFormat.add((byte) SOH);
@@ -207,11 +207,14 @@ public class Mx1Packetizer extends Mx1TrafficController {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a gnu.io port is set to have a receive timeout (via the
+     * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
      *
+     * @param istream the input stream
+     * @return the first byte in the stream
+     * @throws java.io.IOException if unable to read istream
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         while (true) { // loop will repeat until character found
@@ -253,7 +256,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         public void run() {
             int opCode;
             if (protocol) {
-                ArrayList<Integer> message = new ArrayList<Integer>();
+                ArrayList<Integer> message = new ArrayList<>();
                 while (true) {
                     try {
                         int firstByte = readByteProtected(istream) & 0xFF;
@@ -264,7 +267,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             firstByte = secondByte;
                             secondByte = readByteProtected(istream) & 0xFF;
                         }
-                        message = new ArrayList<Integer>();
+                        message = new ArrayList<>();
                         while (true) {
                             int b = readByteProtected(istream) & 0xFF;
                             if (b == EOT) //End of Frame
@@ -319,18 +322,13 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         log.debug("schedule notify of incoming packet");
                         javax.swing.SwingUtilities.invokeLater(r);
 
-                    } // done with this one // done with this one
-                    /*catch (java.io.EOFException e) {
-                     // posted from idle port when enableReceiveTimeout used
-                     log.debug("EOFException, is serial I/O using timeouts?");
-                     }*/ catch (java.io.IOException e) {
+                    } catch (java.io.IOException e) {
                         // fired when write-end of HexFile reaches end
-                        log.debug("IOException, should only happen with HexFIle: " + e);
+                        log.debug("IOException, should only happen with HexFIle", e);
                         disconnectPort(controller);
                         return;
-                    } catch (Exception e) {
-                        log.warn("run: unexpected exception: " + e);
-                        e.printStackTrace();
+                    } catch (RuntimeException e) {
+                        log.warn("run: unexpected exception:", e);
                     }
                 }
             } else {
@@ -377,8 +375,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             log.debug("schedule notify of incoming packet");
                             javax.swing.SwingUtilities.invokeLater(r);
                         }
-                    } // done with this one // done with this one
-                    catch (java.io.EOFException e) {
+                    } catch (java.io.EOFException e) {
                         // posted from idle port when enableReceiveTimeout used
                         log.debug("EOFException, is serial I/O using timeouts?");
                     } catch (java.io.IOException e) {
@@ -386,7 +383,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         log.debug("IOException, should only happen with HexFIle: " + e);
                         disconnectPort(controller);
                         return;
-                    } catch (Exception e) {
+                    } catch (RuntimeException e) {
                         log.warn("run: unexpected exception: " + e);
                     }
                 } // end of permanent loop
@@ -697,5 +694,5 @@ public class Mx1Packetizer extends Mx1TrafficController {
         0x74, 0x2a, 0xc8, 0x96, 0x15, 0x4b, 0xa9, 0xf7, 0xb6, 0xe8, 0x0a, 0x54, 0xd7, 0x89, 0x6b, 0x35
     };
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class);
 }

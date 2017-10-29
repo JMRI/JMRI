@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
  */
 public class NceTurnout extends AbstractTurnout {
@@ -25,6 +25,9 @@ public class NceTurnout extends AbstractTurnout {
     /**
      * NCE turnouts use the NMRA number (0-2044) as their numerical
      * identification.
+     * @param tc traffic controller for connection
+     * @param p system connection prefix
+     * @param i NMRA turnout number
      */
     public NceTurnout(NceTrafficController tc, String p, int i) {
         super(p + "T" + i);
@@ -41,8 +44,8 @@ public class NceTurnout extends AbstractTurnout {
     }
 
     private synchronized void initialize() {
-        numNtTurnouts++;	// increment the total number of NCE turnouts
-        // update feedback modes, MONITORING requires PowerHouse system with new EPROM   	
+        numNtTurnouts++; // increment the total number of NCE turnouts
+        // update feedback modes, MONITORING requires PowerHouse system with new EPROM    
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006 && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
             if (modeNames == null) {
                 if (_validFeedbackNames.length != _validFeedbackModes.length) {
@@ -81,9 +84,9 @@ public class NceTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //										Object oldValue,
-        //										Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -165,6 +168,12 @@ public class NceTurnout extends AbstractTurnout {
     public boolean canInvert() {
         return true;
     }
+    /**
+     * NCE turnouts can provide both modes when properly configured
+     *
+     * @return Both cab and pushbutton (decoder) modes
+     */
+    public int getPossibleLockModes() { return CABLOCKOUT | PUSHBUTTONLOCKOUT ; }
 
     /**
      * NCE turnouts support two types of lockouts, pushbutton and cab. Cab
@@ -177,8 +186,9 @@ public class NceTurnout extends AbstractTurnout {
             return false;
         }
         // check to see if push button lock is enabled and valid decoder
+        String dn = getDecoderName();
         if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0 && _enablePushButtonLockout
-                && !getDecoderName().equals(PushbuttonPacket.unknown)) {
+                && dn != null && !dn.equals(PushbuttonPacket.unknown)) {
             return true;
         }
         // check to see if cab lockout is enabled
@@ -260,5 +270,5 @@ public class NceTurnout extends AbstractTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnout.class);
 }

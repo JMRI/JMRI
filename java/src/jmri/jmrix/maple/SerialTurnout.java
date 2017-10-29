@@ -46,23 +46,47 @@ import org.slf4j.LoggerFactory;
  * NOTE: In the current version Maple support, code for implementing pulsed
  * turnouts has been commented out.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2008
- * @author	David Duchamp Copyright (C) 2004, 2007
- * @author	Dan Boudreau Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2008
+ * @author David Duchamp Copyright (C) 2004, 2007
+ * @author Dan Boudreau Copyright (C) 2007
   */
 public class SerialTurnout extends AbstractTurnout {
 
+    private MapleSystemConnectionMemo _memo = null;
+
     /**
      * Create a Turnout object, with both system and user names.
-     * <P>
-     * 'systemName' was previously validated in SerialTurnoutManager
+     * <p>
+     * 'systemName' has already been validated in SerialTurnoutManager
+     *
+     * @param systemName the system name for this Turnout
+     * @param userName   the user name for this Turnout
+     * @param memo       the memo for the system connection
      */
-    public SerialTurnout(String systemName, String userName) {
+    public SerialTurnout(String systemName, String userName, MapleSystemConnectionMemo memo) {
         super(systemName, userName);
         // Save system Name
         tSystemName = systemName;
+        _memo = memo;
         // Extract the Bit from the name
-        tBit = SerialAddress.getBitFromSystemName(systemName);
+        tBit = SerialAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
+    }
+
+    /**
+     * Create a Turnout object, with only a system name.
+     * <p>
+     * 'systemName' has already been validated in SerialTurnoutManager
+     *
+     * @param systemName the system name for this Turnout
+     * @param memo       the memo for the system connection
+     */
+    public SerialTurnout(String systemName, MapleSystemConnectionMemo memo) {
+        super(systemName);
+        // Save system Name
+        tSystemName = systemName;
+        _memo = memo;
+        // Extract the Bit from the name
+        tBit = SerialAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
     }
 
     /**
@@ -74,9 +98,9 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //                    Object oldValue,
+        //      Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -84,7 +108,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN: " + newState);
+                log.error("Cannot command both CLOSED and THROWN: {}", newState);
                 return;
             } else {
                 // send a CLOSED command
@@ -107,14 +131,14 @@ public class SerialTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ");
+            log.debug("Send command to {} Pushbutton", (_pushButtonLockout ? "Lock" : "Unlock"));
         }
     }
 
     // data members
     String tSystemName; // System Name of this turnout
     protected int tBit;   // bit number of turnout control in Serial node
-//	protected SerialNode tNode = null;
+// protected SerialNode tNode = null;
     protected javax.swing.Timer mPulseClosedTimer = null;
     protected javax.swing.Timer mPulseThrownTimer = null;
     protected boolean mPulseTimerOn = false;
@@ -145,19 +169,19 @@ public class SerialTurnout extends AbstractTurnout {
                                 // known state is different from output bit, set output bit to be correct
                                 //     for known state, then start a timer to set it to requested state
                                 OutputBits.instance().setOutputBit(tBit, false ^ getInverted());
-//								// start a timer to finish setting this turnout
-//								if (mPulseClosedTimer==null) {
-//									mPulseClosedTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
-//											new java.awt.event.ActionListener() {
-//										public void actionPerformed(java.awt.event.ActionEvent e) {
-//											OutputBits.instance().setOutputBit(tBit, true^getInverted());
-//											mPulseClosedTimer.stop();
-//											mPulseTimerOn = false;
-//										}
-//									});
-//								}
-//								mPulseTimerOn = true;
-//								mPulseClosedTimer.start();
+//        // start a timer to finish setting this turnout
+//        if (mPulseClosedTimer==null) {
+//         mPulseClosedTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
+//           new java.awt.event.ActionListener() {
+//          public void actionPerformed(java.awt.event.ActionEvent e) {
+//           OutputBits.instance().setOutputBit(tBit, true^getInverted());
+//           mPulseClosedTimer.stop();
+//           mPulseTimerOn = false;
+//          }
+//         });
+//        }
+//        mPulseTimerOn = true;
+//        mPulseClosedTimer.start();
                             }
                         } else {
                             // THROWN is being requested
@@ -165,50 +189,51 @@ public class SerialTurnout extends AbstractTurnout {
                                 // known state is different from output bit, set output bit to be correct
                                 //     for known state, then start a timer to set it to requested state
                                 OutputBits.instance().setOutputBit(tBit, true ^ getInverted());
-//								// start a timer to finish setting this turnout
-//								if (mPulseThrownTimer==null) {
-//									mPulseThrownTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
-//											new java.awt.event.ActionListener() {
-//										public void actionPerformed(java.awt.event.ActionEvent e) {
-//											OutputBits.instance().setOutputBit(tBit, false^getInverted());
-//											mPulseThrownTimer.stop();
-//											mPulseTimerOn = false;								
-//										}
-//									});
-//								}
-//								mPulseTimerOn = true;
-//								mPulseThrownTimer.start();
+//        // start a timer to finish setting this turnout
+//        if (mPulseThrownTimer==null) {
+//         mPulseThrownTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
+//           new java.awt.event.ActionListener() {
+//          public void actionPerformed(java.awt.event.ActionEvent e) {
+//           OutputBits.instance().setOutputBit(tBit, false^getInverted());
+//           mPulseThrownTimer.stop();
+//           mPulseTimerOn = false;        
+//          }
+//         });
+//        }
+//        mPulseTimerOn = true;
+//        mPulseThrownTimer.start();
                             }
                         }
                     }
                 } else {
                     // Pulse control
-//					int iTime = OutputBits.instance().getPulseWidth();
-//					// Get current known state of turnout
-//					int kState = getKnownState();
-//					if ( (closed && ((kState & Turnout.THROWN) != 0)) ||
-//							(!closed && ((kState & Turnout.CLOSED) != 0)) ) {
-//						// known and requested are different, a change is requested
-//						//   Pulse the line, first turn bit on
-//						OutputBits.instance().setOutputBit(tBit,false^getInverted());
-//						// Start a timer to return bit to off state
-//						if (mPulseClosedTimer==null) {
-//							mPulseClosedTimer = new javax.swing.Timer(iTime, new 
-//										java.awt.event.ActionListener() {
-//								public void actionPerformed(java.awt.event.ActionEvent e) {
-//									OutputBits.instance().setOutputBit(tBit, true^getInverted());
-//									mPulseClosedTimer.stop();
-//									mPulseTimerOn = false;
-//								}
-//							});
-//						}
-//						mPulseTimerOn = true;
-//						mPulseClosedTimer.start();						
-//					}
+//     int iTime = OutputBits.instance().getPulseWidth();
+//     // Get current known state of turnout
+//     int kState = getKnownState();
+//     if ( (closed && ((kState & Turnout.THROWN) != 0)) ||
+//       (!closed && ((kState & Turnout.CLOSED) != 0)) ) {
+//      // known and requested are different, a change is requested
+//      //   Pulse the line, first turn bit on
+//      OutputBits.instance().setOutputBit(tBit,false^getInverted());
+//      // Start a timer to return bit to off state
+//      if (mPulseClosedTimer==null) {
+//       mPulseClosedTimer = new javax.swing.Timer(iTime, new 
+//          java.awt.event.ActionListener() {
+//        public void actionPerformed(java.awt.event.ActionEvent e) {
+//         OutputBits.instance().setOutputBit(tBit, true^getInverted());
+//         mPulseClosedTimer.stop();
+//         mPulseTimerOn = false;
+//        }
+//       });
+//      }
+//      mPulseTimerOn = true;
+//      mPulseClosedTimer.start();      
+//     }
                 }
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+
 }

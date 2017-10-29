@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
     BundleTest.class,
     ControlPanelServletTest.class,
     LayoutPanelServletTest.class,
+    SwitchboardServletTest.class,
     PanelServletTest.class
 })
 /**

@@ -16,7 +16,7 @@ public class TrainEditBuildOptionsAction extends AbstractAction {
         this.frame = frame;
     }
 
-    TrainEditFrame frame;	// the parent frame that is launching the TrainEditBuildOptionsFrame.
+    TrainEditFrame frame; // the parent frame that is launching the TrainEditBuildOptionsFrame.
 
     TrainEditBuildOptionsFrame f = null;
 

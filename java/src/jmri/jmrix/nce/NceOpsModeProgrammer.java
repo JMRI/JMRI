@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002, 2014
+ * @author Bob Jacobsen Copyright (C) 2002, 2014
  * @author kcameron Copyright (C) 2014
  */
 public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProgrammer {
@@ -31,7 +31,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         log.debug("NCE ops mode programmer " + pAddress + " " + pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-        setMode(DefaultProgrammerManager.OPSBYTEMODE);
+        setMode(ProgrammingMode.OPSBYTEMODE);
     }
 
     /**
@@ -62,7 +62,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
             if (contents == null) {
                 throw new ProgrammerException();
             }
-            msg = NceMessage.sendPacketMessage(tc, contents, 5);	// retry 5 times
+            msg = NceMessage.sendPacketMessage(tc, contents, 5); // retry 5 times
         }
         // record state. COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
@@ -117,7 +117,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -158,6 +158,6 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class);
 
 }

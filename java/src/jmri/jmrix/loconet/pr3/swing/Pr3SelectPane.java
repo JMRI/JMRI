@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane for downloading software updates to PRICOM products
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
   */
 public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
@@ -129,6 +129,6 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Pr3SelectPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Pr3SelectPane.class);
 
 }

@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Setup;
@@ -28,6 +29,7 @@ import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
             "/web/operationsManifest.html", // redirect to default since ~ 13 May 2014
             "/web/operationsTrains.html" // redirect to default since ~ 13 May 2014
         })
+@ServiceProvider(service = HttpServlet.class)
 public class OperationsServlet extends HttpServlet {
 
     private ObjectMapper mapper;
@@ -106,7 +109,7 @@ public class OperationsServlet extends HttpServlet {
     protected void processTrains(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType(UTF8_APPLICATION_JSON);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             try {
                 JsonUtil utilities = new JsonUtil(this.mapper);
                 response.getWriter().print(utilities.getTrains(request.getLocale()));
@@ -116,7 +119,7 @@ public class OperationsServlet extends HttpServlet {
             }
         } else if ("html".equals(request.getParameter("format"))) {
             response.setContentType(UTF8_TEXT_HTML);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             boolean showAll = ("all".equals(request.getParameter("show")));
             StringBuilder html = new StringBuilder();
             String format = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TrainsSnippet.html")));
@@ -143,12 +146,12 @@ public class OperationsServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
+                            InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "TrainsTitle")
                     ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                    ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     "" // no train Id
             ));
         }
@@ -159,7 +162,7 @@ public class OperationsServlet extends HttpServlet {
         if ("html".equals(request.getParameter("format"))) {
             log.debug("Getting manifest HTML code for train {}", id);
             HtmlManifest manifest = new HtmlManifest(request.getLocale(), train);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "ManifestSnippet.html"))),
@@ -186,16 +189,16 @@ public class OperationsServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
+                            InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                             String.format(request.getLocale(),
                                     Bundle.getMessage(request.getLocale(), "ManifestTitle"),
                                     train.getIconName(),
                                     StringEscapeUtils.escapeHtml4(train.getDescription())
                             )
                     ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                    !train.getTrainRailroadName().equals("") ? train.getTrainRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));
         }
@@ -223,7 +226,7 @@ public class OperationsServlet extends HttpServlet {
             }
             log.debug("Getting conductor HTML code for train {}", id);
             HtmlConductor conductor = new HtmlConductor(request.getLocale(), train);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(conductor.getLocation());
         } else {
@@ -232,16 +235,16 @@ public class OperationsServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
+                            InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                             String.format(request.getLocale(),
                                     Bundle.getMessage(request.getLocale(), "ConductorTitle"),
                                     train.getIconName(),
                                     StringEscapeUtils.escapeHtml4(train.getDescription())
                             )
                     ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                    !train.getTrainRailroadName().equals("") ? train.getTrainRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));
         }

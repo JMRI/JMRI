@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.event.ActionListener;
@@ -226,6 +226,6 @@ class EngineSound extends VSDSound {
                 + " Fade-Out-Time: " + this.getFadeOutTime());
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EngineSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(EngineSound.class);
 
 }

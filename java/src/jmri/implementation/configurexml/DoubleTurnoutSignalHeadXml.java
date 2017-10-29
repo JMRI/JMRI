@@ -34,8 +34,6 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
@@ -130,5 +128,5 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadXml.class);
 }

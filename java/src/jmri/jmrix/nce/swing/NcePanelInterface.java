@@ -17,7 +17,8 @@ public interface NcePanelInterface {
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * @param memo system connection memo
      */
-    public void initComponents(NceSystemConnectionMemo memo) throws Exception;
+    public void initComponents(NceSystemConnectionMemo memo);
 
 }

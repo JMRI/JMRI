@@ -3,9 +3,9 @@ package jmri.jmrix.xpa;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,18 +15,18 @@ import org.slf4j.LoggerFactory;
  * a pair of *Streams, which then carry sequences of characters for
  * transmission. Note that this processing is handled in an independent thread.
  *
- * @author	Paul Bender Copyright (C) 2004,2016
+ * @author Paul Bender Copyright (C) 2004, 2016
  */
 public class XpaTrafficController implements XpaInterface, Runnable {
 
     // Linked list to store the transmit queue.
-    LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
+    LinkedList<byte[]> xmtList = new LinkedList<>();
 
     /**
      * xmtHandler (a local class) object to implement the transmit thread
      *
      */
-    XmtHandler xmtHandler = new XmtHandler();
+    final XmtHandler xmtHandler = new XmtHandler();
     Thread xmtThread = null;
 
     public XpaTrafficController() {
@@ -36,22 +36,19 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     }
 
     /**
-     * Start the Transmit thread
+     * Start the Transmit thread.
      *
      */
     public void startTransmitThread() {
-        if(xmtThread == null )
-        {
-           // Start the xmtHandler thread
-           Thread xmtThread = new Thread(xmtHandler, "XPA transmit handler");
-           xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
-           xmtThread.start();
+        if (xmtThread == null) {
+            // Start the xmtHandler thread
+            xmtThread = new Thread(xmtHandler, "XPA transmit handler");
+            xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
+            xmtThread.start();
         }
     }
 
-
-// The methods to implement the XpaInterface
-    protected Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
+    protected final ArrayList<XpaListener> cmdListeners = new ArrayList<>();
 
     @Override
     public boolean status() {
@@ -65,31 +62,32 @@ public class XpaTrafficController implements XpaInterface, Runnable {
             throw new java.lang.NullPointerException();
         }
         if (!cmdListeners.contains(l)) {
-            cmdListeners.addElement(l);
+            cmdListeners.add(l);
         }
     }
 
     @Override
     public synchronized void removeXpaListener(XpaListener l) {
         if (cmdListeners.contains(l)) {
-            cmdListeners.removeElement(l);
+            cmdListeners.remove(l);
         }
     }
 
     /**
      * Forward a XpaMessage to all registered XpaInterface listeners.
+     *
+     * @param m     the message to forward
+     * @param notMe registered listener not to forward the message to
      */
     @SuppressWarnings("unchecked")
     protected void notifyMessage(XpaMessage m, XpaListener notMe) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<XpaListener> v;
+        ArrayList<XpaListener> v;
         synchronized (this) {
-            v = (Vector<XpaListener>) cmdListeners.clone();
+            v = new ArrayList<>(cmdListeners);
         }
         // forward to all listeners
-        int cnt = v.size();
-        for (int i = 0; i < cnt; i++) {
-            XpaListener client = v.elementAt(i);
+        for (XpaListener client : v) {
             if (notMe != client) {
                 if (log.isDebugEnabled()) {
                     log.debug("notify client: " + client);
@@ -108,14 +106,12 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     @SuppressWarnings("unchecked")
     protected void notifyReply(XpaMessage r) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
-        Vector<XpaListener> v;
+        ArrayList<XpaListener> v;
         synchronized (this) {
-            v = (Vector<XpaListener>) cmdListeners.clone();
+            v = new ArrayList<>(cmdListeners);
         }
         // forward to all listeners
-        int cnt = v.size();
-        for (int i = 0; i < cnt; i++) {
-            XpaListener client = v.elementAt(i);
+        for (XpaListener client : v) {
             if (log.isDebugEnabled()) {
                 log.debug("notify client: " + client);
             }
@@ -139,10 +135,13 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     }
 
     /**
-     * Forward a preformatted message to the actual interface.
+     * Forward a pre-formatted message to the actual interface.
+     *
+     * @param m     the message to forward
+     * @param reply the listener to receive the reply
      */
-     @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL"},
-              justification = "Notify is used because Having more than one thread waiting on xmtHandler is an error.")
+    @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL"},
+            justification = "Notify is used because Having more than one thread waiting on xmtHandler is an error.")
     @Override
     synchronized public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
@@ -178,6 +177,8 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
     /**
      * Make connection to existing PortController object.
+     *
+     * @param p controller for the port associated with this controller
      */
     public void connectPort(XpaPortController p) {
         istream = p.getInputStream();
@@ -193,6 +194,8 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     /**
      * Break connection to existing XpaPortController object. Once broken,
      * attempts to send via "message" member will fail.
+     *
+     * @param p controller for the port associated with this controller
      */
     public void disconnectPort(XpaPortController p) {
         istream = null;
@@ -204,7 +207,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     }
 
     /**
-     * static function returning the XpaTrafficController instance to use.
+     * Static function returning the XpaTrafficController instance to use.
      *
      * @return The registered XpaTrafficController instance for general use, if
      *         need be creating one.
@@ -238,14 +241,14 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     }
 
     void handleOneIncomingReply() throws java.io.IOException {
-          // we sit in this until the message is complete, relying on
+        // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
 
         // Create output message
         XpaMessage msg = new XpaMessage();
         // message exists, now fill it
         int i;
-        for (i = 0; i < XpaMessage.maxSize; i++) {
+        for (i = 0; i < XpaMessage.MAX_SIZE; i++) {
             byte char1 = istream.readByte();
             msg.setElement(i, char1);
             //if (endReply(msg)) break;
@@ -274,11 +277,11 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     }
 
     /**
-     * Captive class to handle transmission
+     * Captive class to handle transmission.
      */
     class XmtHandler implements Runnable {
 
-        @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","NO_NOTIFY_NOT_NOTIFYALL"},
+        @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "NO_NOTIFY_NOT_NOTIFYALL"},
                 justification = "while loop controls access")
         @Override
         public void run() {
@@ -289,7 +292,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                     if (log.isDebugEnabled()) {
                         log.debug("check for input");
                     }
-                    byte msg[] = null;
+                    byte msg[];
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }
@@ -331,8 +334,5 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XpaTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTrafficController.class);
 }
-
-
-

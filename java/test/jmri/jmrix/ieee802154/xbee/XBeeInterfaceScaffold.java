@@ -1,19 +1,17 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import java.util.Vector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import com.digi.xbee.api.connection.IConnectionInterface;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
-import com.digi.xbee.api.XBeeDevice;
-import com.digi.xbee.api.RemoteXBeeDevice;
+import java.util.Vector;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
 import org.powermock.core.classloader.annotations.MockPolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**
@@ -38,9 +36,9 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
         // setup the mock XBee Connection.
         // Mock the local device.
-        localDevice = PowerMockito.mock(XBeeDevice.class);
-        Mockito.when(localDevice.getConnectionInterface()).thenReturn(Mockito.mock(IConnectionInterface.class));
-        Mockito.when(localDevice.getXBeeProtocol()).thenReturn(XBeeProtocol.ZIGBEE);
+        XBeeAdapter a = PowerMockito.mock((XBeeAdapter.class));
+        Mockito.when(a.isOpen()).thenReturn(true);
+        localDevice = new XBeeDevice(a);
 
         // Mock the remote device 1.
         remoteDevice1 = Mockito.mock(RemoteXBeeDevice.class);
@@ -68,6 +66,12 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
    public XBeeDevice getXBee() {
         return localDevice;
    }
+
+    // allow classes to get remoteDevice1
+    public RemoteXBeeDevice getRemoteDevice1(){
+       return remoteDevice1;
+    }
+
 
     /**
      * record XBee messages sent, provide access for making sure they are OK
@@ -128,6 +132,6 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
           remoteDevice3=null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class);
 
 }

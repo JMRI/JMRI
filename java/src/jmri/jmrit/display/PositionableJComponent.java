@@ -46,8 +46,8 @@ public class PositionableJComponent extends JComponent implements Positionable {
         pos.setControlling(isControlling());
         pos.setHidden(isHidden());
         pos.setPositionable(isPositionable());
-        pos.setShowTooltip(showTooltip());
-        pos.setTooltip(getTooltip());
+        pos.setShowToolTip(showToolTip());
+        pos.setToolTip(getToolTip());
         pos.setEditable(isEditable());
         pos.updateSize();
         return pos;
@@ -61,9 +61,9 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public void displayState() {
     }
 
-    /**
-     * *************** Positionable methods *********************
-     */
+    //
+    // *************** Positionable methods *********************
+    //
     @Override
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
@@ -125,7 +125,9 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
 
     /**
-     * Delayed setDisplayLevel for DnD
+     * Delayed setDisplayLevel for DnD.
+     *
+     * @param l the new level
      */
     public void setLevel(int l) {
         _displayLevel = l;
@@ -147,22 +149,22 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
 
     @Override
-    public void setShowTooltip(boolean set) {
+    public void setShowToolTip(boolean set) {
         _showTooltip = set;
     }
 
     @Override
-    public boolean showTooltip() {
+    public boolean showToolTip() {
         return _showTooltip;
     }
 
     @Override
-    public void setTooltip(ToolTip tip) {
+    public void setToolTip(ToolTip tip) {
         _tooltip = tip;
     }
 
     @Override
-    public ToolTip getTooltip() {
+    public ToolTip getToolTip() {
         return _tooltip;
     }
 
@@ -240,9 +242,6 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return true;
     }
 
-    /**
-     * For over-riding in the using classes: add item specific menu choices
-     */
     @Override
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
         return false;
@@ -321,7 +320,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
 
     /**
-     * To be overridden if any special work needs to be done
+     * To be overridden if any special work needs to be done.
      */
     void cleanup() {
     }
@@ -329,7 +328,9 @@ public class PositionableJComponent extends JComponent implements Positionable {
     boolean active = true;
 
     /**
-     * "active" means that the object is still displayed, and should be stored.
+     * Check if the component is still displayed, and should be stored.
+     *
+     * @return true if active; false otherwise
      */
     public boolean isActive() {
         return active;
@@ -340,5 +341,5 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class);
 }

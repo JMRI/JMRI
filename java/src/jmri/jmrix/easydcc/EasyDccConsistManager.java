@@ -75,7 +75,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
 
     @Override
     protected boolean shouldRequestUpdateFromLayout() {
-        return (reader.CurrentState == EasyDccConsistReader.IDLE);
+        return (reader.currentState == EasyDccConsistReader.IDLE);
     }
 
     // Internal class to read consists from the command station
@@ -87,7 +87,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         final static int IDLE = 0;
         final static int SEARCHREQUESTSENT = 1;
         // Current State
-        int CurrentState = IDLE;
+        int currentState = IDLE;
 
         EasyDccConsistReader() {
         }
@@ -100,7 +100,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
             if (log.isDebugEnabled()) {
                 log.debug("Sending request for next consist, _lastAddress is: " + _lastAddress);
             }
-            CurrentState = SEARCHREQUESTSENT;
+            currentState = SEARCHREQUESTSENT;
             EasyDccMessage msg = EasyDccMessage.getDisplayConsist(++_lastAddress);
             EasyDccTrafficController.instance().sendEasyDccMessage(msg, this);
         }
@@ -108,7 +108,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         // Listener for messages from the command station
         @Override
         public void reply(EasyDccReply r) {
-            if (CurrentState == SEARCHREQUESTSENT) {
+            if (currentState == SEARCHREQUESTSENT) {
                 // We sent a request for a consist address.
                 // We need to find out what type of message 
                 // was recived as a response.  If the message 
@@ -168,7 +168,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
                     if (_lastAddress < 255) {
                         searchNext();
                     } else {
-                        CurrentState = IDLE;
+                        currentState = IDLE;
                         notifyConsistListChanged();
                     }
                 } else {
@@ -184,5 +184,5 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         public void message(EasyDccMessage m) {
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class);
 }

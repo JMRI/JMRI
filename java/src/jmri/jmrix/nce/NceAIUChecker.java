@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
  */
 public class NceAIUChecker implements NceListener {
 
-    private static final int MEM_AIU = 0xDC15; 	// NCE CS AIU memory address 
-    private static final int REPLY_LEN = 1; 	// number of bytes read
-    private boolean EXPECT_REPLY = false; 		// flag 
+    private static final int MEM_AIU = 0xDC15;  // NCE CS AIU memory address 
+    private static final int REPLY_LEN = 1;  // number of bytes read
+    private boolean EXPECT_REPLY = false;   // flag 
 
     private NceTrafficController tc = null;
 
@@ -88,7 +88,7 @@ public class NceAIUChecker implements NceListener {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(NceAIUChecker.class.getName());
+            .getLogger(NceAIUChecker.class);
 
 }
 

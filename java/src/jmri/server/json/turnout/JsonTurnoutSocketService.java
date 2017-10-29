@@ -4,6 +4,7 @@ import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -18,6 +19,9 @@ import jmri.TurnoutManager;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  *
@@ -26,8 +30,11 @@ import jmri.server.json.JsonSocketService;
 public class JsonTurnoutSocketService extends JsonSocketService {
 
     private final JsonTurnoutHttpService service;
-    private final HashMap<String, TurnoutListener> turnouts = new HashMap<>();
+    private final HashMap<String, TurnoutListener> turnoutListeners = new HashMap<>();
+    private final TurnoutsListener turnoutsListener = new TurnoutsListener();   
     private Locale locale;
+    private final static Logger log = LoggerFactory.getLogger(JsonTurnoutSocketService.class);
+
 
     public JsonTurnoutSocketService(JsonConnection connection) {
         super(connection);
@@ -43,26 +50,48 @@ public class JsonTurnoutSocketService extends JsonSocketService {
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.turnouts.containsKey(name)) {
+        if (!this.turnoutListeners.containsKey(name)) {
             Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
             TurnoutListener listener = new TurnoutListener(turnout);
-            turnout.addPropertyChangeListener(listener);
-            this.turnouts.put(name, listener);
+            if (turnout != null) {
+                turnout.addPropertyChangeListener(listener);
+                this.turnoutListeners.put(name, listener);
+            }
         }
     }
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+        log.debug("adding TurnoutsListener");
         this.locale = locale;
         this.connection.sendMessage(this.service.doGetList(type, locale));
+
+        InstanceManager.getDefault(TurnoutManager.class).addPropertyChangeListener(turnoutsListener); //add parent listener
+        addListenersToChildren();
+        
     }
+
+    private void addListenersToChildren() {
+        InstanceManager.getDefault(TurnoutManager.class).getSystemNameList().stream().forEach((tn) -> { //add listeners to each child (if not already)
+            if (!turnoutListeners.containsKey(tn)) {
+                log.debug("adding TurnoutListener for Turnout {}", tn);
+                Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(tn);
+                if (t != null) {
+                    turnoutListeners.put(tn, new TurnoutListener(t));
+                    t.addPropertyChangeListener(this.turnoutListeners.get(tn));
+                }
+            }
+        });
+    }
+
 
     @Override
     public void onClose() {
-        turnouts.values().stream().forEach((turnout) -> {
+        turnoutListeners.values().stream().forEach((turnout) -> {
             turnout.turnout.removePropertyChangeListener(turnout);
         });
-        turnouts.clear();
+        turnoutListeners.clear();
+        InstanceManager.getDefault(TurnoutManager.class).removePropertyChangeListener(turnoutsListener);
     }
 
     private class TurnoutListener implements PropertyChangeListener {
@@ -74,9 +103,12 @@ public class JsonTurnoutSocketService extends JsonSocketService {
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent e) {
-            // If the Commanded State changes, show transition state as "<inconsistent>"
-            if (e.getPropertyName().equals("KnownState")) {
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in TurnoutListener for '{}' '{}' ('{}'=>'{}')", this.turnout.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            if (evt.getPropertyName().equals("KnownState")  //only send changes for values which are sent
+                    || evt.getPropertyName().equals("inverted")
+                    || evt.getPropertyName().equals("UserName")
+                    || evt.getPropertyName().equals("Comment")) { 
                 try {
                     try {
                         connection.sendMessage(service.doGet(TURNOUT, this.turnout.getSystemName(), locale));
@@ -86,8 +118,32 @@ public class JsonTurnoutSocketService extends JsonSocketService {
                 } catch (IOException ex) {
                     // if we get an error, de-register
                     turnout.removePropertyChangeListener(this);
-                    turnouts.remove(this.turnout.getSystemName());
+                    turnoutListeners.remove(this.turnout.getSystemName());
                 }
+            }
+        }
+    }
+    private class TurnoutsListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in TurnoutsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+
+            try {
+                try {
+                 // send the new list
+                    connection.sendMessage(service.doGetList(TURNOUTS, locale)); 
+                    //child added or removed, reset listeners
+                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                        addListenersToChildren();
+                    }
+                } catch (JsonException ex) {
+                    log.warn("json error sending Turnouts: {}", ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage());
+                }
+            } catch (IOException ex) {
+                // if we get an error, de-register
+                log.debug("deregistering turnoutsListener due to IOException");
+                InstanceManager.getDefault(TurnoutManager.class).removePropertyChangeListener(turnoutsListener);
             }
         }
     }

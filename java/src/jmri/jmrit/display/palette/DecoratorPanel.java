@@ -188,7 +188,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
     /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
     public void initDecoratorPanel(Positionable pos) {
-        Positionable item = pos.deepClone();		// copy of PositionableLabel being edited
+        Positionable item = pos.deepClone();  // copy of PositionableLabel being edited
         _util = item.getPopupUtility();
 
         if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
@@ -261,7 +261,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             doPopupUtility("Text", TEXT_FONT, sample, _util, addtextField);
         }
         makeFontPanels();
-//        item.setVisible(false);		// otherwise leaves traces for PositionableJPanels
+//        item.setVisible(false);  // otherwise leaves traces for PositionableJPanels
 
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
@@ -347,23 +347,23 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(colorPanel);
     }
 
-    String BundleCaption = null;
+    String bundleCaption = null;
 
     private JPanel makeTextPanel(String caption, JLabel sample, int state, boolean addTextField) {
         JPanel panel = new JPanel();
         // use NamedBeanBundle property for basic beans like "Turnout" I18N
         if ("Active".equals(caption)) {
-            BundleCaption = "SensorStateActive";
+            bundleCaption = "SensorStateActive";
         } else if ("InActive".equals(caption)) {
-            BundleCaption = "SensorStateInactive";
+            bundleCaption = "SensorStateInactive";
         } else if ("Unknown".equals(caption)) {
-            BundleCaption = "BeanStateUnknown";
+            bundleCaption = "BeanStateUnknown";
         } else if ("Inconsistent".equals(caption)) {
-            BundleCaption = "BeanStateInconsistent";
+            bundleCaption = "BeanStateInconsistent";
         } else {
-            BundleCaption = caption;
+            bundleCaption = caption;
         }
-        panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage(BundleCaption)));
+        panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage(bundleCaption)));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         if (addTextField) {
@@ -708,5 +708,5 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoratorPanel.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoratorPanel.class);
 }

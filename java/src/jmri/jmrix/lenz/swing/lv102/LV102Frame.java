@@ -3,21 +3,21 @@ package jmri.jmrix.lenz.swing.lv102;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 
 /**
  * Frame displaying the LV102 configuration utility
- *
+ * <p>
  * This is a container for the LV102 configuration utility. The actual utility
  * is defined in {@link LV102InternalFrame}
  *
- * @author	Paul Bender Copyright (C) 2004,2005
+ * @author Paul Bender Copyright (C) 2004,2005
   */
 public class LV102Frame extends jmri.util.JmriJFrame {
 
     public LV102Frame() {
-        this("LV102 Configuration Utility");
+        this(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
     }
 
     public LV102Frame(String FrameName) {
@@ -50,7 +50,7 @@ public class LV102Frame extends jmri.util.JmriJFrame {
         );
     }
 
-    JToggleButton closeButton = new JToggleButton("Close");
+    JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
 
     @Override
     public void dispose() {

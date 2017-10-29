@@ -4,15 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SpeedoReply.java
+ * Carries the reply to an SprogMessage
  *
- * Description:	Carries the reply to an SprogMessage
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SpeedoReply {
-	// This should be an extension af AbstractMRReply and needs re-factoring
+ // This should be an extension af AbstractMRReply and needs re-factoring
 
     // create a new one
     public SpeedoReply() {
@@ -132,5 +130,6 @@ public class SpeedoReply {
     private int _nDataChars;
     private char _dataChars[] = new char[maxSize];
     private boolean unsolicited;
-    private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class);
+
 }

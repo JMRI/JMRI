@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.ztc640;
 
-import org.junit.After;
 import org.junit.Before;
 
 
@@ -18,14 +17,11 @@ public class ZTC640XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new ZTC640XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        tc = null;
-        apps.tests.Log4JFixture.tearDown();
+        tc = new ZTC640XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation()) {
+            @Override
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
+            }
+        };
     }
 
 }

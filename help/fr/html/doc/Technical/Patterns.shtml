@@ -1,7 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; 2013-09-08-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; 2016-08-14-->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -24,122 +23,143 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
 
-<body>
-  <!--#include virtual="/Header" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
 
-    <div id="mainContent">
-      <h1>JMRI: Mod&egrave;les et Organisation</h1>JMRI a grandi et
-      &eacute;volu&eacute; avec le temps, et vous ne pouvez pas
-      toujours voir les structures et les caract&eacute;ristiques
-      actuellement pr&eacute;f&eacute;r&eacute;es en regardant
-      l'ancien code.
+	<div id="mainContent">
+	    <!-- -------- -->
+	    <!--  Teaser  --> <!-- Optional -->
+	    <!-- -------- -->
 
-      <p>Cette page tente de d&eacute;crire la structure
-      recommand&eacute;e et les mod&egrave;les, et fournir des
-      exemples des meilleures pratiques actuelles.</p>
+<H1>JMRI: Mod&#232;les et Organisation</H1>
+<p>
+JMRI a grandi et &#233;volu&#233; avec le temps, et
+vous ne pouvez pas toujours voir les structures et les 
+caract&#233;ristiques actuellement pr&#233;f&#233;r&#233;es
+en regardant des morceaux de l'ancien code.
+<p>
+Cette page tente de d&#233;crire la structure et les mod&#232;les recommand&#233;s,
+et fournir des exemples des meilleures pratiques actuelles.
 
-      <h2>Organisation du Code</h2>
+<a id="namedbeans" name="namedbeans"></a><h2>Noms, NamedBeans, et les gestionnaires</h2>
 
-      <p>Au plus haut niveau, nous s&eacute;parons le code de test
-      du code distribu&eacute;s en les mettant dans des
-      r&eacute;pertoires distincts dans le r&eacute;pertoire de
-      d&eacute;veloppement: "test" et "src". Il est donc facile de
-      compiler une version sans code de test, d'appliquer des
-      outils diff&eacute;rents pour les deux types de code, etc</p>
+Le concept "NameBean" est la base de JMRI.
+Un <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
+est un objet de base qui repr&#233;sente quelque chose, typiquement quelque chose 
+comme un Capteur ou un Aiguillage.
+<ul>
+<li>Ils sont appel&#233;s "Bean" parce qu'ils sont une unit&#233; 
+d'interaction: De multiples morceaux de code peuvent travailler avec l'un d'eux, il peut &#234;tre charg&#233; ou stock&#233;, etc.
+<li>Ils sont "named" parce que pour &#234;tre s&#251;r qu'ils sont uniques et retrouvables: Il y a seulement un Aiguillage NamedBean
+appel&#233; LT01, et il repr&#233;sente un objet sp&#233;cifique du r&#233;seau adress&#233;( named ).
+Voir la  <a href="Names.shtml">page sur les Noms</a> pour en savoir davantage.
+</ul>
+Fonctionnellement, toutes les classes d'objets du syst&#232;me ( Capteur, Aiguillage,... ) et
+leurs mise en oeuvre sp&#233;cifiques ( LnSensor,  XNetTurnout, ...), h&#233;rite de la classe de base
+<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>.
+<p>
+Pour obtenir l'acc&#232;s &#224; un objet sp&#233;cifique (un NamedBean d'un type sp&#233;cifique avec un nom sp&#233;cifique ), vous faites 
+des demandes &#224; un gestionnaire: vous demandez un
+<a href="http://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a> pour un Aiguillage sp&#233;cifique
+&#224; votre tour, vous
+<a href="IntroStructure.shtml">acc&#233;dez aux gestionnaires &#224; travers l'InstanceManager commun</a>.
 
-      <p>Dans le code source lui-m&ecirc;me, nous s&eacute;parons
-      plusieurs types.</p>
+<p>
+Un utilisateur peut vouloir r&#233;&#233;f&#233;rencer un NamedBean via un nom utilisateur, et &#224; son tour peut vouloir
+changer le NetBean sp&#233;cifique auquel le nom utilisateur se r&#233;f&#232;re. "Yard East Turnout" peut &#234;tre 
+"LT12" &#224; un point et plus tardpeut changer en "CT5". Pour g&#233;rer ceci,
+votre code utilise les objets
+<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
+pour g&#233;rer les r&#233;f&#233;rences pour NamedBeans. Ils automatisent le processus de renommage.
 
-      <dl>
-        <dt>Le paquet jmri</dt>
+<h2>Organisation du Code</h2>
+<p>
+Au plus haut niveau, nous s&#233;parons le code de test du code
+distribu&#233; en les mettant dans des r&#233;pertoires distincts
+dans le r&#233;pertoire de d&#233;veloppement: "test" et "src".
+Il est donc facile de compiler une version sans code de test,
+d'appliquer des outils diff&#233;rents pour les deux types de code, etc
 
-        <dd>contient les interfaces de base pour le syst&egrave;me.
-        Il doit contenir le code de mise en oeuvre minimale, et pas
-        de r&eacute;f&eacute;rences non-JMRI, en particulier le
-        code Swing.</dd>
+<p>
+Dans le code source lui-m&#234;me, nous s&#233;parons plusieurs types. 
 
-        <dt>jmri.jmrix package (jmri.jmrix)</dt>
+<dl>
+<dt>Le paquet jmri
+<dd>contient les interfaces de base pour le syst&#232;me.
+     Il doit contenir le code de mise en &#339;uvre minimale,
+     et pas de r&#233;f&#233;rences non-JMRI, en particulier le code Swing.
 
-        <dd>Contient tout le code pour se connecter &agrave; du
-        mat&eacute;riel sp&eacute;cifique du r&eacute;seau
-        ferr&eacute;.</dd>
+<dt>Le paquet jmri.jmris 
+<dd>Contient tout le code pour la mise en &#339;uvre des serveurs pour les interfaces JMRI.
 
-        <dt>jmri.managers and jmri.implementations packages
-        (paquets jmri.managers et jmri.implementations)</dt>
+<dt>Le paquet jmri.jmrit
+<dd>contient tout le code pour les outils JMRI non sp&#233;cifiques au syst&#232;me et extensions
+		La plupart des outils sont dans des sous-paquets, mais certains apparaissent directement dans le paquet
 
-        <dd>Ceux-ci fournissent des r&eacute;alisations par
-        d&eacute;faut pour les gestionnaires et les autres classes.
-        Cela d&eacute;place le code du paquet primaire JMRI. Ils ne
-        doivent pas r&eacute;pondre &agrave; des applications,
-        jmri.jmrix ou jmri.jmrit.</dd>
+<dt>Le paquet jmri.jmrix
+<dd>Contient tout le code pour se connecter &#224;
+     du mat&#233;riel sp&#233;cifique du r&#233;seau ferr&#233;.
 
-        <dt>jmri.util package (paquet jmri.util)</dt>
+<dt>Les paquetsjmri.managers et jmri.implementations  
+<dd>Ceux-ci fournissent des mises en &#339;uvres  par d&#233;faut pour les gestionnaires 
+		et les autres classes. Cela d&#233;place le code du paquet
+ 		primaire JMRI. Ils ne doivent pas r&#233;pondre &#224; des applications, jmri.jmrix 
+		ou jmri.jmrit.
 
-        <dd>Autres r&eacute;alisations courantes d'usage
-        g&eacute;n&eacute;ral. Ne devrait pas d&eacute;pendre des
-        paquets jmri.jmri tou de jmri.jmrix. Le sous-paquet
-        jmri.util.swing fournit les utilitaires Swing</dd>
+<dt>paquet jmri.util 
+<dd>Autres mise en oeuvre courantes d'usage g&#233;n&#233;ral.
+     Ne devrait pas d&#233;pendre des paquets  jmri.jmrit ou jmri.jmrix.
+     Le sous-paquet jmri.util.swing fournit les utilitaires Swing 
 
-        <dt>Apps package (paquet applications)</dt>
+<dt>paquet Apps 
+<dd>Pour rassembler une application, cela peut 
+		d&#233;pendre de n'importe quoi.
 
-        <dd>Pour rassembler une application, cela peut
-        d&eacute;pendre de rien.</dd>
+<dt>Sous-r&#233;pertoires configurexml 
+<dd>Ceux-ci contiennent le code pour le
+		<a href="XmlPersistance.shtml"> syst&#232;me de configuration XML</a>
+ 		les paquets de haut niveau, esp util & dependancies, apps.
 
-        <dt>Sous-r&eacute;pertoires configurexml</dt>
+<dt>Sous-r&#233;pertoires swing
+<dd>Contient les outils Swing sp&#233;cifiques.
+    En particulier &#224; l'ext&#233;rieur du paquet jmri.jmrit,
+		nous essayons de s&#233;parer le code Swing du
+    code normal op&#233;rationnel.
+    Voir la <a href=""> page Swing</a>
+		pour plus d'informations.
 
-        <dd>Ceux-ci contiennent le code pour le <a href=
-        "XmlPersistance.shtml">syst&egrave;me de configuration
-        XML</a> les paquets de haut niveau, en particulier util
-        &amp; d&eacute;pendances, les application.</dd>
+<dt>Help files (fichiers d'aide)
+<dd>La structure du fichier d'aide, 
+		les fichiers &#233;chos de la structure du code.
+    Pour plus d'informations, voir la page d'aide 
+		<a href="Help.shtml"> dans les pages JavaHelp</a>.
+ 
+<dt>ResourceBundles
+<dd>Nous utilisons le regroupements de ressources pour <a href="I8N.shtml">l'internationalisation</a>.
+    Elles sont colocalis&#233;e avec le code qui les r&#233;f&#233;rence, 
+		mais nous nous dirigeons vers une nouvelle convention de d&#233;nomination.
+    Pour r&#233;duire le fardeau de chargement, nous nous dirigeons vers un 
+		mod&#232;le o&#249; le fichier jmri.foo.FooBundle.properties 
+		est adress&#233; par un &#233;l&#233;ment statique dans la 
+		classe jmri.foo.FooBundle, s&#233;par&#233; des 
+		propri&#233;t&#233;s du fichier lui m&#234;me. Cela r&#233;duit 
+		beaucoup le temps de chargement!    
+		<p>
+		Notez qu'il existe &#233;galement quelques 
+		regroupements de ressources qui sont utilis&#233;s &#224; d'autres fins, 
+		indiqu&#233;s dans leurs commentaires en t&#234;te.
+		</dl>
+		Le script outil de d&#233;veloppement "checkdepends.csh" 
+		est destin&#233; &#224; v&#233;rifier certaines des d&#233;pendances par inadvertance,
+		mais nous sommes loin de l'effacer.
 
-        <dt>Sous-r&eacute;pertoires swing</dt>
+<!--#include virtual="/Footer" -->
 
-        <dd>Contient les outils Swing sp&eacute;cifiques. En
-        particulier &agrave; l'ext&eacute;rieur du paquet
-        jmri.jmrit,nous essayons de s&eacute;parer le code Swing du
-        code normal op&eacute;rationnel. Voir la <a href="">page
-        Swing</a>pour plus d'informations.</dd>
-
-        <dt>help files (fichiers d'aide)</dt>
-
-        <dd>La structure du fichier d'aide, les fichiers
-        &eacute;chos de la structure du code. Pour plus
-        d'informations, voir la page d'aide <a href=
-        "Help.shtml">dans les pages JavaHelp</a>.</dd>
-
-        <dt>ResourceBundles</dt>
-
-        <dd>
-          Nous utilisons le regroupements de ressources pour
-          <a href="I8N.shtml">l'internationalisation</a>. Elles
-          sont colocalis&eacute;e avec le code qui les
-          r&eacute;f&eacute;rences, mais nous nous dirigeons vers
-          une nouvelle convention de d&eacute;nomination. Pour
-          r&eacute;duire le fardeau de chargement, nous nous
-          dirigeons vers un mod&egrave;le o&ucirc; le fichier
-          jmri.foo.FooBundle.properties est adress&eacute; par un
-          &eacute;l&eacute;ment statique dans la classe
-          jmri.foo.FooBundle, s&eacute;par&eacute; des
-          propri&eacute;t&eacute;s du fichier lui m&ecirc;me. Cela
-          r&eacute;duit beaucoup le temps de chargement!
-
-          <p>Notez qu'il existe &eacute;galement quelques
-          regroupements de ressources qui sont utilis&eacute;s
-          &agrave; d'autres fins, indiqu&eacute;s dans leurs
-          commentaires en t&ecirc;te.</p>
-        </dd>
-      </dl>Le script outil de d&eacute;veloppement
-      "checkdepends.csh" est destin&eacute; &agrave;
-      v&eacute;rifier certaines des d&eacute;pendances par
-      inadvertance, mais nous sommes loin de l'effacer. 
-      <!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+	</div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.NamedBean;
 import jmri.jmrit.logix.OBlock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define OBlocks
@@ -22,9 +24,9 @@ import jmri.jmrit.logix.OBlock;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
-class BlockPortalTableModel extends AbstractTableModel implements PropertyChangeListener {
+public class BlockPortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int BLOCK_NAME_COLUMN = 0;
     public static final int PORTAL_NAME_COLUMN = 1;
@@ -59,6 +61,9 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
                 return Bundle.getMessage("BlockName");
             case PORTAL_NAME_COLUMN:
                 return Bundle.getMessage("PortalName");
+            default:
+                log.warn("Unhandled column name: {}", col);
+                break;
         }
         return "";
     }
@@ -68,7 +73,7 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         List<NamedBean> list = _oBlockModel.getBeanList();
         if (list.size() > 0) {
             int count = 0;
-            int idx = 0;		//accumulated row count
+            int idx = 0;  //accumulated row count
             OBlock block = null;
             NamedBean[] array = new NamedBean[list.size()];
             array = list.toArray(array);
@@ -85,7 +90,7 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
                 return "";
             }
             return block.getPortals().get(idx).getName();
-            /*           
+            /*
              while (count <= row)  {
              count += ((OBlock)list.get(idx++)).getPortals().size();
              }
@@ -128,4 +133,6 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
             fireTableDataChanged();
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class);
 }

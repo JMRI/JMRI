@@ -2,6 +2,7 @@ package jmri.jmrix.maple.serialdriver;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.nodeconfig.NodeConfigAction;
 
 /**
@@ -21,18 +22,18 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
     }
 
-    JButton b = new JButton("Configure Maple Nodes");
+    JButton b = new JButton(Bundle.getMessage("WindowTitle"));
 
     @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new NodeConfigAction((MapleSystemConnectionMemo) adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }
@@ -47,6 +48,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
+        }
     }
+
 }

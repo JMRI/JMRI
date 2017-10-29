@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * at the remote node, all of the routing of messages to multiple consumers can
  * be done without traffic over the connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
@@ -99,5 +99,5 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class);
 }

@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
  * JMRIClient implementation of the Reporter interface.
  * <P>
  *
- * Description:	extend jmri.AbstractReporter for JMRIClient layouts
+ * Description: extend jmri.AbstractReporter for JMRIClient layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2010
   */
 public class JMRIClientReporter extends AbstractReporter implements JMRIClientListener {
 
@@ -87,7 +87,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
         return state;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientReporter.class);
 
 }
 

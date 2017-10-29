@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.event.ActionEvent;
@@ -162,6 +162,6 @@ public class LoadVSDFileAction extends AbstractAction {
     }
 
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(LoadVSDFileAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(LoadVSDFileAction.class);
 
 }

@@ -70,6 +70,9 @@
         Wiki</a>, which lets a lot of people easily contribute to
         building better documentation</li>
 
+        <li>Chris Atkins helped improve the
+        <a href="http://jmri.org/help/en/html/tools/scripting/FAQ.shtml#newJython">instructions for using a separate jython install</a></li>
+
         <li>Ron W. Auld, whose llnmon program formed the basis for
         the LocoNet monitoring <a name="B" id="B"></a></li>
 
@@ -186,10 +189,12 @@
         <a href="http://jmri.org/k/UDRP/index.shtml">despicable
         behavior</a>, and wrote a scripting example page</li>
 
-        <li>Egbert Broerse, who worked on translations, improved
-        the signaling help and website content, contributed the
-        Rio Grande 1965 signal definition and greatly improved the GUI
-        for adding turnouts and signals.</li>
+        <li>Egbert Broerse, who worked on translations, added
+        Switchboards, graphic state display in the tables,
+        the Output Matrix signal mast and the Rio Grande 1965
+        signal definition, localized hardware connection tools and 
+        improved the signaling help, website content and
+        the GUI for adding turnouts and signals.</li>
 
         <li>Dick Bronson, who created the great LocoBuffer-II and
         worked hard to make sure it worked well with JMRI. He also
@@ -203,7 +208,7 @@
         <li>Stephen Brooks, who did the initial testing of the
         Grapevine and Maple support</li>
 
-        <li>Andy Brown, who helped solve a problem with NX 
+        <li>Andy Brown, who helped solve a problem with NX
         entry/exit pairs.</li>
 
         <li>Bill Brown, whose layout was used for the first NCE
@@ -239,7 +244,7 @@
 
         <li>Claudio Capaccio of LaisDCC provided definitions
         for their line of decoders</li>
-        
+
         <li>Bill Carman, who located information on the MRC/Athearn
         F Unit and Challenger decoders</li>
 
@@ -393,11 +398,14 @@
         Hobbyist</a> emagazine for putting the <a href=
         "http://model-railroad-hobbyist.com/mrht_decoderpro">JMRI
         clinics from the NMRA 2008 Anaheim convention</a> on the
-        web. 
-        
+        web.
+
         <a name="G" id="G"></a></li>
 
         <li>William C Gage provided an MRC decoder definition</li>
+
+        <li>Steve Gigiel, who fixed the XML definition of the block contents icon,
+        and helped fix the Transit implementation of comments.
 
         <li>Brian Gilhuly, who helped debug a programmer problem in
         JMRI 3.11.1</li>
@@ -417,6 +425,8 @@
         provided the DH83FX definition, and many great
         suggestions</li>
 
+        <li>Costin Grigoras added an option to start the DCC++ TCP server at startup</li>
+
         <li>Bill Gray suggested web page improvements</li>
 
         <li>Michael Greene, who corrected a bug in the SoundTraxx
@@ -427,10 +437,6 @@
 
         <li>Walter Griffin, who provided graphics for signals and
         CTC panels</li>
-        
-        <li>Steve Gigiel, who fixed the XML definition of the block contents icon,
-        and helped fix the Transit implementation of comments.
-        
 
         <li>Mark Gurries, who provided loaner equipment and great
         ideas. He's currently working on decoder definitions for
@@ -525,7 +531,7 @@
         the Uhlenbrock 67800 servo decoder.</li>
 
         <li>Klaus Killinger, who improved the sound support</li>
-        
+
         <li>Scott Kitts, who helped debug the new communications
         library for Mac OS X</li>
 
@@ -569,7 +575,9 @@
 
         <li>Jim LeFevre, who did the testing on the TMCC
         implementation, including buying components so we could do
-        a more complete job, and coded the function support</li>
+        a more complete job, and coded the function support.
+        He's also put a lot of work into test and development
+        of the C/MRI support.</li>
 
         <li>Alain Le Marchand, who provided a number of decoder
         definitions and updates</li>
@@ -627,18 +635,20 @@
 
         <li>Greg McCartney, who provided a <a href=
         "http://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk
-        and Western signal definition</a> and a <a href=
+        and Western signal definition</a>, the <a href=
         "http://jmri.org/xml/signals/B&amp;O-1980/index.shtml">B&amp;O
-        1980 signal definition</a></li>
-
-        <li>David McGowan, who handled many aspects of JMRI legal
-        defense against Matt Katzer</li>
+        1980 signal definition</a>, and the
+        <a href="http://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>.
+        </li>
 
         <li>David McDowell of the North Raleigh Model Railroad Club
         created a <a href=
         "http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">
         clinic</a> covering Block Occupancy, Transponding and
         Simple Signal Logic.</li>
+
+        <li>David McGowan, who handled many aspects of JMRI legal
+        defense against Matt Katzer</li>
 
         <li>Randy McKenzie, who contributed some CTC panel
         background images</li>
@@ -761,7 +771,11 @@
         our tech documentation, and updated the OpenLCB support to
         their version 0.7</li>
 
-        <li>Steve Rawlinson, who fixed a bug in Layout Blocks.</li>
+        <li>Steve Rawlinson, who fixed a bug in Layout Blocks and
+        generously provides the <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins server</a>
+        where we integrate our code and build the packages that we release to 
+        our users.
+        </li>
 
         <li>Simon Reader, who improved the throttle, added a check
         for completed status to Routes, and added the "invert"
@@ -955,8 +969,11 @@
         <li>Jack Walton, who created the Lenz LE080 decoder
         definition</li>
 
-        <li>George Warner, who fixed the turnout circle in the 
-        Layout Editor.</li>
+        <li>George Warner, who changed all the TextFields to editable
+        comboboxes (with drop-down menus); added a 2nd turnout
+        circle for slips and added left, right & bottom options
+        for the toolbar (and re-laid out same) in the Layout Editor.
+        Also wrote all the slip code for the web server.</li>
 
         <li>Mark Waters, who provided numerous Zimo decoder
         definitions and new Zimo MX620 definitions.</li>

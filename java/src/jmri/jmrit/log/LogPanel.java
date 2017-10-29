@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * User interface for adding an item to the log file.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
   */
 public class LogPanel extends JPanel {
 
@@ -41,6 +41,6 @@ public class LogPanel extends JPanel {
         log.error(textField.getText());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LogPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LogPanel.class);
 
 }

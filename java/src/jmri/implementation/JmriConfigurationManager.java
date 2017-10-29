@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ServiceLoader;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import jmri.Application;
@@ -17,6 +18,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
+import jmri.jmrit.XmlFile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.spi.PreferencesManager;
@@ -45,8 +47,9 @@ public class JmriConfigurationManager implements ConfigureManager {
                 InstanceManager.store(provided.cast(pp), provided);
             }
         }
-        if (ProfileManager.getDefault().getActiveProfile() != null) {
-            this.legacy.setPrefsLocation(new File(ProfileManager.getDefault().getActiveProfile().getPath(), Profile.CONFIG_FILENAME));
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        if (profile != null) {
+            this.legacy.setPrefsLocation(new File(profile.getPath(), Profile.CONFIG_FILENAME));
         }
         if (!GraphicsEnvironment.isHeadless()) {
             ConfigXmlManager.setErrorHandler(new DialogErrorHandler());
@@ -102,7 +105,7 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     @Override
-    public ArrayList<Object> getInstanceList(Class<?> c) {
+    public List<Object> getInstanceList(Class<?> c) {
         return this.legacy.getInstanceList(c);
     }
 
@@ -158,8 +161,8 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     @Override
-    public boolean load(URL file) throws JmriException {
-        return this.load(file, false);
+    public boolean load(URL url) throws JmriException {
+        return this.load(url, false);
     }
 
     @Override
@@ -168,12 +171,12 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     @Override
-    public boolean load(URL file, boolean registerDeferred) throws JmriException {
-        log.debug("loading {} ...", file);
+    public boolean load(URL url, boolean registerDeferred) throws JmriException {
+        log.debug("loading {} ...", url);
         try {
-            if (file == null
-                    || (new File(file.toURI())).getName().equals("ProfileConfig.xml") //NOI18N
-                    || (new File(file.toURI())).getName().equals(Profile.CONFIG)) {
+            if (url == null
+                    || (new File(url.toURI())).getName().equals("ProfileConfig.xml") //NOI18N
+                    || (new File(url.toURI())).getName().equals(Profile.CONFIG)) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 List<PreferencesManager> providers = new ArrayList<>(InstanceManager.getList(PreferencesManager.class));
                 providers.stream().forEach((provider) -> {
@@ -181,7 +184,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                 });
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
-                        ArrayList<String> errors = new ArrayList<>();
+                        List<String> errors = new ArrayList<>();
                         this.initialized.forEach((provider) -> {
                             List<Exception> exceptions = provider.getInitializationExceptions(profile);
                             if (!exceptions.isEmpty()) {
@@ -211,17 +214,21 @@ public class JmriConfigurationManager implements ConfigureManager {
                         (new TabbedPreferencesAction()).actionPerformed();
                     }
                 }
-                if (file != null && (new File(file.toURI())).getName().equals("ProfileConfig.xml")) { // NOI18N
+                if (url != null && (new File(url.toURI())).getName().equals("ProfileConfig.xml")) { // NOI18N
                     log.debug("Loading legacy configuration...");
-                    return this.legacy.load(file, registerDeferred);
+                    return this.legacy.load(url, registerDeferred);
                 }
                 return this.initializationExceptions.isEmpty();
             }
         } catch (URISyntaxException ex) {
-            log.error("Unable to get File for {}", file);
+            log.error("Unable to get File for {}", url);
             throw new JmriException(ex.getMessage(), ex);
         }
-        return this.legacy.load(file, registerDeferred);
+        // make this url the default "Save Panels..." file
+        JFileChooser ufc = jmri.configurexml.StoreXmlUserAction.getUserFileChooser();
+        ufc.setSelectedFile(new File(FileUtil.urlToURI(url)));
+
+        return this.legacy.load(url, registerDeferred);
         // return true; // always return true once legacy support is dropped
     }
 
@@ -272,4 +279,15 @@ public class JmriConfigurationManager implements ConfigureManager {
     public HashMap<PreferencesManager, InitializationException> getInitializationExceptions() {
         return new HashMap<>(initializationExceptions);
     }
+
+    @Override
+    public void setValidate(XmlFile.Validate v) {
+        legacy.setValidate(v);
+    }
+
+    @Override
+    public XmlFile.Validate getValidate() {
+        return legacy.getValidate();
+    }
+
 }

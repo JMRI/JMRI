@@ -1544,7 +1544,7 @@
         <text> </text>
       </label>
       <display item="Sw rep1" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 1" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 1" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1555,7 +1555,7 @@
         <text> </text>
       </label>
       <display item="Sw rep2" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 2" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 2" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1566,7 +1566,7 @@
         <text> </text>
       </label>
       <display item="Sw rep3" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 3" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 3" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1577,7 +1577,7 @@
         <text> </text>
       </label>
       <display item="Sw rep4" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 4" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 4" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1588,7 +1588,7 @@
         <text> </text>
       </label>
       <display item="Sw rep5" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 5" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 5" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1599,7 +1599,7 @@
         <text> </text>
       </label>
       <display item="Sw rep6" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 6" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 6" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1610,7 +1610,7 @@
         <text> </text>
       </label>
       <display item="Sw rep7" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 7" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 7" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1621,7 +1621,7 @@
         <text> </text>
       </label>
       <display item="Sw rep8" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 8" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 8" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1633,7 +1633,7 @@
       <label>
         <text> </text>
       </label>
-      <display item="Send Address Delay" tooltip="Time between senting addresses in a route"/>
+      <display item="Send Address Delay" tooltip="Time between sending addresses in a route"/>
       <label>
         <text> </text>
       </label>

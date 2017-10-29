@@ -1,65 +1,43 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  *
  * @author zoo
  */
-public class VersionTest extends TestCase {
-
-    public VersionTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
+public class VersionTest {
 
     /**
      * Test of isCanonicalVersion method, of class Version.
      */
+    @Test
     public void testIsCanonicalVersion() {
 
         assertTrue(Version.isCanonicalVersion("1.2.3"));
         assertFalse(Version.isCanonicalVersion("1.2"));
-
+        assertTrue(Version.isCanonicalVersion("1.2.3-p"));
+        assertTrue(Version.isCanonicalVersion("1.2.0"));
+        assertFalse(Version.isCanonicalVersion("1.2.0ish"));
     }
 
     /**
      * Test of isCanonicalVersion method, of class Version.
      */
+    @Test
     public void testCompareCanonicalVersions() {
 
         assertTrue(Version.compareCanonicalVersions("1.2.3", "1.2.3") == 0);
         assertTrue(Version.compareCanonicalVersions("1.2.1", "1.2.3") < 0);
         assertTrue(Version.compareCanonicalVersions("1.2.4", "1.2.3") > 0);
-
+        assertTrue(Version.compareCanonicalVersions("1.2.3-P", "1.2.3-P") == 0);
+        assertTrue(Version.compareCanonicalVersions("1.2.4", "1.2.3-P") > 0);
+        assertTrue(Version.compareCanonicalVersions("1.2.3-P", "1.2.3") == 0);
         assertTrue(Version.compareCanonicalVersions("213.1.1", "213.1.1") == 0);
         assertTrue(Version.compareCanonicalVersions("213.1.1", "213.1.10") < 0);
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(VersionTest.class);
-        return suite;
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", VersionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
 }

@@ -1,0 +1,17 @@
+@startuml
+
+package jmri {}
+
+package jmri.implementation {}
+package jmri.managers {}
+
+package jmri.util {}
+package jmri.util.swing {}
+
+jmri +-- jmri.implementation
+jmri +-- jmri.managers
+jmri +-- jmri.util
+
+jmri.util +-- jmri.util.swing
+
+@enduml

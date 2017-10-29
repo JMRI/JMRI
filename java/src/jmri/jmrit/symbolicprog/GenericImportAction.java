@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to import the CV values from a LokProgrammer CV list file.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Dave Heap Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Dave Heap Copyright (C) 2015
  */
 public class GenericImportAction extends AbstractAction {
 
@@ -73,5 +73,5 @@ public class GenericImportAction extends AbstractAction {
         return false;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(GenericImportAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GenericImportAction.class);
 }

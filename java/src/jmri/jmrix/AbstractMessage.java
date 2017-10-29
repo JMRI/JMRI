@@ -1,11 +1,12 @@
 package jmri.jmrix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base for various message implementations used by the 
+ * Base for various message implementations used by the
  * various abstract TrafficController classes.
  *
  * @author Bob Jacobsen Copyright 2007, 2008
@@ -33,18 +34,11 @@ public abstract class AbstractMessage implements Message {
         }
     }
 
-    @SuppressWarnings("null")
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
-            justification = "we want to force an exception")
-    public AbstractMessage(AbstractMessage m) {
-        if (m == null) {
-            log.error("copy ctor of null message throws exception");
-        }
+    public AbstractMessage(@Nonnull AbstractMessage m) {
+        Objects.requireNonNull(m, "Unable to create message by copying null message");
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = m._dataChars[i];
-        }
+        System.arraycopy(m._dataChars, 0, _dataChars, 0, _nDataChars);
     }
 
     @Override
@@ -98,11 +92,11 @@ public abstract class AbstractMessage implements Message {
     @Override
     public int hashCode() {
         int retval = 0;
-        for(int i = 0;i<this.getNumDataElements();i++){ 
+        for(int i = 0;i<this.getNumDataElements();i++){
             retval += this.getElement(i);
         }
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMessage.class);
 }

@@ -8,14 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.ProgListener;
 import jmri.Programmer;
+import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 
 /**
  * Frame providing a simple command station programmer
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @author Giorgio Terdina Copyright (C) 2007
   */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {

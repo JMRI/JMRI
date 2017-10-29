@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Pete Cressman Copyright 2009, 2016
+ * @author Pete Cressman Copyright 2009, 2016
  *
  */
 public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {
@@ -145,5 +145,5 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DragJLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DragJLabel.class);
 }

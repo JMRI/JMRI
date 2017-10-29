@@ -56,8 +56,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 }
                 log.debug("system name is " + sname);
                 Memory m = tm.getBySystemName(sname);
-                Element elem = new Element("memory")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("memory");
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common part
@@ -167,5 +166,5 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         m.setValue(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class);
 }

@@ -89,21 +89,16 @@ public class JmriPanel extends JPanel {
 
     /**
      * 2nd stage of initialization, invoked after the constructor is complete.
-     *
-     * @throws java.lang.Exception if there is an exception initializing the
-     *                             components
      */
-    public void initComponents() throws Exception {
+    public void initComponents() {
     }
 
     /**
      * 3rd stage of initialization, invoked after Swing components exist.
      *
      * @param context the context that this panel may be initialized with
-     * @throws java.lang.Exception if there is an exception initializing the
-     *                             context
      */
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
     }
 
     public void dispose() {

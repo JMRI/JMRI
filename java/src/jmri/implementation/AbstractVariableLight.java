@@ -33,12 +33,11 @@ import org.slf4j.LoggerFactory;
  * Unlike the parent class, this stores CurrentIntensity and TargetIntensity in
  * separate variables.
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Ken Cameron Copyright (C) 2008,2009
- * @author	Bob Jacobsen Copyright (C) 2008,2009
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Ken Cameron Copyright (C) 2008,2009
+ * @author Bob Jacobsen Copyright (C) 2008,2009
  */
-public abstract class AbstractVariableLight extends AbstractLight
-        implements java.io.Serializable {
+public abstract class AbstractVariableLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractVariableLight.class);
 

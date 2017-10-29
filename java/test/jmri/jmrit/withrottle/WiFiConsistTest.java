@@ -1,49 +1,28 @@
 package jmri.jmrit.withrottle;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Test simple functioning of WiFiConsist
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author	Paul Bender Copyright (C) 2016,2017
  */
-public class WiFiConsistTest extends TestCase {
+public class WiFiConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
-    public void testCtor() {
-        jmri.DccLocoAddress addr = new jmri.DccLocoAddress(1234,true);
-        WiFiConsist panel = new WiFiConsist(addr);
-        Assert.assertNotNull("exists", panel );
-    }
-
-    // from here down is testing infrastructure
-    public WiFiConsistTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", WiFiConsistTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(WiFiConsistTest.class);
-        return suite;
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugCommandStation();
+        jmri.DccLocoAddress addr = new jmri.DccLocoAddress(1234, true);
+        c = new WiFiConsist(addr);
     }
 
     @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-    }
-    
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 }

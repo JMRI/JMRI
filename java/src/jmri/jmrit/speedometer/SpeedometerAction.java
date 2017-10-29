@@ -8,7 +8,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to create and register a SpeedometerFrame
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SpeedometerAction extends JmriAbstractAction {
 

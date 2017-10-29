@@ -1,6 +1,7 @@
 package jmri.jmrix.tmcc;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,8 +19,8 @@ import org.slf4j.LoggerFactory;
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override
@@ -59,6 +60,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

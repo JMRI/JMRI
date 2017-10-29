@@ -15,12 +15,12 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,8 +31,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.FileUtil;
 import jmri.util.PhysicalLocation;
-import org.jdom2.Document;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,10 +81,10 @@ public class VSDecoderPreferences {
         // Try to load preferences from the file
         try {
             root = prefs.rootFromFile(file);
-        } catch (java.io.FileNotFoundException e2) {
+        } catch (IOException e2) {
             log.info("Did not find VSDecoder preferences file.  This is normal if you haven't save the preferences before");
             root = null;
-        } catch (Exception e) {
+        } catch (JDOMException | RuntimeException e) {
             log.error("Exception while loading VSDecoder preferences: " + e);
             root = null;
         }
@@ -198,7 +197,7 @@ public class VSDecoderPreferences {
             {
                 log.error("createNewFile failed");
             }
-        } catch (Exception exp) {
+        } catch (IOException | RuntimeException exp) {
             log.error("Exception while writing the new VSDecoder preferences file, may not be complete: " + exp);
         }
 
@@ -208,14 +207,14 @@ public class VSDecoderPreferences {
             Document doc = XmlFile.newDocument(root);
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-/*TODO    		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*TODO      java.util.Map<String,String> m = new java.util.HashMap<String,String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttles-preferences.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0,p);*/
             root.setContent(store());
             xf.writeXML(file, doc);
-        } catch (Exception ex) { // TODO fix null value for Attribute
+        } catch (IOException | RuntimeException ex) { // TODO fix null value for Attribute
             log.warn("Exception in storing vsdecoder preferences xml: " + ex);
         }
     }
@@ -326,5 +325,5 @@ public class VSDecoderPreferences {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class);
 }

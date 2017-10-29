@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * In particular, ZTC640XNetPacketizer adds functions to add and remove the 0xFF
  * bytes that appear prior to some messages.
  *
- * @author	Paul Bender Copyright (C) 2006
+ * @author Paul Bender Copyright (C) 2006
  *
  */
 public class ZTC640XNetPacketizer extends XNetPacketizer {
@@ -63,7 +63,7 @@ public class ZTC640XNetPacketizer extends XNetPacketizer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC640XNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC640XNetPacketizer.class);
 }
 
 

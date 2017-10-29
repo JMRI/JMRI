@@ -27,6 +27,9 @@ public class YardTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("YardName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }
@@ -71,5 +74,5 @@ public class YardTableModel extends TrackTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(YardTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(YardTableModel.class);
 }

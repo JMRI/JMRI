@@ -56,8 +56,11 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     int previousGroupChannel;
 //    Dimension channelTextSize;
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         int i;
         int j;
         int minWindowWidth = 0;
@@ -84,7 +87,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         p = new JPanel();
-        graphicArea = new duplexGroupChannelScanGuiCanvas();
+        graphicArea = new DuplexGroupChannelScanGuiCanvas();
         p.add(graphicArea);
         add(p);
 
@@ -166,16 +169,25 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel"; // NOI18N
     } // NOI18N
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return rb.getString("Title");
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -491,7 +503,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class);
 
     @Override
     public void stateChanged(javax.swing.event.ChangeEvent e) {
@@ -505,9 +517,9 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         graphicArea.repaint();
     }
 
-    private duplexGroupChannelScanGuiCanvas graphicArea;
+    private DuplexGroupChannelScanGuiCanvas graphicArea;
 
-    private class duplexGroupChannelScanGuiCanvas extends java.awt.Canvas {
+    private class DuplexGroupChannelScanGuiCanvas extends java.awt.Canvas {
 
         private int barWidth = 7;
         private int barSpace = barWidth + 8;
@@ -534,7 +546,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         private final java.awt.Color averageLineColor = java.awt.Color.GREEN;
         private final java.awt.Color lowerLimitLineColor = java.awt.Color.LIGHT_GRAY;
 
-        public duplexGroupChannelScanGuiCanvas() {
+        public DuplexGroupChannelScanGuiCanvas() {
             super();
             setBackground(backgroundColor);
             setForeground(foregroundColor);

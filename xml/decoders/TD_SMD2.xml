@@ -100,7 +100,7 @@
       </label>
       <display item="Output 2 Alternate Address" tooltip="Sets the address for output 2"/>
       <label>
-        <text>Only required for non-sequencial addresses for outputs 1 and 2</text>
+        <text>Only required for non-sequential addresses for outputs 1 and 2</text>
       </label>
       <label>
         <text> </text>
@@ -154,11 +154,11 @@
   </pane>
   <pane>
     <column>
-      <display item="Output 1 Type" tooltip="Configures the output for specfic use"/>
+      <display item="Output 1 Type" tooltip="Configures the output for specific use"/>
       <label>
         <text> </text>
       </label>
-      <display item="Output 2 Type" tooltip="Configures the output for specfic use"/>
+      <display item="Output 2 Type" tooltip="Configures the output for specific use"/>
     </column>
     <name>Outputs</name>
   </pane>

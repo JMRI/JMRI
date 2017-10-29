@@ -27,6 +27,9 @@ public class InterchangeTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("InterchangeName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }
@@ -71,5 +74,5 @@ public class InterchangeTableModel extends TrackTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InterchangeTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InterchangeTableModel.class);
 }

@@ -80,8 +80,8 @@ public class NceMessageCheck {
     /* NCE USB no longer has an accessory address restriction dboudreau 1/18/2012
      private static void checkACC_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
      // USB connected to PowerCab or SB3 can only access addresses up to 250
-     int number = m.getElement(1);			// high byte address
-     number = number*256 + m.getElement(2);	// low byte address
+     int number = m.getElement(1);   // high byte address
+     number = number*256 + m.getElement(2); // low byte address
      if (number > 250 && 
      (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_POWERCAB 
      || (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_SB3))){
@@ -121,7 +121,7 @@ public class NceMessageCheck {
         throw new JmriException(txt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class);
 }
 
 

@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.beans.PropertyChangeEvent;
@@ -143,5 +143,5 @@ abstract public class Trigger implements PropertyChangeListener {
         }
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(Trigger.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(Trigger.class);
 }

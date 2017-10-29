@@ -5,7 +5,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 /**
  * Provide access to Swing components for the LocoNet subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * 
  * @since 2.99.2
  */
@@ -18,7 +18,7 @@ public class CanComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     CanSystemConnectionMemo memo;
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
      */
     @Override
     public javax.swing.JMenu getMenu() {
@@ -28,6 +28,3 @@ public class CanComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         return new CanMenu(memo);
     }
 }
-
-
-

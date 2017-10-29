@@ -6,7 +6,7 @@ package jmri.jmrix.nce;
  * <P>
  * Some rudimentary support is provided for the "binary" option.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
@@ -82,7 +82,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
 
     @Override
     public boolean isUnsolicited() {
-// Boudreau: check for unsolicited AIU messages in pre 2006 EPROMs    	
+// Boudreau: check for unsolicited AIU messages in pre 2006 EPROMs     
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             return false;
         }

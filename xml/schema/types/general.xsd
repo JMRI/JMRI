@@ -169,46 +169,61 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="screenColorType">
-    <xs:annotation>
-        <xs:documentation>
-          Provide possible colors for screen use, not for signals.
-          See jmri.jmrit.display.layoutEditor.LayoutBlock.colorText
-          (until refactored?).
-          Code indicates leading capital letters, but files are 
-          available with all-lower case.
-        </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="Black"/>
-      <xs:enumeration value="DarkGray"/>
-      <xs:enumeration value="Gray"/>
-      <xs:enumeration value="LightGray"/>
-      <xs:enumeration value="White"/>
-      <xs:enumeration value="Red"/>
-      <xs:enumeration value="Pink"/>
-      <xs:enumeration value="Orange"/>
-      <xs:enumeration value="Yellow"/>
-      <xs:enumeration value="Green"/>
-      <xs:enumeration value="Blue"/>
-      <xs:enumeration value="Magenta"/>
-      <xs:enumeration value="Cyan"/>
-      <xs:enumeration value="black"/>
-      <xs:enumeration value="darkgray"/>
-      <xs:enumeration value="darkGray"/>
-      <xs:enumeration value="gray"/>
-      <xs:enumeration value="lightgray"/>
-      <xs:enumeration value="lightGray"/>
-      <xs:enumeration value="white"/>
-      <xs:enumeration value="red"/>
-      <xs:enumeration value="pink"/>
-      <xs:enumeration value="orange"/>
-      <xs:enumeration value="yellow"/>
-      <xs:enumeration value="green"/>
-      <xs:enumeration value="blue"/>
-      <xs:enumeration value="magenta"/>
-      <xs:enumeration value="cyan"/>
-    </xs:restriction>
+  <xs:simpleType name="screenColorType"> 
+    <xs:union>
+       <xs:simpleType>
+          <xs:annotation>
+             <xs:documentation>
+                 Allow hex strings for screen colors starting with version 4.9.6
+             </xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+             <xs:pattern value="#[0-9A-Fa-f]{6}"/>
+          </xs:restriction>
+       </xs:simpleType>
+       <xs:simpleType>
+          <xs:annotation>
+             <xs:documentation>
+                Provide possible colors for screen use, not for signals.
+                Lower case values historically were encoded in 
+                jmri.util.ColorUtil, but are now encoded in 
+                jmri.NamedBeanBundle.properties.  Some code in jmri.jmrit
+                has used upper case first letters, so those are included
+                just in case the values appear in files.
+             </xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:token">
+             <xs:enumeration value="Black"/>
+             <xs:enumeration value="DarkGray"/>
+             <xs:enumeration value="Gray"/>
+             <xs:enumeration value="LightGray"/>
+             <xs:enumeration value="White"/>
+             <xs:enumeration value="Red"/>
+             <xs:enumeration value="Pink"/>
+             <xs:enumeration value="Orange"/>
+             <xs:enumeration value="Yellow"/>
+             <xs:enumeration value="Green"/>
+             <xs:enumeration value="Blue"/>
+             <xs:enumeration value="Magenta"/>
+             <xs:enumeration value="Cyan"/>
+             <xs:enumeration value="black"/>
+             <xs:enumeration value="darkgray"/>
+             <xs:enumeration value="darkGray"/>
+             <xs:enumeration value="gray"/>
+             <xs:enumeration value="lightgray"/>
+             <xs:enumeration value="lightGray"/>
+             <xs:enumeration value="white"/>
+             <xs:enumeration value="red"/>
+             <xs:enumeration value="pink"/>
+             <xs:enumeration value="orange"/>
+             <xs:enumeration value="yellow"/>
+             <xs:enumeration value="green"/>
+             <xs:enumeration value="blue"/>
+             <xs:enumeration value="magenta"/>
+             <xs:enumeration value="cyan"/>
+          </xs:restriction>
+       </xs:simpleType>
+    </xs:union>
   </xs:simpleType>
 
   <xs:simpleType name="classType">
@@ -244,7 +259,7 @@
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
         <!-- accepts, but should not, the greater than and less than characters in file names -->
-      <xs:pattern value="((program:|preference:|settings:|home:|profile:|file:|[a-zA-Z]:|\/)(\/|\\|[^/?*:;{}\\]+)+|https?:\/\/.+\/?.*)"/>
+      <xs:pattern value="((program:|preference:|settings:|home:|profile:|file:|[a-zA-Z]:|/)(/|\\|[^\\/?*:;{}]+)+|https?://.+/?.*)"/>
     </xs:restriction>
   </xs:simpleType>
 

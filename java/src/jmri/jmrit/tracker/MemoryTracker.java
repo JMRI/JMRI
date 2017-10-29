@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tracks train into memory object
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class MemoryTracker {
 
@@ -50,5 +50,5 @@ public class MemoryTracker {
     //Memory m;
     Block block;
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryTracker.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryTracker.class);
 }

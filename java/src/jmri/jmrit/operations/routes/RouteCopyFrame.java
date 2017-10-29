@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RouteCopyFrame extends OperationsFrame {
 
-    RouteManager routeManager = RouteManager.instance();
+    RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
 
     // labels
     javax.swing.JLabel textCopyRoute = new javax.swing.JLabel(Bundle.getMessage("CopyRoute"));
@@ -36,7 +37,7 @@ public class RouteCopyFrame extends OperationsFrame {
     javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
-    JComboBox<Route> routeBox = RouteManager.instance().getComboBox();
+    JComboBox<Route> routeBox = InstanceManager.getDefault(RouteManager.class).getComboBox();
 
     public RouteCopyFrame() {
         super(Bundle.getMessage("TitleRouteCopy"));

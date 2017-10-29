@@ -15,9 +15,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
-       Mx1SystemConnectionMemo memo = new Mx1SystemConnectionMemo();
+       JUnitUtil.setUp();
        Mx1TrafficController tc = new Mx1TrafficController(){
           @Override
           public boolean status(){
@@ -27,6 +25,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
           public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
           }
        };
+       Mx1SystemConnectionMemo memo = new Mx1SystemConnectionMemo(tc);
        apc = new Mx1PortController(memo){
             @Override
             public boolean status(){
@@ -71,8 +70,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

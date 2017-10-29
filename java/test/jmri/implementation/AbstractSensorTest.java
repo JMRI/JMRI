@@ -3,11 +3,11 @@ package jmri.implementation;
 import java.beans.PropertyChangeListener;
 import jmri.JmriException;
 import jmri.Sensor;
-
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Eventually: Abstract Base Class for Sensor tests in specific jmrix packages. This is not
@@ -21,7 +21,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     // implementing classes must provide these these methods
 
     // return number of listeners registered with the TrafficController
-    /*abstract*/ public int numListeners() {return 0;}	
+    /*abstract*/ public int numListeners() {return 0;}
 
     /*abstract*/ public void checkOnMsgSent() {}
 
@@ -36,7 +36,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
                 public void requestUpdateFromLayout(){}
         };
     }
-    
+
     protected AbstractSensor t = null;	// holds objects under test
 
     static protected boolean listenerResult = false;
@@ -73,7 +73,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
         t.removePropertyChangeListener(ln);
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertTrue("listener should not have heard message after removeListner",
+        Assert.assertTrue("listener should not have heard message after removeListener",
                 !listenerResult);
     }
 
@@ -102,23 +102,23 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     public void testDebounceSettings() throws JmriException {
         t.setSensorDebounceGoingActiveTimer(81L);
         Assert.assertEquals("timer", 81L, t.getSensorDebounceGoingActiveTimer());
-        
+
         t.setSensorDebounceGoingInActiveTimer(31L);
         Assert.assertEquals("timer", 31L, t.getSensorDebounceGoingInActiveTimer());
-        
-        Assert.assertEquals("initial default", false, t.useDefaultTimerSettings());
-        t.useDefaultTimerSettings(true);
-        Assert.assertEquals("initial default", true, t.useDefaultTimerSettings());
-                
+
+        Assert.assertEquals("initial default", false, t.getUseDefaultTimerSettings());
+        t.setUseDefaultTimerSettings(true);
+        Assert.assertEquals("initial default", true, t.getUseDefaultTimerSettings());
+
     }
 
     public void testDebounce() throws JmriException {
         t.setSensorDebounceGoingActiveTimer(81L);
         Assert.assertEquals("timer", 81L, t.getSensorDebounceGoingActiveTimer());
-        
+
         t.setSensorDebounceGoingInActiveTimer(31L);
         Assert.assertEquals("timer", 31L, t.getSensorDebounceGoingInActiveTimer());
-                
+
         Assert.assertEquals("initial state", Sensor.UNKNOWN, t.getState());
         t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
         Assert.assertEquals("post-set state", Sensor.UNKNOWN, t.getState());
@@ -129,7 +129,12 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
         Assert.assertEquals("post-set state", Sensor.ACTIVE, t.getState());
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.INACTIVE;}, "Sensor.INACTIVE set");
     }
-    
+
+    public void testGetPullResistance(){
+       // default is off, override this test if this is supported.
+       Assert.assertEquals("Pull Direction",jmri.Sensor.PullResistance.PULL_OFF,t.getPullResistance());
+    }
+
     // from here down is testing infrastructure
 
     public AbstractSensorTest(String s) {
@@ -151,7 +156,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

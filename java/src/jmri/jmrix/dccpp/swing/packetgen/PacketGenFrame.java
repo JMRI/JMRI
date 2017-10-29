@@ -8,15 +8,18 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user input of XpressNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2002
+ * @author Bob Jacobsen Copyright (C) 2001,2002
  * @author      Mark Underwood Copyright (C) 2015
   */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.dccpp.swing.DCCppSwingBundle");
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
 
         // all we need to do is set the title 
@@ -27,6 +30,9 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         pack();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendDCCppMessage(createPacket(packetTextField.getSelectedItem().toString()), null);
@@ -57,6 +63,6 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     // private data
     private DCCppTrafficController tc = null;
     
-    private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class);
 
 }

@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
+ * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
   */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
@@ -243,6 +243,6 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev4 = new JCheckBox();
 
-    private final static Logger log = LoggerFactory.getLogger(PM4Panel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PM4Panel.class);
 
 }

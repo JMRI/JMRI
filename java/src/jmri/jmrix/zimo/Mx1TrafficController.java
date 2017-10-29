@@ -26,6 +26,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      *
      * @param pCommandStation reference to associated command station object,
      *                        preserved for later.
+     * @param prot            false if {@link #ASCII}, true if {@link #BINARY}
      */
     Mx1TrafficController(Mx1CommandStation pCommandStation, boolean prot) {
         mCommandStation = pCommandStation;
@@ -136,5 +137,5 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         return adaptermemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class);
 }

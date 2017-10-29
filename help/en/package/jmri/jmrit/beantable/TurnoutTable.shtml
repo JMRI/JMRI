@@ -28,12 +28,14 @@
       "columns"></a></p>
 
       <h2>Turnout Table Columns</h2>
-
+      (You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to a column title)
       <dl>
         <dt>System Name</dt>
 
         <dd>The System Name cannot be changed once entered into the
-        table. The "Add..." button located in the lower left corner
+        table. The <a href="TurnoutAddEdit.shtml">"Add..."</a>
+        button located in the lower left corner
         of the pane allows you to add a new Turnout to the table.
         The System Name is automatically generated when using the
         "Add..." button.<br>
@@ -44,13 +46,19 @@
         <dt>User Name</dt>
 
         <dd>You can directly enter or change the "User Name" for an
-        existing Turnout. This can be pretty much anything you wish
-        to describe the Turnout.</dd>
+        existing Turnout (double click in the cell). This can be
+        pretty much anything you wish to describe the Turnout.</dd>
 
         <dt>State</dt>
-
-        <dd>Pushing one of the buttons in the "State" column button
-        will change the state of that particular Turnout.</dd>
+        <img src="images/TurnoutTableGraphic.png" height="96" width="399"
+        align="right" alt="Graphic Turnout state column">
+        <img src="images/TurnoutTableText.png" height="140" width="406"
+        align="right" alt="Textual Turnout state column">
+        <dd>Pushing one of the buttons/icons in the "State" column
+        will change the state of that particular Turnout.<br>
+        Choose between textual and graphic display of the Turnout state
+        in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display
+        preferences</a>.</dd>
 
         <dt>Delete</dt>
 
@@ -347,6 +355,14 @@
         "Thrown". When Sensor 2 is "Active", the turnout is known
         to be "Closed" (normal).</dd>
 
+        <dt>DELAYED</dt>
+
+        <dd>When something tells the Turnout to change, 
+        it immediately starts the operation and goes to
+        the INCONSISTENT state to reflect that the points
+        are moving.  After a few seconds delay, the
+        operation completes and the final state is reported.</dd>
+
         <dt>MONITORING</dt>
 
         <dd>Default for LocoNet Turnouts (and probably XpressNet
@@ -435,7 +451,8 @@
       "RouteAddEdit.shtml#lock">Route</a> or Logix, or from
       scripts.</p>
 
-      <h4>Cab Lockout</h4>To do the Cab Lockout, JMRI works with
+      <h4>Cab Lockout</h4>
+      To do the Cab Lockout, JMRI works with
       the DCC system to prevent people from changing the position
       of a locked Turnout. JMRI can only do this with some DCC
       systems. To do it, the JMRI program monitors the Turnout's
@@ -448,7 +465,8 @@
       the NCE command station must have the 2007 or newer
       EPROM.</p>
 
-      <h4>Pushbutton Lockout</h4>JMRI can also work with certain
+      <h4>Pushbutton Lockout</h4>
+      JMRI can also work with certain
       types of DCC accessory decoders to lock out their
       locally-wired pushbuttons. To do this, JMRI sends DCC
       commands to the decoder. These commands are decoder-type
@@ -460,7 +478,8 @@
       selected in the <a href="#decodercol">"Decoder" column</a> of
       the Turnout Table.
 
-      <h4>Locking Routes</h4>To help you select a set of Turnouts
+      <h4>Locking Routes</h4>
+      To help you select a set of Turnouts
       to lock, a Route can also be locked. All Turnouts that are
       being monitored by the JMRI program and are included in the
       Route will be locked. See the <a href=

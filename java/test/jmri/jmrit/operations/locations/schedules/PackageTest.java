@@ -38,6 +38,14 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SchedulesTableFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SchedulesTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleResetHitsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SchedulesByLoadActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SchedulesResetHitsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SchedulesTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleOptionsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleOptionsFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationTrackPairTest.class));
         return suite;
     }
 

@@ -12,7 +12,7 @@ import jmri.util.swing.multipane.PanedInterface;
  *
  * Ignores WindowInterface, since standalone.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class PanelProFrame extends MultiPaneWindow {
 

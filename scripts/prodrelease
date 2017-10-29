@@ -42,9 +42,9 @@ echo
 echo "releaselist:"
 echo '----------------------------------------------------------------------------------'
 echo "  ${1}:"
-echo "   tgz: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`"\"
-echo "   dmg: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`"\"
-echo "   exe: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`"\"
+echo "   tgz: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`"\" | tr + . 
+echo "   dmg: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`"\" | tr + . 
+echo "   exe: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`"\" | tr + . 
 echo '----------------------------------------------------------------------------------'
 
 echo
@@ -55,15 +55,15 @@ echo "release note:"
 echo '----------------------------------------------------------------------------------'
 echo '<ul>'
 echo '<li>OS X / macOS: <a'
-echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`</a><br/>"
+echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`</a><br/>"  | tr + . 
 echo  "  sha256: `$SHA *.dmg| awk '{print $1}'` </p>"
 echo
 echo '<li>Windows: <a'
-echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`</a><br/>"
+echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`</a><br/>"  | tr + . 
 echo "   sha256: `$SHA *.exe| awk '{print $1}'`</p>"
 echo
 echo '<li>Linux: <a'
-echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`</a><br/>"
+echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`</a><br/>"  | tr + . 
 echo "   sha256: `$SHA *.tgz| awk '{print $1}'`</p>"
 echo '</ul>'
 echo '----------------------------------------------------------------------------------'
@@ -76,15 +76,15 @@ echo "Older release note format using Sf.net:"
 echo '----------------------------------------------------------------------------------'
 echo '<ul>'
 echo '<li>OS X / macOS: <a'
-echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.dmg`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.dmg`/download</a><br/>"
+echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.dmg`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.dmg`/download</a><br/>"  | tr + . 
 echo  "  sha256: `$SHA *.dmg| awk '{print $1}'` </p>"
 echo
 echo '<li>Windows: <a'
-echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.exe`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.exe`/download</a><br/>"
+echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.exe`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.exe`/download</a><br/>"  | tr + . 
 echo "   sha256: `$SHA *.exe| awk '{print $1}'`</p>"
 echo
 echo '<li>Linux: <a'
-echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.tgz`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.tgz`/download</a><br/>"
+echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.tgz`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.tgz`/download</a><br/>"  | tr + . 
 echo "   sha256: `$SHA *.tgz| awk '{print $1}'`</p>"
 echo '</ul>'
 echo '----------------------------------------------------------------------------------'

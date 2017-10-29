@@ -3,13 +3,14 @@ package jmri.jmrit.symbolicprog;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
+import jmri.util.JUnitUtil;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 
 /**
@@ -63,8 +64,7 @@ public class QualifierCombinerTest {
         model = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                cvtable,
-                new IndexedCvTableModel(new JLabel(""), p)
+                cvtable
         );
 
         // create a JDOM tree with just some elements
@@ -116,7 +116,7 @@ public class QualifierCombinerTest {
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

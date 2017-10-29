@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 /**
  * Swing action to create and register a SampleAutomaton object
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SampleAutomatonAction extends AbstractAction {
 

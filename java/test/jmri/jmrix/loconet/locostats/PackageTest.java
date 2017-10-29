@@ -10,9 +10,13 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    jmri.jmrix.loconet.locostats.swing.PackageTest.class,
+    LocoBufferIIStatusTest.class,
+    PR2StatusTest.class,
+    PR3MS100ModeStatusTest.class,
+    RawStatusTest.class,
+    LocoStatsFuncTest.class,
     BundleTest.class,
-    LocoStatsFrameTest.class,
-    LocoStatsPanelTest.class
 })
 public class PackageTest {
 }

@@ -86,7 +86,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * Get the Register Number for this Throttle's assigned address
      */
     int getRegisterNum() {
-	return(tc.getCommandStation().getRegisterNum(this.getDccAddress()));
+ return(tc.getCommandStation().getRegisterNum(this.getDccAddress()));
     }
 
     /**
@@ -95,11 +95,11 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      */
     @Override
     protected void sendFunctionGroup1() {
-	log.debug("sendFunctionGroup1(): f0 {} f1 {} f2 {} f3 {} f4{}",
-		  f0, f1, f2, f3, f4);
+ log.debug("sendFunctionGroup1(): f0 {} f1 {} f2 {} f3 {} f4{}",
+    f0, f1, f2, f3, f4);
         DCCppMessage msg = DCCppMessage.makeFunctionGroup1OpsMsg(this.getDccAddress(),
                 f0, f1, f2, f3, f4);
-	log.debug("sendFunctionGroup1(): Message: {}", msg.toString());
+ log.debug("sendFunctionGroup1(): Message: {}", msg.toString());
         // now, queue the message for sending to the command station
         //queueMessage(msg, THROTTLEFUNCSENT);
         queueMessage(msg, THROTTLEIDLE);
@@ -149,11 +149,11 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      */
     @Override
     protected void sendFunctionGroup5() {
-	log.debug("sendFunctionGroup5(): f21 {} f22 {} f23 {} f24 {} f25 {} f26 {} f27 {} f28 {}",
-		  f21, f22, f23, f24, f25, f26, f27, f28);
+ log.debug("sendFunctionGroup5(): f21 {} f22 {} f23 {} f24 {} f25 {} f26 {} f27 {} f28 {}",
+    f21, f22, f23, f24, f25, f26, f27, f28);
         DCCppMessage msg = DCCppMessage.makeFunctionGroup5OpsMsg(this.getDccAddress(),
                 f21, f22, f23, f24, f25, f26, f27, f28);
-	log.debug("sendFunctionGroup5(): Message: {}", msg.toString());
+ log.debug("sendFunctionGroup5(): Message: {}", msg.toString());
         // now, queue the message for sending to the command station
         //queueMessage(msg, THROTTLEFUNCSENT);
         queueMessage(msg, THROTTLEIDLE);
@@ -246,10 +246,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             }
             /* we're sending a speed to the locomotive */
             DCCppMessage msg = DCCppMessage.makeSpeedAndDirectionMsg(
-								    getRegisterNum(),
-								    getDccAddress(),
-								    speed,
-								    this.isForward);
+            getRegisterNum(),
+            getDccAddress(),
+            speed,
+            this.isForward);
             // now, queue the message for sending to the command station
             //queueMessage(msg, THROTTLESPEEDSENT);
             queueMessage(msg, THROTTLEIDLE);
@@ -345,68 +345,68 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             }
             // We haven't sent anything, but we might be told someone else 
             // has taken over this address
-	    // For now, do nothing.
+     // For now, do nothing.
         } else if ((requestState & THROTTLESPEEDSENT) == THROTTLESPEEDSENT) {
             if (log.isDebugEnabled()) {
                 log.debug("Current throttle status is THROTTLESPEEDSENT");
-	    }
-	    // This is a reply to a Throttle message, or to a Status message.
-	    if (l.isThrottleReply()) {
-		// Update our state with the register's information.
-		handleThrottleReply(l);
-	    }
-	    // For a Throttle command ("t") we get back a Throttle Status.
-	    if (log.isDebugEnabled()) {
-		log.debug("Last Command processed successfully.");
-	    }
-	    setIsAvailable(true);
-	    requestState = THROTTLEIDLE;
-	    sendQueuedMessage();
-		
-	}
-	if ((requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
+     }
+     // This is a reply to a Throttle message, or to a Status message.
+     if (l.isThrottleReply()) {
+  // Update our state with the register's information.
+  handleThrottleReply(l);
+     }
+     // For a Throttle command ("t") we get back a Throttle Status.
+     if (log.isDebugEnabled()) {
+  log.debug("Last Command processed successfully.");
+     }
+     setIsAvailable(true);
+     requestState = THROTTLEIDLE;
+     sendQueuedMessage();
+  
+ }
+ if ((requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
             if (log.isDebugEnabled()) {
                 log.debug("Current throttle status is THROTTLEFUNCSENT. Ignoring Reply");
-		log.debug("Reply: {}", l.toString());
+  log.debug("Reply: {}", l.toString());
             }
-	}
+ }
         requestState=THROTTLEIDLE;
         sendQueuedMessage();
     }
 
     private void handleThrottleReply(DCCppReply l) {
-	int reg, speed, dir;
-	reg = l.getRegisterInt();
-	speed = l.getSpeedInt();
-	dir = l.getDirectionInt();
+ int reg, speed, dir;
+ reg = l.getRegisterInt();
+ speed = l.getSpeedInt();
+ dir = l.getDirectionInt();
 
-	// Check to see if register matches MY throttle.
-	// If so, update my values to match the returned values.
-	// Make (relatively) direct writes to the memories, so we don't
-	// cause looped throttle messages.
-	int regaddr = tc.getCommandStation().getRegisterAddress(reg);
-	if ((regaddr == DCCppConstants.REGISTER_UNALLOCATED) ||
-	    (regaddr != this.address)) {
-	    // This register doesn't match anything.
-	    // Or the assigned address doesn't match mine.
-	    return;
-	} else {
-	    // The assigned address matches mine.  Update my info 
-	    // to match the returned register info.
-	    if (speed < 0) {
-		//this.setSpeedSetting(0.0f);
-		this.speedSetting = 0.0f;
-	    }
-	    else {
-		//this.setSpeedSetting((speed * 1.0f)/126.0f);
-		this.speedSetting = (speed * 1.0f)/126.0f;
-	    }
-	    this.isForward = (dir == 1 ? true : false);
-	}
-	
+ // Check to see if register matches MY throttle.
+ // If so, update my values to match the returned values.
+ // Make (relatively) direct writes to the memories, so we don't
+ // cause looped throttle messages.
+ int regaddr = tc.getCommandStation().getRegisterAddress(reg);
+ if ((regaddr == DCCppConstants.REGISTER_UNALLOCATED) ||
+     (regaddr != this.address)) {
+     // This register doesn't match anything.
+     // Or the assigned address doesn't match mine.
+     return;
+ } else {
+     // The assigned address matches mine.  Update my info 
+     // to match the returned register info.
+     if (speed < 0) {
+  //this.setSpeedSetting(0.0f);
+  this.speedSetting = 0.0f;
+     }
+     else {
+  //this.setSpeedSetting((speed * 1.0f)/126.0f);
+  this.speedSetting = (speed * 1.0f)/126.0f;
+     }
+     this.isForward = (dir == 1 ? true : false);
+ }
+ 
     }
 
-	
+ 
     // listen for the messages to the LI100/LI101
     @Override
     public void message(DCCppMessage l) {
@@ -467,7 +467,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             public void run() {
                 /* If the timer times out, just send a status 
                  request message */
-		// TODO: how to do this for DCC++?
+  // TODO: how to do this for DCC++?
                 //sendStatusInformationRequest();
             }
         };
@@ -565,5 +565,5 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     // register for notification
-    private final static Logger log = LoggerFactory.getLogger(DCCppThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppThrottle.class);
 }

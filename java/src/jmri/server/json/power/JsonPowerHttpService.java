@@ -1,6 +1,8 @@
 package jmri.server.json.power;
 
 import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.DEFAULT;
+import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.OFF;
 import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.STATE;
@@ -10,6 +12,7 @@ import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +42,16 @@ public class JsonPowerHttpService extends JsonHttpService {
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
         try {
-            switch (InstanceManager.getDefault(jmri.PowerManager.class).getPower()) {
+            PowerManager manager = InstanceManager.getDefault(PowerManager.class);
+            if (name != null && !name.isEmpty()) {
+                for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
+                    if (pm.getUserName().equals(name)) {
+                        manager = pm;
+                        data.put(NAME, name);
+                    }
+                }
+            }
+            switch (manager.getPower()) {
                 case PowerManager.OFF:
                     data.put(STATE, OFF);
                     break;
@@ -49,6 +61,10 @@ public class JsonPowerHttpService extends JsonHttpService {
                 default:
                     data.put(STATE, UNKNOWN);
                     break;
+            }
+            data.put(DEFAULT, false);
+            if (manager.equals(InstanceManager.getDefault(PowerManager.class))) {
+                data.put(DEFAULT, true);
             }
         } catch (JmriException e) {
             log.error("Unable to get Power state.", e);
@@ -64,12 +80,20 @@ public class JsonPowerHttpService extends JsonHttpService {
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         try {
+            PowerManager manager = InstanceManager.getDefault(PowerManager.class);
+            if (name != null && !name.isEmpty()) {
+                for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
+                    if (pm.getUserName().equals(name)) {
+                        manager = pm;
+                    }
+                }
+            }
             switch (state) {
                 case OFF:
-                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.OFF);
+                    manager.setPower(PowerManager.OFF);
                     break;
                 case ON:
-                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.ON);
+                    manager.setPower(PowerManager.ON);
                     break;
                 case UNKNOWN:
                     // quietly ignore
@@ -84,7 +108,11 @@ public class JsonPowerHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "UnlistableService", POWER));
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+        ArrayNode root = this.mapper.createArrayNode();
+        for (PowerManager manager : InstanceManager.getList(PowerManager.class)) {
+            root.add(this.doGet(type, manager.getUserName(), locale));
+        }
+        return root;
     }
 }

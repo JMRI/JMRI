@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  */
 public class SensorTextEdit extends JmriJFrame {
 
-    SensorIcon pl; 	// layout positional label tracked by this frame
+    SensorIcon pl;  // layout positional label tracked by this frame
     static final String INIT = null;
     String oldActive = INIT;
     String oldInactive = INIT;
@@ -56,7 +56,7 @@ public class SensorTextEdit extends JmriJFrame {
         super.windowClosed(e);
     }
 
-    public void initComponents(SensorIcon l, String name) throws Exception {
+    public void initComponents(SensorIcon l, String name) {
         pl = l;
 
         // the following code sets the frame's initial state

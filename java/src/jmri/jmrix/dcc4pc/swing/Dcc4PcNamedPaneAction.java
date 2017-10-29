@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class Dcc4PcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
@@ -47,5 +47,5 @@ public class Dcc4PcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcNamedPaneAction.class);
 }

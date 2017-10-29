@@ -6,8 +6,8 @@ import java.util.Date;
  * MrcTrafficListenerFilter is a helper class used to suppress notifications a
  * client is not interested in.
  *
- * @author	Matthias Keil Copyright (C) 2013
- * @author	Kevin Dickerson Copyright (C) 2014
+ * @author Matthias Keil Copyright (C) 2013
+ * @author Kevin Dickerson Copyright (C) 2014
  * 
  *
  */

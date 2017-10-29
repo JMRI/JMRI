@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.Icon;
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.swing.JmriAbstractAction;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Update the decoder definitions in the roster
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  * @see jmri.jmrit.XmlFile
  */
 public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
@@ -40,7 +41,7 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
             String model = entry.getDecoderModel();
 
             // check if replaced
-            List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, family, null, null, null, model);
+            List<DecoderFile> decoders = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, family, null, null, null, model);
             log.info("Found " + decoders.size() + " decoders matching family \"" + family + "\" model \"" + model + "\" from roster entry \"" + entry.getId() + "\"");
 
             String replacementFamily = null;
@@ -51,16 +52,21 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
                 if (decoder.getReplacementFamily() != null || decoder.getReplacementModel() != null) {
                     log.info("   Recommended replacement is family \"" + decoder.getReplacementFamily() + "\" model \"" + decoder.getReplacementModel() + "\"");
                 }
-                replacementFamily = (decoder.getReplacementFamily() != null) ? decoder.getReplacementFamily() : replacementFamily;
-                replacementModel = (decoder.getReplacementModel() != null) ? decoder.getReplacementModel() : replacementModel;
+                replacementFamily = decoder.getReplacementFamily();
+                replacementModel = decoder.getReplacementModel();
             }
 
-            if (replacementModel != null && replacementFamily != null) {
-                log.info("   *** Will update");
+            if (replacementModel != null || replacementFamily != null) {
 
                 // change the roster entry
-                entry.setDecoderFamily(replacementFamily);
-                entry.setDecoderModel(replacementModel);
+                if (replacementFamily != null) {
+                    log.info("   *** Will update. replacementFamily='{}'", replacementFamily);
+                    entry.setDecoderFamily(replacementFamily);
+                }
+                if (replacementModel != null) {
+                    log.info("   *** Will update. replacementModel='{}'", replacementModel);
+                    entry.setDecoderModel(replacementModel);
+                }
 
                 // write it out (not bothering to do backup?)
                 entry.updateFile();
@@ -84,5 +90,5 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(UpdateDecoderDefinitionAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UpdateDecoderDefinitionAction.class);
 }

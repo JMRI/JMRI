@@ -146,7 +146,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
             return MIN_CHECKBOXES; // default is 6 checkboxes per row
         }
         StringBuilder padding = new StringBuilder("X");
-        for (int i = 0; i < CarTypes.instance().getMaxFullNameLength(); i++) {
+        for (int i = 0; i < InstanceManager.getDefault(CarTypes.class).getMaxFullNameLength(); i++) {
             padding.append("X");
         }
 
@@ -347,7 +347,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
     protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
 
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
-        pad = new JPanel();	// kludge fix for horizontal scrollbar
+        pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
         panel.add(pad);
 
@@ -361,13 +361,13 @@ public class OperationsPanel extends JPanel implements AncestorListener {
 
     @Override
     public void ancestorAdded(AncestorEvent event) {
-//		log.debug("Ancestor Added");
+//  log.debug("Ancestor Added");
         // do nothing
     }
 
     @Override
     public void ancestorRemoved(AncestorEvent event) {
-//		log.debug("Ancestor Removed");	
+//  log.debug("Ancestor Removed"); 
         // do nothing
     }
 
@@ -376,7 +376,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         if (pad != null) {
             if (pad.isVisible() ^ ((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing()) {
                 pad.setVisible(((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing());
-//				log.debug("Scrollbar visible: {}", pad.isVisible());
+//    log.debug("Scrollbar visible: {}", pad.isVisible());
             }
         }
     }
@@ -389,5 +389,5 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class);
 }

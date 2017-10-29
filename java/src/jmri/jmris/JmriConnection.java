@@ -107,7 +107,17 @@ public class JmriConnection {
                 this.session.getRemote().sendString(message, new WriteCallback() {
                     @Override
                     public void writeFailed(Throwable thrwbl) {
-                        log.error("Exception \"{}\" sending {}", thrwbl.getMessage(), message);
+                        if (log.isDebugEnabled()) {
+                            // include entire message in log
+                            log.error("Exception \"{}\" sending {}", thrwbl.getMessage(), message, thrwbl);
+                        } else {
+                            // include only first 75 characters of message in log
+                            int length = 75;
+                            log.error("Exception \"{}\" sending {}", thrwbl,
+                                    (message.length() > length)
+                                    ? message.substring(0, length - 1)
+                                    : message);
+                        }
                         JmriConnection.this.getSession().close(StatusCode.NO_CODE, thrwbl.getMessage());
                     }
 

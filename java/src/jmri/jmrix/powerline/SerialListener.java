@@ -3,7 +3,7 @@ package jmri.jmrix.powerline;
 /**
  * Listener interface to be notified about serial traffic
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
   */
 abstract public interface SerialListener extends jmri.jmrix.AbstractMRListener {
 

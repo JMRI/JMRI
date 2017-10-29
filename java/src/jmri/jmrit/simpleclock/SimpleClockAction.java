@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SimpleClockFrame object
  *
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class SimpleClockAction extends AbstractAction {
 
@@ -32,5 +32,5 @@ public class SimpleClockAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleClockAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleClockAction.class);
 }

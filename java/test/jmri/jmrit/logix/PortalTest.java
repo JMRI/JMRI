@@ -1,20 +1,23 @@
 package jmri.jmrit.logix;
 
+import jmri.InstanceManager;
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  */
-public class PortalTest extends TestCase {
+public class PortalTest {
 
     OBlockManager _blkMgr;
     PortalManager _portalMgr;
     jmri.TurnoutManager _turnoutMgr;
 
+    @Test
     public void testCtor() {
         Portal p = _portalMgr.createNewPortal("IP1", null);
         Assert.assertNull("No User Name", p);       // Portals must have a user name
@@ -22,6 +25,7 @@ public class PortalTest extends TestCase {
         Assert.assertNotNull("Has User Name", p);
     }
     
+    @Test
     public void testValidPortal() {
         Portal p = _portalMgr.providePortal("portal_2");
         OBlock toBlk = _blkMgr.provideOBlock("OB1");
@@ -34,6 +38,7 @@ public class PortalTest extends TestCase {
         Assert.assertTrue("portal has both blocks", p.isValid());
     }
 
+    @Test
     public void testAddPath() {
         Portal p = _portalMgr.providePortal("portal_3");
         OBlock toBlk = _blkMgr.provideOBlock("OB1");
@@ -70,40 +75,24 @@ public class PortalTest extends TestCase {
         Assert.assertEquals("Number of toPaths", 2, p.getToPaths().size());
         Assert.assertEquals("Number of fromPaths", 1, p.getFromPaths().size());
         
-        jmri.util.JUnitAppender.assertWarnMessage("Path path_1 already in block OB2, cannot be added to block OB1");
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"path_1\" already in block OB2, cannot be added to block OB1");
         jmri.util.JUnitAppender.assertWarnMessage("Path \"path_3\" is duplicate of path \"path_2\" in Portal \"portal_3\" from block OB1.");
         jmri.util.JUnitAppender.assertWarnMessage("Path \"path_2\" is duplicate name for another path in Portal \"portal_3\" from block OB1.");
     }
 
     // from here down is testing infrastructure
-    public PortalTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PortalTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        return new TestSuite(PortalTest.class);
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        _blkMgr = new OBlockManager();
-        _portalMgr = new PortalManager();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();        
+        _blkMgr = InstanceManager.getDefault(OBlockManager.class);
+        _portalMgr = InstanceManager.getDefault(PortalManager.class);
         _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
-    @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

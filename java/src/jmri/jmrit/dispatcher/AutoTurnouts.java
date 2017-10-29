@@ -1,7 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.List;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -29,19 +29,16 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2008-2009
+ * @author Dave Duchamp Copyright (C) 2008-2009
  */
 public class AutoTurnouts {
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     public AutoTurnouts(DispatcherFrame d) {
         _dispatcher = d;
     }
 
-    private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
-    private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+    private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+    private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     // operational variables
     protected DispatcherFrame _dispatcher = null;
@@ -49,12 +46,16 @@ public class AutoTurnouts {
 
     /**
      * Check that all turnouts are correctly set for travel in the designated
-     * Section to the next Section.
-     *
-     * Returns 'true' if affected turnouts are correctly set, returns 'false'
-     * otherwise. If arguments are not valid for this Section, returns 'false',
-     * and issues an error message. NOTE: This method requires use of the
+     * Section to the next Section. NOTE: This method requires use of the
      * connectivity stored in a Layout Editor panel.
+     *
+     * @param s           the section to check
+     * @param seqNum      sequence number for the section
+     * @param nextSection the following section
+     * @param at          the associated train
+     * @param le          the associated layout panel
+     * @param prevSection the prior section
+     * @return true if affected turnouts are correctly set; false otherwise.
      */
     protected boolean checkTurnoutsInSection(Section s, int seqNum, Section nextSection,
             ActiveTrain at, LayoutEditor le, Section prevSection) {
@@ -71,13 +72,23 @@ public class AutoTurnouts {
      * command needs to be issued. For a command to be issued to set a turnout,
      * the Block containing that turnout must be unoccupied. NOTE: This method
      * does not wait for turnout feedback--it assumes the turnout will be set
-     * correctly if a command is issued. Returns 'true' if affected turnouts are
-     * correctly set or commands have been issued to set any that aren't set
-     * correctly. If a needed command could not be issued because the turnout's
-     * Block is occupied, returns 'false' and sends a warn message. If arguments
-     * are not valid for this Transit, returns 'false', and issues an error
-     * message. NOTE: This method requires use of the connectivity stored in a
-     * Layout Editor panel.
+     * correctly if a command is issued.
+     *
+     * NOTE: This method requires use of the connectivity stored in a Layout
+     * Editor panel.
+     *
+     * @param s                  the section to check
+     * @param seqNum             sequence number for the section
+     * @param nextSection        the following section
+     * @param at                 the associated train
+     * @param le                 the associated layout panel
+     * @param trustKnownTurnouts true to trust known turnouts
+     * @param prevSection        the prior section
+     *
+     * @return true if affected turnouts are correctly set or commands have been
+     *         issued to set any that aren't set correctly; false if a needed
+     *         command could not be issued because the turnout's Block is
+     *         occupied
      */
     protected boolean setTurnoutsInSection(Section s, int seqNum, Section nextSection,
             ActiveTrain at, LayoutEditor le, boolean trustKnownTurnouts, Section prevSection) {
@@ -123,14 +134,14 @@ public class AutoTurnouts {
         if (nextSection != null) {
             exitPt = s.getExitPointToSection(nextSection, direction);
         }
-        Block curBlock = null;    // must be in the section
-        Block prevBlock = null;	  // must start outside the section or be null
-        int curBlockSeqNum = -1;   // sequence number of curBlock in Section
+        Block curBlock;         // must be in the section
+        Block prevBlock = null; // must start outside the section or be null
+        int curBlockSeqNum;     // sequence number of curBlock in Section
         if (entryPt != null) {
             curBlock = entryPt.getBlock();
             prevBlock = entryPt.getFromBlock();
             curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
-        } else if (s.containsBlock(at.getStartBlock())) {
+        } else if ( !at.isAllocationReversed() && s.containsBlock(at.getStartBlock())) {
             curBlock = at.getStartBlock();
             curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
             //Get the previous block so that we can set the turnouts in the current block correctly.
@@ -139,14 +150,31 @@ public class AutoTurnouts {
             } else if (direction == Section.REVERSE) {
                 prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
             }
+        } else if (at.isAllocationReversed() && s.containsBlock(at.getEndBlock())) {
+            curBlock = at.getEndBlock();
+            curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
+            //Get the previous block so that we can set the turnouts in the current block correctly.
+            if (direction == Section.REVERSE) {
+                prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+            } else if (direction == Section.FORWARD) {
+                prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+            }
         } else {
 
-            if (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST) {
-                //This can be considered normal where SignalMast Logic is used.
-                return true;
+            //if (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST) {
+            //    //This can be considered normal where SignalMast Logic is used.
+            //    return true;
+            //}
+            // this is an error but is it? It only happens when system is under stress
+            // which would point to a threading issue.
+            try {
+            log.error("[{}]direction[{}] Section[{}]Error in turnout check/set request - initial Block and Section mismatch",
+                    at.getActiveTrainName(),at.isAllocationReversed(),s.getUserName(),
+                    at.getStartBlock().getUserName(),at.getEndBlock().getUserName());
+            } catch (Exception ex ) {
+                log.warn(ex.getLocalizedMessage());
             }
-            log.error("Error in turnout check/set request - initial Block and Section mismatch");
-            return false;
+            return true;
         }
 
         Block nextBlock = null;
@@ -156,27 +184,40 @@ public class AutoTurnouts {
             // next Block is outside of the Section
             nextBlock = exitPt.getFromBlock();
         } else {
-            // next Block is inside the Section
-            if (direction == Section.FORWARD) {
-                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
-                nextBlockSeqNum = curBlockSeqNum + 1;
-            } else if (direction == Section.REVERSE) {
-                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
-                nextBlockSeqNum = curBlockSeqNum - 1;
-            }
-            if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
-                log.error("Error in block sequence numbers when setting/checking turnouts");
-                return false;
+            if (!at.isAllocationReversed()) {
+                if (direction == Section.FORWARD) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+                    nextBlockSeqNum = curBlockSeqNum + 1;
+                } else if (direction == Section.REVERSE) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+                    nextBlockSeqNum = curBlockSeqNum - 1;
+                }
+                if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
+                    log.error("Error in block sequence numbers fwd when setting/checking turnouts");
+                    return false;
+                }
+            } else {
+                if (direction == Section.REVERSE) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+                    nextBlockSeqNum = curBlockSeqNum + 1;
+                } else if (direction == Section.FORWARD) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+                    nextBlockSeqNum = curBlockSeqNum - 1;
+                }
+                if ((nextBlock == null) && (curBlock != at.getStartBlock())) {
+                    log.error("Error in block sequence numbers rev when setting/checking turnouts");
+                    return false;
+                }
             }
         }
 
-        ArrayList<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();
-        ArrayList<Integer> settingsList = new ArrayList<Integer>();
+        List<LayoutTurnout> turnoutList = new ArrayList<>();
+        List<Integer> settingsList = new ArrayList<>();
         // get turnouts by Block
         boolean turnoutsOK = true;
         while (curBlock != null) {
-            /*No point in getting the list if the previous block is null as it will return empty and generate an error, 
-             this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of 
+            /*No point in getting the list if the previous block is null as it will return empty and generate an error,
+             this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of
              been set correctly for the train to have arrived in the first place.
              */
             if (prevBlock != null) {
@@ -186,16 +227,19 @@ public class AutoTurnouts {
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
                 Turnout to = turnoutList.get(i).getTurnout();
-                int setting = settingsList.get(i).intValue();
+                int setting = settingsList.get(i);
                 if (turnoutList.get(i) instanceof LayoutSlip) {
                     setting = ((LayoutSlip) turnoutList.get(i)).getTurnoutState(settingsList.get(i));
                 }
                 // check or ignore current setting based on flag, set in Options
                 if (!trustKnownTurnouts) {
-                    log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getFullyFormattedDisplayName(), 
-                            (setting==Turnout.CLOSED ? closedText : thrownText));
+                    log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getFullyFormattedDisplayName(),
+                            (setting == Turnout.CLOSED ? closedText : thrownText));
                     to.setCommandedState(setting);
-                    try { Thread.sleep(100); } catch(Exception ex) {}  //TODO: move this to separate thread
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                    }  //TODO: move this to separate thread
                 } else {
                     if (to.getKnownState() != setting) {
                         // turnout is not set correctly
@@ -203,10 +247,13 @@ public class AutoTurnouts {
                             // setting has been requested, is Section free and Block unoccupied
                             if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
                                 // send setting command
-                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getFullyFormattedDisplayName(), 
-                                        (setting==Turnout.CLOSED ? closedText : thrownText));
+                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getFullyFormattedDisplayName(),
+                                        (setting == Turnout.CLOSED ? closedText : thrownText));
                                 to.setCommandedState(setting);
-                                try { Thread.sleep(100); } catch(Exception ex) {}  //TODO: move this to separate thread
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException ex) {
+                                }  //TODO: move this to separate thread
                             } else {
                                 turnoutsOK = false;
                             }
@@ -214,8 +261,8 @@ public class AutoTurnouts {
                             turnoutsOK = false;
                         }
                     } else {
-                        log.debug("{}: turnout {} already {}, skipping", at.getTrainName(), to.getFullyFormattedDisplayName(), 
-                                (setting==Turnout.CLOSED ? closedText : thrownText));                        
+                        log.debug("{}: turnout {} already {}, skipping", at.getTrainName(), to.getFullyFormattedDisplayName(),
+                                (setting == Turnout.CLOSED ? closedText : thrownText));
                     }
                 }
                 if (turnoutList.get(i) instanceof LayoutSlip) {
@@ -245,7 +292,6 @@ public class AutoTurnouts {
                 if (nextBlockSeqNum >= 0) {
                     prevBlock = curBlock;
                     curBlock = nextBlock;
-                    curBlockSeqNum = nextBlockSeqNum;
                     if ((exitPt != null) && (curBlock == exitPt.getBlock())) {
                         // next block is outside of the Section
                         nextBlock = exitPt.getFromBlock();
@@ -272,7 +318,5 @@ public class AutoTurnouts {
         return turnoutsOK;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class);
 }
-
-

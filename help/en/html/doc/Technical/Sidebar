@@ -23,15 +23,16 @@
 			</ul>
 		</dd>
 
-		<dt><h3>Structure</h3></dt>
+		<dt><h3>Code Structure</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="IntroStructure.shtml">Introduction</a>
-			<li><a href="AppStructure.shtml">Application Structure</a>
 			<li><a href="Names.shtml">Names and Naming</a>
+			<li><a href="AppStructure.shtml">Application Structure</a>
 			<li><a href="Patterns.shtml">Code Structure Patterns</a>
 			<li><a href="Swing.shtml">Swing Structure</a>
 			<li><a href="SystemStructure.shtml">External Connection Structure</a>
+			<li><a href="AppPreferences.shtml">Application Preferences</a>
 			<li><a href="Threads.shtml">Threads</a>
 			<li><a href="XmlUsage.shtml">Use of XML</a>
 			<li><a href="WebSite.shtml">Web Site</a>

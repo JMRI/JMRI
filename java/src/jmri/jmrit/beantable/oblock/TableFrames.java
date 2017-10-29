@@ -90,8 +90,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     boolean _showWarnings = true;
     JMenuItem _showWarnItem;
     JMenu _openMenu;
-    HashMap<String, JInternalFrame> _blockPathMap = new HashMap<String, JInternalFrame>();
-    HashMap<String, JInternalFrame> _PathTurnoutMap = new HashMap<String, JInternalFrame>();
+    HashMap<String, JInternalFrame> _blockPathMap = new HashMap<>();
+    HashMap<String, JInternalFrame> _PathTurnoutMap = new HashMap<>();
 
     public TableFrames() {
         this("OBlock Table");
@@ -313,8 +313,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         WarrantTableAction.initPathPortalCheck();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            WarrantTableAction.checkPathPortals(manager.getBySystemName(sysNames[i]));
+        for (String sysName : sysNames) {
+            WarrantTableAction.checkPathPortals(manager.getBySystemName(sysName));
         }
         if (_showWarnings) {
             WarrantTableAction.showPathPortalErrors();
@@ -390,10 +390,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         };
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            OBlock block = manager.getBySystemName(sysNames[i]);
+        for (String sysName : sysNames) {
+            OBlock block = manager.getBySystemName(sysName);
             JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathMenu", block.getDisplayName()));
-            mi.setActionCommand(sysNames[i]);
+            mi.setActionCommand(sysName);
             mi.addActionListener(openFrameAction);
             openBlockPath.add(mi);
         }
@@ -401,8 +401,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         JMenu openTurnoutPath = new JMenu(Bundle.getMessage("OpenBlockPathTurnoutMenu"));
         sysNames = manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            OBlock block = manager.getBySystemName(sysNames[i]);
+        for (String sysName : sysNames) {
+            OBlock block = manager.getBySystemName(sysName);
             JMenu openTurnoutMenu = new JMenu(Bundle.getMessage("OpenTurnoutMenu", block.getDisplayName()));
             openTurnoutPath.add(openTurnoutMenu);
             openFrameAction = new ActionListener() {
@@ -416,7 +416,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             while (iter.hasNext()) {
                 OPath path = (OPath) iter.next();
                 JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathTurnoutMenu", path.getName()));
-                mi.setActionCommand(makePathTurnoutName(sysNames[i], path.getName()));
+                mi.setActionCommand(makePathTurnoutName(sysName, path.getName()));
                 mi.addActionListener(openFrameAction);
                 openTurnoutMenu.add(mi);
             }
@@ -435,8 +435,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
         _oBlockTable.setRowSorter(sorter);
         _oBlockTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{OBlockTableModel.EDIT_COL,
-                OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,
-                OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL}));
+            OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,
+            OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL}));
         _oBlockTable.setDragEnabled(true);
 
         // Use XTableColumnModel so we can control which columns are visible
@@ -453,11 +453,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
-        JComboBox<String> box = new JComboBox<String>(OBlockTableModel.curveOptions);
+        JComboBox<String> box = new JComboBox<>(OBlockTableModel.curveOptions);
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
-        box = new JComboBox<String>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
+        box = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
         box.addItem("");
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(
@@ -530,7 +530,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalTable.setRowSorter(sorter);
         _portalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{PortalTableModel.DELETE_COL}));
         _portalTable.setDragEnabled(true);
-        
+
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i = 0; i < _portalModel.getColumnCount(); i++) {
@@ -563,7 +563,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _blockPortalTable = new JTable(_blockPortalXRefModel);
         _blockPortalTable.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _blockPortalTable.setDragEnabled(true);
-        
+
         _blockPortalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         _blockPortalTable.setDefaultEditor(String.class, new jmri.jmrit.symbolicprog.ValueEditor());
         for (int i = 0; i < _blockPortalXRefModel.getColumnCount(); i++) {
@@ -599,7 +599,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
                 new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL}));
         _signalTable.setDragEnabled(true);
-        
+
         _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
@@ -628,7 +628,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     /**
      * ********************* BlockPathFrame *****************************
      */
-    static class BlockPathFrame extends JInternalFrame {
+    protected static class BlockPathFrame extends JInternalFrame {
 
         /**
          *
@@ -664,9 +664,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathModel.init();
         JTable blockPathTable = new JTable(blockPathModel);
         blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{
-                BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
+            BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
         blockPathTable.setDragEnabled(true);
-        
+
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
@@ -717,7 +717,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 new int[]{PathTurnoutTableModel.SETTINGCOLUMN, PathTurnoutTableModel.DELETE_COL}));
         PathTurnoutTable.setDragEnabled(true);
 
-        JComboBox<String> box = new JComboBox<String>(PathTurnoutTableModel.turnoutStates);
+        JComboBox<String> box = new JComboBox<>(PathTurnoutTableModel.turnoutStates);
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.SETTINGCOLUMN).setCellEditor(new DefaultCellEditor(box));
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
@@ -761,7 +761,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             try {
                 frame.setIcon(false);
             } catch (PropertyVetoException pve) {
-                log.warn("BlockPath Table Frame for \"" + sysName + "\" vetoed setIcon " + pve.toString());
+                log.warn("BlockPath Table Frame for \"{}\" vetoed setIcon {}", sysName, pve);
             }
             frame.moveToFront();
         }
@@ -773,7 +773,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     protected void openPathTurnoutFrame(String pathTurnoutName) {
         JInternalFrame frame = _PathTurnoutMap.get(pathTurnoutName);
-        log.debug("openPathTurnoutFrame for " + pathTurnoutName);
+        log.debug("openPathTurnoutFrame for {}", pathTurnoutName);
         if (frame == null) {
             int index = pathTurnoutName.indexOf('&');
             String pathName = pathTurnoutName.substring(1, index);
@@ -795,8 +795,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             try {
                 frame.setIcon(false);
             } catch (PropertyVetoException pve) {
-                log.warn("PathTurnout Table Frame for \"" + pathTurnoutName
-                        + "\" vetoed setIcon " + pve.toString());
+                log.warn("PathTurnout Table Frame for \"{}\" vetoed setIcon {}", pathTurnoutName, pve);
             }
             frame.moveToFront();
         }
@@ -819,7 +818,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
             JLabel val;
             if (value instanceof Boolean) {
-                if (((Boolean) value).booleanValue()) {
+                if (((Boolean) value)) {
                     val = new JLabel(_trueValue);
                 } else {
                     val = new JLabel(_falseValue);
@@ -832,9 +831,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-    /**
-     * ********************* InternalFrameListener implementatiom
-     * *****************
+    /*
+     * ********************* InternalFrameListener implementation *****************
      */
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
@@ -908,5 +906,5 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         //log.debug("Internal frame deactivated: "+frame.getTitle());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TableFrames.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TableFrames.class);
 }

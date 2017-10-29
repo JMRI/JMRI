@@ -1,7 +1,7 @@
 /**
  * Concrete subclass of TurnoutOperator for a turnout that has sensor feedback.
  *
- * @author	John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  */
 package jmri.implementation;
 
@@ -78,5 +78,5 @@ public class SensorTurnoutOperator extends TurnoutOperator {
         myTurnout.removePropertyChangeListener(listener);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperator.class);
 }

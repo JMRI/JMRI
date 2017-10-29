@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class SerialMonAction extends AbstractAction {
 
@@ -32,6 +32,6 @@ public class SerialMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class);
 
 }

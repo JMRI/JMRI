@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  *
  */
 public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
@@ -48,7 +48,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     public static final int NOTIFIEDSTATE = 15;    // xmt notified, will next wake
     public static final int WAITMSGREPLYSTATE = 25;  // xmt has sent, await reply to message
 
-    static int defaultWaitTimer = 2000;
+    static int defaultWaitTimer = 10000;
 
     /**
      * Forward a preformatted LocoNetMessage to the actual interface.
@@ -84,7 +84,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                 xmtList.addLast(msg);
                 xmtHandler.notify();
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: " + e);
         }
     }
@@ -250,7 +250,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                     return;
                 } // normally, we don't catch the unnamed Exception, but in this
                 // permanently running loop it seems wise.
-                catch (Exception e) {
+                catch (RuntimeException e) {
                     log.warn("run: unexpected Exception: " + e);
                     e.printStackTrace();
                 }
@@ -376,5 +376,5 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class);
 }

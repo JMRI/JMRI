@@ -39,17 +39,16 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     private BufferedImage scaledImage = null;
     private boolean _resizeContainer = false;
     private boolean _respectAspectRatio = true;
-    static private Color BackGroundColor = Color.BLACK;
+    static private Color backgroundColor = Color.BLACK;
     boolean toResize = false;
-    final static Dimension smallDim = new Dimension(10, 10);
+    final static Dimension SMALL_DIM = new Dimension(10, 10);
 
     /**
      * Default constructor.
-     *
      */
     public ResizableImagePanel() {
         super();
-        super.setBackground(BackGroundColor);
+        super.setBackground(backgroundColor);
         setVisible(false);
     }
 
@@ -62,7 +61,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
      */
     public ResizableImagePanel(String imagePath) {
         super();
-        super.setBackground(BackGroundColor);
+        super.setBackground(backgroundColor);
         setImagePath(imagePath);
     }
 
@@ -77,7 +76,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         super();
         setPreferredSize(new Dimension(w, h));
         setSize(w, h);
-        super.setBackground(BackGroundColor);
+        super.setBackground(backgroundColor);
         setImagePath(imagePath);
     }
 
@@ -213,7 +212,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     public void componentHidden(ComponentEvent e) {
         log.debug("Component hidden");
         if (isResizingContainer()) {
-            resizeContainer(smallDim);
+            resizeContainer(SMALL_DIM);
         }
     }
 
@@ -225,8 +224,9 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
             setSize(d);
             p1.setPreferredSize(d);
             p1.setSize(d);
-            if ((getTopLevelAncestor() != null) && (getTopLevelAncestor() instanceof Window)) {
-                ((Window) getTopLevelAncestor()).pack(); // yes, lucky hack, possibly dirty
+            Container c = getTopLevelAncestor();
+            if (c != null && c instanceof Window) {
+                ((Window) c).pack();
             }
         }
     }
@@ -290,5 +290,5 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class);
 }

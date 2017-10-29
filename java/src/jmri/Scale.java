@@ -4,7 +4,7 @@ package jmri;
  * Provide values and methods related to layout scale.
  * <P>
  * *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  * @since 2.5.4
  */
 public class Scale {
@@ -13,12 +13,12 @@ public class Scale {
     }
 
     // Scale definitions
-    public static final int Z = 0x01;	//  1:220
-    public static final int N = 0x02;	//  1:160	
-    public static final int TT = 0x03;	//  1:120
+    public static final int Z = 0x01; //  1:220
+    public static final int N = 0x02; //  1:160 
+    public static final int TT = 0x03; //  1:120
     public static final int HO = 0x04;  //  1:87
     public static final int S = 0x05;   //  1:64
-    public static final int O = 0x06;	//  1:48
+    public static final int O = 0x06; //  1:48
     public static final int G = 0x07;   //  1:24
     public static final int UK_N = 0x08;  //  1:148
     public static final int UK_OO = 0x09; //  1:76.2

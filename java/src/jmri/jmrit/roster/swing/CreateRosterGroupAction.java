@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class CreateRosterGroupAction extends JmriAbstractAction {
 
@@ -104,5 +104,5 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class);
 }

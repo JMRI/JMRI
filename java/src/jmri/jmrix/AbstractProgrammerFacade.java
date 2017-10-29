@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -11,7 +12,7 @@ import jmri.ProgrammingMode;
  * Common implementations of the Programmer interface for making Programmer
  * facade classes.
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  */
 public abstract class AbstractProgrammerFacade implements Programmer {
 
@@ -130,5 +131,9 @@ public abstract class AbstractProgrammerFacade implements Programmer {
     public boolean getCanWrite(String addr) {
         return prog.getCanWrite(addr);
     }
+
+    @Override
+    @Nonnull
+    public WriteConfirmMode getWriteConfirmMode(String addr) { return prog.getWriteConfirmMode(addr); }
 
 }

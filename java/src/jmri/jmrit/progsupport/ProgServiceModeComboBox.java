@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class ProgServiceModeComboBox extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -179,5 +179,5 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     @Override
     public void dispose() {
     }
-    private final static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class);
 }

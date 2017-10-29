@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * The original module has been converted to a clock monitor by removing all
  * active items (Dave Duchamp 2007-2008).
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2004, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2004, 2010
  */
 public class ClockMonPane extends LnPanel implements SlotListener {
 
@@ -149,6 +149,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClockMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClockMonPane.class);
 
 }

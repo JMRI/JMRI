@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  * @since 2.5.1
  */
 public class JmriMemoryPropertyListener extends JmriSimplePropertyListener {
@@ -53,5 +53,5 @@ public class JmriMemoryPropertyListener extends JmriSimplePropertyListener {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriMemoryPropertyListener.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriMemoryPropertyListener.class);
 }

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * This connects an EasyDcc command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
   */
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
@@ -75,6 +75,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

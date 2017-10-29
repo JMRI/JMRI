@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * CAN messages and the message format of the CAN adapter that connects to the
  * layout.
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 abstract public class AbstractCanTrafficController
         extends AbstractMRTrafficController
@@ -130,7 +130,7 @@ abstract public class AbstractCanTrafficController
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             portWarn(e);
         }
     }
@@ -303,12 +303,12 @@ abstract public class AbstractCanTrafficController
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (Exception e) {
+        } catch (java.lang.reflect.InvocationTargetException | InterruptedException | RuntimeException e) {
             log.error("Unexpected exception in invokeAndWait:" + e);
             e.printStackTrace();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class);
 
 }

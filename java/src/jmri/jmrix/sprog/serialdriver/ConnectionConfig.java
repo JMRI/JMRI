@@ -44,4 +44,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
            adapter = new SerialDriverAdapter();
         }
     }
+
 }

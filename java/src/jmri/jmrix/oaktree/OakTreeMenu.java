@@ -6,7 +6,7 @@ import javax.swing.JMenu;
 /**
  * Create a "Systems" menu containing the Jmri Oak Tree-specific tools
  *
- * @author	Bob Jacobsen Copyright 2003, 2006
+ * @author Bob Jacobsen Copyright 2003, 2006
  */
 public class OakTreeMenu extends JMenu {
 

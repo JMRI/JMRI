@@ -9,8 +9,8 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers for EasyDcc
  * systems
  *
- * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @see jmri.managers.DefaultProgrammerManager
+ * @author Bob Jacobsen Copyright (C) 2002
   */
 public class EasyDccProgrammerManager extends DefaultProgrammerManager {
 

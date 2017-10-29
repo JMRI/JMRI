@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Sensors are numbered from 1.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008, 2009
- * @author	Ken Cameron, (C) 2009, 2010 sensors from poll replies Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008, 2009
+ * @author Ken Cameron, (C) 2009, 2010 sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
@@ -145,6 +145,6 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificSensorManager.class);
 }
 

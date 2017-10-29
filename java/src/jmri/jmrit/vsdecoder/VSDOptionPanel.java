@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.GridLayout;
@@ -103,5 +103,5 @@ public class VSDOptionPanel extends JmriPanel {
     }
 
     // Unused as yet.  Commented out to hide the compiler warning.
-    //private static final Logger log = LoggerFactory.getLogger(VSDOptionPanel.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VSDOptionPanel.class);
 }

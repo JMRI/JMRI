@@ -21,7 +21,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
     private static LnMessageServer self = null;
     static final String serviceName = "LocoNetServer"; // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(LnMessageServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageServer.class);
 
     private LnMessageServer() throws RemoteException {
         super();
@@ -34,7 +34,9 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
     public static synchronized LnMessageServer getInstance() throws RemoteException {
         if (self == null) {
-            System.setSecurityManager(new java.rmi.RMISecurityManager());
+            if (System.getSecurityManager() == null) {
+                System.setSecurityManager(new SecurityManager());
+            }
 
             self = new LnMessageServer();
         }

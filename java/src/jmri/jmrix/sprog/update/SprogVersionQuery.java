@@ -4,15 +4,15 @@ import java.util.Vector;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Get the firmware version of the attached SPROG
- *
- * Updated April 2016 by Andrew Crosland look for the correct replies, which may 
+ * Get the firmware version of the attached SPROG.
+ * <p>
+ * Updated April 2016 by Andrew Crosland: look for the correct replies, which may
  * not be the very next message after a query is sent, due to slot manager
  * traffic. Add Pi-SPROG version decoding.
  *
@@ -106,8 +106,9 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Notify all registered listeners of the SPROG version
+     * Notify all registered listeners of the SPROG version.
      *
+     * @param v version to send notify to
      */
     protected synchronized void notifyVersion(SprogVersion v) {
         ver = v;
@@ -123,16 +124,14 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * SprogListener notify Message not used
-     *
+     * SprogListener notify Message (not used).
      */
     @Override
     public void notifyMessage(SprogMessage m) {
     }   // Ignore
 
     /**
-     * SprogListener notify Reply listens to replies and looks for version reply
-     *
+     * SprogListener notifyReply listens to replies and looks for version reply.
      */
     @Override
     synchronized public void notifyReply(SprogReply m) {
@@ -256,7 +255,7 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     synchronized protected void timeout() {
         SprogVersion v;
@@ -277,18 +276,21 @@ public class SprogVersionQuery implements SprogListener {
             case IDLE:
                 log.error("Timeout in unexpected state: " + state);
                 break;
+            default:
+                log.warn("Unhandled timeout state code: {}", state);
+                break;
         }
     }
 
     /**
-     * Internal routine to restart timer with a long delay
+     * Internal routine to restart timer with a long delay.
      */
     protected void startLongTimer() {
         restartTimer(LONG_TIMEOUT);
     }
 
     /**
-     * Internal routine to stop timer, as all is well
+     * Internal routine to stop timer, as all is well.
      */
     protected void stopTimer() {
         if (timer != null) {
@@ -297,7 +299,7 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts {@literal &} restarts.
      * 
      * @param delay timer delay
      */
@@ -317,5 +319,5 @@ public class SprogVersionQuery implements SprogListener {
         timer.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class);
 }

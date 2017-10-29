@@ -3,10 +3,10 @@ package jmri.jmrix.dccpp;
 /**
  * DCCppConstants.java
  *
- * Description:	Constants to represent values seen in DCC++ traffic
+ * Description: Constants to represent values seen in DCC++ traffic
  *
- * @author	Paul Bender Copyright (C) 2003-2009
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2003-2009
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
@@ -38,8 +38,8 @@ public final class DCCppConstants {
     public final static int DCCPP_UNO_1_0 = 1;
     public final static int DCCPP_ARDUINO_1_1 = 2;
     public final static String CommandStationNames[] = {
-	"DCCPP Arduino Uno v1.0",
-	"DCCPP Arduino V1.1",
+ "DCCPP Arduino Uno v1.0",
+ "DCCPP Arduino V1.1",
     };
 
     // DCC++ Command OpCodes
@@ -70,7 +70,7 @@ public final class DCCppConstants {
     public final static char GET_FREE_MEMORY        = 'F';
     public final static char LIST_REGISTER_CONTENTS = 'L';
     public final static char ENTER_DIAG_MODE_CMD    = 'D'; // Enter Diagnostics mode -- NEW V1.2?
-	
+ 
     // Message Replies
     public final static char THROTTLE_REPLY   = 'T'; // <T reg speed dir>
     public final static char TURNOUT_REPLY    = 'H'; // <H id throw> or <X>
@@ -120,8 +120,8 @@ public final class DCCppConstants {
     public final static String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*"; // <c>
     public final static String READ_CS_STATUS_REGEX = "\\s*s\\s*";// <s>
     public final static String QUERY_SENSOR_REGEX = "\\s*[Q,q]\\s*(\\d+)\\s*";
-    public final static String WRITE_DCC_PACKET_MAIN_REGEX = "\\s*M\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+((\\d+)\\s+)?((\\d+)\\s+)?(\\d+)*\\s*";
-    public final static String WRITE_DCC_PACKET_PROG_REGEX = "\\s*P\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+((\\d+)\\s+)?((\\d+)\\s+)?(\\d+)*\\s*";
+    public final static String WRITE_DCC_PACKET_MAIN_REGEX = "M\\s+(\\d+)(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})\\s*"; // M REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
+    public final static String WRITE_DCC_PACKET_PROG_REGEX = "P\\s+(\\d+)(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})\\s*"; // P REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
     public final static String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
     public final static String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
     public final static String ENTER_DIAG_MODE_REGEX = "\\s*D\\s*";

@@ -57,8 +57,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 }
                 log.debug("system name is " + sname);
                 Light lgt = tm.getBySystemName(sname);
-                Element elem = new Element("light")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("light");
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common parts
@@ -328,5 +327,5 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         return InstanceManager.lightManagerInstance().getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class);
 }

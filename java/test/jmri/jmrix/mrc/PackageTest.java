@@ -18,7 +18,18 @@ import org.junit.runners.Suite;
    MrcMessageExceptionTest.class,
    MrcConnectionTypeListTest.class,
    MrcPacketizerTest.class,
-   MrcPacketsTest.class
+   MrcPacketsTest.class,
+   MrcMessageTest.class,
+   MrcOpsModeProgrammerTest.class,
+   MrcPowerManagerTest.class,
+   MrcPowerManagerTest.class,
+   MrcProgrammerTest.class,
+   MrcProgrammerManagerTest.class,
+   MrcThrottleTest.class,
+   MrcThrottleManagerTest.class,
+   MrcTrafficListenerFilterTest.class,
+   MrcTurnoutManagerTest.class,
+   MrcTurnoutTest.class
 })
 
 /**

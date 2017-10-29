@@ -17,7 +17,7 @@ package jmri.jmrit.beantable.oblock;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -126,6 +126,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 return Bundle.getMessage("BlockLengthColName");
             case UNITSCOL:
                 return "  ";
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -191,6 +194,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 } else {
                     return Bundle.getMessage("ButtonClear");
                 }
+            default:
+                // fall through
+                break;
          }
         return "";
     }
@@ -257,6 +263,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 case DELETE_COL:
                     initTempRow();
                     fireTableRowsUpdated(row, row);
+                    break;
+                default:
+                    // fall through
                     break;
             }
             tempRow[col] = (String)value;
@@ -389,7 +398,10 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     _units.remove(row);
                     fireTableDataChanged();
                 }
-
+                break;
+            default:
+                // fall through
+                break;
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
@@ -437,6 +449,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 return new JButton("TURNOUT").getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }
@@ -454,5 +469,5 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class);
 }

@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractMessage;
 /**
  * Methods to decode CBUS opcodes
  *
- * @author	Andrew Crosland Copyright (C) 2009
+ * @author Andrew Crosland Copyright (C) 2009
  */
 public class CbusOpCodes {
 

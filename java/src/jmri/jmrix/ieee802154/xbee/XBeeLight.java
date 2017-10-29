@@ -17,13 +17,13 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeLight extends AbstractLight {
 
-    private String NodeIdentifier; /* This is a string representation of
+    private String nodeIdentifier; /* This is a string representation of
      the XBee address in the system name
      It may be an address or it may be
      the NodeIdentifier string stored in
      the NI parameter on the node.*/
 
-    private XBeeNode node = null; // Which node does this belong too.    
+    private XBeeNode node = null; // Which node does this belong too.
 
     private int address;
     private int pin;         /* Which DIO pin does this light represent. */
@@ -35,6 +35,9 @@ public class XBeeLight extends AbstractLight {
     /**
      * Create a Light object, with system and user names and a reference to the
      * traffic controller.
+     * @param systemName Xbee system id : pin id
+     * @param userName User friendly name
+     * @param controller tc for connection for this node
      */
     public XBeeLight(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);
@@ -55,7 +58,7 @@ public class XBeeLight extends AbstractLight {
         // store address
         systemName = id;
         jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo m = tc.getAdapterMemo();
-        if( !(m instanceof XBeeConnectionMemo)) 
+        if( !(m instanceof XBeeConnectionMemo))
         {
            log.error("Memo associated with the traffic controller is not the right type");
            throw new IllegalArgumentException("Memo associated with the traffic controller is not the right type");
@@ -66,11 +69,11 @@ public class XBeeLight extends AbstractLight {
                //Address format passed is in the form of encoderAddress:input or L:light address
                int seperator = systemName.indexOf(":");
                try {
-                   NodeIdentifier = systemName.substring(prefix.length() + 1, seperator);
-                   if ((node = (XBeeNode) tc.getNodeFromName(NodeIdentifier)) == null) {
-                       if ((node = (XBeeNode) tc.getNodeFromAddress(NodeIdentifier)) == null) {
+                   nodeIdentifier = systemName.substring(prefix.length() + 1, seperator);
+                   if ((node = (XBeeNode) tc.getNodeFromName(nodeIdentifier)) == null) {
+                       if ((node = (XBeeNode) tc.getNodeFromAddress(nodeIdentifier)) == null) {
                            try {
-                               node = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(NodeIdentifier));
+                               node = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(nodeIdentifier));
                            } catch (java.lang.NumberFormatException nfe) {
                                // if there was a number format exception, we couldn't
                               // find the node.
@@ -84,10 +87,10 @@ public class XBeeLight extends AbstractLight {
               }
            } else {
                try {
-                   NodeIdentifier = systemName.substring(prefix.length() + 1, id.length() - 1);
+                   nodeIdentifier = systemName.substring(prefix.length() + 1, id.length() - 1);
                    address = Integer.parseInt(systemName.substring(prefix.length() + 1));
                    node = (XBeeNode) tc.getNodeFromAddress(address / 10);
-                   // calculate the pin to use. 
+                   // calculate the pin to use.
                    pin = ((address) % 10);
                } catch (NumberFormatException ex) {
                    log.debug("Unable to convert " + systemName + " Hardware Address to a number");
@@ -95,7 +98,7 @@ public class XBeeLight extends AbstractLight {
            }
            if (log.isDebugEnabled()) {
                log.debug("Created Light " + systemName
-                    + " (NodeIdentifier " + NodeIdentifier
+                    + " (NodeIdentifier " + nodeIdentifier
                     + " D" + pin
                     + ")");
            }
@@ -119,5 +122,5 @@ public class XBeeLight extends AbstractLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeLight.class);
 }

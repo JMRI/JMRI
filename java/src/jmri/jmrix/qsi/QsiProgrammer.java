@@ -36,8 +36,8 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
         return ret;
     }
 
@@ -216,6 +216,6 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiProgrammer.class);
 
 }

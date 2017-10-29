@@ -12,7 +12,7 @@ import javax.swing.table.TableRowSorter;
 /**
  * Pane for showing the consumer table
  *
- * @author	Bob Jacobsen 2008
+ * @author Bob Jacobsen 2008
   * @since 2.3.7
  */
 public class ConsumerTablePane extends JPanel {
@@ -22,7 +22,7 @@ public class ConsumerTablePane extends JPanel {
     protected JTable table = null;
     protected ConsumerTableModel tableModel = null;
 
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setSize(500, 300);

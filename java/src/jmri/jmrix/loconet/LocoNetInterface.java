@@ -21,7 +21,7 @@ package jmri.jmrix.loconet;
  * that messages will be returned in any particular thread. See the
  * LocoNetListener doc for more background.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.jmrix.loconet.LocoNetListener
  * @see jmri.jmrix.loconet.LnTrafficController
  */

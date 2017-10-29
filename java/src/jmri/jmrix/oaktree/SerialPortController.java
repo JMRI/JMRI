@@ -5,7 +5,7 @@ import jmri.jmrix.SystemConnectionMemo;
 /**
  * Abstract base for classes representing a communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
   */
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
 

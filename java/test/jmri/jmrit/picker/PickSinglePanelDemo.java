@@ -1,33 +1,37 @@
 package jmri.jmrit.picker;
 
-import jmri.*;
-
-import javax.swing.*;
-import javax.swing.event.*;
-
-import java.awt.*;
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.util.JUnitUtil;
 
 /**
- * Demo for exploring operation of the PickSinglePanel class 
+ * Demo for exploring operation of the PickSinglePanel class
+ *
  * @author	Bob Jacobsen Copyright 2017
  */
 public class PickSinglePanelDemo implements ListSelectionListener {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+
         PickSinglePanelDemo demo = new PickSinglePanelDemo();
         demo.start();
     }
 
     PickListModel tableModel;
     PickSinglePanel panel;
-    
+
     void start() {
-        SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
+        SensorManager m = InstanceManager.getDefault(SensorManager.class);
         m.provideSensor("1");
         m.provideSensor("2");
         m.provideSensor("3").setUserName("Three");
@@ -40,11 +44,10 @@ public class PickSinglePanelDemo implements ListSelectionListener {
 
         tableModel = PickListModel.sensorPickModelInstance(); // N11N
         panel = new PickSinglePanel<Sensor>(tableModel);
-        
-        // add a listener 
+
+        // add a listener
         panel.getTable().getSelectionModel().addListSelectionListener(this);
-        
-        
+
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
         JFrame f = new JFrame();
         f.add(panel);
@@ -54,7 +57,7 @@ public class PickSinglePanelDemo implements ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        System.out.println("  Selected: "+panel.getSelectedBeanHandle());
+        System.out.println("  Selected: " + panel.getSelectedBeanHandle());
     }
 
 }

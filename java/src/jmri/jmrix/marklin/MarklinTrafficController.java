@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class MarklinTrafficController extends AbstractMRTrafficController implements MarklinInterface, CommandStation {
 
@@ -263,5 +263,5 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return adaptermemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class);
 }

@@ -32,22 +32,22 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
 
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
-    static final int RETURNSENT = 4; 	// waiting reply to go back to ops mode
+    static final int MODESENT = 1;   // waiting reply to command to go into programming mode
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
+    static final int RETURNSENT = 4;  // waiting reply to go back to ops mode
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override
@@ -210,6 +210,6 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class);
 
 }

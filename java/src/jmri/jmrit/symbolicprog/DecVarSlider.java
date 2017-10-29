@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /* Extends a JSlider so that its color & value are consistent with
  * an underlying variable; we return one of these in DecValVariable.getNewRep.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
+ * @author   Bob Jacobsen   Copyright (C) 2001
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 
@@ -72,6 +72,6 @@ public class DecVarSlider extends JSlider implements ChangeListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DecVarSlider.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecVarSlider.class);
 
 }

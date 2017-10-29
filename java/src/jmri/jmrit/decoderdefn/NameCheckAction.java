@@ -9,7 +9,9 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.symbolicprog.NameFile;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -20,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Check the names in an XML decoder file against the names.xml definitions
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -65,7 +67,7 @@ public class NameCheckAction extends AbstractAction {
                 Iterator<Element> iter = root.getChild("decoder").getChild("variables")
                         .getDescendants(new ElementFilter("variable"));
 
-                jmri.jmrit.symbolicprog.NameFile nfile = jmri.jmrit.symbolicprog.NameFile.instance();
+                NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
                 String warnings = "";
 
@@ -115,7 +117,12 @@ public class NameCheckAction extends AbstractAction {
     }
 
     /**
-     * Ask SAX to read and verify a file
+     * Read and verify an XML file.
+     *
+     * @param file the file to read
+     * @return the root element in the file
+     * @throws org.jdom2.JDOMException if the file cannot be parsed
+     * @throws java.io.IOException     if the file cannot be read
      */
     Element readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile() {
@@ -126,6 +133,6 @@ public class NameCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NameCheckAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NameCheckAction.class);
 
 }

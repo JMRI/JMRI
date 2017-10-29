@@ -5,7 +5,7 @@ import jmri.implementation.AbstractSensor;
 /**
  * Extend jmri.AbstractSensor for NCE systems
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class NceSensor extends AbstractSensor {
 

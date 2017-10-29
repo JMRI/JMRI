@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - XPressNet System Information
+  <title>JMRI Hardware Support - XpressNet System Information
   Tool</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,11 +23,11 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: XPressNet System Information
+      <h1>Hardware Support: XpressNet System Information
       Tool</h1><img src="images/XPressNetSystemInfo.jpg" alt=
-      "XPressNet System Information Tool Image">
+      "XpressNet System Information Tool Image">
 
-      <p>The XPressNet System Information tool is used to determine
+      <p>The XpressNet System Information tool is used to determine
       what hardware is connected to the system.</p>
 
       <p>The top two lines indicate the Command Station type and
@@ -49,11 +49,12 @@
 
       <p>Clicking on "Close" will close the pane.</p>
 
-      <p>Back to the <a href="index.shtml">XPressNet Help</a>
+      <p>Back to the <a href="index.shtml">XpressNet Help</a>
       page</p>
       <hr>
       Paul Bender<br>
-      paul.bender@acm.org <!--#include virtual="/Footer" -->
+      paul.bender@acm.org
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

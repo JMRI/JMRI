@@ -25,7 +25,7 @@
     <dd>
     <ul>
       <li><a href="Main_Main.shtml">Main Window Menu</a></li>
-      <li><a href="Main_Tool.shtml">Tools Menu</a></li>
+      <li><a href="Main_Menu.shtml">Tools Menu</a></li>
  	    <li><a href="Ops_Start.shtml">Operations</a>
       <ul>
         <li><a href="Ops_Settings.shtml">Settings</a></li>

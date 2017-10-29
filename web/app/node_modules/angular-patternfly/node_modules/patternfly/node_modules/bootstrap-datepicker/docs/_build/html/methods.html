@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Methods &mdash; bootstrap-datepicker  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="bootstrap-datepicker  documentation" href="index.html"/>
+        <link rel="next" title="Events" href="events.html"/>
+        <link rel="prev" title="Options" href="options.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> bootstrap-datepicker
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="markup.html">Markup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html#reference">Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#destroy">destroy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#show">show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hide">hide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update">update</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setdate">setDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setutcdate">setUTCDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setdates">setDates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cleardates">clearDates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setutcdates">setUTCDates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getdate">getDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getutcdate">getUTCDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getdates">getDates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getutcdates">getUTCDates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getstartdate">getStartDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getenddate">getEndDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setstartdate">setStartDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setenddate">setEndDate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setdatesdisabled">setDatesDisabled</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setdaysofweekdisabled">setDaysOfWeekDisabled</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setdaysofweekhighlighted">setDaysOfWeekHighlighted</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keyboard.html">Keyboard support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="i18n.html">I18N</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">bootstrap-datepicker</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Methods</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/methods.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="methods">
+<h1>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h1>
+<p>Methods are called on a datepicker by calling the <code class="docutils literal"><span class="pre">datepicker</span></code> function with a string first argument, followed by any arguments the method takes</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.datepicker&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="nx">arg1</span><span class="p">,</span> <span class="nx">arg2</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="destroy">
+<h2>destroy<a class="headerlink" href="#destroy" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Remove the datepicker.  Removes attached events, internal attached objects, and added HTML elements.</p>
+<p><em>Alias: remove</em></p>
+</div>
+<div class="section" id="show">
+<h2>show<a class="headerlink" href="#show" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Show the picker.</p>
+</div>
+<div class="section" id="hide">
+<h2>hide<a class="headerlink" href="#hide" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Hide the picker.</p>
+</div>
+<div class="section" id="update">
+<h2>update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>date (String|Date, optional)</li>
+</ul>
+<p>Update the datepicker with given argument or the current input value.</p>
+<p>If <code class="docutils literal"><span class="pre">date</span></code> is provided and is a Date object, it is assumed to be a &#8220;local&#8221; date object, and will be converted to UTC for internal use.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.datepicker&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.datepicker&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="s1">&#39;2011-03-05&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.datepicker&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>To reset the datepicker and clear the selected date, pass an empty string with <code class="docutils literal"><span class="pre">update</span></code>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.datepicker&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setdate">
+<h2>setDate<a class="headerlink" href="#setdate" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>date (Date)</li>
+</ul>
+<p>Sets the internal date.  <code class="docutils literal"><span class="pre">date</span></code> is assumed to be a &#8220;local&#8221; date object, and will be converted to UTC for internal use.</p>
+</div>
+<div class="section" id="setutcdate">
+<h2>setUTCDate<a class="headerlink" href="#setutcdate" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>date (Date)</li>
+</ul>
+<p>Sets the internal date.  <code class="docutils literal"><span class="pre">date</span></code> is assumed to be a UTC date object, and will not be converted.</p>
+</div>
+<div class="section" id="setdates">
+<h2>setDates<a class="headerlink" href="#setdates" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>date[, date[, ...]] (Date)</li>
+</ul>
+<p>or</p>
+<ul class="simple">
+<li>[date[, date[, ...]]] (Array)</li>
+</ul>
+<p>Sets the internal date list; accepts multiple dates or a single array of dates as arguments.  Each <code class="docutils literal"><span class="pre">date</span></code> is assumed to be a &#8220;local&#8221; date object, and will be converted to UTC for internal use.  For use with multidate pickers.</p>
+</div>
+<div class="section" id="cleardates">
+<h2>clearDates<a class="headerlink" href="#cleardates" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Clear dates.</p>
+</div>
+<div class="section" id="setutcdates">
+<h2>setUTCDates<a class="headerlink" href="#setutcdates" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>date[, date[, ...]] (Date)</li>
+</ul>
+<p>or</p>
+<ul class="simple">
+<li>[date[, date[, ...]]] (Array)</li>
+</ul>
+<p>Sets the internal date list.  Each <code class="docutils literal"><span class="pre">date</span></code> is assumed to be a UTC date object, and will not be converted.  For use with multidate pickers.</p>
+</div>
+<div class="section" id="getdate">
+<h2>getDate<a class="headerlink" href="#getdate" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Returns a localized date object representing the internal date object of the first datepicker in the selection.  For multidate pickers, returns the latest date selected.</p>
+</div>
+<div class="section" id="getutcdate">
+<h2>getUTCDate<a class="headerlink" href="#getutcdate" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Returns the internal UTC date object, as-is and unconverted to local time, of the first datepicker in the selection.  For multidate pickers, returns the latest date selected.</p>
+</div>
+<div class="section" id="getdates">
+<h2>getDates<a class="headerlink" href="#getdates" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Returns a list of localized date objects representing the internal date objects of the first datepicker in the selection.  For use with multidate pickers.</p>
+</div>
+<div class="section" id="getutcdates">
+<h2>getUTCDates<a class="headerlink" href="#getutcdates" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Returns the internal list of UTC date objects, as they are and unconverted to local time, of the first datepicker in the selection.  For use with multidate pickers.</p>
+</div>
+<div class="section" id="getstartdate">
+<h2>getStartDate<a class="headerlink" href="#getstartdate" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Returns the lower date limit on the datepicker.</p>
+</div>
+<div class="section" id="getenddate">
+<h2>getEndDate<a class="headerlink" href="#getenddate" title="Permalink to this headline">¶</a></h2>
+<p>Arguments: None</p>
+<p>Returns the upper date limit on the datepicker.</p>
+</div>
+<div class="section" id="setstartdate">
+<h2>setStartDate<a class="headerlink" href="#setstartdate" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>startDate (Date)</li>
+</ul>
+<p>Sets a new lower date limit on the datepicker.  See <a class="reference internal" href="options.html#startdate"><span>showOnFocus</span></a> for valid values.</p>
+<p>Omit startDate (or provide an otherwise falsey value) to unset the limit.</p>
+</div>
+<div class="section" id="setenddate">
+<h2>setEndDate<a class="headerlink" href="#setenddate" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>endDate (Date)</li>
+</ul>
+<p>Sets a new upper date limit on the datepicker.  See <a class="reference internal" href="options.html#enddate"><span>disableTouchKeyboard</span></a> for valid values.</p>
+<p>Omit endDate (or provide an otherwise falsey value) to unset the limit.</p>
+</div>
+<div class="section" id="setdatesdisabled">
+<h2>setDatesDisabled<a class="headerlink" href="#setdatesdisabled" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>datesDisabled (String|Array)</li>
+</ul>
+<p>Sets the days that should be disabled.  See <a class="reference internal" href="options.html#id3"><span>defaultViewDate</span></a> for valid values.</p>
+<p>Omit datesDisabled (or provide an otherwise falsey value) to unset the disabled days.</p>
+</div>
+<div class="section" id="setdaysofweekdisabled">
+<h2>setDaysOfWeekDisabled<a class="headerlink" href="#setdaysofweekdisabled" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>daysOfWeekDisabled (String|Array)</li>
+</ul>
+<p>Sets the days of week that should be disabled.  See <a class="reference internal" href="options.html#daysofweekdisabled"><span>datesDisabled</span></a> for valid values.</p>
+<p>Omit daysOfWeekDisabled (or provide an otherwise falsey value) to unset the disabled days.</p>
+</div>
+<div class="section" id="setdaysofweekhighlighted">
+<h2>setDaysOfWeekHighlighted<a class="headerlink" href="#setdaysofweekhighlighted" title="Permalink to this headline">¶</a></h2>
+<p>Arguments:</p>
+<ul class="simple">
+<li>daysOfWeekHighlighted (String|Array)</li>
+</ul>
+<p>Sets the days of week that should be highlighted.  See <a class="reference internal" href="options.html#daysofweekhighlighted"><span>daysOfWeekHighlighted</span></a> for valid values.</p>
+<p>Omit daysOfWeekHighlighted (or provide an otherwise falsey value) to unset the disabled days.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="events.html" class="btn btn-neutral float-right" title="Events" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="options.html" class="btn btn-neutral" title="Options" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2013, eternicode.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

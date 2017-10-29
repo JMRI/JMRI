@@ -109,7 +109,7 @@
       <ul>
         <li><a href="#junit4">Migrating to JUnit4</a></li>
       </ul>
-      
+
       <a name="Introduction" id="Introduction"></a> JUnit is a
       system for building "unit tests" of software. Unit tests are
       small tests that make sure that individual parts of the
@@ -136,25 +136,24 @@
 
       <h2><a name="run" id="run">Running the Tests</a></h2>To run
       the existing tests, say
-      <pre>
-<code>
+<pre style="font-family: monospace;">
    ant alltest
-</code>
-</pre>This will compile the test code, which lives in the "test"
-subdirectory of the "java" directory in our usual code
-distributions, and then run the tests under a GUI. (To make sure
-you've recompiled everything, you may want to do <code>ant
-clean</code> first)<br>
-If you know the name of your test class, or the
-test class for your package, you can run that directly with the
-"runtest" script:
-      <pre>
-<code>
-   ant tests<br>   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
-</code>
-</pre>The first line compiles all the test code, and the second
-runs a specific test or test suite.<br>
-(Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
+</pre>
+    This will compile the test code, which lives in the "test"
+    subdirectory of the "java" directory in our usual code
+    distributions, and then run the tests under a GUI. (To make sure
+    you've recompiled everything, you may want to do <code>ant
+    clean</code> first)<br>
+    If you know the name of your test class, or the
+    test class for your package, you can run that directly with the
+    "runtest" script:
+<pre style="font-family: monospace;">
+   ant tests
+   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
+</pre>
+    The first line compiles all the test code, and the second
+    runs a specific test or test suite.<br>
+    (Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
       <h2><a name="Continuous" id="Continuous">Continuous
       Integration Test Execution</a></h2>The <a href=
@@ -245,10 +244,10 @@ runs a specific test or test suite.<br>
       "public void" signature. JUnit will handle everything after
       that.</p>
 
-      <p>If the test suite has been converted to JUnit4, the JUnit4 
-      conventions require that the test be preceeded by the 
+      <p>If the test suite has been converted to JUnit4, the JUnit4
+      conventions require that the test be preceeded by the
       "<code>@Test</code>" annotation:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     @Test
     public void testSomething() {
         ...
@@ -265,16 +264,15 @@ runs a specific test or test suite.<br>
       <h3><a name="write4NewClass" id="write4NewClass">Writing
       Tests for a New Class</a></h3>
 
-      To write a test for a new class, you need to create a file that 
+      <p>To write a test for a new class, you need to create a file that
       shadows your new class.   For our example, consider creating a
-      test for a new class that appears in 
+      test for a new class that appears in
       "<code>src/jmri/jmrix/foo/Foo.java</code>".  The new test would
-      be created in a file named "<code>test/jmri/jmrix/foo/FooTest.java</code>"
-.</p>
+      be created in a file named "<code>test/jmri/jmrix/foo/FooTest.java</code>".</p>
       <p>Assuming that the Foo class has a default constructor named <code>foo()</code>,
       Then the following would be minimal contents for the <code>test/jmri/jmrix/foo/FooTest.java</code> file:
 
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     package jmri.jmrix.foo;
 
     import org.junit.After;
@@ -293,21 +291,21 @@ runs a specific test or test suite.<br>
        public void testCtor() {
            Assert.AssertNotNull("Foo Constructor Return",new foo());
        }
-  
+
       @Before
       public void setUp() {
-         apps.tests.Log4JFixture.setUp();
+         jmri.util.JUnitUtil.setUp();
       }
-     
+
      @After
-     public void setUp() {
-        apps.tests.Log4JFixture.tearDown();
+     public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
      }
   }
 </pre>
 
      <p>
-     You may also choose to copy an existing test file and make 
+     You may also choose to copy an existing test file and make
      modifications to suite the needs of your new class. Please
      make sure you're copying a file in the new JUnit4 format,
      with the @Test statements, to keep us from having to update
@@ -315,8 +313,8 @@ runs a specific test or test suite.<br>
      </p>
 
      <p>
-     After the test class is created it needs to be added to the 
-     package test for the package.  In the case of our example, 
+     After the test class is created it needs to be added to the
+     package test for the package.  In the case of our example,
      that should be the file <code>test/jmri/jmrix/foo/PackageTest.java</code>
      </p>
 
@@ -332,11 +330,11 @@ runs a specific test or test suite.<br>
       <h3><a name="Write4NewPackage" id="Write4NewPackage">Writing
       Tests for a New Package</a></h3>
 
-      To write a tests for a new package, in addition to <a href=#write4NewClass">writing tests for each class</a>, you need to create a "<code>PackageTest.java</code> file that calls your new tests.  For our example, we will create the file "<code>test/jmri/jmrix/foo/PackageTest.java</code>" and call the tests in "<code>test/jmri/jmrix/foo/FooTest.java</code>".</p>
+      <p>To write a tests for a new package, in addition to <a href="#write4NewClass">writing tests for each class</a>, you need to create a "<code>PackageTest.java</code> file that calls your new tests.  For our example, we will create the file "<code>test/jmri/jmrix/foo/PackageTest.java</code>" and call the tests in "<code>test/jmri/jmrix/foo/FooTest.java</code>".</p>
 
       The following would be minimal contents for the <code>test/jmri/jmrix/foo/PackageTest.java</code> file:
 
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     package jmri.jmrix.foo;
 
     import org.junit.runner.RunWith;
@@ -356,12 +354,12 @@ runs a specific test or test suite.<br>
 </pre>
 
      <p>
-     You may also choose to copy an existing test file and make 
+     You may also choose to copy an existing test file and make
      modifications to suite the needs of your new class.
 
      <p>
-     After the PackageTest class is created it needs to be added to the 
-     PackageTest for the enclosing package.  In the case of our example, 
+     After the PackageTest class is created it needs to be added to the
+     PackageTest for the enclosing package.  In the case of our example,
      the enclosing package test would be the file <code>test/jmri/jmrix/PackageTest.java</code>
      </p>
 
@@ -422,10 +420,17 @@ runs a specific test or test suite.<br>
         their setup() and teardown() code to ensure that log4j is
         properly initiated, and that the custom appender is told
         when a test is beginning and ending.
-          <pre>
-<code>
-    // The minimal setup for log4J<br>    protected void setUp() throws Exception { <br>        super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a><br>        apps.tests.Log4JFixture.setUp(); <br>    }<br>    protected void tearDown() throws Exception { <br>        apps.tests.Log4JFixture.tearDown(); <br>        super.tearDown(); // Note: skip this line when using <a href="#super">JUnit4</a><br>    }<br>
-</code>
+
+<pre style="font-family: monospace;">
+    // The minimal setup for log4J<br>
+    protected void setUp() throws Exception { <br>
+    super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a><br>
+    jmri.util.JUnitUtil.setUp(); <br>
+    }<br>
+    protected void tearDown() throws Exception { <br>
+    jmri.util.JUnitUtil.tearDown(); <br>
+    super.tearDown(); // Note: skip this line when using <a href="#super">JUnit4</a><br>
+    }<br>
 </pre>
         </li>
 
@@ -433,16 +438,14 @@ runs a specific test or test suite.<br>
         should then use the check to see that the message was
         created. For example, if the class under test is expected
         to do<br>
-          <pre>
-<code>
+<pre style="font-family: monospace;">
     log.warn("Provoked message");
-</code>
-</pre>the invoking test case should follow that with the line:<br>
 
-          <pre>
-<code>
+</pre>
+    the invoking test case should follow that with the line:<br>
+
+<pre style="font-family: monospace;">
     jmri.util.JUnitAppender.assertWarnMessage("Provoked message");
-</code>
 </pre>
 
           <p>It will be a JUnit error if a log.warn(...) or
@@ -451,11 +454,10 @@ runs a specific test or test suite.<br>
         </li>
       </ol>In any case, all of your main() routines should start
       with
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     apps.tests.Log4JFixture.initLogging();
-</code>
-</pre>so that they can be run independently.
+</pre>
+    so that they can be run independently.
 
       <p>Note: Our <a href="ContinuousIntegration.shtml">CI
       test</a> executables are configured to fail if any FATAL or
@@ -472,26 +474,22 @@ runs a specific test or test suite.<br>
 
       <p>Depending on what managers your code uses, your
       <code>setUp()</code> implementation should start with:</p>
-      <pre>
-<code>
+
+<pre style="font-family: monospace;">
     super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
-    apps.tests.Log4JFixture.setUp();
-    jmri.util.JUnitUtil.resetInstanceManager();
+    jmri.util.JUnitUtil.setUp();
     jmri.util.JUnitUtil.initInternalTurnoutManager();
     jmri.util.JUnitUtil.initInternalLightManager();
     jmri.util.JUnitUtil.initInternalSensorManager();
-</code>
-</pre>(You can omit the initialization managers you don't need) See
-the jmri.util.JUnitUtil class for the full list of available ones,
-and please add more if you need one that's not there yet.
+</pre>
+    (You can omit the initialization managers you don't need) See
+    the jmri.util.JUnitUtil class for the full list of available ones,
+    and please add more if you need one that's not there yet.
 
       <p>Your <code>tearDown()</code> should end with:</p>
-      <pre>
-<code>
-    jmri.util.JUnitUtil.resetInstanceManager();
-    apps.tests.Log4JFixture.tearDown();
+<pre style="font-family: monospace;">
+    jmri.util.JUnitUtil.tearDown();
     super.tearDown();  // Note: skip this line when using <a href="#super">JUnit4</a>
-</code>
 </pre>
 
       <h3><a name="RunningListeners" id="RunningListeners">Working
@@ -503,23 +501,25 @@ and please add more if you need one that's not there yet.
       <p>If you want to wait for some specific condition to be
       true, e.g. receiving a reply object, you can use a waitFor
       method call which looks like:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     JUnitUtil.waitFor(()-&gt;{reply!=null}, "reply didn't arrive");
-</code>
-</pre>The first argument is a lambda closure, a small piece of code
-that'll be evaluated repeatedly until true. The String second
-argument is the text of the assertion (error message) you'll get if
-the condition doesn't come true in a reasonable length of time.
+</pre>
+    The first argument is a lambda closure, a small piece of code
+    that'll be evaluated repeatedly until true. The String second
+    argument is the text of the assertion (error message) you'll get if
+    the condition doesn't come true in a reasonable length of time.
 
       <p>Waiting for a specific result is fastest and most
       reliable. If you can't do that for some reason, you can do a
       short time-based wait:</p>
-      <pre>
-<code>
+
+<pre style="font-family: monospace;">
     JUnitUtil.releaseThread(this);
-</code>
-</pre>This uses a nominal delay.
+</pre>
+    This uses a nominal delay. But you might want to consider the 
+    structure of either your code (that you're testing) or the 
+    test itself:  If you can't tell whether it succeeded, what's the
+    purpose of the operation?
 
       <p>Note that this should <b>not</b> be used to synchronize
       with Swing threads. See the <a href="#testSwingCode">Testing
@@ -563,16 +563,32 @@ the condition doesn't come true in a reasonable length of time.
       <p>For example, if creating a thread based on <a href=
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
       AbstractAutomat</a>, you can check the start with:</p>
-      <pre>
-<code>
-    AbsractAutomat p = new MyThreadClass();<br>    p.start();<br>    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
-</code>
-</pre>and ensure termination with
-      <pre>
-<code>
-    p.stop();<br>    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
-</code>
+<pre style="font-family: monospace;">
+    AbsractAutomat p = new MyThreadClass();
+    p.start();
+    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
 </pre>
+    and ensure termination with
+<pre style="font-family: monospace;">
+    p.stop();
+    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
+</pre>
+
+      <p>
+      Please make sure your unit tests clean up after themselves!
+      They should not leave any threads running. Any threads they
+      start should have either terminated normally by the end of the test
+      (don't let them just time out and crash later during some other test!)
+      or you should add code to terminate them.
+      <p>
+      You can check whether you've left any threads running by
+      editing the <code>java/test/apps/tests/Log4JFixture.java</code>
+      and finding a line like:
+<pre style="font-family: monospace;">
+        // checkThreads(false);  // true means stop on 1st extra thread
+</pre>
+      Uncomment that, compile and run your tests.  It will report
+      any threads you've left running.
 
       <h3><a id="io" name="io"></a>Testing I/O</h3>Some test
       environments don't automatically flush I/O operations such as
@@ -584,7 +600,9 @@ the condition doesn't come true in a reasonable length of time.
 
       <h3><a name="tempFileCreation" id=
       "tempFileCreation">Temporary File Creation in
-      Tests</a></h3>Testcases which create temporary files must be
+      Tests</a></h3>
+      
+      Testcases which create temporary files must be
       carefully created so that there will not be any problems with
       file path, filesystem security, pre-existence of the file,
       etc. These tests must also be written in a way that will
@@ -595,9 +613,36 @@ the condition doesn't come true in a reasonable length of time.
 
       <p>Here are some ideas which can help avoid these types of
       problems.</p>
-
+      
       <ul>
-        <li>Place the temporary file(s) in the the "temp" directory
+        <li>
+        If you need a temporary file or directory, and your test
+        uses JUnit4, you can use a Rule to create a file or directory
+        before each test runs.
+<pre style="font-family: monospace;">
+    import org.junit.Rule;
+    import org.junit.rules.TemporaryFolder;
+    ...
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+</pre>
+
+    <p>
+        You then reference "folder" in your test code:
+<pre style="font-family: monospace;">
+        // create a file in "temp"
+        File rosterDir = folder.newFolder();
+        File backupDir = folder.newFolder();
+</pre>
+
+    
+      JUnit will make sure the file or folder is removed afterwards regardless of whether the 
+      test succeeds or fails. For more information on this, see the 
+      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolderTest"</a>.
+     
+
+        <li>(Pre-JUnit4 only; use the above if using JUnit 4)
+        Place the temporary file(s) in the the "temp" directory
         which is a sub- directory of the jmri run-time directory.
         This directory is used by some testcases and is already
         configured as excluded from the JMRI code repository. It
@@ -605,18 +650,19 @@ the condition doesn't come true in a reasonable length of time.
         created by a particular test. Be sure that the directory
         exists before creating files in the directory, and create
         the directory if necessary. An example is shown here:
-          <pre>
-<code>
-    String tempDirectoryName = "temp";<br>    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>        // create the temp directory if it does not exist<br>        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>    }<br></code>
+<pre style="font-family: monospace;">
+        String tempDirectoryName = "temp";
+        if ( ! (new File(tempDirectoryName).isDirectory())) {
+                // create the temp directory if it does not exist
+                FileUtil.createDirectory(tempDirectoryName);
+        }
 </pre>
         </li>
 
         <li>Allow the JRE to define the directory hierarchy
         separator character automatically:
-          <pre>
-<code>
-    String filename = tempDirectoryName + <strong>File.separator</strong> + "testcaseFile.txt";
-</code>
+<pre style="font-family: monospace;">
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";
 </pre>
         </li>
 
@@ -626,9 +672,20 @@ the condition doesn't come true in a reasonable length of time.
         the testcase temporary file(s), and delete if necessary,
         before writing to the file(s). The following example will
         delete the previous file if it exists:
-          <pre>
-<code>
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>    File file = new File(filename);<br>    <strong>if (file.exists())</strong> {<br>        <strong> try {<br>            file.delete();<br>        } catch (java.lang.Exception e) {<br>            Assert.fail("Exception while trying to delete the existing file " + <br>                    filename + <br>                    ".\n Exception reported: " + <br>                    e.toString());<br>            // perform some appropriate action in this case<br>        }</strong><br>    }<br></code>
+<pre style="font-family: monospace;">
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";
+    File file = new File(filename);
+    if (file.exists()) {
+        try {
+            file.delete();
+        } catch (java.lang.Exception e) {
+            Assert.fail("Exception while trying to delete the existing file " +
+                                    filename +
+                                    ".\n Exception reported: " +
+                                    e.toString());
+                // perform some appropriate action in this case
+        }
+    }
 </pre>
         </li>
 
@@ -641,22 +698,24 @@ the condition doesn't come true in a reasonable length of time.
         path and filename when logging debug messages (without
         deleting the temporary file), and to perform the delete
         only when debug logging is not enabled, such as:
-          <pre>
-<code>
-    <strong>if (log.isDebugEnabled()) {</strong><br>        log.debug("Path to written hex file is: "+filename);<br>    <strong>}<br>    else {<br>        file.delete();<br>    }</strong><br></code>
+<pre style="font-family: monospace;">
+    if (log.isDebugEnabled()) {
+            log.debug("Path to written hex file is: "+filename);
+    } else {
+            file.delete();
+    }
 </pre>
         </li>
 
         <li>It is unclear whether native Java library routines
         which create temporary files in an
         operating-system-specific way such as:
-          <pre>
-<code>
+<pre style="font-family: monospace;">
     java.io.File.createTempFile("testcasefile","txt")
-</code>
-</pre>will work reliably within the <a href=
-"ContinuousIntegration.shtml">continuous integration build</a>
-environment.
+</pre>
+    will work reliably within the <a href=
+    "ContinuousIntegration.shtml">continuous integration build</a>
+    environment.
         </li>
       </ul>
 
@@ -671,6 +730,8 @@ environment.
       test was modified based on the temporary file recommendations
       shown here, the test became stable over multiple continuous
       integration executions of "headlesstest".</p>
+
+
 
       <h2><a id="testSwingCode" name="testSwingCode"></a>Testing
       Swing Code</h2>AWT and Swing code runs on a separate thread
@@ -702,13 +763,11 @@ environment.
       windows around so you can manipulate them, e.g. for manual
       testing or debugging, you can use the jmri.demo system
       parameter to control that:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
         if (!System.getProperty("jmri.demo", "false").equals("false")) {
             myFrame.setVisible(false);
             myFrame.dispose();
         }
-</code>
 </pre>
 
       <p>For many tests, you'll both make testing reliable and
@@ -718,24 +777,24 @@ environment.
       methods and checking the state them update.</p>
 
       <p>For more complicated GUI testing, two tools are generally used.
-      The older one, 
+      The older one,
       <a href="#jfcunit">JFCUnit</a>
-      is no longer maintained, so we recommend that new tests be 
+      is no longer maintained, so we recommend that new tests be
       written with <a href="#jemmy">Jemmy</a>.
       Note: Only use one of these in your test class!  Don't try
       to mix them.
-      
+
       <h3><a id="jemmy" name="jemmy">Using Jemmy</a></h3>
-      
+
       Recently, e.g. 2016, some tests have been developed
       using the
-      <a href="https://jemmy.java.net/tutorial.html">jemmy</a> tool.  See e.g. the Speedometer tests
-      <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a> 
+      <a href="http://wiki.netbeans.org/Jemmy">jemmy</a> tool.  See e.g. the Speedometer tests
+      <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a>
       for an example.
 
       <h4>Locating GUI Items using Jemmy</h4>
 
-      <p>Jemmy must be able to find the objects on the screen.  Jemmy Operators are generally used to both locate and manipulate items on the screen.</p>  
+      <p>Jemmy must be able to find the objects on the screen.  Jemmy Operators are generally used to both locate and manipulate items on the screen.</p>
 
       <p>Here are a few tips for locating items with Jemmy:</p>
 
@@ -745,10 +804,10 @@ environment.
       <li>If an item contains its own text (Buttons, for example), it is recommended you use the text to search for a component.</li>
       <li>If an item does not contain its own description, but the GUI contains a JLabel describing that component, be certain the JLabel's LabelFor property is set.  A Jemmy JLabelOperator can then be used to find the label, and retrieve the object.</li>
       </ul>
-      
-      <h3><a id="jfcunit" name=jfcunit">Using JFCUnit</a></h3>
-      
-      <a href="http://jfcunit.sourceforge.net/">JFCUnit</a> to control
+
+      <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
+
+      <p><a href="http://jfcunit.sourceforge.net/">JFCUnit</a> to control
       interactions with Swing objects.
       </p>
 
@@ -801,9 +860,11 @@ environment.
       <p><u>As a test only</u>, you can try setting the
       "-noloading" option in the <code>main</code> of whichever
       test class you're having trouble with:</p>
-      <pre>
-<code>
-    static public void main(String[] args) {<br>        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>        junit.swingui.TestRunner.main(testCaseName);<br>    }<br></code>
+<pre style="font-family: monospace;">
+    static public void main(String[] args) {<br>
+            String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>
+            junit.swingui.TestRunner.main(testCaseName);<br>
+    }<br>
 </pre>
 
       <p>Please don't leave "-noloading" in place, as it prevents
@@ -815,7 +876,9 @@ environment.
       and reloading of classes.</p>
 
       <h2><a name="junit4" id="junit4">Migrating to
-      JUnit4</a></h2>JUnit4 is a significant upgrade of the JUnit
+      JUnit4</a></h2>
+      
+      JUnit4 is a significant upgrade of the JUnit
       tool. It brings new capabilities, but also changes how
       tests are structured. As of this writing (Summer 2016), we're
       still supporting the existing test structures described
@@ -832,7 +895,7 @@ environment.
       <p>We may want to consider:</p>
 
       <ul>
-        <li>using <a href="https://jemmy.java.net/">Jemmy</a> for
+        <li>using <a href="http://wiki.netbeans.org/Jemmy">Jemmy</a> for
         UI tests instead of JFCUnit, since Jemmy can be used by
         Junit 4 tests, while JFCUnit requires extending Junit 3
         TestCase class.</li>
@@ -882,14 +945,14 @@ environment.
       <ol>
         <li>Change the imports. Typically, these can be
         removed:<br>
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 </pre><br>
           and you'll typically need<br>
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -905,12 +968,12 @@ import org.junit.Test;
 
         <li>Mark test methods with the "<code>@Test</code>"
         annotation:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     @Test
     public void testSomething() {
         ...
     }
-        
+
 </pre>
         </li>
 
@@ -918,15 +981,15 @@ import org.junit.Test;
         testing infrastructure" comment, followed by setup code.
         Some of that can be removed. First, remove the class
         constructor, e.g.
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     public MyClassTest(String s) {
            super(s);
-    }      
+    }
 </pre>
         </li>
 
         <li>Next, remove the main method if there is one, e.g.:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     // Main entry point
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
@@ -940,26 +1003,26 @@ import org.junit.Test;
         <code>tearDown()</code> methods. Note: They have to be
         "public" methods, not "protected" or "private". They should
         end up looking like (plus your own content, of course):
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     @Before
     public void setUp() {
-          apps.tests.Log4JFixture.setUp();
+          jmri.util.JUnitUtil.setUp();
     }
 
-    @After 
+    @After
     public void tearDown() {
-          apps.tests.Log4JFixture.tearDown();
+          jmri.util.JUnitUtil.tearDown();
     }
 </pre>
-            <a name="super">Make sure no more references to the <code>super.</code></a>
-            method remain in either setUp() or tearDown().
-            Just remove those lines.
+        <a name="super">Make sure no more references to the <code>super.</code></a>
+        method remain in either setUp() or tearDown().
+        Just remove those lines.
         </li>
 
         <li>Finally, replace the test suite definition. JUnit3 was
         normally used with "run everything in this class
         automatically" by having a method that looked like this:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(Z21MessageTest.class);
@@ -970,7 +1033,7 @@ import org.junit.Test;
           If you've got more logic in the suite() routine,
           ask for help on the jmri-developers list. An example of
           the result of migrating a more complex case:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    CMRISystemConnectionMemoTest.class,

@@ -10,7 +10,7 @@ import jmri.LocoAddress;
  *
  * @author	Paul Bender Copyright (C) 2015
  */
-public class LocoAddressComparator implements Comparator<LocoAddress>, java.io.Serializable {
+public class LocoAddressComparator implements Comparator<LocoAddress> {
 
     public LocoAddressComparator() {
     }

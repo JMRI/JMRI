@@ -36,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockSetFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RollingStockGroupTest.class));
 
         // Last test, deletes log file if one exists
         suite.addTest(OperationsLoggerTest.suite());

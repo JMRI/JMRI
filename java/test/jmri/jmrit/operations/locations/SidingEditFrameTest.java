@@ -2,10 +2,12 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +27,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l = lManager.getLocationByName("Test Loc C");
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
@@ -49,7 +51,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         f.trackLengthTextField.setText("9999");
         enterClickAndLeave(f.addTrackButton);
 
-
         t = l.getTrackByName("2nd siding track", null);
         Assert.assertNotNull("2nd siding track", t);
         Assert.assertEquals("2nd siding track length", 9999, t.getLength());
@@ -58,9 +59,8 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
         // kill all frames
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
-
 
     @Test
     public void testSetDirectionUsingCheckbox() {
@@ -79,7 +79,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Track t = l.getTrackByName("3rd siding track", null);
         Assert.assertNotNull("3rd siding track", t);
         Assert.assertEquals("3rd siding track length", 1010, t.getLength());
-        Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
+        Assert.assertEquals("Direction All before change", ALL, t.getTrainDirections());
 
         // deselect east, west and north check boxes
         enterClickAndLeave(f.eastCheckBox);
@@ -91,7 +91,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
 
         // kill all frames
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -116,8 +116,8 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull(sef);
 
         // kill all frames
-        f.dispose();
-        sef.dispose();
+        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(sef);
     }
 
     @Test
@@ -158,8 +158,8 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull(sef);
 
         // kill all frames
-        f.dispose();
-        sef.dispose();
+        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(sef);
 
         // now reload
         Location l2 = lManager.getLocationByName("Test Loc C");
@@ -174,12 +174,12 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of sidings", 3, fl.spurModel.getRowCount());
         Assert.assertEquals("number of staging tracks", 0, fl.stagingModel.getRowCount());
 
-        fl.dispose();
+        JUnitUtil.dispose(fl);
     }
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");
@@ -200,7 +200,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         super.setUp();
 
         loadLocations();
-        lManager = LocationManager.instance();
+        lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
     }
 

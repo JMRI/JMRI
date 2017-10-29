@@ -3,13 +3,14 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  *
@@ -278,8 +279,7 @@ public class QualifierAdderTest extends TestCase {
         model = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                cvtable,
-                new IndexedCvTableModel(new JLabel(""), p)
+                cvtable
         );
 
         // create a JDOM tree with just some elements
@@ -331,7 +331,7 @@ public class QualifierAdderTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

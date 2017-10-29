@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * Since this is by definition connected to an Intellibox, the command station
  * prompt has limited choices
  *
- * @author	Alex Shepherd Copyright (C) 2004
+ * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
   */
 public class IntelliboxAdapter extends LocoBufferAdapter {

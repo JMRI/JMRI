@@ -4,8 +4,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
@@ -17,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * SlotManager object.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener {
 
@@ -257,7 +259,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
     
     // handle mode
-    protected ProgrammingMode mode = DefaultProgrammerManager.OPSBYTEMODE;
+    protected ProgrammingMode mode = ProgrammingMode.OPSBYTEMODE;
 
     @Override
     public final void setMode(ProgrammingMode m) {
@@ -280,10 +282,25 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
         return ret;
+    }
+
+    /**
+     * Confirmation mode by programming mode; not that this doesn't
+     * yet know whether BDL168 hardware is present to allow DecoderReply
+     * to function; that should be a preference eventually.  See also DCS240...
+     *
+     * @param addr CV address ignored, as there's no variance with this in LocoNet
+     * @return Depends on programming mode
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) {
+        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return WriteConfirmMode.NotVerified;
+        return WriteConfirmMode.DecoderReply;
     }
 
     /**
@@ -357,6 +374,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class);
 
 }

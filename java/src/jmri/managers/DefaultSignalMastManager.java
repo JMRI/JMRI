@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class DefaultSignalMastManager extends AbstractManager
+public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         implements SignalMastManager, java.beans.PropertyChangeListener {
 
     public DefaultSignalMastManager() {
@@ -83,12 +83,12 @@ public class DefaultSignalMastManager extends AbstractManager
 
     @Override
     public SignalMast getBySystemName(String key) {
-        return (SignalMast) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     @Override
     public SignalMast getByUserName(String key) {
-        return (SignalMast) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -130,5 +130,5 @@ public class DefaultSignalMastManager extends AbstractManager
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class);
 }

@@ -459,7 +459,8 @@
       triggered when any monitored state changes as noted below.
       <i>Note:</i> Not all Logix conditionals are listed
       here.</p><a href=
-      "../../../package/jmri/jmrit/beantable/LogixSignalHeadVariable.png"><img src="../../../package/jmri/jmrit/beantable/LogixSignalHeadVariable.png"
+      "../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png"><img
+            src="../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png"
       width="423" height="92" align="right"></a>
 
       <p>Conditionals for Variable Type "Signal Head":</p>
@@ -561,7 +562,8 @@
       id="scripting"></a>
 
       <h3>Scripting</h3><a href=
-      "../../../package/jmri/jmrit/beantable/jmriScriptWindow.png"><img src="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png"
+      "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"><img
+            src="../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
       width="250" height="136" align="right"></a>
 
       <p>Just like other objects in JMRI you can set and read

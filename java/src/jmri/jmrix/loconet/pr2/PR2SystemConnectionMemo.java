@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.pr2;
 
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.jmrix.loconet.LnPr2ThrottleManager;
 import jmri.jmrix.loconet.LnTrafficController;
@@ -9,7 +10,7 @@ import jmri.jmrix.loconet.SlotManager;
 /**
  * Lightweight class to denote that a PR2 is active
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
@@ -29,17 +30,21 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
     public void configureManagers() {
         jmri.InstanceManager.store(getPowerPr2Manager(), jmri.PowerManager.class);
 
-        /* jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager()); */
+        // jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
 
-        /* jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager()); */
+        // jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
 
-        /* jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager()); */
+        // jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
         jmri.InstanceManager.setThrottleManager(getPr2ThrottleManager());
 
-        jmri.InstanceManager.setProgrammerManager(
-                new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager(), this));
+        if (getProgrammerManager().isAddressedModePossible()) {
+            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        }
 
-        /* jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager()); */
+        // jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
     }
 
     private LnPr2PowerManager powerPr2Manager;
@@ -78,9 +83,6 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (type.equals(jmri.ThrottleManager.class)) {
             return (T) getPr2ThrottleManager();
         }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
@@ -100,9 +102,6 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             return true;
         }
         if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
             return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {

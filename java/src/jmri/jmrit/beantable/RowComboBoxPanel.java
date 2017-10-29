@@ -1,7 +1,7 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Component;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -11,13 +11,13 @@ import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import javax.annotation.Nonnull;
 import javax.swing.DefaultCellEditor;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import org.slf4j.Logger;
@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table cell editor abstract class with a custom ComboBox per row as the editing component.
+ * <p>
  * Used as TableCellRenderer from JTable, declared in ConfigValueColumn()
  * Based on: http://alvinalexander.com/java/jwarehouse/netbeans-src/monitor/src/org/netbeans/modules/web/monitor/client/ComboBoxTableCellEditor.java.shtml
  * @author Egbert Broerse 2016
@@ -81,7 +82,7 @@ public abstract class RowComboBoxPanel
     protected EventObject startEditingEvent = null;
 
     /**
-     *  Create a new CellEditor and CellRenderer
+     *  Create a new CellEditor and CellRenderer.
      *  @param values array (list) of options to display
      *  @param customRenderer renderer to display things
      */
@@ -119,8 +120,9 @@ public abstract class RowComboBoxPanel
     }
 
     /**
-     * Returns the editor component for the cell.
-     * @param table JTable of NamedBean
+     * Create the editor component for the cell and add a listener for changes in the table.
+     *
+     * @param table parent JTable of NamedBean
      * @param value current value for cell to be rendered.
      * @param isSelected tells if this row is selected in the table.
      * @param row the row in table.
@@ -152,6 +154,18 @@ public abstract class RowComboBoxPanel
         return getEditorComponent(table, value, isSelected, row, col);
     }
 
+    /**
+     * (Re)build combobox with all allowed state values, select current and add action listener.
+     *
+     * @param table parent JTable of NamedBean
+     * @param value current value for cell to be rendered.
+     * @param isSelected tells if this row is selected in the table.
+     * @param row the row in table.
+     * @param col the column in table, in this case Value (Aspect or Appearance).
+     * @return a JPanel containing a JComboBox
+     * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
+     * @see #getEditorBox(int)
+     */
     protected Component getEditorComponent(JTable  table,
                                            Object  value,
                                            boolean isSelected,
@@ -159,7 +173,7 @@ public abstract class RowComboBoxPanel
                                            int     col)
     {
         //new or old row? > should be cleaned up, leave our isSelected argument?
-        isSelected = table.isRowSelected(row);
+        //isSelected = table.isRowSelected(row);
         if  (isSelected) {
             //old row
             log.debug("getEditorComponent>isSelected (value={})", value);
@@ -185,8 +199,9 @@ public abstract class RowComboBoxPanel
     }
 
     /**
-     * Returns the renderer component for the cell.
-     * @param table the SignalMastTable.
+     * Create the renderer component for the cell and add a listener for changes in the table.
+     *
+     * @param table the parent Table.
      * @param value current value for cell to be rendered.
      * @param isSelected tells if this row is selected in the table.
      * @param hasFocus true if the row has focus.
@@ -220,6 +235,18 @@ public abstract class RowComboBoxPanel
         return getRendererComponent(table, value, isSelected, hasFocus, row, col); // OK to call getEditorComponent() instead?
     }
 
+    /**
+     * (Re)build combobox with only the active state value.
+     *
+     * @param table the parent Table.
+     * @param value current value for cell to be rendered.
+     * @param isSelected tells if this row is selected in the table.
+     * @param hasFocus true if the row has focus.
+     * @param row the row in table.
+     * @param col the column in table, in this case Value (Aspect/Appearance).
+     * @return a JPanel containing a JComboBox
+     * @see #getTableCellRendererComponent(JTable, Object, boolean, boolean, int, int)
+     */
     protected Component getRendererComponent(JTable  table,
                                              Object  value,
                                              boolean isSelected,
@@ -228,13 +255,25 @@ public abstract class RowComboBoxPanel
                                              int     col)
     {
         this.renderer.removeAll();  //remove the combobox from the panel
-        JComboBox renderbox = new JComboBox<>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
+        JComboBox<String> renderbox = new JComboBox<>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
         log.debug("RCBP getRendererComponent (row={}, value={})", row, value);
-        renderbox.addItem(value); // display (only) the current Value
+        if (value != null) {
+            renderbox.addItem(value.toString()); // display (only) the current Value
+        } else {
+            renderbox.addItem(""); // blank item
+        }
         renderer.add(renderbox);
         return this.renderer;
     }
 
+    /**
+     * Refresh contents of editor.
+     *
+     * @param row the row in table.
+     * @param isSelected tells if this row is selected in the table.
+     * @param table the parent Table.
+     * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
+     */
     protected void updateData(int row, boolean isSelected, JTable table) {
         // get valid Value options for ComboBox
         log.debug("RCBP updateData (row:{}; me = {}))", row, this.toString());
@@ -250,7 +289,9 @@ public abstract class RowComboBoxPanel
     /**
      *  Is the cell editable? If the mouse was pressed at a margin
      *  we don't want the cell to be editable.
-     *  @param evt The event-object.
+     *
+     *  @param evt The event-object
+     *  @return true when user clicked inside cell, not on cell border
      */
     @Override
     public boolean isCellEditable(EventObject evt) {
@@ -270,6 +311,11 @@ public abstract class RowComboBoxPanel
         return super.isCellEditable(evt);
     }
 
+    /**
+     * Get current contents (value) in cell.
+     *
+     * @return value (String in 4.6 applications)
+     */
     @Override
     public Object getCellEditorValue() {
         log.debug("getCellEditorValue, prevItem: {}; me = {})", prevItem, this.toString());
@@ -278,20 +324,23 @@ public abstract class RowComboBoxPanel
 
     /**
      *  Put contents into the combobox.
-     *  @param items array (list) of options to display
+     *  @param items array (strings) of options to display
      */
-    public final void setItems(Object [] items) {
-        JComboBox editorbox = new JComboBox<> ();
-        final int n = (items != null  ?  items.length : 0);
+    public final void setItems(@Nonnull Object [] items) {
+        JComboBox<String> editorbox = new JComboBox<> ();
+        final int n = items.length;
         for  (int i = 0; i < n; i++)
         {
             if (items [i] != null) {
-                editorbox.addItem (items [i]);
+                editorbox.addItem (items[i].toString());
             }
         }
         this.editor.add(editorbox);
     }
 
+    /**
+     * Open combobox (Editor) when clicked.
+     */
     protected void eventEditorMousePressed() {
         this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
         this.editor.revalidate();
@@ -299,8 +348,10 @@ public abstract class RowComboBoxPanel
         log.debug("eventEditorMousePressed in row {}; me = {})", this.currentRow, this.toString());
     }
 
+    /**
+     * Stop editing if a new row is selected.
+     */
     protected void eventTableSelectionChanged() {
-        //stop editing if a new row is selected
         log.debug("eventTableSelectionChanged");
         if  ( ! this.table.isRowSelected(this.currentRow))
         {
@@ -309,8 +360,8 @@ public abstract class RowComboBoxPanel
     }
 
     /**
-     * method for our own VALUECOL row specific JComboBox
-     * @param choice the selected item (Aspect/Appearance) in the list
+     * Method for our own VALUECOL row specific JComboBox.
+     * @param choice the selected item (Aspect/Appearance) in the combobox list
      */
     protected void eventRowComboBoxActionPerformed(@Nonnull Object choice) {
         Object item = choice;
@@ -323,12 +374,14 @@ public abstract class RowComboBoxPanel
         return this.currentRow;
     }
 
-    // dummy method, override in application
+    /*
+     * Placeholder method; contents are overridden in application.
+     */
     protected JComboBox getEditorBox(int row) {
         String [] list = {"Error", "Not Valid"};
         return new JComboBox<String> (list);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
 
 }

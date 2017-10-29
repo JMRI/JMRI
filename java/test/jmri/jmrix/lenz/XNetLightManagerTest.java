@@ -2,14 +2,13 @@ package jmri.jmrix.lenz;
 
 import jmri.Light;
 import jmri.LightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
@@ -88,8 +87,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // prepare an interface, register
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
@@ -100,10 +98,9 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetLightManagerTest.class);
 
 }
