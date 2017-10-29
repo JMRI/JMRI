@@ -80,7 +80,6 @@ public class LayoutEditorTools {
 
     // Defined text resource, should be called by Bundle.getMessage() to allow reuse of shared keys via path
     //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     // constants
     private int NONE = 0;  // Signal at Turnout Positions
     private int A1 = 1;
@@ -189,8 +188,9 @@ public class LayoutEditorTools {
      * continuing and diverging icons on the outside edge of the turnout.
      */
     // operational variables for Set Signals at Turnout tool
-    private JmriJFrame setSignalsFrame = null;
-    private boolean setSignalsOpen = false;
+    private JmriJFrame setSignalsAtTurnoutFrame = null;
+    private boolean setSignalsAtTurnoutOpenFlag = false;
+    private boolean setSignalsAtTurnoutFromMenuFlag = false;
 
     private JmriBeanComboBox turnoutComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(),
@@ -228,7 +228,6 @@ public class LayoutEditorTools {
     private LayoutTurnout layoutTurnout = null;
     private double placeSignalDirectionDEG = 0.0;
 
-    private boolean setSignalsAtTurnoutFromMenuFlag = false;
     private Turnout turnout = null;
     private SignalHead throatContinuingHead = null;
     private SignalHead throatDivergingHead = null;
@@ -248,16 +247,16 @@ public class LayoutEditorTools {
     public void setSignalsAtTurnout(@Nonnull MultiIconEditor theEditor, @Nonnull JFrame theFrame) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        if (setSignalsOpen) {
-            setSignalsFrame.setVisible(true);
+        if (setSignalsAtTurnoutOpenFlag) {
+            setSignalsAtTurnoutFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (setSignalsFrame == null) {
-            setSignalsFrame = new JmriJFrame(Bundle.getMessage("SignalsAtTurnout"), false, true);
-            setSignalsFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTurnout", true);
-            setSignalsFrame.setLocation(70, 30);
-            Container theContentPane = setSignalsFrame.getContentPane();
+        if (setSignalsAtTurnoutFrame == null) {
+            setSignalsAtTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalsAtTurnout"), false, true);
+            setSignalsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTurnout", true);
+            setSignalsAtTurnoutFrame.setLocation(70, 30);
+            Container theContentPane = setSignalsAtTurnoutFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
@@ -402,7 +401,7 @@ public class LayoutEditorTools {
             });
             setSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            setSignalsFrame.addWindowListener(new WindowAdapter() {
+            setSignalsAtTurnoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setSignalsCancelPressed(null);
@@ -412,9 +411,9 @@ public class LayoutEditorTools {
                 turnoutSignalsGetSaved(null);
             }
         }
-        setSignalsFrame.pack();
-        setSignalsFrame.setVisible(true);
-        setSignalsOpen = true;
+        setSignalsAtTurnoutFrame.pack();
+        setSignalsAtTurnoutFrame.setVisible(true);
+        setSignalsAtTurnoutOpenFlag = true;
     }   // setSignalsAtTurnout
 
     private void turnoutSignalsGetSaved(ActionEvent a) {
@@ -427,9 +426,9 @@ public class LayoutEditorTools {
     }
 
     private void setSignalsCancelPressed(ActionEvent a) {
-        setSignalsOpen = false;
+        setSignalsAtTurnoutOpenFlag = false;
         setSignalsAtTurnoutFromMenuFlag = false;
-        setSignalsFrame.setVisible(false);
+        setSignalsAtTurnoutFrame.setVisible(false);
     }
 
     private void setSignalsDonePressed(ActionEvent a) {
@@ -446,7 +445,7 @@ public class LayoutEditorTools {
         if (setThroatContinuing.isSelected()) {
             if (isHeadOnPanel(throatContinuingHead)
                     && (throatContinuingHead != getHeadFromName(layoutTurnout.getSignalA1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -463,7 +462,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(throatContinuingHead)
                         && isHeadAssignedAnywhere(throatContinuingHead)) {
-                    JOptionPane.showMessageDialog(setSignalsFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -481,7 +480,7 @@ public class LayoutEditorTools {
         if ((setThroatDiverging.isSelected()) && (throatDivergingHead != null)) {
             if (isHeadOnPanel(throatDivergingHead)
                     && (throatDivergingHead != getHeadFromName(layoutTurnout.getSignalA2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -498,7 +497,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(throatDivergingHead)
                         && isHeadAssignedAnywhere(throatDivergingHead)) {
-                    JOptionPane.showMessageDialog(setSignalsFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -520,7 +519,7 @@ public class LayoutEditorTools {
         if (setContinuing.isSelected()) {
             if (isHeadOnPanel(continuingHead)
                     && (continuingHead != getHeadFromName(layoutTurnout.getSignalB1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -541,7 +540,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(continuingHead)
                         && isHeadAssignedAnywhere(continuingHead)) {
-                    JOptionPane.showMessageDialog(setSignalsFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -560,7 +559,7 @@ public class LayoutEditorTools {
         if (setDiverging.isSelected()) {
             if (isHeadOnPanel(divergingHead)
                     && (divergingHead != getHeadFromName(layoutTurnout.getSignalC1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -581,7 +580,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(divergingHead)
                         && isHeadAssignedAnywhere(divergingHead)) {
-                    JOptionPane.showMessageDialog(setSignalsFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -612,9 +611,9 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
-        setSignalsOpen = false;
+        setSignalsAtTurnoutOpenFlag = false;
         setSignalsAtTurnoutFromMenuFlag = false;
-        setSignalsFrame.setVisible(false);
+        setSignalsAtTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -634,13 +633,13 @@ public class LayoutEditorTools {
                 str = turnoutComboBox.getDisplayName();
             }
             if ((str == null) || str.isEmpty()) {
-                JOptionPane.showMessageDialog(setSignalsFrame, Bundle.getMessage("SignalsError1"),
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame, Bundle.getMessage("SignalsError1"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             turnout = InstanceManager.turnoutManagerInstance().getTurnout(str);
             if (turnout == null) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError2"),
                                 new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -695,7 +694,7 @@ public class LayoutEditorTools {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(setSignalsFrame,
+        JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                 MessageFormat.format(Bundle.getMessage("SignalsError3"),
                         new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                 JOptionPane.ERROR_MESSAGE);
@@ -703,16 +702,16 @@ public class LayoutEditorTools {
     }   // getTurnoutInformation
 
     private boolean getTurnoutSignalHeadInformation() {
-        throatContinuingHead = getSignalHeadFromEntry(throatContinuingSignalHeadComboBox, true, setSignalsFrame);
+        throatContinuingHead = getSignalHeadFromEntry(throatContinuingSignalHeadComboBox, true, setSignalsAtTurnoutFrame);
         if (throatContinuingHead == null) {
             return false;
         }
-        throatDivergingHead = getSignalHeadFromEntry(throatDivergingSignalHeadComboBox, false, setSignalsFrame);
-        continuingHead = getSignalHeadFromEntry(continuingSignalHeadComboBox, true, setSignalsFrame);
+        throatDivergingHead = getSignalHeadFromEntry(throatDivergingSignalHeadComboBox, false, setSignalsAtTurnoutFrame);
+        continuingHead = getSignalHeadFromEntry(continuingSignalHeadComboBox, true, setSignalsAtTurnoutFrame);
         if (continuingHead == null) {
             return false;
         }
-        divergingHead = getSignalHeadFromEntry(divergingSignalHeadComboBox, true, setSignalsFrame);
+        divergingHead = getSignalHeadFromEntry(divergingSignalHeadComboBox, true, setSignalsAtTurnoutFrame);
         if (divergingHead == null) {
             return false;
         }
@@ -806,19 +805,19 @@ public class LayoutEditorTools {
             track = (TrackSegment) layoutTurnout.getConnectC();
         }
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -827,9 +826,9 @@ public class LayoutEditorTools {
 
         String signalHeadName = throatContinuingSignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track,
-                layoutTurnout, signalHeadName, setSignalsFrame);
+                layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -859,19 +858,19 @@ public class LayoutEditorTools {
             track2 = (TrackSegment) layoutTurnout.getConnectB();
         }
         if (track2 == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block2 = track2.getLayoutBlock();
         if (block2 == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy2 = block2.getOccupancySensor();
         if (occupancy2 == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block2.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -879,9 +878,9 @@ public class LayoutEditorTools {
         }
         signalHeadName = throatContinuingSignalHeadComboBox.getDisplayName();
         SignalHead nextHead2 = getNextSignalFromObject(track2,
-                layoutTurnout, signalHeadName, setSignalsFrame);
+                layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead2 == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block2.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -920,19 +919,19 @@ public class LayoutEditorTools {
             track = (TrackSegment) layoutTurnout.getConnectB();
         }
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -940,9 +939,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = throatDivergingSignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track,
-                layoutTurnout, signalHeadName, setSignalsFrame);
+                layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -970,19 +969,19 @@ public class LayoutEditorTools {
     private void setLogicContinuing() {
         TrackSegment track = (TrackSegment) layoutTurnout.getConnectA();
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -990,9 +989,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = continuingSignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track,
-                layoutTurnout, signalHeadName, setSignalsFrame);
+                layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -1016,19 +1015,19 @@ public class LayoutEditorTools {
     private void setLogicDiverging() {
         TrackSegment track = (TrackSegment) layoutTurnout.getConnectA();
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -1036,9 +1035,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = divergingSignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track,
-                layoutTurnout, signalHeadName, setSignalsFrame);
+                layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -1971,8 +1970,10 @@ public class LayoutEditorTools {
      * Block boundary must be at an Anchor Point on the LayoutEditor panel.
      */
     // operational variables for Set Signals at Block Boundary tool
-    private JmriJFrame setSignalsAtBoundaryFrame = null;
-    private boolean setSignalsAtBoundaryOpen = false;
+    private JmriJFrame setSignalsAtBlockBoundaryFrame = null;
+    private boolean setSignalsAtBlockBoundaryOpenFlag = false;
+    private boolean setSignalsAtBlockBoundaryFromMenuFlag = false;
+
     private JmriBeanComboBox block1IDComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class),
             null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -1994,16 +1995,14 @@ public class LayoutEditorTools {
 
     private JButton getAnchorSavedSignalHeads = null;
     private JButton changeSignalAtBoundaryIcon = null;
-    private JButton setSignalsAtBoundaryDone = null;
-    private JButton setSignalsAtBoundaryCancel = null;
+    private JButton setSignalsAtBlockBoundaryDone = null;
+    private JButton setSignalsAtBlockBoundaryCancel = null;
 
     private LayoutBlock block1 = null;
     private LayoutBlock block2 = null;
 
     private TrackSegment eastTrack = null;
     private TrackSegment westTrack = null;
-
-    private boolean setSignalsAtBlockBoundaryFromMenuFlag = false;
 
     private PositionablePoint boundary = null;
     private SignalHead eastBoundHead = null;
@@ -2028,16 +2027,16 @@ public class LayoutEditorTools {
     public void setSignalsAtBlockBoundary(MultiIconEditor theEditor, JFrame theFrame) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        if (setSignalsAtBoundaryOpen) {
-            setSignalsAtBoundaryFrame.setVisible(true);
+        if (setSignalsAtBlockBoundaryOpenFlag) {
+            setSignalsAtBlockBoundaryFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (setSignalsAtBoundaryFrame == null) {
-            setSignalsAtBoundaryFrame = new JmriJFrame(Bundle.getMessage("SignalsAtBoundary"), false, true);
-            setSignalsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtBoundary", true);
-            setSignalsAtBoundaryFrame.setLocation(70, 30);
-            Container theContentPane = setSignalsAtBoundaryFrame.getContentPane();
+        if (setSignalsAtBlockBoundaryFrame == null) {
+            setSignalsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SignalsAtBoundary"), false, true);
+            setSignalsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtBoundary", true);
+            setSignalsAtBlockBoundaryFrame.setLocation(70, 30);
+            Container theContentPane = setSignalsAtBlockBoundaryFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
@@ -2130,38 +2129,38 @@ public class LayoutEditorTools {
             });
             changeSignalAtBoundaryIcon.setToolTipText(Bundle.getMessage("ChangeSignalIconHint"));
             panel6.add(new JLabel("	 "));
-            panel6.add(setSignalsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSignalsAtBoundaryDone.addActionListener((ActionEvent e) -> {
-                setSignalsAtBoundaryDonePressed(e);
+            panel6.add(setSignalsAtBlockBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
+            setSignalsAtBlockBoundaryDone.addActionListener((ActionEvent e) -> {
+                setSignalsAtBlockBoundaryDonePressed(e);
             });
-            setSignalsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+            setSignalsAtBlockBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
             SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setSignalsAtBoundaryDone);
-                rootPane.setDefaultButton(setSignalsAtBoundaryDone);
+                JRootPane rootPane = SwingUtilities.getRootPane(setSignalsAtBlockBoundaryDone);
+                rootPane.setDefaultButton(setSignalsAtBlockBoundaryDone);
             });
 
-            panel6.add(setSignalsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSignalsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
-                setSignalsAtBoundaryCancelPressed(e);
+            panel6.add(setSignalsAtBlockBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSignalsAtBlockBoundaryCancel.addActionListener((ActionEvent e) -> {
+                setSignalsAtBlockBoundaryCancelPressed(e);
             });
-            setSignalsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
+            setSignalsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            setSignalsAtBoundaryFrame.addWindowListener(new WindowAdapter() {
+            setSignalsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    setSignalsAtBoundaryCancelPressed(null);
+                    setSignalsAtBlockBoundaryCancelPressed(null);
                 }
             });
             if (setSignalsAtBlockBoundaryFromMenuFlag) {
                 getSavedAnchorSignals(null);
             }
         }
-        setSignalsAtBoundaryFrame.pack();
-        setSignalsAtBoundaryFrame.setVisible(true);
-        setSignalsAtBoundaryOpen = true;
+        setSignalsAtBlockBoundaryFrame.pack();
+        setSignalsAtBlockBoundaryFrame.setVisible(true);
+        setSignalsAtBlockBoundaryOpenFlag = true;
     }   // setSignalsAtBlockBoundary
 
     private void getSavedAnchorSignals(ActionEvent a) {
@@ -2172,20 +2171,20 @@ public class LayoutEditorTools {
         westBoundSignalHeadComboBox.setText(boundary.getWestBoundSignal());
     }
 
-    private void setSignalsAtBoundaryCancelPressed(ActionEvent a) {
-        setSignalsAtBoundaryOpen = false;
+    private void setSignalsAtBlockBoundaryCancelPressed(ActionEvent a) {
+        setSignalsAtBlockBoundaryOpenFlag = false;
         setSignalsAtBlockBoundaryFromMenuFlag = false;
-        setSignalsAtBoundaryFrame.setVisible(false);
+        setSignalsAtBlockBoundaryFrame.setVisible(false);
     }
 
-    private void setSignalsAtBoundaryDonePressed(ActionEvent a) {
+    private void setSignalsAtBlockBoundaryDonePressed(ActionEvent a) {
         if (!getBlockInformation()) {
             return;
         }
-        eastBoundHead = getSignalHeadFromEntry(eastBoundSignalHeadComboBox, false, setSignalsAtBoundaryFrame);
-        westBoundHead = getSignalHeadFromEntry(westBoundSignalHeadComboBox, false, setSignalsAtBoundaryFrame);
+        eastBoundHead = getSignalHeadFromEntry(eastBoundSignalHeadComboBox, false, setSignalsAtBlockBoundaryFrame);
+        westBoundHead = getSignalHeadFromEntry(westBoundSignalHeadComboBox, false, setSignalsAtBlockBoundaryFrame);
         if ((eastBoundHead == null) && (westBoundHead == null)) {
-            JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+            JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                     Bundle.getMessage("SignalsError12"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
@@ -2195,7 +2194,7 @@ public class LayoutEditorTools {
         if ((eastBoundHead != null) && setEastBound.isSelected()) {
             if (isHeadOnPanel(eastBoundHead)
                     && (eastBoundHead != getHeadFromName(boundary.getEastBoundSignal()))) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{newEastBoundSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2211,7 +2210,7 @@ public class LayoutEditorTools {
                 && (eastBoundHead != getHeadFromName(boundary.getEastBoundSignal()))
                 && (eastBoundHead != getHeadFromName(boundary.getWestBoundSignal()))) {
             if (isHeadOnPanel(eastBoundHead)) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError13"),
                                 new Object[]{newEastBoundSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2229,7 +2228,7 @@ public class LayoutEditorTools {
         if ((westBoundHead != null) && setWestBound.isSelected()) {
             if (isHeadOnPanel(westBoundHead)
                     && (westBoundHead != getHeadFromName(boundary.getWestBoundSignal()))) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{newWestBoundSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2245,7 +2244,7 @@ public class LayoutEditorTools {
                 && (westBoundHead != getHeadFromName(boundary.getEastBoundSignal()))
                 && (westBoundHead != getHeadFromName(boundary.getWestBoundSignal()))) {
             if (isHeadOnPanel(westBoundHead)) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError13"),
                                 new Object[]{newWestBoundSignalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2265,15 +2264,15 @@ public class LayoutEditorTools {
         if ((westBoundHead != null) && setupLogicWestBound.isSelected()) {
             setLogicWestBound();
         }
-        setSignalsAtBoundaryOpen = false;
+        setSignalsAtBlockBoundaryOpenFlag = false;
         setSignalsAtBlockBoundaryFromMenuFlag = false;
-        setSignalsAtBoundaryFrame.setVisible(false);
+        setSignalsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setSignalsAtBoundaryDonePressed
+    }   // setSignalsAtBlockBoundaryDonePressed
 
     /*
      * Do some thing here for end bumpers.
@@ -2310,7 +2309,7 @@ public class LayoutEditorTools {
                 }
             }
             if (boundary == null) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         Bundle.getMessage("SignalsError7"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -2387,7 +2386,7 @@ public class LayoutEditorTools {
     @CheckReturnValue
     private LayoutBlock getBlockFromEntry(@Nullable String theBlockName) {
         if ((theBlockName == null) || theBlockName.isEmpty()) {
-            JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame, Bundle.getMessage("SignalsError9"),
+            JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame, Bundle.getMessage("SignalsError9"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -2395,7 +2394,7 @@ public class LayoutEditorTools {
         if (block == null) {
             block = InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(theBlockName);
             if (block == null) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError10"),
                                 new Object[]{theBlockName}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -2403,7 +2402,7 @@ public class LayoutEditorTools {
             }
         }
         if (!block.isOnPanel(layoutEditor)) {
-            JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+            JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                     MessageFormat.format(Bundle.getMessage("SignalsError11"),
                             new Object[]{theBlockName}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
@@ -2446,7 +2445,7 @@ public class LayoutEditorTools {
         LayoutBlock eastBlock = eastTrack.getLayoutBlock();
         Sensor eastBlockOccupancy = eastBlock.getOccupancySensor();
         if (eastBlockOccupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+            JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{eastBlock.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -2458,9 +2457,9 @@ public class LayoutEditorTools {
         }
         String newEastBoundSignalName = eastBoundSignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(eastTrack,
-                p, newEastBoundSignalName, setSignalsAtBoundaryFrame);
+                p, newEastBoundSignalName, setSignalsAtBlockBoundaryFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+            JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{eastBlock.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -2485,7 +2484,7 @@ public class LayoutEditorTools {
         LayoutBlock westBlock = westTrack.getLayoutBlock();
         Sensor westBlockOccupancy = westBlock.getOccupancySensor();
         if (westBlockOccupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+            JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{westBlock.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -2497,9 +2496,9 @@ public class LayoutEditorTools {
         }
         String newWestBoundSignalName = westBoundSignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(westTrack,
-                p, newWestBoundSignalName, setSignalsAtBoundaryFrame);
+                p, newWestBoundSignalName, setSignalsAtBlockBoundaryFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+            JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{westBlock.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -2537,7 +2536,6 @@ public class LayoutEditorTools {
         setSignalsAtBlockBoundaryFromMenuFlag = true;
 
         setSignalsAtBlockBoundary(theEditor, theFrame);
-        return;
     }
 
     /**
@@ -2553,8 +2551,9 @@ public class LayoutEditorTools {
      * second signal at each is optional.
      */
     // operational variables for Set Signals at Double Crossover Turnout tool
-    private JmriJFrame setSignalsAtXoverFrame = null;
-    private boolean setSignalsAtXoverOpen = false;
+    private JmriJFrame setSignalsAtXoverTurnoutFrame = null;
+    private boolean setSignalsAtXoverTurnoutOpenFlag = false;
+    private boolean setSignalsAtXoverTurnoutFromMenuFlag = false;
 
     private JmriBeanComboBox a1ComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SignalHeadManager.class),
@@ -2603,8 +2602,6 @@ public class LayoutEditorTools {
     private JButton changeXoverSignalIcon = null;
     private JButton setXoverSignalsDone = null;
     private JButton setXoverSignalsCancel = null;
-
-    private boolean setSignalsAtXoverTurnoutFromMenuFlag = false;
 
     private SignalHead a1Head = null;
     private SignalHead a2Head = null;
@@ -2655,16 +2652,16 @@ public class LayoutEditorTools {
                 + Bundle.getMessage("Name") + " : " + xoverTurnoutName);
         xoverType = layoutTurnout.getTurnoutType();
 
-        if (setSignalsAtXoverOpen) {
-            setSignalsAtXoverFrame.setVisible(true);
+        if (setSignalsAtXoverTurnoutOpenFlag) {
+            setSignalsAtXoverTurnoutFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (setSignalsAtXoverFrame == null) {
-            setSignalsAtXoverFrame = new JmriJFrame(Bundle.getMessage("SignalsAtXoverTurnout"), false, true);
-            setSignalsAtXoverFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtXoverTurnout", true);
-            setSignalsAtXoverFrame.setLocation(70, 30);
-            Container theContentPane = setSignalsAtXoverFrame.getContentPane();
+        if (setSignalsAtXoverTurnoutFrame == null) {
+            setSignalsAtXoverTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalsAtXoverTurnout"), false, true);
+            setSignalsAtXoverTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtXoverTurnout", true);
+            setSignalsAtXoverTurnoutFrame.setLocation(70, 30);
+            Container theContentPane = setSignalsAtXoverTurnoutFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
@@ -2872,7 +2869,7 @@ public class LayoutEditorTools {
             });
             setXoverSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            setSignalsAtXoverFrame.addWindowListener(new WindowAdapter() {
+            setSignalsAtXoverTurnoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setXoverSignalsCancelPressed(null);
@@ -2882,9 +2879,9 @@ public class LayoutEditorTools {
                 xoverTurnoutSignalsGetSaved(null);
             }
         }
-        setSignalsAtXoverFrame.pack();
-        setSignalsAtXoverFrame.setVisible(true);
-        setSignalsAtXoverOpen = true;
+        setSignalsAtXoverTurnoutFrame.pack();
+        setSignalsAtXoverTurnoutFrame.setVisible(true);
+        setSignalsAtXoverTurnoutOpenFlag = true;
     }   // setSignalsAtXoverTurnout
 
     private void xoverTurnoutSignalsGetSaved(ActionEvent a) {
@@ -2899,9 +2896,9 @@ public class LayoutEditorTools {
     }
 
     private void setXoverSignalsCancelPressed(ActionEvent a) {
-        setSignalsAtXoverOpen = false;
+        setSignalsAtXoverTurnoutOpenFlag = false;
         setSignalsAtXoverTurnoutFromMenuFlag = false;
-        setSignalsAtXoverFrame.setVisible(false);
+        setSignalsAtXoverTurnoutFrame.setVisible(false);
     }
 
     private void setXoverSignalsDonePressed(ActionEvent a) {
@@ -2913,7 +2910,7 @@ public class LayoutEditorTools {
         if (setA1Head.isSelected()) {
             if (isHeadOnPanel(a1Head)
                     && (a1Head != getHeadFromName(layoutTurnout.getSignalA1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2930,7 +2927,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(a1Head)
                         && isHeadAssignedAnywhere(a1Head)) {
-                    JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2948,7 +2945,7 @@ public class LayoutEditorTools {
         if ((a2Head != null) && setA2Head.isSelected()) {
             if (isHeadOnPanel(a2Head)
                     && (a2Head != getHeadFromName(layoutTurnout.getSignalA2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2965,7 +2962,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(a2Head)
                         && isHeadAssignedAnywhere(a2Head)) {
-                    JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2986,7 +2983,7 @@ public class LayoutEditorTools {
         if (setB1Head.isSelected()) {
             if (isHeadOnPanel(b1Head)
                     && (b1Head != getHeadFromName(layoutTurnout.getSignalB1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3003,7 +3000,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(b1Head)
                         && isHeadAssignedAnywhere(b1Head)) {
-                    JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3021,7 +3018,7 @@ public class LayoutEditorTools {
         if ((b2Head != null) && setB2Head.isSelected()) {
             if (isHeadOnPanel(b2Head)
                     && (b2Head != getHeadFromName(layoutTurnout.getSignalB2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3038,7 +3035,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(b2Head)
                         && isHeadAssignedAnywhere(b2Head)) {
-                    JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3059,7 +3056,7 @@ public class LayoutEditorTools {
         if (setC1Head.isSelected()) {
             if (isHeadOnPanel(c1Head)
                     && (c1Head != getHeadFromName(layoutTurnout.getSignalC1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3076,7 +3073,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(c1Head)
                         && isHeadAssignedAnywhere(c1Head)) {
-                    JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3094,7 +3091,7 @@ public class LayoutEditorTools {
         if ((c2Head != null) && setC2Head.isSelected()) {
             if (isHeadOnPanel(c2Head)
                     && (c2Head != getHeadFromName(layoutTurnout.getSignalC2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3111,7 +3108,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(c2Head)
                         && isHeadAssignedAnywhere(c2Head)) {
-                    JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3132,7 +3129,7 @@ public class LayoutEditorTools {
         if (setD1Head.isSelected()) {
             if (isHeadOnPanel(d1Head)
                     && (d1Head != getHeadFromName(layoutTurnout.getSignalD1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3149,7 +3146,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(d1Head)
                         && isHeadAssignedAnywhere(d1Head)) {
-                    JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3167,7 +3164,7 @@ public class LayoutEditorTools {
         if ((d2Head != null) && setD2Head.isSelected()) {
             if (isHeadOnPanel(d2Head)
                     && (d2Head != getHeadFromName(layoutTurnout.getSignalD2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3184,7 +3181,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(d2Head)
                         && isHeadAssignedAnywhere(d2Head)) {
-                    JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3242,9 +3239,9 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
-        setSignalsAtXoverOpen = false;
+        setSignalsAtXoverTurnoutOpenFlag = false;
         setSignalsAtXoverTurnoutFromMenuFlag = false;
-        setSignalsAtXoverFrame.setVisible(false);
+        setSignalsAtXoverTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -3253,39 +3250,39 @@ public class LayoutEditorTools {
     }   // setXoverSignalsDonePressed
 
     private boolean getXoverSignalHeadInformation() {
-        a1Head = getSignalHeadFromEntry(a1ComboBox, true, setSignalsAtXoverFrame);
+        a1Head = getSignalHeadFromEntry(a1ComboBox, true, setSignalsAtXoverTurnoutFrame);
         if (a1Head == null) {
             return false;
         }
         if (!(xoverType == LayoutTurnout.LH_XOVER)) {
-            a2Head = getSignalHeadFromEntry(a2ComboBox, false, setSignalsAtXoverFrame);
+            a2Head = getSignalHeadFromEntry(a2ComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             a2Head = null;
         }
-        b1Head = getSignalHeadFromEntry(b1ComboBox, true, setSignalsAtXoverFrame);
+        b1Head = getSignalHeadFromEntry(b1ComboBox, true, setSignalsAtXoverTurnoutFrame);
         if (b1Head == null) {
             return false;
         }
         if (!(xoverType == LayoutTurnout.RH_XOVER)) {
-            b2Head = getSignalHeadFromEntry(b2ComboBox, false, setSignalsAtXoverFrame);
+            b2Head = getSignalHeadFromEntry(b2ComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             b2Head = null;
         }
-        c1Head = getSignalHeadFromEntry(c1ComboBox, true, setSignalsAtXoverFrame);
+        c1Head = getSignalHeadFromEntry(c1ComboBox, true, setSignalsAtXoverTurnoutFrame);
         if (c1Head == null) {
             return false;
         }
         if (!(xoverType == LayoutTurnout.LH_XOVER)) {
-            c2Head = getSignalHeadFromEntry(c2ComboBox, false, setSignalsAtXoverFrame);
+            c2Head = getSignalHeadFromEntry(c2ComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             c2Head = null;
         }
-        d1Head = getSignalHeadFromEntry(d1ComboBox, true, setSignalsAtXoverFrame);
+        d1Head = getSignalHeadFromEntry(d1ComboBox, true, setSignalsAtXoverTurnoutFrame);
         if (d1Head == null) {
             return false;
         }
         if (!(xoverType == LayoutTurnout.RH_XOVER)) {
-            d2Head = getSignalHeadFromEntry(d2ComboBox, false, setSignalsAtXoverFrame);
+            d2Head = getSignalHeadFromEntry(d2ComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             d2Head = null;
         }
@@ -3416,7 +3413,7 @@ public class LayoutEditorTools {
     private void setLogicXover(SignalHead head, TrackSegment track, SignalHead secondHead, TrackSegment track2,
             boolean setup1, boolean setup2) {
         if ((track == null) && setup1) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -3425,22 +3422,22 @@ public class LayoutEditorTools {
         if ((track != null) && setup1) {
             LayoutBlock block = track.getLayoutBlock();
             if (block == null) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             occupancy = block.getOccupancySensor();
             if (occupancy == null) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                                 new Object[]{block.getUserName()}),
                         null, JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             nextHead = getNextSignalFromObject(track,
-                    layoutTurnout, head.getSystemName(), setSignalsAtXoverFrame);
+                    layoutTurnout, head.getSystemName(), setSignalsAtXoverTurnoutFrame);
             if ((nextHead == null) && (!reachedEndBumper())) {
-                JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+                JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                                 new Object[]{block.getUserName()}),
                         null, JOptionPane.INFORMATION_MESSAGE);
@@ -3467,19 +3464,19 @@ public class LayoutEditorTools {
         }
         SignalHead savedAuxSignal = auxSignal;
         if (track2 == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block2 = track2.getLayoutBlock();
         if (block2 == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy2 = block2.getOccupancySensor();
         if (occupancy2 == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block2.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -3490,9 +3487,9 @@ public class LayoutEditorTools {
             signalHeadName = secondHead.getSystemName();
         }
         SignalHead nextHead2 = getNextSignalFromObject(track2,
-                layoutTurnout, signalHeadName, setSignalsAtXoverFrame);
+                layoutTurnout, signalHeadName, setSignalsAtXoverTurnoutFrame);
         if ((nextHead2 == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block2.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -3540,28 +3537,28 @@ public class LayoutEditorTools {
 
     private void setLogicXoverContinuing(SignalHead head, TrackSegment track) {
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         SignalHead nextHead = getNextSignalFromObject(track,
-                layoutTurnout, head.getSystemName(), setSignalsAtXoverFrame);
+                layoutTurnout, head.getSystemName(), setSignalsAtXoverTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
+            JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -3597,8 +3594,9 @@ public class LayoutEditorTools {
      * Some user adjustment of turnout positions may be needed.
      */
     // operational variables for Set Signals at Level Crossing tool
-    private JmriJFrame setSignalsAtXingFrame = null;
-    private boolean setSignalsAtXingOpen = false;
+    private JmriJFrame setSignalsAtLevelXingFrame = null;
+    private boolean setSignalsAtLevelXingOpenFlag = false;
+    private boolean setSignalsAtLevelXingFromMenuFlag = false;
 
     private JmriBeanComboBox blockAComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -3633,8 +3631,6 @@ public class LayoutEditorTools {
     private JButton setXingSignalsDone = null;
     private JButton setXingSignalsCancel = null;
 
-    private boolean setSignalsAtLevelXingFromMenuFlag = false;
-
     private LevelXing levelXing = null;
 
     private SignalHead aHead = null;
@@ -3658,8 +3654,8 @@ public class LayoutEditorTools {
             @Nonnull JFrame theFrame) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        if (setSignalsAtXingOpen) {
-            setSignalsAtXingFrame.setVisible(true);
+        if (setSignalsAtLevelXingOpenFlag) {
+            setSignalsAtLevelXingFrame.setVisible(true);
             return;
         }
         aSignalHeadComboBox.setText("");
@@ -3667,11 +3663,11 @@ public class LayoutEditorTools {
         cSignalHeadComboBox.setText("");
         dSignalHeadComboBox.setText("");
         // Initialize if needed
-        if (setSignalsAtXingFrame == null) {
-            setSignalsAtXingFrame = new JmriJFrame(Bundle.getMessage("SignalsAtLevelXing"), false, true);
-            setSignalsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
-            setSignalsAtXingFrame.setLocation(70, 30);
-            Container theContentPane = setSignalsAtXingFrame.getContentPane();
+        if (setSignalsAtLevelXingFrame == null) {
+            setSignalsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SignalsAtLevelXing"), false, true);
+            setSignalsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
+            setSignalsAtLevelXingFrame.setLocation(70, 30);
+            Container theContentPane = setSignalsAtLevelXingFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
@@ -3831,7 +3827,7 @@ public class LayoutEditorTools {
             });
             setXingSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            setSignalsAtXingFrame.addWindowListener(new WindowAdapter() {
+            setSignalsAtLevelXingFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setXingSignalsCancelPressed(null);
@@ -3841,9 +3837,9 @@ public class LayoutEditorTools {
                 xingSignalsGetSaved(null);
             }
         }
-        setSignalsAtXingFrame.pack();
-        setSignalsAtXingFrame.setVisible(true);
-        setSignalsAtXingOpen = true;
+        setSignalsAtLevelXingFrame.pack();
+        setSignalsAtLevelXingFrame.setVisible(true);
+        setSignalsAtLevelXingOpenFlag = true;
     }   // setSignalsAtLevelXing
 
     private void xingSignalsGetSaved(ActionEvent a) {
@@ -3857,9 +3853,9 @@ public class LayoutEditorTools {
     }
 
     private void setXingSignalsCancelPressed(ActionEvent a) {
-        setSignalsAtXingOpen = false;
+        setSignalsAtLevelXingOpenFlag = false;
         setSignalsAtLevelXingFromMenuFlag = false;
-        setSignalsAtXingFrame.setVisible(false);
+        setSignalsAtLevelXingFrame.setVisible(false);
     }
 
     private void setXingSignalsDonePressed(ActionEvent a) {
@@ -3875,7 +3871,7 @@ public class LayoutEditorTools {
         if ((aHead != null) && setAHead.isSelected()) {
             if (isHeadOnPanel(aHead)
                     && (aHead != getHeadFromName(levelXing.getSignalAName()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3893,7 +3889,7 @@ public class LayoutEditorTools {
                 && (aHead != getHeadFromName(levelXing.getSignalCName()))
                 && (aHead != getHeadFromName(levelXing.getSignalDName()))) {
             if (isHeadOnPanel(aHead)) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError13"),
                                 new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3917,7 +3913,7 @@ public class LayoutEditorTools {
         if ((bHead != null) && setBHead.isSelected()) {
             if (isHeadOnPanel(bHead)
                     && (bHead != getHeadFromName(levelXing.getSignalBName()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3935,7 +3931,7 @@ public class LayoutEditorTools {
                 && (bHead != getHeadFromName(levelXing.getSignalCName()))
                 && (bHead != getHeadFromName(levelXing.getSignalDName()))) {
             if (isHeadOnPanel(bHead)) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError13"),
                                 new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3959,7 +3955,7 @@ public class LayoutEditorTools {
         if ((cHead != null) && setCHead.isSelected()) {
             if (isHeadOnPanel(cHead)
                     && (cHead != getHeadFromName(levelXing.getSignalCName()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -3977,7 +3973,7 @@ public class LayoutEditorTools {
                 && (cHead != getHeadFromName(levelXing.getSignalCName()))
                 && (cHead != getHeadFromName(levelXing.getSignalDName()))) {
             if (isHeadOnPanel(cHead)) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError13"),
                                 new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -4001,7 +3997,7 @@ public class LayoutEditorTools {
         if ((dHead != null) && setDHead.isSelected()) {
             if (isHeadOnPanel(dHead)
                     && (dHead != getHeadFromName(levelXing.getSignalDName()))) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -4019,7 +4015,7 @@ public class LayoutEditorTools {
                 && (dHead != getHeadFromName(levelXing.getSignalCName()))
                 && (dHead != getHeadFromName(levelXing.getSignalDName()))) {
             if (isHeadOnPanel(dHead)) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError13"),
                                 new Object[]{signalName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -4061,9 +4057,9 @@ public class LayoutEditorTools {
                     (TrackSegment) levelXing.getConnectC(), dSignalHeadComboBox.getDisplayName());
         }
         // finish up
-        setSignalsAtXingOpen = false;
+        setSignalsAtLevelXingOpenFlag = false;
         setSignalsAtLevelXingFromMenuFlag = false;
-        setSignalsAtXingFrame.setVisible(false);
+        setSignalsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -4076,7 +4072,7 @@ public class LayoutEditorTools {
             levelXing = null;
             List<LevelXing> levelXings = layoutEditor.getLevelXings();
             if (levelXings.size() <= 0) {
-                JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                         Bundle.getMessage("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -4137,14 +4133,14 @@ public class LayoutEditorTools {
                     }
                 }
                 if (foundCount > 1) {
-                    JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError16"),
                                     new Object[]{" " + foundCount + " "}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 if (levelXing == null) {
-                    JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                             Bundle.getMessage("SignalsError17"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -4161,19 +4157,19 @@ public class LayoutEditorTools {
 
     private boolean getXingSignalHeadInformation() {
         // note that all heads are optional, but pairs must be present
-        aHead = getSignalHeadFromEntry(aSignalHeadComboBox, false, setSignalsAtXingFrame);
-        bHead = getSignalHeadFromEntry(bSignalHeadComboBox, false, setSignalsAtXingFrame);
-        cHead = getSignalHeadFromEntry(cSignalHeadComboBox, false, setSignalsAtXingFrame);
-        dHead = getSignalHeadFromEntry(dSignalHeadComboBox, false, setSignalsAtXingFrame);
+        aHead = getSignalHeadFromEntry(aSignalHeadComboBox, false, setSignalsAtLevelXingFrame);
+        bHead = getSignalHeadFromEntry(bSignalHeadComboBox, false, setSignalsAtLevelXingFrame);
+        cHead = getSignalHeadFromEntry(cSignalHeadComboBox, false, setSignalsAtLevelXingFrame);
+        dHead = getSignalHeadFromEntry(dSignalHeadComboBox, false, setSignalsAtLevelXingFrame);
         if (((aHead != null) && (cHead == null)) || ((aHead == null) && (cHead != null))
                 || ((bHead != null) && (dHead == null)) || ((bHead == null) && (dHead != null))) {
-            JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+            JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                     Bundle.getMessage("SignalsError14"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if ((aHead == null) && (bHead == null) && (cHead == null) && (dHead == null)) {
-            JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+            JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                     Bundle.getMessage("SignalsError12"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return false;
@@ -4252,7 +4248,7 @@ public class LayoutEditorTools {
     private void setLogicXing(SignalHead head, TrackSegment track, LayoutBlock crossBlock,
             TrackSegment crossTrack1, TrackSegment crossTrack2, String signalHeadName) {
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+            JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -4263,13 +4259,13 @@ public class LayoutEditorTools {
         SignalHead nextHead = null;
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+            JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+            JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -4298,16 +4294,16 @@ public class LayoutEditorTools {
             }
         }
         nextHead = getNextSignalFromObject(track, levelXing,
-                head.getSystemName(), setSignalsAtXoverFrame);
+                head.getSystemName(), setSignalsAtXoverTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+            JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if ((crossOccupancy == null) && (track1Occupancy == null) && (track2Occupancy == null)) {
-            JOptionPane.showMessageDialog(setSignalsAtXingFrame,
+            JOptionPane.showMessageDialog(setSignalsAtLevelXingFrame,
                     MessageFormat.format(Bundle.getMessage("SignalsWarn1"),
                             new Object[]{signalHeadName}),
                     null, JOptionPane.WARNING_MESSAGE);
@@ -4375,8 +4371,9 @@ public class LayoutEditorTools {
      * second signal at each is optional.
      */
     // operational variables for Set Signals at Double Crossover Turnout tool
-    private JmriJFrame setSignalsAtTToTFrame = null;
-    private boolean setSignalsAtTToTOpen = false;
+    private JmriJFrame setSignalsAtThroatToThroatTurnoutsFrame = null;
+    private boolean setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
+    private boolean setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
 
     private JmriBeanComboBox turnout1ComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(),
@@ -4441,8 +4438,6 @@ public class LayoutEditorTools {
 
     private TrackSegment connectorTrack = null;
 
-    private boolean setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
-
     private String ttotTurnoutName1 = null;
     private String ttotTurnoutName2 = null;
 
@@ -4478,16 +4473,16 @@ public class LayoutEditorTools {
             @Nonnull MultiIconEditor theEditor, @Nonnull JFrame theFrame) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        if (setSignalsAtTToTOpen) {
-            setSignalsAtTToTFrame.setVisible(true);
+        if (setSignalsAtThroatToThroatTurnoutsOpenFlag) {
+            setSignalsAtThroatToThroatTurnoutsFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (setSignalsAtTToTFrame == null) {
-            setSignalsAtTToTFrame = new JmriJFrame(Bundle.getMessage("SignalsAtTToTTurnout"), false, true);
-            setSignalsAtTToTFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTToTTurnout", true);
-            setSignalsAtTToTFrame.setLocation(70, 30);
-            Container theContentPane = setSignalsAtTToTFrame.getContentPane();
+        if (setSignalsAtThroatToThroatTurnoutsFrame == null) {
+            setSignalsAtThroatToThroatTurnoutsFrame = new JmriJFrame(Bundle.getMessage("SignalsAtTToTTurnout"), false, true);
+            setSignalsAtThroatToThroatTurnoutsFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTToTTurnout", true);
+            setSignalsAtThroatToThroatTurnoutsFrame.setLocation(70, 30);
+            Container theContentPane = setSignalsAtThroatToThroatTurnoutsFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1a = new JPanel(new FlowLayout());
@@ -4736,7 +4731,7 @@ public class LayoutEditorTools {
             });
             setTToTSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            setSignalsAtTToTFrame.addWindowListener(new WindowAdapter() {
+            setSignalsAtThroatToThroatTurnoutsFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setTToTSignalsCancelPressed(null);
@@ -4748,9 +4743,9 @@ public class LayoutEditorTools {
                 tToTTurnoutSignalsGetSaved(null);
             });
         }
-        setSignalsAtTToTFrame.pack();
-        setSignalsAtTToTFrame.setVisible(true);
-        setSignalsAtTToTOpen = true;
+        setSignalsAtThroatToThroatTurnoutsFrame.pack();
+        setSignalsAtThroatToThroatTurnoutsFrame.setVisible(true);
+        setSignalsAtThroatToThroatTurnoutsOpenFlag = true;
     }   // setSignalsAtTToTTurnouts
 
     private void tToTTurnoutSignalsGetSaved(ActionEvent a) {
@@ -4768,9 +4763,9 @@ public class LayoutEditorTools {
     }
 
     private void setTToTSignalsCancelPressed(ActionEvent a) {
-        setSignalsAtTToTOpen = false;
+        setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
         setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
-        setSignalsAtTToTFrame.setVisible(false);
+        setSignalsAtThroatToThroatTurnoutsFrame.setVisible(false);
     }
 
     private boolean getTToTTurnoutInformation() {
@@ -4791,13 +4786,13 @@ public class LayoutEditorTools {
             ttotTurnoutName2 = turnout2ComboBox.getDisplayName();
             if (ttotTurnoutName2.isEmpty()) {
                 // no entries in turnout fields
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame, Bundle.getMessage("SignalsError1"),
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame, Bundle.getMessage("SignalsError1"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             turnout2 = InstanceManager.turnoutManagerInstance().getTurnout(ttotTurnoutName2);
             if (turnout2 == null) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError2"),
                                 new Object[]{ttotTurnoutName2}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -4809,7 +4804,7 @@ public class LayoutEditorTools {
                 ttotTurnoutName2 = ttotTurnoutName2.toUpperCase();
                 turnout2ComboBox.setText(ttotTurnoutName2);
             }
-            layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2, false, ttotTurnoutName2, setSignalsAtTToTFrame);
+            layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2, false, ttotTurnoutName2, setSignalsAtThroatToThroatTurnoutsFrame);
             if (layoutTurnout2 == null) {
                 return false;
             }
@@ -4817,7 +4812,7 @@ public class LayoutEditorTools {
             connectorTrack = (TrackSegment) layoutTurnout2.getConnectA();
             if (connectorTrack == null) {
                 // Inform user of error, and terminate
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         Bundle.getMessage("SignalsError18"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -4831,7 +4826,7 @@ public class LayoutEditorTools {
             if ((type != LayoutTrack.TURNOUT_A) || (connect == null)) {
                 // Not two turnouts connected throat-to-throat by a single Track Segment
                 // Inform user of error and terminate
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         Bundle.getMessage("SignalsError18"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -4839,7 +4834,7 @@ public class LayoutEditorTools {
             layoutTurnout1 = (LayoutTurnout) connect;
             turnout1 = layoutTurnout1.getTurnout();
             if (turnout1 == null) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         Bundle.getMessage("SignalsError18"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -4849,7 +4844,7 @@ public class LayoutEditorTools {
             // something was entered in the turnout 1 field
             turnout1 = InstanceManager.turnoutManagerInstance().getTurnout(ttotTurnoutName1);
             if (turnout1 == null) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError2"),
                                 new Object[]{ttotTurnoutName1}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -4861,7 +4856,7 @@ public class LayoutEditorTools {
                 turnout1ComboBox.setText(ttotTurnoutName1);
             }
             // have turnout 1 - get corresponding layoutTurnout
-            layoutTurnout1 = getLayoutTurnoutFromTurnout(turnout1, false, ttotTurnoutName1, setSignalsAtTToTFrame);
+            layoutTurnout1 = getLayoutTurnoutFromTurnout(turnout1, false, ttotTurnoutName1, setSignalsAtThroatToThroatTurnoutsFrame);
             if (layoutTurnout1 == null) {
                 return false;
             }
@@ -4873,7 +4868,7 @@ public class LayoutEditorTools {
                 connectorTrack = (TrackSegment) layoutTurnout1.getConnectA();
                 if (connectorTrack == null) {
                     // Inform user of error, and terminate
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             Bundle.getMessage("SignalsError18"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -4887,7 +4882,7 @@ public class LayoutEditorTools {
                 if ((type != LayoutTrack.TURNOUT_A) || (connect == null)) {
                     // Not two turnouts connected throat-to-throat by a single Track Segment
                     // Inform user of error and terminate
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             Bundle.getMessage("SignalsError18"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -4895,7 +4890,7 @@ public class LayoutEditorTools {
                 layoutTurnout2 = (LayoutTurnout) connect;
                 turnout2 = layoutTurnout2.getTurnout();
                 if (turnout2 == null) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             Bundle.getMessage("SignalsError18"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -4905,7 +4900,7 @@ public class LayoutEditorTools {
                 // turnout 2 entered also
                 turnout2 = InstanceManager.turnoutManagerInstance().getTurnout(ttotTurnoutName2);
                 if (turnout2 == null) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError2"),
                                     new Object[]{ttotTurnoutName2}), Bundle.getMessage("ErrorTitle"),
                             JOptionPane.ERROR_MESSAGE);
@@ -4916,7 +4911,7 @@ public class LayoutEditorTools {
                     ttotTurnoutName2 = ttotTurnoutName2.toUpperCase();
                     turnout2ComboBox.setText(ttotTurnoutName2);
                 }
-                layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2, false, ttotTurnoutName2, setSignalsAtTToTFrame);
+                layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2, false, ttotTurnoutName2, setSignalsAtThroatToThroatTurnoutsFrame);
                 if (layoutTurnout2 == null) {
                     return false;
                 }
@@ -4925,7 +4920,7 @@ public class LayoutEditorTools {
                 if (layoutTurnout1.getConnectA() != layoutTurnout2.getConnectA()) {
                     // Not two turnouts connected throat-to-throat by a single Track Segment
                     // Inform user of error and terminate
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             Bundle.getMessage("SignalsError18"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -4953,7 +4948,7 @@ public class LayoutEditorTools {
         if (setA1TToTHead.isSelected()) {
             if (isHeadOnPanel(a1TToTHead)
                     && (a1TToTHead != getHeadFromName(layoutTurnout1.getSignalB1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -4974,7 +4969,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(a1TToTHead)
                         && isHeadAssignedAnywhere(a1TToTHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -4993,7 +4988,7 @@ public class LayoutEditorTools {
         if ((a2TToTHead != null) && setA2TToTHead.isSelected()) {
             if (isHeadOnPanel(a2TToTHead)
                     && (a2TToTHead != getHeadFromName(layoutTurnout1.getSignalB2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5014,7 +5009,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(a2TToTHead)
                         && isHeadAssignedAnywhere(a2TToTHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5036,7 +5031,7 @@ public class LayoutEditorTools {
         if (setB1TToTHead.isSelected()) {
             if (isHeadOnPanel(b1TToTHead)
                     && (b1TToTHead != getHeadFromName(layoutTurnout1.getSignalC1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5057,7 +5052,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(b1TToTHead)
                         && isHeadAssignedAnywhere(b1TToTHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5076,7 +5071,7 @@ public class LayoutEditorTools {
         if ((b2TToTHead != null) && setB2TToTHead.isSelected()) {
             if (isHeadOnPanel(b2TToTHead)
                     && (b2TToTHead != getHeadFromName(layoutTurnout1.getSignalC2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5097,7 +5092,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(b2TToTHead)
                         && isHeadAssignedAnywhere(b2TToTHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5120,7 +5115,7 @@ public class LayoutEditorTools {
         if (setC1TToTHead.isSelected()) {
             if (isHeadOnPanel(c1TToTHead)
                     && (c1TToTHead != getHeadFromName(layoutTurnout2.getSignalB1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5141,7 +5136,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(c1TToTHead)
                         && isHeadAssignedAnywhere(c1TToTHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5160,7 +5155,7 @@ public class LayoutEditorTools {
         if ((c2TToTHead != null) && setC2TToTHead.isSelected()) {
             if (isHeadOnPanel(c2TToTHead)
                     && (c2TToTHead != getHeadFromName(layoutTurnout2.getSignalB2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5181,7 +5176,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(c2TToTHead)
                         && isHeadAssignedAnywhere(c2TToTHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5203,7 +5198,7 @@ public class LayoutEditorTools {
         if (setD1TToTHead.isSelected()) {
             if (isHeadOnPanel(d1TToTHead)
                     && (d1TToTHead != getHeadFromName(layoutTurnout2.getSignalC1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5224,7 +5219,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(d1TToTHead)
                         && isHeadAssignedAnywhere(d1TToTHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5243,7 +5238,7 @@ public class LayoutEditorTools {
         if ((d2TToTHead != null) && setD2TToTHead.isSelected()) {
             if (isHeadOnPanel(d2TToTHead)
                     && (d2TToTHead != getHeadFromName(layoutTurnout2.getSignalC2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5264,7 +5259,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(d2TToTHead)
                         && isHeadAssignedAnywhere(d2TToTHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -5309,9 +5304,9 @@ public class LayoutEditorTools {
         layoutTurnout2.setLinkedTurnoutName(turnout1ComboBox.getDisplayName());
         layoutTurnout2.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
         // finish up
-        setSignalsAtTToTOpen = false;
+        setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
         setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
-        setSignalsAtTToTFrame.setVisible(false);
+        setSignalsAtThroatToThroatTurnoutsFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -5320,26 +5315,26 @@ public class LayoutEditorTools {
     }   // setTToTSignalsDonePressed
 
     private boolean getTToTSignalHeadInformation() {
-        a1TToTHead = getSignalHeadFromEntry(a1TToTSignalHeadComboBox, true, setSignalsAtTToTFrame);
+        a1TToTHead = getSignalHeadFromEntry(a1TToTSignalHeadComboBox, true, setSignalsAtThroatToThroatTurnoutsFrame);
         if (a1TToTHead == null) {
             return false;
         }
-        a2TToTHead = getSignalHeadFromEntry(a2TToTSignalHeadComboBox, false, setSignalsAtTToTFrame);
-        b1TToTHead = getSignalHeadFromEntry(b1TToTSignalHeadComboBox, true, setSignalsAtTToTFrame);
+        a2TToTHead = getSignalHeadFromEntry(a2TToTSignalHeadComboBox, false, setSignalsAtThroatToThroatTurnoutsFrame);
+        b1TToTHead = getSignalHeadFromEntry(b1TToTSignalHeadComboBox, true, setSignalsAtThroatToThroatTurnoutsFrame);
         if (b1TToTHead == null) {
             return false;
         }
-        b2TToTHead = getSignalHeadFromEntry(b2TToTSignalHeadComboBox, false, setSignalsAtTToTFrame);
-        c1TToTHead = getSignalHeadFromEntry(c1TToTSignalHeadComboBox, true, setSignalsAtTToTFrame);
+        b2TToTHead = getSignalHeadFromEntry(b2TToTSignalHeadComboBox, false, setSignalsAtThroatToThroatTurnoutsFrame);
+        c1TToTHead = getSignalHeadFromEntry(c1TToTSignalHeadComboBox, true, setSignalsAtThroatToThroatTurnoutsFrame);
         if (c1TToTHead == null) {
             return false;
         }
-        c2TToTHead = getSignalHeadFromEntry(c2TToTSignalHeadComboBox, false, setSignalsAtTToTFrame);
-        d1TToTHead = getSignalHeadFromEntry(d1TToTSignalHeadComboBox, true, setSignalsAtTToTFrame);
+        c2TToTHead = getSignalHeadFromEntry(c2TToTSignalHeadComboBox, false, setSignalsAtThroatToThroatTurnoutsFrame);
+        d1TToTHead = getSignalHeadFromEntry(d1TToTSignalHeadComboBox, true, setSignalsAtThroatToThroatTurnoutsFrame);
         if (d1TToTHead == null) {
             return false;
         }
-        d2TToTHead = getSignalHeadFromEntry(d2TToTSignalHeadComboBox, false, setSignalsAtTToTFrame);
+        d2TToTHead = getSignalHeadFromEntry(d2TToTSignalHeadComboBox, false, setSignalsAtThroatToThroatTurnoutsFrame);
         return true;
     }
 
@@ -5518,13 +5513,13 @@ public class LayoutEditorTools {
         LayoutBlock farTurnoutBlock = farTurnout.getLayoutBlock();
         Sensor connectorOccupancy = null;
         if ((connectorBlock == null) || (nearTurnoutBlock == null) || (farTurnoutBlock == null)) {
-            JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+            JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         connectorOccupancy = connectorBlock.getOccupancySensor();
         if (connectorOccupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+            JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{connectorBlock.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -5532,7 +5527,7 @@ public class LayoutEditorTools {
         }
         // setup signal head for continuing track of far turnout (or both tracks of far turnout)
         if ((track1 == null) && setup1) {
-            JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+            JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -5541,22 +5536,22 @@ public class LayoutEditorTools {
         if ((track1 != null) && setup1) {
             LayoutBlock block = track1.getLayoutBlock();
             if (block == null) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             occupancy = block.getOccupancySensor();
             if (occupancy == null) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                                 new Object[]{block.getUserName()}),
                         null, JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             nextHead = getNextSignalFromObject(track1, farTurnout,
-                    head.getSystemName(), setSignalsAtTToTFrame);
+                    head.getSystemName(), setSignalsAtThroatToThroatTurnoutsFrame);
             if ((nextHead == null) && (!reachedEndBumper())) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                                 new Object[]{block.getUserName()}),
                         null, JOptionPane.INFORMATION_MESSAGE);
@@ -5589,19 +5584,19 @@ public class LayoutEditorTools {
         }
         SignalHead savedAuxSignal = auxSignal;
         if (track2 == null) {
-            JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+            JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block2 = track2.getLayoutBlock();
         if (block2 == null) {
-            JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+            JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy2 = block2.getOccupancySensor();
         if (occupancy2 == null) {
-            JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+            JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block2.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -5610,9 +5605,9 @@ public class LayoutEditorTools {
         SignalHead nextHead2 = null;
         if (secondHead != null) {
             nextHead2 = getNextSignalFromObject(track2,
-                    farTurnout, secondHead.getSystemName(), setSignalsAtTToTFrame);
+                    farTurnout, secondHead.getSystemName(), setSignalsAtThroatToThroatTurnoutsFrame);
             if ((nextHead2 == null) && (!reachedEndBumper())) {
-                JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+                JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
                         MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                                 new Object[]{block2.getUserName()}),
                         null, JOptionPane.INFORMATION_MESSAGE);
@@ -5796,8 +5791,8 @@ public class LayoutEditorTools {
      * separate block, either works fine.
      */
     // operational variables for Set Signals at 3-Way Turnout tool
-    private JmriJFrame setSignalsAt3WayFrame = null;
-    private boolean setSignalsAt3WayOpen = false;
+    private JmriJFrame setSignalsAt3WayTurnoutFrame = null;
+    private boolean setSignalsAt3WayTurnoutOpenFlag = false;
 
     private JmriBeanComboBox turnoutAComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(),
@@ -5871,16 +5866,16 @@ public class LayoutEditorTools {
             @Nonnull JFrame theFrame) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        if (setSignalsAt3WayOpen) {
-            setSignalsAt3WayFrame.setVisible(true);
+        if (setSignalsAt3WayTurnoutOpenFlag) {
+            setSignalsAt3WayTurnoutFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (setSignalsAt3WayFrame == null) {
-            setSignalsAt3WayFrame = new JmriJFrame(Bundle.getMessage("SignalsAt3WayTurnout"), false, true);
-            setSignalsAt3WayFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAt3WayTurnout", true);
-            setSignalsAt3WayFrame.setLocation(70, 30);
-            Container theContentPane = setSignalsAt3WayFrame.getContentPane();
+        if (setSignalsAt3WayTurnoutFrame == null) {
+            setSignalsAt3WayTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalsAt3WayTurnout"), false, true);
+            setSignalsAt3WayTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAt3WayTurnout", true);
+            setSignalsAt3WayTurnoutFrame.setLocation(70, 30);
+            Container theContentPane = setSignalsAt3WayTurnoutFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
@@ -6073,16 +6068,16 @@ public class LayoutEditorTools {
             });
             set3WaySignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            setSignalsAt3WayFrame.addWindowListener(new WindowAdapter() {
+            setSignalsAt3WayTurnoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     set3WaySignalsCancelPressed(null);
                 }
             });
         }
-        setSignalsAt3WayFrame.pack();
-        setSignalsAt3WayFrame.setVisible(true);
-        setSignalsAt3WayOpen = true;
+        setSignalsAt3WayTurnoutFrame.pack();
+        setSignalsAt3WayTurnoutFrame.setVisible(true);
+        setSignalsAt3WayTurnoutOpenFlag = true;
     }   // setSignalsAt3WayTurnout
 
     private void getSaved3WaySignals(ActionEvent a) {
@@ -6098,8 +6093,8 @@ public class LayoutEditorTools {
     }
 
     private void set3WaySignalsCancelPressed(ActionEvent a) {
-        setSignalsAt3WayOpen = false;
-        setSignalsAt3WayFrame.setVisible(false);
+        setSignalsAt3WayTurnoutOpenFlag = false;
+        setSignalsAt3WayTurnoutFrame.setVisible(false);
     }
 
     private boolean get3WayTurnoutInformation() {
@@ -6116,13 +6111,13 @@ public class LayoutEditorTools {
             str = turnoutBComboBox.getDisplayName();
             if ((str == null) || str.isEmpty()) {
                 // no entries in turnout fields
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame, Bundle.getMessage("SignalsError1"),
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame, Bundle.getMessage("SignalsError1"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             turnoutB = InstanceManager.turnoutManagerInstance().getTurnout(str);
             if (turnoutB == null) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError2"),
                                 new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -6134,7 +6129,7 @@ public class LayoutEditorTools {
                 str = str.toUpperCase();
                 turnoutBComboBox.setText(str);
             }
-            layoutTurnoutB = getLayoutTurnoutFromTurnout(turnoutB, false, str, setSignalsAt3WayFrame);
+            layoutTurnoutB = getLayoutTurnoutFromTurnout(turnoutB, false, str, setSignalsAt3WayTurnoutFrame);
             if (layoutTurnoutB == null) {
                 return false;
             }
@@ -6142,7 +6137,7 @@ public class LayoutEditorTools {
             connectorTrack = (TrackSegment) layoutTurnoutB.getConnectA();
             if (connectorTrack == null) {
                 // Inform user of error, and terminate
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         Bundle.getMessage("SignalsError19"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -6156,7 +6151,7 @@ public class LayoutEditorTools {
             if ((type != LayoutTrack.TURNOUT_B) || (connect == null)) {
                 // Not two turnouts connected as required by a single Track Segment
                 // Inform user of error and terminate
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         Bundle.getMessage("SignalsError19"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -6164,7 +6159,7 @@ public class LayoutEditorTools {
             layoutTurnoutA = (LayoutTurnout) connect;
             turnoutA = layoutTurnoutA.getTurnout();
             if (turnoutA == null) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         Bundle.getMessage("SignalsError19"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -6174,7 +6169,7 @@ public class LayoutEditorTools {
             // something was entered in the turnout A field
             turnoutA = InstanceManager.turnoutManagerInstance().getTurnout(str);
             if (turnoutA == null) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError2"),
                                 new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -6187,7 +6182,7 @@ public class LayoutEditorTools {
                 turnoutAComboBox.setText(str);
             }
             // have turnout A - get corresponding layoutTurnout
-            layoutTurnoutA = getLayoutTurnoutFromTurnout(turnoutA, false, str, setSignalsAt3WayFrame);
+            layoutTurnoutA = getLayoutTurnoutFromTurnout(turnoutA, false, str, setSignalsAt3WayTurnoutFrame);
             if (layoutTurnoutA == null) {
                 return false;
             }
@@ -6199,7 +6194,7 @@ public class LayoutEditorTools {
                 connectorTrack = (TrackSegment) layoutTurnoutA.getConnectB();
                 if (connectorTrack == null) {
                     // Inform user of error, and terminate
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             Bundle.getMessage("SignalsError19"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -6213,7 +6208,7 @@ public class LayoutEditorTools {
                 if ((type != LayoutTrack.TURNOUT_A) || (connect == null)) {
                     // Not two turnouts connected with the throat of B connected to the continuing of A
                     //	  by a single Track Segment.  Inform user of error and terminat.e
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             Bundle.getMessage("SignalsError19"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -6221,7 +6216,7 @@ public class LayoutEditorTools {
                 layoutTurnoutB = (LayoutTurnout) connect;
                 turnoutB = layoutTurnoutB.getTurnout();
                 if (turnoutB == null) {
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             Bundle.getMessage("SignalsError19"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -6231,7 +6226,7 @@ public class LayoutEditorTools {
                 // turnout B entered also
                 turnoutB = InstanceManager.turnoutManagerInstance().getTurnout(str);
                 if (turnoutB == null) {
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError2"),
                                     new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                             JOptionPane.ERROR_MESSAGE);
@@ -6243,7 +6238,7 @@ public class LayoutEditorTools {
                     str = str.toUpperCase();
                     turnoutBComboBox.setText(str);
                 }
-                layoutTurnoutB = getLayoutTurnoutFromTurnout(turnoutB, false, str, setSignalsAt3WayFrame);
+                layoutTurnoutB = getLayoutTurnoutFromTurnout(turnoutB, false, str, setSignalsAt3WayTurnoutFrame);
                 if (layoutTurnoutB == null) {
                     return false;
                 }
@@ -6252,7 +6247,7 @@ public class LayoutEditorTools {
                 if (layoutTurnoutA.getConnectB() != layoutTurnoutB.getConnectA()) {
                     // Not two turnouts connected as required by a single Track Segment
                     // Inform user of error and terminate
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             Bundle.getMessage("SignalsError19"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -6277,7 +6272,7 @@ public class LayoutEditorTools {
         if (setA13WayHead.isSelected()) {
             if (isHeadOnPanel(a13WayHead)
                     && (a13WayHead != getHeadFromName(layoutTurnoutA.getSignalA1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6294,7 +6289,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(a13WayHead)
                         && isHeadAssignedAnywhere(a13WayHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6313,7 +6308,7 @@ public class LayoutEditorTools {
         if ((setA23WayHead.isSelected()) && (a23WayHead != null)) {
             if (isHeadOnPanel(a23WayHead)
                     && (a23WayHead != getHeadFromName(layoutTurnoutA.getSignalA2Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6330,7 +6325,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(a23WayHead)
                         && isHeadAssignedAnywhere(a23WayHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6352,7 +6347,7 @@ public class LayoutEditorTools {
         if ((setA33WayHead.isSelected()) && (a33WayHead != null)) {
             if (isHeadOnPanel(a33WayHead)
                     && (a33WayHead != getHeadFromName(layoutTurnoutA.getSignalA3Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6369,7 +6364,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(a33WayHead)
                         && isHeadAssignedAnywhere(a33WayHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6391,7 +6386,7 @@ public class LayoutEditorTools {
         if (setB3WayHead.isSelected()) {
             if (isHeadOnPanel(b3WayHead)
                     && (b3WayHead != getHeadFromName(layoutTurnoutA.getSignalC1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6408,7 +6403,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(b3WayHead)
                         && isHeadAssignedAnywhere(b3WayHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6428,7 +6423,7 @@ public class LayoutEditorTools {
         if (setC3WayHead.isSelected()) {
             if (isHeadOnPanel(c3WayHead)
                     && (c3WayHead != getHeadFromName(layoutTurnoutB.getSignalB1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6445,7 +6440,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(c3WayHead)
                         && isHeadAssignedAnywhere(c3WayHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6464,7 +6459,7 @@ public class LayoutEditorTools {
         if (setD3WayHead.isSelected()) {
             if (isHeadOnPanel(d3WayHead)
                     && (d3WayHead != getHeadFromName(layoutTurnoutB.getSignalC1Name()))) {
-                JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{signalHeadName}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6481,7 +6476,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isHeadOnPanel(d3WayHead)
                         && isHeadAssignedAnywhere(d3WayHead)) {
-                    JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+                    JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6522,8 +6517,8 @@ public class LayoutEditorTools {
         layoutTurnoutB.setLinkedTurnoutName(signalHeadName);
         layoutTurnoutB.setLinkType(LayoutTurnout.SECOND_3_WAY);
         // finish up
-        setSignalsAt3WayOpen = false;
-        setSignalsAt3WayFrame.setVisible(false);
+        setSignalsAt3WayTurnoutOpenFlag = false;
+        setSignalsAt3WayTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -6532,25 +6527,25 @@ public class LayoutEditorTools {
     }   // set3WaySignalsDonePressed
 
     private boolean get3WaySignalHeadInformation() {
-        a13WayHead = getSignalHeadFromEntry(a1_3WaySignalHeadComboBox, true, setSignalsAt3WayFrame);
+        a13WayHead = getSignalHeadFromEntry(a1_3WaySignalHeadComboBox, true, setSignalsAt3WayTurnoutFrame);
         if (a13WayHead == null) {
             return false;
         }
-        a23WayHead = getSignalHeadFromEntry(a2_3WaySignalHeadComboBox, false, setSignalsAt3WayFrame);
-        a33WayHead = getSignalHeadFromEntry(a3_3WaySignalHeadComboBox, false, setSignalsAt3WayFrame);
+        a23WayHead = getSignalHeadFromEntry(a2_3WaySignalHeadComboBox, false, setSignalsAt3WayTurnoutFrame);
+        a33WayHead = getSignalHeadFromEntry(a3_3WaySignalHeadComboBox, false, setSignalsAt3WayTurnoutFrame);
         if (((a23WayHead == null) && (a33WayHead != null)) || ((a33WayHead == null)
                 && (a23WayHead != null))) {
             return false;
         }
-        b3WayHead = getSignalHeadFromEntry(b_3WaySignalHeadComboBox, true, setSignalsAt3WayFrame);
+        b3WayHead = getSignalHeadFromEntry(b_3WaySignalHeadComboBox, true, setSignalsAt3WayTurnoutFrame);
         if (b3WayHead == null) {
             return false;
         }
-        c3WayHead = getSignalHeadFromEntry(c_3WaySignalHeadComboBox, true, setSignalsAt3WayFrame);
+        c3WayHead = getSignalHeadFromEntry(c_3WaySignalHeadComboBox, true, setSignalsAt3WayTurnoutFrame);
         if (c3WayHead == null) {
             return false;
         }
-        d3WayHead = getSignalHeadFromEntry(d_3WaySignalHeadComboBox, true, setSignalsAt3WayFrame);
+        d3WayHead = getSignalHeadFromEntry(d_3WaySignalHeadComboBox, true, setSignalsAt3WayTurnoutFrame);
         if (d3WayHead == null) {
             return false;
         }
@@ -6689,19 +6684,19 @@ public class LayoutEditorTools {
     private void set3WayLogicThroatContinuing() {
         TrackSegment track = (TrackSegment) layoutTurnoutB.getConnectB();
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6709,9 +6704,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = a1_3WaySignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutB,
-                signalHeadName, setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6737,7 +6732,7 @@ public class LayoutEditorTools {
             return;
         }
         // only one head at the throat
-        JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+        JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                 Bundle.getMessage("InfoMessage9"), "", JOptionPane.INFORMATION_MESSAGE);
         return;
     }   // set3WayLogicThroatContinuing
@@ -6745,19 +6740,19 @@ public class LayoutEditorTools {
     private void set3WayLogicThroatDivergingA() {
         TrackSegment track = (TrackSegment) layoutTurnoutA.getConnectC();
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6765,9 +6760,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = a2_3WaySignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
-                signalHeadName, setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6794,19 +6789,19 @@ public class LayoutEditorTools {
     private void set3WayLogicThroatDivergingB() {
         TrackSegment track = (TrackSegment) layoutTurnoutB.getConnectC();
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6814,9 +6809,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = a3_3WaySignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutB,
-                signalHeadName, setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6845,19 +6840,19 @@ public class LayoutEditorTools {
     private void set3WayLogicDivergingA() {
         TrackSegment track = (TrackSegment) layoutTurnoutA.getConnectA();
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6865,9 +6860,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = b_3WaySignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
-                signalHeadName, setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6894,19 +6889,19 @@ public class LayoutEditorTools {
     private void set3WayLogicContinuing() {
         TrackSegment track = (TrackSegment) layoutTurnoutA.getConnectA();
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6914,9 +6909,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = c_3WaySignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
-                signalHeadName, setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6945,19 +6940,19 @@ public class LayoutEditorTools {
     private void set3WayLogicDivergingB() {
         TrackSegment track = (TrackSegment) layoutTurnoutA.getConnectA();
         if (track == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage7"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         LayoutBlock block = track.getLayoutBlock();
         if (block == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     Bundle.getMessage("InfoMessage6"), "", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Sensor occupancy = block.getOccupancySensor();
         if (occupancy == null) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage4"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -6965,9 +6960,9 @@ public class LayoutEditorTools {
         }
         String signalHeadName = d_3WaySignalHeadComboBox.getDisplayName();
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
-                signalHeadName, setSignalsAt3WayFrame);
+                signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
-            JOptionPane.showMessageDialog(setSignalsAt3WayFrame,
+            JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                             new Object[]{block.getUserName()}),
                     null, JOptionPane.INFORMATION_MESSAGE);
@@ -7000,12 +6995,14 @@ public class LayoutEditorTools {
     BeanDetails westBoundSensor;
     BeanDetails eastBoundSensor;
 
+    private JmriJFrame setSensorsAtBlockBoundaryFrame = null;
+    private boolean setSensorsAtBlockBoundaryOpenFlag = false;
+    private boolean setSensorsAtBlockBoundaryFromMenuFlag = false;
+
     private JButton getAnchorSavedSensors = null;
     private JButton changeSensorAtBoundaryIcon = null;
-    private JButton setSensorsAtBoundaryDone = null;
-    private JButton setSensorsAtBoundaryCancel = null;
-    private boolean setSensorsAtBoundaryOpen = false;
-    private JmriJFrame setSensorsAtBoundaryFrame = null;
+    private JButton setSensorsAtBlockBoundaryDone = null;
+    private JButton setSensorsAtBlockBoundaryCancel = null;
 
     private JFrame sensorFrame = null;
     private MultiIconEditor sensorIconEditor = null;
@@ -7013,7 +7010,7 @@ public class LayoutEditorTools {
     public void setSensorsAtBlockBoundaryFromMenu(@Nonnull PositionablePoint p,
             @Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        setSignalsAtBlockBoundaryFromMenuFlag = true;
+        setSensorsAtBlockBoundaryFromMenuFlag = true;
         boundary = p;
         block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         if (boundary.getType() != PositionablePoint.ANCHOR) {
@@ -7029,26 +7026,26 @@ public class LayoutEditorTools {
             @Nonnull JFrame theFrame) {
         sensorIconEditor = theEditor;
         sensorFrame = theFrame;
-        if (setSensorsAtBoundaryOpen) {
-            setSensorsAtBoundaryFrame.setVisible(true);
+        if (setSensorsAtBlockBoundaryOpenFlag) {
+            setSensorsAtBlockBoundaryFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (setSensorsAtBoundaryFrame == null) {
+        if (setSensorsAtBlockBoundaryFrame == null) {
             westBoundSensor = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
             eastBoundSensor = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
 
-            setSensorsAtBoundaryFrame = new JmriJFrame(Bundle.getMessage("SensorsAtBoundary"), false, true);
-            setSensorsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtBoundary", true);
-            setSensorsAtBoundaryFrame.setLocation(70, 30);
-            Container theContentPane = setSensorsAtBoundaryFrame.getContentPane();
+            setSensorsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SensorsAtBoundary"), false, true);
+            setSensorsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtBoundary", true);
+            setSensorsAtBlockBoundaryFrame.setLocation(70, 30);
+            Container theContentPane = setSensorsAtBlockBoundaryFrame.getContentPane();
             theContentPane.setLayout(new BorderLayout());
 
             JPanel header = new JPanel();
             header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
-            if (setSignalsAtBlockBoundaryFromMenuFlag) {
+            if (setSensorsAtBlockBoundaryFromMenuFlag) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getId());
                 panel11.add(block1NameLabel);
@@ -7062,7 +7059,7 @@ public class LayoutEditorTools {
             header.add(panel11);
 
             JPanel panel12 = new JPanel(new FlowLayout());
-            if ((setSignalsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
+            if ((setSensorsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
                 panel12.add(block2NameLabel);
@@ -7096,7 +7093,7 @@ public class LayoutEditorTools {
 
             if (boundary.getType() != PositionablePoint.END_BUMPER) {
                 eastBoundSensor.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
-                if ((setSignalsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
+                if ((setSensorsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                     if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                         eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
                     } else {
@@ -7107,7 +7104,7 @@ public class LayoutEditorTools {
                 main.add(eastBoundSensor.getDetailsPanel());
 
                 westBoundSensor.setBoundaryTitle(Bundle.getMessage("West/NorthBound"));
-                if (setSignalsAtBlockBoundaryFromMenuFlag) {
+                if (setSensorsAtBlockBoundaryFromMenuFlag) {
                     if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                         westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     } else {
@@ -7117,14 +7114,16 @@ public class LayoutEditorTools {
                 westBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
                 main.add(westBoundSensor.getDetailsPanel());
             } else {
-                if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary) && (setSignalsAtBlockBoundaryFromMenuFlag)) {
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                    eastBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
-                    main.add(eastBoundSensor.getDetailsPanel());
-                } else if (setSignalsAtBlockBoundaryFromMenuFlag) {
-                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                    westBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
-                    main.add(westBoundSensor.getDetailsPanel());
+                if (setSensorsAtBlockBoundaryFromMenuFlag) {
+                    if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                        eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                        eastBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
+                        main.add(eastBoundSensor.getDetailsPanel());
+                    } else {
+                        westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                        westBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
+                        main.add(westBoundSensor.getDetailsPanel());
+                    }
                 }
             }
             main.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -7137,43 +7136,39 @@ public class LayoutEditorTools {
             });
             changeSensorAtBoundaryIcon.setToolTipText(Bundle.getMessage("ChangeSensorIconHint"));
             panel6.add(new JLabel("	 "));
-            panel6.add(setSensorsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSensorsAtBoundaryDone.addActionListener((ActionEvent e) -> {
-                setSensorsAtBoundaryDonePressed(e);
+            panel6.add(setSensorsAtBlockBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
+            setSensorsAtBlockBoundaryDone.addActionListener((ActionEvent e) -> {
+                setSensorsAtBlockBoundaryDonePressed(e);
             });
-            setSensorsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+            setSensorsAtBlockBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
             SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBoundaryDone);
-                rootPane.setDefaultButton(setSensorsAtBoundaryDone);
+                JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBlockBoundaryDone);
+                rootPane.setDefaultButton(setSensorsAtBlockBoundaryDone);
             });
 
-            panel6.add(setSensorsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSensorsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
-                setSensorsAtBoundaryCancelPressed(e);
+            panel6.add(setSensorsAtBlockBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSensorsAtBlockBoundaryCancel.addActionListener((ActionEvent e) -> {
+                setSensorsAtBlockBoundaryCancelPressed(e);
             });
-            setSensorsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
+            setSensorsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
-            setSensorsAtBoundaryFrame.addWindowListener(new WindowAdapter() {
+            setSensorsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    setSensorsAtBoundaryCancelPressed(null);
+                    setSensorsAtBlockBoundaryCancelPressed(null);
                 }
             });
-            if (setSignalsAtBlockBoundaryFromMenuFlag) {
-                getSavedAnchorSensors(null);
-            }
-        } else {
-            if (setSignalsAtBlockBoundaryFromMenuFlag) {
-                getSavedAnchorSensors(null);
-            }
         }
-        setSensorsAtBoundaryFrame.setPreferredSize(null);
-        setSensorsAtBoundaryFrame.pack();
-        setSensorsAtBoundaryFrame.setVisible(true);
-        setSensorsAtBoundaryOpen = true;
+        if (setSensorsAtBlockBoundaryFromMenuFlag) {
+            getSavedAnchorSensors(null);
+        }
+        setSensorsAtBlockBoundaryFrame.setPreferredSize(null);
+        setSensorsAtBlockBoundaryFrame.pack();
+        setSensorsAtBlockBoundaryFrame.setVisible(true);
+        setSensorsAtBlockBoundaryOpenFlag = true;
     }   // setSensorsAtBlockBoundary
 
     /**
@@ -7439,22 +7434,22 @@ public class LayoutEditorTools {
             }
         }
 
-        setSensorsAtBoundaryFrame.setPreferredSize(null);
-        setSensorsAtBoundaryFrame.pack();
+        setSensorsAtBlockBoundaryFrame.setPreferredSize(null);
+        setSensorsAtBlockBoundaryFrame.pack();
     }
 
-    private void setSensorsAtBoundaryCancelPressed(ActionEvent a) {
-        setSensorsAtBoundaryOpen = false;
-        setSignalsAtBlockBoundaryFromMenuFlag = false;
-        setSensorsAtBoundaryFrame.setVisible(false);
+    private void setSensorsAtBlockBoundaryCancelPressed(ActionEvent a) {
+        setSensorsAtBlockBoundaryOpenFlag = false;
+        setSensorsAtBlockBoundaryFromMenuFlag = false;
+        setSensorsAtBlockBoundaryFrame.setVisible(false);
     }
 
-    private void setSensorsAtBoundaryDonePressed(ActionEvent a) {
+    private void setSensorsAtBlockBoundaryDonePressed(ActionEvent a) {
         if (!getSimpleBlockInformation()) {
             return;
         }
-        Sensor eastSensor = getSensorFromEntry(eastBoundSensor.getText(), false, setSensorsAtBoundaryFrame);
-        Sensor westSensor = getSensorFromEntry(westBoundSensor.getText(), false, setSensorsAtBoundaryFrame);
+        Sensor eastSensor = getSensorFromEntry(eastBoundSensor.getText(), false, setSensorsAtBlockBoundaryFrame);
+        Sensor westSensor = getSensorFromEntry(westBoundSensor.getText(), false, setSensorsAtBlockBoundaryFrame);
         if (eastSensor == null) {
             removeSensorAssignment(InstanceManager.sensorManagerInstance().getSensor(boundary.getEastBoundSensorName()));
             boundary.setEastBoundSensor(null);
@@ -7467,7 +7462,7 @@ public class LayoutEditorTools {
         if ((eastSensor != null) && eastBoundSensor.addToPanel()) {
             if (isSensorAssignedAnywhere(eastSensor)
                     && (eastSensor != boundary.getEastBoundSensor())) {
-                JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{eastBoundSensor.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -7482,7 +7477,7 @@ public class LayoutEditorTools {
                 && (eastSensor != boundary.getEastBoundSensor())
                 && (eastSensor != boundary.getWestBoundSensor())) {
             if (isSensorAssignedAnywhere(eastSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{eastBoundSensor.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -7499,7 +7494,7 @@ public class LayoutEditorTools {
         if ((westSensor != null) && westBoundSensor.addToPanel()) {
             if (isSensorAssignedAnywhere(westSensor)
                     && (westSensor != boundary.getWestBoundSensor())) {
-                JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{westBoundSensor.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -7515,7 +7510,7 @@ public class LayoutEditorTools {
                 && (westSensor != boundary.getWestBoundSensor())) {
             if (isSensorAssignedAnywhere(westSensor)) {
                 //Need to do this better, so that the sensor can be on panel multiple times but only alocated to one anchor at a time
-                JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{westBoundSensor.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -7528,9 +7523,9 @@ public class LayoutEditorTools {
                 && (westSensor == boundary.getEastBoundSensor())) {
             boundary.setWestBoundSensor(westBoundSensor.getText());
         }
-        setSensorsAtBoundaryOpen = false;
-        setSignalsAtBlockBoundaryFromMenuFlag = false;
-        setSensorsAtBoundaryFrame.setVisible(false);
+        setSensorsAtBlockBoundaryOpenFlag = false;
+        setSensorsAtBlockBoundaryFromMenuFlag = false;
+        setSensorsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -7547,18 +7542,20 @@ public class LayoutEditorTools {
         return false;
     }
 
+    private JmriJFrame setSignalMastsAtBlockBoundaryFrame = null;
+    private boolean setSignalMastsAtBlockBoundaryOpenFlag = false;
+    private boolean setSignalMastsAtBlockBoundaryFromMenuFlag = false;
+
     private JButton getAnchorSavedSignalMasts = null;
-    private JButton setSignalMastsAtBoundaryDone = null;
-    private JButton setSignalMastsAtBoundaryCancel = null;
-    private boolean setSignalMastsAtBoundaryOpen = false;
-    private JmriJFrame setSignalMastsAtBoundaryFrame = null;
+    private JButton setSignalMastsAtBlockBoundaryDone = null;
+    private JButton setSignalMastsAtBlockBoundaryCancel = null;
 
     BeanDetails eastSignalMast;
     BeanDetails westSignalMast;
 
     public void setSignalMastsAtBlockBoundaryFromMenu(
             @Nonnull PositionablePoint p) {
-        setSignalsAtBlockBoundaryFromMenuFlag = true;
+        setSignalMastsAtBlockBoundaryFromMenuFlag = true;
         boundary = p;
         block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         if (boundary.getType() == PositionablePoint.ANCHOR) {
@@ -7569,25 +7566,25 @@ public class LayoutEditorTools {
     }
 
     public void setSignalMastsAtBlockBoundary() {
-        if (setSignalMastsAtBoundaryOpen) {
-            setSignalMastsAtBoundaryFrame.setVisible(true);
+        if (setSignalMastsAtBlockBoundaryOpenFlag) {
+            setSignalMastsAtBlockBoundaryFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (setSignalMastsAtBoundaryFrame == null) {
+        if (setSignalMastsAtBlockBoundaryFrame == null) {
             eastSignalMast = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class)); // NOI18N
             westSignalMast = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class)); // NOI18N
-            setSignalMastsAtBoundaryFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtBoundary"), false, true);
-            setSignalMastsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtBoundary", true);
-            setSignalMastsAtBoundaryFrame.setLocation(70, 30);
-            Container theContentPane = setSignalMastsAtBoundaryFrame.getContentPane();
+            setSignalMastsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtBoundary"), false, true);
+            setSignalMastsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtBoundary", true);
+            setSignalMastsAtBlockBoundaryFrame.setLocation(70, 30);
+            Container theContentPane = setSignalMastsAtBlockBoundaryFrame.getContentPane();
             theContentPane.setLayout(new BorderLayout());
 
             JPanel header = new JPanel();
             header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
-            if (setSignalsAtBlockBoundaryFromMenuFlag) {
+            if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getId());
                 panel11.add(block1NameLabel);
@@ -7601,18 +7598,19 @@ public class LayoutEditorTools {
             header.add(panel11);
 
             JPanel panel12 = new JPanel(new FlowLayout());
-            if ((setSignalsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
-                JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
-                panel12.add(block2NameLabel);
-            } else if (boundary.getType() == PositionablePoint.ANCHOR) {
-                JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : ");
-                panel12.add(block2NameLabel);
-                panel12.add(block2IDComboBox);
-                block2IDComboBox.setToolTipText(Bundle.getMessage("SignalMastsBlockNameHint"));
+            if (boundary.getType() == PositionablePoint.ANCHOR) {
+                if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
+                    JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
+                            + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
+                    panel12.add(block2NameLabel);
+                } else {
+                    JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
+                            + Bundle.getMessage("Name") + " : ");
+                    panel12.add(block2NameLabel);
+                    panel12.add(block2IDComboBox);
+                    block2IDComboBox.setToolTipText(Bundle.getMessage("SignalMastsBlockNameHint"));
+                }
             }
-
             header.add(panel12);
             header.add(new JSeparator(JSeparator.HORIZONTAL));
             theContentPane.add(header, BorderLayout.NORTH);
@@ -7635,7 +7633,7 @@ public class LayoutEditorTools {
 
             if (boundary.getType() != PositionablePoint.END_BUMPER) {
                 eastSignalMast.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
-                if (setSignalsAtBlockBoundaryFromMenuFlag) {
+                if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                     if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                         eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
                     } else {
@@ -7646,7 +7644,7 @@ public class LayoutEditorTools {
                 main.add(eastSignalMast.getDetailsPanel());
 
                 westSignalMast.setBoundaryTitle(Bundle.getMessage("West/NorthBound"));
-                if (setSignalsAtBlockBoundaryFromMenuFlag) {
+                if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                     if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                         westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     } else {
@@ -7656,56 +7654,56 @@ public class LayoutEditorTools {
                 westSignalMast.getDetailsPanel().setBackground(new Color(200, 255, 255));
                 main.add(westSignalMast.getDetailsPanel());
             } else {
-                if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary) && (setSignalsAtBlockBoundaryFromMenuFlag)) {
-                    eastSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                    eastSignalMast.getDetailsPanel().setBackground(new Color(200, 255, 255));
-                    main.add(eastSignalMast.getDetailsPanel());
-                } else if (setSignalsAtBlockBoundaryFromMenuFlag) {
-                    westSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                    westSignalMast.getDetailsPanel().setBackground(new Color(255, 255, 200));
-                    main.add(westSignalMast.getDetailsPanel());
+                if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
+                    if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                        eastSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                        eastSignalMast.getDetailsPanel().setBackground(new Color(200, 255, 255));
+                        main.add(eastSignalMast.getDetailsPanel());
+                    } else {
+                        westSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                        westSignalMast.getDetailsPanel().setBackground(new Color(255, 255, 200));
+                        main.add(westSignalMast.getDetailsPanel());
+                    }
                 }
             }
             main.add(new JSeparator(JSeparator.HORIZONTAL));
             theContentPane.add(main, BorderLayout.CENTER);
 
             JPanel panel6 = new JPanel(new FlowLayout());
-            panel6.add(setSignalMastsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
-            setSignalMastsAtBoundaryDone.addActionListener((ActionEvent e) -> {
-                setSignalMastsAtBoundaryDonePressed(e);
+            panel6.add(setSignalMastsAtBlockBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
+            setSignalMastsAtBlockBoundaryDone.addActionListener((ActionEvent e) -> {
+                setSignalMastsAtBlockBoundaryDonePressed(e);
             });
-            setSignalMastsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+            setSignalMastsAtBlockBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
             SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsAtBoundaryDone);
-                rootPane.setDefaultButton(setSignalMastsAtBoundaryDone);
+                JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsAtBlockBoundaryDone);
+                rootPane.setDefaultButton(setSignalMastsAtBlockBoundaryDone);
             });
 
-            panel6.add(setSignalMastsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            setSignalMastsAtBoundaryCancel.addActionListener((ActionEvent e) -> {
-                setSignalMastsAtBoundaryCancelPressed(e);
+            panel6.add(setSignalMastsAtBlockBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            setSignalMastsAtBlockBoundaryCancel.addActionListener((ActionEvent e) -> {
+                setSignalMastsAtBlockBoundaryCancelPressed(e);
             });
-            setSignalMastsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
+            setSignalMastsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
-            setSignalMastsAtBoundaryFrame.addWindowListener(new WindowAdapter() {
+            setSignalMastsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    setSignalMastsAtBoundaryCancelPressed(null);
+                    setSignalMastsAtBlockBoundaryCancelPressed(null);
                 }
             });
-            if (setSignalsAtBlockBoundaryFromMenuFlag) {
-                getSavedAnchorSignalMasts(null);
-            }
-        } else if (setSignalsAtBlockBoundaryFromMenuFlag) {
+        }
+        if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
             getSavedAnchorSignalMasts(null);
         }
         refreshSignalMastAtBoundaryComboBox();
-        setSignalMastsAtBoundaryFrame.setPreferredSize(null);
-        setSignalMastsAtBoundaryFrame.pack();
-        setSignalMastsAtBoundaryFrame.setVisible(true);
-        setSignalMastsAtBoundaryOpen = true;
+        setSignalMastsAtBlockBoundaryFrame.setPreferredSize(null);
+        setSignalMastsAtBlockBoundaryFrame.pack();
+        setSignalMastsAtBlockBoundaryFrame.setVisible(true);
+        setSignalMastsAtBlockBoundaryOpenFlag = true;
     }
 
     /**
@@ -7917,14 +7915,14 @@ public class LayoutEditorTools {
                 eastSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
         }
-        setSignalMastsAtBoundaryFrame.setPreferredSize(null);
-        setSignalMastsAtBoundaryFrame.pack();
+        setSignalMastsAtBlockBoundaryFrame.setPreferredSize(null);
+        setSignalMastsAtBlockBoundaryFrame.pack();
     }
 
-    private void setSignalMastsAtBoundaryCancelPressed(ActionEvent a) {
-        setSignalMastsAtBoundaryOpen = false;
-        setSignalsAtBlockBoundaryFromMenuFlag = false;
-        setSignalMastsAtBoundaryFrame.setVisible(false);
+    private void setSignalMastsAtBlockBoundaryCancelPressed(ActionEvent a) {
+        setSignalMastsAtBlockBoundaryOpenFlag = false;
+        setSignalMastsAtBlockBoundaryFromMenuFlag = false;
+        setSignalMastsAtBlockBoundaryFrame.setVisible(false);
     }
 
     void refreshSignalMastAtBoundaryComboBox() {
@@ -7935,16 +7933,16 @@ public class LayoutEditorTools {
         westSignalMast.getCombo().excludeItems(usedMasts);
     }
 
-    private void setSignalMastsAtBoundaryDonePressed(ActionEvent a) {
+    private void setSignalMastsAtBlockBoundaryDonePressed(ActionEvent a) {
         if (!getSimpleBlockInformation()) {
             return;
         }
 
         SignalMast oldBlock1SignalMast = boundary.getEastBoundSignalMast();
-        SignalMast block1BoundSignalMast = getSignalMastFromEntry(eastSignalMast.getText(), false, setSignalMastsAtBoundaryFrame);
+        SignalMast block1BoundSignalMast = getSignalMastFromEntry(eastSignalMast.getText(), false, setSignalMastsAtBlockBoundaryFrame);
         if (block1BoundSignalMast == null) {
             if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(SignalMastLogicManager.class).isSignalMastUsed(oldBlock1SignalMast)) {
-                SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast);
+                SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, oldBlock1SignalMast);
             }
 
             removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
@@ -7953,10 +7951,10 @@ public class LayoutEditorTools {
         }
 
         SignalMast oldBlock2SignalMast = boundary.getWestBoundSignalMast();
-        SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(), false, setSignalMastsAtBoundaryFrame);
+        SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(), false, setSignalMastsAtBlockBoundaryFrame);
         if (block2BoundSignalMast == null) {
             if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(SignalMastLogicManager.class).isSignalMastUsed(oldBlock2SignalMast)) {
-                SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast);
+                SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, oldBlock2SignalMast);
             }
 
             removeSignalMastFromPanel(boundary.getWestBoundSignalMast());
@@ -7965,7 +7963,7 @@ public class LayoutEditorTools {
         }
         if (block2BoundSignalMast != null && block1BoundSignalMast != null) {
             if (block1BoundSignalMast == block2BoundSignalMast) {
-                JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtBlockBoundaryFrame,
                         Bundle.getMessage("SignalMastsError14"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
@@ -7993,7 +7991,7 @@ public class LayoutEditorTools {
                 boundary.setWestBoundSignalMast(westSignalMast.getText());
                 //Then sort out the logic
                 if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-                    SignallingGuiTools.swapSignalMastLogic(setSignalMastsAtBoundaryFrame, block1BoundSignalMast, block2BoundSignalMast);
+                    SignallingGuiTools.swapSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, block1BoundSignalMast, block2BoundSignalMast);
                 }
                 needRedraw = true;
             }
@@ -8003,7 +8001,7 @@ public class LayoutEditorTools {
                 if (eastSignalMast.addToPanel()) {
                     if (isSignalMastAssignedAnywhere(block1BoundSignalMast)
                             && (block1BoundSignalMast != oldBlock1SignalMast)) {
-                        JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                        JOptionPane.showMessageDialog(setSignalMastsAtBlockBoundaryFrame,
                                 MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                         new Object[]{eastSignalMast.getText()}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -8020,7 +8018,7 @@ public class LayoutEditorTools {
                 } else if ((block1BoundSignalMast != boundary.getEastBoundSignalMast())
                         && (block1BoundSignalMast != boundary.getWestBoundSignalMast())) {
                     if (isSignalMastOnPanel(block1BoundSignalMast)) {
-                        JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                        JOptionPane.showMessageDialog(setSignalMastsAtBlockBoundaryFrame,
                                 MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                         new Object[]{eastSignalMast.getText()}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -8036,7 +8034,7 @@ public class LayoutEditorTools {
                 if (westSignalMast.addToPanel()) {
                     if (isSignalMastAssignedAnywhere(block2BoundSignalMast)
                             && (block2BoundSignalMast != oldBlock2SignalMast)) {
-                        JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                        JOptionPane.showMessageDialog(setSignalMastsAtBlockBoundaryFrame,
                                 MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                         new Object[]{westSignalMast.getText()}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -8054,7 +8052,7 @@ public class LayoutEditorTools {
                         && (block2BoundSignalMast != oldBlock2SignalMast)) {
                     if (isSignalMastAssignedAnywhere(block2BoundSignalMast)) {
                         //Need to do this better, so that the signalMast can be on panel multiple times but only alocated to one anchor at a time
-                        JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                        JOptionPane.showMessageDialog(setSignalMastsAtBlockBoundaryFrame,
                                 MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                         new Object[]{westSignalMast.getText()}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -8079,9 +8077,9 @@ public class LayoutEditorTools {
                 }
             }
         }
-        setSignalMastsAtBoundaryOpen = false;
-
-        setSignalMastsAtBoundaryFrame.setVisible(false);
+        setSignalMastsAtBlockBoundaryOpenFlag = false;
+        setSignalMastsAtBlockBoundaryFromMenuFlag = false;
+        setSignalMastsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -8103,31 +8101,31 @@ public class LayoutEditorTools {
             boolean new2Used = smlm.isSignalMastUsed(block2BoundSignalMast);
             if (new1Used || new2Used) {
                 if ((new1Used) && (block1BoundSignalMast != oldBlock1SignalMast)) {
-                    SignallingGuiTools.removeAlreadyAssignedSignalMastLogic(setSignalMastsAtBoundaryFrame, block1BoundSignalMast);
+                    SignallingGuiTools.removeAlreadyAssignedSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, block1BoundSignalMast);
                 }
                 if ((new2Used) && (block2BoundSignalMast != oldBlock2SignalMast)) {
-                    SignallingGuiTools.removeAlreadyAssignedSignalMastLogic(setSignalMastsAtBoundaryFrame, block2BoundSignalMast);
+                    SignallingGuiTools.removeAlreadyAssignedSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, block2BoundSignalMast);
                 }
             }
             if (block1BoundSignalMast != null) {
                 if (oldBlock2SignalMast != null && old2Used
                         && oldBlock2SignalMast == block1BoundSignalMast) {
-                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast, block1BoundSignalMast);
+                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, oldBlock2SignalMast, block1BoundSignalMast);
                 }
 
                 if (oldBlock1SignalMast != null && old1Used
                         && oldBlock1SignalMast != block1BoundSignalMast) {
 
-                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast, block1BoundSignalMast);
+                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, oldBlock1SignalMast, block1BoundSignalMast);
                 }
             }
             if (block2BoundSignalMast != null) {
                 if (old1Used && oldBlock1SignalMast == block2BoundSignalMast) {
 
-                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast, block2BoundSignalMast);
+                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, oldBlock1SignalMast, block2BoundSignalMast);
                 }
                 if (old2Used && oldBlock2SignalMast != block2BoundSignalMast) {
-                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast, block2BoundSignalMast);
+                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, oldBlock2SignalMast, block2BoundSignalMast);
                 }
             }
         }
@@ -8626,9 +8624,9 @@ public class LayoutEditorTools {
         return false;
     }
 
-    boolean setSignalMastsOpen = false;
-    boolean setSignalMastsAtTurnoutFromMenuFlag = false;
-    private JmriJFrame signalMastsJmriFrame = null;
+    private JmriJFrame setSignalMastsAtTurnoutFrame = null;
+    private boolean setSignalMastsAtTurnoutOpenFlag = false;
+    private boolean setSignalMastsAtTurnoutFromMenuFlag = false;
 
     private JmriBeanComboBox signalMastsTurnoutComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -8636,6 +8634,7 @@ public class LayoutEditorTools {
     private JButton setSignalMastsDone;
     private JButton getSavedSignalMasts;
     private JButton setSignalMastsCancel;
+    private JLabel turnoutMastNameLabel = null;
 
     BeanDetails turnoutSignalMastA;
     BeanDetails turnoutSignalMastB;
@@ -8656,7 +8655,7 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             turnoutBlocks[i] = blocks[i];
         }
-        setSignalMastsAtTurnouts();
+        setSignalMastsAtTurnout();
     }
 
     List<NamedBean> usedMasts = new ArrayList<>();
@@ -8732,22 +8731,30 @@ public class LayoutEditorTools {
         turnoutSignalMastB.getCombo().excludeItems(usedMasts);
         turnoutSignalMastC.getCombo().excludeItems(usedMasts);
         turnoutSignalMastD.getCombo().excludeItems(usedMasts);
+
     }
 
-    public void setSignalMastsAtTurnouts() {
-        if (setSignalMastsOpen) {
-            //We will do a refresh in case the block boundaries have changed.
+    public void setSignalMastsAtTurnout() {
+        if (setSignalMastsAtTurnoutOpenFlag) {
+            if (setSignalMastsAtTurnoutFromMenuFlag) {
+                turnoutMastNameLabel.setText(Bundle.getMessage("BeanNameTurnout") + " "
+                        + Bundle.getMessage("Name") + " : " + layoutTurnout.getTurnoutName());
+                turnoutSignalMastsGetSaved(null);
+            }
+
+            // We will do a refresh in case the block boundaries have changed.
             turnoutSignalMastsGetSaved(null);
             refreshSignalMastAtTurnoutComboBox();
-            signalMastsJmriFrame.setVisible(true);
+            setSignalMastsAtTurnoutFrame.setVisible(true);
             return;
         }
+
         // Initialize if needed
-        if (signalMastsJmriFrame == null) {
-            signalMastsJmriFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtTurnout"), false, true);
-            signalMastsJmriFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtTurnout", true);
-            signalMastsJmriFrame.setLocation(70, 30);
-            Container theContentPane = signalMastsJmriFrame.getContentPane();
+        if (setSignalMastsAtTurnoutFrame == null) {
+            setSignalMastsAtTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtTurnout"), false, true);
+            setSignalMastsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtTurnout", true);
+            setSignalMastsAtTurnoutFrame.setLocation(70, 30);
+            Container theContentPane = setSignalMastsAtTurnoutFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
@@ -8758,7 +8765,7 @@ public class LayoutEditorTools {
             turnoutSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
             if (setSignalMastsAtTurnoutFromMenuFlag) {
-                JLabel turnoutMastNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
+                turnoutMastNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                         + Bundle.getMessage("Name") + " : " + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutMastNameLabel);
 
@@ -8836,22 +8843,17 @@ public class LayoutEditorTools {
             });
             setSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            //signalMastsJmriFrame.addWindowListener(new WindowAdapter() {
-            //    @Override
-            //    public void windowClosing(WindowEvent e) {
-            //        setSignalMastsCancelPressed(null);
-            //    }
-            //});
-            if (setSignalsAtTurnoutFromMenuFlag) {
-                turnoutSignalMastsGetSaved(null);
-            }
         }
+        if (setSignalMastsAtTurnoutFromMenuFlag) {
+            turnoutSignalMastsGetSaved(null);
+        }
+
         refreshSignalMastAtTurnoutComboBox();
-        signalMastsJmriFrame.setPreferredSize(null);
-        signalMastsJmriFrame.pack();
-        signalMastsJmriFrame.setVisible(true);
-        setSignalMastsOpen = true;
-    }
+        setSignalMastsAtTurnoutFrame.setPreferredSize(null);
+        setSignalMastsAtTurnoutFrame.pack();
+        setSignalMastsAtTurnoutFrame.setVisible(true);
+        setSignalMastsAtTurnoutOpenFlag = true;
+    }   // setSignalMastsAtTurnout
 
     private void turnoutSignalMastsGetSaved(ActionEvent a) {
         if (!getTurnoutMastInformation()) {
@@ -8892,10 +8894,10 @@ public class LayoutEditorTools {
             blockBoundary = true;
         }
         if (!blockBoundary) {
-            JOptionPane.showMessageDialog(signalMastsAtXingFrame, "There are no block boundaries on this turnout\nIt is therefore not possible to add Signal Masts to it");
+            JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame, "There are no block boundaries on this turnout\nIt is therefore not possible to add Signal Masts to it");
         }
-        signalMastsJmriFrame.setPreferredSize(null);
-        signalMastsJmriFrame.pack();
+        setSignalMastsAtTurnoutFrame.setPreferredSize(null);
+        setSignalMastsAtTurnoutFrame.pack();
     }
 
     private int isMastAssignedHere(
@@ -8985,16 +8987,16 @@ public class LayoutEditorTools {
         }
 
         // process signal head names
-        SignalMast turnoutMast = getSignalMastFromEntry(turnoutSignalMastA.getText(), false, setSignalsFrame);
-        SignalMast turnoutMastB = getSignalMastFromEntry(turnoutSignalMastB.getText(), false, setSignalsFrame);
-        SignalMast turnoutMastC = getSignalMastFromEntry(turnoutSignalMastC.getText(), false, setSignalsFrame);
-        SignalMast turnoutMastD = getSignalMastFromEntry(turnoutSignalMastD.getText(), false, setSignalsFrame);
+        SignalMast turnoutMast = getSignalMastFromEntry(turnoutSignalMastA.getText(), false, setSignalsAtTurnoutFrame);
+        SignalMast turnoutMastB = getSignalMastFromEntry(turnoutSignalMastB.getText(), false, setSignalsAtTurnoutFrame);
+        SignalMast turnoutMastC = getSignalMastFromEntry(turnoutSignalMastC.getText(), false, setSignalsAtTurnoutFrame);
+        SignalMast turnoutMastD = getSignalMastFromEntry(turnoutSignalMastD.getText(), false, setSignalsAtTurnoutFrame);
 
         // place signals as requested
         if (turnoutSignalMastA.addToPanel() && (turnoutMast != null)) {
             if (isSignalMastOnPanel(turnoutMast)
                     && (turnoutMast != layoutTurnout.getSignalAMast())) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{turnoutSignalMastA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9013,7 +9015,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isSignalMastOnPanel(turnoutMast)
                         && isSignalMastAssignedAnywhere(turnoutMast)) {
-                    JOptionPane.showMessageDialog(setSignalsFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{turnoutSignalMastA.getText()}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9033,7 +9035,7 @@ public class LayoutEditorTools {
         if ((turnoutSignalMastB.addToPanel()) && (turnoutMastB != null)) {
             if (isSignalMastOnPanel(turnoutMastB)
                     && (turnoutMastB != layoutTurnout.getSignalBMast())) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                 new Object[]{turnoutSignalMastB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9052,7 +9054,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isSignalMastOnPanel(turnoutMastB)
                         && isSignalMastAssignedAnywhere(turnoutMastB)) {
-                    JOptionPane.showMessageDialog(setSignalsFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                     new Object[]{turnoutSignalMastB.getText()}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9073,7 +9075,7 @@ public class LayoutEditorTools {
             if (turnoutSignalMastC.addToPanel()) {
                 if (isSignalMastOnPanel(turnoutMastC)
                         && (turnoutMastC != layoutTurnout.getSignalCMast())) {
-                    JOptionPane.showMessageDialog(setSignalsFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                     new Object[]{turnoutSignalMastC.getText()}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9092,7 +9094,7 @@ public class LayoutEditorTools {
                 if (assigned == NONE) {
                     if (isSignalMastOnPanel(turnoutMastC)
                             && isSignalMastAssignedAnywhere(turnoutMastC)) {
-                        JOptionPane.showMessageDialog(setSignalsFrame,
+                        JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                                 MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                         new Object[]{turnoutSignalMastC.getText()}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9115,7 +9117,7 @@ public class LayoutEditorTools {
                 if (isSignalMastOnPanel(turnoutMastD)
                         && (turnoutMastD != layoutTurnout.getSignalDMast())) {
                     String signalHeadName = divergingSignalHeadComboBox.getDisplayName();
-                    JOptionPane.showMessageDialog(setSignalsFrame,
+                    JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError6"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9134,7 +9136,7 @@ public class LayoutEditorTools {
                 if (assigned == NONE) {
                     if (isSignalMastOnPanel(turnoutMastD)
                             && isSignalMastAssignedAnywhere(turnoutMastD)) {
-                        JOptionPane.showMessageDialog(setSignalsFrame,
+                        JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                                 MessageFormat.format(Bundle.getMessage("SignalsError8"),
                                         new Object[]{turnoutSignalMastD.getText()}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9157,9 +9159,9 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
-        setSignalMastsOpen = false;
-        setSignalsAtTurnoutFromMenuFlag = false;
-        signalMastsJmriFrame.setVisible(false);
+        setSignalMastsAtTurnoutOpenFlag = false;
+        setSignalMastsAtTurnoutFromMenuFlag = false;
+        setSignalMastsAtTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -9172,13 +9174,13 @@ public class LayoutEditorTools {
         layoutTurnout = null;
         String str = signalMastsTurnoutComboBox.getDisplayName();
         if ((str == null) || str.isEmpty()) {
-            JOptionPane.showMessageDialog(setSignalsFrame, Bundle.getMessage("SignalsError1"),
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame, Bundle.getMessage("SignalsError1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         turnout = InstanceManager.turnoutManagerInstance().getTurnout(str);
         if (turnout == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("SignalsError2"),
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
@@ -9198,7 +9200,7 @@ public class LayoutEditorTools {
 
         LayoutTurnout t = layoutTurnout;
         if (t == null) {
-            JOptionPane.showMessageDialog(setSignalsFrame,
+            JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("SignalsError3"),
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
@@ -9235,20 +9237,20 @@ public class LayoutEditorTools {
     }
 
     private void setSignalMastsCancelPressed(ActionEvent a) {
-        setSignalMastsOpen = false;
-        setSignalsAtTurnoutFromMenuFlag = false;
-        signalMastsJmriFrame.setVisible(false);
+        setSignalMastsAtTurnoutOpenFlag = false;
+        setSignalMastsAtTurnoutFromMenuFlag = false;
+        setSignalMastsAtTurnoutFrame.setVisible(false);
     }
 
     // operational variables for Set SignalMast at Slip tool
-    private JmriJFrame signalMastsAtSlipFrame = null;
-    private boolean setSignalMastsAtSlipOpen = false;
+    private JmriJFrame setSignalMastsAtLayoutSlipFrame = null;
+    private boolean setSignalMastsAtLayoutSlipOpenFlag = false;
+    private boolean setSignalMastsAtLayoutSlipFromMenuFlag = false;
 
     private JButton getSavedSlipSignalMasts = null;
     private JButton setSlipSignalMastsDone = null;
     private JButton setSlipSignalMastsCancel = null;
 
-    private boolean setSignalMastsAtSlipFromMenuFlag = false;
     private String[] slipBlocks = new String[4];
 
     BeanDetails slipSignalMastA;
@@ -9260,7 +9262,7 @@ public class LayoutEditorTools {
 
     public void setSignalMastsAtSlipFromMenu(@Nonnull LayoutSlip slip,
             @Nonnull String[] blocks, @Nonnull JFrame theFrame) {
-        setSignalMastsAtSlipFromMenuFlag = true;
+        setSignalMastsAtLayoutSlipFromMenuFlag = true;
         layoutSlip = slip;
         layoutTurnout = slip;
         xingBlockAComboBox.setText(layoutSlip.getBlockName());
@@ -9274,26 +9276,26 @@ public class LayoutEditorTools {
 
     public void setSignalMastsAtLayoutSlip(@Nonnull JFrame theFrame) {
         signalFrame = theFrame;
-        if (setSignalMastsAtSlipOpen) {
+        if (setSignalMastsAtLayoutSlipOpenFlag) {
             slipSignalMastsGetSaved(null);
-            signalMastsAtSlipFrame.setVisible(true);
+            setSignalMastsAtLayoutSlipFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (signalMastsAtSlipFrame == null) {
+        if (setSignalMastsAtLayoutSlipFrame == null) {
             slipSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
             slipSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
             slipSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
             slipSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
-            signalMastsAtSlipFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLayoutSlip"), false, true);
-            signalMastsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
-            signalMastsAtSlipFrame.setLocation(70, 30);
-            Container theContentPane = signalMastsAtSlipFrame.getContentPane();
+            setSignalMastsAtLayoutSlipFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLayoutSlip"), false, true);
+            setSignalMastsAtLayoutSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
+            setSignalMastsAtLayoutSlipFrame.setLocation(70, 30);
+            Container theContentPane = setSignalMastsAtLayoutSlipFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
-            if (setSignalMastsAtSlipFromMenuFlag) {
+            if (setSignalMastsAtLayoutSlipFromMenuFlag) {
                 JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
@@ -9313,7 +9315,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel11);
 
             JPanel panel12 = new JPanel(new FlowLayout());
-            if (setSignalMastsAtSlipFromMenuFlag) {
+            if (setSignalMastsAtLayoutSlipFromMenuFlag) {
                 JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
@@ -9376,21 +9378,21 @@ public class LayoutEditorTools {
             });
             setSlipSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            signalMastsAtSlipFrame.addWindowListener(new WindowAdapter() {
+            setSignalMastsAtLayoutSlipFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setSlipSignalMastsCancelPressed(null);
                 }
             });
-            if (setSignalMastsAtSlipFromMenuFlag) {
+            if (setSignalMastsAtLayoutSlipFromMenuFlag) {
                 slipSignalMastsGetSaved(null);
             }
         }
         refreshSignalMastAtSlipComboBox();
-        signalMastsAtSlipFrame.setPreferredSize(null);
-        signalMastsAtSlipFrame.pack();
-        signalMastsAtSlipFrame.setVisible(true);
-        setSignalMastsAtSlipOpen = true;
+        setSignalMastsAtLayoutSlipFrame.setPreferredSize(null);
+        setSignalMastsAtLayoutSlipFrame.pack();
+        setSignalMastsAtLayoutSlipFrame.setVisible(true);
+        setSignalMastsAtLayoutSlipOpenFlag = true;
     }
 
     void refreshSignalMastAtSlipComboBox() {
@@ -9444,18 +9446,18 @@ public class LayoutEditorTools {
             boundary = true;
         }
         if (!boundary) {
-            JOptionPane.showMessageDialog(signalMastsAtSlipFrame, "There are no block boundaries on this level crossing\nIt is therefore not possible to add Signal Masts to it");
+            JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame, "There are no block boundaries on this level crossing\nIt is therefore not possible to add Signal Masts to it");
         }
-        signalMastsAtSlipFrame.setPreferredSize(null);
-        signalMastsAtSlipFrame.pack();
+        setSignalMastsAtLayoutSlipFrame.setPreferredSize(null);
+        setSignalMastsAtLayoutSlipFrame.pack();
     }
 
     private boolean getSlipMastInformation() {
-        if (!setSignalMastsAtSlipFromMenuFlag) {
+        if (!setSignalMastsAtLayoutSlipFromMenuFlag) {
             layoutSlip = null;
             List<LayoutSlip> layoutSlips = layoutEditor.getLayoutSlips();
             if (layoutSlips.size() <= 0) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         Bundle.getMessage("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -9511,14 +9513,14 @@ public class LayoutEditorTools {
                     }
                 }
                 if (foundCount > 1) {
-                    JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                    JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError16"),
                                     new Object[]{" " + foundCount + " "}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 if (layoutSlip == null) {
-                    JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                    JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                             Bundle.getMessage("SignalsError17"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -9529,24 +9531,24 @@ public class LayoutEditorTools {
     }
 
     private void setSlipSignalMastsCancelPressed(ActionEvent a) {
-        setSignalMastsAtSlipOpen = false;
-        signalMastsAtSlipFrame.setVisible(false);
-        setSignalMastsAtSlipFromMenuFlag = false;
+        setSignalMastsAtLayoutSlipOpenFlag = false;
+        setSignalMastsAtLayoutSlipFromMenuFlag = false;
+        setSignalMastsAtLayoutSlipFrame.setVisible(false);
     }
 
     private void setSlipSignalMastsDonePressed(ActionEvent a) {
         if (!getSlipMastInformation()) {
             return;
         }
-        SignalMast aMast = getSignalMastFromEntry(slipSignalMastA.getText(), false, signalMastsAtSlipFrame);
-        SignalMast bMast = getSignalMastFromEntry(slipSignalMastB.getText(), false, signalMastsAtSlipFrame);
-        SignalMast cMast = getSignalMastFromEntry(slipSignalMastC.getText(), false, signalMastsAtSlipFrame);
-        SignalMast dMast = getSignalMastFromEntry(slipSignalMastD.getText(), false, signalMastsAtSlipFrame);
+        SignalMast aMast = getSignalMastFromEntry(slipSignalMastA.getText(), false, setSignalMastsAtLayoutSlipFrame);
+        SignalMast bMast = getSignalMastFromEntry(slipSignalMastB.getText(), false, setSignalMastsAtLayoutSlipFrame);
+        SignalMast cMast = getSignalMastFromEntry(slipSignalMastC.getText(), false, setSignalMastsAtLayoutSlipFrame);
+        SignalMast dMast = getSignalMastFromEntry(slipSignalMastD.getText(), false, setSignalMastsAtLayoutSlipFrame);
         // place or update signals as requested
         if ((aMast != null) && slipSignalMastA.addToPanel()) {
             if (isSignalMastOnPanel(aMast)
                     && (aMast != layoutSlip.getSignalAMast())) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                 new Object[]{slipSignalMastA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9566,7 +9568,7 @@ public class LayoutEditorTools {
                 && (aMast != layoutSlip.getSignalCMast())
                 && (aMast != layoutSlip.getSignalDMast())) {
             if (isSignalMastOnPanel(aMast)) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                 new Object[]{slipSignalMastA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9589,7 +9591,7 @@ public class LayoutEditorTools {
         if ((bMast != null) && slipSignalMastB.addToPanel()) {
             if (isSignalMastOnPanel(bMast)
                     && (bMast != layoutSlip.getSignalBMast())) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                 new Object[]{slipSignalMastB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9609,7 +9611,7 @@ public class LayoutEditorTools {
                 && (bMast != layoutSlip.getSignalCMast())
                 && (bMast != layoutSlip.getSignalDMast())) {
             if (isSignalMastOnPanel(bMast)) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                 new Object[]{slipSignalMastB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9632,7 +9634,7 @@ public class LayoutEditorTools {
         if ((cMast != null) && slipSignalMastC.addToPanel()) {
             if (isSignalMastOnPanel(cMast)
                     && (cMast != layoutSlip.getSignalCMast())) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                 new Object[]{slipSignalMastC.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9652,7 +9654,7 @@ public class LayoutEditorTools {
                 && (cMast != layoutSlip.getSignalCMast())
                 && (cMast != layoutSlip.getSignalDMast())) {
             if (isSignalMastOnPanel(cMast)) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                 new Object[]{slipSignalMastC.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9675,7 +9677,7 @@ public class LayoutEditorTools {
         if ((dMast != null) && slipSignalMastD.addToPanel()) {
             if (isSignalMastOnPanel(dMast)
                     && (dMast != layoutSlip.getSignalDMast())) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                 new Object[]{slipSignalMastD.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9695,7 +9697,7 @@ public class LayoutEditorTools {
                 && (dMast != layoutSlip.getSignalCMast())
                 && (dMast != layoutSlip.getSignalDMast())) {
             if (isSignalMastOnPanel(dMast)) {
-                JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                 new Object[]{slipSignalMastD.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9717,9 +9719,9 @@ public class LayoutEditorTools {
         }
         // setup logic if requested
         // finish up
-        setSignalMastsAtSlipOpen = false;
-        signalMastsAtSlipFrame.setVisible(false);
-        setSignalMastsAtSlipFromMenuFlag = false;
+        setSignalMastsAtLayoutSlipOpenFlag = false;
+        setSignalMastsAtLayoutSlipFromMenuFlag = false;
+        setSignalMastsAtLayoutSlipFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -9728,8 +9730,9 @@ public class LayoutEditorTools {
     }
 
     // operational variables for Set SignalMast at Level Crossing tool
-    private JmriJFrame signalMastsAtXingFrame = null;
-    private boolean setSignalMastsAtXingOpen = false;
+    private JmriJFrame setSignalMastsAtLevelXingFrame = null;
+    private boolean setSignalMastsAtLevelXingOpenFlag = false;
+    private boolean setSignalMastsAtLevelXingFromMenuFlag = false;
 
     private JmriBeanComboBox xingBlockAComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class),
@@ -9742,7 +9745,6 @@ public class LayoutEditorTools {
     private JButton setXingSignalMastsDone = null;
     private JButton setXingSignalMastsCancel = null;
 
-    private boolean setSignalMastsAtLevelXingFromMenuFlag = false;
     private String[] xingBlocks = new String[4];
 
     BeanDetails xingSignalMastA;
@@ -9772,22 +9774,22 @@ public class LayoutEditorTools {
 
     public void setSignalMastsAtLevelXing(@Nonnull JFrame theFrame) {
         signalFrame = theFrame;
-        if (setSignalMastsAtXingOpen) {
+        if (setSignalMastsAtLevelXingOpenFlag) {
             xingSignalMastsGetSaved(null);
-            signalMastsAtXingFrame.setVisible(true);
+            setSignalMastsAtLevelXingFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (signalMastsAtXingFrame == null) {
+        if (setSignalMastsAtLevelXingFrame == null) {
             xingSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
             xingSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
             xingSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
             xingSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
-            signalMastsAtXingFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLevelXing"), false, true);
-            signalMastsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
-            signalMastsAtXingFrame.setLocation(70, 30);
-            Container theContentPane = signalMastsAtXingFrame.getContentPane();
+            setSignalMastsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLevelXing"), false, true);
+            setSignalMastsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
+            setSignalMastsAtLevelXingFrame.setLocation(70, 30);
+            Container theContentPane = setSignalMastsAtLevelXingFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
@@ -9879,7 +9881,7 @@ public class LayoutEditorTools {
             });
             setXingSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            signalMastsAtXingFrame.addWindowListener(new WindowAdapter() {
+            setSignalMastsAtLevelXingFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setXingSignalMastsCancelPressed(null);
@@ -9890,10 +9892,10 @@ public class LayoutEditorTools {
             }
         }
         refreshSignalMastAtXingComboBox();
-        signalMastsAtXingFrame.setPreferredSize(null);
-        signalMastsAtXingFrame.pack();
-        signalMastsAtXingFrame.setVisible(true);
-        setSignalMastsAtXingOpen = true;
+        setSignalMastsAtLevelXingFrame.setPreferredSize(null);
+        setSignalMastsAtLevelXingFrame.pack();
+        setSignalMastsAtLevelXingFrame.setVisible(true);
+        setSignalMastsAtLevelXingOpenFlag = true;
     }
 
     void refreshSignalMastAtXingComboBox() {
@@ -9949,10 +9951,10 @@ public class LayoutEditorTools {
             boundary = true;
         }
         if (!boundary) {
-            JOptionPane.showMessageDialog(signalMastsAtXingFrame, "There are no block boundaries on this level crossing\nIt is therefore not possible to add Signal Masts to it");
+            JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame, "There are no block boundaries on this level crossing\nIt is therefore not possible to add Signal Masts to it");
         }
-        signalMastsAtXingFrame.setPreferredSize(null);
-        signalMastsAtXingFrame.pack();
+        setSignalMastsAtLevelXingFrame.setPreferredSize(null);
+        setSignalMastsAtLevelXingFrame.pack();
     }
 
     private boolean getLevelCrossingMastInformation() {
@@ -9960,7 +9962,7 @@ public class LayoutEditorTools {
             levelXing = null;
             List<LevelXing> levelXings = layoutEditor.getLevelXings();
             if (levelXings.size() <= 0) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         Bundle.getMessage("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -10027,14 +10029,14 @@ public class LayoutEditorTools {
                     }
                 }
                 if (foundCount > 1) {
-                    JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                    JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError16"),
                                     new Object[]{" " + foundCount + " "}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 if (levelXing == null) {
-                    JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                    JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                             Bundle.getMessage("SignalsError17"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -10045,25 +10047,25 @@ public class LayoutEditorTools {
     }
 
     private void setXingSignalMastsCancelPressed(ActionEvent a) {
-        setSignalMastsAtXingOpen = false;
-        signalMastsAtXingFrame.setVisible(false);
+        setSignalMastsAtLevelXingOpenFlag = false;
         setSignalMastsAtLevelXingFromMenuFlag = false;
+        setSignalMastsAtLevelXingFrame.setVisible(false);
     }
 
     private void setXingSignalMastsDonePressed(ActionEvent a) {
         if (!getLevelCrossingMastInformation()) {
             return;
         }
-        SignalMast aMast = getSignalMastFromEntry(xingSignalMastA.getText(), false, signalMastsAtXingFrame);
-        SignalMast bMast = getSignalMastFromEntry(xingSignalMastB.getText(), false, signalMastsAtXingFrame);
-        SignalMast cMast = getSignalMastFromEntry(xingSignalMastC.getText(), false, signalMastsAtXingFrame);
-        SignalMast dMast = getSignalMastFromEntry(xingSignalMastD.getText(), false, signalMastsAtXingFrame);
+        SignalMast aMast = getSignalMastFromEntry(xingSignalMastA.getText(), false, setSignalMastsAtLevelXingFrame);
+        SignalMast bMast = getSignalMastFromEntry(xingSignalMastB.getText(), false, setSignalMastsAtLevelXingFrame);
+        SignalMast cMast = getSignalMastFromEntry(xingSignalMastC.getText(), false, setSignalMastsAtLevelXingFrame);
+        SignalMast dMast = getSignalMastFromEntry(xingSignalMastD.getText(), false, setSignalMastsAtLevelXingFrame);
         //if ( !getXingSignalMastInformation() ) return;
         // place or update signals as requested
         if ((aMast != null) && xingSignalMastA.addToPanel()) {
             if (isSignalMastOnPanel(aMast)
                     && (aMast != levelXing.getSignalAMast())) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                 new Object[]{xingSignalMastA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10083,7 +10085,7 @@ public class LayoutEditorTools {
                 && (aMast != levelXing.getSignalCMast())
                 && (aMast != levelXing.getSignalDMast())) {
             if (isSignalMastOnPanel(aMast)) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                 new Object[]{xingSignalMastA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10106,7 +10108,7 @@ public class LayoutEditorTools {
         if ((bMast != null) && xingSignalMastB.addToPanel()) {
             if (isSignalMastOnPanel(bMast)
                     && (bMast != levelXing.getSignalBMast())) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                 new Object[]{xingSignalMastB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10126,7 +10128,7 @@ public class LayoutEditorTools {
                 && (bMast != levelXing.getSignalCMast())
                 && (bMast != levelXing.getSignalDMast())) {
             if (isSignalMastOnPanel(bMast)) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                 new Object[]{xingSignalMastB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10150,7 +10152,7 @@ public class LayoutEditorTools {
         if ((cMast != null) && xingSignalMastC.addToPanel()) {
             if (isSignalMastOnPanel(cMast)
                     && (cMast != levelXing.getSignalCMast())) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                 new Object[]{xingSignalMastC.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10170,7 +10172,7 @@ public class LayoutEditorTools {
                 && (cMast != levelXing.getSignalCMast())
                 && (cMast != levelXing.getSignalDMast())) {
             if (isSignalMastOnPanel(cMast)) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                 new Object[]{xingSignalMastC.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10193,7 +10195,7 @@ public class LayoutEditorTools {
         if ((dMast != null) && xingSignalMastD.addToPanel()) {
             if (isSignalMastOnPanel(dMast)
                     && (dMast != levelXing.getSignalDMast())) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError6"),
                                 new Object[]{xingSignalMastD.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10213,7 +10215,7 @@ public class LayoutEditorTools {
                 && (dMast != levelXing.getSignalCMast())
                 && (dMast != levelXing.getSignalDMast())) {
             if (isSignalMastOnPanel(dMast)) {
-                JOptionPane.showMessageDialog(signalMastsAtXingFrame,
+                JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SignalMastsError13"),
                                 new Object[]{xingSignalMastD.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10235,9 +10237,9 @@ public class LayoutEditorTools {
         }
         // setup logic if requested
         // finish up
-        setSignalMastsAtXingOpen = false;
-        signalMastsAtXingFrame.setVisible(false);
+        setSignalMastsAtLevelXingOpenFlag = false;
         setSignalMastsAtLevelXingFromMenuFlag = false;
+        setSignalMastsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -10245,9 +10247,10 @@ public class LayoutEditorTools {
         }
     }
 
-    boolean setSensorsOpen = false;
-    boolean setSensorsAtTurnoutFromMenuFlag = false;
-    private JmriJFrame setSensorsFrame = null;
+    private JmriJFrame setSensorsAtTurnoutFrame = null;
+    private boolean setSensorsAtTurnoutOpenFlag = false;
+    private boolean setSensorsAtTurnoutFromMenuFlag = false;
+
     private JFrame turnoutSensorFrame = null;
 
     private JmriBeanComboBox sensorsTurnoutComboBox = new JmriBeanComboBox(
@@ -10281,22 +10284,22 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             turnoutSenBlocks[i] = blocks[i];
         }
-        setSensorsAtTurnouts(frame);
+        setSensorsAtTurnout(frame);
     }
 
-    public void setSensorsAtTurnouts(@Nonnull JFrame frame) {
+    public void setSensorsAtTurnout(@Nonnull JFrame frame) {
         turnoutSensorFrame = frame;
-        if (setSensorsOpen) {
+        if (setSensorsAtTurnoutOpenFlag) {
             turnoutSensorsGetSaved(null);
-            setSensorsFrame.setVisible(true);
+            setSensorsAtTurnoutFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (setSensorsFrame == null) {
-            setSensorsFrame = new JmriJFrame(Bundle.getMessage("SensorsAtTurnout"), false, true);
-            setSensorsFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtTurnout", true);
-            setSensorsFrame.setLocation(70, 30);
-            Container theContentPane = setSensorsFrame.getContentPane();
+        if (setSensorsAtTurnoutFrame == null) {
+            setSensorsAtTurnoutFrame = new JmriJFrame(Bundle.getMessage("SensorsAtTurnout"), false, true);
+            setSensorsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtTurnout", true);
+            setSensorsAtTurnoutFrame.setLocation(70, 30);
+            Container theContentPane = setSensorsAtTurnoutFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
@@ -10384,7 +10387,7 @@ public class LayoutEditorTools {
             });
             setSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            setSensorsFrame.addWindowListener(new WindowAdapter() {
+            setSensorsAtTurnoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setSensorsCancelPressed(null);
@@ -10394,11 +10397,11 @@ public class LayoutEditorTools {
         if (setSensorsAtTurnoutFromMenuFlag) {
             turnoutSensorsGetSaved(null);
         }
-        setSensorsFrame.setPreferredSize(null);
-        setSensorsFrame.pack();
-        setSensorsFrame.setVisible(true);
-        setSensorsOpen = true;
-    }
+        setSensorsAtTurnoutFrame.setPreferredSize(null);
+        setSensorsAtTurnoutFrame.pack();
+        setSensorsAtTurnoutFrame.setVisible(true);
+        setSensorsAtTurnoutOpenFlag = true;
+    }   // setSensorsAtTurnout
 
     private void turnoutSensorsGetSaved(ActionEvent a) {
         if (!getTurnoutSensorInformation()) {
@@ -10439,10 +10442,10 @@ public class LayoutEditorTools {
             blockBoundary = true;
         }
         if (!blockBoundary) {
-            JOptionPane.showMessageDialog(setSensorsFrame, "There are no block boundaries on this turnout\nIt is therefore not possible to add Sensors to it");
+            JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame, "There are no block boundaries on this turnout\nIt is therefore not possible to add Sensors to it");
         }
-        setSensorsFrame.setPreferredSize(null);
-        setSensorsFrame.pack();
+        setSensorsAtTurnoutFrame.setPreferredSize(null);
+        setSensorsAtTurnoutFrame.pack();
     }
 
     private int isSensorAssignedHere(Sensor sensor, LayoutTurnout lTurnout) {
@@ -10535,18 +10538,18 @@ public class LayoutEditorTools {
         }
         // process signal head names
         //if ( !getSensorTurnoutInformation() ) return;
-        Sensor sensorA = getSensorFromEntry(turnoutSensorA.getText(), false, setSensorsFrame);
+        Sensor sensorA = getSensorFromEntry(turnoutSensorA.getText(), false, setSensorsAtTurnoutFrame);
         //if (turnoutSensor==null) return false;
-        Sensor sensorB = getSensorFromEntry(turnoutSensorB.getText(), false, setSensorsFrame);
+        Sensor sensorB = getSensorFromEntry(turnoutSensorB.getText(), false, setSensorsAtTurnoutFrame);
         //if (turnoutSensorB==null) return false;
-        Sensor sensorC = getSensorFromEntry(turnoutSensorC.getText(), false, setSensorsFrame);
+        Sensor sensorC = getSensorFromEntry(turnoutSensorC.getText(), false, setSensorsAtTurnoutFrame);
         //if (turnoutSensorC==null) return false;
-        Sensor sensorD = getSensorFromEntry(turnoutSensorD.getText(), false, setSensorsFrame);
+        Sensor sensorD = getSensorFromEntry(turnoutSensorD.getText(), false, setSensorsAtTurnoutFrame);
         // place signals as requested
         if (turnoutSensorA.addToPanel()) {
             if (isSensorOnPanel(sensorA)
                     && (sensorA != layoutTurnout.getSensorA())) {
-                JOptionPane.showMessageDialog(setSensorsFrame,
+                JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{turnoutSensorA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10563,7 +10566,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isSensorOnPanel(sensorA)
                         && isSensorAssignedAnywhere(sensorA)) {
-                    JOptionPane.showMessageDialog(setSensorsFrame,
+                    JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SensorsError8"),
                                     new Object[]{turnoutSensorA.getText()}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10583,7 +10586,7 @@ public class LayoutEditorTools {
         if ((turnoutSensorB != null) && (turnoutSensorB.addToPanel())) {
             if (isSensorOnPanel(sensorB)
                     && (sensorB != layoutTurnout.getSensorB())) {
-                JOptionPane.showMessageDialog(setSensorsFrame,
+                JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{turnoutSensorB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10601,7 +10604,7 @@ public class LayoutEditorTools {
             if (assigned == NONE) {
                 if (isSensorOnPanel(sensorB)
                         && isSensorAssignedAnywhere(sensorB)) {
-                    JOptionPane.showMessageDialog(setSensorsFrame,
+                    JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SensorsError8"),
                                     new Object[]{turnoutSensorB.getText()}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10622,7 +10625,7 @@ public class LayoutEditorTools {
             if (turnoutSensorC.addToPanel()) {
                 if (isSensorOnPanel(sensorC)
                         && (sensorC != layoutTurnout.getSensorC())) {
-                    JOptionPane.showMessageDialog(setSensorsFrame,
+                    JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                     new Object[]{turnoutSensorC.getText()}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10640,7 +10643,7 @@ public class LayoutEditorTools {
                 if (assigned == NONE) {
                     if (isSensorOnPanel(sensorC)
                             && isSensorAssignedAnywhere(sensorC)) {
-                        JOptionPane.showMessageDialog(setSensorsFrame,
+                        JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                                 MessageFormat.format(Bundle.getMessage("SensorsError8"),
                                         new Object[]{turnoutSensorC.getText()}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10663,7 +10666,7 @@ public class LayoutEditorTools {
                 if (isSensorOnPanel(sensorD)
                         && (sensorD != layoutTurnout.getSensorD())) {
                     String signalHeadName = divergingSignalHeadComboBox.getDisplayName();
-                    JOptionPane.showMessageDialog(setSensorsFrame,
+                    JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                             MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                     new Object[]{signalHeadName}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10680,7 +10683,7 @@ public class LayoutEditorTools {
                 if (assigned == NONE) {
                     if (isSensorOnPanel(sensorD)
                             && isSensorAssignedAnywhere(sensorD)) {
-                        JOptionPane.showMessageDialog(setSensorsFrame,
+                        JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                                 MessageFormat.format(Bundle.getMessage("SensorsError8"),
                                         new Object[]{turnoutSensorD.getText()}),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -10703,9 +10706,9 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
-        setSensorsOpen = false;
-        setSignalsAtTurnoutFromMenuFlag = false;
-        setSensorsFrame.setVisible(false);
+        setSensorsAtTurnoutOpenFlag = false;
+        setSensorsAtTurnoutFromMenuFlag = false;
+        setSensorsAtTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -10718,13 +10721,13 @@ public class LayoutEditorTools {
         layoutTurnout = null;
         String str = sensorsTurnoutComboBox.getDisplayName();
         if ((str == null) || str.isEmpty()) {
-            JOptionPane.showMessageDialog(setSensorsFrame, Bundle.getMessage("SensorsError1"),
+            JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame, Bundle.getMessage("SensorsError1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         turnout = InstanceManager.turnoutManagerInstance().getTurnout(str);
         if (turnout == null) {
-            JOptionPane.showMessageDialog(setSensorsFrame,
+            JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("SensorsError2"),
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
@@ -10744,7 +10747,7 @@ public class LayoutEditorTools {
 
         LayoutTurnout t = layoutTurnout;
         if (t == null) {
-            JOptionPane.showMessageDialog(setSensorsFrame,
+            JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                     MessageFormat.format(Bundle.getMessage("SensorsError3"),
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
@@ -10754,14 +10757,15 @@ public class LayoutEditorTools {
     }
 
     private void setSensorsCancelPressed(ActionEvent a) {
-        setSensorsOpen = false;
+        setSensorsAtTurnoutOpenFlag = false;
         setSensorsAtTurnoutFromMenuFlag = false;
-        setSensorsFrame.setVisible(false);
+        setSensorsAtTurnoutFrame.setVisible(false);
     }
 
     // operational variables for Set Sensors at Level Crossing tool
-    private JmriJFrame sensorsAtXingFrame = null;
-    private boolean setSensorsAtXingOpen = false;
+    private JmriJFrame setSensorsAtLevelXingFrame = null;
+    private boolean setSensorsAtLevelXingOpenFlag = false;
+    private boolean setSensorsAtLevelXingFromMenuFlag = false;
 
     private JmriBeanComboBox xingSensorsBlockAComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class),
@@ -10776,7 +10780,6 @@ public class LayoutEditorTools {
     private JButton changeSensorXingIcon = null;
     JFrame sensorXingFrame = null;
 
-    private boolean xingSensorFromMenu = false;
     private String[] xingSensorBlocks = new String[4];
 
     BeanDetails xingSensorA;
@@ -10791,7 +10794,7 @@ public class LayoutEditorTools {
             @Nonnull String[] blocks,
             @Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        xingSensorFromMenu = true;
+        setSensorsAtLevelXingFromMenuFlag = true;
         levelXing = xing;
         xingSensorsBlockAComboBox.setText(levelXing.getBlockNameAC());
         xingSensorsBlockCComboBox.setText(levelXing.getBlockNameBD());
@@ -10806,17 +10809,17 @@ public class LayoutEditorTools {
             @Nonnull JFrame theFrame) {
         sensorIconEditor = theEditor;
         sensorXingFrame = theFrame;
-        if (setSensorsAtXingOpen) {
+        if (setSensorsAtLevelXingOpenFlag) {
             xingSensorsGetSaved(null);
-            sensorsAtXingFrame.setVisible(true);
+            setSensorsAtLevelXingFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (sensorsAtXingFrame == null) {
-            sensorsAtXingFrame = new JmriJFrame(Bundle.getMessage("SensorsAtLevelXing"), false, true);
-            sensorsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelXing", true);
-            sensorsAtXingFrame.setLocation(70, 30);
-            Container theContentPane = sensorsAtXingFrame.getContentPane();
+        if (setSensorsAtLevelXingFrame == null) {
+            setSensorsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SensorsAtLevelXing"), false, true);
+            setSensorsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelXing", true);
+            setSensorsAtLevelXingFrame.setLocation(70, 30);
+            Container theContentPane = setSensorsAtLevelXingFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
@@ -10824,7 +10827,7 @@ public class LayoutEditorTools {
             xingSensorB = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
             xingSensorC = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
             xingSensorD = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            if (xingSensorFromMenu) {
+            if (setSensorsAtLevelXingFromMenuFlag) {
                 JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
 
@@ -10844,7 +10847,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel11);
 
             JPanel panel12 = new JPanel(new FlowLayout());
-            if (xingSensorFromMenu) {
+            if (setSensorsAtLevelXingFromMenuFlag) {
                 JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
 
@@ -10920,20 +10923,20 @@ public class LayoutEditorTools {
             });
             setXingSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            sensorsAtXingFrame.addWindowListener(new WindowAdapter() {
+            setSensorsAtLevelXingFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setXingSensorsCancelPressed(null);
                 }
             });
         }
-        if (xingSensorFromMenu) {
+        if (setSensorsAtLevelXingFromMenuFlag) {
             xingSensorsGetSaved(null);
         }
-        sensorsAtXingFrame.setPreferredSize(null);
-        sensorsAtXingFrame.pack();
-        sensorsAtXingFrame.setVisible(true);
-        setSensorsAtXingOpen = true;
+        setSensorsAtLevelXingFrame.setPreferredSize(null);
+        setSensorsAtLevelXingFrame.pack();
+        setSensorsAtLevelXingFrame.setVisible(true);
+        setSensorsAtLevelXingOpenFlag = true;
     }
 
     private void xingSensorsGetSaved(ActionEvent a) {
@@ -10976,18 +10979,18 @@ public class LayoutEditorTools {
             boundary = true;
         }
         if (!boundary) {
-            JOptionPane.showMessageDialog(sensorsAtXingFrame, Bundle.getMessage("NoBoundaryXingSensor"));
+            JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame, Bundle.getMessage("NoBoundaryXingSensor"));
         }
-        sensorsAtXingFrame.setPreferredSize(null);
-        sensorsAtXingFrame.pack();
+        setSensorsAtLevelXingFrame.setPreferredSize(null);
+        setSensorsAtLevelXingFrame.pack();
     }
 
     private boolean getLevelCrossingSensorInformation() {
-        if (!xingSensorFromMenu) {
+        if (!setSensorsAtLevelXingFromMenuFlag) {
             levelXing = null;
             List<LevelXing> levelXings = layoutEditor.getLevelXings();
             if (levelXings.size() <= 0) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         Bundle.getMessage("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -11053,14 +11056,14 @@ public class LayoutEditorTools {
                     }
                 }
                 if (foundCount > 1) {
-                    JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                    JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError16"),
                                     new Object[]{" " + foundCount + " "}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 if (levelXing == null) {
-                    JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                    JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                             Bundle.getMessage("SignalsError17"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -11071,24 +11074,24 @@ public class LayoutEditorTools {
     }
 
     private void setXingSensorsCancelPressed(ActionEvent a) {
-        setSensorsAtXingOpen = false;
-        sensorsAtXingFrame.setVisible(false);
-        xingSensorFromMenu = false;
+        setSensorsAtLevelXingOpenFlag = false;
+        setSensorsAtLevelXingFromMenuFlag = false;
+        setSensorsAtLevelXingFrame.setVisible(false);
     }
 
     private void setXingSensorsDonePressed(ActionEvent a) {
         if (!getLevelCrossingSensorInformation()) {
             return;
         }
-        Sensor aSensor = getSensorFromEntry(xingSensorA.getText(), false, sensorsAtXingFrame);
-        Sensor bSensor = getSensorFromEntry(xingSensorB.getText(), false, sensorsAtXingFrame);
-        Sensor cSensor = getSensorFromEntry(xingSensorC.getText(), false, sensorsAtXingFrame);
-        Sensor dSensor = getSensorFromEntry(xingSensorD.getText(), false, sensorsAtXingFrame);
+        Sensor aSensor = getSensorFromEntry(xingSensorA.getText(), false, setSensorsAtLevelXingFrame);
+        Sensor bSensor = getSensorFromEntry(xingSensorB.getText(), false, setSensorsAtLevelXingFrame);
+        Sensor cSensor = getSensorFromEntry(xingSensorC.getText(), false, setSensorsAtLevelXingFrame);
+        Sensor dSensor = getSensorFromEntry(xingSensorD.getText(), false, setSensorsAtLevelXingFrame);
         // place or update signals as requested
         if ((aSensor != null) && xingSensorA.addToPanel()) {
             if (isSensorOnPanel(aSensor)
                     && (aSensor != levelXing.getSensorA())) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{xingSensorA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11106,7 +11109,7 @@ public class LayoutEditorTools {
                 && (aSensor != levelXing.getSensorC())
                 && (aSensor != levelXing.getSensorD())) {
             if (isSensorOnPanel(aSensor)) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{xingSensorA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11129,7 +11132,7 @@ public class LayoutEditorTools {
         if ((bSensor != null) && xingSensorB.addToPanel()) {
             if (isSensorOnPanel(bSensor)
                     && (bSensor != levelXing.getSensorB())) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{xingSensorB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11147,7 +11150,7 @@ public class LayoutEditorTools {
                 && (bSensor != levelXing.getSensorC())
                 && (bSensor != levelXing.getSensorD())) {
             if (isSensorOnPanel(bSensor)) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{xingSensorB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11170,7 +11173,7 @@ public class LayoutEditorTools {
         if ((cSensor != null) && xingSensorC.addToPanel()) {
             if (isSensorOnPanel(cSensor)
                     && (cSensor != levelXing.getSensorC())) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{xingSensorC.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11188,7 +11191,7 @@ public class LayoutEditorTools {
                 && (cSensor != levelXing.getSensorC())
                 && (cSensor != levelXing.getSensorD())) {
             if (isSensorOnPanel(cSensor)) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{xingSensorC.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11211,7 +11214,7 @@ public class LayoutEditorTools {
         if ((dSensor != null) && xingSensorD.addToPanel()) {
             if (isSensorOnPanel(dSensor)
                     && (dSensor != levelXing.getSensorD())) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{xingSensorD.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11229,7 +11232,7 @@ public class LayoutEditorTools {
                 && (dSensor != levelXing.getSensorC())
                 && (dSensor != levelXing.getSensorD())) {
             if (isSensorOnPanel(dSensor)) {
-                JOptionPane.showMessageDialog(sensorsAtXingFrame,
+                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{xingSensorD.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11251,9 +11254,9 @@ public class LayoutEditorTools {
         }
         // setup logic if requested
         // finish up
-        setSensorsAtXingOpen = false;
-        sensorsAtXingFrame.setVisible(false);
-        xingSensorFromMenu = false;
+        setSensorsAtLevelXingOpenFlag = false;
+        setSensorsAtLevelXingFromMenuFlag = false;
+        setSensorsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -11263,7 +11266,7 @@ public class LayoutEditorTools {
 
     private boolean getSimpleBlockInformation() {
         //might have to do something to trick it with an end bumper
-        if (!setSignalsAtBlockBoundaryFromMenuFlag) {
+        if (!setSignalMastsAtBlockBoundaryFromMenuFlag) {
             block1 = getBlockFromEntry(block1IDComboBox);
             if (block1 == null) {
                 return false;
@@ -11300,7 +11303,7 @@ public class LayoutEditorTools {
                 }
             }
             if (boundary == null) {
-                JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
+                JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         Bundle.getMessage("SignalsError7"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -11310,8 +11313,9 @@ public class LayoutEditorTools {
     }
 
     // operational variables for Set Sensors at Level Crossing tool
-    private JmriJFrame sensorsAtSlipFrame = null;
-    private boolean setSensorsAtSlipOpen = false;
+    private JmriJFrame setSensorsAtSlipFrame = null;
+    private boolean setSensorsAtSlipOpenFlag = false;
+    private boolean setSensorsAtSlipFromMenuFlag = false;
 
     private JButton getSavedSlipSensors = null;
     private JButton setSlipSensorsDone = null;
@@ -11319,7 +11323,6 @@ public class LayoutEditorTools {
     private JButton changeSensorSlipIcon = null;
     JFrame sensorSlipFrame = null;
 
-    private boolean slipSensorFromMenu = false;
     private String[] slipSensorBlocks = new String[4];
 
     BeanDetails slipSensorA;
@@ -11334,7 +11337,7 @@ public class LayoutEditorTools {
             @Nonnull String[] blocks,
             @Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        slipSensorFromMenu = true;
+        setSensorsAtSlipFromMenuFlag = true;
         layoutSlip = slip;
         layoutTurnout = slip;
         xingSensorsBlockAComboBox.setText(layoutSlip.getBlockName());
@@ -11349,17 +11352,17 @@ public class LayoutEditorTools {
             @Nonnull JFrame theFrame) {
         sensorIconEditor = theEditor;
         sensorSlipFrame = theFrame;
-        if (setSensorsAtSlipOpen) {
+        if (setSensorsAtSlipOpenFlag) {
             slipSensorsGetSaved(null);
-            sensorsAtSlipFrame.setVisible(true);
+            setSensorsAtSlipFrame.setVisible(true);
             return;
         }
         // Initialize if needed
-        if (sensorsAtSlipFrame == null) {
-            sensorsAtSlipFrame = new JmriJFrame(Bundle.getMessage("SensorsAtSlip"), false, true);
-            sensorsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelSlip", true);
-            sensorsAtSlipFrame.setLocation(70, 30);
-            Container theContentPane = sensorsAtSlipFrame.getContentPane();
+        if (setSensorsAtSlipFrame == null) {
+            setSensorsAtSlipFrame = new JmriJFrame(Bundle.getMessage("SensorsAtSlip"), false, true);
+            setSensorsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelSlip", true);
+            setSensorsAtSlipFrame.setLocation(70, 30);
+            Container theContentPane = setSensorsAtSlipFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
@@ -11367,7 +11370,7 @@ public class LayoutEditorTools {
             slipSensorB = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
             slipSensorC = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
             slipSensorD = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            if (slipSensorFromMenu) {
+            if (setSensorsAtSlipFromMenuFlag) {
                 JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
@@ -11457,20 +11460,20 @@ public class LayoutEditorTools {
             });
             setSlipSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            sensorsAtSlipFrame.addWindowListener(new WindowAdapter() {
+            setSensorsAtSlipFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     setSlipSensorsCancelPressed(null);
                 }
             });
         }
-        if (slipSensorFromMenu) {
+        if (setSensorsAtSlipFromMenuFlag) {
             slipSensorsGetSaved(null);
         }
-        sensorsAtSlipFrame.setPreferredSize(null);
-        sensorsAtSlipFrame.pack();
-        sensorsAtSlipFrame.setVisible(true);
-        setSensorsAtSlipOpen = true;
+        setSensorsAtSlipFrame.setPreferredSize(null);
+        setSensorsAtSlipFrame.pack();
+        setSensorsAtSlipFrame.setVisible(true);
+        setSensorsAtSlipOpenFlag = true;
     }
 
     private void slipSensorsGetSaved(ActionEvent a) {
@@ -11513,18 +11516,18 @@ public class LayoutEditorTools {
             boundary = true;
         }
         if (!boundary) {
-            JOptionPane.showMessageDialog(sensorsAtSlipFrame, Bundle.getMessage("NoBoundarySlipSensor"));
+            JOptionPane.showMessageDialog(setSensorsAtSlipFrame, Bundle.getMessage("NoBoundarySlipSensor"));
         }
-        sensorsAtSlipFrame.setPreferredSize(null);
-        sensorsAtSlipFrame.pack();
+        setSensorsAtSlipFrame.setPreferredSize(null);
+        setSensorsAtSlipFrame.pack();
     }
 
     private boolean getSlipSensorInformation() {
-        if (!slipSensorFromMenu) {
+        if (!setSensorsAtSlipFromMenuFlag) {
             layoutSlip = null;
             List<LayoutSlip> layoutSlips = layoutEditor.getLayoutSlips();
             if (layoutSlips.size() <= 0) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         Bundle.getMessage("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -11578,14 +11581,14 @@ public class LayoutEditorTools {
                     }
                 }
                 if (foundCount > 1) {
-                    JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                    JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                             MessageFormat.format(Bundle.getMessage("SignalsError16"),
                                     new Object[]{" " + foundCount + " "}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 if (layoutSlip == null) {
-                    JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                    JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                             Bundle.getMessage("SignalsError17"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -11596,24 +11599,24 @@ public class LayoutEditorTools {
     }
 
     private void setSlipSensorsCancelPressed(ActionEvent a) {
-        setSensorsAtSlipOpen = false;
-        sensorsAtSlipFrame.setVisible(false);
-        slipSensorFromMenu = false;
+        setSensorsAtSlipOpenFlag = false;
+        setSensorsAtSlipFromMenuFlag = false;
+        setSensorsAtSlipFrame.setVisible(false);
     }
 
     private void setSlipSensorsDonePressed(ActionEvent a) {
         if (!getSlipSensorInformation()) {
             return;
         }
-        Sensor aSensor = getSensorFromEntry(slipSensorA.getText(), false, sensorsAtSlipFrame);
-        Sensor bSensor = getSensorFromEntry(slipSensorB.getText(), false, sensorsAtSlipFrame);
-        Sensor cSensor = getSensorFromEntry(slipSensorC.getText(), false, sensorsAtSlipFrame);
-        Sensor dSensor = getSensorFromEntry(slipSensorD.getText(), false, sensorsAtSlipFrame);
+        Sensor aSensor = getSensorFromEntry(slipSensorA.getText(), false, setSensorsAtSlipFrame);
+        Sensor bSensor = getSensorFromEntry(slipSensorB.getText(), false, setSensorsAtSlipFrame);
+        Sensor cSensor = getSensorFromEntry(slipSensorC.getText(), false, setSensorsAtSlipFrame);
+        Sensor dSensor = getSensorFromEntry(slipSensorD.getText(), false, setSensorsAtSlipFrame);
         // place or update signals as requested
         if ((aSensor != null) && slipSensorA.addToPanel()) {
             if (isSensorOnPanel(aSensor)
                     && (aSensor != layoutSlip.getSensorA())) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{slipSensorA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11631,7 +11634,7 @@ public class LayoutEditorTools {
                 && (aSensor != layoutSlip.getSensorC())
                 && (aSensor != layoutSlip.getSensorD())) {
             if (isSensorOnPanel(aSensor)) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{slipSensorA.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11654,7 +11657,7 @@ public class LayoutEditorTools {
         if ((bSensor != null) && slipSensorB.addToPanel()) {
             if (isSensorOnPanel(bSensor)
                     && (bSensor != layoutSlip.getSensorB())) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{slipSensorB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11672,7 +11675,7 @@ public class LayoutEditorTools {
                 && (bSensor != layoutSlip.getSensorC())
                 && (bSensor != layoutSlip.getSensorD())) {
             if (isSensorOnPanel(bSensor)) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{slipSensorB.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11695,7 +11698,7 @@ public class LayoutEditorTools {
         if ((cSensor != null) && slipSensorC.addToPanel()) {
             if (isSensorOnPanel(cSensor)
                     && (cSensor != layoutSlip.getSensorC())) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{slipSensorC.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11713,7 +11716,7 @@ public class LayoutEditorTools {
                 && (cSensor != layoutSlip.getSensorC())
                 && (cSensor != layoutSlip.getSensorD())) {
             if (isSensorOnPanel(cSensor)) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{slipSensorC.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11736,7 +11739,7 @@ public class LayoutEditorTools {
         if ((dSensor != null) && slipSensorD.addToPanel()) {
             if (isSensorOnPanel(dSensor)
                     && (dSensor != layoutSlip.getSensorD())) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError6"),
                                 new Object[]{slipSensorD.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11754,7 +11757,7 @@ public class LayoutEditorTools {
                 && (dSensor != layoutSlip.getSensorC())
                 && (dSensor != layoutSlip.getSensorD())) {
             if (isSensorOnPanel(dSensor)) {
-                JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
                         MessageFormat.format(Bundle.getMessage("SensorsError13"),
                                 new Object[]{slipSensorD.getText()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -11776,9 +11779,9 @@ public class LayoutEditorTools {
         }
         // setup logic if requested
         // finish up
-        setSensorsAtSlipOpen = false;
-        sensorsAtSlipFrame.setVisible(false);
-        slipSensorFromMenu = false;
+        setSensorsAtSlipOpenFlag = false;
+        setSensorsAtSlipFromMenuFlag = false;
+        setSensorsAtSlipFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -11924,7 +11927,9 @@ public class LayoutEditorTools {
 
     // operational variables for Set Signals at Double Crossover Turnout tool
     private JmriJFrame setSignalsAtSlipFrame = null;
-    private boolean setSignalsAtSlipOpen = false;
+    private boolean setSignalsAtSlipOpenFlag = false;
+    private boolean setSignalsAtSlipFromMenuFlag = false;
+
     private JComboBox<String> slipNameCombo = new JComboBox<String>();
 
     private JmriBeanComboBox a1SlipSignalHeadComboBox = new JmriBeanComboBox(
@@ -11984,7 +11989,6 @@ public class LayoutEditorTools {
 
     private JPanel dblSlipC2SigPanel;
     private JPanel dblSlipB2SigPanel;
-    private boolean setSignalsAtSlipFromMenuFlag = false;
 
     public void setSignalsAtSlipFromMenu(@Nonnull LayoutSlip ls,
             @Nonnull MultiIconEditor theEditor, @Nonnull JFrame theFrame) {
@@ -12006,7 +12010,7 @@ public class LayoutEditorTools {
             @Nonnull JFrame theFrame) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        if (setSignalsAtSlipOpen) {
+        if (setSignalsAtSlipOpenFlag) {
             setSignalsAtSlipFrame.setVisible(true);
             return;
         }
@@ -12277,7 +12281,7 @@ public class LayoutEditorTools {
         }
         setSignalsAtSlipFrame.pack();
         setSignalsAtSlipFrame.setVisible(true);
-        setSignalsAtSlipOpen = true;
+        setSignalsAtSlipOpenFlag = true;
     }
 
     private void getSlipTurnoutSignalsGetSaved(ActionEvent a) {
@@ -12295,7 +12299,8 @@ public class LayoutEditorTools {
     }
 
     private void setSlipSignalsCancelPressed(ActionEvent a) {
-        setSignalsAtSlipOpen = false;
+        setSignalsAtSlipOpenFlag = false;
+        setSignalsAtSlipFromMenuFlag = false;
         setSignalsAtSlipFrame.setVisible(false);
     }
 
@@ -12719,8 +12724,10 @@ public class LayoutEditorTools {
                     layoutSlip.getTurnout(), LayoutTurnout.STATE_BD, LayoutTurnout.STATE_AD, 6);
         }
         // finish up
-        setSignalsAtSlipOpen = false;
+        setSignalsAtSlipOpenFlag = false;
+        setSignalsAtSlipFromMenuFlag = false;
         setSignalsAtSlipFrame.setVisible(false);
+
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
@@ -12984,7 +12991,7 @@ public class LayoutEditorTools {
             nextHead = getNextSignalFromObject(track1, slip,
                     head.getSystemName(), setSignalsAtSlipFrame);
             if ((nextHead == null) && (!reachedEndBumper())) {
-                JOptionPane.showMessageDialog(setSignalsFrame,
+                JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                         MessageFormat.format(Bundle.getMessage("InfoMessage5"),
                                 new Object[]{block.getUserName()}),
                         null, JOptionPane.INFORMATION_MESSAGE);
