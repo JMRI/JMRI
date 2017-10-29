@@ -750,16 +750,16 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         } else if (getElement(0) == XNetConstants.CS_INFO) {
             switch (getElement(1)) {
                 case XNetConstants.BC_NORMAL_OPERATIONS:
-                    text = Bundle.getMessage("XNetReplyBCNormalOpsResumed") + ";";
+                    text = Bundle.getMessage("XNetReplyBCNormalOpsResumed");  
                     break;
                 case XNetConstants.BC_EVERYTHING_OFF:
-                    text = Bundle.getMessage("XNetReplyBCEverythingOff") + ";";
+                    text = Bundle.getMessage("XNetReplyBCEverythingOff");
                     break;
                 case XNetConstants.BC_SERVICE_MODE_ENTRY:
-                    text = Bundle.getMessage("XNetReplyBCServiceEntry") + ";";
+                    text = Bundle.getMessage("XNetReplyBCServiceEntry");
                     break;
                 case XNetConstants.PROG_SHORT_CIRCUIT:
-                    text = Bundle.getMessage("XNetReplyServiceModeShort") + ";";
+                    text = Bundle.getMessage("XNetReplyServiceModeShort");
                     break;
                 case XNetConstants.PROG_BYTE_NOT_FOUND:
                     text = Bundle.getMessage("XNetReplyServiceModeDataByteNotFound");
@@ -1056,7 +1056,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     case 1:
                         text = text + Bundle.getMessage("TurnoutWFeedback")
                                 + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-                                + "" + getTurnoutMsgAddr(i) + " "
+                                + " " + getTurnoutMsgAddr(i) + " "
                                 + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " ";
                         if ((getElement(i + 1) & 0x03) == 0x00) {
                             text = text + Bundle.getMessage("XNetReplyNotOperated"); // last items on line, no trailing space
