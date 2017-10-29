@@ -23,7 +23,9 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.swing.ButtonSwatchColorChooserPanel;
 
 /**
  * @author Pete Cressman Copyright (c) 2012
@@ -145,6 +147,8 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         panel.add(p);
         _chooser = new JColorChooser(Color.LIGHT_GRAY);
         _chooser.setColor(Color.green);
+        AbstractColorChooserPanel _chooserColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        _chooser.setChooserPanels(_chooserColorPanels);
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
             colorChange();
         });

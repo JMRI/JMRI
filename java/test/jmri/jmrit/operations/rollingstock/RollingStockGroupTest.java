@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,8 +16,14 @@ public class RollingStockGroupTest {
 
     @Test
     public void testCTor() {
-        RollingStockGroup t = new RollingStockGroup("Test");
-        Assert.assertNotNull("exists",t);
+        RollingStockGroup <Car> t = new RollingStockGroup<Car>("Test");
+        Assert.assertNotNull("exists", t);
+    }
+    
+    @Test
+    public void testCTor2() {
+        RollingStockGroup <Engine> t = new RollingStockGroup<Engine>("Test");
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

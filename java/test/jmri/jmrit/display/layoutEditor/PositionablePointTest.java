@@ -125,7 +125,7 @@ public class PositionablePointTest {
         Point2D point = new Point2D.Double(666.6, 999.9);
         PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, point, le);
         Assert.assertNotNull("exists", pp);
-        Rectangle2D bounds = new Rectangle2D.Double(point.getX(), point.getY(), 0.0, 0.0);
+        Rectangle2D bounds = new Rectangle2D.Double(point.getX() - 0.5, point.getY() - 0.5, 1.0, 1.0);
         Assert.assertEquals("getBounds equal to {666.6, 999.9, 0.0, 0.0}", bounds, pp.getBounds());
     }
 
@@ -345,8 +345,9 @@ public class PositionablePointTest {
         // test null track segment
         Assert.assertFalse("pp.setTrackConnection(null) is false",
                 pp.setTrackConnection(null));
+        jmri.util.JUnitAppender.assertErrorMessage("Attempt to remove non-existant track connection: null");
 
-        PositionablePoint ppA = new PositionablePoint("A", PositionablePoint.ANCHOR, new Point2D.Double( 0.0,  0.0), le);
+        PositionablePoint ppA = new PositionablePoint("A", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
         PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), le);
         PositionablePoint ppC = new PositionablePoint("C", PositionablePoint.ANCHOR, new Point2D.Double(20.0, 20.0), le);
         PositionablePoint ppD = new PositionablePoint("D", PositionablePoint.ANCHOR, new Point2D.Double(30.0, 30.0), le);
@@ -361,20 +362,22 @@ public class PositionablePointTest {
         Assert.assertTrue("pp.setTrackConnection(tsAB) is true",
                 pp.setTrackConnection(tsAB));
 
-        // test already connected is true
-        Assert.assertTrue("pp.setTrackConnection(tsAB) is true",
+        // test already connected
+        Assert.assertFalse("pp.setTrackConnection(tsAB) is false",
                 pp.setTrackConnection(tsAB));
+        jmri.util.JUnitAppender.assertErrorMessage("Already connected to testAB");
 
         // test 2nd non-null track segment
         Assert.assertTrue("pp.setTrackConnection(tsBC) is true",
                 pp.setTrackConnection(tsBC));
 
-        // test already connected is true
-        Assert.assertTrue("pp.setTrackConnection(tsBC) is true",
+        // test already connected
+        Assert.assertFalse("pp.setTrackConnection(tsBC) is false",
                 pp.setTrackConnection(tsBC));
+        jmri.util.JUnitAppender.assertErrorMessage("Already connected to testBC");
 
         // test 3rd non-null track segment
-        Assert.assertFalse("pp.setTrackConnection(tsCD) is true",
+        Assert.assertFalse("pp.setTrackConnection(tsCD) is false",
                 pp.setTrackConnection(tsCD));
         jmri.util.JUnitAppender.assertErrorMessage("Attempt to assign more than allowed number of connections");
     }

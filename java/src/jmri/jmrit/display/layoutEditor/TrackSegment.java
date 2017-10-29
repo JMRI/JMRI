@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -11,7 +13,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -54,10 +59,10 @@ public class TrackSegment extends LayoutTrack {
 
     // persistent instances variables (saved between sessions)
     private String blockName = "";
-    private LayoutTrack connect1 = null;
-    private int type1 = 0;
-    private LayoutTrack connect2 = null;
-    private int type2 = 0;
+    protected LayoutTrack connect1 = null;
+    protected int type1 = 0;
+    protected LayoutTrack connect2 = null;
+    protected int type2 = 0;
     private boolean dashed = false;
     private boolean mainline = false;
     private boolean arc = false;
@@ -129,7 +134,7 @@ public class TrackSegment extends LayoutTrack {
      * @return text showing id and connections of this segment
      */
     public String toString() {
-        return "TrackSegment " + ident
+        return "TrackSegment " + getName()
                 + " c1:{" + getConnect1Name() + " (" + type1 + "},"
                 + " c2:{" + getConnect2Name() + " (" + type2 + "}";
 
@@ -180,6 +185,54 @@ public class TrackSegment extends LayoutTrack {
         type2 = connectionType;
     }
 
+
+    /**
+     * replace old track connection with new track connection
+     *
+     * @param oldTrack the old track connection
+     * @param newTrack the new track connection
+     * @return true if successful
+     */
+    public boolean replaceTrackConnection(@Nullable LayoutTrack oldTrack, @Nullable LayoutTrack newTrack, int newType) {
+        boolean result = false; // assume failure (pessimist!)
+        // trying to replace old track with null?
+        if (newTrack == null) {
+            // (yes) remove old connection
+            if (oldTrack != null) {
+                result = true;  // assume success (optimist!)
+                if (connect1 == oldTrack) {
+                    connect1 = null;
+                    type1 = NONE;
+                } else if (connect2 == oldTrack) {
+                    connect2 = null;
+                    type2 = NONE;
+                } else {
+                    result = false; // didn't find old connection
+                }
+            } else {
+                result = false; // can't replace null with null
+            }
+            if (!result) {
+                log.error("Attempt to remove non-existant track connection");
+            }
+        } else // already connected to newTrack?
+        if ((connect1 != newTrack) && (connect2 != newTrack)) {
+            // (no) find a connection we can connect to
+            result = true;  // assume success (optimist!)
+            if (connect1 == oldTrack) {
+                connect1 = newTrack;
+                type1 = newType;
+            } else if (connect2 == oldTrack) {
+                connect2 = newTrack;
+                type2 = newType;
+            } else {
+                log.error("Attempt to replace invalid connection");
+                result = false;
+            }
+        }
+        return result;
+    }
+    
     /**
      * @return true if track segment should be drawn dashed
      * @deprecated since 4.9.4; use {@link #isDashed()} instead
@@ -364,10 +417,10 @@ public class TrackSegment extends LayoutTrack {
         return getConnectName(connect2, type2);
     }
 
-    private String getConnectName(@Nullable LayoutTrack o, int type) {
+    private String getConnectName(@Nullable LayoutTrack layoutTrack, int type) {
         String result = null;
-        if (null != o) {
-            result = ((LayoutTrack) o).getName();
+        if (layoutTrack != null) {
+            result = ((LayoutTrack) layoutTrack).getName();
         }
         return result;
     }
@@ -380,7 +433,7 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to supress "does not override abstract method " error in compiler
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
-        // nothing to do here, move along
+        // nothing to see here, move along
         return null;
     }
 
@@ -392,7 +445,7 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to supress "does not override abstract method " error in compiler
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
-        // nothing to do here, move along
+        // nothing to see here, move along
     }
 
     public int getNumberOfBezierControlPoints() {
@@ -427,9 +480,17 @@ public class TrackSegment extends LayoutTrack {
      * Set Up a Layout Block for a Track Segment.
      */
     public void setLayoutBlock(@Nullable LayoutBlock b) {
-        layoutBlock = b;
-        if (b != null) {
-            blockName = b.getId();
+        if (layoutBlock != b) {
+            // block has changed, if old block exists, decrement use
+            if (layoutBlock != null) {
+                layoutBlock.decrementUse();
+            }
+            layoutBlock = b;
+            if (b != null) {
+                blockName = b.getId();
+            } else {
+                blockName = "";
+            }
         }
     }
 
@@ -447,7 +508,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to scale Y coordinates
      */
     public void scaleCoords(float xFactor, float yFactor) {
-        // Nothing to do here, move along
+        // nothing to see here, move along
     }
 
     /**
@@ -457,7 +518,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to translate Y coordinates
      */
     public void translateCoords(float xFactor, float yFactor) {
-        // Nothing to do here, move along
+        // nothing to see here, move along
     }
 
     /**
@@ -497,18 +558,18 @@ public class TrackSegment extends LayoutTrack {
                 blockName = tBlockName;
                 layoutBlock.incrementUse();
             } else {
-                log.error("bad blockname '" + tBlockName + "' in tracksegment " + ident);
+                log.error("bad blockname '" + tBlockName + "' in tracksegment " + getName());
             }
         }
 
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
-        connect1 = (LayoutTrack) p.getFinder().findObjectByName(tConnect1Name);
+        connect1 = p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
             log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
             connect1 = (LayoutTrack) p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
-        connect2 = (LayoutTrack) p.getFinder().findObjectByName(tConnect2Name);
+        connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type2 + ".");
             connect2 = (LayoutTrack) p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
@@ -571,21 +632,21 @@ public class TrackSegment extends LayoutTrack {
 
             if (isCircle()) {
                 if (r.contains(getCoordsCenterCircle())) {
-                    result = LayoutTrack.TRACK_CIRCLE_CENTRE;
+                    result = TRACK_CIRCLE_CENTRE;
                 }
             } else if (isBezier()) {
                 // hit testing for the control points
                 // note: control points will override center circle
                 for (int index = 0; index < bezierControlPoints.size(); index++) {
                     if (r.contains(bezierControlPoints.get(index))) {
-                        result = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN + index;
+                        result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
                         break;
                     }
                 }
             }
             if (result == NONE) {
                 if (r.contains(getCentreSeg())) {
-                    result = LayoutTrack.TRACK;
+                    result = TRACK;
                 }
             }
         }
@@ -634,9 +695,11 @@ public class TrackSegment extends LayoutTrack {
     private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Dashed"));
 
     /**
-     * Display popup menu for information and editing.
+     * {@inheritDoc}
      */
-    protected void showPopup(MouseEvent e) {
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -656,7 +719,7 @@ public class TrackSegment extends LayoutTrack {
             info = info + " (" + Bundle.getMessage("Line") + ")";
         }
 
-        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", info) + ident);
+        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", info) + getName());
         jmi.setEnabled(false);
 
         if (blockName.isEmpty()) {
@@ -670,22 +733,30 @@ public class TrackSegment extends LayoutTrack {
         if ((connect1 != null) || (connect2 != null)) {
             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
             if (connect1 != null) {
-                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName()) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + connect1.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connect1).getName());
-                        layoutEditor.setSelectionRect(lt.getBounds());
+                        LayoutTrack lt = lf.findObjectByName(connect1.getName());
+                        // this shouldn't ever be null... however...
+                        if (lt != null) {
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
+                        }
                     }
                 });
             }
             if (connect2 != null) {
-                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + ((LayoutTrack) connect2).getName()) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + connect2.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connect2).getName());
-                        layoutEditor.setSelectionRect(lt.getBounds());
+                        LayoutTrack lt = lf.findObjectByName(connect2.getName());
+                        // this shouldn't ever be null... however...
+                        if (lt != null) {
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
+                        }
                     }
                 });
             }
@@ -725,6 +796,61 @@ public class TrackSegment extends LayoutTrack {
                 layoutEditor.removeTrackSegment(TrackSegment.this);
                 remove();
                 dispose();
+            }
+        });
+        popup.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TrackSegment ts_this = TrackSegment.this;
+                // create a new anchor
+                Point2D p = getCentreSeg();
+                PositionablePoint newAnchor = layoutEditor.addAnchor(p);
+                // link it to me
+                layoutEditor.setLink(newAnchor, POS_POINT, ts_this, TRACK);
+
+                //get unique name for a new track segment
+                String name = layoutEditor.getFinder().uniqueName("T", 0);
+
+                //create it between the new anchor and my connect2(/type2)
+                TrackSegment newTrackSegment = new TrackSegment(name,
+                        newAnchor, POS_POINT,
+                        connect2, type2,
+                        isDashed(), isMainline(), layoutEditor);
+                // add it to known tracks
+                layoutEditor.getLayoutTracks().add(newTrackSegment);
+                layoutEditor.setDirty();
+
+                // copy attributes to new track segment
+                newTrackSegment.setArc(ts_this.isArc());
+                newTrackSegment.setCircle(ts_this.isCircle());
+                //newTrackSegment.setBezier(ts_this.isBezier());
+                newTrackSegment.setFlip(ts_this.isFlip());
+
+                // link my connect2 to the new track segment
+                if (connect2 instanceof PositionablePoint) {
+                    PositionablePoint pp = (PositionablePoint) connect2;
+                    pp.replaceTrackConnection(ts_this, newTrackSegment);
+                } else {
+                    layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
+                }
+
+                // link the new anchor to the new track segment
+                layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
+
+                // link me to the new newAnchor
+                connect2 = newAnchor;
+                type2 = POS_POINT;
+
+                //check on layout block
+                LayoutBlock b = ts_this.getLayoutBlock();
+
+                if (b != null) {
+                    newTrackSegment.setLayoutBlock(b);
+                    layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+                    newTrackSegment.updateBlockInfo();
+                }
+                layoutEditor.setDirty();
+                layoutEditor.redrawPanel();
             }
         });
 
@@ -797,8 +923,9 @@ public class TrackSegment extends LayoutTrack {
                 }
             });
         }
-        popup.show(e.getComponent(), e.getX(), e.getY());
-    }
+        popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+        return popup;
+    }   // showPopup
 
     /**
      * Display popup menu for information and editing.
@@ -1106,7 +1233,7 @@ public class TrackSegment extends LayoutTrack {
     public Point2D getCentreSeg() {
         Point2D result = MathUtil.zeroPoint2D;
 
-        if ((null != connect1) && (null != connect2)) {
+        if ((connect1 != null) && (connect2 != null)) {
             // get the end points
             Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -1345,6 +1472,9 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw(Graphics2D g2) {
+        // hidden, dashed & solid track segments are drawn interleaved
+        // so save and restore the previous stroke before & after drawing
+        Stroke oldStroke = g2.getStroke();  // save previous stroke
         setColorForTrackBlock(g2, getLayoutBlock());
 
         if (isHidden()) {
@@ -1356,6 +1486,7 @@ public class TrackSegment extends LayoutTrack {
         } else if (!isHidden()) {
             drawSolid(g2);
         }
+        g2.setStroke(oldStroke);    // restore previous stroke
     }
 
     /**
@@ -1364,30 +1495,23 @@ public class TrackSegment extends LayoutTrack {
     @Override
     protected void drawUnconnected(Graphics2D g2) {
         // TrackSegments are always connected
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
-    
+
     private void drawHidden(Graphics2D g2) {
-        // hidden track segments are drawn interleaved with non-hidden ones
-        // so save and restore the previous stroke before & after drawing here
-        Stroke oldStroke = g2.getStroke();  // save previous stroke
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
                 layoutEditor.getCoords(getConnect2(), getType2())));
-        g2.setStroke(oldStroke);    // restore previous stroke
     }   // drawHidden
 
     private void drawDashed(Graphics2D g2) {
         float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
         if (isArc()) {
             calculateTrackSegmentAngle();
-            Stroke originalStroke = g2.getStroke();
             Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
             g2.setStroke(drawingStroke);
             g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
-            g2.setStroke(originalStroke);
         } else if (isBezier()) {
-            Stroke originalStroke = g2.getStroke();
             Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
             g2.setStroke(drawingStroke);
 
@@ -1403,8 +1527,6 @@ public class TrackSegment extends LayoutTrack {
             points[cnt + 1] = pt2;
 
             MathUtil.drawBezier(g2, points);
-
-            g2.setStroke(originalStroke);
         } else {
             Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -1461,7 +1583,7 @@ public class TrackSegment extends LayoutTrack {
                 Point2D circleCenterPoint = getCoordsCenterCircle();
                 g2.draw(new Line2D.Double(circleCenterPoint, ep1));
                 g2.draw(new Line2D.Double(circleCenterPoint, ep2));
-                // Draw a circle and square at the circles centre, that 
+                // Draw a circle and square at the circles centre, that
                 // allows the user to change the angle by dragging the mouse.
                 g2.draw(layoutEditor.trackControlCircleAt(circleCenterPoint));
                 g2.draw(layoutEditor.trackControlCircleRectAt(circleCenterPoint));
@@ -1481,7 +1603,7 @@ public class TrackSegment extends LayoutTrack {
 
     protected void drawTurnoutControls(Graphics2D g2) {
         // TrackSegments don't have turnout controls...
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1489,7 +1611,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void reCheckBlockBoundary() {
-        // nothing to do here... move along...
+        // nothing to see here... move along...
     }
 
     /*
@@ -1504,21 +1626,21 @@ public class TrackSegment extends LayoutTrack {
         // ensure that block is assigned
         if (lb1 != null) {
             // check first connection for turnout or level crossing
-            if ((type1 >= LayoutTrack.TURNOUT_A) && (type1 <= LayoutTrack.LEVEL_XING_D)) {
+            if ((type1 >= TURNOUT_A) && (type1 <= LEVEL_XING_D)) {
                 // have connection to turnout or level crossing
-                if (type1 <= LayoutTrack.TURNOUT_D) {
+                if (type1 <= TURNOUT_D) {
                     // have connection to a turnout, is block different
                     LayoutTurnout lt = (LayoutTurnout) getConnect1();
                     lb2 = lt.getLayoutBlock();
                     if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                         // not RH, LH, or WYE turnout - other blocks possible
-                        if ((type1 == LayoutTrack.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
+                        if ((type1 == TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                             lb2 = lt.getLayoutBlockB();
                         }
-                        if ((type1 == LayoutTrack.TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
+                        if ((type1 == TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
                             lb2 = lt.getLayoutBlockC();
                         }
-                        if ((type1 == LayoutTrack.TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
+                        if ((type1 == TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
                             lb2 = lt.getLayoutBlockD();
                         }
                     }
@@ -1535,7 +1657,7 @@ public class TrackSegment extends LayoutTrack {
                 } else {
                     // have connection to a level crossing
                     LevelXing lx = (LevelXing) getConnect1();
-                    if ((type1 == LayoutTrack.LEVEL_XING_A) || (type1 == LayoutTrack.LEVEL_XING_C)) {
+                    if ((type1 == LEVEL_XING_A) || (type1 == LEVEL_XING_C)) {
                         lb2 = lx.getLayoutBlockAC();
                     } else {
                         lb2 = lx.getLayoutBlockBD();
@@ -1551,7 +1673,7 @@ public class TrackSegment extends LayoutTrack {
                         results.add(lc);
                     }
                 }
-            } else if ((type1 >= LayoutTrack.SLIP_A) && (type1 <= LayoutTrack.SLIP_D)) {
+            } else if ((type1 >= SLIP_A) && (type1 <= SLIP_D)) {
                 // have connection to a slip crossing
                 LayoutSlip ls = (LayoutSlip) getConnect1();
                 lb2 = ls.getLayoutBlock();
@@ -1566,21 +1688,21 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
             // check second connection for turnout or level crossing
-            if ((type2 >= LayoutTrack.TURNOUT_A) && (type2 <= LayoutTrack.LEVEL_XING_D)) {
+            if ((type2 >= TURNOUT_A) && (type2 <= LEVEL_XING_D)) {
                 // have connection to turnout or level crossing
-                if (type2 <= LayoutTrack.TURNOUT_D) {
+                if (type2 <= TURNOUT_D) {
                     // have connection to a turnout
                     LayoutTurnout lt = (LayoutTurnout) getConnect2();
                     lb2 = lt.getLayoutBlock();
                     if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                         // not RH, LH, or WYE turnout - other blocks possible
-                        if ((type2 == LayoutTrack.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
+                        if ((type2 == TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                             lb2 = lt.getLayoutBlockB();
                         }
-                        if ((type2 == LayoutTrack.TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
+                        if ((type2 == TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
                             lb2 = lt.getLayoutBlockC();
                         }
-                        if ((type2 == LayoutTrack.TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
+                        if ((type2 == TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
                             lb2 = lt.getLayoutBlockD();
                         }
                     }
@@ -1597,7 +1719,7 @@ public class TrackSegment extends LayoutTrack {
                 } else {
                     // have connection to a level crossing
                     LevelXing lx = (LevelXing) getConnect2();
-                    if ((type2 == LayoutTrack.LEVEL_XING_A) || (type2 == LayoutTrack.LEVEL_XING_C)) {
+                    if ((type2 == LEVEL_XING_A) || (type2 == LEVEL_XING_C)) {
                         lb2 = lx.getLayoutBlockAC();
                     } else {
                         lb2 = lx.getLayoutBlockBD();
@@ -1613,7 +1735,7 @@ public class TrackSegment extends LayoutTrack {
                         results.add(lc);
                     }
                 }
-            } else if ((type2 >= LayoutTrack.SLIP_A) && (type2 <= LayoutTrack.SLIP_D)) {
+            } else if ((type2 >= SLIP_A) && (type2 <= SLIP_D)) {
                 // have connection to a slip crossing
                 LayoutSlip ls = (LayoutSlip) getConnect2();
                 lb2 = ls.getLayoutBlock();
@@ -1629,11 +1751,114 @@ public class TrackSegment extends LayoutTrack {
                 }
             } else {
                 // this is routinely reached in normal operations
-                // (nothing to do here... move along)
+                // (nothing to see here... move along)
             }
         }   // if (lb1 != null)
         return results;
     }   // getLayoutConnectivity()
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> checkForFreeConnections() {
+        List<Integer> result = new ArrayList<>();
+        // Track Segments always have all their connections so...
+        // (nothing to see here... move along)
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForUnAssignedBlocks() {
+        return (getLayoutBlock() != null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
+        /*
+         * For each (non-null) blocks of this track do:
+         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+         * #2) If this track is already in the TrackNameSet for this block
+         *     then return (done!)
+         * #3) else add a new set (with this block/track) to
+         *     blockNamesToTrackNameSetMap and
+         * #4) collect all the connections in this block
+         * <p>
+         *     Basically, we're maintaining contiguous track sets for each block found
+         *     (in blockNamesToTrackNameSetMap)
+         */
+        List<Set<String>> TrackNameSets = null;
+        Set<String> TrackNameSet = null;
+        if (blockName != null) {
+            TrackNameSet = null;    // assume not found (pessimist!)
+            TrackNameSets = blockNamesToTrackNameSetsMap.get(blockName);
+            if (TrackNameSets != null) { // (#1)
+                for (Set<String> checkTrackNameSet : TrackNameSets) {
+                    if (checkTrackNameSet.contains(getName())) { // (#2)
+                        TrackNameSet = checkTrackNameSet;
+                        break;
+                    }
+                }
+            } else {    // (#3)
+                log.info("•New block ('{}') trackNameSets", blockName);
+                TrackNameSets = new ArrayList<>();
+                blockNamesToTrackNameSetsMap.put(blockName, TrackNameSets);
+            }
+            if (TrackNameSet == null) {
+                TrackNameSet = new LinkedHashSet<>();
+                TrackNameSets.add(TrackNameSet);
+            }
+            if (TrackNameSet.add(getName())) {
+                log.info("•    Add track '{}' to TrackNameSets for block '{}'", getName(), blockName);
+            }
+            // (#4)
+            if (connect1 != null) {
+                connect1.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+            }
+            if (connect2 != null) { // (#4)
+                connect2.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+            }
+        }
+    }   // collectContiguousTracksNamesInBlockNamed
+
+    /**
+     * {@inheritDoc}
+     */
+    public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
+            @Nonnull Set<String> TrackNameSet) {
+        if (!TrackNameSet.contains(getName())) {
+            // is this the blockName we're looking for?
+            if (this.blockName.equals(blockName)) {
+                // if we are added to the TrackNameSet
+                if (TrackNameSet.add(getName())) {
+                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                }
+                // these should never be null... but just in case...
+                // it's time to play... flood your neighbours!
+                if (connect1 != null) {
+                    connect1.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+                }
+                if (connect2 != null) {
+                    connect2.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+                }
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        setLayoutBlock(layoutBlock);
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
+    );
 }
