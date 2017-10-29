@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +21,7 @@ import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -630,18 +633,63 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Setup and remove connections to track
+     * setup a connection to a track
+     *
+     * @param track the track we want to connect to
+     * @return true if successful
      */
-    public boolean setTrackConnection(TrackSegment track) {
-        if (track == null) {
-            return false;
-        }
-        if ((connect1 != track) && (connect2 != track)) {
-            // not connected to this track
-            if (connect1 == null) {
-                connect1 = track;
-            } else if ((type == ANCHOR) && (connect2 == null)) {
-                connect2 = track;
+    public boolean setTrackConnection(@Nonnull TrackSegment track) {
+        return replaceTrackConnection(null, track);
+    }
+
+    /**
+     * remove a connection to a track
+     *
+     * @param track the track we want to disconnect from
+     * @return true if successful
+     */
+    public boolean removeTrackConnection(@Nonnull TrackSegment track) {
+        return replaceTrackConnection(track, null);
+    }
+
+    /**
+     * replace old track connection with new track connection
+     *
+     * @param oldTrack the old track connection
+     * @param newTrack the new track connection
+     * @return true if successful
+     */
+    public boolean replaceTrackConnection(@Nullable TrackSegment oldTrack, @Nullable TrackSegment newTrack) {
+        boolean result = false; // assume failure (pessimist!)
+        // trying to replace old track with null?
+        if (newTrack == null) {
+            // (yes) remove old connection
+            if (oldTrack != null) {
+                result = true;  // assume success (optimist!)
+                if (connect1 == oldTrack) {
+                    connect1 = null;
+                    reCheckBlockBoundary();
+                    removeLinkedPoint();
+                } else if (connect2 == oldTrack) {
+                    connect2 = null;
+                    reCheckBlockBoundary();
+                } else {
+                    result = false; // didn't find old connection
+                }
+            } else {
+                result = false; // can't replace null with null
+            }
+            if (!result) {
+                log.error("Attempt to remove non-existant track connection: {}", oldTrack);
+            }
+        } else // already connected to newTrack?
+        if ((connect1 != newTrack) && (connect2 != newTrack)) {
+            // (no) find a connection we can connect to
+            result = true;  // assume success (optimist!)
+            if (connect1 == oldTrack) {
+                connect1 = newTrack;
+            } else if ((type == ANCHOR) && (connect2 == oldTrack)) {
+                connect2 = newTrack;
                 if (connect1.getLayoutBlock() == connect2.getLayoutBlock()) {
                     westBoundSignalMastNamed = null;
                     eastBoundSignalMastNamed = null;
@@ -650,24 +698,14 @@ public class PositionablePoint extends LayoutTrack {
                 }
             } else {
                 log.error("Attempt to assign more than allowed number of connections");
-                return false;
+                result = false;
             }
-        }
-        return true;
-    }
-
-    public void removeTrackConnection(TrackSegment track) {
-        if (track == connect1) {
-            connect1 = null;
-            reCheckBlockBoundary();
-            removeLinkedPoint();
-        } else if (track == connect2) {
-            connect2 = null;
-            reCheckBlockBoundary();
         } else {
-            log.error("Attempt to remove non-existant track connection");
+                log.error("Already connected to {}", newTrack.getName());
+                result = false;
         }
-    }
+        return result;
+    }   // replaceTrackConnection
 
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
@@ -855,44 +893,50 @@ public class PositionablePoint extends LayoutTrack {
             if (blockBoundary) {
                 jmi = popup.add(new JMenuItem(Bundle.getMessage("CanNotMergeAtBlockBoundary")));
                 jmi.setEnabled(false);
-            } else {
+            } else if ((connect1 != null) && (connect2 != null)) {
                 jmi = popup.add(new AbstractAction(Bundle.getMessage("MergeAdjacentTracks")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        PositionablePoint pp_this = PositionablePoint.this;
                         // if I'm fully connected...
                         if ((connect1 != null) && (connect2 != null)) {
-                            // this is the other ("not me") connection to connect2
+                            // who is my connect2 connected to (that's not me)?
                             LayoutTrack newConnect2 = null;
                             int newType2 = TRACK;
-                            if (connect2.connect1 == PositionablePoint.this) {
+                            if (connect2.connect1 == pp_this) {
                                 newConnect2 = connect2.connect2;
                                 newType2 = connect2.type2;
-                            } else if (connect2.connect2 == PositionablePoint.this) {
+                            } else if (connect2.connect2 == pp_this) {
                                 newConnect2 = connect2.connect1;
                                 newType2 = connect2.type1;
                             } else {
                                 //this should never happen however...
-                                log.error("Join: wrong connects error.");
+                                log.error("Join: wrong connect2 error.");
                             }
 
-                            // connect the other connection to my connect1
-                            if (newConnect2 != null) {  // (this should NEVER happen... however...)
-                                layoutEditor.setLink(connect1, TRACK, newConnect2, newType2);
-                            }
-
-                            // connect my old connect1 to the new connect 2
-                            if (connect1.connect1 == PositionablePoint.this) {
-                                connect1.connect1 = newConnect2;
-                                connect1.type1 = newType2;
-                            } else if (connect1.connect2 == PositionablePoint.this) {
-                                connect1.connect2 = newConnect2;
-                                connect1.type2 = newType2;
+                            // connect the other connection to my connect2 to my connect1
+                            if (newConnect2 == null) {
+                                // (this should NEVER happen... however...)
+                                log.error("Merge: no 'other' connection to connect2.");
                             } else {
-                                //this should never happen however...
-                                log.error("Join: wrong connects error.");
+                                if (newConnect2 instanceof PositionablePoint) {
+                                    PositionablePoint pp = (PositionablePoint) newConnect2;
+                                    pp.replaceTrackConnection(connect2, connect1);
+                                } else {
+                                    layoutEditor.setLink(newConnect2, newType2, connect1, TRACK);
+                                }
+                                // connect the track at my connect1 to the newConnect2
+                                if (connect1.getConnect1() == pp_this) {
+                                    connect1.setNewConnect1(newConnect2, newType2);
+                                } else if (connect1.getConnect2() == pp_this) {
+                                    connect1.setNewConnect2(newConnect2, newType2);
+                                } else {
+                                    // (this should NEVER happen... however...)
+                                    log.error("Merge: no connection to connect1.");
+                                }
                             }
 
-                            //remove connect2 from selection information
+                            // remove connect2 from selection information
                             if (layoutEditor.selectedObject == connect2) {
                                 layoutEditor.selectedObject = null;
                             }
@@ -919,29 +963,32 @@ public class PositionablePoint extends LayoutTrack {
                             connect2.dispose();
                             connect2 = null;
 
-                            //remove me from selection information
-                            if (layoutEditor.selectedObject == PositionablePoint.this) {
+                            //remove pp_this from selection information
+                            if (layoutEditor.selectedObject == pp_this) {
                                 layoutEditor.selectedObject = null;
                             }
-                            if (layoutEditor.prevSelectedObject == PositionablePoint.this) {
+                            if (layoutEditor.prevSelectedObject == pp_this) {
                                 layoutEditor.prevSelectedObject = null;
                             }
 
-                            // remove me from the layoutEditor's list of layout tracks
-                            if (layoutEditor.getLayoutTracks().contains(PositionablePoint.this)) {
-                                layoutEditor.getLayoutTracks().remove(PositionablePoint.this);
+                            // remove pp_this from the layoutEditor's list of layout tracks
+                            if (layoutEditor.getLayoutTracks().contains(pp_this)) {
+                                layoutEditor.getLayoutTracks().remove(pp_this);
                                 layoutEditor.setDirty();
                                 layoutEditor.redrawPanel();
                             }
-                            PositionablePoint.this.remove();
-                            PositionablePoint.this.dispose();
+                            pp_this.remove();
+                            pp_this.dispose();
 
                             layoutEditor.setDirty();
                             layoutEditor.redrawPanel();
+                        } else {
+                            // (this should NEVER happen... however...)
+                            log.error("Merge: missing connection(s).");
                         }   // if ((connect1 != null) && (connect2 != null))
                     }   // actionPerformed
                 }); // jmi = popup.add(new AbstractAction(...) {
-            }   // if (blockBoundary) {} else {}
+            }   // if (blockBoundary) {} else if ((connect1 != null) && (connect2 != null))
         }   // if (getType() == ANCHOR)
 
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -1744,6 +1791,13 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
+   /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        // positionable points don't have blocks...
+        // nothing to see here, move along...
+    }
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
 
 }
