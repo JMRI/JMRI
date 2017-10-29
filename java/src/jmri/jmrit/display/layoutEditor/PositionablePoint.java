@@ -730,7 +730,7 @@ public class PositionablePoint extends LayoutTrack {
         tools = layoutEditor.getLETools();
 
         boolean blockBoundary = false;
-        boolean endBumper = false;
+        boolean addSensorsAndSignalMasksMenuItemsFlag = false;
         JMenuItem jmi = null;
         switch (getType()) {
             case ANCHOR:
@@ -770,7 +770,7 @@ public class PositionablePoint extends LayoutTrack {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")) + blockEnd.getDisplayName());
                     jmi.setEnabled(false);
                 }
-                endBumper = true;
+                addSensorsAndSignalMasksMenuItemsFlag = true;
                 break;
             case EDGE_CONNECTOR:
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + getName());
@@ -1034,24 +1034,9 @@ public class PositionablePoint extends LayoutTrack {
                     popup.add(ssaa);
                 }
             }
-            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    // bring up signals at block boundary tool dialog
-                    tools.setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
-                }
-            });
-
-            popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    // bring up sensors at block boundary tool dialog
-                    tools.setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                            layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
-                }
-            });
+            addSensorsAndSignalMasksMenuItemsFlag = true;
         }
-        if (endBumper) {
+        if (addSensorsAndSignalMasksMenuItemsFlag) {
             popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
