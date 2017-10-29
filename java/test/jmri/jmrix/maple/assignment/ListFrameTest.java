@@ -1,13 +1,13 @@
 package jmri.jmrix.maple.assignment;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of ListFrame
@@ -16,22 +16,21 @@ import java.awt.GraphicsEnvironment;
  */
 public class ListFrameTest {
 
+    private MapleSystemConnectionMemo _memo = null;
+
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListFrame action = new ListFrame(); 
+        ListFrame action = new ListFrame(_memo);
         Assert.assertNotNull("exists", action);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        _memo = new MapleSystemConnectionMemo("K", "Maple");
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

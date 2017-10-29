@@ -1,11 +1,11 @@
 package jmri.jmrix.powerline;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for SerialTrafficController.
@@ -42,9 +42,9 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @Override
     @After
     public void tearDown(){
-       tc = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown(); 
+
+        tc = null;
+        JUnitUtil.tearDown(); 
     }
 
 }

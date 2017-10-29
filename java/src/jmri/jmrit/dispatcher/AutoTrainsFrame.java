@@ -19,6 +19,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import jmri.Throttle;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,7 +118,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         displayAutoTrains();
     }
 
-    private void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
+    private synchronized void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
         for (AutoActiveTrain aat : _autoTrainsList) {
             if (aat.getActiveTrain() == e.getSource()) {
                 int newValue = ((Integer) e.getNewValue()).intValue();
@@ -140,6 +141,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 addThrottleListener(aat);
             }
         }
+        else {
+            log.info("No Throttle[{}]",aat.getActiveTrain().getActiveTrainName());
+        }
     }
 
     private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
@@ -148,8 +152,24 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         }
         int index = _throttles.indexOf(e.getSource());
         if (index == -1) {
-            log.warn("handleThrottleChange - cannot find throttle index");
-            return;
+            jmri.Throttle waThrottle1 =  (Throttle) e.getSource();
+            int DDCAddress =  waThrottle1.getLocoAddress().getNumber() ;
+            log.warn("handleThrottleChange - using locoaddress [" + DDCAddress + "]");
+            for (jmri.Throttle waThrottle  : _throttles ) {
+                if (waThrottle != null) {
+                    if ( DDCAddress == waThrottle.getLocoAddress().getNumber()) {
+                        index = _throttles.indexOf(waThrottle);
+                        if (index == -1) {
+                            log.warn("handleThrottleChange - cannot find throttle DCCAddress");
+                            return;
+                        }
+                    }
+                }
+            }
+            if (index == -1) {
+                log.warn("handleThrottleChange - cannot find throttle index");
+                return;
+            }
         }
         JLabel status = _throttleStatus.get(index);
         if (!status.isVisible()) {
@@ -576,7 +596,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         autoTrainsFrame.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 
 }
 

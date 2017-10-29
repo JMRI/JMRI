@@ -1,7 +1,6 @@
 package jmri.jmrix;
 
 import org.openide.util.lookup.ServiceProvider;
-import jmri.jmrix.ConnectionTypeList;
 
 /**
  * Returns a list of valid Connection Types

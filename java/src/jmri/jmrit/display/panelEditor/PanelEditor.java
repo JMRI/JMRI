@@ -22,10 +22,10 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -92,23 +92,23 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelEditor extends Editor implements ItemListener {
 
-    JTextField nextX = new JTextField("0", 4);
-    JTextField nextY = new JTextField("0", 4);
+    private JTextField nextX = new JTextField("0", 4);
+    private JTextField nextY = new JTextField("0", 4);
 
-    JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
-    JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
-    JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
-    //JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
-    JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
-    JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
-    JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
-    JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
-    JComboBox<String> scrollableComboBox = new JComboBox<String>();
+    private JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
+    private JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
+    private JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
+    //private JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
+    private JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
+    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
+    private JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
+    private JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
+    private JComboBox<String> scrollableComboBox = new JComboBox<String>();
 
-    JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
-    JTextField nextLabel = new JTextField(10);
+    private JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
+    private JTextField nextLabel = new JTextField(10);
 
-    JComboBox<ComboBoxItem> _addIconBox;
+    private JComboBox<ComboBoxItem> _addIconBox;
 
     public PanelEditor() {
     }
@@ -133,6 +133,7 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         };
         Thread thr = new Thread(r);
+        thr.setName("PanelEditor init");
         thr.start();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -170,8 +171,6 @@ public class PanelEditor extends Editor implements ItemListener {
         });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
         editItem.addActionListener(new ActionListener() {
-            PanelEditor panelEd;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
@@ -179,11 +178,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 ii.setVisible(true);
             }
 
-            ActionListener init(PanelEditor pe) {
-                panelEd = pe;
-                return this;
-            }
-        }.init(this));
+        });
         fileMenu.add(editItem);
 
         editItem = new JMenuItem(Bundle.getMessage("CPEView"));
@@ -359,10 +354,10 @@ public class PanelEditor extends Editor implements ItemListener {
             showTooltipBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setAllShowTooltip(showTooltipBox.isSelected());
+                    setAllShowToolTip(showTooltipBox.isSelected());
                 }
             });
-            showTooltipBox.setSelected(showTooltip());
+            showTooltipBox.setSelected(showToolTip());
 
             contentPane.add(menuBox);
             menuBox.addActionListener(new ActionListener() {
@@ -459,21 +454,21 @@ public class PanelEditor extends Editor implements ItemListener {
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
-        showTooltipBox.setSelected(showTooltip());
+        showTooltipBox.setSelected(showToolTip());
         hiddenBox.setSelected(showHidden());
         menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
     }
 
     static class ComboBoxItem {
 
-        String name;
-        String BundleName;
+        private String name;
+        private String bundleName;
 
-        ComboBoxItem(String n) {
+        protected ComboBoxItem(String n) {
             name = n;
         }
 
-        String getName() {
+        protected String getName() {
             return name;
         }
 
@@ -482,27 +477,23 @@ public class PanelEditor extends Editor implements ItemListener {
             // I18N split Bundle name
             // use NamedBeanBundle property for basic beans like "Turnout" I18N
             if ("Sensor".equals(name)) {
-                BundleName = "BeanNameSensor";
+                bundleName = "BeanNameSensor";
             } else if ("SignalHead".equals(name)) {
-                BundleName = "BeanNameSignalHead";
+                bundleName = "BeanNameSignalHead";
             } else if ("SignalMast".equals(name)) {
-                BundleName = "BeanNameSignalMast";
+                bundleName = "BeanNameSignalMast";
             } else if ("Memory".equals(name)) {
-                BundleName = "BeanNameMemory";
+                bundleName = "BeanNameMemory";
             } else if ("Reporter".equals(name)) {
-                BundleName = "BeanNameReporter";
+                bundleName = "BeanNameReporter";
             } else if ("Light".equals(name)) {
-                BundleName = "BeanNameLight";
+                bundleName = "BeanNameLight";
             } else {
-                BundleName = name;
+                bundleName = name;
             }
-            return Bundle.getMessage(BundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
+            return Bundle.getMessage(bundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
         }
     }
-
-    int locationX = 0;
-    int locationY = 0;
-    static final int DELTA = 20;
 
     /*
      *  itemListener for JComboBox
@@ -711,7 +702,7 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * ***************************************************
      */
-    boolean delayedPopupTrigger;
+    private boolean delayedPopupTrigger;
 
     @Override
     public void mousePressed(MouseEvent event) {
@@ -930,7 +921,7 @@ public class PanelEditor extends Editor implements ItemListener {
             _highlightcomponent = null;
             _targetPanel.repaint();
         }
-        if (selection != null && selection.getDisplayLevel() > BKG && selection.showTooltip()) {
+        if (selection != null && selection.getDisplayLevel() > BKG && selection.showToolTip()) {
             showToolTip(selection, event);
             //selection.highlightlabel(true);
             _targetPanel.repaint();
@@ -1190,8 +1181,10 @@ public class PanelEditor extends Editor implements ItemListener {
                     adapter = (XmlAdapter) Class.forName(className).newInstance();
                     Element el = adapter.store(copied);
                     adapter.load(el, this);
-                } catch (Exception ex) {
-                    log.debug(ex.getLocalizedMessage(), ex);
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                    | jmri.configurexml.JmriConfigureXmlException
+                    | RuntimeException ex) {
+                        log.debug(ex.getLocalizedMessage(), ex);
                 }
                 /*We remove the original item from the list, so we end up with
                  just the new items selected and allow the items to be moved around */
@@ -1297,82 +1290,21 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     public void setBackgroundMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("FontBackgroundColor"));
-        makeColorMenu(edit);
+        JMenuItem edit = new JMenuItem(Bundle.getMessage("FontBackgroundColor"));
+        edit.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("FontBackgroundColor"),
+                                 getBackgroundColor());
+            if (desiredColor!=null ) {
+               setBackgroundColor(desiredColor);
+           }
+        });
         popup.add(edit);
-
-    }
-
-    protected void makeColorMenu(JMenu colorMenu) {
-        ButtonGroup buttonGrp = new ButtonGroup();
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Gray"), Color.gray);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("LightGray"), Color.lightGray);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("White"), Color.white);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Red"), Color.red);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Orange"), Color.orange);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Yellow"), Color.yellow);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Green"), Color.green);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"), Color.blue);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"), Color.magenta);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null);
-    }
-
-    protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
-            final String name, Color color) {
-        ActionListener a = new ActionListener() {
-            //final String desiredName = name;
-            Color desiredColor;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (desiredColor != null) {
-                    setBackgroundColor(desiredColor);
-                } else {
-                    clearBackgroundColor();
-                }
-            }
-
-            ActionListener init(Color c) {
-                desiredColor = c;
-                return this;
-            }
-        }.init(color);
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-        r.addActionListener(a);
-
-        if (color == null) {
-            color = defaultBackgroundColor;
-        }
-        setColorButton(getBackgroundColor(), color, r);
-        colorButtonGroup.add(r);
-        menu.add(r);
-    }
-
-    protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
-        if (log.isDebugEnabled()) {
-            log.debug("setColorButton: color=" + color + " (RGB= " + (color == null ? "" : color.getRGB())
-                    + ") buttonColor= " + buttonColor + " (RGB= " + (buttonColor == null ? "" : buttonColor.getRGB()) + ")");
-        }
-        if (buttonColor != null) {
-            if (color != null && buttonColor.getRGB() == color.getRGB()) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-        } else {
-            if (color == null) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-        }
     }
 
     /**
      * ***************************************************
      */
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
 }

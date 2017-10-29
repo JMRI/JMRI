@@ -1,10 +1,10 @@
 package jmri.jmrix.lenz;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid lenz XPressNet Connection Types
+ * Returns a list of valid lenz XpressNet Connection Types
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010

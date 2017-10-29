@@ -186,7 +186,7 @@ public class NodeIdentity {
                 }
             }
         } catch (UnknownHostException ex) {
-            this.identity = WebServerPreferences.getDefault().getRailRoadName().replaceAll("[^A-Za-z0-9 ]", "-"); // NOI18N
+            this.identity = WebServerPreferences.getDefault().getRailroadName().replaceAll("[^A-Za-z0-9 ]", "-"); // NOI18N
             log.error("Cannot get host address or name {}", ex.getLocalizedMessage());
             log.error("Using {} as a fallback.", this.identity);
         }

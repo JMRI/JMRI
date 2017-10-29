@@ -194,14 +194,17 @@
 
         <li>An <b>NXWarrant</b>, (eNtry/eXit) where throttle commands 
         are generated automatically to move a train between blocks
-        chosen "on the fly" by you. To create an NXWarrant, 
+        chosen "on the fly" by you. A dialog allows you to choose
+        start and destination distances and to set the maximum 
+        throttle settings. To create an NXWarrant, 
         select the <b>Warrants-&gt;Tables-&gt;Create NXWarrant</b>
         menu item.</li>
 
         <li>A <b>Fast reacting</b> warrant. This type does not follow
-        the rules used by warrants, but reacts to signals
+        the usual rules used by warrants, but reacts to signals
         when entering their approach block with an immediate speed
-        change. To create such a
+        change. The throttle settings are a fixed proportion of the
+        Aspect Speed Names in Warrant Preferences. To create such a
         warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
         menu item.</li>
       </ul>

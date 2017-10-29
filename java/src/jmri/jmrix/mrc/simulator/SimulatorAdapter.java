@@ -129,8 +129,9 @@ public class SimulatorAdapter extends MrcPortController implements
                 synchronized (this) {
                     wait(100);
                 }
-            } catch (Exception e) {
-
+            } catch (InterruptedException e) {
+                log.debug("Interrupted, ending");
+                return;
             }
             MrcMessage m = readMessage();
             if (log.isDebugEnabled()) {
@@ -399,6 +400,6 @@ public class SimulatorAdapter extends MrcPortController implements
 //  return reply;
 // }
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

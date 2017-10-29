@@ -139,7 +139,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
         for (int i = 0; i < content.getComponentCount(); i++) {
             Entry e = (Entry) content.getComponent(i);
-            if (e.sensor.getText().trim().equals("")) {
+            if (e.sensor.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("Error19", i+1),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);

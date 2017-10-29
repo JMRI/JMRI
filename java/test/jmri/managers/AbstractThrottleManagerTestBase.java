@@ -1,9 +1,9 @@
 package jmri.managers;
 
-import jmri.DccThrottle;
-import jmri.ThrottleManager;
-import jmri.ThrottleListener;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
+import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,7 +68,6 @@ public abstract class AbstractThrottleManagerTestBase {
     @Test
     public void getUserName() {
         Assert.assertNotNull(tm.getUserName());
-        Assert.assertTrue(tm.getUserName() instanceof String);
     }
 
     @Test

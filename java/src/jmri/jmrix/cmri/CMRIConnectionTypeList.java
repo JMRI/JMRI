@@ -1,7 +1,7 @@
 package jmri.jmrix.cmri;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid C/MRI Connection Types

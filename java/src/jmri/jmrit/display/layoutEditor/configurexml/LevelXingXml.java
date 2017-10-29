@@ -6,6 +6,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
         Element element = new Element("levelxing");
 
         // include attributes
-        element.setAttribute("ident", p.getID());
+        element.setAttribute("ident", p.getId());
         if (!p.getBlockNameAC().isEmpty()) {
             element.setAttribute("blocknameac", p.getBlockNameAC());
         }
@@ -43,16 +44,19 @@ public class LevelXingXml extends AbstractXmlAdapter {
             element.setAttribute("blocknamebd", p.getBlockNameBD());
         }
         if (p.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getID());
+            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getId());
         }
         if (p.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getID());
+            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getId());
         }
         if (p.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getID());
+            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getId());
         }
         if (p.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getID());
+            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
+        }
+        if (p.isHidden()) {
+            element.setAttribute("hidden", "yes");
         }
         if (!p.getSignalAName().isEmpty()) {
             element.setAttribute("signalaname", p.getSignalAName());
@@ -180,6 +184,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
         if (a != null) {
             l.setSignalDName(a.getValue());
         }
+
         try {
             x = element.getAttribute("xa").getFloatValue();
             y = element.getAttribute("ya").getFloatValue();
@@ -187,6 +192,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
             log.error("failed to convert levelxing a coords attribute");
         }
         l.setCoordsA(new Point2D.Double(x, y));
+
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
@@ -195,64 +201,71 @@ public class LevelXingXml extends AbstractXmlAdapter {
         }
         l.setCoordsB(new Point2D.Double(x, y));
 
+        try {
+            l.setHidden(element.getAttribute("hidden").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert levelxing hidden attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+
         if (element.getChild("signalAMast") != null) {
             String mast = element.getChild("signalAMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalAMast(mast);
             }
         }
 
         if (element.getChild("signalBMast") != null) {
             String mast = element.getChild("signalBMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalBMast(mast);
             }
         }
 
         if (element.getChild("signalCMast") != null) {
             String mast = element.getChild("signalCMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalCMast(mast);
             }
         }
 
         if (element.getChild("signalDMast") != null) {
             String mast = element.getChild("signalDMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalDMast(mast);
             }
         }
 
         if (element.getChild("sensorA") != null) {
             String sensor = element.getChild("sensorA").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorAName(sensor);
             }
         }
 
         if (element.getChild("sensorB") != null) {
             String sensor = element.getChild("sensorB").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorBName(sensor);
             }
         }
 
         if (element.getChild("sensorC") != null) {
             String sensor = element.getChild("sensorC").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorCName(sensor);
             }
         }
 
         if (element.getChild("sensorD") != null) {
             String sensor = element.getChild("sensorD").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorDName(sensor);
             }
         }
 
-        p.xingList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LevelXingXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LevelXingXml.class);
 }

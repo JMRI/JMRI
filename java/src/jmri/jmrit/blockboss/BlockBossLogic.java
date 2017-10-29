@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -1420,5 +1419,5 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
 }

@@ -9,6 +9,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,14 +61,14 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                     Element elem = new Element("layoutblock").setAttribute("systemName", sname);
                     elem.addContent(new Element("systemName").addContent(sname));
                     storeCommon(b, elem);
-                    if (!b.getOccupancySensorName().equals("")) {
+                    if (!b.getOccupancySensorName().isEmpty()) {
                         elem.setAttribute("occupancysensor", b.getOccupancySensorName());
                     }
                     elem.setAttribute("occupiedsense", "" + b.getOccupiedSense());
-                    elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
-                    elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
-                    elem.setAttribute("extracolor", ColorUtil.colorToString(b.getBlockExtraColor()));
-                    if (!b.getMemoryName().equals("")) {
+                    elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
+                    elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
+                    elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
+                    if (!b.getMemoryName().isEmpty()) {
                         elem.setAttribute("memory", b.getMemoryName());
                     }
                     if (!b.useDefaultMetric()) {
@@ -114,16 +115,16 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      */
     public void loadLayoutBlocks(Element layoutblocks) {
         LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
-        if (layoutblocks.getAttribute("blockrouting") != null) {
-            if (layoutblocks.getAttribute("blockrouting").getValue().equals("yes")) {
-                tm.enableAdvancedRouting(true);
-            }
+        try {
+            tm.enableAdvancedRouting(layoutblocks.getAttribute("blockrouting").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout block manager blockrouting attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         if (layoutblocks.getAttribute("routingStablisedSensor") != null) {
             try {
                 tm.setStabilisedSensor(layoutblocks.getAttribute("routingStablisedSensor").getValue());
             } catch (jmri.JmriException e) {
-
             }
         }
 
@@ -183,7 +184,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                 if (((layoutblockList.get(i))).getChild("metric") != null) {
                     String stMetric = ((layoutblockList.get(i))).getChild("metric").getText();
                     try {
-                        b.setBlockMetric(Integer.valueOf(stMetric));
+                        b.setBlockMetric(Integer.parseInt(stMetric));
                     } catch (java.lang.NumberFormatException e) {
                         log.error("failed to convert metric attribute for block " + b.getDisplayName());
                     }
@@ -217,5 +218,5 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class);
 }

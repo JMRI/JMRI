@@ -2,9 +2,9 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Turnout implementation for C/MRI serial systems.
@@ -56,7 +56,7 @@ public class SerialTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName,CMRISystemConnectionMemo memo) {
+    public SerialTurnout(String systemName, String userName, CMRISystemConnectionMemo memo) {
         super(systemName, userName);
         // Save system Name
         tSystemName = systemName;
@@ -265,5 +265,5 @@ public class SerialTurnout extends AbstractTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
 }

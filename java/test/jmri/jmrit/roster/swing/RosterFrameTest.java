@@ -1,6 +1,5 @@
 package jmri.jmrit.roster.swing;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -21,7 +20,7 @@ public class RosterFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RosterFrame frame = new RosterFrame();
         Assert.assertNotNull("exists", frame);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -31,13 +30,12 @@ public class RosterFrameTest {
         frame.setVisible(true);
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
         Assert.assertTrue("Identify Button Enabled", operator.isIdentifyButtonEnabled());
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initGuiLafPreferencesManager();
@@ -47,9 +45,6 @@ public class RosterFrameTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

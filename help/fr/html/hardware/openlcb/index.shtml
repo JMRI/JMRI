@@ -1,123 +1,134 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated by Herv&#233; Blorec le 2013-09-18-->
+<!-- UpDated by Herv&#233; Blorec le 2017-02-06-->
+<title>JMRI: OpenLCB Support</title>
 
-  <title>JMRI: OpenLCB Support</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<title>JMRI Hardware Support - OpenLCB</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>JMRI: Support OpenLCB</h1><em>Le contenu de cette page
-      &eacute;volue rapidement; le Code r&eacute;el pourrait
-      &ecirc;tre en avance ou en retard par rapport &agrave; la
-      documentation pour un jour donn&eacute;.</em>
+<div id="mainContent">
 
-      <p>JMRI fournit un support pour les <a href=
-      "../../tools/Sensors.shtml">Capteurs JMRI</a> et les <a href=
-      "../../tools/Turnouts.shtml">Aiguillages</a> en
-      g&eacute;n&eacute;ral. en termes "d'&eacute;v&eacute;nements"
-      OpenLCB.</p>
+<h1>Documentation Mat&#233;rielle: OpenLCB</h1>
 
-      <p>Vous pouvez directement utiliser le r&eacute;seau OpenLCB
-      par l' <a href=
-      "../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">
-      envoi de trame outil</a>. Pour la navigation et les
-      param&egrave;tres de configuration, consultez les <a href=
-      "../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">
-      outils de configuration de noeud du navigateur</a>. <a href=
-      "../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
-      <img src=
-      "../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
-      width="128" height="149" align="right" alt=
-      "Configuration Tool window"></a></p>
+<em> Le contenu de cette page &#233;volue rapidement; le Code r&#233;el pourrait &#234;tre en avance ou en retard par rapport &#224; la documentation
+pour un jour donn&#233;.</em> <p>
+<ul class="snav"><!-- TOC -->
+	<li><a href="#connecting">Connexion</a></li>
+	<li><a href="#tools">Outils JMRI OpenLCB </a></li>
+	<li><a href="#documentation">Documentation</a></li>
+</ul>
 
-      <p>Voir aussi l' <a href="../index.shtml">page d'aide
-      principale</a> pourle support JMRI CAN y compris des liens
-      vers divers outils g&eacute;n&eacute;raux et la page sur les
-      <a href="Details.shtml">d&eacute;tails techniques</a> de
-      soutien OpenLCB de JMRI.</p>
+<a name="connecting"></a><h2>Connexion</h2>
+JMRI fournit un support pour les
+<a href="../../tools/Sensors.shtml"> Capteurs JMRI</a> 
+et les
+<a href="../../tools/Turnouts.shtml"> Aiguillages</a> en g&#233;n&#233;ral.
+en termes "d'&#233;v&#233;nements" OpenLCB.
 
-      <h2>D&eacute;signation</h2>La <a href=
-      "../../../html/doc/Technical/Names.shtml">lettre du
-      syst&egrave;me</a> pour les connexions OpenLCB est "M". Les
-      noms OpenLCB d'&eacute;v&eacute;nement et d'objet sont
-      pr&eacute;sent&eacute; ci-dessous, avec des d&eacute;tails et
-      des formats suppl&eacute;mentaires sur une <a href=
-      "Names.shtml">page s&eacute;par&eacute;e</a>.
+<h3>R&#233;glages</h3>
+<p>
+La <a href="../../../html/doc/Technical/Names.shtml">lettre syst&#232;me <a> 
+pour les connexions OpenLCB est "M". Les &#233;v&#233;nements
+et noms d'objets OpenLCB sont 
+introduit,ci-dessous, avec des d&#233;tails suppl&#233;mentaires et les formats sur une 
+<a href="Names.shtml">page s&#233;par&#233;e</a>.
 
-      <p>JMRI associ&eacute;s &eacute;v&eacute;nements OpenLCB avec
-      des Objets JMRI individuels (capteurs, les Aiguillages, etc)
-      via le Noms syst&egrave;me JMRI. Un nom de syst&egrave;me
-      comme " <code>MS1.2.3.4.5.6.7.8; 1.2.3.4.5.6.7.9</code>"
-      d&eacute;finit un capteur qui suit le "1.2.3.4.5.6.7.8" et
-      l'&eacute;v&eacute;nements OpenLCB "1.2.3.4.5.6.7.9" &agrave;
-      changer d'&eacute;tat.</p>
+<p>
+JMRI associ&#233;s &#233;v&#233;nements OpenLCB avec des
+objets JMRI individuels (Capteurs, Aiguillages, etc) via le
+Noms syst&#232;me JMRI. Un nom de syst&#232;me comme
+"<code> MS1.2.3.4.5.6.7.8; 1.2.3.4.5.6.7.9</code>"
+d&#233;finit un capteur qui suit le "1.2.3.4.5.6.7.8"
+et l'&#233;v&#233;nements OpenLCB "1.2.3.4.5.6.7.9" 
+&#224; changer d'&#233;tat.
+<p>
+Un autre format pour les ID d'&#233;v&#233;nement est une
+cha&#238;ne hexad&#233;cimale continue, tels que
+"<code>x0102030405060709</code>"..
+<p>
+Ces noms de syst&#232;me peut devenir tr&#232;s long, dans lequel
+cas, les "noms utilisateur" deviennent beaucoup plus utile.
 
-      <p>Un autre format pour les ID d'&eacute;v&eacute;nement est
-      une cha&icirc;ne hexad&eacute;cimale continue, tels que
-      "x0102030405060709".</p>
 
-      <p>Ces noms de syst&egrave;me peut devenir tr&egrave;s long,
-      dans lequel cas, les "noms utilisateur" deviennent beaucoup
-      plus utile.</p>
+<h2> Capteurs</h2>
+<p>
+Les Messages OpenLCB &#224; venir dans les applications JMRI peuvent &#234;tre accessibles
+via des objets de capteur JMRI. Le  
+<a href="Names.shtml">Nom Syst&#232;me du Capteur</a> 
+d&#233;termine les &#233;v&#233;nements de OpenLCB auquels il correspond.
+Un Capteur est d&#233;fini par deux &#233;v&#233;nements: celui qui la d&#233;finit ACTIF et
+celui qui d&#233;finit INACTIF. Les num&#233;ros d'&#233;v&#233;nements sont essentiellement
+arbitraire, et sont d&#233;finis par les n&#339;uds OpenLCB qui les envoient.
+Parce que les &#233;v&#233;nements ne sont pas intrins&#232;quement associ&#233;e &#224; un objet mat&#233;riel sp&#233;cifique
+, et parce que les gens peuvent utiliser les ID d'&#201;v&#233;nement de; bien des fa&#231;ons,
+une ID sp&#233;cifique d'ev&#232;nement pour un Capteur doit &#234;tre fourni.
+Vous cr&#233;ez des Capteurs en utilisant le bouton
+<a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"> Ajouter ...</a>
+ sur le
+<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml"> tableau Capteur</a>.
+Si vous fournissez deux ID d'&#233;v&#233;nement, le premier va r&#233;gler le d&#233;tecteur ACTIF et
+le second vous permettra de passer INACTIF. Si vous fournissez un seul, il
+fixera le capteur ACTIF, et il se r&#233;initialise automatiquement &#224; INACTIF
+peu de temps apr&#232;s. Ceci peut &#234;tre utilis&#233; pour des &#233;v&#233;nements qui indiquent des choses momentan&#233;es sur
+le r&#233;seaut comme "il est midi".
 
-      <h2>Capteurs</h2>Les mMessages OpenLCB &agrave; venir dans
-      les applications JMRI peuvent &ecirc;tre consult&eacute;s via
-      des objets de capteur JMRI. Le <a href=
-      "Names.shtml">syst&egrave;me de nom capteur</a>
-      d&eacute;termine les &eacute;v&eacute;nements de OpenLCB il
-      correspond.
+<h2> Aiguillages</h2>
+<p>
+Le r&#233;gime des aiguillages est similaire aux capteurs ci-dessus,
+sauf que JMRI &#233;met les trames OpenLCB au lieu de les recevoir, et
+la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.2.3.4.5.6.7.9</code>".
 
-      <p>Un capteur est d&eacute;fini par deux
-      &eacute;v&eacute;nements: celui qui la d&eacute;finit ACTIFe
-      et celui qui d&eacute;finit INACTIF. Les num&eacute;ros
-      d'&eacute;v&eacute;nements sont essentiellement arbitraire,
-      et sont d&eacute;finis par les noeuds OpenLCB qui les
-      envoient. Parce que les &eacute;v&eacute;nements ne sont pas
-      intrins&egrave;quement associ&eacute;e &agrave; un objet
-      mat&eacute;riel sp&eacute;cifique , et parce que les gens
-      peuvent utiliser les ID d'&eacute;v&eacute;nement &agrave;
-      bien des fa&ccedil;ons, une ID sp&eacute;cifique
-      d'ev&egrave;nement pour un capteur doit &ecirc;tre fourni.
-      Vous cr&eacute;ez des Capteurs en utilisant le bouton
-      <a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
-      Ajouter ...</a> sur le <a href=
-      "../../../../package/jmri/jmrit/beantable/SensorTable.shtml">tableau
-      Capteur</a>. Si vous fournissez deux ID
-      d'&eacute;v&eacute;nement, le premier va r&eacute;gler le
-      d&eacute;tecteur ACTIF et le second vous permettra de passer
-      INACTIF. Si vous fournissez un seul, il fixera le capteur
-      ACTIF, et il se r&eacute;initialise automatiquement &agrave;
-      INACTIF peu de temps apr&egrave;s. Ceci peut &ecirc;tre
-      utilis&eacute; pour des &eacute;v&eacute;nements qui
-      indiquent des choses momentan&eacute;es sur le r&eacute;seaut
-      comme "il est midi".</p>
+<h3>C&#226;blage</h3
+<p>Les options de connexion OpenLCB sont <a href="Connections.shtml">sur une page s&#233;par&#233;e</a>.
 
-      <h2>Aiguillages</h2>Le r&eacute;gime des aiguillages est
-      similaire aux capteurs ci-dessus, sauf que JMRI &eacute;met
-      les trames OpenLCB au lieu de les recevoir, et la lettre type
-      est "T" au lieu de "S", par exemple "
-      <code>MT1.2.3.4.5.6.7.8; 1.2.3.4.5.6.7.9</code>". 
-      <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<a name="tools"></a><h2>JOutils JMRI OpenLCB</h2
+<img src="images/OpenLCBmenu.png" width="172" height="126" align="right" alt="Menu">
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via ce syst&#232;me, un menu <b>OpenLCB</b> est montr&#233;:</p>
+<ul>   
+	<li>Moniteur de Trafic<br>
+	<a href="images/OpenLCBMonitor.png">
+	<img src="images/OpenLCBMonitor.png" alt="Monitor Pane" width="488" height="88"></a></li>
+	<li>Vous pouvez agir directement sur le r&#233;seau OpenLCB via l'outil 
+	<a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml"></a>Envoi Trame</a><br>
+	<a href="images/OpenLCBSendFrame.png">
+	<img src="images/OpenLCBSendFrame.png" alt="Send Frame Pane" width="456" height="349"></a></li>
+	<li>Naviguer et r&#233;gler la Configuration avec l'outil
+	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configurer No&#339;uds</a><br>
+	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
+	    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
+	    width="128" height="149" alt="Configuration Tool pane"></a>
+	<li>D&#233;marrer le Concentrateur<br>
+	<a href="images/OpenLCBHubControl.png">
+	<img src="images/OpenLCBHubControl.png" alt="Hub Control Pane" width="114" height="28"></a></li>
+	<li>L'outil <a href="../../../package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">Mise &#224; Jour Firmware</a>
+	peut charger le nouveau Firmware dans des N&#339;uds compatible OpenLCB <br>
+	<a href="images/OpenLCBFWDownloader.png">
+	<img src="images/OpenLCBFWDownloader.png" alt="HW Downloader Pane" width="145" height="171"></a></li>
+</ul>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+<ul>
+<li>Comment <a href="Connections.shtml">Connecter JMRI &#224; une installation OpenLCB</a></li>
+<li>La page d'aide sur les <a href="Details.shtml">D&#233;tails Techniques OpenLCB </a></li>
+<li>La <a href="../can/index.shtml">page principale d'Aide</a> pour la prise en charge de JMRI CAN,
+incluant des liens vers des outils vari&#233;s </li>
+</ul>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

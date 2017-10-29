@@ -21,6 +21,7 @@
 		    <li><dfn><a href="Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="LRoutes.shtml">LRoutes</a></dfn>
 		    <li><dfn><a href="Sections.shtml">Sections</a></dfn>
+		    <li><dfn><a href="Transits.shtml">Transits</a></dfn>
 		    <li><dfn><a href="Logix.shtml">Logix</a></dfn>
 		    <li><dfn><a href="fastclock/index.shtml">Fast Clocks</a></dfn>
 		    <li><dfn><a href="speedometer/index.shtml">Speedometer</a></dfn>
@@ -42,14 +43,14 @@
 		    <li><dfn><a href="../hardware/grapevine/index.shtml#tools">Grapevine</a></dfn>
 		    <li><dfn><a href="../hardware/loconet/Digitrax.shtml#tools">LocoNet (Digitrax)</a></dfn>
 		    <li><dfn><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin</a></dfn>
-		    <li><dfn><a href="../hardware/nce/index.shtml#tools">NCE</a></dfn>
+		    <li><dfn><a href="../hardware/nce/NCE.shtml#tools">NCE</a></dfn>
 		    <li><dfn><a href="../hardware/openlcb/index.shtml#tools">OpenLCB</a></dfn>
 		    <li><dfn><a href="../hardware/rps/index.shtml#tools">RPS</a></dfn>
 		    <li><dfn><a href="../hardware/sprog/SPROG.shtml#tools">SPROG</a></dfn>
-				<li><dfn><a href="../hardware/XBee/index.shtml#tools">XBee</a></dfn>
-				<li><dfn><a href="../hardware/XPressNet/index.shtml#tools">XPressNet (Lenz)</a></dfn>
-				</ul>
-    </dd>
+		    <li><dfn><a href="../hardware/XBee/index.shtml#tools">XBee</a></dfn>
+		    <li><dfn><a href="../hardware/XPressNet/index.shtml#tools">XPressNet (Lenz)</a></dfn>
+		    </ul>
+                </dd>
 
 		<dt><h3><a href="automation/">Layout Automation</a></h3></dt>
 		<dd>JMRI can be used to automate parts 
@@ -57,7 +58,8 @@
 		to running trains in the background.
 		    <ul>
 		    <li><dfn><a href="signaling/index.shtml">Signaling</a></dfn>
-        <li><dfn><a href="EntryExit.shtml">Entry Exit (NX)</a></dfn>
+                    <li><dfn><a href="EntryExit.shtml">Entry Exit (NX)</a></dfn>
+                    <li><dfn><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 		    <li><dfn><a href="Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="fastclock/index.shtml">Fast Clocks</a></dfn>
 		    <li><dfn><a href="scripting/index.shtml">Scripting</a></dfn>

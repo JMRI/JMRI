@@ -74,7 +74,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             }
             f.pack();
             f.setVisible(true);
-        } else {  // create and configure the headless server 
+        } else {  // create and configure the headless server
             hfs = new jmri.jmrix.loconet.hexfile.HexFileServer();
             hfs.setAdapter((LnHexFilePort) adapter);
         }

@@ -1,9 +1,6 @@
 package jmri.jmrix.loconet.ds64;
 
 import java.util.Locale;
-import jmri.jmrix.loconet.ds64.Bundle;
-import jmri.jmrix.loconet.ds64.Bundle;
-
 import org.junit.Assert;
 import org.junit.Test;
 

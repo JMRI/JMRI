@@ -1,8 +1,8 @@
 package jmri.jmrix.swing;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -24,8 +24,11 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         super();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
         setTitle("Send Packet"); // NOI18N
 

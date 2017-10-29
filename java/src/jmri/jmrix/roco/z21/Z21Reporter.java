@@ -1,9 +1,9 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.RailCom; 
-import jmri.RailComManager;
-import jmri.InstanceManager;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.RailCom;
+import jmri.RailComManager;
 
 /**
  * Z21Reporter implements the Reporter Manager interface

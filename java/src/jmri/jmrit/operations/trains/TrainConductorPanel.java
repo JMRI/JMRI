@@ -126,8 +126,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             }
 
             // Does this train have a unique railroad name?
-            if (!_train.getRailroadName().equals(Train.NONE)) {
-                textRailRoadName.setText(_train.getRailroadName());
+            if (!_train.getTrainRailroadName().equals(Train.NONE)) {
+                textRailRoadName.setText(_train.getTrainRailroadName());
             } else {
                 textRailRoadName.setText(Setup.getRailroadName());
             }
@@ -189,7 +189,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
                     } else {
                         moveButton.setEnabled(false);
-                        setButton.setEnabled(false);
+                        modifyButton.setEnabled(false);
                     }
                     
                     textStatus.setText(getStatus(rl, IS_MANIFEST));
@@ -201,6 +201,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                         moveButton.setText(Bundle.getMessage("Move"));
                     }
                     updateComplete();
+                    
                 }
             }
         });
@@ -222,14 +223,14 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     e.getOldValue(), e.getNewValue());
         }
         if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             clearAndUpdate();
         }
         if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
                 || (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) && e
                 .getNewValue() == null)
-                || e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
             // remove car from list
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();
@@ -237,10 +238,13 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 checkBoxes.remove("s" + car.getId());
                 checkBoxes.remove("m" + car.getId());
                 log.debug("Car ({}) removed from list", car.toString());
+                if (car.isUtility()) {
+                    clearAndUpdate(); // need to recalculate number of utility cars
+                }
             }
             update();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainConductorPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainConductorPanel.class);
 }

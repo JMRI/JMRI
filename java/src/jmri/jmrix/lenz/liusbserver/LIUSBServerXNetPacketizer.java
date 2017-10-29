@@ -72,13 +72,13 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException e) {
             // start the recovery process if an exception occurs.
             portWarn(e);
             controller.recover();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class);
 
 }

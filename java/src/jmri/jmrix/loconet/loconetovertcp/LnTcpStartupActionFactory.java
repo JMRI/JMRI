@@ -24,7 +24,7 @@ public class LnTcpStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
     public Class<?>[] getActionClasses() {
-        return new Class[]{LnTcpServerAction.class};
+        return new Class<?>[]{LnTcpServerAction.class};
     }
 
 }

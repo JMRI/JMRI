@@ -317,7 +317,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         // replaced with some notification system
         // to reduce the work used.
 
-        id.setText("" + r.getID());
+        id.setText("" + r.getId());
         timep.notify(r);
     }
 
@@ -356,5 +356,5 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     com.csvreader.CsvReader measurementInput = null;
     final javax.swing.JFileChooser measurementFileChooser = new JFileChooser("rps/positions.csv");
 
-    private final static Logger log = LoggerFactory.getLogger(DebuggerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebuggerFrame.class);
 }

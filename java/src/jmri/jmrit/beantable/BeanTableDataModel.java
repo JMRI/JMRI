@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of NamedBean manager contents.
  *
  * @author Bob Jacobsen Copyright (C) 2003
- * @author  Dennis Miller Copyright (C) 2006
+ * @author Dennis Miller Copyright (C) 2006
  */
 abstract public class BeanTableDataModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -105,7 +105,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager
             updateNameList();
-            log.debug("Table changed length to " + sysNameList.size());
+            log.debug("Table changed length to {}", sysNameList.size());
             fireTableDataChanged();
         } else if (matchPropertyName(e)) {
             // a value changed.  Find it, to avoid complete redraw
@@ -120,7 +120,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 try {
                     fireTableRowsUpdated(row, row);
                 } catch (Exception ex) {
-                    log.error("Property Change " + ex.toString());
+                    log.error("Exception updating table", ex);
                 }
             }
         }
@@ -223,7 +223,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             case DELETECOL:  //
                 return Bundle.getMessage("ButtonDelete");
             default:
-                log.error("internal state inconsistent with table requst for " + row + " " + col);
+                log.error("internal state inconsistent with table requst for {} {}", row, col);
                 return null;
         }
     }
@@ -239,7 +239,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             case DELETECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                 return new JTextField(22).getPreferredSize().width;
             default:
-                log.warn("Unexpected column in getPreferredWidth: " + col);
+                log.warn("Unexpected column in getPreferredWidth: {}", col);
                 return new JTextField(8).getPreferredSize().width;
         }
     }
@@ -278,7 +278,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 } else {
                     NamedBean nB = getByUserName((String) value);
                     if (nB != null) {
-                        log.error("User name is not unique " + value);
+                        log.error("User name is not unique {}", value);
                         String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                         JOptionPane.showMessageDialog(null, msg,
                                 Bundle.getMessage("WarningTitle"),
@@ -535,7 +535,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 }
                 w.write("\n"); // NOI18N
             } catch (IOException e) {
-                log.warn("error during printing: " + e);
+                log.warn("error during printing: {}", e.getMessage());
             }
         }
     }
@@ -660,7 +660,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         } else {
             NamedBean nB = getByUserName(value);
             if (nB != null) {
-                log.error("User name is not unique " + value);
+                log.error("User name is not unique {}", value);
                 String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                 JOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
@@ -736,8 +736,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 "Move " + getBeanType() + " " + currentName + " from " + oldNameBean.getSystemName(), "Move UserName",
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null); // TODO I18N
-        log.debug("Dialog value " + retval + " selected " + box.getSelectedIndex() + ":"
-                + box.getSelectedItem());
+        log.debug("Dialog value {} selected {}:{}", retval, box.getSelectedIndex(), box.getSelectedItem());
         if (retval != 1) {
             return;
         }
@@ -773,7 +772,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             String columnName = table.getModel().getColumnName(i);
             if (columnName != null && !columnName.equals("")) {
                 JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
-                menuItem.addActionListener(new headerActionListener(tc, tcm));
+                menuItem.addActionListener(new HeaderActionListener(tc, tcm));
                 popupMenu.add(menuItem);
             }
 
@@ -795,7 +794,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      */
     @Deprecated
     public void saveTableColumnDetails(JTable table) {
-        // do nothing 
+        // do nothing
     }
 
     /**
@@ -867,12 +866,12 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         this.persistTable(table);
     }
 
-    static class headerActionListener implements ActionListener {
+    static class HeaderActionListener implements ActionListener {
 
         TableColumn tc;
         XTableColumnModel tcm;
 
-        headerActionListener(TableColumn tc, XTableColumnModel tcm) {
+        HeaderActionListener(TableColumn tc, XTableColumnModel tcm) {
             this.tc = tc;
             this.tcm = tcm;
         }
@@ -897,7 +896,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
 
         @Override
-        public Void doInBackground() throws Exception {
+        public Void doInBackground() {
             StringBuilder message = new StringBuilder();
             try {
                 getManager().deleteBean(t, "CanDelete");  // NOI18N
@@ -1022,11 +1021,11 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
-    class popupmenuRemoveName implements ActionListener {
+    class PopupMenuRemoveName implements ActionListener {
 
         int row;
 
-        popupmenuRemoveName(int row) {
+        PopupMenuRemoveName(int row) {
             this.row = row;
         }
 
@@ -1067,5 +1066,5 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
 }

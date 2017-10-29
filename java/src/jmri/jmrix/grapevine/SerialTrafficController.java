@@ -57,31 +57,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         this.removeListener(l);
     }
 
-// remove this code when SerialLight is operational - obsoleted and doesn't belong here anyway
-    /**
-     * Public method to set a Grapevine Output bit Note: systemName is of format
-     * CNnnnBxxxx where "nnn" is the serial node number (0 - 127) "xxxx' is the
-     * bit number within that node (1 thru number of defined bits) state is
-     * 'true' for 0, 'false' for 1 The bit is transmitted to the hardware
-     * immediately before the next poll packet is sent.
-     */
-    public void setSerialOutput(String systemName, boolean state) {
-        // get the node and bit numbers
-        SerialNode node = SerialAddress.getNodeFromSystemName(systemName);
-        if (node == null) {
-            log.error("bad SerialNode specification in SerialOutput system name:" + systemName);
-            return;
-        }
-        int bit = SerialAddress.getBitFromSystemName(systemName);
-        if (bit == 0) {
-            log.error("bad output bit specification in SerialOutput system name:" + systemName);
-            return;
-        }
-        // set the bit
-        node.setOutputBit(bit, state);
-    }
-// end of code to be removed
-
     /**
      * Public method to set up for initialization of a Serial node
      */
@@ -100,7 +75,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for grapevine serial");
+        log.warn("enterProgMode doesn't make sense for grapevine serial");
         return null;
     }
 
@@ -425,5 +400,5 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return m.getNumDataElements(); // All are same length as message
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
 }

@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
@@ -43,8 +42,8 @@ import org.slf4j.LoggerFactory;
  */
 public class DecoderPro extends Apps {
 
-    DecoderPro(JFrame p) {
-        super(p);
+    DecoderPro() {
+        super();
     }
 
     @Override
@@ -91,8 +90,8 @@ public class DecoderPro extends Apps {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+        if (InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null
+                || !InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -100,8 +99,8 @@ public class DecoderPro extends Apps {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
+        if (InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) == null
+                || !InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
@@ -130,13 +129,13 @@ public class DecoderPro extends Apps {
         Apps.setStartupInfo("DecoderPro");
 
         setConfigFilename("DecoderProConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("DecoderPro");
-        DecoderPro dp = new DecoderPro(f);
+        DecoderPro dp = new DecoderPro();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(dp, f);
 
         log.debug("main initialization done");
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderPro.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderPro.class);
 }

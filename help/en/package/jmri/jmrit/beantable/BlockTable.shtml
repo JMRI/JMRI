@@ -32,10 +32,11 @@
       Layout Editor Panel, make the change in the Layout Editor,
       not in the Block Table.</p>
 
+      <a name="blockPaths" id="blockPaths"></a>
+      <h2>Blocks &amp; Paths</h2>
       <p>To complete the definition of a Block, Paths and Bean
       Settings must be attached to each Block.<br>
-      <a name="blockPaths" id=
-      "blockPaths"><strong>Paths</strong></a> describe entry points
+      <strong>Paths</strong> describe entry points
       to the Block. Each Block has one or more Paths associated
       with it. Sometimes a Turnout must be set a certain way to use
       a Path; Bean Settings carry that information. Paths and Bean
@@ -220,7 +221,7 @@
       <h2>Adding a new Block</h2>
 
       <p>To add a new Block, see <a href=
-      "BlockAddEdit.shtml">Add/Edit Block Entries</a></p>
+      "BlockAddEdit.shtml">Adding Blocks</a>.</p>
 
       <h2>Editing an existing Block</h2>
 
@@ -237,7 +238,7 @@
 
       <p>Back to the <a href=
       "../../../../html/tools/Blocks.shtml">Blocks Help
-      page</a></p>Located at package/jmri/jmrt/beantable/BlockTable
+      page</a></p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

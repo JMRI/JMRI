@@ -1,10 +1,15 @@
 package jmri.jmrit.display;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
+import javax.swing.border.Border;
 
 /**
  * Defines display objects.
@@ -41,13 +46,13 @@ public interface Positionable extends Cloneable {
 
     public boolean isEditable();
 
-    public void setShowTooltip(boolean set);
+    public void setShowToolTip(boolean set);
 
-    public boolean showTooltip();
+    public boolean showToolTip();
 
-    public void setTooltip(ToolTip tip);
+    public void setToolTip(ToolTip tip);
 
-    public ToolTip getTooltip();
+    public ToolTip getToolTip();
 
     public void setViewCoordinates(boolean enabled);
 
@@ -240,25 +245,25 @@ public interface Positionable extends Cloneable {
 
     public int getHeight();
 
-    public java.awt.Container getParent();
+    public Container getParent();
 
     public void setOpaque(boolean isOpaque);
 
     public boolean isOpaque();
 
-    public void setBackground(java.awt.Color bg);
+    public void setBackground(Color bg);
 
-    public java.awt.Color getBackground();
+    public Color getBackground();
 
-    public void setForeground(java.awt.Color bg);
+    public void setForeground(Color bg);
 
-    public java.awt.Color getForeground();
+    public Color getForeground();
 
-    public java.awt.Font getFont();
+    public Font getFont();
 
-    public void setBorder(javax.swing.border.Border border);
+    public void setBorder(Border border);
 
-    public java.awt.Dimension getPreferredSize();
+    public Dimension getPreferredSize();
 
     public void invalidate();
 

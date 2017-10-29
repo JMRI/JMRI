@@ -219,17 +219,12 @@ public class SimulatorAdapter extends NcePortController implements
             log.info("NCE Simulator Started");
         }
         while (true) {
-            try {
-                wait(100);
-            } catch (Exception e) {
-
-            }
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 buf.append("Nce Simulator Thread received message: ");
                 for (int i = 0; i < m.getNumDataElements(); i++) {
-                    buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+                    buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
                 }
                 log.debug(buf.toString());
             }
@@ -237,10 +232,10 @@ public class SimulatorAdapter extends NcePortController implements
                 NceReply r = generateReply(m);
                 writeReply(r);
                 if (log.isDebugEnabled() && r != null) {
-                    StringBuffer buf = new StringBuffer();
+                    StringBuilder buf = new StringBuilder();
                     buf.append("Nce Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                     }
                     log.debug(buf.toString());
                 }
@@ -496,6 +491,6 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

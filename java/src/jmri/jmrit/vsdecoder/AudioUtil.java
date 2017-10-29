@@ -73,20 +73,20 @@ public class AudioUtil {
         try {
             ALut.alutLoadWAVFile(stream, format, data, size, freq, loop);
         } catch (ALException e) {
-            log.warn("Error loading JoalAudioBuffer: " + e.getMessage());
+            log.warn("Error loading JoalAudioBuffer: {}", e.getMessage());
             return null;
         }
 
         // OK, for now, we're only going to support 8-bit and 16-bit Mono data.
         // I'll have to figure out later how to extend this to multiple data formats.
         if ((format[0] != AL.AL_FORMAT_MONO8) && (format[0] != AL.AL_FORMAT_MONO16)) {
-            log.warn("Invalid Format for splitting! Failing out." + parseFormat(format[0]));
+            log.warn("Invalid Format for splitting! Failing out.{}", parseFormat(format[0]));
             return null;
         }
 
         while (data[0].remaining() > 0) {
-            log.debug("while loop. Source: " + data[0]);
-            AudioByteBuffer ab = new AudioByteBuffer(getSubBuffer(data[0], max_time, min_time, format[0], freq[0]), format[0], freq[0], loop[0]);
+            log.debug("while loop. Source: {}", data[0]);
+            AudioByteBuffer ab = new AudioByteBuffer(getSubBuffer(data[0], max_time, min_time, format[0], freq[0]), format[0], freq[0]);
             // getSubBuffer returning null isn't necessarily an error.  It could mean there weren't enough bytes left, so we truncated.
             // In this case, we wil have already gotten (via get()) the remaining bytes from data[0], so we should exit the while loop
             // normally.
@@ -135,7 +135,7 @@ public class AudioUtil {
         // OK, for now, we're only going to support 8-bit and 16-bit Mono data.
         // I'll have to figure out later how to extend this to multiple data formats.
         if ((format[0] != AL.AL_FORMAT_MONO8) && (format[0] != AL.AL_FORMAT_MONO16)) {
-            log.warn("Invalid Format! Failing out." + parseFormat(format[0]));
+            log.warn("Invalid Format! Failing out.{}", parseFormat(format[0]));
             return 0;
         }
         log.debug("WAV format: {}", parseFormat(format[0]));
@@ -151,10 +151,10 @@ public class AudioUtil {
      *
      * @return List of AudioBuffers
      */
-    static public List<AudioBuffer> getAudioBufferList(String prefix, List<AudioByteBuffer> blist) {
+    static private List<AudioBuffer> getAudioBufferList(String prefix, List<AudioByteBuffer> blist) {
         // Sanity check the prefix, since if it's wrong we'll get a casting error below.
         if (prefix.charAt(2) != Audio.BUFFER) {
-            log.warn("Not a Buffer request! " + prefix);
+            log.warn("Not a Buffer request! {}", prefix);
             return null;
         }
 
@@ -165,12 +165,8 @@ public class AudioUtil {
             try {
                 AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(prefix + "_sbuf" + i);
                 i++;
-                if (buf == null) {
-                    log.debug("provideAudio returned null!");
-                    return null;
-                } // might be redundant with the try/catch.
                 if (buf.getLength() > 0) {
-                    log.debug("provideAudio found already-built buffer:" + buf.getSystemName() + " ... skipping load.");
+                    log.debug("provideAudio found already-built buffer:{} ... skipping load.", buf.getSystemName());
                 } else {
                     buf.loadBuffer(b.data, b.format, b.frequency);
                     if (log.isDebugEnabled()) {
@@ -183,7 +179,7 @@ public class AudioUtil {
 
                 rlist.add(buf);
             } catch (AudioException | IllegalArgumentException e) {
-                log.warn("Error on provideAudio! " + e.toString());
+                log.warn("Error on provideAudio! {}", (Object) e);
                 if (log.isDebugEnabled()) {
                     jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
                         log.debug("\tBuffer: " + s);
@@ -279,7 +275,7 @@ public class AudioUtil {
         // samples = time_us * freq / 1e3.
         // This will be approximate due to integer rounding.
         int rv = frameSize(fmt) * ((time_ms * freq) / 1000);
-        log.debug("calcTimeIndex: freq = " + freq + " time_us = " + time_ms + " rv = " + rv);
+        log.debug("calcTimeIndex: freq = {} time_us = {} rv = {}", freq, time_ms, rv);
         return rv;
     }
 
@@ -301,27 +297,28 @@ public class AudioUtil {
      * @return true if a zero crossing is detected.
      */
     private static Boolean isZeroCross(byte[] buf, int len, int format, ByteOrder order) {
-        if (format == AL.AL_FORMAT_MONO8) {
-            if (len < 3) {
+        switch (format) {
+            case AL.AL_FORMAT_MONO8:
+                if (len < 3) {
+                    return false;
+                } else {
+                    return (((0xFF & buf[len - 3]) < 128) && ((0xFF & buf[len - 2]) < 128) && ((0xFF & buf[len - 1]) >= 128));
+                }
+            case AL.AL_FORMAT_MONO16:
+                if (len < 6) {
+                    return false;
+                }
+                short[] sbuf = new short[len / 2];
+                // Below assumes little-endian
+                ByteBuffer bb = ByteBuffer.wrap(buf);
+                bb.order(order);
+                //bb.reset();
+                sbuf[0] = bb.getShort();
+                sbuf[1] = bb.getShort();
+                sbuf[2] = bb.getShort();
+                return ((sbuf[0] < 0) && (sbuf[1] < 0) && (sbuf[2] >= 0));
+            default:
                 return false;
-            } else {
-                return (((0xFF & buf[len - 3]) < 128) && ((0xFF & buf[len - 2]) < 128) && ((0xFF & buf[len - 1]) >= 128));
-            }
-        } else if (format == AL.AL_FORMAT_MONO16) {
-            if (len < 6) {
-                return false;
-            }
-            short[] sbuf = new short[len / 2];
-            // Below assumes little-endian
-            ByteBuffer bb = ByteBuffer.wrap(buf);
-            bb.order(order);
-            //bb.reset();
-            sbuf[0] = bb.getShort();
-            sbuf[1] = bb.getShort();
-            sbuf[2] = bb.getShort();
-            return ((sbuf[0] < 0) && (sbuf[1] < 0) && (sbuf[2] >= 0));
-        } else {
-            return false;
         }
     }
 
@@ -349,11 +346,11 @@ public class AudioUtil {
         ByteBuffer retbuf;
         byte[] retbytes = new byte[source.remaining() + 1];
 
-        log.debug("Creating sub buffer.  interval = " + max_time + " freq = " + freq + " time_size = " + time_size + " sample size= " + frameSize(format));
-        log.debug("\tBefore: Source = " + source);
+        log.debug("Creating sub buffer.  interval = {} freq = {} time_size = {} sample size= {}", max_time, freq, time_size, frameSize(format));
+        log.debug("\tBefore: Source = {}", source);
 
         if (time_size < source.remaining()) {
-            log.debug("Extracting slice.  Remaining = " + source.remaining());
+            log.debug("Extracting slice.  Remaining = {}", source.remaining());
             // Enough bytes remaining to pull out a chunk.
             // First, copy over time_size bytes
             source.get(retbytes, 0, time_size);
@@ -365,7 +362,7 @@ public class AudioUtil {
                 bufcount += frameSize;
             }
         } else {
-            log.debug("Not enough bytes.  Copying remaining bytes = " + source.remaining());
+            log.debug("Not enough bytes.  Copying remaining bytes = {}", source.remaining());
             // Not enough bytes remaning to pull out a chunk. Just copy/return the rest of the buffer.
             bufcount = source.remaining();
             source.get(retbytes, 0, bufcount);
@@ -376,7 +373,7 @@ public class AudioUtil {
             retbuf = ByteBuffer.allocate(bufcount);
             retbuf.order(source.order()); // set new buffer's byte order to match source buffer.
             retbuf.put(retbytes, 0, bufcount);
-            log.debug("\tAfter: source= " + source + "bufcount=" + bufcount + " retbuf= " + retbuf);
+            log.debug("\tAfter: source= {}bufcount={} retbuf= {}", source, bufcount, retbuf);
         } else {
             log.warn("Remaining bytes less than minimum time interval.  Discarding.");
             return null;
@@ -384,7 +381,7 @@ public class AudioUtil {
         return retbuf;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioUtil.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioUtil.class);
 
     /**
      * Private class used to associate audio information (frequency, format,
@@ -395,14 +392,11 @@ public class AudioUtil {
         public ByteBuffer data;
         public int format;
         public int frequency;
-        @SuppressWarnings("unused")
-        public int loop;
 
-        public AudioByteBuffer(ByteBuffer d, int fmt, int freq, int lp) {
+        public AudioByteBuffer(ByteBuffer d, int fmt, int freq) {
             data = d;
             format = fmt;
             frequency = freq;
-            loop = lp;
         }
     }
 }

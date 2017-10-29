@@ -2,6 +2,7 @@ package jmri.jmrit.log;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
  */
-public class Log4JTreePaneTest {
+public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     public void testShow() {
@@ -29,18 +30,23 @@ public class Log4JTreePaneTest {
                 "jmri.jmrit.log.Log4JTreePane").actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("MenuItemLogTreeAction"), true, true);
         Assert.assertNotNull(f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
+        panel = new Log4JTreePane();
+        title=Bundle.getMessage("MenuItemLogTreeAction");
+        helpTarget="package.jmri.jmrit.log.Log4JTreePane";
     }
 
     @After
+    @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

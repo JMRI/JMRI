@@ -3,8 +3,8 @@ package jmri.jmrix.jmriclient.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import jmri.server.json.JSON;
 import jmri.jmrix.AbstractMRReply;
+import jmri.server.json.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

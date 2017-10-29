@@ -7,12 +7,11 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.util.JUnitUtil;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
@@ -463,17 +462,17 @@ public abstract class AbstractVariableValueTestBase extends TestCase {
     }
 
     // abstract class has no main entry point, test suite
-    private final static Logger log = LoggerFactory.getLogger(AbstractVariableValueTestBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

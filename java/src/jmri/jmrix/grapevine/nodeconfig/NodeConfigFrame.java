@@ -4,7 +4,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -523,6 +522,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         return (addr);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

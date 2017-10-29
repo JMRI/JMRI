@@ -3,53 +3,83 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233; 2013-09-25-->
+<!-- UpDated  by Blorec Herv&#233; 2017-01-26-->
+<title>JMRI Hardware Support - Protrak Grapevine System</title>
 
-  <title>JMRI: Connecting the Grapevine System</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>JMRI: Connexion au Syst&egrave;me
-      Grapevine</h1>D&eacute;signation et connecteurs
-      d'entr&eacute;e/sortie sont d&eacute;crits sur une <a href=
-      "Names.shtml">page s&eacute;par&eacute;e</a>.
+<div id="mainContent">
 
-      <h2>Outils</h2>Vous pouvez v&eacute;rifier si votre Grapevine
-      travaille et configure les noeuds connect&eacute;s &agrave;
-      l'aide de l'outil <a href=
-      "../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">
-      la table des noeud</a> . Il vous permet &eacute;galement de
-      changer le num&eacute;ro d'un noeud.
+<h1>Support Mat&#233;riel: Protrak Grapevine System</h1>
 
-      <h2>Limitations</h2>
+<a name="hardware"></a><h2> Mat&#233;riel pris en charge</h2>
+<h3>Modules</h3>
+<ul>
+	<li>Protrak Grapevine Nodes</li>
+<ul>
 
-      <ul>
-        <li>Les horloges rapides ne sont pas encore
-        support&eacute;es. Si vous en avez une et que vous
-        souhaitez la tester avec JMRI, nous le faire savoir.</li>
-      </ul>
+<a name="limitations"></a><h2>Limitations</h2>
+<ul>
+<LI>Les horloges rapides ne sont pas encore support&#233;es. Si vous en avez une et que vous souhaitez la tester
+ avec JMRI, nous le faire savoir.
+</UL>
 
-      <h2>Plus d'informations</h2>Plus d'informations sur le
-      mat&eacute;riel Grapevine peut &eacute;tre consult&eacute;e
-      sur le <a href="http://www.protrak.cc">site web ProTrak</a>. 
-      <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<a name="connecting"></a><h2>Connexion</h2>
+
+<h3>R&#233;glages</h3>
+<p>Pour configurer la connexion:
+<ul>
+<li>Ouvrez les pr&#233;f&#233;rence JMRI dans le menu "&#233;dition"
+<li>Dans l'onglet Connexion, s&#233;lectionnez "Protrak"comme System Manufacturer
+<li>S&#233;lectionnez "Grapevine (ProTrak) Layout Bus" comme System Connection (la seule possibilit&#233;)
+<li>Cliquez "Enregistrer"  &amp; red&#233;marrez
+</ul>
+<p>
+Avant que vous acc&#233;diez au N&#339;eud Gravpine dans JMRI, Vous devez le d&#233;finir pour
+le programme. Vous pouvez le faire soit depuis la 
+<a href="../../../package/apps/TabbedPreferences.shtml">fen&#234;tre Pr&#233;f&#233;rences</a>
+dans le menu "&#233;dition du menu principal
+ou en utilisant
+l'outil <a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configurer les N&#339;uds</a>
+dans le menu <strong>Grapevine</strong>.
+
+<p>Les Noms Syst&#232;mes Gravrpine commencent avec un syst&#232;me de lettre "G". 
+Apr&#232;s ceci , il y a une
+<a href="../../doc/Technical/Names.shtml#type"> Lettre type</a>, 
+puis un num&#233;ro de n&#339;ud et un num&#233;ro de broche.<br>
+La d&#233;nomination et les connecteurs entr&#233;e/sortie sont d&#233;crits dans une 
+<a href="Names.shtml">page s&#233;par&#233;e</a>.
+
+<a name="tools"></a><h2>Outils JMRI Grapevine</h2>
+<p>Le menu <strong>Grapevine</strong> donne acc&#232;s &#224;:
+<ul>
+<li>Le
+<a href="../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Tableau des N&#339;uds</a> outil Pour v&#233;rifier si votre Grapevine fonctionne et configurer les n&#339;uds connect&#233;s.
+<li>L'outil 
+<a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configurer les N&#339;uds</a>.
+</ul>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Autre Source d'info</h3>
+<ul>
+
+Plus d'informations sur le mat&#233;riel Grapevine peut &#233;tre consult&#233;e sur le
+<a href="http://www.protrak.cc"> site web ProTrak</a> incluant le
+<li><a href="http://protrak.cc/wpt/support/the-manual/">Manuel Protrak</a>
+</ul>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

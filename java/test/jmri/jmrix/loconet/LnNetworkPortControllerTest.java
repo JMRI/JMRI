@@ -15,8 +15,7 @@ public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortC
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
        apc = new LnNetworkPortController(memo){
             @Override
@@ -28,7 +27,6 @@ public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortC
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 }

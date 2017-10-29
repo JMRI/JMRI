@@ -90,14 +90,13 @@ public class CombinedLocoSelListPaneTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

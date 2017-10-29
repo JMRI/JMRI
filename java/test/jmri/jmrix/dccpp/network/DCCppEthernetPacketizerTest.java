@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.network;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -27,7 +28,7 @@ public class DCCppEthernetPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketize
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

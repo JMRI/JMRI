@@ -3,51 +3,51 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- $Id$ -->
-  <!--UpDated by Herv&#233; Blorec le 2013-09-20-->
+ <!--UpDated by Herv&#233; Blorec le 2017-01-12-->
+<title>JMRI Hardware Support - Creating an XPressNet Log File</title>
 
-  <title>How to Create an XPressNet Log File</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h2>Comment Cr&eacute;er un Fichier de Connexion
-      XPressNet</h2>
+<div id="mainContent">
 
-      <p>D&eacute;marrer Decoder Pro (ou la d&eacute;mo JMRI)
-      Ouvrez le Moniteur XpressNet ( qui est dans le sous-menu du
-      menu "Syst&egrave;me" de XPressNet)</p>
+	<H1>Structure Mat&#233;rielle: Cr&#233;ation d'un Fichier Journal</H1>
+	<P>
+ 	D&#233;marrer Decoder Pro (ou la d&#233;mo JMRI)
+	<p>  Ouvrez le <strong>Moniteur XpressNet</strong> ( qui est dans le sous-menu du menu "Syst&#232;me" de XPressNet)
+	<P>
+ 	Le volet suivant va s'ouvrir:<br
+  	<img src="images/XPressNetTrafficMonitor.jpg" alt="XPressNet Traffic Monitor Image">
 
-      <p>Vous verrez une fen&ecirc;tre comme la suivante: <img src=
-      "images/XPressNetTrafficMonitor.jpg" alt=
-      "XPressNet Traffic Monitor Image"><br>
-      Ensuite cliquez sur le bouton &Acirc;&laquo;Choisir le
-      fichier Rapport" , et choisissez un fichier Rapport &agrave;
-      utiliser (vous pouvez utiliser le nom par d&eacute;faut, la
-      chose importante est de savoir o&ugrave; est le fichier )<br>
-      Une fois que vous avez cliquez sur Enregistrer dans la
-      bo&icirc;te de dialogue, cliquez sur le bouton
-      "D&eacute;marrer Connexion" sur le moniteur.<br>
-      Maintenant, vous pouvez effectuer toutes les actions que vous
-      souhaitez effectuer.<br>
-      Enfin, retournez &agrave; la fen&ecirc;tre Moniteur XPressNet
-      , puis cliquez sur le bouton "Stop Connexion"<br>
-      Maintenant vous pouvez quitter l'application ou continuer
-      &agrave; travailler. <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+		h4>Boutons</h4>
+				<ul>
+				<li>"Clear Screen" enl&#232;ve tout l'historique du panneau
+				<li>"Freeze Screen" Arr&#234;te le chargement de nouvelle donn&#233;e pour vous aider &#224; &#233;tudier le contenu actuel de l'affichage
+				<li>Cliquer sur le bouton "Choisir fichier journal", et choisir le nom d'un fichier de connexion &#224; utiliser
+				( vous pouvez garder le nom par d&#233;faut; l'important est de savoir où le fichier est stock&#233; )
+				<li>Ensuite vous cliquez "Save" dans la boite de dialogue fichier, cliquez le bouton "Start logging" sur le panneau.<br> 
+   				Maintenant, vous pouvez effectuer toutes les actions que vous souhaitez effectuer dans JMRI. Un journal est conserv&#233; de tout le trafic sur la connexion XPressNet.
+ 				<li>Cliquez le bouton "Stop Logging" sur le volet XPressNet Monitor, pour - bien - arr&#234;ter l'enregistrement.
+				</ul>
+
+<p>Retour &#224; la page <a href="index.shtml">Aide XPressNet</a>  
+
+<hr>
+Paul Bender<br>
+paul.bender@acm.org
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

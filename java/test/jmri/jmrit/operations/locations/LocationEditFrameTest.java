@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -57,11 +58,11 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.deleteLocationButton);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
         // confirm delete dialog window should appear
-        pressDialogButton(f, Bundle.getMessage("deletelocation?"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonYes"));
         // location now deleted
         Assert.assertEquals("should be 5 locations", 5, lManager.getLocationsByNameList().size());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     private void loadLocations() {

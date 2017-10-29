@@ -106,7 +106,7 @@ public class SystemsMenu extends JMenu {
         JMenu j = null;
         try {
             j = (JMenu) Class.forName(className).newInstance();
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             log.warn("Could not make menu from class " + className + "; " + e);
         }
         if (j != null) {
@@ -114,5 +114,5 @@ public class SystemsMenu extends JMenu {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemsMenu.class);
 }

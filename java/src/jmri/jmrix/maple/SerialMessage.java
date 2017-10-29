@@ -1,6 +1,6 @@
 package jmri.jmrix.maple;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,19 +47,16 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         super(String.valueOf(a));
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder("");
         for (int i = 0; i < getNumDataElements(); i++) {
             if (i != 0) {
-                s += " ";
+                s.append(" ");
             }
-            s += jmri.util.StringUtil.twoHexFromInt(getElement(i));
+            s.append(StringUtil.twoHexFromInt(getElement(i)));
         }
-        return s;
+        return s.toString();
     }
 
     // control when reply is expected
@@ -102,7 +99,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // static methods to return a formatted message
     static public SerialMessage getPoll(int UA, int startAdd, int count) {
         if ((count <= 0) || (count > 99)) {
-            log.error("Illegal count in Maple poll message - " + count);
+            log.error("Illegal count in Maple poll message - {}", count);
             return null;
         }
         SerialMessage m = new SerialMessage(14);
@@ -111,7 +108,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(2, '0' + (UA - ((UA / 10) * 10)));
         m.setElement(3, 'R');
         m.setElement(4, 'C');
-        m.setElement(5, '0' + (startAdd / 1000));    // read starting at 0001    
+        m.setElement(5, '0' + (startAdd / 1000));    // read starting at 0001
         m.setElement(6, '0' + ((startAdd - ((startAdd / 1000) * 1000)) / 100));
         m.setElement(7, '0' + ((startAdd - ((startAdd / 100) * 100)) / 10));
         m.setElement(8, '0' + (startAdd - ((startAdd / 10) * 10)));
@@ -151,7 +148,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         setElement(index + 1, secondChar);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class);
+
 }
-
-

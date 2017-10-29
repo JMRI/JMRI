@@ -57,14 +57,14 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
             int sum = Integer.valueOf(s2, 16).intValue();
             sum += 16 * Integer.valueOf(s1, 16).intValue();
             val = sum;  // don't do this assign until now in case the conversion throws
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Unable to get number from reply: \"" + s1 + s2 + "\" index: " + index
                     + " message: \"" + toString() + "\"");
         }
         return val;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccReply.class);
 
 }
 

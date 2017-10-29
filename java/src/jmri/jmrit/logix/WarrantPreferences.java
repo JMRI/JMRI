@@ -131,6 +131,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
+    private float _mf = 0.8f;    // momentum factor (guess) for speed change
 
     /**
      * Get the default instance.
@@ -418,7 +419,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingLunar")));
             rampPrefs.addContent(step);
             prefs.addContent(rampPrefs);
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             log.warn("Exception in storing warrant xml.", ex);
             return false;
         }
@@ -664,6 +665,22 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     public float getThrottleIncrement() {
         return _throttleIncr;
+    }
+    
+    /**
+     * Get momentum factor
+     */
+    public float getMomentumFactor() {
+//      _mf = 1f - 22167 / ((_intervalTime / _throttleIncr) + 21667); // .1->.3 2->.9 *
+//      _mf = 1f - 33833 / ((_intervalTime / _throttleIncr) + 38333); // .1->.3 3->.9
+//      _mf = 1f - 45500 / ((_intervalTime / _throttleIncr) + 55000); // .1->.3 4->.9 **
+//      _mf = 1f - 44571 / ((_intervalTime / _throttleIncr) + 45714); // .1->.2 4->.9
+//      _mf = 1f - 100000 / ((_msIncrTime / _throttleIncr) + 187409); // excel **
+      _mf = 1f - 56297 / ((_msIncrTime / _throttleIncr) + 100000); // excel
+      if (_mf < 0.45f) {
+          _mf = 0.45f;            
+      }
+       return _mf; 
     }
 
     /**

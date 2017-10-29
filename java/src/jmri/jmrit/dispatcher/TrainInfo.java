@@ -24,11 +24,16 @@ public class TrainInfo {
 
     // instance variables for both manual and automatic operation
     private String transitName = "";
+    private String transitId = "";
     private String trainName = "";
     private String dccAddress = "";
     private boolean trainInTransit = false;
     private String startBlockName = "";
+    private String startBlockId = "";
+    private int startBlockSeq = -1;
     private String destinationBlockName = "";
+    private String destinationBlockId = "";
+    private int destinationBlockSeq = -1;
     private boolean trainFromRoster = true;
     private boolean trainFromTrains = false;
     private boolean trainFromUser = false;
@@ -36,6 +41,7 @@ public class TrainInfo {
     private boolean autoRun = false;
     private boolean resetWhenDone = false;
     private boolean allocateAllTheWay = false;
+    private int allocationMethod = 3;
     private boolean reverseAtEnd = false;
     private int delayedStart = ActiveTrain.NODELAY;
     private int delayedRestart = ActiveTrain.NODELAY;
@@ -56,6 +62,10 @@ public class TrainInfo {
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
     private float maxTrainLength = 200.0f;
+    private boolean useSpeedProfile = false;
+    private boolean stopBySpeedProfile = false;
+    private float stopBySpeedProfileAdjust = 1.0f;
+
 
     //
     // Access methods for manual and automatic instance variables
@@ -68,6 +78,14 @@ public class TrainInfo {
         return transitName;
     }
 
+    protected void setTransitId(String s) {
+        transitId = s;
+    }
+
+    protected String getTransitId() {
+        return transitId;
+    }
+
     protected void setTrainName(String s) {
         trainName = s;
     }
@@ -76,11 +94,11 @@ public class TrainInfo {
         return trainName;
     }
 
-    protected void setDCCAddress(String s) {
+    protected void setDccAddress(String s) {
         dccAddress = s;
     }
 
-    protected String getDCCAddress() {
+    protected String getDccAddress() {
         return dccAddress;
     }
 
@@ -100,12 +118,44 @@ public class TrainInfo {
         return startBlockName;
     }
 
+    protected void setStartBlockId(String s) {
+        startBlockId = s;
+    }
+
+    protected String getStartBlockId() {
+        return startBlockId;
+    }
+
+    protected void setStartBlockSeq(int i) {
+        startBlockSeq = i;
+    }
+
+    protected int getStartBlockSeq() {
+        return startBlockSeq;
+    }
+
     protected void setDestinationBlockName(String s) {
         destinationBlockName = s;
     }
 
     protected String getDestinationBlockName() {
         return destinationBlockName;
+    }
+
+    protected void setDestinationBlockId(String s) {
+        destinationBlockId = s;
+    }
+
+    protected String getDestinationBlockId() {
+        return destinationBlockId;
+    }
+
+    protected void setDestinationBlockSeq(int i) {
+        destinationBlockSeq = i;
+    }
+
+    protected int getDestinationBlockSeq() {
+        return destinationBlockSeq;
     }
 
     protected void setTrainFromRoster(boolean b) {
@@ -170,6 +220,38 @@ public class TrainInfo {
 
     protected boolean getAllocateAllTheWay() {
         return allocateAllTheWay;
+    }
+
+    protected void setAllocationMethod(int i) {
+        allocationMethod = i;
+    }
+
+    protected int getAllocationMethod() {
+        return allocationMethod;
+    }
+
+    protected void setUseSpeedProfile(boolean b) {
+        useSpeedProfile = b;
+    }
+
+    protected boolean getUseSpeedProfile() {
+        return useSpeedProfile;
+    }
+
+    protected void setStopBySpeedProfile(boolean b) {
+        stopBySpeedProfile = b;
+    }
+
+    protected boolean getStopBySpeedProfile() {
+        return stopBySpeedProfile;
+    }
+
+    protected void setStopBySpeedProfileAdjust(float f) {
+        stopBySpeedProfileAdjust = f;
+    }
+
+    protected float getStopBySpeedProfileAdjust() {
+        return stopBySpeedProfileAdjust;
     }
 
     protected void setReverseAtEnd(boolean b) {
@@ -294,7 +376,7 @@ public class TrainInfo {
     //
     // Access methods for automatic operation instance variables
     //
-    protected void setSpeedFactor(Float f) {
+    protected void setSpeedFactor(float f) {
         speedFactor = f;
     }
 
@@ -302,7 +384,7 @@ public class TrainInfo {
         return speedFactor;
     }
 
-    protected void setMaxSpeed(Float f) {
+    protected void setMaxSpeed(float f) {
         maxSpeed = f;
     }
 

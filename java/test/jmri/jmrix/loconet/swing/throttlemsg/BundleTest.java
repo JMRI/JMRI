@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.swing.throttlemsg;
 
 import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Test;
 

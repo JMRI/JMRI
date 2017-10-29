@@ -134,7 +134,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         if (!iter.hasNext()) {
             return;
         }
-        ArrayList<NamedBean> excludeList = new ArrayList<NamedBean>();
+        ArrayList<NamedBean> excludeList = new ArrayList<>();
         while (iter.hasNext()) {
             String mname = iter.next();
             if (mname != null) {
@@ -210,6 +210,8 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
 
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case ENABLE_COLUMN:
@@ -356,6 +358,8 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
             }
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
         @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == DIR_COLUMN) {
@@ -383,6 +387,6 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanel.class);
 
 }

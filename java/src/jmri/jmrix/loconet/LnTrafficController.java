@@ -144,5 +144,5 @@ public abstract class LnTrafficController implements LocoNetInterface {
     }
     protected int transmittedMsgCount = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(LnTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTrafficController.class);
 }

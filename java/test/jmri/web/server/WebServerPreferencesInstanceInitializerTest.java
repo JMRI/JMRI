@@ -1,6 +1,5 @@
 package jmri.web.server;
 
-import apps.tests.Log4JFixture;
 import java.util.Set;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -33,14 +32,10 @@ public class WebServerPreferencesInstanceInitializerTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

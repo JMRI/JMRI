@@ -1,20 +1,19 @@
 package jmri.jmrix.loconet.pr2;
 
+import jmri.JmriException;
+import jmri.PowerManager;
 import jmri.jmrix.AbstractPowerManagerTestBase;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Ignore;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LnPowerManager;
-import jmri.jmrix.loconet.LnPr2ThrottleManager;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.SlotManager;
-import jmri.PowerManager;
-import jmri.JmriException;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * tests for the Jmri package LnPr2PowerManager
@@ -23,7 +22,7 @@ import jmri.JmriException;
  */
 public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
 
-    private SlotManager slotmanager = null; 
+    private SlotManager slotmanager = null;
 
     /**
      * service routines to simulate receiving on, off from interface
@@ -130,6 +129,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     @Before
     @Override
     public void setUp() {
+        JUnitUtil.setUp();
         controller = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(controller);
         PR2SystemConnectionMemo memo = new PR2SystemConnectionMemo(controller,slotmanager);
@@ -142,8 +142,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     @After
     public void tearDown() {
         pwr.dispose();
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
     LocoNetInterfaceScaffold controller;  // holds dummy for testing

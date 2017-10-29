@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
- * @author kcameron Copyright (C) 2011
+ * @author Ken Cameron Copyright (C) 2011
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -36,7 +36,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Turnout s = getBySystemName(prefix + typeLetter() + curAddress);
         if (s == null) {
@@ -45,19 +45,20 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
         // This bit deals with handling the curAddress, and how to get the next address.
         int iName = 0;
-        //Address starts with a single letter called a house code.
+        // Address starts with a single letter called a House Code.
         String houseCode = curAddress.substring(0, 1);
         try {
             iName = Integer.parseInt(curAddress.substring(1));
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         s = getBySystemName(prefix + typeLetter() + curAddress);
         if (s != null) {
             for (int x = 1; x < 10; x++) {
@@ -93,12 +94,31 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // does system name correspond to configured hardware
         if (!tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(sName, 'T')) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    /**
+     * Public method to validate system name format
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'T'));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
 

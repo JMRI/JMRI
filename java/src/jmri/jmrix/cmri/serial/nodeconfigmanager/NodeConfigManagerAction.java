@@ -2,11 +2,11 @@
 
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a
@@ -41,7 +41,7 @@ public class NodeConfigManagerAction extends AbstractAction {
         f.setLocation(20,40);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerAction.class);
 
 }
 

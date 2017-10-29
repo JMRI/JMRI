@@ -17,10 +17,14 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -90,7 +94,7 @@ abstract class BeanEditAction extends AbstractAction {
         basic.setLayout(new BoxLayout(basic, BoxLayout.Y_AXIS));
 
         basic.addItem(new BeanEditItem(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"), null));
-                //Bundle.getMessage("ConnectionHint", "N/A"))); // TODO get connection name from nbMan.getSystemPrefix()
+        //Bundle.getMessage("ConnectionHint", "N/A"))); // TODO get connection name from nbMan.getSystemPrefix()
 
         basic.addItem(new BeanEditItem(userNameField, Bundle.getMessage("ColumnUserName"), null));
 
@@ -297,9 +301,9 @@ abstract class BeanEditAction extends AbstractAction {
         GridBagConstraints cD = new GridBagConstraints();
         GridBagConstraints cR = new GridBagConstraints();
         cL.fill = GridBagConstraints.HORIZONTAL;
-        cL.insets = new Insets(2, 0, 0, 15);
-        cR.insets = new Insets(0, 10, 15, 15);
-        cD.insets = new Insets(2, 0, 0, 0);
+        cL.insets = new Insets(4, 0, 0, 15);   // inset for left hand column (description)
+        cR.insets = new Insets(4, 10, 13, 15); // inset for help (right hand column, multi line text area)
+        cD.insets = new Insets(4, 0, 0, 0);    // top inset 4, up from 2 to align JLabel with JTextField
         cD.anchor = GridBagConstraints.NORTHWEST;
         cL.anchor = GridBagConstraints.NORTHWEST;
 
@@ -307,25 +311,37 @@ abstract class BeanEditAction extends AbstractAction {
         JPanel p = new JPanel();
 
         for (BeanEditItem it : items) {
+            // add the 3 elements on a JPanel to the parent panel grid layout
             if (it.getDescription() != null && it.getComponent() != null) {
-                JLabel decript = new JLabel(it.getDescription() + ":", JLabel.LEFT);
+                JLabel descript = new JLabel(it.getDescription() + ":", JLabel.LEFT);
                 if (it.getDescription().equals("")) {
-                    decript.setText("");
+                    descript.setText("");
                 }
                 cL.gridx = 0;
                 cL.gridy = y;
                 cL.ipadx = 3;
 
-                gbLayout.setConstraints(decript, cL);
+                gbLayout.setConstraints(descript, cL);
                 p.setLayout(gbLayout);
-                p.add(decript, cL);
+                p.add(descript, cL);
 
                 cD.gridx = 1;
                 cD.gridy = y;
 
-                gbLayout.setConstraints(it.getComponent(), cD);
-
-                p.add(it.getComponent(), cD);
+                Component thing = it.getComponent();
+                //log.debug("descript: '" + it.getDescription() + "', thing: " + thing.getClass().getName());
+                if (thing instanceof JComboBox
+                        || thing instanceof JTextField
+                        || thing instanceof JCheckBox
+                        || thing instanceof JRadioButton) {
+                    cD.insets = new Insets(0, 0, 0, 0); // put a little higher than a JLabel
+                } else if (thing instanceof JColorChooser) {
+                    cD.insets = new Insets(-6, 0, 0, 0); // move it up
+                } else {
+                    cD.insets = new Insets(4, 0, 0, 0); // reset
+                }
+                gbLayout.setConstraints(thing, cD);
+                p.add(thing, cD);
 
                 cR.gridx = 2;
                 cR.gridwidth = 1;
@@ -458,7 +474,7 @@ abstract class BeanEditAction extends AbstractAction {
 
     /**
      * TableModel for edit of Bean properties.
-     *
+     * <p>
      * At this stage we purely use this to allow the user to delete properties,
      * not to add them. Changing properties is possible but only for strings.
      * Based upon the code from the RosterMediaPane

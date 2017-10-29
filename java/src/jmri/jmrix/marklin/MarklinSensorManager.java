@@ -137,7 +137,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             while (port < 17) {
                 try {
                     tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (Exception e) {
+                } catch (JmriException e) {
                     log.error("Error creating system name for " + board + ":" + port);
                     JOptionPane.showMessageDialog(null, (Bundle.getMessage("ErrorCreateSystemName") +  " " + board + ":" + port),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -259,6 +259,6 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinSensorManager.class);
 
 }

@@ -3,60 +3,64 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2008 -->
-  <!--  $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233;  2013-09-10-->
+<!-- UpDated  by Blorec Herv&#233;  2017-01-16-->
+<title>JMRI Hardware Support - CBUS - Tech Details</title>
 
-  <title>JMRI: CBUS Support Details</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>JMRI: D&eacute;tails Support Technique CBUS</h1><em>Le
-      support sur cette page est en &eacute;volution rapide, le
-      code r&eacute;el pourrait &eacute;tre en avance ou en retard
-      sur la documentation un jour donn&eacute;.</em>
+<div id="mainContent">
 
-      <p>Cette page d&eacute;crit les d&eacute;tails techniques du
-      support JMRI pour <a href="index.shtml">CBUS</a> Voir aussi
-      les pages sur le <a href="../index.shtml">soutien
-      g&eacute;n&eacute;ral JMRI pour CAN</a> .</p>
+<h1>Structure Mat&#233;riel:  CBUS - D&#233;tails Support Technique</h1>
 
-      <h2>CAN adaptateurs</h2>L'approche g&eacute;n&eacute;rale
-      JMRI est de supporter le plus grand nombre de combinaisons de
-      mat&eacute;riel possibles. En soutenant le plus grand nombre
-      possible de personnes et leurs mat&eacute;riels, nous pouvons
-      cr&eacute;er une communaut&eacute; grandissante de
-      d&eacute;veloppeurs, donc plus de code.
+<em>Le support sur cette page est en &#233;volution rapide, le
+code r&#233;el pourrait &#233;tre en avance ou en retard sur la documentation
+un jour donn&#233;.</em><p>
 
-      <p>Dans le cadre de la pr&eacute;sente, le soutien JMRI CAN
-      est con&ccedil;u pour utiliser autant de types d'adaptateur
-      CAN que possible..</p>
+Cette page d&#233;crit les d&#233;tails techniques dde la prise en charge JMRI pour
+<a href="index.shtml"> CBUS </a>
+ Voir aussi les pages sur le
+<A href="../index.shtml"> soutien g&#233;n&#233;ral JMRI pour CAN </a>.
+<p>
 
-      <p>Le MERG CAN-RS peut faire "l'&eacute;num&eacute;ration "
-      pour CBUS, mais de nombreux autres adaptateurs ne peuvent pas
-      &eacute;tre utilis&eacute;s en raison de leur latence
-      intrins&egrave;que. Leurs r&eacute;ponses ralentit
-      efficacement et les rend invisibles.</p>
+<h2>Adaptateurs CAN</h2>
 
-      <p>Par cons&eacute;quent, Mike Bolton, l'un des
-      d&eacute;veloppeurs du CBUS a sugg&eacute;r&eacute; que JMRI
-      utilise un ID CBUS de 126. Actuellement, c'est une valeur
-      fixe. <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+L'approche g&#233;n&#233;rale JMRI est de prendre en charge le plus grand nombre de
+combinaisons de mat&#233;riel possibles. En soutenant le plus 
+grand nombre possible de personnes et leurs mat&#233;riels, nous
+pouvons cr&#233;er une communaut&#233; grandissante de d&#233;veloppeurs, donc plus de
+code.
+
+<P>
+Dans le cadre de la pr&#233;sente, la prise en charge JMRI CAN est con&#231;ue pour
+utiliser autant de types d'adaptateur CAN que possible..
+
+<P>
+Le MERG CAN-RS peut faire "l'&#233;num&#233;ration " pour CBUS, mais
+de nombreux autres adaptateurs ne peuvent pas &#233;tre utilis&#233;s
+en raison de leur latence intrins&#232;que.
+Leurs r&#233;ponses lentes les rend effectivement invisibles.
+
+<P>
+Par cons&#233;quent, Mike Bolton, l'un des d&#233;veloppeurs du CBUS
+a sugg&#233;r&#233; que JMRI utilise un ID CBUS de 126. Actuellement, c'est une valeur fixe.
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+<p>Retour &#224; la page  <a href="index.shtml">Aide Principale CBUS</a>
+<p>Lire aussi la  <a href="../index.shtml">prise en charge g&#233;n&#233;rale de CAN dans JMRI</a>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

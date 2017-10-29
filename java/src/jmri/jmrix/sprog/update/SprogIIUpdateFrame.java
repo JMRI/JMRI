@@ -23,11 +23,11 @@ public class SprogIIUpdateFrame
         super(memo);
     }
 
-    /**
-     * Set the help item.
+    /** 
+     * {@inheritDoc}
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
 
         // add help menu to window
@@ -39,6 +39,9 @@ public class SprogIIUpdateFrame
 
     int bootVer = 0;
 
+    /** 
+     * {@inheritDoc}
+     */
     @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
@@ -371,5 +374,5 @@ public class SprogIIUpdateFrame
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SprogIIUpdateFrame.class.getName());
+            .getLogger(SprogIIUpdateFrame.class);
 }

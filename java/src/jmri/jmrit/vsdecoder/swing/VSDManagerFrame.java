@@ -41,6 +41,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
@@ -89,8 +90,6 @@ public class VSDManagerFrame extends JmriJFrame {
         // Other GUI
         Mnemonics.put("MuteButton", KeyEvent.VK_M);
         Mnemonics.put("AddButton", KeyEvent.VK_A);
-        Mnemonics.put("CloseButton", KeyEvent.VK_C);
-
     }
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -103,7 +102,6 @@ public class VSDManagerFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
-    //private List<JMenu> menuList;
     /**
      * Constructor
      */
@@ -137,7 +135,6 @@ public class VSDManagerFrame extends JmriJFrame {
         volumePane.setLayout(new BoxLayout(volumePane, BoxLayout.LINE_AXIS));
         JToggleButton muteButton = new JToggleButton(Bundle.getMessage("MuteButtonLabel"));
         JButton addButton = new JButton(Bundle.getMessage("AddButtonLabel"));
-        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         JSlider volume = new JSlider(0, 100);
         volume.setMinorTickSpacing(10);
         volume.setPaintTicks(true);
@@ -170,32 +167,22 @@ public class VSDManagerFrame extends JmriJFrame {
                 addButtonPressed(e);
             }
         });
-        volumePane.add(closeButton);
-        closeButton.setToolTipText(Bundle.getMessage("MgrCloseButtonToolTip"));
-        closeButton.setMnemonic(Mnemonics.get("CloseButton"));
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                closeButtonPressed(e);
-            }
-        });
 
         this.add(decoderPane);
         this.add(volumePane);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                firePropertyChange(PropertyChangeID.CLOSE_WINDOW, null, null);
+            }
+        });
 
         log.debug("pane size + " + decoderPane.getPreferredSize());
         this.pack();
         this.setVisible(true);
 
         log.debug("done...");
-    }
-
-    /**
-     * Handle "Close" button press
-     */
-    protected void closeButtonPressed(ActionEvent e) {
-        firePropertyChange(PropertyChangeID.CLOSE_WINDOW, null, null);
-        dispose();
     }
 
     /**
@@ -221,9 +208,8 @@ public class VSDManagerFrame extends JmriJFrame {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 addButtonPropertyChange(event);
             }
-
         });
-        //firePropertyChange(PropertyChangeID.ADD_DECODER, null, null);
+        //firePropertyChange(PropertyChangeId.ADD_DECODER, null, null);
     }
 
     /**
@@ -231,39 +217,42 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void addButtonPropertyChange(PropertyChangeEvent event) {
         log.debug("internal config dialog handler");
-        log.debug("New Config: " + config.toString());
-        VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
-        if (newDecoder == null) {
-            log.debug("no New Decoder constructed!" + config.toString());
-            return;
-        }
-        // Need to add something here... if this Control already exists, don't
-        // create a new one.
-        VSDControl newControl = new VSDControl(config);
-        // Set the Decoder to listen to PropertyChanges from the control
-        newControl.addPropertyChangeListener(newDecoder);
-        this.addPropertyChangeListener(newDecoder);
-        // Set US to listen to PropertyChanges from the control (mainly for DELETE)
-        newControl.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
-                vsdControlPropertyChange(event);
+        log.debug("New Config: " + config);
+        // If this decoder already exists, don't create a new Control
+        if (VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
+        } else {
+            VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+            if (newDecoder == null) {
+                log.info("no New Decoder constructed!" + config);
+                return;
             }
-        });
-        if (decoderPane.isAncestorOf(decoderBlank)) {
-            decoderPane.remove(decoderBlank);
-        }
-        decoderPane.add(newControl);
-        newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
-        //debugPrintDecoderList();
-        decoderPane.revalidate();
-        decoderPane.repaint();
+            VSDControl newControl = new VSDControl(config);
+            // Set the Decoder to listen to PropertyChanges from the control
+            newControl.addPropertyChangeListener(newDecoder);
+            this.addPropertyChangeListener(newDecoder);
+            // Set US to listen to PropertyChanges from the control (mainly for DELETE)
+            newControl.addPropertyChangeListener(new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent event) {
+                    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+                    vsdControlPropertyChange(event);
+                }
+            });
+            if (decoderPane.isAncestorOf(decoderBlank)) {
+                decoderPane.remove(decoderBlank);
+            }
+            decoderPane.add(newControl);
+            newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
+            //debugPrintDecoderList();
+            decoderPane.revalidate();
+            decoderPane.repaint();
 
-        this.pack();
-        //this.setVisible(true);
-        // Do we need to make newControl a listener to newDecoder?
-        //firePropertyChange(PropertyChangeID.ADD_DECODER, null, newDecoder);
+            this.pack();
+            //this.setVisible(true);
+            // Do we need to make newControl a listener to newDecoder?
+            //firePropertyChange(PropertyChangeId.ADD_DECODER, null, newDecoder);
+        }
     }
 
     /**
@@ -271,7 +260,7 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void vsdControlPropertyChange(PropertyChangeEvent event) {
         String property = event.getPropertyName();
-        if (property.equals(VSDControl.PCIDMap.get(VSDControl.PropertyChangeID.DELETE))) {
+        if (property.equals(VSDControl.PCIdMap.get(VSDControl.PropertyChangeId.DELETE))) {
             String ov = (String) event.getOldValue();
             String nv = (String) event.getNewValue();
             VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(nv);
@@ -287,8 +276,9 @@ public class VSDManagerFrame extends JmriJFrame {
             }
             //debugPrintDecoderList();
             decoderPane.revalidate();
+            decoderPane.repaint();
+
             this.pack();
-            this.setVisible(true);
         }
     }
 
@@ -334,44 +324,6 @@ public class VSDManagerFrame extends JmriJFrame {
         this.getJMenuBar().add(fileMenu);
         this.getJMenuBar().add(editMenu);
         this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true); // Fix this... needs to be help for the new frame
-
-    }
-
-    /**
-     * Add a standard help menu, including window specific help item.
-     *
-     * @param ref    JHelp reference for the desired window-specific help page
-     * @param direct true if the help menu goes directly to the help system,
-     *               e.g. there are no items in the help menu
-     *
-     * WARNING: BORROWED FROM JmriJFrame.
-     */
-    @Override
-    public void addHelpMenu(String ref, boolean direct) {
-        // only works if no menu present?
-        JMenuBar bar = getJMenuBar();
-        if (bar == null) {
-            bar = new JMenuBar();
-        }
-        // add Window menu
-        bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
-        // add Help menu
-        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
-        setJMenuBar(bar);
-    }
-
-    /**
-     * Handle window close event
-     */
-    @Override
-    public void windowClosing(java.awt.event.WindowEvent e) {
-        // Call the superclass function
-        //super.windowClosing(e);
-
-        log.debug("VSDecoderFrame windowClosing() called... " + e.toString());
-
-        log.debug("Calling decoderPane.windowClosing() directly " + e.toString());
-        //decoderPane.windowClosing(e);
     }
 
     // VSDecoderManager Events
@@ -423,5 +375,5 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     //public List<JMenu> getMenus() { return menuList; }
-    private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class);
 }

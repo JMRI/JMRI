@@ -1,40 +1,36 @@
 package jmri.jmrix.marklin;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class MarklinThrottleManagerTest {
+public class MarklinThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
     public void testCTor() {
-        MarklinTrafficController tc = new MarklinTrafficController();
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
-        MarklinThrottleManager t = new MarklinThrottleManager(c);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        MarklinTrafficController tc = new MarklinTrafficController();
+        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
+        tm = new MarklinThrottleManager(c);
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MarklinThrottleManagerTest.class);
 
 }

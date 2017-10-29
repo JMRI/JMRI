@@ -3,9 +3,9 @@ package jmri.jmrix.sprog.update;
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Frame for SPROG v4 firmware update utility.
@@ -22,11 +22,11 @@ public class Sprogv4UpdateFrame
         super(memo);
     }
 
-    /**
-     * Set the help item
+    /** 
+     * {@inheritDoc}
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
 
         setSprogModeButton.setVisible(false);
@@ -38,6 +38,9 @@ public class Sprogv4UpdateFrame
         _memo.getSprogVersionQuery().requestVersion(this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
@@ -251,5 +254,5 @@ public class Sprogv4UpdateFrame
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(Sprogv4UpdateFrame.class.getName());
+            .getLogger(Sprogv4UpdateFrame.class);
 }

@@ -5,6 +5,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import jmri.InstanceManager;
 import jmri.ProgrammerScaffold;
+import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -31,16 +32,16 @@ public class ProgServiceModePaneTest {
         f.pack();
         f.setLocation(0, 0);
         f.setVisible(true);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testCreateHorizontalDIRECTBYTEMODE() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // add dummy DCC
-        InstanceManager.setProgrammerManager(new DefaultProgrammerManager(
-                (new ProgrammerScaffold(DefaultProgrammerManager.DIRECTBYTEMODE))));
-        Assert.assertNotNull("programer manager available", InstanceManager.getDefault(jmri.ProgrammerManager.class));
+        InstanceManager.setAddressedProgrammerManager(new DefaultProgrammerManager(
+                (new ProgrammerScaffold(ProgrammingMode.DIRECTBYTEMODE))));
+        Assert.assertNotNull("programer manager available", InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
         // create and show
         JmriJFrame f = new JmriJFrame("Horizontal DIRECTBYTEMODE");
         f.getContentPane().add(
@@ -48,7 +49,7 @@ public class ProgServiceModePaneTest {
         f.pack();
         f.setLocation(0, 100);
         f.setVisible(true);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -62,18 +63,16 @@ public class ProgServiceModePaneTest {
         f.pack();
         f.setLocation(0, 200);
         f.setVisible(true);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

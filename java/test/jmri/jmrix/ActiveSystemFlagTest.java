@@ -1,9 +1,9 @@
 package jmri.jmrix;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +49,6 @@ public class ActiveSystemFlagTest extends TestCase {
     }
 
     // protected access for subclass
-    static protected Logger log = LoggerFactory.getLogger(ActiveSystemFlagTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ActiveSystemFlagTest.class);
 
 }

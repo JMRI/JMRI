@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     SimpleLightCtrlFrameTest.class,
-    SimpleLightCtrlActionTest.class
+    SimpleLightCtrlActionTest.class,
+    BundleTest.class
 })
 
 /**

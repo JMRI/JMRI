@@ -1,9 +1,8 @@
 package jmri.jmrit.ussctc;
 
-import org.junit.*;
-
+import jmri.util.JUnitUtil;
 import jmri.*;
-import jmri.util.*;
+import org.junit.*;
 
 /**
  * Tests for TurnoutSection class in the jmri.jmrit.ussctc package
@@ -23,7 +22,7 @@ public class TurnoutSectionTest {
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.INACTIVE);
         
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
+        new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         
         // initialization sets indicators to follow actual turnout state
         Assert.assertEquals(Turnout.THROWN, layoutTurnout.getKnownState());
@@ -35,7 +34,8 @@ public class TurnoutSectionTest {
     @Test
     public void testLayoutMonitoring() throws JmriException {
         layoutTurnout.setCommandedState(Turnout.THROWN);        
-        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
+        
+        new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         
         layoutTurnout.setCommandedState(Turnout.CLOSED);
         
@@ -195,8 +195,7 @@ public class TurnoutSectionTest {
     // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -224,8 +223,7 @@ public class TurnoutSectionTest {
 
     @org.junit.After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

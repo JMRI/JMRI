@@ -92,7 +92,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -133,6 +133,6 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammer.class);
 
 }

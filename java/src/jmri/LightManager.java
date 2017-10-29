@@ -12,7 +12,6 @@ import javax.annotation.Nonnull;
  * instead of being system-specific.
  * <P>
  * Based on SignalHeadManager.java
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -54,8 +53,8 @@ public interface LightManager extends Manager<Light> {
      * @return Never null
      * @throws IllegalArgumentException if Light doesn't already exist and the
      *                                  manager cannot create the Light due to
-     *                                  an illegal name or name that can't
-     *                                  be parsed.
+     *                                  an illegal name or name that can't be
+     *                                  parsed.
      */
     @CheckReturnValue
     @CheckForNull
@@ -112,15 +111,6 @@ public interface LightManager extends Manager<Light> {
     @CheckReturnValue
     @CheckForNull
     public Light getBySystemName(@Nonnull String s);
-
-    /**
-     * Test if parameter is a properly formatted system name.
-     *
-     * @param systemName the system name
-     * @return true if formatted correctly; false otherwise
-     */
-    @CheckReturnValue
-    public boolean validSystemNameFormat(@Nonnull String systemName);
 
     /**
      * Test if parameter is a valid system name for current configuration.
@@ -202,10 +192,5 @@ public interface LightManager extends Manager<Light> {
      */
     @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
-
-    /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
-     */
-    public String getEntryToolTip();
 
 }

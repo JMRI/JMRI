@@ -6,6 +6,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -484,6 +485,6 @@ public class TrackTest extends OperationsTestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -29,7 +29,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         displayState();
 
         // blow up default font
-        setFont(jmri.util.FontUtil.deriveFont(getFont(), (float) 24.));
+        setFont(getFont().deriveFont(24.f));
 
         // connect
         Distributor.instance().addMeasurementListener(this);
@@ -264,7 +264,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     public void notify(Measurement m) {
         // only honor measurements to this icon if filtered
         if (filterNumber != null && m.getReading() != null
-                && !filterNumber.equals(m.getReading().getID())) {
+                && !filterNumber.equals(m.getReading().getId())) {
             return;
         }
 
@@ -280,7 +280,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         }
 
         if (_text) {
-            super.setText("" + m.getReading().getID());
+            super.setText("" + m.getReading().getId());
         }
         displayState();
 

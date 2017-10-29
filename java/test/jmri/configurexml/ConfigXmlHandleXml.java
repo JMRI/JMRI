@@ -14,12 +14,12 @@ import org.jdom2.Element;
 class ConfigXmlHandleXml implements XmlAdapter {
 
     @Override
-    public boolean load(Element e) throws Exception {
+    public boolean load(Element e) {
         return true;
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         return true;
     }
 
@@ -29,12 +29,12 @@ class ConfigXmlHandleXml implements XmlAdapter {
     }
 
     @Override
-    public void load(Element e, Object o) throws Exception {
+    public void load(Element e, Object o) {
         return;
     }
 
     @Override
-    public void load(Element shared, Element perNode, Object o) throws Exception {
+    public void load(Element shared, Element perNode, Object o) {
         return;
     }
 

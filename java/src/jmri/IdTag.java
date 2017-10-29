@@ -1,9 +1,9 @@
 package jmri;
 
 import java.util.Date;
-import org.jdom2.Element;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import org.jdom2.Element;
 
 /**
  * IdTag represents a tag that might be attached to a specific piece of rolling

@@ -35,7 +35,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     // By making this private, and not protected, we are able to require that
     // all access is through the getter and setter, and that subclasses that
-    // override the getter and setter must call the super implemenations of the
+    // override the getter and setter must call the super implementations of the
     // getter and setter. By channelling setting through a single method, we can
     // ensure this is never null.
     private SystemConnectionMemo connectionMemo;
@@ -394,6 +394,6 @@ abstract public class AbstractPortController implements PortAdapter {
         this.connectionMemo = connectionMemo;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractPortController.class);
 
 }

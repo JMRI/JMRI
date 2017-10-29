@@ -36,9 +36,9 @@
 
       <ul>
         <li><a href=
-        "../../../package/jmri/jmrit/beantable/jmriScriptWindow.png">
+        "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png">
         <img src=
-        "../../../package/jmri/jmrit/beantable/jmriScriptWindow.png"
+        "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
         width="250" height="136" align="right"></a>From the
         "Panels" menu, select "Script Entry". This will give you a
         window where you can type one or more commands to execute.

@@ -1,16 +1,15 @@
 package jmri.jmrix.roco.z21.swing.mon;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.roco.z21.RocoZ21CommandStation;
+import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
+import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrix.roco.z21.RocoZ21CommandStation;
-import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
-import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
-
-import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for Z21MonFrame class.
@@ -30,9 +29,9 @@ public class Z21MonFrameTest {
    }
 
    @Before
-   public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+   public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold();
@@ -44,8 +43,7 @@ public class Z21MonFrameTest {
    public void tearDown(){
         memo=null;
         tc=null;
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
    }
 
 }

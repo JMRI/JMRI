@@ -5,10 +5,10 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -247,6 +247,6 @@ public class QsiTrafficControllerTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficControllerTest.class);
 
 }

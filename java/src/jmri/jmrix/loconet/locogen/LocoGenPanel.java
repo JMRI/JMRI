@@ -47,18 +47,27 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton("Go");
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; // NOI18N
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSendPacket"));
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -122,6 +131,9 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         });
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -180,9 +192,8 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         sendNextItem();
     }
 
-    /**
-     * Process the incoming message to look for the needed echo
-     *
+    /** 
+     * {@inheritDoc}
      */
     @Override
     public void message(LocoNetMessage m) {
@@ -270,5 +281,5 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoGenPanel.class);
 }

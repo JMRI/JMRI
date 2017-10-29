@@ -17,7 +17,8 @@ import org.slf4j.LoggerFactory;
    LevelXingXmlTest.class,
    MemoryIconXmlTest.class,
    PositionablePointXmlTest.class,
-   TrackSegmentXmlTest.class
+   TrackSegmentXmlTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrit.display.layoutEditor.configurexml package.
@@ -39,6 +40,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

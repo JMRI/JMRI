@@ -69,13 +69,13 @@ public abstract class AbstractTurnoutTestBase {
         t.removePropertyChangeListener(ln);
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertTrue("listener should not have heard message after removeListner",
+        Assert.assertTrue("listener should not have heard message after removeListener",
                 !listenerResult);
     }
 
     @Test
     public void testDispose() {
-        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController 
+        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController
         //is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());

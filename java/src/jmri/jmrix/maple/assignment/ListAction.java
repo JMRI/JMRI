@@ -2,6 +2,7 @@ package jmri.jmrix.maple.assignment;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,17 +13,20 @@ import org.slf4j.LoggerFactory;
   */
 public class ListAction extends AbstractAction {
 
-    public ListAction(String s) {
+    private MapleSystemConnectionMemo _memo = null;
+
+    public ListAction(String s, MapleSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
-    public ListAction() {
-        this("List C/MRI Assignments");
+    public ListAction(MapleSystemConnectionMemo memo) {
+        this(Bundle.getMessage("MenuItemAssignments"), memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ListFrame f = new ListFrame();
+        ListFrame f = new ListFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -31,5 +35,6 @@ public class ListAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ListAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListAction.class);
+
 }

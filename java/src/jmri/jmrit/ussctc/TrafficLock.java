@@ -2,7 +2,6 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 
-import java.util.*;
 
 /**
  * Implements a traffic lock.

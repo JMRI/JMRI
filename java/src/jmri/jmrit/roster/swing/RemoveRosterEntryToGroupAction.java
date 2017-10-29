@@ -127,6 +127,6 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupAction.class);
 
 }

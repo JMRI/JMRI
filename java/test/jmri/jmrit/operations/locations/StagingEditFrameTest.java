@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,7 +64,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         f.trackLengthTextField.setText("1");
         enterClickAndLeave(f.addTrackButton);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
 
         t = l.getTrackByName("3rd staging track", null);
         Assert.assertNotNull("3rd staging track", t);
@@ -72,7 +73,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("all directions", ALL, t.getTrainDirections());
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -103,7 +104,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
         Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -140,7 +141,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
         enterClickAndLeave(f.saveTrackButton);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
 
         Location l2 = lManager.getLocationByName("Test Loc A");
         Assert.assertNotNull("Test Loc A", l2);
@@ -159,7 +160,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // is the staging only button selected?
         Assert.assertTrue("staging selected", fl.stageRadioButton.isSelected());
 
-        fl.dispose();
+        JUnitUtil.dispose(fl);
     }
 
     private void loadLocations() {

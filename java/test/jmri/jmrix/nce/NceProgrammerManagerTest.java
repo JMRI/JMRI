@@ -1,11 +1,10 @@
 package jmri.jmrix.nce;
 
-import org.junit.Assert;
+import jmri.GlobalProgrammerManager;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.GlobalProgrammerManager;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the NceProgrammerManager class
@@ -74,6 +73,6 @@ public class NceProgrammerManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManagerTest.class.getName());
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManagerTest.class);
 
 }

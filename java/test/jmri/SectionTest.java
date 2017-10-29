@@ -1,5 +1,6 @@
 package jmri;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,17 +25,33 @@ public class SectionTest {
       Assert.assertNotNull("Constructor", new Section("TS1", "user name"));
    }
 
+   @Test
+   public void warnOnBlockAdd() {
+    Section  s = new Section("TS1");
+    Assert.assertEquals(0, s.getBlockList().size());
+    s.addBlock(new Block("IB1", "user"));
+    Assert.assertEquals(1, s.getBlockList().size());
+   }
+
+   @Test
+   public void warnOnBlockAddWithNoUserName() {
+    Section  s = new Section("TS1");
+    Assert.assertEquals(0, s.getBlockList().size());
+    s.addBlock(new Block("IB1"));
+    jmri.util.JUnitAppender.assertWarnMessage("Block IB1 does not have a user name, may not work correctly in Section TS1");
+    Assert.assertEquals(1, s.getBlockList().size());
+   }
+   
    @Before
-   public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+   public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
    @After
    public void tearDown(){
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
    }
 
 }

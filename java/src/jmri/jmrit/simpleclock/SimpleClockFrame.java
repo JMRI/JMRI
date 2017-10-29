@@ -85,7 +85,7 @@ public class SimpleClockFrame extends JmriJFrame
      */
     @SuppressWarnings("deprecation")
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         setTitle(Bundle.getMessage("SimpleClockWindowTitle"));
 
         Container contentPane = getContentPane();
@@ -98,7 +98,6 @@ public class SimpleClockFrame extends JmriJFrame
             log.error("Could not obtain a Timebase instance.");
             setVisible(false);
             dispose();
-            throw new jmri.JmriException("Could not obtain a Timebase instance");
         }
         if (!clock.getIsInitialized()) {
             // if clocks have not been initialized at start up, do so now
@@ -666,7 +665,7 @@ public class SimpleClockFrame extends JmriJFrame
         super.windowClosing(e);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleClockFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleClockFrame.class);
 }
 
 

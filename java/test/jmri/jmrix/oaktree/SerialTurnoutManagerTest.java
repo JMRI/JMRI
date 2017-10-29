@@ -1,6 +1,8 @@
 package jmri.jmrix.oaktree;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,19 +10,57 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialTurnoutManagerTest.java
- *
- * Description:	tests for the SerialTurnoutManager class
+ * JUnit tests for the SerialTurnoutManager class
  *
  * @author	Bob Jacobsen
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    private OakTreeSystemConnectionMemo memo = null;
+
+    @Override
+    public String getSystemName(int n) {
+        return "OT" + n;
+    }
+
+    @Test
+    public void testCtor() {
+        // create and register the manager object
+        SerialTurnoutManager atm = new SerialTurnoutManager();
+        Assert.assertNotNull("Oak Tree Turnout Manager creation", atm);
+    }
+
+    @Test
+    public void testConstructor() {
+        // create and register the manager object
+        SerialTurnoutManager atm = new SerialTurnoutManager(new OakTreeSystemConnectionMemo());
+        Assert.assertNotNull("Oak Tree Turnout Manager creation with memo", atm);
+    }
+
+    @Test
+    public void testAsAbstractFactory() {
+        // ask for a Turnout, and check type
+        Turnout o = l.newTurnout("OT21", "my name");
+
+        log.debug("received turnout value {}", o);
+        Assert.assertTrue(null != (SerialTurnout) o);
+
+        // make sure loaded into tables
+        if (log.isDebugEnabled()) {
+            log.debug("by system name: {}", l.getBySystemName("OT21"));
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("by user name:   {}", l.getByUserName("my name"));
+        }
+
+        Assert.assertTrue(null != l.getBySystemName("OT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
+    }
+
     @Before
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-
         // replace the SerialTrafficController
         SerialTrafficController t = new SerialTrafficController() {
             SerialTrafficController test() {
@@ -29,39 +69,19 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
             }
         }.test();
         t.registerNode(new SerialNode(0, SerialNode.IO48));
+        memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
         // create and register the manager object
-        l = new SerialTurnoutManager();
+        l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    @Override
-    public String getSystemName(int n) {
-        return "OT" + n;
+    @After
+    public void tearDown() {
+        l.dispose();
+        memo.dispose();
+        JUnitUtil.tearDown();
     }
 
-    @Test
-    public void testAsAbstractFactory() {
-        // ask for a Turnout, and check type
-        Turnout o = l.newTurnout("OT21", "my name");
-
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
-        Assert.assertTrue(null != (SerialTurnout) o);
-
-        // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("OT21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != l.getBySystemName("OT21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
-
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

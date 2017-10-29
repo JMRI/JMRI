@@ -1,11 +1,10 @@
 package jmri.util;
 
-import org.junit.Assert;
+import java.util.concurrent.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.concurrent.*;
+import org.junit.Assert;
 
 /**
  * This class serves as a demonstration of some good

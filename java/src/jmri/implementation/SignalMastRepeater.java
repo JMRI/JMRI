@@ -1,15 +1,8 @@
 package jmri.implementation;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-
-/**
- * A simple class that repeaters the state of one SignalMast to another
- *
- * @author Kevin Dickerson Copyright (C) 2012
- */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.SignalMast;
 import org.slf4j.Logger;
@@ -148,6 +141,6 @@ public class SignalMastRepeater {
         _slave = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeater.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeater.class);
 
 }

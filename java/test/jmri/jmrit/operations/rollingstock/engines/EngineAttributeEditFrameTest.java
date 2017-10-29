@@ -9,6 +9,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -42,7 +43,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
 
@@ -50,7 +51,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         // new model was next
         Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -58,16 +59,16 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.LENGTH);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.OWNER);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.ROAD);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.TYPE);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Override

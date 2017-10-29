@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -17,17 +18,20 @@ public class ThrottleFramePropertyEditorTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleFramePropertyEditor dialog = new ThrottleFramePropertyEditor();
+        ThrottleWindow frame = new ThrottleWindow();
+        frame.setVisible(true);
+        ThrottleFramePropertyEditor dialog = new ThrottleFramePropertyEditor(frame);
         Assert.assertNotNull("exists", dialog);
+        JUnitUtil.dispose(frame);
     }
 
     @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 }

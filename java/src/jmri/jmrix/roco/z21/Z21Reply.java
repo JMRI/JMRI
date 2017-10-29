@@ -1,7 +1,6 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRReply;
-import java.lang.StringBuilder;
 
 /**
  * Class for replies in the z21/Z21 protocol.

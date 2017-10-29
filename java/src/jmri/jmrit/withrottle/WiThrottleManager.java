@@ -1,64 +1,108 @@
 package jmri.jmrit.withrottle;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.io.File;
-import jmri.util.FileUtil;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
-@SuppressFBWarnings(value="ISC_INSTANTIATE_STATIC_CLASS", justification="False Positive (April 2016)")
-        // FindBugs is flagging "This class allocates an object that is based on a class that only supplies static methods. This object does not need to be created, just access the static methods directly using the class name as a qualifier."
-        // so it's confused about the access to the instance() variable.
-public class WiThrottleManager {
-
-    static private WiThrottleManager root;
+public class WiThrottleManager implements InstanceManagerAutoDefault {
 
     private TrackPowerController trackPowerController = null;
     private TurnoutController turnoutController = null;
     private RouteController routeController = null;
     private ConsistController consistController = null;
 
-    private WiThrottlePreferences withrottlePreferences = null;
-
     public WiThrottleManager() {
-        trackPowerController = new TrackPowerController();
-        turnoutController = new TurnoutController();
-        routeController = new RouteController();
-        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class) == null) {
-            jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
-        }
-        withrottlePreferences = jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class);
     }
 
-    static private WiThrottleManager instance() {
-        if (root == null) {
-            root = new WiThrottleManager();
+    public TrackPowerController getTrackPowerController() {
+        if (trackPowerController == null) {
+            trackPowerController = new TrackPowerController();
         }
-        return root;
+        return trackPowerController;
     }
 
+    public TurnoutController getTurnoutController() {
+        if (turnoutController == null) {
+            turnoutController = new TurnoutController();
+        }
+        return turnoutController;
+    }
+
+    public RouteController getRouteController() {
+        if (routeController == null) {
+            routeController = new RouteController();
+        }
+        return routeController;
+    }
+
+    public ConsistController getConsistController() {
+        if (consistController == null) {
+            consistController = new ConsistController();
+        }
+        return consistController;
+    }
+
+    /**
+     *
+     * @return the default instance
+     * @deprecated since 4.9.5; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
+     * WiThrottlePreferences.class directly
+     */
+    @Deprecated
+    public WiThrottlePreferences getWiThrottlePreferences() {
+        return InstanceManager.getDefault(WiThrottlePreferences.class);
+    }
+
+    /**
+     *
+     * @return the TrackPowerController managed by this WiThrottleManager
+     * @deprecated since 4.9.5; use {@link #getTrackPowerController() } instead
+     */
+    @Deprecated
     static public TrackPowerController trackPowerControllerInstance() {
-        return instance().trackPowerController;
+        return InstanceManager.getDefault(WiThrottleManager.class).getTrackPowerController();
     }
 
+    /**
+     *
+     * @return the TurnoutController managed by this WiThrottleManager
+     * @deprecated since 4.9.5; use {@link #getTurnoutController() } instead
+     */
+    @Deprecated
     static public TurnoutController turnoutControllerInstance() {
-        return instance().turnoutController;
+        return InstanceManager.getDefault(WiThrottleManager.class).getTurnoutController();
     }
 
+    /**
+     *
+     * @return the RouteController managed by this WiThrottleManager
+     * @deprecated since 4.9.5; use {@link #getRouteController() } instead
+     */
+    @Deprecated
     static public RouteController routeControllerInstance() {
-        return instance().routeController;
+        return InstanceManager.getDefault(WiThrottleManager.class).getRouteController();
     }
 
+    /**
+     *
+     * @return the ConsistController managed by this WiThrottleManager
+     * @deprecated since 4.9.5; use {@link #getConsistController() } instead
+     */
+    @Deprecated
     static public ConsistController consistControllerInstance() {
-        if (instance().consistController == null) {
-            instance().consistController = new ConsistController();
-        }
-        return instance().consistController;
+        return InstanceManager.getDefault(WiThrottleManager.class).getConsistController();
     }
 
+    /**
+     *
+     * @return the default instance of the WiThrottlePreferences
+     * @deprecated since 4.9.5; use {@link #getWiThrottlePreferences()} instead
+     */
+    @Deprecated
     static public WiThrottlePreferences withrottlePreferencesInstance() {
-        return instance().withrottlePreferences;
+        return InstanceManager.getDefault(WiThrottlePreferences.class);
     }
-
 }

@@ -9,12 +9,13 @@ import org.slf4j.LoggerFactory;
  * A group of rolling stock that is managed as one unit.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2013
+ * @param <T> the type of RollingStock in this group
  */
-public class RollingStockGroup {
+public class RollingStockGroup<T extends RollingStock> {
 
     protected String _name = "";
-    protected RollingStock _lead = null;
-    protected List<RollingStock> _group = new ArrayList<RollingStock>();
+    protected T _lead = null;
+    protected List<T> _group = new ArrayList<>();
 
     public RollingStockGroup(String name) {
         _name = name;
@@ -30,7 +31,7 @@ public class RollingStockGroup {
         return _name;
     }
 
-    public void add(RollingStock rs) {
+    public void add(T rs) {
         if (_group.contains(rs)) {
             log.debug("rs ({}) already part of group ({})", rs.toString(), getName());
             return;
@@ -43,7 +44,7 @@ public class RollingStockGroup {
         firePropertyChange("grouplistLength", Integer.toString(oldSize), Integer.valueOf(_group.size())); // NOI18N
     }
 
-    public void delete(RollingStock rs) {
+    public void delete(T rs) {
         if (!_group.contains(rs)) {
             log.debug("rs ({}) not part of group ({})", rs.getId(), getName());
             return;
@@ -55,13 +56,13 @@ public class RollingStockGroup {
         firePropertyChange("grouplistLength", Integer.toString(oldSize), Integer.valueOf(_group.size())); // NOI18N
     }
 
-    public List<RollingStock> getGroup() {
+    public List<T> getGroup() {
         return _group;
     }
 
     public int getTotalLength() {
         int length = 0;
-        for (RollingStock rs : _group) {
+        for (T rs : _group) {
             length = length + rs.getTotalLength();
         }
         return length;
@@ -74,20 +75,20 @@ public class RollingStockGroup {
      */
     public int getAdjustedWeightTons() {
         int weightTons = 0;
-        for (RollingStock rs : _group) {
+        for (T rs : _group) {
             weightTons = weightTons + rs.getAdjustedWeightTons();
         }
         return weightTons;
     }
 
-    public boolean isLead(RollingStock rs) {
+    public boolean isLead(T rs) {
         if (rs == _lead) {
             return true;
         }
         return false;
     }
 
-    public RollingStock getLead() {
+    public T getLead() {
         return _lead;
     }
 
@@ -108,13 +109,13 @@ public class RollingStockGroup {
      *
      * @param rs lead for this group.
      */
-    public void setLead(RollingStock rs) {
+    public void setLead(T rs) {
         if (_group.contains(rs)) {
             _lead = rs;
         }
     }
 
-    public void removeLead(RollingStock rs) {
+    public void removeLead(T rs) {
         if (isLead(rs) && _group.size() > 0) {
             setLead(_group.get(0));
         }
@@ -138,5 +139,5 @@ public class RollingStockGroup {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockGroup.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockGroup.class);
 }

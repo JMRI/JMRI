@@ -33,7 +33,7 @@ public class NamedBeanHandle<T extends NamedBean> {
         this.bean = bean;
     }
 
-    @CheckReturnValue
+    @Nonnull
     public String getName() {
         return name;
     }
@@ -87,10 +87,7 @@ public class NamedBeanHandle<T extends NamedBean> {
     @Override
     @CheckReturnValue
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + (this.getBean() != null ? this.getBean().hashCode() : 0);
-        hash = 37 * hash + (this.getName() != null ? this.getName().hashCode() : 0);
-        return hash;
+        return 259 + getName().hashCode();  // 259 is arbitrary offset constant
     }
 
 }

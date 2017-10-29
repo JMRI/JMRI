@@ -128,7 +128,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                 .getNamedBeanHandle(portal.getUserName(), portal);
         portal.addPropertyChangeListener(this);
         setName(portal.getName());
-        setTooltip(new ToolTip(portal.getDescription(), 0, 0));
+        setToolTip(new ToolTip(portal.getDescription(), 0, 0));
     }
 
     public void setStatus(String status) {
@@ -307,5 +307,5 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalIcon.class);
 }

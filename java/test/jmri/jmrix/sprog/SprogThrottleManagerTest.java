@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,14 +12,13 @@ import org.junit.Test;
  * </P>
  * @author Paul Bender Copyright (C) 2017
  */
-public class SprogThrottleManagerTest {
+public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     private SprogTrafficControlScaffold stcs = null;
-    private SprogThrottleManager op = null;
 
     @Test
     public void testCtor(){
-       Assert.assertNotNull("exists",op);
+       Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
@@ -32,13 +32,12 @@ public class SprogThrottleManagerTest {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
 
-        op = new SprogThrottleManager(m);
+        tm = new SprogThrottleManager(m);
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

@@ -1,174 +1,138 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233;  2013-09-09-->
-
-<html lang="fr">
+<!-- UpDated  by Blorec Herv&#233;  2017-01-10--> 
+<HTML LANG="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+<title>JMRI Hardware Setup Support - USB to Serial adapters</title>
 
-  <title>JMRI Hardware Guide: Use of USB to Serial adapters</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="USB serial adapter JMRI install">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<meta name="Author" content="Bob Jacobsen">
+<meta name="keywords" content="USB serial adapter JMRI install">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>Guide Mat&eacute;riel JMRI: Utilisation d'un USB vers un
-      Adaptateur S&eacute;rie</h1>
+<div class="nomenu" ID="mBody">
+<div id="mainContent">">
 
-      <p>Si votre mat&eacute;riel de r&eacute;seau ferroviaire est
-      cens&eacute; se connecter &agrave; un ordinateur via une
-      connexion s&eacute;rie RS232 traditionnelle, mais que votre
-      ordinateur n'a pas de ports RS232, que faites-vous? C'est de
-      plus en plus courants que les nouveaux ordinateurs soient
-      vendus avec des ports USB au lieu de ports s&eacute;rie RS232
-      .</p>
+<a name="usb2serial"><H1>Configuration Mat&#233;rielle prise en charge: Utilisation d'un Adaptateur USB vers connecteur S&#233;rie</H1>
 
-      <p>Une solution consiste &agrave; utiliser un adaptateur "USB
-      vers s&eacute;rie" pour r&eacute;soudre ce probl&egrave;me.
-      Une unit&eacute; typique est <a href=
-      "http://keyspan.com/products/usa19hs/">les s&eacute;rie
-      d'adaptateurs USA-19HS Keyspan</a> Par Tripplite. Nous
-      recommandons ces adaptateurs Keyspan; nous utilisons un
-      Keyspan Adaptateur s&eacute;rie 19- au cours de la
-      v&eacute;rification de la version, et on n'a pas
-      trouv&eacute; de mani&egrave;re de travailler plus fiable
-      jusqu'&agrave; ce jour.</p>
 
-      <p>D'autres soci&eacute;t&eacute;s, telles que <a href=
-      "http://www.belkin.com">Belkin</a>, ont des adaptateurs sur
-      le march&eacute; sous leur propre nom, et vous pouvez souvent
-      trouver en dehors de la marque des adaptateurs dans votre
-      magasin informatique local.</p>
+<P>Si votre mat&#233;riel de r&#233;seau ferroviaire est cens&#233; se connecter &#224; un
+ordinateur via une connexion s&#233;rie RS232 traditionnelle, mais que votre ordinateur
+n'a pas de ports RS232, que faites-vous? C'est de plus en plus
+courants que les nouveaux ordinateurs soient vendus avec des ports USB au lieu de ports s&#233;rie RS232
+.</P>
 
-      <p>Avant d'acheter un adaptateur, assurez-vous que cela va
-      fonctionner avec votre ordinateur particulier et la version
-      du syst&egrave;me d'exploitation. La question importante
-      voici le "pilote" de l'ordinateur doit communiquer avec le
-      mat&eacute;riel adaptateur, certains fabricants de cartes ne
-      fournissent que des pilotes Windows, qui rend leurs produits
-      inutiles &agrave; un Macintosh ou Linux. A noter
-      &eacute;galement que les pilotes pour MacOS 8/9 et Mac OS X
-      pilotes sont diff&eacute;rents, et ne peuvent &ecirc;tre
-      interchang&eacute;s.</p>
+<a name="hardware"></a><h2>Mat&#233;riel Pris en Charge</h2>
+<ul>
+<li>Une solution consiste &#224; utiliser un adaptateur "USB vers s&#233;rie" pour r&#233;soudre ce probl&#232;me. Une
+unit&#233; typique est
+<A HREF="http://keyspan.com/products/usa19hs/"> les s&#233;rie d'adaptateurs USA-19HS Keyspan</A>Par Tripplite. 
+Nous recommandons ces adaptateurs Keyspan; nous utilisons un Adaptateur
+Keyspan s&#233;rie 19- au cours de la v&#233;rification de la version, et on n'a pas trouv&#233; de mani&#232;re de 
+travailler plus fiable jusqu'&#224; ce jour.</li>
+<li>D'autres soci&#233;t&#233;s, telles que <A HREF="http://www.belkin.com"> Belkin</A>, ont des
+adaptateurs sur le march&#233; sous leur propre nom, et vous pouvez souvent trouver en dehors de la marque
+des adaptateurs dans votre magasin informatique local.</li>
+</ul>
+<P> Avant d'acheter un adaptateur, assurez-vous que cela va fonctionner avec votre
+ordinateur particulier et la version du syst&#232;me d'exploitation. La question importante
+voici le "pilote" de l'ordinateur doit communiquer avec le mat&#233;riel
+adaptateur, certains fabricants de cartes ne fournissent que des pilotes Windows, qui
+rend leurs produits inutiles &#224; un Macintosh ou Linux. A noter &#233;galement
+que les pilotes pour MacOS 8/9 et Mac OS X pilotes sont diff&#233;rents, et ne peuvent &#234;tre
+interchang&#233;s.
+</P>
+<P>De nombreux <a href="index.shtml">syst&#232;mes DCC</a> ne demande pas beaucoup &#224; leurs ports s&#233;rie,
+et dans ce cas un adaptateur fonctionnera probablement. Mais certains syst&#232;mes DCC
+n&#233;cessitent soit des vitesses de transmission et/ou des contr&#244;le RS232 que 
+toutes les cartes ne puissent pas fournir. Le reste de cette page s'adresse &#224; ces cas sp&#233;ciaux
+</P>
 
-      <p>De nombreux syst&egrave;mes DCC ne demande pas beaucoup
-      &agrave; leurs ports s&eacute;rie, et dans ce cas un
-      adaptateur fonctionnera probablement. Mais certains
-      syst&egrave;mes DCC n&eacute;cessitent soit des vitesses de
-      transmission et/ou des contr&ocirc;le RS232 que toutes les
-      cartes ne puissent pas fournir. Le reste de cette page
-      s'adresse &agrave; ces cas sp&eacute;ciaux</p><a name="MS100"
-      id="MS100"></a>
+<a name="connecting"></a><h2>Connexion</h2>
 
-      <h2>LocoNet via Adaptateur MS100</h2>Le MS100 exige un vitese
-      sp&eacute;ciale de transmission que la plupart des
-      adaptateurs USB vers s&eacute;rie ne peut pas fournir. Il
-      faut aussi pouvoir &ecirc;tre aliment&eacute; via le port
-      RS232 et le c&acirc;bles de commande.
+<a name="MS100">
+<H2>LocoNet via Adaptateur MS100</H2></A>
 
-      <p>Les adaptateurs 19HS Keyspan sont connus pour fonctionner
-      avec le MS100. Nous avons un rapports de succ&egrave;s obtenu
-      par des utilisateurs &agrave; partir de Windows 98, Windows
-      XP et Mac OS 9. (Notez que le MS100 ne fonctionne pas avec
-      Mac OS X ou plusieurs ordinateurs Windows Vista; ce n'est pas
-      une question adaptateur USB) Vous devrez obtenir un
-      c&acirc;ble sp&eacute;cial pour brancher le connecteur 9-pin
-      de l'adaptateur Keyspan au connecteur &agrave; 25 broches sur
-      le MS100.</p>
+<p> Notez que l'utilisation d'un LocoBuffer est hautement recommand&#233; &#224; la place d'essayer de faire travailler un MS100! </p> 
+Le MS100 exige un vitese sp&#233;ciale de transmission que la plupart des adaptateurs USB vers s&#233;rie
+ne peut pas fournir. Il faut aussi pouvoir &#234;tre aliment&#233; via le port RS232 et les 
+c&#226;bles de commande.
+<P>Les adaptateurs 19HS Keyspan sont connus pour fonctionner avec le MS100. Nous avons un
+rapports de succ&#232;s obtenu par des utilisateurs &#224; partir de Windows 98, Windows XP et Mac OS 9.<br>
 
-      <p>Notez que l'aide d'un LocoBuffer est fortement
-      recommand&eacute; au lieu d' essayer d'obtenir un MS100 au
-      travail!</p>
+(Notez que le MS100 ne fonctionne pas avec Mac OS X ou plusieurs ordinateurs Windows Vista;
+ce n'est pas une question d'adaptateur USB) Vous devrez obtenir un c&#226;ble sp&#233;cial pour brancher le connecteur 9-pins
+ de l'adaptateur Keyspan au connecteur &#224; 25 broches sur le MS100.</P>
+<P> Notez que l'aide d'un LocoBuffer est fortement recommand&#233; au lieu d'
+essayer d'obtenir un MS100 au travail!</p>
+<P> Il existe d'autres adaptateurs USB Keyspan qui sont connus pour ne pas travailler
+avec le MS100. En particulier, l'adaptateur Dual Serial Macintosh qui
+fournit deux ports s&#233;rie Macintosh DIN-8 ne fournit pas la puissance
+n&#233;cessaire pour le MS100. <A HREF="loconet/KeyspanUSB.shtml"> (Plus de d&#233;tails)</A></P>
+<P>Les utilisateurs ont signal&#233; qu'un adaptateur Belkin ne fonctionnerait pas avec un
+MS100 parce qu'il ne pouvait pas fournir la vitesse sp&#233;ciale de transmission n&#233;cessaire.</P>
 
-      <p>Il existe d'autres adaptateurs USB Keyspan qui sont connus
-      pour ne pas travailler avec le MS100. En particulier,
-      l'adaptateur Macintosh S&eacute;rie Double qui fournit deux
-      ports s&eacute;rie Macintosh DIN-8 ne fournit pas la
-      puissance n&eacute;cessaire pour le MS100. <a href=
-      "loconet/KeyspanUSB.shtml">(Plus de d&eacute;tails)</a></p>
+<A NAME="LocoBuffer">
+<H2>LocoNet via LocoBuffer, LocoBuffer-II</H2></A>
 
-      <p>Les utilisateurs ont signal&eacute; qu'un adaptateur
-      Belkin ne fonctionnerait pas avec un MS100 parce qu'il ne
-      pouvait pas fournir la vitesse sp&eacute;ciale de
-      transmission n&eacute;cessaire.</p><a name="LocoBuffer" id=
-      "LocoBuffer"></a>
+<P> Si vous n'avez pas encore achet&#233; un LocoBuffer, la meilleure chose est de commander un
+<A HREF="http://www.rr-cirkits.com"> LocoBuffer-USB</A>
+de <A HREF="http://www.rr-cirkits.com"> RR-Cirkits</A>
+Celui-ci a une connexion native USB &#224; votre ordinateur, donc un
+Adaptateur USB vers connecteur s&#233;rie n'est pas n&#233;cessaire.</P>
 
-      <h2>LocoNet via LocoBuffer, LocoBuffer-II</h2>
+<p>
+Pour un fonctionnement fiable, les interfaces s&#233;rie LocoBuffer exigent que
+le contr&#244;le RS232 permette de fournir le contr&#244;le de flux.
 
-      <p>Si vous n'avez pas encore achet&eacute; un LocoBuffer, la
-      meilleure chose est d'en commander un <a href=
-      "http://www.rr-cirkits.com">LocoBuffer-USB</a> &agrave;
-      partir de <a href="http://www.rr-cirkits.com">RR-Cirkits</a>
-      Celui-ci a une connexion native USB &agrave; votre
-      ordinateur, donc un Adaptateur USB vers s&eacute;rie n'est
-      pas n&eacute;cessaire.</p>
+<p>Les adaptateurs Keyspan sont &#233;galement connus pour travailler avec les LocoBuffer.
+Nous avons re&#231;u des rapports de succ&#232;s &#224; partir de Windows 98, Windows ME, Windows XP
+et utilisateurs de Mac OS X. Vous devrez obtenir un c&#226;ble sp&#233;cial pour relier
+le connecteur &#224; 9 broches sur l'adaptateur Keyspan au connecteur &#224; 25 broches sur
+le LocoBuffer original; les mod&#232;les plus r&#233;cents ont un connecteur s&#233;rie &#224; 9 broches</P>.
+<P> Nous avons &#233;galement eu un rapport sur l'adaptateur "iConcepts"  achet&#233;
+&#224; CompUSA, et qui fonctionne avec Windows ME et Windows XP.</P>
+<P> Tous les adaptateurs bas&#233;s sur la "puce FTDI FT232BM" devrait fonctionner correctement.
+Cela inclut l'adaptateur UN8E RR-C fourni par
+<A HREF="http://www.rr-cirkits.com">RR-Cirkits</A> et de nombreux
+adaptateurs do-it-yourself. Si vous utilisez cet adaptateur avec un Macintosh
+ou un ordinateur Linux, assurez-vous de t&#233;l&#233;charger les pilotes les plus r&#233;cents du site Web
+<A HREF="http://www.ftdichip.com/FTDrivers.htm"> FTDI</A> ,
+les premi&#232;res versions avaient des bugs.</P>
 
-      <p>Pour un fonctionnement fiable, les interfaces s&eacute;rie
-      LocoBuffer exigent que le contr&ocirc;le RS232 permette de
-      fournir le contr&ocirc;le de flux.</p>
+<A NAME="LI100">
+<H2>XpressNet via LI100</H2></A>
 
-      <p>Les adaptateurs Keyspan sont &eacute;galement connus pour
-      travailler avec les LocoBuffer. Nous avons re&ccedil;u des
-      rapports de succ&egrave;s &agrave; partir de Windows 98,
-      Windows ME, Windows XP et utilisateurs de Mac OS X. Vous
-      devrez obtenir un c&acirc;ble sp&eacute;cial pour relier le
-      connecteur &agrave; 9 broches sur l'adaptateur Keyspan au
-      connecteur &agrave; 25 broches sur le LocoBuffer original;
-      les mod&egrave;les plus r&eacute;cents ont un connecteur
-      s&eacute;rie &agrave; 9 broches</p>.
+Pour un fonctionnement fiable, l'interface LI100 XpressNet exige que le c&#226;ble de
+Commande RS232 fournisse le contr&#244;le de flux.
 
-      <p>Nous avons &eacute;galement eu un rapport sur l'adaptateur
-      "iConcepts" achet&eacute; &agrave; CompUSA, et qui fonctionne
-      avec Windows ME et Windows XP.</p>
+<P>Les adaptateurs Keyspan  sont connus pour fonctionner avec le LI100. Nous avons des
+rapports des succ&#232;s obtenu par des utilisateurs &#224; partir de Windows 98, Windows XP, MacOS 9 et MacOS
+X .</P>
 
-      <p>Tous les adaptateurs bas&eacute;s sur la "puce FTDI
-      FT232BM" devrait fonctionner correctement. Cela inclut
-      l'adaptateur UN8E RR-C fourni par <a href=
-      "http://www.rr-cirkits.com">RR-Cirkits</a> et de nombreux
-      adaptateurs do-it-yourself. Si vous utilisez cet adaptateur
-      avec un Macintosh ou un ordinateur Linux, assurez-vous de
-      t&eacute;l&eacute;charger les pilotes les plus r&eacute;cents
-      du site Web <a href=
-      "http://www.ftdichip.com/FTDrivers.htm">FTDI</a> , les
-      premi&egrave;res versions avaient des bugs.</p><a name=
-      "LI100" id="LI100"></a>
+<a name="LI101">
+ <H2>XpressNet via LI101</H2></A>
+<p>
+Pour un fonctionnement fiable, l'interface LI101 XpressNet exige que le c&#226;ble de
+commande RS232 fournisse le contr&#244;le de flux.
 
-      <h2>XpressNet via LI100</h2>Pour un fonctionnement fiable,
-      l'interface LI100 XpressNet exige que le c&acirc;ble de
-      Contr&ocirc;le RS232 fournisse le contr&ocirc;le de flux.
+<P>pour l'instant, nous n'avons pas re&#231;u de rapports  de succ&#232;s ou d'&#233;chec de
+personnes utilisant un LI101 avec un adaptateur USB/s&#233;rie. Plus d'informations
+seraient grandement appr&#233;ci&#233;es. 
 
-      <p>Les adaptateurs Keyspan sont connus pour fonctionner avec
-      le LI100. Nous avons des rapports des succ&egrave;s obtenu
-      par des utilisateurs &agrave; partir de Windows 98, Windows
-      XP, MacOS 9 et MacOS X .</p>
-
-      <h2>XpressNet via LI101</h2>Pour un fonctionnement fiable,
-      l'interface LI101 XpressNet exige que le c&acirc;ble de
-      Contr&ocirc;le RS232 fournisse le contr&ocirc;le de flux.
-
-      <p>pour l'instant, nous n'avons pas re&ccedil;u de rapports
-      de succ&egrave;s ou d'&eacute;chec de personnes utilisant un
-      LI101 avec un adaptateur USB/s&eacute;rie. Plus
-      d'informations seraient grandement appr&eacute;ci&eacute;es. 
-      <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

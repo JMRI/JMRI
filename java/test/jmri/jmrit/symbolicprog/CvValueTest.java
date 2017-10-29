@@ -1,14 +1,13 @@
 package jmri.jmrit.symbolicprog;
 
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.util.JUnitUtil;
 
 /**
  * Test CvValue class
@@ -132,17 +131,17 @@ public class CvValueTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CvValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CvValueTest.class);
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

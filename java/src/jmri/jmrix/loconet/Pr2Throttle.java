@@ -29,6 +29,7 @@ public class Pr2Throttle extends AbstractThrottle {
         super(memo);
         this.address = address;
         addr = address.getNumber();
+        setSpeedStepMode(DccThrottle.SpeedStepMode128);
         this.speedIncrement = 1;  // 128 step mode only
     }
 
@@ -264,6 +265,6 @@ public class Pr2Throttle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Pr2Throttle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Pr2Throttle.class);
 
 }

@@ -3,13 +3,12 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 
 /**
  * SignalMast implemented via a Binary Matrix (Truth Table) of Apects x Turnout objects.
@@ -439,8 +438,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //NOI18N
-            //Do nothing at this stage
         }
     }
 
@@ -484,5 +481,5 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class);
 }

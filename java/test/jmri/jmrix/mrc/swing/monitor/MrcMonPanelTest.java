@@ -1,15 +1,14 @@
 package jmri.jmrix.mrc.swing.monitor;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JmriJFrame;
-import jmri.jmrix.AbstractMonPaneScaffold;
 
 
 /**
@@ -20,11 +19,6 @@ import jmri.jmrix.AbstractMonPaneScaffold;
 public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.mrc.MrcSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane);
-    }
 
     // Test checking the AutoScroll checkbox.
     // for some reason the MrcMonPanel has the checkbox value reversed on
@@ -57,21 +51,20 @@ public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         memo = new jmri.jmrix.mrc.MrcSystemConnectionMemo();
         jmri.jmrix.mrc.MrcInterfaceScaffold tc = new jmri.jmrix.mrc.MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, jmri.jmrix.mrc.MrcSystemConnectionMemo.class);
-        pane = new MrcMonPanel();
-        ((MrcMonPanel)pane).initContext(memo); 
+        // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
+        panel = pane = new MrcMonPanel();
+        ((MrcMonPanel)pane).initContext(memo);
+        helpTarget = "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel";
+        title = "Open MRC Monitor"; 
     }
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

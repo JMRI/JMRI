@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -847,6 +847,6 @@ public class MemoryContentsTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(MemoryContentsTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryContentsTest.class);
 
 }

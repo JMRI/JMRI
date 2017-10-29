@@ -88,7 +88,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
     }
 
     @Override
-    protected void cleanUp() {
+    protected void cleanup() {
         // no clean-up needed for Listener
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JavaSoundAudioListener (" + this.getSystemName() + ")");
@@ -96,6 +96,6 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioListener.class);
 
 }

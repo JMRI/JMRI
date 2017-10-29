@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -25,7 +24,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,8 +80,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(Bundle.getMessage("MenuItemAssignments"));
@@ -604,6 +605,6 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
     };
 
-    private final static Logger log = LoggerFactory.getLogger(ListFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListFrame.class);
 
 }

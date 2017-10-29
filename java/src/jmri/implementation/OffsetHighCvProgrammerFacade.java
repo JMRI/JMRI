@@ -41,25 +41,19 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
     public OffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo) {
         super(prog);
         this.top = Integer.parseInt(top);
-        this.addrCV = Integer.parseInt(addrCV);
+        this.addrCV = addrCV;
         this.cvFactor = Integer.parseInt(cvFactor);
         this.modulo = Integer.parseInt(modulo);
     }
 
     int top;
-    int addrCV;
+    String addrCV;
     int cvFactor;
     int modulo;
 
     // members for handling the programmer interface
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
-
-    // programming interface
-    @Override
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        writeCV("" + CV, val, p);
-    }
 
     @Override
     public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -69,22 +63,12 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         useProgrammer(p);
         if (prog.getCanWrite(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.writeCV(_cv, val, this);
+            prog.writeCV(CV, val, this);
         } else {
             // write index first
             state = ProgState.FINISHWRITE;
             prog.writeCV(addrCV, (_cv / modulo) * cvFactor, this);
         }
-    }
-
-    @Override
-    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
-    }
-
-    @Override
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV("" + CV, p);
     }
 
     @Override
@@ -167,7 +151,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
             case FINISHWRITE:
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.writeCV(_cv % modulo, _val, this);
+                    prog.writeCV(""+(_cv % modulo), _val, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final write", e);
                 }
@@ -203,6 +187,6 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         return Integer.parseInt(addr) <= 1024;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OffsetHighCvProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OffsetHighCvProgrammerFacade.class);
 
 }

@@ -1,6 +1,5 @@
 package jmri.web.servlet;
 
-import apps.tests.Log4JFixture;
 import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
@@ -25,22 +24,20 @@ public class ServletUtilTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Test
     public void testGetRailroadName() {
         ServletUtil instance = new ServletUtil();
         String name = "TEST_RAILROAD";
-        InstanceManager.getDefault(WebServerPreferences.class).setRailRoadName(name);
+        InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
         Assert.assertEquals("-->" + name + "<!--", instance.getRailroadName(true));
         Assert.assertEquals(name, instance.getRailroadName(false));
     }
@@ -63,7 +60,7 @@ public class ServletUtilTest {
         String title = "TITLE";
         String name = "TEST_RAILROAD";
         Locale locale = Locale.ENGLISH;
-        InstanceManager.getDefault(WebServerPreferences.class).setRailRoadName(name);
+        InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
         Assert.assertEquals(Bundle.getMessage(locale, "HtmlTitle", name, title), instance.getTitle(locale, title));
     }
 

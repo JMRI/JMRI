@@ -3,6 +3,7 @@ package jmri.util.swing.sdi;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.ButtonTestAction;
 import org.junit.After;
@@ -32,18 +33,18 @@ public class SdiWindowTest {
 //    public void testFrameCreation() {
         JFrame f2 = jmri.util.JmriJFrame.getFrame("SDI test");
         Assert.assertTrue("found frame", f2 != null);
-        f2.dispose();
+        JUnitUtil.dispose(f2);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

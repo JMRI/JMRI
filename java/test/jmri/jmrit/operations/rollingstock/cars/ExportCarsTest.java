@@ -1,12 +1,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.util.List;
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.List;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 
 /**
  *
@@ -17,7 +17,7 @@ public class ExportCarsTest {
     @Test
     public void testCTor() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         ExportCars t = new ExportCars(carList);
         Assert.assertNotNull("exists", t);
     }
@@ -25,15 +25,13 @@ public class ExportCarsTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class);
 }
