@@ -25,7 +25,7 @@ import jmri.profile.ProfileManager;
  *
  * @author Randall Wood Copyright (C) 2011
  */
-public class Metadata {
+public interface Metadata {
 
     public static final String JMRIVERSION = "JMRIVERSION"; // NOI18N
     public static final String JMRIVERCANON = "JMRIVERCANON"; // NOI18N
