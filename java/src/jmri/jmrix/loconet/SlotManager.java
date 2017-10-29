@@ -1,8 +1,5 @@
 package jmri.jmrix.loconet;
 
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_ACTIVE;
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_BUSY;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -185,18 +182,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * The SlotListener is not subscribed for slot notifications; it can do that
      * later if it wants. We don't currently think that's a race condition.
      *
-     * @param i Specific slot, counted starting from zero.
+     * @param address Specific loco address, counted starting from zero.
      * @param l The SlotListener to notify of the answer.
      */
-    public void slotFromLocoAddress (int i, SlotListener l) {
+    public void slotFromLocoAddress (int address, SlotListener l) {
         // store connection between this address and listener for later
-        mLocoAddrHash.put(Integer.valueOf(i), l);
+        log.debug("slotFromLocoAddress - request for address {}", address);
+        mLocoAddrHash.put(Integer.valueOf(address), l);
 
         // send info request
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
-        m.setElement(1, (i / 128) & 0x7F);
-        m.setElement(2, i & 0x7F);
+        m.setElement(1, (address / 128) & 0x7F);
+        m.setElement(2, address & 0x7F);
         tc.sendLocoNetMessage(m);
     }
 
@@ -598,14 +596,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // to reflect the content of the LocoNet message, so _slots[i]
             // has the locomotive address of this request 
             int addr = _slots[i].locoAddr();
-            log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
+            log.debug("OPC_SL_RD_DATA resp is slot {} for addr {} with status {}", i, addr, LnConstants.LOCO_STAT(_slots[i].slotStatus())); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
             if (l != null) {
-                // only notify once per request
-                mLocoAddrHash.remove(Integer.valueOf(addr));
-                // and send the notification
+                // send the notification
                 log.debug("notify listener"); // NOI18N
                 l.notifyChangedSlot(_slots[i]);
+                if (_slots[i].slotStatus() == LnConstants.LOCO_IN_USE) {
+                    mLocoAddrHash.remove(Integer.valueOf(addr));
+                }
             } else {
                 log.debug("no request for addr {}", addr); // NOI18N
             }
@@ -1129,7 +1128,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // schedule next read if needed
         if (nextReadSlot < 127) {
-            javax.swing.Timer t = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+            javax.swing.Timer t = new javax.swing.Timer(200, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     readNextSlot();
