@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Also provides a static member for adding these items to an existing menu.
  *
- * @see SystemsMenu
- *
  * @author Bob Jacobsen Copyright 2003
  */
 public class ActiveSystemsMenu extends JMenu {
