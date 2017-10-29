@@ -1103,22 +1103,31 @@ public class PositionablePoint extends LayoutTrack {
                         tools.setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
                     }
                 });
+
+                popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        // bring up sensors at block boundary tool dialog
+                        tools.setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
+                                layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                    }
+                });
             }
         }
         if (endBumper) {
+            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    // bring up signals at block boundary tool dialog
+                    tools.setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
+                }
+            });
             popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
                     tools.setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
                             layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
-                }
-            });
-            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    // bring up signals at block boundary tool dialog
-                    tools.setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
                 }
             });
         }
