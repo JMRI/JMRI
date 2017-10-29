@@ -56,6 +56,7 @@ public class LocoNetSlot {
      * {@link LnConstants#LOCO_IDLE},
      * {@link LnConstants#LOCO_COMMON},
      * {@link LnConstants#LOCO_FREE}
+     * @return int containing only Slot Status (busy, active) bits of status byte
      */
     public int slotStatus() {
         return stat & LnConstants.LOCOSTAT_MASK;
@@ -71,6 +72,7 @@ public class LocoNetSlot {
      * {@link LnConstants#CONSIST_TOP},
      * {@link LnConstants#CONSIST_MID},
      * {@link LnConstants#CONSIST_SUB}
+     * @return int containing only consisting bits of status byte
      */
     public int consistStatus() {
         return stat & LnConstants.CONSIST_MASK;
