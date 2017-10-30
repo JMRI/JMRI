@@ -512,6 +512,7 @@ public class LayoutEditorTools {
 
     private void setSignalsCancelPressed(ActionEvent a) {
         setSignalsAtTurnoutOpenFlag = false;
+        setSignalsAtTurnoutFromMenuFlag = false;
         setSignalsAtTurnoutFrame.setVisible(false);
     }
 
@@ -696,6 +697,7 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
         setSignalsAtTurnoutOpenFlag = false;
+        setSignalsAtTurnoutFromMenuFlag = false;
         setSignalsAtTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -2268,6 +2270,7 @@ public class LayoutEditorTools {
 
     private void setSignalsAtBlockBoundaryCancelPressed(ActionEvent a) {
         setSignalsAtBlockBoundaryOpenFlag = false;
+        setSignalsAtBlockBoundaryFromMenuFlag = false;
         setSignalsAtBlockBoundaryFrame.setVisible(false);
     }
 
@@ -2359,6 +2362,7 @@ public class LayoutEditorTools {
             setLogicWestBound();
         }
         setSignalsAtBlockBoundaryOpenFlag = false;
+        setSignalsAtBlockBoundaryFromMenuFlag = false;
         setSignalsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -3004,6 +3008,7 @@ public class LayoutEditorTools {
 
     private void setXoverSignalsCancelPressed(ActionEvent a) {
         setSignalsAtXoverTurnoutOpenFlag = false;
+        setSignalsAtXoverTurnoutFromMenuFlag = false;
         setSignalsAtXoverTurnoutFrame.setVisible(false);
     }
 
@@ -3346,6 +3351,7 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
         setSignalsAtXoverTurnoutOpenFlag = false;
+        setSignalsAtXoverTurnoutFromMenuFlag = false;
         setSignalsAtXoverTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -3973,6 +3979,7 @@ public class LayoutEditorTools {
 
     private void setXingSignalsCancelPressed(ActionEvent a) {
         setSignalsAtLevelXingOpenFlag = false;
+        setSignalsAtLevelXingFromMenuFlag = false;
         setSignalsAtLevelXingFrame.setVisible(false);
     }
 
@@ -4176,6 +4183,7 @@ public class LayoutEditorTools {
         }
         // finish up
         setSignalsAtLevelXingOpenFlag = false;
+        setSignalsAtLevelXingFromMenuFlag = false;
         setSignalsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -4917,6 +4925,7 @@ public class LayoutEditorTools {
 
     private void setTToTSignalsCancelPressed(ActionEvent a) {
         setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
+        setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
         setSignalsAtThroatToThroatTurnoutsFrame.setVisible(false);
     }
 
@@ -5457,6 +5466,7 @@ public class LayoutEditorTools {
         layoutTurnout2.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
         // finish up
         setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
+        setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
         setSignalsAtThroatToThroatTurnoutsFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -6283,6 +6293,7 @@ public class LayoutEditorTools {
 
     private void set3WaySignalsCancelPressed(ActionEvent a) {
         setSignalsAt3WayTurnoutOpenFlag = false;
+        setSignalsAt3WayTurnoutFromMenuFlag = false;
         setSignalsAt3WayTurnoutFrame.setVisible(false);
     }
 
@@ -6707,6 +6718,7 @@ public class LayoutEditorTools {
         layoutTurnoutB.setLinkType(LayoutTurnout.SECOND_3_WAY);
         // finish up
         setSignalsAt3WayTurnoutOpenFlag = false;
+        setSignalsAt3WayTurnoutFromMenuFlag = false;
         setSignalsAt3WayTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -7637,6 +7649,7 @@ public class LayoutEditorTools {
 
     private void setSensorsAtBlockBoundaryCancelPressed(ActionEvent a) {
         setSensorsAtBlockBoundaryOpenFlag = false;
+        setSensorsAtBlockBoundaryFromMenuFlag = false;
         setSensorsAtBlockBoundaryFrame.setVisible(false);
     }
 
@@ -7720,6 +7733,7 @@ public class LayoutEditorTools {
             boundary.setWestBoundSensor(westBoundSensor.getText());
         }
         setSensorsAtBlockBoundaryOpenFlag = false;
+        setSensorsAtBlockBoundaryFromMenuFlag = false;
         setSensorsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -8125,6 +8139,7 @@ public class LayoutEditorTools {
 
     private void setSignalMastsAtBlockBoundaryCancelPressed(ActionEvent a) {
         setSignalMastsAtBlockBoundaryOpenFlag = false;
+        setSignalMastsAtBlockBoundaryFromMenuFlag = false;
         setSignalMastsAtBlockBoundaryFrame.setVisible(false);
     }
 
@@ -8291,6 +8306,7 @@ public class LayoutEditorTools {
             }
         }
         setSignalMastsAtBlockBoundaryOpenFlag = false;
+        setSignalMastsAtBlockBoundaryFromMenuFlag = false;
         setSignalMastsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -9817,6 +9833,7 @@ public class LayoutEditorTools {
 
     private void setSlipSignalMastsCancelPressed(ActionEvent a) {
         setSignalMastsAtLayoutSlipOpenFlag = false;
+        setSignalMastsAtLayoutSlipFromMenuFlag = false;
         setSignalMastsAtLayoutSlipFrame.setVisible(false);
     }
 
@@ -10004,6 +10021,7 @@ public class LayoutEditorTools {
         // setup logic if requested
         // finish up
         setSignalMastsAtLayoutSlipOpenFlag = false;
+        setSignalMastsAtLayoutSlipFromMenuFlag = false;
         setSignalMastsAtLayoutSlipFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -10337,6 +10355,7 @@ public class LayoutEditorTools {
 
     private void setXingSignalMastsCancelPressed(ActionEvent a) {
         setSignalMastsAtLevelXingOpenFlag = false;
+        setSignalMastsAtLevelXingFromMenuFlag = false;
         setSignalMastsAtLevelXingFrame.setVisible(false);
     }
 
@@ -10526,6 +10545,7 @@ public class LayoutEditorTools {
         // setup logic if requested
         // finish up
         setSignalMastsAtLevelXingOpenFlag = false;
+        setSignalMastsAtLevelXingFromMenuFlag = false;
         setSignalMastsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -11009,6 +11029,7 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
         setSensorsAtTurnoutOpenFlag = false;
+        setSensorsAtTurnoutFromMenuFlag = false;
         setSensorsAtTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -11059,6 +11080,7 @@ public class LayoutEditorTools {
 
     private void setSensorsCancelPressed(ActionEvent a) {
         setSensorsAtTurnoutOpenFlag = false;
+        setSensorsAtTurnoutFromMenuFlag = false;
         setSensorsAtTurnoutFrame.setVisible(false);
     }
 
@@ -11381,6 +11403,7 @@ public class LayoutEditorTools {
 
     private void setXingSensorsCancelPressed(ActionEvent a) {
         setSensorsAtLevelXingOpenFlag = false;
+        setSensorsAtLevelXingFromMenuFlag = false;
         setSensorsAtLevelXingFrame.setVisible(false);
     }
 
@@ -11560,6 +11583,7 @@ public class LayoutEditorTools {
         // setup logic if requested
         // finish up
         setSensorsAtLevelXingOpenFlag = false;
+        setSensorsAtLevelXingFromMenuFlag = false;
         setSensorsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
