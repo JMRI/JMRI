@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="3" time="0.340015">
+<testcase classname="InstanceManager" name="Consist Manager is null" time="0.327806">
+<system-out><![CDATA[Given the InstanceManager is started........................................passed
+When I ask for the Consist Manager..........................................passed
+Then the consist manager is null............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="InstanceManager" name="NMRA Consist Manager installed with Command Station instance" time="0.000524">
+<system-out><![CDATA[Given the InstanceManager is started........................................passed
+Given A Command Station Instance............................................passed
+When I ask for the Consist Manager..........................................passed
+Then the consist manager is not null........................................passed
+And the consist manager is an Nmra Consist Manager..........................passed
+]]></system-out>
+</testcase>
+<testcase classname="InstanceManager" name="Dcc Consist Manager installed with an Operations Mode Programmer instance" time="0.011685">
+<system-out><![CDATA[Given the InstanceManager is started........................................passed
+Given An Operations Mode Programmer Instance................................passed
+When I ask for the Consist Manager..........................................passed
+Then the consist manager is not null........................................passed
+And the consist manager is an Dcc Consist Manager...........................passed
+]]></system-out>
+</testcase>
+</testsuite>
