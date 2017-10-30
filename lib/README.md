@@ -99,7 +99,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - (JMRI file)
 
 ##### xercesImpl.jar
-- version Xerces-J 2.9.1
+- version Xerces-J 2.11.0
 - from http://www.apache.org/dist/xerces/j/
 
 ##### jdom.jar
