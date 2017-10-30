@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -224,7 +225,7 @@ public class MultiThrottleController extends ThrottleController {
      * @param address of DCC locomotive involved in the steal
      */
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address) {
+    public void notifyStealThrottleRequired(LocoAddress address) {
         sendStealAddress();
         notifyFailedThrottleRequest(address, "Steal Required");
     }

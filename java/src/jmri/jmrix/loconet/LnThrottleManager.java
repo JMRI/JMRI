@@ -305,7 +305,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     @Override
-    public void failedThrottleRequest(DccLocoAddress address, String reason) {
+    public void failedThrottleRequest(LocoAddress address, String reason) {
         super.failedThrottleRequest(address, reason);
         log.debug("failedThrottleRequest - address {}, reason {}", address, reason);
         //now end and remove any waiting thread
@@ -393,7 +393,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * @since 4.9.2
      */
     @Override
-    public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l, boolean steal){
+    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
        log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
        if (steal == false) {
             failedThrottleRequest(address, "User chose not to 'steal' the throttle.");

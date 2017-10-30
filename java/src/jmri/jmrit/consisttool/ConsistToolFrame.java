@@ -21,6 +21,7 @@ import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
@@ -267,7 +268,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     }
 
     private void initializeConsistBox() {
-        ArrayList<DccLocoAddress> existingConsists = consistManager.getConsistList();
+        ArrayList<LocoAddress> existingConsists = consistManager.getConsistList();
         if (!existingConsists.isEmpty()) {
             java.util.Collections.sort(existingConsists, new jmri.util.LocoAddressComparator()); // sort the consist list.
             consistAdrBox.removeAllItems();
@@ -630,7 +631,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
      * implement the interface
      */
     @Override
-    public void consistReply(DccLocoAddress locoaddress, int status) {
+    public void consistReply(LocoAddress locoaddress, int status) {
         log.debug("Consist Reply received for Locomotive {} with status {}", locoaddress, status);
         _status.setText(consistManager.decodeErrorCode(status));
         // For some status codes, we want to trigger specific actions

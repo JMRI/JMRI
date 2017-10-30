@@ -8,6 +8,7 @@ import jmri.ConsistListListener;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.JmriException;
+import jmri.LocoAddress;
 import jmri.jmrit.consisttool.ConsistFile;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
@@ -73,7 +74,7 @@ public class JsonConsistSocketService extends JsonSocketService {
     private class JsonConsistListener implements ConsistListener {
 
         @Override
-        public void consistReply(DccLocoAddress locoaddress, int status) {
+        public void consistReply(LocoAddress locoaddress, int status) {
             try {
                 try {
                     connection.sendMessage(service.getConsist(locale, locoaddress));

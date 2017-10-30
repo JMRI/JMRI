@@ -21,6 +21,7 @@ import javax.swing.WindowConstants;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.Programmer;
 import jmri.ThrottleListener;
 import jmri.jmrit.DccLocoAddressSelector;
@@ -73,7 +74,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     public void destroy() { // Handle disposing of the throttle
         if (throttle != null) {
-            DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
+            LocoAddress l = throttle.getLocoAddress();
             throttle.removePropertyChangeListener(this);
             InstanceManager.throttleManagerInstance().cancelThrottleRequest(l.getNumber(), this);
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
@@ -168,13 +169,13 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     public void notifyThrottleFound(DccThrottle t) {
         log.info("Asked for " + currentAddress.getNumber() + " got " + t.getLocoAddress());
         if (consistAddress != null
-                && ((DccLocoAddress) t.getLocoAddress()).getNumber() == consistAddress.getNumber()) {
+                && t.getLocoAddress().getNumber() == consistAddress.getNumber()) {
             // notify the listeners that a throttle was found
             // for the consist address.
             notifyConsistThrottleFound(t);
             return;
         }
-        if (((DccLocoAddress) t.getLocoAddress()).getNumber() != currentAddress.getNumber()) {
+        if (t.getLocoAddress().getNumber() != currentAddress.getNumber()) {
             log.warn("Not correct address, asked for " + currentAddress.getNumber() + " got " + t.getLocoAddress() + ", requesting again...");
             boolean requestOK
                     = InstanceManager.throttleManagerInstance().requestThrottle(currentAddress.getNumber(), currentAddress.isLongAddress(), this);
@@ -230,12 +231,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         javax.swing.JOptionPane.showMessageDialog(null, reason, Bundle.getMessage("FailedSetupRequestTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(LocoAddress address){
         int choice = javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION);
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, choice == javax.swing.JOptionPane.YES_OPTION);
     }
