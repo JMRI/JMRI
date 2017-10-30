@@ -568,5 +568,12 @@ public abstract class LayoutTrack {
             @Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet);
 
+    /**
+     * Assign all the layout blocks in this track
+     * @param layoutBlock to this layout block
+     * (used by the Tools menu's "Assign block to selection" item)
+     */
+    public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
+    
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

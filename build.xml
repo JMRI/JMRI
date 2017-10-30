@@ -196,9 +196,9 @@
         <pathelement location="${libdir}/websocket-common-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/websocket-server-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/websocket-servlet-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
-        <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
-        <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
+        <pathelement location="${libdir}/slf4j-api-1.7.25.jar"/>
+        <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
+        <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
         <pathelement location="${libdir}/xbee-java-library-1.2.0.jar"/>
         <pathelement location="${libdir}/pi4j-core.jar"/>
         <pathelement location="${libdir}/pi4j-device.jar"/>
@@ -576,6 +576,7 @@
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
                 <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
+                <compilerarg value="-Xpkginfo:always"/>  <!-- reduce warning messages during normal compile -->
                 <compilerarg value="-Xmaxerrs"/><compilerarg value="1000"/><!-- change from default 100 errors -->
             </javac>
         </sequential>
