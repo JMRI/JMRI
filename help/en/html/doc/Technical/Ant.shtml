@@ -105,9 +105,9 @@
         <dt>Check for newer versions of the maven plugins</dt>
         <dd><code>mvn versions:display-plugin-updates</code></dd>
         <dt>Run DecoderPro</dt>
-        <dd><code>mvn antrun:run -Dtarget=decoderpro</code></dd>
+        <dd><code>mvn antrun:run -Danttarget=decoderpro</code></dd>
         <dt>Run PanelPro</dt>
-        <dd><code>mvn antrun:run -Dtarget=panelpro</code></dd>
+        <dd><code>mvn antrun:run -Danttarget=panelpro</code></dd>
       </dl>
 
       <!--#include virtual="/Footer" -->
