@@ -64,6 +64,10 @@ public class WebServerTest {
 
     @After
     public void tearDown(){
+        jmri.util.zeroconf.ZeroConfService.stopAll();
+        JUnitUtil.waitFor(() -> {
+            return (jmri.util.zeroconf.ZeroConfService.allServices().isEmpty());
+        }, "Stopping all ZeroConf Services");
         JUnitUtil.tearDown();
     }
 }
