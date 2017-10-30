@@ -23,10 +23,12 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -61,6 +63,7 @@ import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
+import jmri.jmrit.signalling.AddEntryExitPairAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
@@ -77,9 +80,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2007
  */
 public class LayoutEditorTools {
-
-    // Defined text resource, should be called by Bundle.getMessage() to allow reuse of shared keys via path
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // constants
     private int NONE = 0;  // Signal at Turnout Positions
@@ -101,9 +101,12 @@ public class LayoutEditorTools {
     private BlockBossLogic logic = null;
     private SignalHead auxSignal = null;
 
-    // constructor method
-    public LayoutEditorTools(@Nonnull LayoutEditor thePanel) {
-        layoutEditor = thePanel;
+    /**
+     * LayoutEditorTools construction method
+     * @param layoutEditor the Layout Editor associated with this instance
+     */
+    public LayoutEditorTools(@Nonnull LayoutEditor layoutEditor) {
+        this.layoutEditor = layoutEditor;
 
         LayoutEditor.setupComboBox(turnoutComboBox, true, true);
 
@@ -176,7 +179,151 @@ public class LayoutEditorTools {
         LayoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
         LayoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
         LayoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
-    }
+    }   // LayoutEditorTools
+
+    private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;
+    private transient AddEntryExitPairAction entryExit = null;
+
+    /**
+     * setup the Layout Editor Tools menu
+     * @param menuBar the menu bar to add the Tools menu to
+     */
+    protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
+        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
+
+        toolsMenu.setMnemonic(layoutEditor.stringsToVTCodes.get(Bundle.getMessage("MenuToolsMnemonic")));
+        menuBar.add(toolsMenu);
+
+        //setup checks menu
+        layoutEditor.getLEChecks().setupChecksMenu(toolsMenu);
+
+        //assign blocks to selection
+        JMenuItem jmi = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
+        jmi.setToolTipText(Bundle.getMessage("AssignBlockToSelectionToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up scale track diagram dialog
+            layoutEditor.assignBlockToSelection();
+        });
+
+        //scale track diagram
+        jmi = new JMenuItem(Bundle.getMessage("ScaleTrackDiagram") + "...");
+        jmi.setToolTipText(Bundle.getMessage("ScaleTrackDiagramToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up scale track diagram dialog
+            layoutEditor.scaleTrackDiagram();
+        });
+
+        //translate selection
+        jmi = new JMenuItem(Bundle.getMessage("TranslateSelection") + "...");
+        jmi.setToolTipText(Bundle.getMessage("TranslateSelectionToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up translate selection dialog
+            layoutEditor.moveSelection();
+        });
+
+        //undo translate selection
+        jmi = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
+        jmi.setToolTipText(Bundle.getMessage("UndoTranslateSelectionToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //undo previous move selection
+            layoutEditor.undoMoveSelection();
+        });
+
+        //reset turnout size to program defaults
+        jmi = new JMenuItem(Bundle.getMessage("ResetTurnoutSize"));
+        jmi.setToolTipText(Bundle.getMessage("ResetTurnoutSizeToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //undo previous move selection
+            layoutEditor.resetTurnoutSize();
+        });
+        toolsMenu.addSeparator();
+
+        //skip turnout
+        skipTurnoutCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SkipInternalTurnout"));
+        skipTurnoutCheckBoxMenuItem.setToolTipText(Bundle.getMessage("SkipInternalTurnoutToolTip"));
+        toolsMenu.add(skipTurnoutCheckBoxMenuItem);
+        skipTurnoutCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            layoutEditor.setIncludedTurnoutSkipped(skipTurnoutCheckBoxMenuItem.isSelected());
+        });
+        skipTurnoutCheckBoxMenuItem.setSelected(layoutEditor.isIncludedTurnoutSkipped());
+
+        //set signals at turnout
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtTurnout") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtTurnoutToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at turnout tool dialog
+            layoutEditor.getLETools().setSignalsAtTurnout(signalIconEditor, signalFrame);
+        });
+
+        //set signals at block boundary
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtBoundary") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtBoundaryToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at block boundary tool dialog
+            layoutEditor.getLETools().setSignalsAtBlockBoundary(signalIconEditor, signalFrame);
+        });
+
+        //set signals at crossover turnout
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtXoverTurnout") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtXoverTurnoutToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at double crossover tool dialog
+            layoutEditor.getLETools().setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
+        });
+
+        //set signals at level crossing
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtLevelXing") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtLevelXingToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at level crossing tool dialog
+            layoutEditor.getLETools().setSignalsAtLevelXing(signalIconEditor, signalFrame);
+        });
+
+        //set signals at throat-to-throat turnouts
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtTToTTurnout") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtTToTTurnoutToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at throat-to-throat turnouts tool dialog
+            layoutEditor.getLETools().setSignalsAtThroatToThroatTurnouts(signalIconEditor, signalFrame);
+        });
+
+        //set signals at 3-way turnout
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAt3WayTurnout") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAt3WayTurnoutToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at 3-way turnout tool dialog
+            layoutEditor.getLETools().setSignalsAt3WayTurnout(signalIconEditor, signalFrame);
+        });
+
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtSlip") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtSlipToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at throat-to-throat turnouts tool dialog
+            layoutEditor.getLETools().setSignalsAtSlip(signalIconEditor, signalFrame);
+        });
+
+        jmi = new JMenuItem(Bundle.getMessage("EntryExitTitle") + "...");
+        jmi.setToolTipText(Bundle.getMessage("EntryExitToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            if (entryExit == null) {
+                entryExit = new jmri.jmrit.signalling.AddEntryExitPairAction("ENTRY EXIT", layoutEditor);
+            }
+            entryExit.actionPerformed(event);
+        });
+    } //setupToolsMenu
 
     /**
      * Tool to set signals at a turnout, including placing the signal icons and
@@ -8751,10 +8898,10 @@ public class LayoutEditorTools {
 
             JPanel panel1 = new JPanel(new FlowLayout());
 
-            turnoutSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            turnoutSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            turnoutSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            turnoutSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
+            turnoutSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
             if (turnoutMastFromMenu) {
                 JLabel turnoutMastNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
@@ -9280,10 +9427,10 @@ public class LayoutEditorTools {
         }
         // Initialize if needed
         if (signalMastsAtSlipFrame == null) {
-            slipSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            slipSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            slipSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            slipSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
+            slipSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            slipSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            slipSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            slipSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
             signalMastsAtSlipFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLayoutSlip"), false, true);
             signalMastsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
@@ -9778,10 +9925,10 @@ public class LayoutEditorTools {
         }
         // Initialize if needed
         if (signalMastsAtXingFrame == null) {
-            xingSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            xingSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            xingSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
-            xingSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalHeadManager.class));
+            xingSignalMastA = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            xingSignalMastB = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            xingSignalMastC = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
+            xingSignalMastD = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class));
 
             signalMastsAtXingFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLevelXing"), false, true);
             signalMastsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
@@ -13105,7 +13252,7 @@ public class LayoutEditorTools {
             addNearSensorToSlipLogic(nearSensorName);
             finalizeBlockBossLogic();
         }
-    }
+    }   // setLogicSlip
 
     private String setupNearLogixSlip(Turnout turn, int nearState,
             SignalHead head, Turnout farTurn, int farState, LayoutSlip slip, int number) {
@@ -13172,7 +13319,7 @@ public class LayoutEditorTools {
         }
         x.activateLogix();
         return sensorName;
-    }
+    }   // setupNearLogixSlip
 
     /*
 	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and

@@ -158,7 +158,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("Rotate", "...")) {
+        return new AbstractAction(Bundle.getMessage("Rotate", " (" + pos.getDegrees() + "°)")) {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -658,7 +658,7 @@ public class CoordinateEdit extends JmriJFrame {
                 if (pp.isIcon() || hasText) {
                     pp._text = hasText;
                     if (pp instanceof SensorIcon) {
-                       ((SensorIcon)pp).setOriginalText(t);
+                        ((SensorIcon) pp).setOriginalText(t);
                     }
                     pp.setText(t);
                     pp.updateSize();

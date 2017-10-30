@@ -58,7 +58,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         _manager = inManager;
         setSelectedBean(inNamedBean);
         //setEditable(true);
-        _manager.addPropertyChangeListener(this);
+        _manager.addPropertyChangeListener(new DedupingPropertyChangeListener(this));
         setKeySelectionManager(new BeanSelectionManager());
 
         //fires when drop down list item is selected

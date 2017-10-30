@@ -1025,8 +1025,11 @@ public class LevelXing extends LayoutTrack {
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
                             LayoutTrack lt = lf.findObjectByName(connectA.getName());
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
@@ -1036,7 +1039,11 @@ public class LevelXing extends LayoutTrack {
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
                             LayoutTrack lt = lf.findObjectByName(connectB.getName());
-                            layoutEditor.setSelectionRect(lt.getBounds());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
@@ -1046,7 +1053,11 @@ public class LevelXing extends LayoutTrack {
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
                             LayoutTrack lt = lf.findObjectByName(connectC.getName());
-                            layoutEditor.setSelectionRect(lt.getBounds());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
@@ -1056,7 +1067,11 @@ public class LevelXing extends LayoutTrack {
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
                             LayoutTrack lt = lf.findObjectByName(connectD.getName());
-                            layoutEditor.setSelectionRect(lt.getBounds());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                layoutEditor.setSelectionRect(lt.getBounds());
+                                lt.showPopup();
+                            }
                         }
                     });
                 }
@@ -1572,6 +1587,14 @@ public class LevelXing extends LayoutTrack {
                 }
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        setLayoutBlockAC(layoutBlock);
+        setLayoutBlockBD(layoutBlock);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
