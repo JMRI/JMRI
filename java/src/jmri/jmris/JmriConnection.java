@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstraction of DataOutputStream and WebSocket.Connection classes.
- *
+ * <p>
  * Used so that that server objects need only to use a single object/method to
  * send data to any supported object type.
  *
@@ -91,7 +91,7 @@ public class JmriConnection {
 
     /**
      * Send a String to the instantiated connection.
-     *
+     * <p>
      * This method throws an IOException so the server or servlet holding the
      * connection open can respond to the exception if there is an immediate
      * failure. If there is an asynchronous failure, the connection is closed.
@@ -102,42 +102,45 @@ public class JmriConnection {
     public void sendMessage(String message) throws IOException {
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
-        } else if (this.session != null && this.session.isOpen()) {
-            try {
-                this.session.getRemote().sendString(message, new WriteCallback() {
-                    @Override
-                    public void writeFailed(Throwable thrwbl) {
-                        if (log.isDebugEnabled()) {
-                            // include entire message in log
-                            log.error("Exception \"{}\" sending {}", thrwbl.getMessage(), message, thrwbl);
-                        } else {
-                            // include only first 75 characters of message in log
-                            int length = 75;
-                            log.error("Exception \"{}\" sending {}", thrwbl,
-                                    (message.length() > length)
-                                    ? message.substring(0, length - 1)
-                                    : message);
+        } else if (this.session != null) {
+            if (this.session.isOpen()) {
+                try {
+                    this.session.getRemote().sendString(message, new WriteCallback() {
+                        @Override
+                        public void writeFailed(Throwable thrwbl) {
+                            log.error("Exception \"{}\" sending {}",
+                                    thrwbl.getMessage(),
+                                    log.isDebugEnabled() ? message : message.length() < 75 ? message : message.substring(0, 74),
+                                    thrwbl);
+                            JmriConnection.this.getSession().close(StatusCode.NO_CODE, thrwbl.getMessage());
                         }
-                        JmriConnection.this.getSession().close(StatusCode.NO_CODE, thrwbl.getMessage());
-                    }
 
-                    @Override
-                    public void writeSuccess() {
-                        log.debug("Sent {}", message);
+                        @Override
+                        public void writeSuccess() {
+                            log.debug("Sent {}", message);
+                        }
+                    });
+                } catch (WebSocketException ex) {
+                    log.debug("Exception sending message", ex);
+                    // A WebSocketException is most likely a broken socket,
+                    // so rethrow it as an IOException
+                    if (ex.getMessage() == null) {
+                        // provide a generic message if ex has no message
+                        throw new IOException("Exception sending message", ex);
                     }
-                });
-            } catch (WebSocketException ex) {
-                log.debug("Exception sending message", ex);
-                // A WebSocketException is most likely a broken socket,
-                // so rethrow it as an IOException
-                throw new IOException(ex);
+                    throw new IOException(ex);
+                }
+            } else {
+                // immediately thrown an IOException to trigger closing
+                // actions up the call chain
+                throw new IOException("Will not send message on non-open session");
             }
         }
     }
 
     /**
      * Close the connection.
-     *
+     * <p>
      * Note: Objects using JmriConnection with a
      * {@link org.eclipse.jetty.websocket.api.Session} may prefer to use
      * <code>getSession().close()</code> since Session.close() does not throw an
