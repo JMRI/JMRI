@@ -4,9 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import org.eclipse.jetty.websocket.api.Session;
-import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketException;
-import org.eclipse.jetty.websocket.api.WriteCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +18,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriConnection {
 
-    private Session session = null;
-    private DataOutputStream dataOutputStream = null;
+    private final Session session;
+    private final DataOutputStream dataOutputStream;
     private Locale locale = Locale.getDefault();
     private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
 
@@ -32,6 +30,7 @@ public class JmriConnection {
      */
     public JmriConnection(Session connection) {
         this.session = connection;
+        this.dataOutputStream = null;
     }
 
     /**
@@ -41,6 +40,7 @@ public class JmriConnection {
      */
     public JmriConnection(DataOutputStream output) {
         this.dataOutputStream = output;
+        this.session = null;
     }
 
     /**
@@ -61,32 +61,8 @@ public class JmriConnection {
         return this.getSession();
     }
 
-    /**
-     * Set the WebSocket session.
-     *
-     * @param session the WebSocket session
-     */
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    /**
-     * @deprecated see {@link #setSession(org.eclipse.jetty.websocket.api.Session)
-     * }
-     *
-     * @param webSocketConnection the WebSocket session
-     */
-    @Deprecated
-    public void setWebSocketConnection(Session webSocketConnection) {
-        this.setSession(session);
-    }
-
     public DataOutputStream getDataOutputStream() {
         return dataOutputStream;
-    }
-
-    public void setDataOutputStream(DataOutputStream dataOutputStream) {
-        this.dataOutputStream = dataOutputStream;
     }
 
     /**
@@ -105,21 +81,7 @@ public class JmriConnection {
         } else if (this.session != null) {
             if (this.session.isOpen()) {
                 try {
-                    this.session.getRemote().sendString(message, new WriteCallback() {
-                        @Override
-                        public void writeFailed(Throwable thrwbl) {
-                            log.error("Exception \"{}\" sending {}",
-                                    thrwbl.getMessage(),
-                                    log.isDebugEnabled() ? message : message.length() < 75 ? message : message.substring(0, 74),
-                                    thrwbl);
-                            JmriConnection.this.getSession().close(StatusCode.NO_CODE, thrwbl.getMessage());
-                        }
-
-                        @Override
-                        public void writeSuccess() {
-                            log.debug("Sent {}", message);
-                        }
-                    });
+                    this.session.getRemote().sendString(message);
                 } catch (WebSocketException ex) {
                     log.debug("Exception sending message", ex);
                     // A WebSocketException is most likely a broken socket,
