@@ -8,16 +8,19 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class SerialMonAction extends AbstractAction {
 
-    public SerialMonAction(String s) {
+    private TmccSystemConnectionMemo _memo = null;
+
+    public SerialMonAction(String s, TmccSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
     public SerialMonAction() {
-        this("TMCC monitor");
+        this(Bundle.getMessage("MonitorXTitle", "TMCC"), jmri.InstanceManager.getDefault(jmri.jmrix.tmcc.TmccSystemConnectionMemo.class));
     }
 
     @Override

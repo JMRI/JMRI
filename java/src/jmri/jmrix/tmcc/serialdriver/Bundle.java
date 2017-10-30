@@ -1,4 +1,4 @@
-package jmri.jmrix.easydcc.packetgen;
+package jmri.jmrix.tmcc.serialdriver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author      Bob Jacobsen  Copyright (C) 2012
  * @since       3.7.2
  */
-public class Bundle extends jmri.jmrix.easydcc.Bundle {
+public class Bundle extends jmri.jmrix.tmcc.Bundle {
 
     @Nullable private static final String name = null; // No local resources
 

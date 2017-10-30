@@ -7,21 +7,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for TMCC serial systems
- * <P>
+ * Implement turnout manager for TMCC serial systems.
+ * <p>
  * System names are "TTnnn", where nnn is the turnout number without padding.
+ * First T prefix is user configurable.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    public SerialTurnoutManager() {
+    TmccSystemConnectionMemo _memo = null;
+    private String prefix = "T";
+    private SerialTrafficController trafficController = null;
+    public final static int MAX_ACC_DECODER_ADDRESS = 511;
 
+    public SerialTurnoutManager() {
+        log.debug("EasyDCC Turnout Manager null");
+    }
+
+    public SerialTurnoutManager(TmccSystemConnectionMemo memo) {
+        _memo = memo;
+        prefix = memo.getSystemPrefix();
+        // connect to the TrafficManager
+        trafficController = memo.getTrafficController();
+        // listen for turnout creation
+        trafficController.addEasyDccListener(this);
+        log.debug("TMCC Turnout Manager prefix={}", prefix);
     }
 
     @Override
     public String getSystemPrefix() {
-        return "T";
+        return prefix;
     }
 
     @Override
@@ -32,7 +48,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             // system name is not valid
             return null;
         }
-        // does this turnout already exist
+        // does this turnout already exist?
         Turnout t = getBySystemName(sName);
         if (t != null) {
             return null;
@@ -45,18 +61,33 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
         // create the turnout
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        t = new SerialTurnout(addr);
+        t = new SerialTurnout(prefix, addr, _memo);
         t.setUserName(userName);
 
-        // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        // does system name correspond to configured hardware?
+        if (!SerialAddress.validSystemNameConfig(sName, prefix)) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
     }
 
-    //Turnout address format is more than a simple number.
+    /**
+     * Listeners for messages from the command station.
+     */
+    @Override
+    public void message(SerialMessage m) {
+        log.debug("message received unexpectedly: {}", m.toString());
+    }
+
+    // Listen for status changes from TMCC system
+    @Override
+    public void reply(SerialReply r) {
+        // There isn't anything meaningful coming back at this time.
+        log.debug("reply received unexpectedly: {}", r.toString());
+    }
+
+    // Turnout address format is more than a simple number.
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
@@ -68,10 +99,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Deprecated
     static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+        log.warn("deprecated instance() call for TMCC SerialTurnoutManager");
+        return null;
     }
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure

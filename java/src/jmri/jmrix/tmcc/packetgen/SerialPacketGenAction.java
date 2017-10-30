@@ -6,19 +6,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SerialPacketGenFrame
- * object
+ * Swing action to create and register a SerialPacketGenFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  */
 public class SerialPacketGenAction extends AbstractAction {
 
-    public SerialPacketGenAction(String s) {
+    private EasyDccSystemConnectionMemo _memo = null;
+
+    public SerialPacketGenAction(String s, TmccSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
+    }
+
+    public SerialPacketGenAction(TmccSystemConnectionMemo memo) {
+        this("Generate TMCC message", memo);
     }
 
     public SerialPacketGenAction() {
-        this("Send TMCC message");
+        this(Bundle.getMessage("SendCommandTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.tmcc.TmccSystemConnectionMemo.class));
     }
 
     @Override
@@ -27,9 +33,11 @@ public class SerialPacketGenAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
+
 }

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register an EasyDccMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class EasyDccMonAction extends AbstractAction {
 
     private EasyDccSystemConnectionMemo _memo = null;
