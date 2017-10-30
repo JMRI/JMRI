@@ -3,6 +3,8 @@ package jmri;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 
 /**
  * Trigger file for Cucumber tests.
@@ -25,4 +27,15 @@ import org.junit.runner.RunWith;
                  features="java/acceptancetest/features",
                  tags = {"~@webtest"})
 public class RunCucumberTest {
+   
+   @BeforeClass
+   public static void beforeTests(){
+      apps.tests.Log4JFixture.setUp();
+   }
+
+   @AfterClass
+   public static void afterTests(){
+      apps.tests.Log4JFixture.tearDown();
+   }
+
 }
