@@ -98,14 +98,16 @@
           run specific tests. See
           <a href="https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html">Running a Single Test</a>
         for more details, including running only a single test method.</dt>
+        <dt>Check for vulnerabilities in JMRI dependencies</dt>
+        <dd><code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code></dd>
         <dt>Check for newer versions of JMRI dependencies</dt>
         <dd><code>mvn versions:display-dependency-updates</code></dd>
         <dt>Check for newer versions of the maven plugins</dt>
         <dd><code>mvn versions:display-plugin-updates</code></dd>
         <dt>Run DecoderPro</dt>
-        <dd><code>mvn antrun:run -Dtarget=decoderpro</code></dd>
+        <dd><code>mvn antrun:run -Danttarget=decoderpro</code></dd>
         <dt>Run PanelPro</dt>
-        <dd><code>mvn antrun:run -Dtarget=panelpro</code></dd>
+        <dd><code>mvn antrun:run -Danttarget=panelpro</code></dd>
       </dl>
 
       <!--#include virtual="/Footer" -->

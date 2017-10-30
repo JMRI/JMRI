@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.7.1-SNAPSHOT</version>
+    <version>4.9.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -17,7 +17,7 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <jetty.version>9.4.7.v20170914</jetty.version>
-        <slf4j.version>1.7.21</slf4j.version>
+        <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.15</openlcb.version>
@@ -245,7 +245,7 @@
                 <configuration>
                     <target>
                         <ant antfile="${basedir}/build.xml">
-                            <target name="${target}"/>
+                            <target name="${anttarget}"/>
                         </ant>
                     </target>
                 </configuration>
@@ -406,17 +406,17 @@
                         </configuration>
                     </execution>
                     <execution>
-                      <id>add-test-source</id>
-                      <phase>generate-test-sources</phase>
-                      <goals>
-                          <goal>add-test-source</goal>
-                      </goals>
-                      <configuration>
-                         <sources>
-                             <source>${basedir}/java/acceptancetest/step_definitions</source>
-                         </sources>
-                      </configuration>
-                   </execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/java/acceptancetest/step_definitions</source>
+                            </sources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -568,7 +568,67 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>net.ossindex</groupId>
+                <artifactId>ossindex-maven-plugin</artifactId>
+                <version>2.3.3</version>
+                <configuration>
+                    <failOnError>true</failOnError>
+                    <!-- List packages with vulnerabilities to ignore. -->
+                    <!-- Include an issue in GitHub for each ignored package -->
+                    <!-- documenting why the vulnerability is ignored. -->
+                    <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
+                    <ignore>org.python:jython-standalone:2.7.0</ignore>
+                </configuration>
+            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <!-- This plugin's configuration is used to store Eclipse m2e
+                settings only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>buildnumber-maven-plugin</artifactId>
+                                        <versionRange>[1.4,)</versionRange>
+                                        <goals>
+                                            <goal>create-metadata</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>javacc-maven-plugin</artifactId>
+                                        <versionRange>[2.6,)</versionRange>
+                                        <goals>
+                                            <goal>jjtree-javacc</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <reporting>
         <plugins>
@@ -593,7 +653,7 @@
                         </reports>
                     </reportSet>
                 </reportSets>
-            </plugin>        
+            </plugin>
         </plugins>
     </reporting>
 
@@ -645,6 +705,12 @@
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <version>1.2.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
             <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
@@ -722,9 +788,11 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <!-- when updating, remove from net.ossindex list of ignored -->
+            <!-- vulnerabilities elsewhere in this file -->
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.0</version>
+            <version>2.7.0</version><!-- versions < 2.7.1 have CVE against them --> 
         </dependency>
         <!--
         <dependency>

@@ -5,6 +5,7 @@ import cucumber.api.java8.En;
 import org.junit.Assert;
 
 import jmri.web.server.WebServer;
+import jmri.util.JUnitAppender;
 
 /**
  * Cucumber helper to handle starting and stoping the web server
@@ -17,10 +18,9 @@ public class WebServerScaffold implements En {
    private WebServer server = null;
    String[] tags = {"@webtest"};
 
-   public WebServerScaffold() {
+   public WebServerScaffold(jmri.InstanceManager instance) {
 
       Before(tags,()->{
-          jmri.util.JUnitUtil.setUp();
           jmri.util.JUnitUtil.resetProfileManager();
           jmri.util.JUnitUtil.initShutDownManager();
           jmri.util.JUnitUtil.initDebugPowerManager();
@@ -44,7 +44,6 @@ public class WebServerScaffold implements En {
                  ex.printStackTrace();
                  Assert.fail("Exception occured during web server shutdown:" + ex);
              }
-             jmri.util.JUnitUtil.tearDown();
          } catch(java.lang.NullPointerException npe2) {
              //npe2.printStackTrace();
              //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
