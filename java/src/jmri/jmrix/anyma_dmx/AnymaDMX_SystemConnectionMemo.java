@@ -25,7 +25,7 @@ public class AnymaDMX_SystemConnectionMemo extends jmri.jmrix.SystemConnectionMe
         register(); // registers general type
         InstanceManager.store(this, AnymaDMX_SystemConnectionMemo.class); // also register as specific type
         if (log.isDebugEnabled()) {
-            log.info("*Created AnymaDMX_SystemConnectionMemo");
+            log.debug("*	Created AnymaDMX_SystemConnectionMemo");
         }
     }
 

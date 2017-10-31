@@ -49,7 +49,7 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
-            log.info("*init called for " + name());
+            log.debug("*	init called for " + name());
         }
         if (init) {
             return;

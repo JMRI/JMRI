@@ -39,7 +39,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
      */
     public AbstractUSBConnectionConfig(PortAdapter p) {
         this((USBPortAdapter) p);
-        log.info("*ConnectionConfig()");
+        log.debug("*	ConnectionConfig()");
     }
 
     /**
@@ -53,14 +53,14 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
     public AbstractUSBConnectionConfig(USBPortAdapter p) {
         adapter = p;
         //addToActionList();
-        log.info("*ConnectionConfig()");
+        log.debug("*	ConnectionConfig()");
     }
 
     private USBPortAdapter adapter = null;
 
     @Override
     public USBPortAdapter getAdapter() {
-        log.info("*ConnectionConfig()");
+        log.debug("*	ConnectionConfig()");
         return adapter;
     }
 
@@ -512,19 +512,19 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
     @SuppressWarnings({"unchecked", "UseOfObsoleteCollectionType"})
     protected Vector<String> getPortNames() {
-        log.info("*ConnectionConfig()");
+        log.debug("*	ConnectionConfig()");
         Vector<String> portNameVector = new Vector<>();
 
         return portNameVector;
     }
 
 //    protected final void addToActionList() {
-//        log.info("*ConnectionConfig()");
+//        log.debug("*	ConnectionConfig()");
 //        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
 //    }
 //
 //    protected void removeFromActionList() {
-//        log.info("*ConnectionConfig()");
+//        log.debug("*	ConnectionConfig()");
 //        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
 //    }
 

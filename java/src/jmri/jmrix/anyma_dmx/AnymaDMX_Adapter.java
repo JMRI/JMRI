@@ -27,7 +27,7 @@ public class AnymaDMX_Adapter extends jmri.jmrix.AbstractPortController
 
     public AnymaDMX_Adapter() {
         super(new AnymaDMX_SystemConnectionMemo());
-        log.info("*AnymaDMX_Adapter Constructor called");
+        log.debug("*	AnymaDMX_Adapter Constructor called");
         this.manufacturerName = AnymaDMX_ConnectionTypeList.ANYMA_DMX;
         try {
             dmx = DMX_Factory.getInstance();

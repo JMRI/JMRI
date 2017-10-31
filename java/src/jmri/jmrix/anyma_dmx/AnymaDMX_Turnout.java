@@ -32,13 +32,13 @@ public class AnymaDMX_Turnout extends AbstractTurnout implements Turnout, java.i
 
     public AnymaDMX_Turnout(String systemName, DMX_Controller _dmx) {
         super(systemName.toUpperCase());
-        log.info("*Provisioning turnout {}", systemName);
+        log.debug("*	Provisioning turnout {}", systemName);
         init(systemName.toUpperCase(), _dmx);
     }
 
     public AnymaDMX_Turnout(String systemName, String userName, DMX_Controller _dmx) {
         super(systemName.toUpperCase(), userName);
-        log.info("*Provisioning turnout {} with username '{}'", systemName, userName);
+        log.debug("*	Provisioning turnout {} with username '{}'", systemName, userName);
         init(systemName.toUpperCase(), _dmx);
     }
 
@@ -68,14 +68,14 @@ public class AnymaDMX_Turnout extends AbstractTurnout implements Turnout, java.i
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         if (s == CLOSED) {
-            log.info("*Setting turnout {} to CLOSED", getSystemName());
+            log.debug("*	Setting turnout {} to CLOSED", getSystemName());
             if (!getInverted()) {
                 //pin.high();
             } else {
                 //pin.low();
             }
         } else if (s == THROWN) {
-            log.info("*Setting turnout {} to THROWN", getSystemName());
+            log.debug("*	Setting turnout {} to THROWN", getSystemName());
             if (!getInverted()) {
                 //pin.low();
             } else {

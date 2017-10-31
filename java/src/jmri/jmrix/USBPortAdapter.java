@@ -19,7 +19,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void connect() throws java.io.IOException {
-        log.info("*connect()");
+        log.debug("*	connect()");
     }
 
     private String manufacturer = null;
@@ -28,7 +28,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String getManufacturer() {
-        log.info("*getManufacturer()");
+        log.debug("*	getManufacturer()");
         return manufacturer;
     }
 
@@ -36,7 +36,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void setManufacturer(String manufacturer) {
-        log.info("*setManufacturer('{}')", manufacturer);
+        log.debug("*	setManufacturer('{}')", manufacturer);
         this.manufacturer = manufacturer;
     }
 
@@ -44,7 +44,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public DataInputStream getInputStream() {
-        log.info("*getInputStream()");
+        log.debug("*	getInputStream()");
         return null;
     }
 
@@ -52,7 +52,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public DataOutputStream getOutputStream() {
-        log.info("*getOutputStream()");
+        log.debug("*	getOutputStream()");
         return null;
     }
 
@@ -62,7 +62,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public boolean getDisabled() {
-        log.info("*getDisabled()");
+        log.debug("*	getDisabled()");
         return disabled;
     }
 
@@ -70,7 +70,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void setDisabled(boolean disabled) {
-        log.info("*setDisabled()");
+        log.debug("*	setDisabled()");
         this.disabled = disabled;
     }
 
@@ -80,7 +80,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String getUserName() {
-        log.info("*getUserName()");
+        log.debug("*	getUserName()");
         return userName;
     }
 
@@ -88,7 +88,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void setUserName(String userName) throws IllegalArgumentException {
-        log.info("*setUserName('{}')", userName);
+        log.debug("*	setUserName('{}')", userName);
         this.userName = userName;
     }
 
@@ -98,7 +98,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String getSystemPrefix() {
-        log.info("*getSystemPrefix()");
+        log.debug("*	getSystemPrefix()");
         return systemPrefix;
     }
 
@@ -106,7 +106,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void setSystemPrefix(String systemPrefix) throws IllegalArgumentException {
-        log.info("*setSystemPrefix('{}')", systemPrefix);
+        log.debug("*	setSystemPrefix('{}')", systemPrefix);
         this.systemPrefix = systemPrefix;
     }
 
@@ -116,7 +116,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public SystemConnectionMemo getSystemConnectionMemo() {
-        log.info("*getSystemConnectionMemo()");
+        log.debug("*	getSystemConnectionMemo()");
         return systemConnectionMemo;
     }
 
@@ -124,7 +124,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException {
-        log.info("*setSystemConnectionMemo()");
+        log.debug("*	setSystemConnectionMemo()");
         systemConnectionMemo = connectionMemo;
     }
 
@@ -132,21 +132,21 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void dispose() {
-        log.info("*dispose()");
+        log.debug("*	dispose()");
     }
 
     /**
      * {@inheritDoc}
      */
     public void recover() {
-        log.info("*recover()");
+        log.debug("*	recover()");
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isDirty() {
-        log.info("*isDirty()");
+        log.debug("*	isDirty()");
         return false;
     }
 
@@ -154,7 +154,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public boolean isRestartRequired() {
-        log.info("*isRestartRequired()");
+        log.debug("*	isRestartRequired()");
         return false;
     }
 
@@ -162,7 +162,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public List<String> getPortNames() {
-        log.info("*getPortNames()");
+        log.debug("*	getPortNames()");
         return new ArrayList<>();
     }
 
@@ -170,7 +170,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String openPort(String portName, String appName) {
-        log.info("*openPort('{}')", manufacturer);
+        log.debug("*	openPort('{}')", manufacturer);
         return null;
     }
 
@@ -178,7 +178,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void configure() {
-        log.info("*configure()");
+        log.debug("*	configure()");
     }
 
     private boolean status = true;
@@ -187,7 +187,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public boolean status() {
-        log.info("*status()");
+        log.debug("*	status()");
         return status;
     }
 
@@ -195,14 +195,14 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void setPort(String s) {
-        log.info("*setPort('{}')", manufacturer);
+        log.debug("*	setPort('{}')", manufacturer);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getCurrentPortName() {
-        log.info("*getCurrentPortName()");
+        log.debug("*	getCurrentPortName()");
         return null;
     }
 
@@ -210,7 +210,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String getOption1Name() {
-        log.info("*getOption1Name()");
+        log.debug("*	getOption1Name()");
         return null;
     }
 
@@ -218,7 +218,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String getOption2Name() {
-        log.info("*getOption2Name()");
+        log.debug("*	getOption2Name()");
         return null;
     }
 
@@ -226,7 +226,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String getOption3Name() {
-        log.info("*getOption3Name()");
+        log.debug("*	getOption3Name()");
         return null;
     }
 
@@ -234,7 +234,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String getOption4Name() {
-        log.info("*getOption4Name()");
+        log.debug("*	getOption4Name()");
         return null;
     }
 
@@ -242,35 +242,35 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void configureOption1(String value) {
-        log.info("*configureOption1('{}')", value);
+        log.debug("*	configureOption1('{}')", value);
     }
 
     /**
      * {@inheritDoc}
      */
     public void configureOption2(String value) {
-        log.info("*configureOption2('{}')", value);
+        log.debug("*	configureOption2('{}')", value);
     }
 
     /**
      * {@inheritDoc}
      */
     public void configureOption3(String value) {
-        log.info("*configureOption3('{}')", value);
+        log.debug("*	configureOption3('{}')", value);
     }
 
     /**
      * {@inheritDoc}
      */
     public void configureOption4(String value) {
-        log.info("*configureOption4('{}')", value);
+        log.debug("*	configureOption4('{}')", value);
     }
 
     /**
      * {@inheritDoc}
      */
     public String[] getOptions() {
-        log.info("*getOptions()");
+        log.debug("*	getOptions()");
         return null;
     }
 
@@ -278,7 +278,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public boolean isOptionAdvanced(String option) {
-        log.info("*isOptionAdvanced('{}')", option);
+        log.debug("*	isOptionAdvanced('{}')", option);
         return false;
     }
 
@@ -286,7 +286,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String getOptionDisplayName(String option) {
-        log.info("*getOptionDisplayName('{}')", option);
+        log.debug("*	getOptionDisplayName('{}')", option);
         return null;
     }
 
@@ -294,14 +294,14 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public void setOptionState(String option, String value) {
-        log.info("*setOptionState('{}')", value);
+        log.debug("*	setOptionState('{}')", value);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getOptionState(String option) {
-        log.info("*getOptionState('{}')", option);
+        log.debug("*	getOptionState('{}')", option);
         return null;
     }
 
@@ -309,7 +309,7 @@ public class USBPortAdapter implements PortAdapter {
      * {@inheritDoc}
      */
     public String[] getOptionChoices(String option) {
-        log.info("*getOptionChoices('{}')", option);
+        log.debug("*	getOptionChoices('{}')", option);
         return new String[]{};
     }
     private final static Logger log = LoggerFactory.getLogger(USBPortAdapter.class);

@@ -68,7 +68,7 @@ public class AnymaDMX_Sensor extends AbstractSensor implements GpioPinListenerDi
      * Common initialization for all constructors
      */
     private void init(String id,GpioController _gpio,PinPullResistance p){
-        log.info("*Provisioning sensor {}", id);
+        log.debug("*	Provisioning sensor {}", id);
         if(gpio==null)
            gpio=_gpio;
         address=Integer.parseInt(id.substring(id.lastIndexOf("S")+1));
@@ -101,7 +101,7 @@ public class AnymaDMX_Sensor extends AbstractSensor implements GpioPinListenerDi
     @Override
     public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event){
        // log pin state change
-       log.info("*GPIO PIN STATE CHANGE: {} = {}",event.getPin(),event.getState());
+       log.debug("*	GPIO PIN STATE CHANGE: {} = {}",event.getPin(),event.getState());
        if(event.getPin()==pin){
           if(event.getState().isHigh()) {
              setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);

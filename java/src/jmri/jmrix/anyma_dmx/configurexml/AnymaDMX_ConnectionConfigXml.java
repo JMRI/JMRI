@@ -31,7 +31,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        log.info("*getInstance without Parameter called");
+        log.debug("*	getInstance without Parameter called");
         if (adapter == null) {
             adapter = new AnymaDMX_Adapter();
             if (adapter.getDMX_Controller() == null) {
@@ -45,7 +45,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     protected void getInstance(Object object) {
-        log.info("*getInstance with Parameter called");
+        log.debug("*	getInstance with Parameter called");
         adapter = ((AnymaDMX_ConnectionConfig) object).getAdapter();
     }
 
