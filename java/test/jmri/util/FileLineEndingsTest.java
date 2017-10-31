@@ -98,14 +98,7 @@ public class FileLineEndingsTest {
             for (String pattern : patterns) {
                 PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
                 Files.walk(directory.toPath())
-                        .filter(path -> {
-                            for (PathMatcher antiMatcher : antiMatchers) {
-                                if (antiMatcher.matches(path)) {
-                                    return false;
-                                }
-                            }
-                            return true;
-                        })
+                        .filter(path -> antiMatchers.stream().noneMatch((antiMatcher) -> (antiMatcher.matches(path))))
                         .filter(matcher::matches)
                         .forEach((path) -> {
                             if (path.toFile().isFile()) {

@@ -91,6 +91,12 @@ public class JmriConnection {
                         throw new IOException("Exception sending message", ex);
                     }
                     throw new IOException(ex);
+                } catch (IOException ex) {
+                    if (ex.getMessage() == null) {
+                        // provide a generic message if ex has no message
+                        throw new IOException("Exception sending message", ex);
+                    }
+                    throw ex; // rethrow if complete
                 }
             } else {
                 // immediately thrown an IOException to trigger closing

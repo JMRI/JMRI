@@ -66,6 +66,8 @@ public class JsonWebSocket {
         if (thrwbl instanceof SocketTimeoutException) {
             this.connection.getSession().close(StatusCode.NO_CLOSE, thrwbl.getMessage());
         } else {
+            log.error("This is where handling the socket errors should occur?");
+            log.error("Its possible the next line needs to not dump a trace in all cases.");
             log.error(thrwbl.getMessage(), thrwbl);
         }
     }
