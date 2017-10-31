@@ -5,6 +5,7 @@ import java.net.SocketTimeoutException;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.json.JsonServerPreferences;
+import org.eclipse.jetty.io.EofException;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
@@ -65,6 +66,12 @@ public class JsonWebSocket {
     public void onError(Throwable thrwbl) {
         if (thrwbl instanceof SocketTimeoutException) {
             this.connection.getSession().close(StatusCode.NO_CLOSE, thrwbl.getMessage());
+        } else if (thrwbl instanceof EofException) {
+            try {
+                this.connection.getSession().disconnect();
+            } catch (IOException ex) {
+                this.onClose(StatusCode.ABNORMAL, ex.getMessage());
+            }
         } else {
             log.error("This is where handling the socket errors should occur?");
             log.error("Its possible the next line needs to not dump a trace in all cases.");
