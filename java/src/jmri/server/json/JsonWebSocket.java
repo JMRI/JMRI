@@ -71,7 +71,7 @@ public class JsonWebSocket {
             try {
                 this.connection.getSession().disconnect();
             } catch (IOException ex) {
-                this.onClose(StatusCode.ABNORMAL, ex.getMessage());
+                this.onClose(StatusCode.ABNORMAL, thrwbl.getMessage());
             }
         } else {
             log.error("Unanticipated error {}", thrwbl.getMessage(), thrwbl);
