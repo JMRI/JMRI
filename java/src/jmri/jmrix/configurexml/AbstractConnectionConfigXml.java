@@ -103,7 +103,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
                 }
             }
         }
-
     }
 
     protected void saveOptions(Element e, PortAdapter adapter) {

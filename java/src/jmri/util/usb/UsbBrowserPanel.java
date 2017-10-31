@@ -43,7 +43,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
     private final UsbServicesListener usbServicesListener = new UsbServicesListener() {
         @Override
         public void usbDeviceAttached(UsbServicesEvent use) {
-            // TODO: use sublter method to add device to tree
+            // TODO: use subtler method to add device to tree
             UsbTreeNode root = UsbBrowserPanel.this.root;
             root.removeAllChildren();
             UsbBrowserPanel.this.buildTree(root);
@@ -51,7 +51,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         @Override
         public void usbDeviceDetached(UsbServicesEvent use) {
-            // TODO: use sublter method to remove device from tree
+            // TODO: use subtler method to remove device from tree
             UsbTreeNode root = UsbBrowserPanel.this.root;
             root.removeAllChildren();
             UsbBrowserPanel.this.buildTree(root);
@@ -69,7 +69,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
     /**
      * Create new UsbBrowserPanel.
-     *
+     * <p>
      */
     public UsbBrowserPanel() {
         this.root = new UsbTreeNode();
@@ -263,7 +263,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                             default:
                                 return null;
                         }
-                    }catch (UsbDisconnectedException ex) {
+                    } catch (UsbDisconnectedException ex) {
                         this.setUsbDevice(null);
                     } catch (UnsupportedEncodingException | UsbException ex) {
                         log.error("Unable to get USB device property.", ex);

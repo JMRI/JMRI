@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma;
+package jmri.jmrix.anyma_dmx;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
-@javax.annotation.concurrent.Immutable
+@net.jcip.annotations.Immutable
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -20,12 +20,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @author George Warner Copyright (C) 2017
- * @since 4.3.6
+ * @since       4.9.6
  */
 public class Bundle extends jmri.jmrix.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.anyma.anymaBundle"; // NOI18N
+    private static final String name = "jmri.jmrix.anyma_dmx.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -41,20 +41,6 @@ public class Bundle extends jmri.jmrix.Bundle {
      */
     static String getMessage(String key) {
         return b.handleGetMessage(key);
-    }
-
-    /**
-     * Provides a translated string for a given key in a given locale from the
-     * package resource bundle or parent.
-     * <p>
-     * Note that this is intentionally package-local access.
-     *
-     * @param locale The locale to be used
-     * @param key    Bundle key to be translated
-     * @return Internationalized text
-     */
-    static String getMessage(Locale locale, String key) {
-        return b.handleGetMessage(locale, key);
     }
 
     /**
@@ -91,6 +77,7 @@ public class Bundle extends jmri.jmrix.Bundle {
     static String getMessage(Locale locale, String key, Object... subs) {
         return b.handleGetMessage(locale, key, subs);
     }
+
 
     private final static Bundle b = new Bundle();
 
