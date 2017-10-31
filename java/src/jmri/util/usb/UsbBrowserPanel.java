@@ -298,7 +298,6 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                         result = hubPortNumber + "." + result;
                         usbHub = hubPort.getUsbHub();
                     } else {
-                        result = "0." + result;
                         break;
                     }
                 }
