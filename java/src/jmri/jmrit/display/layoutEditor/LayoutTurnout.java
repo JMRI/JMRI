@@ -2613,7 +2613,20 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
                 if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-                    if (getBlockBName().isEmpty() && getBlockCName().isEmpty() && getBlockDName().isEmpty()) {
+                    Map<String, LayoutBlock> map = new HashMap<>();
+                    if (!getBlockName().isEmpty()) {
+                        map.put(getBlockName(), getLayoutBlock());
+                    }
+                    if (!getBlockBName().isEmpty()) {
+                        map.put(getBlockBName(), getLayoutBlockB());
+                    }
+                    if (!getBlockCName().isEmpty()) {
+                        map.put(getBlockCName(), getLayoutBlockC());
+                    }
+                    if (!getBlockDName().isEmpty()) {
+                        map.put(getBlockDName(), getLayoutBlockD());
+                    }
+                    if (map.size() == 1) {
                         popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -2621,51 +2634,19 @@ public class LayoutTurnout extends LayoutTrack {
                                 routeTableAction.actionPerformed(e);
                             }
                         });
-                    } else {
+                    } else if (map.size() > 1) {
                         JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
-                        viewRouting.add(new AbstractAction(getBlockName()) {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getBlockName(), getLayoutBlock());
-                                routeTableAction.actionPerformed(e);
-                            }
-                        });
-                        if (!getBlockBName().isEmpty()
-                                && !getBlockBName().equals(getBlockName())) {
+                        for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
+                            String blockName = entry.getKey();
+                            LayoutBlock layoutBlock = entry.getValue();
                             viewRouting.add(new AbstractAction(getBlockBName()) {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getBlockBName(), getLayoutBlockB());
+                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
                                     routeTableAction.actionPerformed(e);
                                 }
                             });
                         }
-
-                        if (!getBlockCName().isEmpty()
-                                && !getBlockCName().equals(getBlockName())
-                                && !getBlockCName().equals(getBlockBName())) {
-                            viewRouting.add(new AbstractAction(getBlockCName()) {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getBlockCName(), getLayoutBlockC());
-                                    routeTableAction.actionPerformed(e);
-                                }
-                            });
-                        }
-
-                        if (!getBlockDName().isEmpty()
-                                && !getBlockDName().equals(getBlockName())
-                                && !getBlockDName().equals(getBlockBName())
-                                && !getBlockDName().equals(getBlockCName())) {
-                            viewRouting.add(new AbstractAction(getBlockDName()) {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getBlockDName(), getLayoutBlockD());
-                                    routeTableAction.actionPerformed(e);
-                                }
-                            });
-                        }
-
                         popup.add(viewRouting);
                     }
                 }

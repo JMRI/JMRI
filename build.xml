@@ -167,7 +167,7 @@
         <pathelement location="${libdir}/jdom.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
-        <pathelement location="${libdir}/jmdns.jar"/>
+        <pathelement location="${libdir}/jmdns-3.5.3.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
@@ -258,9 +258,11 @@
         <pathelement location="${libdir}/cucumber-java8-1.2.5.jar"/>
         <pathelement location="${libdir}/cucumber-junit-1.2.5.jar"/>
         <pathelement location="${libdir}/cucumber-jvm-deps-1.0.5.jar"/>
+        <pathelement location="${libdir}/cucumber-picocontainer-1.2.5.jar"/>
         <pathelement location="${libdir}/gherkin-2.12.2.jar"/>
         <pathelement location="${libdir}/gherkin3-3.0.0.jar"/>
         <pathelement location="${libdir}/gherkin-jvm-deps-1.0.3.jar"/>
+        <pathelement location="${libdir}/picocontainer-2.15.jar"/>
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
     </path>
@@ -1346,7 +1348,6 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="cucumber.options" value="--tags ~@Ignore"/>
 
             <classpath refid="test.class.path"/>
 

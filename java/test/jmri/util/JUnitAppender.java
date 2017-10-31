@@ -368,6 +368,13 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     protected static boolean compare(LoggingEvent e1, String s2) {
+        if(e1==null) {
+           System.err.println("Logging event null when comparing to " + s2);
+           return s2==null;
+        } else if(e1.getMessage()==null) {
+           System.err.println("Logging event has null message when comparing to " + s2);
+           return s2==null;
+        }
         String s1 = e1.getMessage().toString();
         return StringUtils.deleteWhitespace(s1).equals(StringUtils.deleteWhitespace(s2));
     }
