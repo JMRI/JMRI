@@ -12,6 +12,7 @@ import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
 import javax.usb.UsbPort;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * useful usb utilities
@@ -23,6 +24,7 @@ public final class USBUtil {
 
     /**
      * get all USB devices
+     *
      * @return a list of all UsbDevice's
      */
     public static List<UsbDevice> getAllDevices() {
@@ -31,8 +33,8 @@ public final class USBUtil {
 
     /**
      * get matching USB devices
-     * 
-     * @param idVendor the vendor id to match
+     *
+     * @param idVendor  the vendor id to match
      * @param idProduct the product id to match
      * @return a list of matching UsbDevices
      */
@@ -44,6 +46,7 @@ public final class USBUtil {
 
     /**
      * get a USB device's full product (manufacturer + product) name
+     *
      * @param usbDevice the usb device you want to full product name of
      * @return the full product name (String)
      */
@@ -69,7 +72,7 @@ public final class USBUtil {
 
     /**
      * get a USB device's serial number (String)
-     * 
+     *
      * @param usbDevice the usb device who's serial number you want
      * @return serial number (String)
      */
@@ -85,11 +88,12 @@ public final class USBUtil {
     }
 
     /**
-     * get a USB device's location (String)
-     * @param usbDevice the usb device who's location you want
-     * @return location (String)
+     * get a USB device's location id (String)
+     *
+     * @param usbDevice the usb device who's location id you want
+     * @return location id (String)
      */
-    public static String getLocation(@Nonnull UsbDevice usbDevice) {
+    public static String getLocationID(@Nonnull UsbDevice usbDevice) {
         String result = "";
         while (usbDevice != null) {
             UsbPort usbPort = usbDevice.getParentUsbPort();
@@ -99,6 +103,7 @@ public final class USBUtil {
             result = "" + usbPort.getPortNumber() + result;
             usbDevice = usbPort.getUsbHub();
         }
+        result = "0x" + StringUtils.rightPad(result, 8, "0");
         return result;
     }
 

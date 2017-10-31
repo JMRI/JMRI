@@ -38,14 +38,14 @@ public class AnymaDMX_Adapter extends jmri.jmrix.AbstractPortController
         option1Name = "USB Device"; // NOI18N
 
         List<String> productNames = new ArrayList<>();
-        List<UsbDevice> usbDevices = USBUtil.getMatchingDevices((short) 0, (short) 0);
+        List<UsbDevice> usbDevices = USBUtil.getMatchingDevices((short) 0x16C0, (short) 0x05DC);
         for (UsbDevice usbDevice : usbDevices) {
             String fullProductName = USBUtil.getFullProductName(usbDevice);
             String serialNumber = USBUtil.getSerialNumber(usbDevice);
             if (!serialNumber.isEmpty()) {
                 fullProductName += " (" + serialNumber + ")";
             }
-            String location = USBUtil.getLocation(usbDevice);
+            String location = USBUtil.getLocationID(usbDevice);
             if (!location.isEmpty()) {
                 fullProductName += " (" + location + ")";
             }

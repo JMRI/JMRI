@@ -12,8 +12,6 @@
 package jmri.util.usb;
 
 import java.io.UnsupportedEncodingException;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -29,6 +27,7 @@ import javax.usb.UsbHub;
 import javax.usb.UsbPort;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
+import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -281,7 +280,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                         case 4:
                             return Bundle.getMessage("UsbDeviceProductId");
                         case 5:
-                            return Bundle.getMessage("UsbDeviceLocation");
+                            return Bundle.getMessage("UsbDeviceLocationId");
                         default:
                             break;
                     }
@@ -297,12 +296,11 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                             case 2:
                                 return node.getUsbDevice().getSerialNumberString();
                             case 3:
-                                return String.format("%04x", node.getUsbDevice().getUsbDeviceDescriptor().idVendor());
+                                return String.format("0x%04X", node.getUsbDevice().getUsbDeviceDescriptor().idVendor());
                             case 4:
-                                return String.format("%04x", node.getUsbDevice().getUsbDeviceDescriptor().idProduct());
+                                return String.format("0x%04X", node.getUsbDevice().getUsbDeviceDescriptor().idProduct());
                             case 5:
-                                //return getUsbDeviceLocation();
-                                return getUsbDeviceLocation(node.getUsbDevice());
+                                return USBUtil.getLocationID(node.getUsbDevice());
                             default:
                                 return null;
                         }
@@ -345,74 +343,5 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         // public byte getUsbPortIndex() {
         //     return usbPortIndex;
         // }
-        public String getUsbDeviceLocation() {
-            String result = "" + node.getUsbPortIndex();
-            UsbTreeNode parentNode = (UsbTreeNode) node.getParent();
-            while (parentNode != null) {
-                result = "" + parentNode.getUsbPortIndex() + "." + result;
-                parentNode = (UsbTreeNode) parentNode.getParent();
-            }
-            return result;
-        }
-
-        public String getUsbDeviceLocation(UsbDevice usbDevice) {
-            String result = null;
-            UsbPort usbPort = usbDevice.getParentUsbPort();
-            if (usbPort != null) {
-                byte portNumber = usbPort.getPortNumber();
-                result = "" + portNumber;
-                UsbHub usbHub = usbPort.getUsbHub();
-                while (usbHub != null) {
-                    UsbPort hubPort = usbHub.getParentUsbPort();
-                    if (hubPort != null) {
-                        byte hubPortNumber = hubPort.getPortNumber();
-                        result = hubPortNumber + "." + result;
-                        usbHub = hubPort.getUsbHub();
-                    } else {
-                        result = "0." + result;
-                        break;
-                    }
-                }
-            }
-            return result;
-        }
-
-        // recursive routine to build a location string based on the ports
-        // from the root hub to the device
-        private String recursiveGetLocation(@Nullable UsbDevice testUsbDevice, @Nonnull UsbDevice findUsbDevice) {
-            String result = null;
-            if (testUsbDevice == null) {
-                try {
-                    testUsbDevice = UsbHostManager.getUsbServices().getRootUsbHub();
-                } catch (UsbException | SecurityException ex) {
-                    log.error("Unable to get root USB hub.", ex);
-                }
-            }
-            if (testUsbDevice != null) {
-                if (testUsbDevice == findUsbDevice) {
-                    result = "";
-                } else if (testUsbDevice.isUsbHub()) {
-                    UsbHub testUsbHub = (UsbHub) testUsbDevice;
-                    for (byte portIndex = 0; portIndex <= testUsbHub.getNumberOfPorts(); portIndex++) {
-                        UsbPort childUsbPort = testUsbHub.getUsbPort(portIndex);
-                        if (childUsbPort != null) {
-                            if (childUsbPort.isUsbDeviceAttached()) {
-                                UsbDevice childUsbDevice = childUsbPort.getUsbDevice();
-                                log.info("childUsbDevice: " + childUsbDevice);
-                                String childResult = recursiveGetLocation(childUsbDevice, findUsbDevice);
-                                if (childResult != null) {
-                                    result = "" + portIndex;
-                                    if (!childResult.isEmpty()) {
-                                        result += "." + childResult;
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return result;
-        }
     }
 }
