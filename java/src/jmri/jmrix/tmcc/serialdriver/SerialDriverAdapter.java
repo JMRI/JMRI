@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.TooManyListenersException;
 import jmri.jmrix.tmcc.SerialPortController;
 import jmri.jmrix.tmcc.SerialTrafficController;
-import jmri.jmrix.tmcc.TMCCSystemConnectionMemo;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -29,7 +29,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(new TMCCSystemConnectionMemo());
+        super(new TmccSystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL;
     }
 

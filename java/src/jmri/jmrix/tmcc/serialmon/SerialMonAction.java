@@ -2,11 +2,12 @@ package jmri.jmrix.tmcc.serialmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SerialMonFrame object
+ * Swing action to create and register a SerialMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
@@ -26,7 +27,7 @@ public class SerialMonAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
-        SerialMonFrame f = new SerialMonFrame();
+        SerialMonFrame f = new SerialMonFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

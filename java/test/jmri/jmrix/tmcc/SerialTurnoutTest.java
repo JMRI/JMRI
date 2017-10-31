@@ -6,19 +6,22 @@ import org.junit.Before;
 /**
  * Tests for the SerialTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
+    private TmccSystemConnectionMemo memo = null;
 
     @Before
     @Override
     public void setUp() {
         // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
+        memo = new TmccSystemConnectionMemo("T", "TMCC Test");
+        tcis = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tcis); // important for successful getTrafficController()
 
-        t = new SerialTurnout(4);
+        t = new SerialTurnout("T", 4, memo);
     }
 
     @Override
@@ -29,15 +32,15 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     public void checkThrownMsgSent() {
 //       tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//       Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//       Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+//       Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//       Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // OUT (THROWN) message
     }
 
     @Override
     public void checkClosedMsgSent() {
 //       tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//       Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//       Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+//       Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//       Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROUGH (CLOSED) message
     }
 
 }

@@ -4,6 +4,7 @@ import jmri.jmrix.tmcc.SerialListener;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) TMCC serial command messages.
@@ -12,8 +13,11 @@ import jmri.jmrix.tmcc.SerialTrafficController;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private TmccSystemConnectionMemo _memo = null;
+
+    public SerialMonFrame(TmccSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     @Override

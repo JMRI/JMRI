@@ -6,6 +6,7 @@ import javax.swing.JSeparator;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
@@ -21,7 +22,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
     private TmccSystemConnectionMemo _memo = null;
 
-    public SerialPacketGenFrame(EasyDccSystemConnectionMemo memo) {
+    public SerialPacketGenFrame(TmccSystemConnectionMemo memo) {
         super();
         _memo = memo;
     }

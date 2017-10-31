@@ -21,7 +21,7 @@ public class EasyDccMonAction extends AbstractAction {
     }
 
     public EasyDccMonAction() {
-        this(Bundle.getMessage("MonitorXTitle", "EasyDCC"), jmri.InstanceManager.getDefault(jmri.jmrix.easydcc.EasyDccSystemConnectionMemo.class));
+        this(Bundle.getMessage("MonitorXTitle", "EasyDCC"), jmri.InstanceManager.getDefault(EasyDccSystemConnectionMemo.class));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package jmri.jmrix.tmcc.swing;
 
-import jmri.jmrix.easydcc.EasyDccMenu;
-import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
+import jmri.jmrix.tmcc.TmccMenu;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 
 /**
  * Provide access to Swing components for the TMCC subsystem.

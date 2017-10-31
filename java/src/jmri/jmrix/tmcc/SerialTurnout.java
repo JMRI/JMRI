@@ -61,7 +61,7 @@ public class SerialTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + prefix + "T" + _number);
+            log.debug("Send command to {} Pushbutton {}T{}", (_pushButtonLockout ? "Lock" : "Unlock"), _prefix, _number);
         }
     }
 
@@ -73,10 +73,10 @@ public class SerialTurnout extends AbstractTurnout {
         } else {
             m.putAsWord(0x401F + _number * 128);
         }
-        SerialTrafficController.instance().sendSerialMessage(m, null);
-        SerialTrafficController.instance().sendSerialMessage(m, null);
-        SerialTrafficController.instance().sendSerialMessage(m, null);
-        SerialTrafficController.instance().sendSerialMessage(m, null);
+        tc.sendSerialMessage(m, null);
+        tc.sendSerialMessage(m, null);
+        tc.sendSerialMessage(m, null);
+        tc.sendSerialMessage(m, null);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);

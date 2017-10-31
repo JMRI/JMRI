@@ -2,6 +2,7 @@ package jmri.jmrix.tmcc.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialPacketGenAction extends AbstractAction {
 
-    private EasyDccSystemConnectionMemo _memo = null;
+    private TmccSystemConnectionMemo _memo = null;
 
     public SerialPacketGenAction(String s, TmccSystemConnectionMemo memo) {
         super(s);
@@ -24,12 +25,12 @@ public class SerialPacketGenAction extends AbstractAction {
     }
 
     public SerialPacketGenAction() {
-        this(Bundle.getMessage("SendCommandTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.tmcc.TmccSystemConnectionMemo.class));
+        this(Bundle.getMessage("SendCommandTitle"), jmri.InstanceManager.getDefault(TmccSystemConnectionMemo.class));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        SerialPacketGenFrame f = new SerialPacketGenFrame();
+        SerialPacketGenFrame f = new SerialPacketGenFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

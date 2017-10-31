@@ -1,6 +1,7 @@
 package jmri.jmrix.tmcc;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
@@ -26,7 +27,7 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
      *
      * @param tc the associated TrafficController
      */
-    public TmccSystemConnectionMemo(TmccTrafficController tc) {
+    public TmccSystemConnectionMemo(SerialTrafficController tc) {
         super("T", "Lionel TMCC");
         trafficController = tc;
         register(); // registers general type
@@ -66,6 +67,10 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
      * @return the traffic controller for this connection
      */
     public SerialTrafficController getTrafficController() {
+        if (trafficController == null) {
+            setTrafficController(new SerialTrafficController(this));
+            log.debug("Auto create of TMCC SerialTrafficController for initial configuration");
+        }
         return trafficController;
     }
 
@@ -76,7 +81,7 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
         trafficController = tc;
         // in addition to setting the TrafficController in this object,
         // set the systemConnectionMemo in the traffic controller
-        et.setSystemConnectionMemo(this);
+        tc.setSystemConnectionMemo(this);
     }
 
     /**
@@ -146,7 +151,7 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
         throttleManager = t;
     }
 
-    private TmccTurnoutManager turnoutManager;
+    private SerialTurnoutManager turnoutManager;
 
     public SerialTurnoutManager getTurnoutManager() {
         if (getDisabled()) {

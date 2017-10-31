@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of a TMCC ThrottleManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class SerialThrottleManager extends AbstractThrottleManager {
 
@@ -18,7 +18,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      */
-    public SerialThrottleManager(EasyDccSystemConnectionMemo memo) {
+    public SerialThrottleManager(TmccSystemConnectionMemo memo) {
         super(memo);
         _memo = memo;
         userName = "Lionel TMCC";

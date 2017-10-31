@@ -359,4 +359,5 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+
 }

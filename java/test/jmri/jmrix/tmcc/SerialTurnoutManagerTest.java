@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialTurnoutManagerTest.java
- *
- * Description:	tests for the SerialTurnoutManager class
+ * Tests for the SerialTurnoutManager class.
  *
  * @author	Bob Jacobsen
  */
@@ -27,8 +25,9 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     @Before
     public void setUp(){
         apps.tests.Log4JFixture.setUp();
+
         // create and register the manager object
-        l = new SerialTurnoutManager();
+        l = new SerialTurnoutManager(new TmccSystemConnectionMemo("T", "TMCC Test"));
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

@@ -170,8 +170,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             }
         }
         return prefix + typeLetter() + iName;
-
     }
+
     int iName;
 
     /**
