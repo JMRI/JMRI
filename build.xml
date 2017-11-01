@@ -1348,6 +1348,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="cucumber.options" value="--tags ~@Ignore"/>
 
             <classpath refid="test.class.path"/>
 
