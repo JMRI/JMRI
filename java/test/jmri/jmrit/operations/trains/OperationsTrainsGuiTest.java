@@ -71,14 +71,14 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.addButton);
 
         // confirm panel creation
-        JmriJFrame tef = JmriJFrame.getFrame("Add Train");
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("TitleTrainAdd"));
         Assert.assertNotNull("train edit frame", tef);
 
         // create the TrainSwichListEditFrame
         enterClickAndLeave(f.switchListsButton);
 
         // confirm panel creation
-        JmriJFrame tsle = JmriJFrame.getFrame("Switch Lists by Location");
+        JmriJFrame tsle = JmriJFrame.getFrame(Bundle.getMessage("TitleSwitchLists"));
         Assert.assertNotNull("train switchlist edit frame", tsle);
 
         // kill panels
@@ -139,7 +139,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(trainEditFrame.editButton);
 
         // confirm panel creation
-        JmriJFrame ref = JmriJFrame.getFrame("Edit Route");
+        JmriJFrame ref = JmriJFrame.getFrame(Bundle.getMessage("TitleRouteEdit"));
         Assert.assertNotNull("route add frame", ref);
 
         // increase screen size so clear and set buttons are shown
@@ -633,7 +633,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
         Assert.assertNotNull(f);
-
     }
 
     // Ensure minimal setup for log4J

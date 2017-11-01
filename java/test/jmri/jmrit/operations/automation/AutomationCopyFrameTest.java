@@ -79,7 +79,7 @@ public class AutomationCopyFrameTest extends OperationsSwingTestCase {
 
         // There should be an edit automation frame
         // confirm that the add automation frame isn't available
-        AutomationTableFrame editAutomationFrame = (AutomationTableFrame) JmriJFrame.getFrame("Edit Automation");
+        AutomationTableFrame editAutomationFrame = (AutomationTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleAutomationEdit"));
         Assert.assertNotNull(editAutomationFrame);
 
         Assert.assertEquals("confirm name is correct", "Name of new automation 2", editAutomationFrame.automationNameTextField.getText());
