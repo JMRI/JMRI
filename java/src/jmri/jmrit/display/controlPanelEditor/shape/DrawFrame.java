@@ -144,7 +144,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _lineColorButon.setSelected(true);
         panel.add(p);
         _chooser = new JColorChooser(Color.LIGHT_GRAY);
-        _chooser.setColor(Color.green);
+//        _chooser.setColor(Color.green);
 //        AbstractColorChooserPanel _chooserColorPanels[] = { new ButtonSwatchColorChooserPanel()};
 //        _chooser.setChooserPanels(_chooserColorPanels);
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
@@ -267,29 +267,31 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _lineSlider.setValue(_lineWidth);
         _lineColor = _shape.getLineColor();
         _fillColor = _shape.getFillColor();
-        if (_lineColor.getAlpha() > _fillColor.getAlpha()) {
+        if (_lineColor.getAlpha() >= _fillColor.getAlpha()) {
             _alphaSlider.setValue(_lineColor.getAlpha());
             _lineColorButon.setSelected(true);
         } else {
-            _alphaSlider.setValue(_fillColor.getAlpha());
+            int alpha = _fillColor.getAlpha();
+            if (alpha < 2) {
+                alpha = 255;
+            }
+            _alphaSlider.setValue(alpha);
             _fillColorButon.setSelected(true);
         }
 
         _contentPanel.remove(0);
         _contentPanel.add(makeInstructions(false, null), 0);
         _contentPanel.add(makeParamsPanel());
-//        if (!editShape) {
-            _contentPanel.add(makeSensorPanel());            
-            _sensorName.setText(_shape.getSensorName());
-            _levelComboBox.setSelectedIndex(_shape.getChangeLevel());
-            if (_shape.isHideOnSensor()) {
-                _hideShape.setSelected(true);
-                _levelComboBox.setEnabled(false);
-            } else {
-                _changeLevel.setSelected(true);
-            }
-            _contentPanel.add(makeDoneButtonPanel());
-//        }
+        _contentPanel.add(makeSensorPanel());            
+        _sensorName.setText(_shape.getSensorName());
+        _levelComboBox.setSelectedIndex(_shape.getChangeLevel());
+        if (_shape.isHideOnSensor()) {
+            _hideShape.setSelected(true);
+            _levelComboBox.setEnabled(false);
+        } else {
+            _changeLevel.setSelected(true);
+        }
+        _contentPanel.add(makeDoneButtonPanel());
         pack();
     }
 
