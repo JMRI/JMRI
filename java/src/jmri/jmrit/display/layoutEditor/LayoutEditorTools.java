@@ -2380,7 +2380,7 @@ public class LayoutEditorTools {
                 return null;
             }
         }
-        if (!block.isOnPanel(layoutEditor)) {
+        if (!block.isOnPanel(layoutEditor) && boundary.getType() != PositionablePoint.EDGE_CONNECTOR) {
             JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                     Bundle.getMessage("SignalsError11",
                             new Object[]{theBlockName}), Bundle.getMessage("ErrorTitle"),
@@ -7196,7 +7196,7 @@ public class LayoutEditorTools {
             @Nonnull JFrame theFrame) {
         boundary = p;
         block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
-        if (boundary.getType() != PositionablePoint.ANCHOR) {
+        if (boundary.getConnect2() == null) {
             block2IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         } else {
             block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());

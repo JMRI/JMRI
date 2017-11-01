@@ -9093,7 +9093,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut track color to.
+     * @param color value to set the default track color to.
      */
     public void setDefaultTrackColor(@Nonnull Color color) {
         LayoutTrack.setDefaultTrackColor(color);
@@ -9110,7 +9110,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut occupied track color to.
+     * @param color value to set the default occupied track color to.
      */
     public void setDefaultOccupiedTrackColor(@Nonnull Color color) {
         defaultOccupiedTrackColor = color;
@@ -9126,7 +9126,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut alternate track color to.
+     * @param color value to set the default alternate track color to.
      */
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
@@ -9182,7 +9182,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut text color to.
+     * @param color value to set the default text color to.
      */
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;

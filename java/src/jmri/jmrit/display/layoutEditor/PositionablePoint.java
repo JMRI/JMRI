@@ -840,7 +840,6 @@ public class PositionablePoint extends LayoutTrack {
                     jmi.setEnabled(false);
                     blockBoundary = true;
                 }
-                blockBoundary = true;
                 break;
             default:
                 break;
@@ -1012,10 +1011,9 @@ public class PositionablePoint extends LayoutTrack {
 
         jmi.setSelected(getType() == ANCHOR);
 
-        // you can't set it to an anchor if it has a 2nd connection
+        // you can't change it to an anchor if it has a 2nd connection
         // TODO: add error dialog if you try?
-        if ((getType()
-                == EDGE_CONNECTOR) && (getConnect2() != null)) {
+        if ((getType() == EDGE_CONNECTOR) && (getConnect2() != null)) {
             jmi.setEnabled(false);
         }
 
