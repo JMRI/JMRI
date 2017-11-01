@@ -293,6 +293,8 @@ public class NXFrameTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        // set the locale to US English
+        Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
