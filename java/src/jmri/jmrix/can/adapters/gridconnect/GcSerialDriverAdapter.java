@@ -242,12 +242,10 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
                 throw new UnsupportedOperationException();
             }
             if (head == null || headOfs >= head.len) {
-                while (true) {
-                    try {
-                        head = readAhead.take();
-                        break;
-                    } catch (InterruptedException e) {
-                    }
+                try {
+                    head = readAhead.take();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 }
                 if (head.e != null) {
                     throw head.e;
