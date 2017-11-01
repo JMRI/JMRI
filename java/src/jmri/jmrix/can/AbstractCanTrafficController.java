@@ -303,7 +303,6 @@ abstract public class AbstractCanTrafficController
     public void distributeOneReply(CanReply msg, AbstractMRListener mLastSender) {
         // forward the message to the registered recipients,
         // which includes the communications monitor
-        // return a notification via the Swing event queue to ensure proper thread
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         if (getSynchronizeRx()) {
             ThreadingUtil.runOnLayout(r::run);
