@@ -55,7 +55,7 @@ public class CarTypesTest {
 
     @Test
     public void defaultNameChangetest(){
-        Locale.setDefault(new Locale.US); // set the locale to US English 
+        Locale.setDefault(Locale.US); // set the locale to US English 
                                            // for this test.
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
