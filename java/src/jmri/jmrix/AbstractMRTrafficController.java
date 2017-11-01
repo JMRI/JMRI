@@ -897,6 +897,25 @@ abstract public class AbstractMRTrafficController {
     private int retransmitCount = 0;
 
     /**
+     * Executes a reply distribution action on the appropriate thread for JMRI.
+     * @param r a runnable typically encapsulating a MRReply and the iteration code needed to
+     *          send it to all the listeners.
+     */
+    protected void distributeReply(Runnable r) {
+        try {
+            if (synchronizeRx) {
+                SwingUtilities.invokeAndWait(r);
+            } else {
+                SwingUtilities.invokeLater(r);
+            }
+        } catch (InterruptedException | java.lang.reflect.InvocationTargetException| RuntimeException e) {
+            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+            return;
+        }
+        log.debug("dispatch thread invoked");
+    }
+
+    /**
      * Handle each reply when complete.
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
@@ -927,17 +946,7 @@ abstract public class AbstractMRTrafficController {
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(msg, mLastSender, this);
-        try {
-            if (synchronizeRx) {
-                SwingUtilities.invokeAndWait(r);
-            } else {
-                SwingUtilities.invokeLater(r);
-            }
-        } catch (InterruptedException | java.lang.reflect.InvocationTargetException| RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
-            return;
-        }
-        log.debug("dispatch thread invoked");
+        distributeReply(r);
 
         if (!msg.isUnsolicited()) {
             // effect on transmit:

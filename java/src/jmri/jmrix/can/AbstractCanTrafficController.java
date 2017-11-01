@@ -304,11 +304,7 @@ abstract public class AbstractCanTrafficController
         // forward the message to the registered recipients,
         // which includes the communications monitor
         Runnable r = newRcvNotifier(msg, mLastSender, this);
-        if (getSynchronizeRx()) {
-            ThreadingUtil.runOnLayout(r::run);
-        } else {
-            ThreadingUtil.runOnLayoutEventually(r::run);
-        }
+        distributeReply(r);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class);
