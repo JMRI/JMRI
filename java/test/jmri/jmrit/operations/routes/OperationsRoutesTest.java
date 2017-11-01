@@ -506,8 +506,8 @@ public class OperationsRoutesTest extends OperationsTestCase {
      * Test route Xml create, read, and backup support. Originally written as
      * three separate tests, now combined into one as of 8/29/2013
      *
-     * @throws JDOMException
-     * @throws IOException
+     * @throws JDOMException exception
+     * @throws IOException exception
      */
     public void testXMLCreate() throws JDOMException, IOException {
 

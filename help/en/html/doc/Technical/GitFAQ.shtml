@@ -106,21 +106,19 @@
           <p>Via the git command line tool you do this with this
           command:</p>
 
-          <blockquote>
-            <code>$ git remote set-url --push origin
-            https://github.com/<em>username</em>/JMRI.git</code>
-          </blockquote>where <code>username</code> is your github
+<pre style="font-family: monospace;">
+            $ git remote set-url --push origin https://github.com/<em>username</em>/JMRI.git
+</pre>
+          where <code>username</code> is your github
           user name. You can check the current status with of the
           push and pull repositories with:
 
-          <blockquote>
-            <code>$ git remote -v</code><br>
-            <code>origin https://github.com/JMRI/JMRI.git
-            (fetch)</code><br>
-            <code>origin
-            https://github.com/<em>username</em>/JMRI.git
-            (push)</code><br>
-          </blockquote>This says that, by default, fetches and
+<pre style="font-family: monospace;">
+            $ git remote -v
+            origin https://github.com/JMRI/JMRI.git (fetch)
+            origin https://github.com/<em>username</em>/JMRI.git (push)
+</pre>
+          This says that, by default, fetches and
           pulls come from the main JMRI/JMRI repository. When you
           push, on the other hand, it goes to your own repository.
 
@@ -212,54 +210,54 @@
                 <li>Clone the JMRI repo to your local system (or
                 update it):
 
-                  <blockquote>
-                    <code>$ git clone
-                    https://github.com/JMRI/JMRI.git</code><br>
-                    or<br>
-                    <code>$ git fetch</code><br>
-                    <code>$ git diff ...origin</code><br>
-                    <code>$ git merge origin/master<br>
-                    Auto-merging ... files ...<br>
-                    CONFLICT (content): Merge conflict in
-                    <em>some_file</em><br>
-                    Automatic merge failed; fix conflicts and then
-                    commit the result.<br>
-                    $ vi <em>some_file</em> # the file has the
-                    conflicts marked, edit to fix...<br>
-                    $ git add <em>some_file</em><br>
-                    $ git commit -m "Merged master fixed
-                    conflict"<br>
-                    $ git merge origin/master</code><br>
-                    or<br>
-                    <code>$ git pull
-                    https://github.com/JMRI/JMRI.git</code><br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                $ git clone https://github.com/JMRI/JMRI.git
+</pre>
+                <p>or</p>
+<pre style="font-family: monospace;">
+                $ git fetch
+</pre>
+                <p>then</p>
+<pre style="font-family: monospace;">
+                $ git diff ...origin
+                $ git merge origin/master
+                Auto-merging ... files ...
+                CONFLICT (content): Merge conflict in <em>some_file</em>
+                Automatic merge failed; fix conflicts and then commit the result.
+                $ vi <em>some_file</em> # the file has the conflicts marked, edit to fix...
+                $ git add <em>some_file</em>
+                $ git commit -m "Merged master fixed conflict"
+                $ git merge origin/master
+</pre>                
+                <p>or</p>
+<pre style="font-family: monospace;">                
+                $ git pull https://github.com/JMRI/JMRI.git</code><br>
+</pre>
                 </li>
 
                 <li>Make your changes locally, test them, etc.
 
-                  <blockquote>
-                    <code>$ git add <i>newfile</i></code><br>
-                    <code>$ git rm <i>newfile</i></code><br>
-                    <code>$ git add .</code><br>
-                    <br>
-                    <code>$ git status</code><br>
-                    <br>
-                    <code>$ git fetch</code><br>
-                    <code>$ git merge</code><br>
-                    <br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    $ git add <i>newfile</i>
+                    $ git rm <i>oldfile</i>
+                    $ git add .
+
+                    $ git status
+
+                    $ git fetch
+                    $ git merge
+</pre>
                 </li>
 
                 <li>Make your changes available to the community
 
-                  <blockquote>
-                    <code>$ git commit -m <i>"commit
-                    message"</i></code><br>
-                    or<br>
-                    <code>$ git commit -a -m <i>"commit
-                    message"</i></code><br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    $ git commit -m <i>"commit message"</i> <i>filename</i>, <i>filename</i>
+</pre>
+                    <p>or</p>
+<pre style="font-family: monospace;">
+                    $ git commit -a -m <i>"commit message"</i>
+</pre>
                 </li>
               </ul>
             </li>
@@ -497,22 +495,20 @@
                 <li>To create a branch called
                 "<em>branchname</em>", you do<br>
 
-                  <blockquote>
-                    <code>git checkout -b
-                    <em>branchname</em></code><br>
-                  </blockquote>The "-b" says to create the branch.
+<pre style="font-family: monospace;">
+                    git checkout -b <em>branchname</em>
+</pre>
+                  The "-b" says to create the branch.
                   To switch to an existing branch, just leave out
                   that option:<br>
-
-                  <blockquote>
-                    <code>git checkout
-                    <em>branchname</em></code><br>
-                  </blockquote>To see all the current branches,
+<pre style="font-family: monospace;">
+                    git checkout <em>branchname</em>
+</pre>
+                  To see all the current branches,
                   do<br>
-
-                  <blockquote>
-                    <code>git branch</code><br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    git branch
+</pre>
                 </li>
 
                 <li>If other people in the community make changes
@@ -520,39 +516,38 @@
                 to date by merging those changes in with your
                 branch<br>
 
-                  <blockquote>
-                    <code>git checkout <em>branchname</em><br>
-                    git merge -m"merging in current contents of
-                    master" master</code><br>
-                  </blockquote>(If you leave off the message
+<pre style="font-family: monospace;">
+                    git checkout <em>branchname</em>
+                    git merge -m"merging in current contents of master" master
+</pre>
+                (If you leave off the message
                   option, you may be prompted to add one in an
                   editor) If any changes were picked up and merged
                   in, you can then commit them to your branch:
 
-                  <blockquote>
-                    <code>git commit -a</code><br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    git commit -a
+</pre>
                 </li>
 
                 <li>
                   <p>When you're done, merge your changes back into
                   the common line of development with<br></p>
 
-                  <blockquote>
-                    <code>git checkout master<br>
-                    git merge -m"merging to master"
-                    <em>branchname</em><br>
-                    git commit -a</code>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    git checkout master
+                    git merge -m"merging to master" <em>branchname</em>
+                    git commit -a
+</pre>
                 </li>
 
                 <li>You can then delete your branch (if you're
                 finally done with it) with<br>
 
-                  <blockquote>
-                    <code>git checkout master<br>
-                    git branch -d branchname</code>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    git checkout master
+                    git branch -d branchname
+</pre>
                 </li>
               </ul>
             </li>
@@ -604,23 +599,22 @@
             <li>Arnie commits it to local repository, and then
             pushes it to his GitHub repository.
 
-              <blockquote>
-                <code>git checkout arnie-great-tool<br>
-                (work on changes)<br>
-                git commit -m"Added support for the Frobnab
-                2000"<br>
-                git push</code>
-              </blockquote>
+<pre style="font-family: monospace;">
+                git checkout arnie-great-tool
+                (work on changes)
+                git commit -m"Added support for the Frobnab 2000"
+                git push
+</pre>
             </li>
 
             <li>Bill can then get that by pulling it from Arnie's
             repository.
 
-              <blockquote>
-                <code>git pull https://github.com/arnie/JMRI.git
-                arnie-great-tool<br>
-                git checkout arnie-great-tool</code>
-              </blockquote>where the 1st part of the "pull" is the
+<pre style="font-family: monospace;">
+                git pull https://github.com/arnie/JMRI.git arnie-great-tool
+                git checkout arnie-great-tool
+</pre>
+              where the 1st part of the "pull" is the
               URL for Arnie's repository.
             </li>
 
@@ -628,18 +622,17 @@
             it as needed. If he makes changes that he wants Arnie
             to have, he does the same process in reverse:
 
-              <blockquote>
-                <code>git commit -m"Fixed a bug in sternerstat
-                handling"<br>
-                git push</code>
-              </blockquote>Then Arnie can merge those changes into
+<pre style="font-family: monospace;">
+                git commit -m"Fixed a bug in sternerstat handling"
+                git push
+</pre>
+              Then Arnie can merge those changes into
               his own copy with:
 
-              <blockquote>
-                <code>git checkout arnie-great-tool<br>
-                git pull https://github.com/bill/JMRI.git
-                arnie-great-tool</code>
-              </blockquote>
+<pre style="font-family: monospace;">
+                git checkout arnie-great-tool
+                git pull https://github.com/bill/JMRI.git arnie-great-tool
+</pre>
             </li>
           </ol>
         </dd>
@@ -840,11 +833,10 @@
 
             <li>Next, pull that branch onto your own machine with
             the command:
-              <pre>
-<code>
+<pre style="font-family: monospace;">
         git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
-        </code>
-</pre>where you have to replace each underlined value:
+</pre>
+            where you have to replace each underlined value:
 
               <ul>
                 <li>Change "user" to the correct GitHub user
@@ -868,16 +860,67 @@
 
             <li>The branch now exists in your machine, and you can
             just move to it:
-              <pre>
-<code>
+<pre style="font-family: monospace;">
         git checkout <u>local-branch</u>
-        </code>
-</pre>then compile, test, etc. as you'd like. You can even commit
-and share changes if you'd like, because this is now your own
-development branch: It started at the other person's, but it's now
-your own.
+
+</pre>
+            then compile, test, etc. as you'd like. You can even commit
+            and share changes if you'd like, because this is now your own
+            development branch: It started at the other person's, but it's now
+            your own.
             </li>
           </ul>
+        </dd>
+
+        <dt id="bisect">Using "git bisect" to find the cause of a bug</dt>
+
+        <dd>
+        If you have a reproducible problem that you think was introduced by a change to the
+        code, "git bisect" can help you track down the commit that caused it. 
+        It's very efficient at tracking down repeating problems due to a single change.
+        <p>
+        Let's say that you know <code>v4.9.1</code> does not have the problem, 
+        and commit <code>23482341</code> (made up number) does.  
+        A narrow range is good, but don't spend any time on it; 
+        git bisect does a binary search that's very efficient.
+
+        Then you check out the bad version:
+<pre style="font-family: monospace;">
+        git checkout 23482341
+</pre>
+        You start the bisect process:
+<pre style="font-family: monospace;">
+        git bisect start
+        git bisect bad
+        git bisect good v4.9.1
+</pre>
+        I.e. set up your branch <u>with</u> the problem, start 'git bisect', tell it the 
+        problem is visible here and now, then tell it where there's a good version to search through.
+        Git will sort out the possible revision path(s) where the problem can lie and devise an optimal search.  
+        Then it will checkout some place in the middle and tell you "Bisecting: 6 revisions left to test after this"
+        or something like this.
+        <p>
+        Test that code:
+<pre style="font-family: monospace;">
+        ant clean tests
+</pre>
+        (and whatever you need to recreate).  One you know if it's good or bad, you say
+<pre style="font-family: monospace;">
+        git bisect good
+</pre>
+        <p>or</p>
+<pre style="font-family: monospace;">
+        git bisect bad
+</pre>
+        and repeat.  Git will do a good job of giving you the minimal number of tests to do,
+        and in the end will show you the commit that turned "good" into "bad" - not the PR, the single commit.
+        You can then look at the exact changes in that commit to see what went wrong.
+        
+        <p>After "git bisect" is finished, end the process with 
+<pre style="font-family: monospace;">
+        git bisect reset
+</pre>
+        to get back to where you started.    
         </dd>
 
         <dt id="SFnetPatches">Handling a SF.net Patch</dt>

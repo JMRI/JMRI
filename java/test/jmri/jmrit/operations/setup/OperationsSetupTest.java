@@ -481,7 +481,7 @@ public class OperationsSetupTest extends OperationsTestCase {
     /**
      * Test-by test initialization.
      *
-     * @throws Exception
+     * @throws Exception exception
      */
     @Override
     protected void setUp() throws Exception {
