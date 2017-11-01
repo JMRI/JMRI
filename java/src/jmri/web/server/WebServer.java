@@ -365,6 +365,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleFailure(LifeCycle lc, Throwable thrwbl) {
+        if (zeroConfService != null) {
+            zeroConfService.stop();
+        }
         log.error("Web Server failed", thrwbl);
     }
 
