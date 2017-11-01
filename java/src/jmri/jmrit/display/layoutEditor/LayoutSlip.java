@@ -678,7 +678,6 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     JPopupMenu popup = null;
-    LayoutEditorTools tools = null;
 
     /**
      * {@inheritDoc}
@@ -691,7 +690,6 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             popup = new JPopupMenu();
         }
-        tools = layoutEditor.getLETools();
         if (layoutEditor.isEditable()) {
             String slipStateString = getSlipStateString(getSlipState());
             slipStateString = String.format(" (%s)", slipStateString);
@@ -887,12 +885,15 @@ public class LayoutSlip extends LayoutTurnout {
                 AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools.setSignalsAtSlipFromMenu(LayoutSlip.this,
-                                layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                        layoutEditor.getLETools().setSignalsAtSlipFromMenu(
+                                LayoutSlip.this,
+                                layoutEditor.signalIconEditor,
+                                layoutEditor.signalFrame);
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLayoutSlipSignalHeadInfoToMenu(LayoutSlip.this, jm)) {
+                if (layoutEditor.getLETools().addLayoutSlipSignalHeadInfoToMenu(
+                        LayoutSlip.this, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -913,13 +914,19 @@ public class LayoutSlip extends LayoutTurnout {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools.setSignalMastsAtSlipFromMenu(LayoutSlip.this, boundaryBetween, layoutEditor.signalFrame);
+                        layoutEditor.getLETools().setSignalMastsAtSlipFromMenu(
+                                LayoutSlip.this, 
+                                boundaryBetween, 
+                                layoutEditor.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools.setSensorsAtSlipFromMenu(LayoutSlip.this, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                        layoutEditor.getLETools().setSensorsAtSlipFromMenu(
+                                LayoutSlip.this, boundaryBetween,
+                                layoutEditor.sensorIconEditor, 
+                                layoutEditor.sensorFrame);
                     }
                 });
             }

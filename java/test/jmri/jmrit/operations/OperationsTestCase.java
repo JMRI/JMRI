@@ -23,6 +23,9 @@ public class OperationsTestCase extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
 
+        // set the locale to US English
+        Locale.setDefault(Locale.ENGLISH);
+
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -39,6 +42,8 @@ public class OperationsTestCase extends TestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
+        // restore locale
+        Locale.setDefault(Locale.getDefault());
         JUnitUtil.tearDown();
     }
 }
