@@ -8957,30 +8957,7 @@ public class LayoutEditorTools {
             getSavedSignalMasts.setToolTipText(Bundle.getMessage("GetSavedHint"));
             theContentPane.add(panel2);
 
-            turnoutSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-            turnoutSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-            turnoutSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-            turnoutSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
-
             signalMastTurnoutPanel.setLayout(new GridLayout(0, 2));
-
-            turnoutSignalMastA.setBoundaryLabel(turnoutBlocks[0]);
-            turnoutSignalMastB.setBoundaryLabel(turnoutBlocks[1]);
-            turnoutSignalMastC.setBoundaryLabel(turnoutBlocks[2]);
-            turnoutSignalMastD.setBoundaryLabel(turnoutBlocks[3]);
-
-            if (turnoutBlocks[0] != null) {
-                signalMastTurnoutPanel.add(turnoutSignalMastA.getDetailsPanel());
-            }
-            if (turnoutBlocks[1] != null) {
-                signalMastTurnoutPanel.add(turnoutSignalMastB.getDetailsPanel());
-            }
-            if (turnoutBlocks[2] != null) {
-                signalMastTurnoutPanel.add(turnoutSignalMastC.getDetailsPanel());
-            }
-            if (turnoutBlocks[3] != null) {
-                signalMastTurnoutPanel.add(turnoutSignalMastD.getDetailsPanel());
-            }
             theContentPane.add(signalMastTurnoutPanel);
 
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -9008,6 +8985,30 @@ public class LayoutEditorTools {
             theContentPane.add(panel6);
         }
 
+        turnoutSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
+        turnoutSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
+        turnoutSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
+        turnoutSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
+
+        turnoutSignalMastA.setBoundaryLabel(turnoutBlocks[0]);
+        turnoutSignalMastB.setBoundaryLabel(turnoutBlocks[1]);
+        turnoutSignalMastC.setBoundaryLabel(turnoutBlocks[2]);
+        turnoutSignalMastD.setBoundaryLabel(turnoutBlocks[3]);
+
+        signalMastTurnoutPanel.removeAll();
+        if (turnoutBlocks[0] != null) {
+            signalMastTurnoutPanel.add(turnoutSignalMastA.getDetailsPanel());
+        }
+        if (turnoutBlocks[1] != null) {
+            signalMastTurnoutPanel.add(turnoutSignalMastB.getDetailsPanel());
+        }
+        if (turnoutBlocks[2] != null) {
+            signalMastTurnoutPanel.add(turnoutSignalMastC.getDetailsPanel());
+        }
+        if (turnoutBlocks[3] != null) {
+            signalMastTurnoutPanel.add(turnoutSignalMastD.getDetailsPanel());
+        }
+
         signalMastsTurnoutComboBox.setVisible(!setSignalMastsAtTurnoutFromMenuFlag);
 
         if (setSignalMastsAtTurnoutFromMenuFlag) {
@@ -9015,6 +9016,11 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameTurnout")
                     + Bundle.getMessage("Name"))
                     + layoutTurnout.getTurnoutName());
+           turnoutMastNameLabel.setText(Bundle.getMessage("MakeLabel",
+                    Bundle.getMessage("BeanNameTurnout") + " 2 "
+                    + Bundle.getMessage("Name"))
+                    + layoutTurnout.getTurnoutName());
+            turnoutSignalMastsGetSaved(null);
         }
 
         if (!setSignalMastsAtTurnoutOpenFlag) {
@@ -9439,11 +9445,6 @@ public class LayoutEditorTools {
             }
         }
         layoutTurnout = layoutEditor.getFinder().findLayoutTurnoutByBean(turnout);
-        for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
-            if (t.getTurnout() == turnout) {
-                layoutTurnout = t;
-            }
-        }
 
         LayoutTurnout t = layoutTurnout;
         if (t == null) {
@@ -11123,14 +11124,7 @@ public class LayoutEditorTools {
             }
         }
         layoutTurnout = layoutEditor.getFinder().findLayoutTurnoutByBean(turnout);
-        for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
-            if (t.getTurnout() == turnout) {
-                layoutTurnout = t;
-            }
-        }
-
-        LayoutTurnout t = layoutTurnout;
-        if (t == null) {
+        if (layoutTurnout == null) {
             JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
                     Bundle.getMessage("SensorsError3",
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
@@ -11677,19 +11671,27 @@ public class LayoutEditorTools {
                 return false;
             }
             block2 = getBlockFromEntry(block2IDComboBox);
-            if (block2 == null) {
+            boundary = null;
+            // if block2 is undefined or same as block 1
+            if (block2 == null || (block1 == block2)) {
+                // find the 1st positionablePoint that's connect1'ed to block1
                 for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                    if ((p.getType() == PositionablePoint.END_BUMPER)
+                        && (p.getConnect1().getLayoutBlock() == block1)) {
                         boundary = p;
                         break;
-                    } else {
-                        return false;
                     }
                 }
+                if (boundary == null) {
+                    return false;
+                }
             }
-            boundary = null;
+
+            // now we try to find an anchor that connected to blocks 1 and 2
+            // (if this fails boundary will still be set to the pp set if
+            // block2 was null or equal to block1 above.)
             for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                if (p.getType() == PositionablePoint.ANCHOR) {
+                if (p.getType() != PositionablePoint.END_BUMPER) {
                     LayoutBlock bA = null;
                     LayoutBlock bB = null;
                     if (p.getConnect1() != null) {
@@ -11707,6 +11709,7 @@ public class LayoutEditorTools {
                     }
                 }
             }
+            // if all that failed…
             if (boundary == null) {
                 JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         Bundle.getMessage("SignalsError7"),
