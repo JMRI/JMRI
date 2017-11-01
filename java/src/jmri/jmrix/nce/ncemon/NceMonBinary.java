@@ -378,7 +378,7 @@ public class NceMonBinary {
     }
 
     private String getNumber(NceMessage m) {
-        return Integer.toString(m.getElement(1) * 256 + m.getElement(2));
+        return Integer.toString(((m.getElement(1) & 0xFF) << 8) | (m.getElement(2) & 0xFF));
     }
 
     private String getLocoAddress(NceMessage m) {
@@ -387,7 +387,7 @@ public class NceMonBinary {
         if ((m.getElement(1) & 0xE0) != 0) {
             appendix = " (long)";
         }
-        return Integer.toString((m.getElement(1) & 0x3F) * 256 + m.getElement(2)) + appendix;
+        return Integer.toString(((m.getElement(1) & 0x3F) << 8) | (m.getElement(2) & 0xFF)) + appendix;
     }
 
     private String getFunctionNumber(NceMessage m) {

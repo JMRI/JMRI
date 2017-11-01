@@ -66,23 +66,24 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         myReply = reply.myReply;
     }
 
-    /**
-     * Create a reply from an DCCppMessage.
-     * @param message message to load
-     */
-    // NOTE: Not Used
-    public DCCppReply(DCCppMessage message) {
+    // Create a new reply from a string
+    public DCCppReply(String reply) {
         super();
         setBinary(false);
-        for (int i = 0; i < message.getNumDataElements(); i++) {
-            setElement(i, message.getElement(i));
-        }
+        valueList = new ArrayList<Integer>();
+        char charList[] = reply.toCharArray();
+        //for(int i=0;i<charList.length;i++){
+        //    valueList.add((int)charList[i]);
+        //}
+        myRegex = "";
+        myReply = new StringBuilder(reply);
+        _nDataChars = toString().length();
     }
 
     @Override
     public String toString() {
         log.trace("DCCppReply.toString(): msg {}", myReply.toString());
-        return(myReply.toString());
+        return myReply.toString();
     }
 
    /**
@@ -231,145 +232,92 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public static DCCppReply parseDCCppReply(String s) {
 
         log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
-        DCCppReply r = new DCCppReply();
+        DCCppReply r = new DCCppReply(s);
         switch(s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
                 if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     log.debug("Status Reply: {}", r.toString());
-                    r._nDataChars = r.toString().length();
                     r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
-                    return(r);
-                } else {
-                    return(new DCCppReply());
-                }
-
+                } 
+                return(r);
             case DCCppConstants.THROTTLE_REPLY:
                 if (s.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
-                } else {
-                    return(new DCCppReply());
+                   log.debug("Throttle Reply: {}", r.toString());
+                   r.myRegex = DCCppConstants.THROTTLE_REPLY_REGEX;
                 }
-                log.debug("Throttle Reply: {}", r.toString());
-                r._nDataChars = r.toString().length();
-                r.myRegex = DCCppConstants.THROTTLE_REPLY_REGEX;
                 return(r);
             case DCCppConstants.TURNOUT_REPLY:
                 if (s.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.TURNOUT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.TURNOUT_DEF_REPLY_REGEX;
-
                 } else if (s.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
-                } else {
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
                 return(r);
             case DCCppConstants.OUTPUT_REPLY:
                 if (s.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.OUTPUT_LIST_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.OUTPUT_REPLY_REGEX;
-                } else {
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
                 return(r);
             case DCCppConstants.PROGRAM_REPLY:
                 if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
                     log.debug("Matches ProgBitReply");
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) {
                     log.debug("Matches ProgReply");
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_REGEX;
                 } else {
                     log.debug("Does not match ProgReply Regex");
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 return(r);
             case DCCppConstants.POWER_REPLY:
                 if (s.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.TRACK_POWER_REPLY_REGEX;
-                } else {
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 return(r);
             case DCCppConstants.CURRENT_REPLY:
                 if (s.matches(DCCppConstants.CURRENT_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.CURRENT_REPLY_REGEX;
-                } else {
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 return(r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
                 if (s.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.WRITE_EEPROM_REPLY_REGEX;
-                } else {
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 return(r);
             case DCCppConstants.MEMORY_REPLY:
                 if (s.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.FREE_MEMORY_REPLY_REGEX;
-                } else {
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 return(r);
             case DCCppConstants.SENSOR_REPLY_H:
                 if (s.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX;
-                } else {
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 return(r);
             case DCCppConstants.SENSOR_REPLY_L:
                 if (s.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.SENSOR_DEF_REPLY_REGEX;
-                } else {
-                    return(new DCCppReply());
                 }
-                r._nDataChars = r.toString().length();
                 return(r);
             case DCCppConstants.MADC_FAIL_REPLY:
-                r.myReply = new StringBuilder(s);
                 r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
                 return(r);
             case DCCppConstants.MADC_SUCCESS_REPLY:
-                r.myReply = new StringBuilder(s);
                 r.myRegex = DCCppConstants.MADC_SUCCESS_REPLY_REGEX;
                 return(r);
             case DCCppConstants.COMM_TYPE_REPLY:
-                r.myReply = new StringBuilder(s);
                 r.myRegex = DCCppConstants.COMM_TYPE_REPLY_REGEX;
                 return(r);
             default:
-                return(new DCCppReply());
+                return(r);
         }
     }
 

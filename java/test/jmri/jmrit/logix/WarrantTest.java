@@ -218,7 +218,7 @@ public class WarrantTest {
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunningMessage().equals("Idle");}, "warrant not done");
         
         // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("Block West does not have a length for path SouthToNorth");
+        // jmri.util.JUnitAppender.assertWarnMessage("Block West does not have a length for path SouthToNorth");
     }
     
     

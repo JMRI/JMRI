@@ -10,6 +10,8 @@ import java.beans.PropertyChangeListener;
 import java.util.regex.Pattern;
 import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
+import jmri.util.MockPropertyChangeListener;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,22 +28,7 @@ import org.slf4j.LoggerFactory;
 public class OlcbTurnoutTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
 
-    interface MockablePropertyChangeListener {
-        void onChange(String property, Object newValue);
-    }
-    class FPropertyChangeListener implements PropertyChangeListener {
-        MockablePropertyChangeListener m;
-        FPropertyChangeListener() {
-            m = mock(MockablePropertyChangeListener.class);
-        }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-            m.onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
-        }
-    }
-
-    protected FPropertyChangeListener l = new FPropertyChangeListener();
+    protected MockPropertyChangeListener l = new MockPropertyChangeListener();
 
     private static final String COMMANDED_STATE = "CommandedState";
     private static final String KNOWN_STATE = "KnownState";

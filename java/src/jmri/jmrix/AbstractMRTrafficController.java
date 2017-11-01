@@ -908,7 +908,10 @@ abstract public class AbstractMRTrafficController {
             } else {
                 SwingUtilities.invokeLater(r);
             }
-        } catch (InterruptedException | java.lang.reflect.InvocationTargetException| RuntimeException e) {
+        } catch (InterruptedException ie) {
+            if(threadStopRequest) return;
+            log.error("Unexpected exception in invokeAndWait: {}" + ie.toString(), ie);
+        } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
             log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
             return;
         }

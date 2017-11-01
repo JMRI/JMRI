@@ -95,12 +95,12 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
 
         p.panelTextField.setText("Test Panel Name");
 
-        ((JComboBox)(new JLabelOperator(jfo,Bundle.getMessage("IconNorth")).getLabelFor())).setSelectedItem(LocoIcon.RED);
-        ((JComboBox)(new JLabelOperator(jfo,Bundle.getMessage("IconEast")).getLabelFor())).setSelectedItem(LocoIcon.BLUE);
-        ((JComboBox)(new JLabelOperator(jfo,Bundle.getMessage("IconWest")).getLabelFor())).setSelectedItem(LocoIcon.WHITE);
-        ((JComboBox)(new JLabelOperator(jfo,Bundle.getMessage("IconSouth")).getLabelFor())).setSelectedItem(LocoIcon.GREEN);
-        ((JComboBox)(new JLabelOperator(jfo,Bundle.getMessage("IconTerminate")).getLabelFor())).setSelectedItem(LocoIcon.GRAY);
-        ((JComboBox)(new JLabelOperator(jfo,Bundle.getMessage("IconLocal")).getLabelFor())).setSelectedItem(LocoIcon.YELLOW);
+        ((JComboBox<?>)(new JLabelOperator(jfo,Bundle.getMessage("IconNorth")).getLabelFor())).setSelectedItem(LocoIcon.RED);
+        ((JComboBox<?>)(new JLabelOperator(jfo,Bundle.getMessage("IconEast")).getLabelFor())).setSelectedItem(LocoIcon.BLUE);
+        ((JComboBox<?>)(new JLabelOperator(jfo,Bundle.getMessage("IconWest")).getLabelFor())).setSelectedItem(LocoIcon.WHITE);
+        ((JComboBox<?>)(new JLabelOperator(jfo,Bundle.getMessage("IconSouth")).getLabelFor())).setSelectedItem(LocoIcon.GREEN);
+        ((JComboBox<?>)(new JLabelOperator(jfo,Bundle.getMessage("IconTerminate")).getLabelFor())).setSelectedItem(LocoIcon.GRAY);
+        ((JComboBox<?>)(new JLabelOperator(jfo,Bundle.getMessage("IconLocal")).getLabelFor())).setSelectedItem(LocoIcon.YELLOW);
 
         (new JButtonOperator(jfo,Bundle.getMessage("ButtonSave"))).push();
 
@@ -147,12 +147,12 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
 
         Assert.assertEquals("panel name", "Test Panel Name", panelRead.panelTextField.getText());
 
-        Assert.assertEquals("east color", LocoIcon.RED, ((JComboBox)(new JLabelOperator(jfo2,Bundle.getMessage("IconNorth")).getLabelFor())).getSelectedItem());
-        Assert.assertEquals("west color", LocoIcon.BLUE, ((JComboBox)(new JLabelOperator(jfo2,Bundle.getMessage("IconEast")).getLabelFor())).getSelectedItem());
-        Assert.assertEquals("north color", LocoIcon.WHITE, ((JComboBox)(new JLabelOperator(jfo2,Bundle.getMessage("IconWest")).getLabelFor())).getSelectedItem());
-        Assert.assertEquals("south color", LocoIcon.GREEN, ((JComboBox)(new JLabelOperator(jfo2,Bundle.getMessage("IconSouth")).getLabelFor())).getSelectedItem());
-        Assert.assertEquals("terminate color", LocoIcon.GRAY, ((JComboBox)(new JLabelOperator(jfo2,Bundle.getMessage("IconTerminate")).getLabelFor())).getSelectedItem());
-        Assert.assertEquals("local color", LocoIcon.YELLOW, ((JComboBox)(new JLabelOperator(jfo2,Bundle.getMessage("IconLocal")).getLabelFor())).getSelectedItem());
+        Assert.assertEquals("east color", LocoIcon.RED, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconNorth")).getLabelFor())).getSelectedItem());
+        Assert.assertEquals("west color", LocoIcon.BLUE, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconEast")).getLabelFor())).getSelectedItem());
+        Assert.assertEquals("north color", LocoIcon.WHITE, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconWest")).getLabelFor())).getSelectedItem());
+        Assert.assertEquals("south color", LocoIcon.GREEN, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconSouth")).getLabelFor())).getSelectedItem());
+        Assert.assertEquals("terminate color", LocoIcon.GRAY, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconTerminate")).getLabelFor())).getSelectedItem());
+        Assert.assertEquals("local color", LocoIcon.YELLOW, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconLocal")).getLabelFor())).getSelectedItem());
         // done
         JUnitUtil.dispose(frameRead);
     }
