@@ -428,7 +428,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
     private JCheckBoxMenuItem highlightSelectedBlockCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
     private JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
     private JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
@@ -554,7 +553,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     JPanel blockPropertiesPanel = null;
 
     //A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
-    private transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    protected transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
     //Antialiasing rendering
     private static final RenderingHints antialiasing = new RenderingHints(
@@ -1101,7 +1100,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         resetDirty();
 
         //establish link to LayoutEditor Tools
-        tools = getLETools();
         auxTools = getLEAuxTools();
 
         SwingUtilities.invokeLater(() -> {
@@ -2133,123 +2131,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //initStringsToVTCodes
 
-    private transient AddEntryExitPairAction entryExit = null;
-
-    protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
-        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
-
-        toolsMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuToolsMnemonic")));
-        menuBar.add(toolsMenu);
-
-        //setup checks menu
-        getLEChecks().setupChecksMenu(toolsMenu);
-
-        //scale track diagram
-        JMenuItem scaleItem = new JMenuItem(Bundle.getMessage("ScaleTrackDiagram") + "...");
-        toolsMenu.add(scaleItem);
-        scaleItem.addActionListener((ActionEvent event) -> {
-            //bring up scale track diagram dialog
-            scaleTrackDiagram();
-        });
-
-        //translate selection
-        JMenuItem moveItem = new JMenuItem(Bundle.getMessage("TranslateSelection") + "...");
-        toolsMenu.add(moveItem);
-        moveItem.addActionListener((ActionEvent event) -> {
-            //bring up translate selection dialog
-            moveSelection();
-        });
-
-        //undo translate selection
-        JMenuItem undoMoveItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
-        toolsMenu.add(undoMoveItem);
-        undoMoveItem.addActionListener((ActionEvent event) -> {
-            //undo previous move selection
-            undoMoveSelection();
-        });
-
-        //reset turnout size to program defaults
-        JMenuItem undoTurnoutSize = new JMenuItem(Bundle.getMessage("ResetTurnoutSize"));
-        toolsMenu.add(undoTurnoutSize);
-        undoTurnoutSize.addActionListener((ActionEvent event) -> {
-            //undo previous move selection
-            resetTurnoutSize();
-        });
-        toolsMenu.addSeparator();
-
-        //skip turnout
-        skipTurnoutCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SkipInternalTurnout"));
-        toolsMenu.add(skipTurnoutCheckBoxMenuItem);
-        skipTurnoutCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setIncludedTurnoutSkipped(skipTurnoutCheckBoxMenuItem.isSelected());
-        });
-        skipTurnoutCheckBoxMenuItem.setSelected(isIncludedTurnoutSkipped());
-
-        //set signals at turnout
-        JMenuItem turnoutItem = new JMenuItem(Bundle.getMessage("SignalsAtTurnout") + "...");
-        toolsMenu.add(turnoutItem);
-        turnoutItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at turnout tool dialog
-            getLETools().setSignalsAtTurnout(signalIconEditor, signalFrame);
-        });
-
-        //set signals at block boundary
-        JMenuItem boundaryItem = new JMenuItem(Bundle.getMessage("SignalsAtBoundary") + "...");
-        toolsMenu.add(boundaryItem);
-        boundaryItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at block boundary tool dialog
-            getLETools().setSignalsAtBlockBoundary(signalIconEditor, signalFrame);
-        });
-
-        //set signals at crossover turnout
-        JMenuItem xoverItem = new JMenuItem(Bundle.getMessage("SignalsAtXoverTurnout") + "...");
-        toolsMenu.add(xoverItem);
-        xoverItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at double crossover tool dialog
-            getLETools().setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
-        });
-
-        //set signals at level crossing
-        JMenuItem xingItem = new JMenuItem(Bundle.getMessage("SignalsAtLevelXing") + "...");
-        toolsMenu.add(xingItem);
-        xingItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at level crossing tool dialog
-            getLETools().setSignalsAtLevelXing(signalIconEditor, signalFrame);
-        });
-
-        //set signals at throat-to-throat turnouts
-        JMenuItem tToTItem = new JMenuItem(Bundle.getMessage("SignalsAtTToTTurnout") + "...");
-        toolsMenu.add(tToTItem);
-        tToTItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at throat-to-throat turnouts tool dialog
-            getLETools().setSignalsAtThroatToThroatTurnouts(signalIconEditor, signalFrame);
-        });
-
-        //set signals at 3-way turnout
-        JMenuItem way3Item = new JMenuItem(Bundle.getMessage("SignalsAt3WayTurnout") + "...");
-        toolsMenu.add(way3Item);
-        way3Item.addActionListener((ActionEvent event) -> {
-            //bring up signals at 3-way turnout tool dialog
-            getLETools().setSignalsAt3WayTurnout(signalIconEditor, signalFrame);
-        });
-
-        JMenuItem slipItem = new JMenuItem(Bundle.getMessage("SignalsAtSlip") + "...");
-        toolsMenu.add(slipItem);
-        slipItem.addActionListener((ActionEvent event) -> {
-            //bring up signals at throat-to-throat turnouts tool dialog
-            getLETools().setSignalsAtSlip(signalIconEditor, signalFrame);
-        });
-
-        JMenuItem entryExitItem = new JMenuItem(Bundle.getMessage("EntryExit") + "...");
-        toolsMenu.add(entryExitItem);
-        entryExitItem.addActionListener((ActionEvent event) -> {
-            if (entryExit == null) {
-                entryExit = new jmri.jmrit.signalling.AddEntryExitPairAction("ENTRY EXIT", LayoutEditor.this);
-            }
-            entryExit.actionPerformed(event);
-        });
-    } //setupToolsMenu
-
     /**
      * Set up the Option menu.
      *
@@ -2754,14 +2635,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("SetBackgroundColor"),
-                                 defaultBackgroundColor);
-            if (desiredColor!=null && !defaultBackgroundColor.equals(desiredColor)) {
-               defaultBackgroundColor = desiredColor;
-               setBackgroundColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("SetBackgroundColor"),
+                    defaultBackgroundColor);
+            if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
+                defaultBackgroundColor = desiredColor;
+                setBackgroundColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
 
         optionMenu.add(backgroundColorMenuItem);
@@ -2833,26 +2714,26 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         trackColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultTrackColor"),
-                                 defaultTrackColor);
-            if (desiredColor!=null && !defaultTrackColor.equals(desiredColor)) {
-               setDefaultTrackColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("DefaultTrackColor"),
+                    defaultTrackColor);
+            if (desiredColor != null && !defaultTrackColor.equals(desiredColor)) {
+                setDefaultTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         trkColourMenu.add(trackColorMenuItem);
 
         JMenuItem trackOccupiedColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultOccupiedTrackColor"));
         trackOccupiedColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultOccupiedTrackColor"),
-                                 defaultOccupiedTrackColor);
-            if (desiredColor!=null && !defaultOccupiedTrackColor.equals(desiredColor)) {
-               setDefaultOccupiedTrackColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("DefaultOccupiedTrackColor"),
+                    defaultOccupiedTrackColor);
+            if (desiredColor != null && !defaultOccupiedTrackColor.equals(desiredColor)) {
+                setDefaultOccupiedTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         trkColourMenu.add(trackOccupiedColorMenuItem);
 
@@ -2860,13 +2741,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         trackAlternativeColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultAlternativeTrackColor"),
-                                 defaultAlternativeTrackColor);
-            if (desiredColor!=null && !defaultAlternativeTrackColor.equals(desiredColor)) {
-               setDefaultAlternativeTrackColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("DefaultAlternativeTrackColor"),
+                    defaultAlternativeTrackColor);
+            if (desiredColor != null && !defaultAlternativeTrackColor.equals(desiredColor)) {
+                setDefaultAlternativeTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         trkColourMenu.add(trackAlternativeColorMenuItem);
 
@@ -2877,13 +2758,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         textColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultTextColor"),
-                                 defaultTextColor);
-            if (desiredColor!=null && !defaultTextColor.equals(desiredColor)) {
-               setDefaultTextColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("DefaultTextColor"),
+                    defaultTextColor);
+            if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
+                setDefaultTextColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         optionMenu.add(textColorMenuItem);
 
@@ -2907,13 +2788,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         turnoutCircleColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("TurnoutCircleColor"),
-                                 turnoutCircleColor);
-            if (desiredColor!=null && !turnoutCircleColor.equals(desiredColor)) {
-               setTurnoutCircleColor(desiredColor);
-               setDirty();
-               redrawPanel();
-           }
+                    Bundle.getMessage("TurnoutCircleColor"),
+                    turnoutCircleColor);
+            if (desiredColor != null && !turnoutCircleColor.equals(desiredColor)) {
+                setTurnoutCircleColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
         });
         turnoutOptionsMenu.add(turnoutCircleColorMenuItem);
 
@@ -2972,6 +2853,151 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         return optionMenu;
     } //setupOptionMenu
+
+    private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;
+    private AddEntryExitPairAction addEntryExitPairAction = null;
+
+    /**
+     * setup the Layout Editor Tools menu
+     *
+     * @param menuBar the menu bar to add the Tools menu to
+     */
+    protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
+        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
+
+        toolsMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuToolsMnemonic")));
+        menuBar.add(toolsMenu);
+
+        //setup checks menu
+        getLEChecks().setupChecksMenu(toolsMenu);
+
+        //assign blocks to selection
+        JMenuItem jmi = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
+        jmi.setToolTipText(Bundle.getMessage("AssignBlockToSelectionToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up scale track diagram dialog
+            assignBlockToSelection();
+        });
+
+        //scale track diagram
+        jmi = new JMenuItem(Bundle.getMessage("ScaleTrackDiagram") + "...");
+        jmi.setToolTipText(Bundle.getMessage("ScaleTrackDiagramToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up scale track diagram dialog
+            scaleTrackDiagram();
+        });
+
+        //translate selection
+        jmi = new JMenuItem(Bundle.getMessage("TranslateSelection") + "...");
+        jmi.setToolTipText(Bundle.getMessage("TranslateSelectionToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up translate selection dialog
+            moveSelection();
+        });
+
+        //undo translate selection
+        jmi = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
+        jmi.setToolTipText(Bundle.getMessage("UndoTranslateSelectionToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //undo previous move selection
+            undoMoveSelection();
+        });
+
+        //reset turnout size to program defaults
+        jmi = new JMenuItem(Bundle.getMessage("ResetTurnoutSize"));
+        jmi.setToolTipText(Bundle.getMessage("ResetTurnoutSizeToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //undo previous move selection
+            resetTurnoutSize();
+        });
+        toolsMenu.addSeparator();
+
+        //skip turnout
+        skipTurnoutCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SkipInternalTurnout"));
+        skipTurnoutCheckBoxMenuItem.setToolTipText(Bundle.getMessage("SkipInternalTurnoutToolTip"));
+        toolsMenu.add(skipTurnoutCheckBoxMenuItem);
+        skipTurnoutCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setIncludedTurnoutSkipped(skipTurnoutCheckBoxMenuItem.isSelected());
+        });
+        skipTurnoutCheckBoxMenuItem.setSelected(isIncludedTurnoutSkipped());
+
+        //set signals at turnout
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtTurnout") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtTurnoutToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at turnout tool dialog
+            getLETools().setSignalsAtTurnout(signalIconEditor, signalFrame);
+        });
+
+        //set signals at block boundary
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtBoundary") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtBoundaryToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at block boundary tool dialog
+            getLETools().setSignalsAtBlockBoundary(signalIconEditor, signalFrame);
+        });
+
+        //set signals at crossover turnout
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtXoverTurnout") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtXoverTurnoutToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at double crossover tool dialog
+            getLETools().setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
+        });
+
+        //set signals at level crossing
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtLevelXing") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtLevelXingToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at level crossing tool dialog
+            getLETools().setSignalsAtLevelXing(signalIconEditor, signalFrame);
+        });
+
+        //set signals at throat-to-throat turnouts
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtTToTTurnout") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtTToTTurnoutToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at throat-to-throat turnouts tool dialog
+            getLETools().setSignalsAtThroatToThroatTurnouts(signalIconEditor, signalFrame);
+        });
+
+        //set signals at 3-way turnout
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAt3WayTurnout") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAt3WayTurnoutToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at 3-way turnout tool dialog
+            getLETools().setSignalsAt3WayTurnout(signalIconEditor, signalFrame);
+        });
+
+        jmi = new JMenuItem(Bundle.getMessage("SignalsAtSlip") + "...");
+        jmi.setToolTipText(Bundle.getMessage("SignalsAtSlipToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            //bring up signals at throat-to-throat turnouts tool dialog
+            getLETools().setSignalsAtSlip(signalIconEditor, signalFrame);
+        });
+
+        jmi = new JMenuItem(Bundle.getMessage("EntryExitTitle") + "...");
+        jmi.setToolTipText(Bundle.getMessage("EntryExitToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            if (addEntryExitPairAction == null) {
+                addEntryExitPairAction = new AddEntryExitPairAction("ENTRY EXIT", LayoutEditor.this);
+            }
+            addEntryExitPairAction.actionPerformed(event);
+        });
+    } //setupToolsMenu
 
     //
     //update drop down menu display order menu
@@ -3756,6 +3782,17 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         super.removeMarkers();
         redrawPanel();
     } //removeMarkers
+
+    /**
+     * Assign the block from the toolbar to all selected layout tracks
+     */
+    protected void assignBlockToSelection() {
+        String newName = blockIDComboBox.getDisplayName();
+        LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
+        for (LayoutTrack lt : _layoutTrackSelection) {
+            lt.setAllLayoutBlocks(b);
+        }
+    }
 
     /*======================================*\
     |* Dialog box to enter new track widths *|
@@ -6918,8 +6955,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         setDirty();
 
         //link to connected objects
-        setLink(newTrack, LayoutTrack.TRACK, beginObject, beginPointType);
-        setLink(newTrack, LayoutTrack.TRACK, foundObject, foundPointType);
+        setLink(beginObject, beginPointType, newTrack, LayoutTrack.TRACK);
+        setLink(foundObject, foundPointType, newTrack, LayoutTrack.TRACK);
 
         //check on layout block
         String newName = blockIDComboBox.getDisplayName();
@@ -7230,77 +7267,83 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //validatePhysicalTurnout
 
     /**
-     * Adds a link in the 'to' object to the 'from' object
+     * link the 'from' object and type to the 'to' object and type
+     *
+     * @param fromObject    the object to link from
+     * @param fromPointType the object type to link from
+     * @param toObject      the object to link to
+     * @param toPointType   the object type to link to
      */
     protected void setLink(@Nonnull LayoutTrack fromObject, int fromPointType,
             @Nonnull LayoutTrack toObject, int toPointType) {
-        switch (toPointType) {
+        switch (fromPointType) {
             case LayoutTrack.POS_POINT: {
-                if (fromPointType == LayoutTrack.TRACK) {
-                    ((PositionablePoint) toObject).setTrackConnection((TrackSegment) fromObject);
+                if (toPointType == LayoutTrack.TRACK) {
+                    ((PositionablePoint) fromObject).setTrackConnection((TrackSegment) toObject);
                 } else {
-                    log.error("Attempt to set a non-TRACK connection to a Positionable Point");
+                    log.error("Attempt to link a non-TRACK connection ('{}')to a Positionable Point ('{}')",
+                            toObject.getName(), fromObject.getName());
                 }
                 break;
             }
 
             case LayoutTrack.TURNOUT_A: {
-                ((LayoutTurnout) toObject).setConnectA(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_B: {
-                ((LayoutTurnout) toObject).setConnectB(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_C: {
-                ((LayoutTurnout) toObject).setConnectC(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.TURNOUT_D: {
-                ((LayoutTurnout) toObject).setConnectD(fromObject, fromPointType);
+                ((LayoutTurnout) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_A: {
-                ((LevelXing) toObject).setConnectA(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_B: {
-                ((LevelXing) toObject).setConnectB(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_C: {
-                ((LevelXing) toObject).setConnectC(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.LEVEL_XING_D: {
-                ((LevelXing) toObject).setConnectD(fromObject, fromPointType);
+                ((LevelXing) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_A: {
-                ((LayoutSlip) toObject).setConnectA(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectA(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_B: {
-                ((LayoutSlip) toObject).setConnectB(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectB(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_C: {
-                ((LayoutSlip) toObject).setConnectC(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectC(toObject, toPointType);
                 break;
             }
 
             case LayoutTrack.SLIP_D: {
-                ((LayoutSlip) toObject).setConnectD(fromObject, fromPointType);
+                ((LayoutSlip) fromObject).setConnectD(toObject, toPointType);
                 break;
             }
 
@@ -7311,9 +7354,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
 
             default: {
-                if ((toPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (fromPointType == LayoutTrack.TRACK)) {
-                    ((LayoutTurntable) toObject).setRayConnect((TrackSegment) fromObject,
-                            toPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+                if ((fromPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (toPointType == LayoutTrack.TRACK)) {
+                    ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
+                            fromPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
                 break;
             }
@@ -8687,13 +8730,16 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return conTools;
     } //getConnectivityUtil
 
-    private transient LayoutEditorTools tools = null;
-
+    //private transient LayoutEditorTools tools = null;
     public LayoutEditorTools getLETools() {
-        if (tools == null) {
-            tools = new LayoutEditorTools(this);
-        }
-        return tools;
+        //if (tools == null) {
+        //    tools = new LayoutEditorTools(this);
+        //}
+        //return tools;
+        // note: we're going to always return a new instance here
+        // (the indivual dialogs are responsible for disposing of it
+        // when no longer needed.)
+        return new LayoutEditorTools(this);
     } //getLETools
 
     private transient LayoutEditorAuxTools auxTools = null;
@@ -9043,7 +9089,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead.
      */
     @Deprecated
     public void setDefaultTrackColor(@Nonnull String colorName) {
@@ -9053,13 +9099,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the defalut track color to.
      */
-    public void setDefaultTrackColor(@Nonnull Color color){
+    public void setDefaultTrackColor(@Nonnull Color color) {
         LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)}
+     * instead.
      */
     @Deprecated
     public void setDefaultOccupiedTrackColor(@Nonnull String colorName) {
@@ -9069,12 +9116,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the defalut occupied track color to.
      */
-    public void setDefaultOccupiedTrackColor(@Nonnull Color color){
+    public void setDefaultOccupiedTrackColor(@Nonnull Color color) {
         defaultOccupiedTrackColor = color;
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultAlternativeTrackColor(Color)} instead. 
+     * @deprecated since 4.9.6 use
+     * {@link #setDefaultAlternativeTrackColor(Color)} instead.
      */
     @Deprecated
     public void setDefaultAlternativeTrackColor(@Nonnull String colorName) {
@@ -9084,12 +9132,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the defalut alternate track color to.
      */
-    public void setDefaultAlternativeTrackColor(@Nonnull Color color){
+    public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)}
+     * instead.
      */
     @Deprecated
     public void setTurnoutCircleColor(@Nonnull String colorName) {
@@ -9101,9 +9150,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /**
      * @param color new color for turnout circle.
-     */ 
+     */
     public void setTurnoutCircleColor(Color color) {
-        if (color==null) {
+        if (color == null) {
             turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
         } else {
             turnoutCircleColor = color;
@@ -9129,7 +9178,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //setTurnoutDrawUnselectedLeg
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead.
      */
     @Deprecated
     public void setDefaultTextColor(@Nonnull String colorName) {
@@ -9139,12 +9188,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the defalut text color to.
      */
-    public void setDefaultTextColor(@Nonnull Color color){
+    public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)} instead. 
+     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)}
+     * instead.
      */
     @Deprecated
     public void setDefaultBackgroundColor(@Nonnull String colorName) {
@@ -9154,7 +9204,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * @param color value to set the panel background to.
      */
-    public void setDefaultBackgroundColor(@Nonnull Color color){
+    public void setDefaultBackgroundColor(@Nonnull Color color) {
         defaultBackgroundColor = color;
     }
 
@@ -9394,7 +9444,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     //reset turnout sizes to program defaults
-    private void resetTurnoutSize() {
+    protected void resetTurnoutSize() {
         turnoutBX = LayoutTurnout.turnoutBXDefault;
         turnoutCX = LayoutTurnout.turnoutCXDefault;
         turnoutWid = LayoutTurnout.turnoutWidDefault;
@@ -9639,7 +9689,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Rectangle targetRect = targetPanel.getVisibleRect();
         // this will make it the size of the targetRect
         // (effectively centering it onscreen)
-        Rectangle2D selRect2D = MathUtil.inset(selectionRect, 
+        Rectangle2D selRect2D = MathUtil.inset(selectionRect,
                 (selectionRect.getWidth() - targetRect.getWidth()) / 2.0,
                 (selectionRect.getHeight() - targetRect.getHeight()) / 2.0);
         // don't let the origin go negative
@@ -10267,6 +10317,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     //initialize logging
-    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditor.class
-    );
+    private transient final static Logger log
+            = LoggerFactory.getLogger(LayoutEditor.class);
 }
