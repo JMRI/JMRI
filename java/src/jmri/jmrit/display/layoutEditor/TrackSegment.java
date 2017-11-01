@@ -3,13 +3,15 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -1080,7 +1082,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * The following are used only as a temporary store after a circle or arc
      * has been calculated. This prevents the need to recalculate the values
-     * each time a re-drawHidden is required.
+     * each time a re-draw is required.
      */
     private Point2D pt1;
     private Point2D pt2;
@@ -1416,24 +1418,61 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw(Graphics2D g2) {
-        // hidden, dashed & solid track segments are drawn interleaved
-        // so save and restore the previous stroke before & after drawing
-        Stroke oldStroke = g2.getStroke();  // save previous stroke
-        setColorForTrackBlock(g2, getLayoutBlock());
+        int mainlineTrackWidth = layoutEditor.getMainlineTrackWidth();
+        Rectangle2D bounds = MathUtil.inset(getBounds(), -mainlineTrackWidth, -mainlineTrackWidth);
+        if ((bounds.getWidth() > mainlineTrackWidth) && (bounds.getHeight() > mainlineTrackWidth)) {
+            // hidden, dashed & solid track segments are drawn interleaved
+            // so save and restore the previous stroke before & after drawing
+            //Stroke oldStroke = g2.getStroke();  // save previous stroke
 
-        if (isHidden()) {
-            if (layoutEditor.isEditable()) {
-                drawHidden(g2);
+            BufferedImage bufferedImage = new BufferedImage(
+                    (int) bounds.getWidth(),
+                    (int) bounds.getHeight(),
+                    BufferedImage.TYPE_INT_ARGB);
+            Graphics2D gI = bufferedImage.createGraphics();
+            AffineTransform at = new AffineTransform();
+            at.translate(-bounds.getX(), -bounds.getY());
+            gI.transform(at);
+            Color transparentColor = new Color(0xA5A5A5);
+            gI.setColor(transparentColor);
+            gI.fill(bounds);
+
+            setColorForTrackBlock(gI, getLayoutBlock());
+            float trackWidth = layoutEditor.setTrackStrokeWidth(gI, mainline);
+
+            for (int pass = 0; pass < 2; pass++) {
+                if (isHidden()) {
+                    if (layoutEditor.isEditable()) {
+                        trackWidth = 1;
+                    } else {
+                        break;
+                    }
+                } else {
+                    if (isDashed()) {
+                        gI.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
+                    } else {
+                        gI.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+                    }
+                }
+                drawSolid(gI);
+
+                gI.setColor(transparentColor);
+                trackWidth -= 2.F;
+                if (trackWidth < 1.F) {
+                    break;
+                }
             }
-        } else if (isDashed()) {
-            float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
-            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-            g2.setStroke(drawingStroke);
-            drawDashed(g2);
-        } else {
-            drawSolid(g2);
+            int[] buf = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+            for (int i = 0; i < buf.length; i++) {
+                if (buf[i] == 0xFFA5A5A5) {
+                    buf[i] = 0x00000000;
+                }
+            }
+
+            g2.drawImage(bufferedImage, null, (int) bounds.getX(), (int) bounds.getY());
+            //g2.drawImage(bufferedImage, (int) bounds.getX(), (int) bounds.getY(), null);
+            //g2.setStroke(oldStroke);    // restore previous stroke
         }
-        g2.setStroke(oldStroke);    // restore previous stroke
     }
 
     /**
@@ -1452,7 +1491,7 @@ public class TrackSegment extends LayoutTrack {
     @Override
     protected void drawTies(Graphics2D g2) {
         if (!isDashed()) {
-            drawDashed(g2);
+            drawSolid(g2);
         }
     }
 
@@ -1465,17 +1504,11 @@ public class TrackSegment extends LayoutTrack {
         // nothing to see here... move along...
     }
 
-    private void drawHidden(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        drawSolid(g2);
-    }   // drawHidden
-
-    private void drawDashed(Graphics2D g2) {
+    private void drawSolid(Graphics2D g2) {
         if (isArc()) {
             calculateTrackSegmentAngle();
             g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
         } else if (isBezier()) {
-
             Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
 
@@ -1492,45 +1525,6 @@ public class TrackSegment extends LayoutTrack {
             Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-            g2.draw(new Line2D.Double(end1, end2));
-
-            //double delX = end1.getX() - end2.getX();
-            //double delY = end1.getY() - end2.getY();
-            //double cLength = Math.hypot(delX, delY);
-            //
-            //// note: The preferred dimension of a dash (solid + blank space) is
-            ////         5 * the track width - about 60% solid and 40% blank.
-            //int nDashes = (int) (cLength / ((trackWidth) * 5.0));
-            //if (nDashes < 3) {
-            //    nDashes = 3;
-            //}
-            //double delXDash = -delX / ((nDashes) - 0.5);
-            //double delYDash = -delY / ((nDashes) - 0.5);
-            //double begX = end1.getX();
-            //double begY = end1.getY();
-            //for (int k = 0; k < nDashes; k++) {
-            //    g2.draw(new Line2D.Double(new Point2D.Double(begX, begY),
-            //            new Point2D.Double(begX + (delXDash * 0.5), begY + (delYDash * 0.5))));
-            //    begX += delXDash;
-            //    begY += delYDash;
-            //}
-        }
-    }   // drawDashed
-
-    private void drawSolid(Graphics2D g2) {
-        if (isArc()) {
-            calculateTrackSegmentAngle();
-            g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
-        } else if (isBezier()) {
-            Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
-            Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
-
-            Point2D pt1 = bezierControlPoints.get(0);
-            Point2D pt2 = bezierControlPoints.get(1);
-            MathUtil.drawBezier(g2, pt0, pt1, pt2, pt3);
-        } else {
-            Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
-            Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
             g2.draw(new Line2D.Double(end1, end2));
         }
         trackRedrawn();

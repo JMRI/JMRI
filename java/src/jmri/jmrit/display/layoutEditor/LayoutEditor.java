@@ -9496,34 +9496,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         drawTrackBallast(g2);
         drawTrackTies(g2);
 
-        setDrawRailsFlag(false);
-        setTrackStrokeWidth(g2, !main);
-
         List<TrackSegment> trackSegments = getTrackSegments();
         drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
         drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
         drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
         drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
 
-        setDrawRailsFlag(true);
-        setTrackStrokeWidth(g2, !main);
-
-        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
-        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
-        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
-        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
-
-        setDrawRailsFlag(false);
-        setTrackStrokeWidth(g2, !main);
-
         drawLayoutTracks(g2);
-
-        setDrawRailsFlag(true);
-        setTrackStrokeWidth(g2, !main);
-
-        drawLayoutTracks(g2);
-
-        setDrawRailsFlag(false);
 
         // things that only get drawn in edit mode
         if (isEditable()) {
