@@ -304,7 +304,7 @@ abstract public class AbstractCanTrafficController
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         try {
-            if (synchronizeRx) {
+            if (getSynchronizeRx()) {
                 SwingUtilities.invokeAndWait(r);
             } else {
                 SwingUtilities.invokeLater(r);

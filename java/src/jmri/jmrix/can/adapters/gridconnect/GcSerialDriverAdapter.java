@@ -144,6 +144,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     private class AsyncBufferInputStream extends FilterInputStream {
         AsyncBufferInputStream(InputStream inputStream, String portName) {
             super(inputStream);
+            this.portName = portName;
             Thread rt = new Thread(this::readThreadBody);
             rt.setName("GcSerialPort InputBufferThread " + portName);
             rt.setDaemon(true);
@@ -167,10 +168,11 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
                 errorCount = 0;
             } catch (IOException e) {
                 tail.e = e;
-                e.printStackTrace();
                 if (++errorCount > MAX_IO_ERRORS_TO_ABORT) {
-                    log.error("Closing read thread due to too many IO errors");
+                    log.error("Closing read thread due to too many IO errors", e);
                     return null;
+                } else {
+                    log.warn("Error reading serial port " + portName, e);
                 }
             }
             return tail;
@@ -184,7 +186,9 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
             while(true) {
                 // Try to read one byte to block the thread.
                 tail = tryRead(1);
-                if (tail == null) return;
+                if (tail == null) {
+                    return;
+                }
                 // NOTE: in order to reuse this class in a generic context, we need to add support
                 // for the underlying input stream persistently returning EOF. That does not
                 // happen on a serial port.
@@ -198,7 +202,9 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
                 // wasting a lot of memory if less data actually shows up.
                 do {
                     tail = tryRead(128);
-                    if (tail == null) return;
+                    if (tail == null) {
+                        return;
+                    }
                     if (tail.len > 0 || tail.e != null) {
                         readAhead.add(tail);
                     } else {
@@ -222,18 +228,18 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
 
         @Override
         public int read() throws IOException {
-            throw new IOException("unimplemented");
+            throw new UnsupportedOperationException();
         }
 
         @Override
         public int read(byte[] bytes) throws IOException {
-            throw new IOException("unimplemented");
+            throw new UnsupportedOperationException();
         }
 
         @Override
         public synchronized int read(byte[] bytes, int skip, int len) throws IOException {
             if (skip != 0) {
-                throw new IOException("unimplemented");
+                throw new UnsupportedOperationException();
             }
             if (head == null || headOfs >= head.len) {
                 while (true) {
@@ -247,15 +253,20 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
                     throw head.e;
                 }
                 headOfs = 0;
-                if (head.len < 0) return -1;
+                if (head.len < 0) {
+                    return -1;
+                }
             }
             int cp = head.len - headOfs;
-            if (cp > len) cp = len;
+            if (cp > len) {
+                cp = len;
+            }
             System.arraycopy(head.data, headOfs, bytes, 0, cp);
             headOfs += cp;
             return cp;
         }
 
+        private final String portName;
         // After this many consecutive read attempts resulting in an exception we will terminate
         // the read thread and return the last exception to the reader.
         private final static int MAX_IO_ERRORS_TO_ABORT = 10;
