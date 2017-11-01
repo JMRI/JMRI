@@ -6,6 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -303,15 +305,10 @@ abstract public class AbstractCanTrafficController
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = newRcvNotifier(msg, mLastSender, this);
-        try {
-            if (getSynchronizeRx()) {
-                SwingUtilities.invokeAndWait(r);
-            } else {
-                SwingUtilities.invokeLater(r);
-            }
-        } catch (java.lang.reflect.InvocationTargetException | InterruptedException | RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            e.printStackTrace();
+        if (getSynchronizeRx()) {
+            ThreadingUtil.runOnLayout(r::run);
+        } else {
+            ThreadingUtil.runOnLayoutEventually(r::run);
         }
     }
 
