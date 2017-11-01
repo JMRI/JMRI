@@ -254,8 +254,8 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
-        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo();
-        SerialTrafficController tcis = new SerialTrafficControlScaffold(memo);
+        SerialTrafficController tcis = new SerialTrafficControlScaffold(null);
+        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo(tcis);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new SerialThrottleManager(memo));
         instance = new SerialThrottle(memo, new jmri.DccLocoAddress(1024, true));
     }

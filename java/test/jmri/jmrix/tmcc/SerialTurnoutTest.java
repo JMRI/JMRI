@@ -1,6 +1,8 @@
 package jmri.jmrix.tmcc;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -41,6 +43,13 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 //       tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 //       Assert.assertTrue("message sent", tcis.outbound.size() > 0);
 //       Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROUGH (CLOSED) message
+    }
+
+    // The minimal setup for log4J
+    @After
+    public void tearDown() {
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }
