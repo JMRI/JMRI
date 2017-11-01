@@ -186,7 +186,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalsAtTurnoutFrame == null) {
+            setSignalsAtTurnoutOpenFlag = false;
             setSignalsAtTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalsAtTurnout"), false, true);
+            oneFrameToRuleThemAll(setSignalsAtTurnoutFrame);
             setSignalsAtTurnoutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
             setSignalsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTurnout", true);
@@ -1997,7 +1999,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalsAtBlockBoundaryFrame == null) {
+            setSignalsAtBlockBoundaryOpenFlag = false;
             setSignalsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SignalsAtBoundary"), false, true);
+            oneFrameToRuleThemAll(setSignalsAtBlockBoundaryFrame);
             setSignalsAtBlockBoundaryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtBoundary", true);
             setSignalsAtBlockBoundaryFrame.setLocation(70, 30);
@@ -2643,7 +2647,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalsAtXoverTurnoutFrame == null) {
+            setSignalsAtXoverTurnoutOpenFlag = false;
             setSignalsAtXoverTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalsAtXoverTurnout"), false, true);
+            oneFrameToRuleThemAll(setSignalsAtXoverTurnoutFrame);
             setSignalsAtXoverTurnoutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalsAtXoverTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtXoverTurnout", true);
             setSignalsAtXoverTurnoutFrame.setLocation(70, 30);
@@ -3686,7 +3692,9 @@ public class LayoutEditorTools {
         dSignalHeadComboBox.setText("");
         // Initialize if needed
         if (setSignalsAtLevelXingFrame == null) {
+            setSignalsAtLevelXingOpenFlag = false;
             setSignalsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SignalsAtLevelXing"), false, true);
+            oneFrameToRuleThemAll(setSignalsAtXoverTurnoutFrame);
             setSignalsAtLevelXingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
             setSignalsAtLevelXingFrame.setLocation(70, 30);
@@ -4541,7 +4549,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalsAtThroatToThroatTurnoutsFrame == null) {
+            setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
             setSignalsAtThroatToThroatTurnoutsFrame = new JmriJFrame(Bundle.getMessage("SignalsAtTToTTurnout"), false, true);
+            oneFrameToRuleThemAll(setSignalsAtThroatToThroatTurnoutsFrame);
             setSignalsAtThroatToThroatTurnoutsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalsAtThroatToThroatTurnoutsFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTToTTurnout", true);
             setSignalsAtThroatToThroatTurnoutsFrame.setLocation(70, 30);
@@ -5999,7 +6009,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalsAt3WayTurnoutFrame == null) {
+            setSignalsAt3WayTurnoutOpenFlag = false;
             setSignalsAt3WayTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalsAt3WayTurnout"), false, true);
+            oneFrameToRuleThemAll(setSignalsAt3WayTurnoutFrame);
             setSignalsAt3WayTurnoutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalsAt3WayTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAt3WayTurnout", true);
             setSignalsAt3WayTurnoutFrame.setLocation(70, 30);
@@ -7207,10 +7219,12 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSensorsAtBlockBoundaryFrame == null) {
+            setSensorsAtBlockBoundaryOpenFlag = false;
             westBoundSensor = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
             eastBoundSensor = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
 
             setSensorsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SensorsAtBoundary"), false, true);
+            oneFrameToRuleThemAll(setSensorsAtBlockBoundaryFrame);
             setSensorsAtBlockBoundaryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSensorsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtBoundary", true);
             setSensorsAtBlockBoundaryFrame.setLocation(70, 30);
@@ -7337,10 +7351,12 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameTurnout") + " 1 "
                     + Bundle.getMessage("Name"))
                     + boundary.getConnect1().getLayoutBlock().getId());
-            block2NameLabel.setText(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("BeanNameTurnout") + " 2 "
-                    + Bundle.getMessage("Name"))
-                    + boundary.getConnect2().getLayoutBlock().getId());
+            if (boundary.getConnect2() != null) {
+                block2NameLabel.setText(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("BeanNameTurnout") + " 2 "
+                        + Bundle.getMessage("Name"))
+                        + boundary.getConnect2().getLayoutBlock().getId());
+            }
             getSavedAnchorSensors(null);
         } else {
             block1NameLabel.setText(Bundle.getMessage("MakeLabel",
@@ -7766,11 +7782,15 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalMastsAtBlockBoundaryFrame == null) {
+            setSignalMastsAtBlockBoundaryOpenFlag = false;
+
             eastSignalMast = new BeanDetails("SignalMast",
                     InstanceManager.getDefault(SignalMastManager.class)); // NOI18N
             westSignalMast = new BeanDetails("SignalMast",
                     InstanceManager.getDefault(SignalMastManager.class)); // NOI18N
+
             setSignalMastsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtBoundary"), false, true);
+            oneFrameToRuleThemAll(setSignalMastsAtBlockBoundaryFrame);
             setSignalMastsAtBlockBoundaryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalMastsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtBoundary", true);
             setSignalMastsAtBlockBoundaryFrame.setLocation(70, 30);
@@ -7897,10 +7917,12 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameTurnout") + " 2 "
                     + Bundle.getMessage("Name"))
                     + boundary.getConnect1().getLayoutBlock().getId());
-            block2NameLabel.setText(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("BeanNameTurnout") + " 2 "
-                    + Bundle.getMessage("Name"))
-                    + boundary.getConnect2().getLayoutBlock().getId());
+            if (boundary.getConnect2() != null) {
+                block2NameLabel.setText(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("BeanNameTurnout") + " 2 "
+                        + Bundle.getMessage("Name"))
+                        + boundary.getConnect2().getLayoutBlock().getId());
+            }
             getSavedAnchorSignalMasts(null);
         }
 
@@ -8878,13 +8900,6 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             turnoutBlocks[i] = blocks[i];
         }
-        if (setSignalMastsAtTurnoutFrame != null) {
-            turnoutMastNameLabel.setText(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("BeanNameTurnout") + " 2 "
-                    + Bundle.getMessage("Name"))
-                    + layoutTurnout.getTurnoutName());
-            turnoutSignalMastsGetSaved(null);
-        }
         setSignalMastsAtTurnout(true);
     }
 
@@ -8898,7 +8913,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalMastsAtTurnoutFrame == null) {
+            setSignalMastsAtTurnoutOpenFlag = false;
             setSignalMastsAtTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtTurnout"), false, true);
+            oneFrameToRuleThemAll(setSignalMastsAtTurnoutFrame);
             setSignalMastsAtTurnoutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalMastsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtTurnout", true);
             setSignalMastsAtTurnoutFrame.setLocation(70, 30);
@@ -8907,18 +8924,15 @@ public class LayoutEditorTools {
 
             JPanel panel1 = new JPanel(new FlowLayout());
 
-            turnoutSignalMastA
-                    = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class
-                    ));
-            turnoutSignalMastB
-                    = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class
-                    ));
-            turnoutSignalMastC
-                    = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class
-                    ));
-            turnoutSignalMastD
-                    = new BeanDetails("SignalMast", InstanceManager.getDefault(SignalMastManager.class
-                    ));
+            turnoutSignalMastA = new BeanDetails("SignalMast",
+                    InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastB = new BeanDetails("SignalMast",
+                    InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastC = new BeanDetails("SignalMast",
+                    InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastD = new BeanDetails("SignalMast",
+                    InstanceManager.getDefault(SignalMastManager.class));
+
             turnoutMastNameLabel = new JLabel(
                     Bundle.getMessage("BeanNameTurnout")
                     + " " + Bundle.getMessage("Name"));
@@ -8999,12 +9013,9 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameTurnout")
                     + Bundle.getMessage("Name"))
                     + layoutTurnout.getTurnoutName());
-            turnoutSignalMastsGetSaved(null);
         }
 
-        if (setSignalMastsAtTurnoutOpenFlag) {
-            turnoutSignalMastsGetSaved(null);
-        } else {
+        if (!setSignalMastsAtTurnoutOpenFlag) {
             setSignalMastsAtTurnoutFrame.setPreferredSize(null);
             setSignalMastsAtTurnoutFrame.pack();
             setSignalMastsAtTurnoutOpenFlag = true;
@@ -9425,6 +9436,7 @@ public class LayoutEditorTools {
                 signalMastsTurnoutComboBox.setText(str);
             }
         }
+        layoutTurnout = layoutEditor.getFinder().findLayoutTurnoutByBean(turnout);
         for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
             if (t.getTurnout() == turnout) {
                 layoutTurnout = t;
@@ -9547,6 +9559,8 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalMastsAtLayoutSlipFrame == null) {
+            setSignalMastsAtLayoutSlipOpenFlag = false;
+
             slipSignalMastA = new BeanDetails("SignalMast",
                     InstanceManager.getDefault(SignalMastManager.class));
             slipSignalMastB = new BeanDetails("SignalMast",
@@ -9557,6 +9571,7 @@ public class LayoutEditorTools {
                     InstanceManager.getDefault(SignalMastManager.class));
 
             setSignalMastsAtLayoutSlipFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLayoutSlip"), false, true);
+            oneFrameToRuleThemAll(setSignalMastsAtLayoutSlipFrame);
             setSignalMastsAtLayoutSlipFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalMastsAtLayoutSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
             setSignalMastsAtLayoutSlipFrame.setLocation(70, 30);
@@ -10109,6 +10124,8 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalMastsAtLevelXingFrame == null) {
+            setSignalMastsAtLevelXingOpenFlag = false;
+
             xingSignalMastA = new BeanDetails("SignalMast",
                     InstanceManager.getDefault(SignalMastManager.class
                     ));
@@ -10126,6 +10143,7 @@ public class LayoutEditorTools {
                             ));
 
             setSignalMastsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLevelXing"), false, true);
+            oneFrameToRuleThemAll(setSignalMastsAtLevelXingFrame);
             setSignalMastsAtLevelXingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalMastsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
             setSignalMastsAtLevelXingFrame.setLocation(70, 30);
@@ -10651,7 +10669,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSensorsAtTurnoutFrame == null) {
+            setSensorsAtTurnoutOpenFlag = false;
             setSensorsAtTurnoutFrame = new JmriJFrame(Bundle.getMessage("SensorsAtTurnout"), false, true);
+            oneFrameToRuleThemAll(setSensorsAtTurnoutFrame);
             setSensorsAtTurnoutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSensorsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtTurnout", true);
             setSensorsAtTurnoutFrame.setLocation(70, 30);
@@ -11100,6 +11120,7 @@ public class LayoutEditorTools {
                 sensorsTurnoutComboBox.setText(str);
             }
         }
+        layoutTurnout = layoutEditor.getFinder().findLayoutTurnoutByBean(turnout);
         for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
             if (t.getTurnout() == turnout) {
                 layoutTurnout = t;
@@ -11186,7 +11207,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSensorsAtLevelXingFrame == null) {
+            setSensorsAtLevelXingOpenFlag = false;
             setSensorsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SensorsAtLevelXing"), false, true);
+            oneFrameToRuleThemAll(setSensorsAtLevelXingFrame);
             setSensorsAtLevelXingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSensorsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelXing", true);
             setSensorsAtLevelXingFrame.setLocation(70, 30);
@@ -11762,7 +11785,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSensorsAtSlipFrame == null) {
+            setSensorsAtSlipOpenFlag = false;
             setSensorsAtSlipFrame = new JmriJFrame(Bundle.getMessage("SensorsAtSlip"), false, true);
+            oneFrameToRuleThemAll(setSensorsAtSlipFrame);
             setSensorsAtSlipFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSensorsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelSlip", true);
             setSensorsAtSlipFrame.setLocation(70, 30);
@@ -12499,7 +12524,9 @@ public class LayoutEditorTools {
 
         // Initialize if needed
         if (setSignalsAtSlipFrame == null) {
+            setSignalsAtSlipOpenFlag = false;
             setSignalsAtSlipFrame = new JmriJFrame(Bundle.getMessage("SignalsAtSlip"), false, true);
+            oneFrameToRuleThemAll(setSignalsAtSlipFrame);
             setSignalsAtSlipFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtSlip", true);
             setSignalsAtSlipFrame.setLocation(70, 30);
@@ -13980,6 +14007,34 @@ public class LayoutEditorTools {
             jmi.setEnabled(false);
             menu.add(jmi);
         }
+    }
+
+    private void oneFrameToRuleThemAll(@Nonnull JmriJFrame goodFrame) {
+        setSensorsAtBlockBoundaryFrame = closeIfNotFrame(goodFrame, setSensorsAtBlockBoundaryFrame);
+        setSensorsAtLevelXingFrame = closeIfNotFrame(goodFrame, setSensorsAtLevelXingFrame);
+        setSensorsAtSlipFrame = closeIfNotFrame(goodFrame, setSensorsAtSlipFrame);
+        setSensorsAtTurnoutFrame = closeIfNotFrame(goodFrame, setSensorsAtTurnoutFrame);
+        setSignalMastsAtBlockBoundaryFrame = closeIfNotFrame(goodFrame, setSignalMastsAtBlockBoundaryFrame);
+        setSignalMastsAtLayoutSlipFrame = closeIfNotFrame(goodFrame, setSignalMastsAtLayoutSlipFrame);
+        setSignalMastsAtLevelXingFrame = closeIfNotFrame(goodFrame, setSignalMastsAtLevelXingFrame);
+        setSignalMastsAtTurnoutFrame = closeIfNotFrame(goodFrame, setSignalMastsAtTurnoutFrame);
+        setSignalsAt3WayTurnoutFrame = closeIfNotFrame(goodFrame, setSignalsAt3WayTurnoutFrame);
+        setSignalsAtBlockBoundaryFrame = closeIfNotFrame(goodFrame, setSignalsAtBlockBoundaryFrame);
+        setSignalsAtLevelXingFrame = closeIfNotFrame(goodFrame, setSignalsAtLevelXingFrame);
+        setSignalsAtSlipFrame = closeIfNotFrame(goodFrame, setSignalsAtSlipFrame);
+        setSignalsAtThroatToThroatTurnoutsFrame = closeIfNotFrame(goodFrame, setSignalsAtThroatToThroatTurnoutsFrame);
+        setSignalsAtTurnoutFrame = closeIfNotFrame(goodFrame, setSignalsAtTurnoutFrame);
+        setSignalsAtXoverTurnoutFrame = closeIfNotFrame(goodFrame, setSignalsAtXoverTurnoutFrame);
+    }
+
+    private JmriJFrame closeIfNotFrame(@Nonnull JmriJFrame goodFrame, @Nullable JmriJFrame badFrame) {
+        JmriJFrame result = badFrame;
+        if ((badFrame != null) && (goodFrame != badFrame)) {
+            badFrame.setVisible(false);
+            badFrame.dispose();
+            result = null;
+        }
+        return result;
     }
 
     private final static Logger log = LoggerFactory.getLogger(

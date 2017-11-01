@@ -392,14 +392,14 @@ public class LayoutTurnout extends LayoutTrack {
 
     public String getTurnoutName() {
         if (namedTurnout != null) {
-            return namedTurnout.getName();
+            turnoutName = namedTurnout.getName();
         }
         return turnoutName;
     }
 
     public String getSecondTurnoutName() {
         if (secondNamedTurnout != null) {
-            return secondNamedTurnout.getName();
+            secondTurnoutName = secondNamedTurnout.getName();
         }
         return secondTurnoutName;
     }
@@ -2595,9 +2595,8 @@ public class LayoutTurnout extends LayoutTrack {
                 };
 
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (layoutEditor.getLETools().
-                        addLayoutTurnoutSignalHeadInfoToMenu(
-                                getTurnoutName(), linkedTurnoutName, jm)) {
+                if (layoutEditor.getLETools().addLayoutTurnoutSignalHeadInfoToMenu(
+                        getTurnoutName(), linkedTurnoutName, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -2607,50 +2606,12 @@ public class LayoutTurnout extends LayoutTrack {
             if (!getBlockName().isEmpty()) {
                 final String[] boundaryBetween = getBlockBoundaries();
                 boolean blockBoundaries = false;
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < boundaryBetween.length; i++) {
                     if (boundaryBetween[i] != null) {
                         blockBoundaries = true;
+                        break;
                     }
                 }
-                if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-                    Map<String, LayoutBlock> map = new HashMap<>();
-                    if (!getBlockName().isEmpty()) {
-                        map.put(getBlockName(), getLayoutBlock());
-                    }
-                    if (!getBlockBName().isEmpty()) {
-                        map.put(getBlockBName(), getLayoutBlockB());
-                    }
-                    if (!getBlockCName().isEmpty()) {
-                        map.put(getBlockCName(), getLayoutBlockC());
-                    }
-                    if (!getBlockDName().isEmpty()) {
-                        map.put(getBlockDName(), getLayoutBlockD());
-                    }
-                    if (map.size() == 1) {
-                        popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
-                                routeTableAction.actionPerformed(e);
-                            }
-                        });
-                    } else if (map.size() > 1) {
-                        JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
-                        for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
-                            String blockName = entry.getKey();
-                            LayoutBlock layoutBlock = entry.getValue();
-                            viewRouting.add(new AbstractAction(getBlockBName()) {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
-                                    routeTableAction.actionPerformed(e);
-                                }
-                            });
-                        }
-                        popup.add(viewRouting);
-                    }
-                }
-
                 if (blockBoundaries) {
                     popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                         @Override
@@ -2669,7 +2630,46 @@ public class LayoutTurnout extends LayoutTrack {
                                     layoutEditor.sensorFrame);
                         }
                     });
-                }
+
+                    if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+                        Map<String, LayoutBlock> map = new HashMap<>();
+                        if (!getBlockName().isEmpty()) {
+                            map.put(getBlockName(), getLayoutBlock());
+                        }
+                        if (!getBlockBName().isEmpty()) {
+                            map.put(getBlockBName(), getLayoutBlockB());
+                        }
+                        if (!getBlockCName().isEmpty()) {
+                            map.put(getBlockCName(), getLayoutBlockC());
+                        }
+                        if (!getBlockDName().isEmpty()) {
+                            map.put(getBlockDName(), getLayoutBlockD());
+                        }
+                        if (map.size() == 1) {
+                            popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                                    routeTableAction.actionPerformed(e);
+                                }
+                            });
+                        } else if (map.size() > 1) {
+                            JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
+                            for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
+                                String blockName = entry.getKey();
+                                LayoutBlock layoutBlock = entry.getValue();
+                                viewRouting.add(new AbstractAction(getBlockBName()) {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
+                                        routeTableAction.actionPerformed(e);
+                                    }
+                                });
+                            }
+                            popup.add(viewRouting);
+                        }
+                    }   // isAdvancedRoutingEnabled()
+                }   // if (blockBoundaries)
             }
             setAdditionalEditPopUpMenu(popup);
             layoutEditor.setShowAlignmentMenu(popup);

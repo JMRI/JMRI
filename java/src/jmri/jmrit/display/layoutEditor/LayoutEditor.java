@@ -8730,16 +8730,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return conTools;
     } //getConnectivityUtil
 
-    //private transient LayoutEditorTools tools = null;
+    private transient LayoutEditorTools tools = null;
     public LayoutEditorTools getLETools() {
-        //if (tools == null) {
-        //    tools = new LayoutEditorTools(this);
-        //}
-        //return tools;
-        // note: we're going to always return a new instance here
-        // (the indivual dialogs are responsible for disposing of it
-        // when no longer needed.)
-        return new LayoutEditorTools(this);
+        if (tools == null) {
+            tools = new LayoutEditorTools(this);
+        }
+        return tools;
     } //getLETools
 
     private transient LayoutEditorAuxTools auxTools = null;
