@@ -56,7 +56,7 @@
         <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
         <size length="1.65" width="0.63" height="0.12" units="inches"/>
       </model>
-      <model model="D13SRJ" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model model="D13SRJ" numOuts="4" numFns="8" connector="9pin" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
@@ -70,7 +70,7 @@
         <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
         <size length="1.03" width="0.63" height="0.185" units="inches"/>
       </model>
-      <model model="D13J" numOuts="4" numFns="8" connector="9pin JST" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+      <model model="D13J" numOuts="4" numFns="8" connector="9pin" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
         <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
