@@ -54,13 +54,11 @@ public class ConnectivityUtil {
     private LayoutEditor layoutEditor = null;
     private LayoutEditorAuxTools auxTools = null;
     private LayoutBlockManager layoutBlockManager = null;
-    private LayoutEditorTools leTools = null;
 
     // constructor method
     public ConnectivityUtil(LayoutEditor thePanel) {
         layoutEditor = thePanel;
         auxTools = new LayoutEditorAuxTools(layoutEditor);
-        leTools = layoutEditor.getLETools();
         layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
     }
 
