@@ -114,12 +114,6 @@
 
      <tocitem text="The Basic Programmer " target="manual.DecoderPro3.Basic_Start"/>
 
-     <tocitem text="Reading Data " target="manual.DecoderPro.Basic_BasicPane_Read Data"/>
-
-     <tocitem text="Writing to Decoder " target="manual.DecoderPro.Basic_BasicPane_Write Data"/>
-
-     <tocitem text="Saving to a File " target="manual.DecoderPro.Basic_BasicPane_Save Data"/>
-
      <tocitem text="What Next? " target="manual.DecoderPro3.Basic_BasicPane_DoMore"/>
 
     </tocitem>

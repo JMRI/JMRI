@@ -359,7 +359,7 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("Test");
 
         // exercise manifest build
-        train.setRailroadName("Working Railroad");
+        train.setTrainRailroadName("Working Railroad");
         train.setComment("One Hard Working Train");
 
         // now add a route that doesn't have any locations
@@ -378,7 +378,7 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("Test");
 
         // exercise manifest build
-        train.setRailroadName("Working Railroad");
+        train.setTrainRailroadName("Working Railroad");
         train.setComment("One Hard Working Train");
 
         // now add a route that doesn't have any locations
@@ -459,7 +459,7 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("Test");
 
         // exercise manifest build
-        train.setRailroadName("Working Railroad");
+        train.setTrainRailroadName("Working Railroad");
         train.setComment("One Hard Working Train");
 
         // now add a route that doesn't have any locations

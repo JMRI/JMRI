@@ -10,20 +10,20 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class MarklinThrottleManagerTest {
+public class MarklinThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
     public void testCTor() {
-        MarklinTrafficController tc = new MarklinTrafficController();
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
-        MarklinThrottleManager t = new MarklinThrottleManager(c);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        MarklinTrafficController tc = new MarklinTrafficController();
+        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
+        tm = new MarklinThrottleManager(c);
     }
 
     @After

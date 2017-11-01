@@ -267,8 +267,15 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     protected static void nxAction() {
-        NXFrame nxFrame = NXFrame.getDefault();
-        nxFrame.setVisible(true);
+        NXFrame nxFrame = WarrantTableAction.getNXFrame();
+        if (nxFrame == null) {
+            nxFrame = new NXFrame();
+            WarrantTableAction.setNXFrame(nxFrame);
+        } else {
+            nxFrame.setState(java.awt.Frame.NORMAL);
+            nxFrame.setVisible(true);
+            nxFrame.toFront();            
+        }
     }
 
     private void haltAllAction() {
@@ -427,11 +434,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             setStatusText(msg, Color.red, false);
             return msg;
         }
-        if (w.commandsHaveTrackSpeeds()) {
+/*        if (w.commandsHaveTrackSpeeds()) {
             w.getSpeedUtil().getValidSpeedProfile(this);            
         } else {
             setStatusText(Bundle.getMessage("NoTrackSpeeds", w.getDisplayName()), Color.red, true);
-        }
+        }*/
         
         msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
         if (msg != null) {
