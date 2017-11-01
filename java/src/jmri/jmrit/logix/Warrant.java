@@ -2324,8 +2324,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     if (speedTime <= momentumTime) {
                         dist = _speedUtil.getTrackSpeed(waitSpeed, isForward) * speedTime;
                     } else {
-                        dist = _speedUtil.getTrackSpeed(waitSpeed, isForward) * momentumTime
-                                + _speedUtil.getTrackSpeed((waitSpeed + nextThrottle), isForward) * (speedTime - momentumTime);                        
+                        dist = _speedUtil.getTrackSpeed(waitSpeed, isForward) * momentumTime;
+                        if (speedTime > momentumTime) {
+                            dist += _speedUtil.getTrackSpeed((waitSpeed + nextThrottle), isForward) * (speedTime - momentumTime);
+                        }
                     }
                     waitSpeed = _speedUtil.modifySpeed(nextThrottle, _curSpeedType, isForward);
                     if ((waitDist + dist + rampLen) > availDist) {
