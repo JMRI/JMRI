@@ -7366,8 +7366,10 @@ public class LayoutEditorTools {
                     Bundle.getMessage("Name") + " 2 - "
                     + Bundle.getMessage("Name")));
         }
-        block2NameLabel.setVisible(boundary.getType() == PositionablePoint.ANCHOR);
-        block2IDComboBox.setVisible(boundary.getType() == PositionablePoint.ANCHOR);
+        // boundary should never be null... however, just in case...
+        boolean enable = ((boundary != null) && (boundary.getType() == PositionablePoint.ANCHOR));
+        block2NameLabel.setVisible(enable);
+        block2IDComboBox.setVisible(enable);
 
         if (!setSensorsAtBlockBoundaryOpenFlag) {
             setSensorsAtBlockBoundaryFrame.setPreferredSize(null);
@@ -9045,24 +9047,24 @@ public class LayoutEditorTools {
         signalMastTurnoutPanel.remove(turnoutSignalMastC.getDetailsPanel());
         signalMastTurnoutPanel.remove(turnoutSignalMastD.getDetailsPanel());
 
-        boolean blockBoundary = false;
+        boolean boundaryFlag = false;
         if (turnoutBlocks[0] != null) {
             signalMastTurnoutPanel.add(turnoutSignalMastA.getDetailsPanel());
-            blockBoundary = true;
+            boundaryFlag = true;
         }
         if (turnoutBlocks[1] != null) {
             signalMastTurnoutPanel.add(turnoutSignalMastB.getDetailsPanel());
-            blockBoundary = true;
+            boundaryFlag = true;
         }
         if (turnoutBlocks[2] != null) {
             signalMastTurnoutPanel.add(turnoutSignalMastC.getDetailsPanel());
-            blockBoundary = true;
+            boundaryFlag = true;
         }
         if (turnoutBlocks[3] != null) {
             signalMastTurnoutPanel.add(turnoutSignalMastD.getDetailsPanel());
-            blockBoundary = true;
+            boundaryFlag = true;
         }
-        if (!blockBoundary) {
+        if (!boundaryFlag) {
             JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame, "There are no block boundaries on this turnout\nIt is therefore not possible to add Signal Masts to it");
         }
         setSignalMastsAtTurnoutFrame.setPreferredSize(null);
@@ -9758,28 +9760,28 @@ public class LayoutEditorTools {
         slipSignalMastC.setBoundaryLabel(slipBlocks[2]);
         slipSignalMastD.setBoundaryLabel(slipBlocks[3]);
 
-        boolean boundary = false;
+        boolean boundaryFlag = false;
         signalMastLayoutSlipPanel.remove(slipSignalMastA.getDetailsPanel());
         signalMastLayoutSlipPanel.remove(slipSignalMastB.getDetailsPanel());
         signalMastLayoutSlipPanel.remove(slipSignalMastC.getDetailsPanel());
         signalMastLayoutSlipPanel.remove(slipSignalMastD.getDetailsPanel());
         if (slipBlocks[0] != null) {
             signalMastLayoutSlipPanel.add(slipSignalMastA.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (slipBlocks[1] != null) {
             signalMastLayoutSlipPanel.add(slipSignalMastB.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (slipBlocks[2] != null) {
             signalMastLayoutSlipPanel.add(slipSignalMastC.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (slipBlocks[3] != null) {
             signalMastLayoutSlipPanel.add(slipSignalMastD.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
-        if (!boundary) {
+        if (!boundaryFlag) {
             JOptionPane.showMessageDialog(setSignalMastsAtLayoutSlipFrame, "There are no block boundaries on this level crossing\nIt is therefore not possible to add Signal Masts to it");
         }
         setSignalMastsAtLayoutSlipFrame.setPreferredSize(null);
@@ -10295,28 +10297,28 @@ public class LayoutEditorTools {
         xingSignalMastC.setBoundaryLabel(xingBlocks[2]);
         xingSignalMastD.setBoundaryLabel(xingBlocks[3]);
 
-        boolean boundary = false;
+        boolean boundaryFlag = false;
         signalMastLevelXingPanel.remove(xingSignalMastA.getDetailsPanel());
         signalMastLevelXingPanel.remove(xingSignalMastB.getDetailsPanel());
         signalMastLevelXingPanel.remove(xingSignalMastC.getDetailsPanel());
         signalMastLevelXingPanel.remove(xingSignalMastD.getDetailsPanel());
         if (xingBlocks[0] != null) {
             signalMastLevelXingPanel.add(xingSignalMastA.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (xingBlocks[1] != null) {
             signalMastLevelXingPanel.add(xingSignalMastB.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (xingBlocks[2] != null) {
             signalMastLevelXingPanel.add(xingSignalMastC.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (xingBlocks[3] != null) {
             signalMastLevelXingPanel.add(xingSignalMastD.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
-        if (!boundary) {
+        if (!boundaryFlag) {
             JOptionPane.showMessageDialog(setSignalMastsAtLevelXingFrame, "There are no block boundaries on this level crossing\nIt is therefore not possible to add Signal Masts to it");
         }
         setSignalMastsAtLevelXingFrame.setPreferredSize(null);
@@ -10805,24 +10807,24 @@ public class LayoutEditorTools {
         sensorTurnoutPanel.remove(turnoutSensorC.getDetailsPanel());
         sensorTurnoutPanel.remove(turnoutSensorD.getDetailsPanel());
 
-        boolean blockBoundary = false;
+        boolean boundaryFlag = false;
         if (turnoutSenBlocks[0] != null) {
             sensorTurnoutPanel.add(turnoutSensorA.getDetailsPanel());
-            blockBoundary = true;
+            boundaryFlag = true;
         }
         if (turnoutSenBlocks[1] != null) {
             sensorTurnoutPanel.add(turnoutSensorB.getDetailsPanel());
-            blockBoundary = true;
+            boundaryFlag = true;
         }
         if (turnoutSenBlocks[2] != null) {
             sensorTurnoutPanel.add(turnoutSensorC.getDetailsPanel());
-            blockBoundary = true;
+            boundaryFlag = true;
         }
         if (turnoutSenBlocks[3] != null) {
             sensorTurnoutPanel.add(turnoutSensorD.getDetailsPanel());
-            blockBoundary = true;
+            boundaryFlag = true;
         }
-        if (!blockBoundary) {
+        if (!boundaryFlag) {
             JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame, "There are no block boundaries on this turnout\nIt is therefore not possible to add Sensors to it");
         }
         setSensorsAtTurnoutFrame.setPreferredSize(null);
@@ -11364,24 +11366,24 @@ public class LayoutEditorTools {
         xingSensorC.setBoundaryLabel(xingSensorBlocks[2]);
         xingSensorD.setBoundaryLabel(xingSensorBlocks[3]);
 
-        boolean boundary = false;
+        boolean boundaryFlag = false;
         if (xingSensorBlocks[0] != null) {
             sensorXingPanel.add(xingSensorA.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (xingSensorBlocks[1] != null) {
             sensorXingPanel.add(xingSensorB.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (xingSensorBlocks[2] != null) {
             sensorXingPanel.add(xingSensorC.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (xingSensorBlocks[3] != null) {
             sensorXingPanel.add(xingSensorD.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
-        if (!boundary) {
+        if (!boundaryFlag) {
             JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame, Bundle.getMessage("NoBoundaryXingSensor"));
         }
         setSensorsAtLevelXingFrame.setPreferredSize(null);
@@ -11988,24 +11990,24 @@ public class LayoutEditorTools {
         slipSensorC.setBoundaryLabel(slipSensorBlocks[2]);
         slipSensorD.setBoundaryLabel(slipSensorBlocks[3]);
 
-        boolean boundary = false;
+        boolean boundaryFlag = false;
         if (slipSensorBlocks[0] != null) {
             sensorSlipPanel.add(slipSensorA.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (slipSensorBlocks[1] != null) {
             sensorSlipPanel.add(slipSensorB.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (slipSensorBlocks[2] != null) {
             sensorSlipPanel.add(slipSensorC.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
         if (slipSensorBlocks[3] != null) {
             sensorSlipPanel.add(slipSensorD.getDetailsPanel());
-            boundary = true;
+            boundaryFlag = true;
         }
-        if (!boundary) {
+        if (!boundaryFlag) {
             JOptionPane.showMessageDialog(setSensorsAtSlipFrame, Bundle.getMessage("NoBoundarySlipSensor"));
         }
         setSensorsAtSlipFrame.setPreferredSize(null);
@@ -12287,7 +12289,7 @@ public class LayoutEditorTools {
         private JLabel textLabel;
 
         private final String boundaryLabelText = Bundle.getMessage("BoundaryOf");
-        private final JLabel boundary = new JLabel(boundaryLabelText);
+        private final JLabel boundaryLabel = new JLabel(boundaryLabelText);
 
         private Manager manager;
 
@@ -12331,12 +12333,12 @@ public class LayoutEditorTools {
             boundaryBlocks.setOpaque(false);
             detailsPanel.setLayout(new BorderLayout());
             detailsPanel.setBorder(BorderFactory.createTitledBorder(blackline, Bundle.getMessage("BlockBoundary")));
-            boundary.setAlignmentX(Component.CENTER_ALIGNMENT);
+            boundaryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             JPanel boundaryDetails = new JPanel(new FlowLayout());
             boundaryDetails.setOpaque(false);
             boundaryDetails.setLayout(new BoxLayout(boundaryDetails, BoxLayout.Y_AXIS));
-            boundaryDetails.add(boundary);
+            boundaryDetails.add(boundaryLabel);
             boundaryDetails.add(boundaryBlocks);
 
             detailsPanel.add(boundaryDetails, BorderLayout.PAGE_START);
@@ -12373,7 +12375,7 @@ public class LayoutEditorTools {
         }
 
         protected void setBoundaryLabelText(String text) {
-            boundary.setText(text);
+            boundaryLabel.setText(text);
         }
 
         protected void setBoundaryLabel(String label) {
