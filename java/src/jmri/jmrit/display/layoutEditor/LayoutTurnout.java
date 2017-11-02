@@ -2335,7 +2335,6 @@ public class LayoutTurnout extends LayoutTrack {
     }   // setObjects
 
     private JPopupMenu popup = null;
-    private LayoutEditorTools tools = null;
 
     /**
      * {@inheritDoc}
@@ -2348,7 +2347,6 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        tools = layoutEditor.getLETools();
 
         if (layoutEditor.isEditable()) {
             String label = "";
@@ -2574,6 +2572,7 @@ public class LayoutTurnout extends LayoutTrack {
                 AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        LayoutEditorTools tools = layoutEditor.getLETools();
                         if ((getTurnoutType() == DOUBLE_XOVER)
                                 || (getTurnoutType() == RH_XOVER)
                                 || (getTurnoutType() == LH_XOVER)) {
@@ -2596,7 +2595,9 @@ public class LayoutTurnout extends LayoutTrack {
                 };
 
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLayoutTurnoutSignalHeadInfoToMenu(getTurnoutName(), linkedTurnoutName, jm)) {
+                if (layoutEditor.getLETools().
+                        addLayoutTurnoutSignalHeadInfoToMenu(
+                                getTurnoutName(), linkedTurnoutName, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -2654,14 +2655,14 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            tools.setSignalMastsAtTurnoutFromMenu(LayoutTurnout.this,
+                            layoutEditor.getLETools().setSignalMastsAtTurnoutFromMenu(LayoutTurnout.this,
                                     boundaryBetween);
                         }
                     });
                     popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            tools.setSensorsAtTurnoutFromMenu(
+                            layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
                                     LayoutTurnout.this,
                                     boundaryBetween,
                                     layoutEditor.sensorIconEditor,
