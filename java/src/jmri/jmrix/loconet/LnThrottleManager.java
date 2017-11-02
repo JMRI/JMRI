@@ -185,7 +185,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
             tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
         } else {
-            log.warn("Slot [{}} has not gone IN-USE in required time, slot is in unreliable state.",s.getSlot());
+            log.warn("Slot [{}] has not gone IN-USE in required time, slot is in unreliable state.",s.getSlot());
         }
 
         s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
@@ -308,6 +308,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
+        if (t ==null) return;
         log.debug("releaseThrottle - throttle {}", t.getLocoAddress());
         if (t instanceof LocoNetThrottle) {
             LocoNetThrottle lnt = (LocoNetThrottle) t;
