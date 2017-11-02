@@ -2071,6 +2071,19 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         inComboBox.setValidateMode(inValidateMode);
         inComboBox.setText("");
         log.debug("LE setupComboBox called");
+
+        setupComboBoxMaxRows(inComboBox);
+
+        inComboBox.setFirstItemBlank(inFirstBlank);
+        inComboBox.setSelectedIndex(-1);
+    } //setupComboBox
+
+    /**
+     * set the maximum number of rows based on screen size
+     *
+     * @param inComboBox
+     */
+    public static void setupComboBoxMaxRows(@Nonnull JmriBeanComboBox inComboBox) {
         // find the max height of all popup items
         BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
         JList list = popup.getList();
@@ -2083,7 +2096,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
         }
 
-        int itemsPerScreen = inComboBox.getItemCount();
+        int itemsPerScreen = inComboBox.getMaximumRowCount();
         // calculate the number of items that will fit on the screen
         if (!GraphicsEnvironment.isHeadless()) {
             // note: this line returns the maximum available size, accounting all
@@ -2099,9 +2112,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             c /= 2; // keeps this a even division of the number of items
         };
         inComboBox.setMaximumRowCount(c);
-        inComboBox.setFirstItemBlank(inFirstBlank);
-        inComboBox.setSelectedIndex(-1);
-    } //setupComboBox
+    }
 
     /**
      * Grabs a subset of the possible KeyEvent constants and puts them into a
@@ -8731,6 +8742,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //getConnectivityUtil
 
     private transient LayoutEditorTools tools = null;
+
     public LayoutEditorTools getLETools() {
         if (tools == null) {
             tools = new LayoutEditorTools(this);
