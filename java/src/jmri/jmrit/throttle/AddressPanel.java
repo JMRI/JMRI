@@ -236,8 +236,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     @Override
     public void notifyStealThrottleRequired(DccLocoAddress address){
-        int choice = javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION);
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, choice == javax.swing.JOptionPane.YES_OPTION);
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, 
+                InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() || 
+                ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)));
     }
 
     /**
