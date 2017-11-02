@@ -3,9 +3,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Building with Eclipse</title>
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI technical code Eclipse">
@@ -20,8 +17,11 @@
       <h1>JMRI: Building with Eclipse</h1>
 
       <p>Eclipse (available at <a href=
-      "http://www.eclipse.org">www.eclipse.org</a>) makes a great
-      platform for working with JMRI.</p>
+      "http://www.eclipse.org">www.eclipse.org</a>) can be used for working with
+      JMRI. Due to the lack of integration between Ant (the primary JMRI build
+      tool) and Eclipse,
+      <a href="Netbeans.shtml">NetBeans</a> is recommended unless you are
+      already familiar with Eclipse.</p>
 
       <p>Eclipse is a complex environment to work with. If you're
       already familiar with IDEs like Microsoft Visual Studio it
@@ -40,8 +40,16 @@
       "Eclipse IDE for Java Developers" version "Oxygen
       Release (4.7.0)".</p>
 
+      <p>Note that you must also install the
+      <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit</a>
+      (not included with Eclipse) to build JMRI with Eclipse.</a>
+
+      <p>If using versions of Eclipse older than "Mars", the
+      <a href="http://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be
+      installed in Eclipse.</p>
+
       <p>Also note that at the time of writing this help document
-      that JMRI requires JAVA version 8. You must confirm that JRE
+      that JMRI requires Java version 8. You must confirm that JRE
       8 is the default Java Runtime Environment. Eclipse recommends
       installing release "Luna" or later for Java 8, but there are workarounds
       described online.</p><a name="getwgit" id="getwgit"></a>
@@ -89,11 +97,11 @@
 
         <li>Press the "Next" button if the local destination is
         acceptable to you.</li>
-        
+
         <li>The download will now happen. It might take a while.</li>
-        
+
         <li>Next select the "Wizard for project import", use "Import existing Eclipse project" then "Next"</li>
-        
+
         <li>Select "Finish" to complete the import.</li>
       </ol>
 
@@ -103,145 +111,31 @@
       "images/EclipsePackageExplorer.png" width="350" height="312"
       alt="Eclipse Package Explorer pane"></a>
 
-      <p>After the download is complete, Eclipse will be reporting
-      an error: Project 'jmri' is missing required source folder:
-      'java/tmp'. This will be fixed by running the ant build as
-      described below.</p>
-
-      <h2>Building and running JMRI using Ant</h2>
-      We recommend that
-      before you try and build and run one of the applications
-      within Eclipse that you run the ant build.xml within Eclipse.
-      This will create the necessary directories, load some
-      resource icons, and create needed Java files using JavaCC. To
-      run the ant build.xml you need to do the following:
-
-      <ol>
-        <li>Ant needs a JDK (Java Development Kit) in order to run
-        the supplied "build.xml" file. The Eclipse download doesn't
-        include a JDK, so you must download and install a JDK, and
-        then configure ant to use the JDK.</li>
-
-        <li>Here's a link to the Oracle site that can provide you
-        with a JDK:
-
-          <p><a href=
-          "http://www.oracle.com/technetwork/java/javase/downloads/index.html">
-          http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
-        </li>
-
-        <li>Select the build.xml file using the Package Explorer,
-        then right click, and a menu should appear.</li>
-
-        <li>Now select "Run As" then "2 Ant Build".</li>
-
-        <li>Confirm under the menu tab "JRE" that you've selected a
-        JDK, not a JRE.</li>
-
-        <li>Now press the "Run" button, this should start the ant
-        build.</li>
-      </ol>
-
-      <p>If the ant build fails, most likely it is because you need
-      a JDK (Java Development Kit) rather than a JRE (Java Runtime
-      Environment) which is the default. To change the JRE, select
-      "Run As" "2 Ant Build" and a new window should appear. Select
-      the "JRE" tab. The change the JRE, select the "Separate JRE:"
-      radio button, and then press the "Installed JREs" button. If
-      you don't see a JDK, you need to add one (from site
-      above).<br>
-      A new JMRI checkout should build cleanly. If not, please
-      check with the JMRIusers or jmri-developers mailings lists
-      for help.</p>
-
-      <p>If the ant build succeeds, you can now launch any of the
-      JMRI applications from ant, and create a jmri.jar file if you
-      wish. Use the "2 Ant Build" and in the window select the
-      "Targets" tab, and use the appropriate checkbox to generate
-      what you want.</p><a name="build" id="build"></a>
-
-      <h2>Building and running JMRI using Eclipse</h2>
-
-      <p>After completing the ant build as described above, you
-      need to refresh the jmri directory. Right click on the jmri
-      directory name and select "Refresh". The refresh operation
-      should trigger a build of the workspace and the build should
-      complete without error.</p>
+      <p>Note that the first build can take a while and will require Internet
+        access.</p>
+        
+      <p>If you get the error "Cannot read lifecycle mapping for artifact", open the "Run" menu, select "Run As",
+      and then select "Maven generate-sources" to fix the error and start the first build.</p>
 
       <p>To run an application do the following:</p>
 
       <ol>
-        <li>You need to verify the compiler compliance level is set
-        to java 1.8. Select under the main control bar
-        "Window-&gt;Preferences", then select
-        "Java-&gt;Compiler".</li>
-
         <li>From the "Run" menu, select "Run Configurations..."
-        We'll use the window that opens to configure which
-        program(s) to run. (If the Run menu does not have a "Run
-        Configurations..." entry, be sure you selected the java
-        directory in the navigation pane above - Eclipse menus are
-        context sensitive)</li>
 
-        <li>On the left side, highlight "Java Application", then
-        press the "New" icon above it. The icon looks like a
-        document with a plus sign on the upper-right.</li>
+        <li>On the left side, expand "Maven Build".</li>
 
-        <li>You should now have a new "Main" tab highlighted. Above
-        that, replace "New_configuration" with "DecoderPro". Below
-        it, enter "jmri" (lower case important) for "Project:" and
-        "apps.DecoderPro.DecoderPro" for "Main class:".</li>
-
-        <li>Select the "Arguments" tab, and under VM arguments
-        enter (You should probably cut and paste):<br>
-          <pre>
--Xms10m
--Xmx300m
--Djava.security.policy=lib/security.policy 
--Dapple.laf.useScreenMenuBar=true
-</pre>If you're using a 32 bit windows system add the library path:
-          <pre>
--Djava.library.path=.;lib;lib/windows/x86 
-</pre>
-If you're using a 64 bit windows system add the library path:
-          <pre>
--Djava.library.path=.;lib;lib/windows/x64
-</pre>
-If you're using a Mac OS X (macOS) system add the library path:
-          <pre>
--Djava.library.path=.:lib:lib/macosx
-</pre>
-        </li>
+        <li>Select "JMRI DecoderPro" or "JMRI PanelPro".</li>
 
         <li>Optional, select the "Common" tab, the section on
-        "Display in favorites menu", check the boxes next to "Run"
-        and "Debug"</li>
+        "Display in favorites menu", check the box next to "Run"</li>
 
-        <li>If you'd like to create targets to make it easy to run
-        PanelPro and AllTests, repeat the above steps to create a
-        new "Java Application" except specifying
-        "apps.PanelPro.PanelPro" and "apps.tests.AllTest"
-        respectively.</li>
+        <li>Click "Run" to run the application. Eclipse will retain the
+        build in the Run menu.</li>
+      </ol>
 
-        <li>Click "Apply", then "Close" (You could click "Run" at
-        this point, but we've got a little more to do)</li>
+      <h2>Pushing changes to your GitHub branch</h2>
 
-        <li>You should now be back to the usual Eclipse navigator
-        view, where most development work is done. To see some
-        particular java file, expand the "java" folder at the left,
-        then the "src" folder, navigating down to the file you
-        want.</li>
-
-        <li>To run DecoderPro, select it under "Run History" from
-        the "Run" menu. Once you've done that once, you can just
-        click the "Run" icon on the toolbar to rerun the last
-        program.</li>
-        
-        </ol>
-
-      <h2>Pushing changes to your GitHub branch</h2> 
-      
-      The standard
+      <p>The standard
       practice for getting your changes included in main JMRI code
       repository is to commit them to your local repository
       periodically, then when ready to publish "push" an entire set
@@ -249,7 +143,7 @@ If you're using a Mac OS X (macOS) system add the library path:
       then finally making a request for somebody to "pull" your
       changes into the main JMRI repository. See <a href=
       "GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a Git
-      environment for JMRI Developers" for more information.
+      environment for JMRI Developers" for more information.</p>
 
       <p>It is also good practice to "pull" all of the recent
       changes from the main JMRI repository before performing your
@@ -322,9 +216,9 @@ If you're using a Mac OS X (macOS) system add the library path:
       </ul><a name="errors" id="errors"></a>
 
       <h2>Compiler Errors and Warnings</h2>
-      
+
       As of 10/18/2017 there's roughly 4300 warnings being reported by the Eclipse. You can ignore these for now.
-      
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
