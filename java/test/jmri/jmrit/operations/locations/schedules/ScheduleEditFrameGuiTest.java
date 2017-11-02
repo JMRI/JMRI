@@ -64,14 +64,18 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         List<ScheduleItem> list = s.getItemsBySequenceList();
         Assert.assertEquals("number of items", 4, list.size());
 
-        ScheduleItem si = list.get(0);
-        Assert.assertEquals("1st type", carTypes[4], si.getTypeName());
-        si = list.get(1);
-        Assert.assertEquals("2nd type", carTypes[1], si.getTypeName());
-        si = list.get(2);
-        Assert.assertEquals("3rd type", carTypes[3], si.getTypeName());
-        si = list.get(3);
-        Assert.assertEquals("4th type", carTypes[2], si.getTypeName());
+        // since this test is internationalized, and the non-english
+        // lists are internationalized, we can just check if each of 
+        // the types is in the list.
+        for( ScheduleItem si: list) {
+           boolean flag = false;
+           for(int i=1;i<5;i++) {
+              if(si.getTypeName().equals(carTypes[i])) {
+                 flag = true;
+              }
+           }
+           Assert.assertTrue("type " + si.getTypeName() + " in list",flag);
+        }
 
         enterClickAndLeave(f.deleteScheduleButton);
         // Yes to pop up
