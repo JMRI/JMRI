@@ -78,7 +78,7 @@ import org.slf4j.LoggerFactory;
 public class LayoutEditorTools {
 
     // constants
-    private final int NONE = 0;  // Signal at Turnout Positions
+    private final int NONE = 0;	 // Signal at Turnout Positions
     private final int A1 = 1;
     private final int A2 = 2;
     private final int A3 = 3;
@@ -100,6 +100,70 @@ public class LayoutEditorTools {
     // constructor method
     public LayoutEditorTools(@Nonnull LayoutEditor thePanel) {
         layoutEditor = thePanel;
+
+        LayoutEditor.setupComboBox(a1_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a1ComboBox, true, true);
+        LayoutEditor.setupComboBox(a1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2ComboBox, true, true);
+        LayoutEditor.setupComboBox(a2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a3_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(aSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b1ComboBox, true, true);
+        LayoutEditor.setupComboBox(b1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b2ComboBox, true, true);
+        LayoutEditor.setupComboBox(b2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(block1IDComboBox, true, true);
+        LayoutEditor.setupComboBox(block2IDComboBox, true, true);
+        LayoutEditor.setupComboBox(blockACComboBox, true, true);
+        LayoutEditor.setupComboBox(blockBDComboBox, true, true);
+        LayoutEditor.setupComboBox(bSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c1ComboBox, true, true);
+        LayoutEditor.setupComboBox(c1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c2ComboBox, true, true);
+        LayoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(continuingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(cSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d1ComboBox, true, true);
+        LayoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d2ComboBox, true, true);
+        LayoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(divergingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(eastBoundSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(sensorsTurnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(signalMastsTurnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(slipSensorsBlockAComboBox, true, true);
+        LayoutEditor.setupComboBox(slipSensorsBlockBComboBox, true, true);
+        LayoutEditor.setupComboBox(slipSensorsBlockCComboBox, true, true);
+        LayoutEditor.setupComboBox(slipSensorsBlockDComboBox, true, true);
+        LayoutEditor.setupComboBox(slipSignalBlockAComboBox, true, true);
+        LayoutEditor.setupComboBox(slipSignalBlockBComboBox, true, true);
+        LayoutEditor.setupComboBox(slipSignalBlockCComboBox, true, true);
+        LayoutEditor.setupComboBox(slipSignalBlockDComboBox, true, true);
+        LayoutEditor.setupComboBox(throatContinuingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(turnout1ComboBox, true, true);
+        LayoutEditor.setupComboBox(turnout2ComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutAComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutBComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(xingBlockACComboBox, true, true);
+        LayoutEditor.setupComboBox(xingBlockBDComboBox, true, true);
+        LayoutEditor.setupComboBox(xingSensorsBlockACComboBox, true, true);
+        LayoutEditor.setupComboBox(xingSensorsBlockBDComboBox, true, true);
     }
 
     /*=====================*\
@@ -199,7 +263,6 @@ public class LayoutEditorTools {
             JPanel panel1 = new JPanel(new FlowLayout());
             turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout"));
             panel1.add(turnoutNameLabel);
-            setupComboBox(turnoutComboBox);
             panel1.add(turnoutComboBox);
             turnoutComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1);
@@ -248,7 +311,6 @@ public class LayoutEditorTools {
                             throatContinuing));
 
             panel21.add(throatContinuingLabel);
-            setupComboBox(throatContinuingSignalHeadComboBox);
             panel21.add(throatContinuingSignalHeadComboBox);
             theContentPane.add(panel21);
             throatContinuingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -267,7 +329,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("MakeLabel",
                             throatDiverging));
             panel31.add(throatDivergingLabel);
-            setupComboBox(throatDivergingSignalHeadComboBox);
             panel31.add(throatDivergingSignalHeadComboBox);
             theContentPane.add(panel31);
             throatDivergingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -286,7 +347,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("MakeLabel",
                             continuing));
             panel41.add(continuingLabel);
-            setupComboBox(continuingSignalHeadComboBox);
             panel41.add(continuingSignalHeadComboBox);
             theContentPane.add(panel41);
             continuingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -305,7 +365,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("MakeLabel",
                             diverging));
             panel51.add(divergingLabel);
-            setupComboBox(divergingSignalHeadComboBox);
             panel51.add(divergingSignalHeadComboBox);
             theContentPane.add(panel51);
             divergingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -372,7 +431,7 @@ public class LayoutEditorTools {
             setSignalsAtTurnoutOpenFlag = true;
         }
         setSignalsAtTurnoutFrame.setVisible(true);
-    }   // setSignalsAtTurnout
+    }	// setSignalsAtTurnout
 
     private void turnoutSignalsGetSaved(ActionEvent a) {
         if (getTurnoutInformation(false)) {
@@ -577,7 +636,7 @@ public class LayoutEditorTools {
             layoutEditor.setDirty();
             needRedraw = false;
         }
-    }   // setSignalsDonePressed
+    }	// setSignalsDonePressed
 
     private boolean getTurnoutInformation(boolean isCrossover) {
         String str = "";
@@ -657,7 +716,7 @@ public class LayoutEditorTools {
                         new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                 JOptionPane.ERROR_MESSAGE);
         return false;
-    }   // getTurnoutInformation
+    }	// getTurnoutInformation
 
     private boolean getTurnoutSignalHeadInformation() {
         throatContinuingHead = getSignalHeadFromEntry(throatContinuingSignalHeadComboBox, true, setSignalsAtTurnoutFrame);
@@ -867,7 +926,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
         }
         finalizeBlockBossLogic();
-    }   // setLogicThroatContinuing
+    }	// setLogicThroatContinuing
 
     private void setLogicThroatDiverging() {
         TrackSegment track = null;
@@ -922,7 +981,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
         }
         finalizeBlockBossLogic();
-    }   // setLogicThroatDiverging
+    }	// setLogicThroatDiverging
 
     private void setLogicContinuing() {
         TrackSegment track = (TrackSegment) layoutTurnout.getConnectA();
@@ -968,7 +1027,7 @@ public class LayoutEditorTools {
             logic.setWatchedSignal1Alt(auxSignal.getSystemName());
         }
         finalizeBlockBossLogic();
-    }   // setLogicContinuing
+    }	// setLogicContinuing
 
     private void setLogicDiverging() {
         TrackSegment track = (TrackSegment) layoutTurnout.getConnectA();
@@ -1017,7 +1076,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
         }
         finalizeBlockBossLogic();
-    }   // setLogicDiverging
+    }	// setLogicDiverging
 
     /*==========================================*\
     | * Utility routines used by multiple tools *|
@@ -1246,7 +1305,7 @@ public class LayoutEditorTools {
             return D2;
         }
         return NONE;
-    }   // isHeadAssignedHere
+    }	// isHeadAssignedHere
 
     /**
      * Returns true if an icon for the specified SignalHead is on the panel
@@ -1338,7 +1397,7 @@ public class LayoutEditorTools {
             }
         }
         return false;
-    }   // isHeadAssignedAnywhere
+    }	// isHeadAssignedAnywhere
 
     /**
      * Removes the assignment of the specified SignalHead to either a turnout, a
@@ -1415,7 +1474,7 @@ public class LayoutEditorTools {
                 x.setSignalDName("");
             }
         }
-    }   // removeAssignment
+    }	// removeAssignment
 
     /**
      * Removes the SignalHead with the specified name from the panel and from
@@ -1430,43 +1489,43 @@ public class LayoutEditorTools {
             removeAssignment(head);
             layoutEditor.removeSignalHead(head);
             //TODO: Dead-code strip this?
-//            if (false) {
-//                SignalHeadIcon h = null;
-//                int index = -1;
-//                for (int i = 0; (i < layoutEditor.signalList.size()) && (index == -1); i++) {
-//                    h = layoutEditor.signalList.get(i);
-//                    if (h.getSignalHead() == head) {
-//                        index = i;
-//                    }
-//                }
-//                if (index != (-1)) {
-//                    layoutEditor.signalList.remove(index);
-//                    h.remove();
-//                    h.dispose();
-//                    needRedraw = true;
-//                }
-//            }
+            //if (false) {
+            //    SignalHeadIcon h = null;
+            //    int index = -1;
+            //    for (int i = 0; (i < layoutEditor.signalList.size()) && (index == -1); i++) {
+            //        h = layoutEditor.signalList.get(i);
+            //        if (h.getSignalHead() == head) {
+            //            index = i;
+            //        }
+            //    }
+            //    if (index != (-1)) {
+            //        layoutEditor.signalList.remove(index);
+            //        h.remove();
+            //        h.dispose();
+            //        needRedraw = true;
+            //    }
+            //}
         }
     }
 
     /*
-	 * Initializes a BlockBossLogic for creation of a signal logic for the signal
-	 *	head named in "signalHeadName".
-	 * Should not be called until enough informmation has been gathered to allow
-	 *	configuration of the Simple Signal Logic.
+     * Initializes a BlockBossLogic for creation of a signal logic for the signal
+     *	head named in "signalHeadName".
+     * Should not be called until enough informmation has been gathered to allow
+     *	configuration of the Simple Signal Logic.
      */
     public boolean initializeBlockBossLogic(@Nonnull String signalHeadName) {
         logic = BlockBossLogic.getStoppedObject(signalHeadName);
         //TODO: Findbugs says this test isn't necessary - dead code strip
-//        if (logic == null) {
-//            log.error("Trouble creating BlockBossLogic for '" + signalHeadName + "'.");
-//            return false;
-//        }
+        //if (logic == null) {
+        //      log.error("Trouble creating BlockBossLogic for '" + signalHeadName + "'.");
+        //      return false;
+        //}
         return true;
     }
 
     /*
-	 * Finalizes a successfully created signal logic
+     * Finalizes a successfully created signal logic
      */
     public void finalizeBlockBossLogic() {
         if (logic == null) {
@@ -1478,19 +1537,19 @@ public class LayoutEditorTools {
     }
 
     /*
-	 * Returns the signal head at the end of the block "track" is assigned to.
-	 *	"track" is the Track Segment leaving "object".
-	 *	"object" must be either an anchor point or one of the connecting
-	 *	 points of a turnout or level crossing.
-	 * Note: returns 'null' is signal is not present where it is expected, or
-	 *	if an End Bumper is reached. To test for end bumper, use the
-	 *		associated routine "reachedEndBumper()". Reaching a turntable ray
-	 *	track connection is considered reaching an end bumper.
-	 * Note: Normally this routine requires a signal at any turnout it finds.
-	 *	However, if 'skipIncludedTurnout' is true, this routine will skip
-	 *	over an absent signal at an included turnout, that is a turnout
-	 *	with its throat track segment and its continuing track segment in
-	 *	the same block. When this happens, the user is warned.
+     * Returns the signal head at the end of the block "track" is assigned to.
+     *	"track" is the Track Segment leaving "object".
+     *	"object" must be either an anchor point or one of the connecting
+     *	 points of a turnout or level crossing.
+     * Note: returns 'null' is signal is not present where it is expected, or
+     *	if an End Bumper is reached. To test for end bumper, use the
+     *		associated routine "reachedEndBumper()". Reaching a turntable ray
+     *	track connection is considered reaching an end bumper.
+     * Note: Normally this routine requires a signal at any turnout it finds.
+     *	However, if 'skipIncludedTurnout' is true, this routine will skip
+     *	over an absent signal at an included turnout, that is a turnout
+     *	with its throat track segment and its continuing track segment in
+     *	the same block. When this happens, the user is warned.
      */
     @CheckReturnValue
     public SignalHead getNextSignalFromObject(@Nonnull TrackSegment track,
@@ -1789,7 +1848,7 @@ public class LayoutEditorTools {
             }
         }
         return null;
-    }   // getNextSignalFromObject
+    }	// getNextSignalFromObject
 
     private boolean hitEndBumper = false;
 
@@ -1833,21 +1892,21 @@ public class LayoutEditorTools {
     }
 
     /*
-	 * Returns 'true' if an end bumper was reached during the last call to
-	 *	GetNextSignalFromObject. Also used in the odd case of reaching a
-	 *	turntable ray track connection, which is treated as an end
-	 *	bumper here.
+     * Returns 'true' if an end bumper was reached during the last call to
+     *	GetNextSignalFromObject. Also used in the odd case of reaching a
+     *	turntable ray track connection, which is treated as an end
+     *	bumper here.
      */
     public boolean reachedEndBumper() {
         return hitEndBumper;
     }
 
     /*
-	 * Returns 'true' if "track" enters a block boundary at the west(north) end of
-	 *	"point". Returns "false" otherwise. If track is neither horizontal or
-	 *		vertical, assumes horizontal, as done when setting signals at block boundary.
-	 * "track" is a TrackSegment connected to "point".
-	 *	"point" is an anchor point serving as a block boundary.
+     * Returns 'true' if "track" enters a block boundary at the west(north) end of
+     *	"point". Returns "false" otherwise. If track is neither horizontal or
+     *		vertical, assumes horizontal, as done when setting signals at block boundary.
+     * "track" is a TrackSegment connected to "point".
+     *	"point" is an anchor point serving as a block boundary.
      */
     public static boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -1919,7 +1978,7 @@ public class LayoutEditorTools {
             return false;
         }
         return true;
-    }   // isAtWestEndOfAnchor
+    }	// isAtWestEndOfAnchor
 
     /*===========================*\
     |* setSignalsAtBlockBoundary *|
@@ -2013,7 +2072,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("MakeLabel",
                             Bundle.getMessage("BeanNameBlock") + " 1 "));
             panel11.add(block1NameLabel);
-            setupComboBox(block1IDComboBox);
             panel11.add(block1IDComboBox);
             block1IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel11);
@@ -2024,7 +2082,6 @@ public class LayoutEditorTools {
                             Bundle.getMessage("BeanNameBlock")
                             + " 2 " + Bundle.getMessage("Name")));
             panel12.add(block2NameLabel);
-            setupComboBox(block2IDComboBox);
             panel12.add(block2IDComboBox);
             block2IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel12);
@@ -2044,7 +2101,6 @@ public class LayoutEditorTools {
                 JPanel panel21 = new JPanel(new FlowLayout());
                 JLabel eastBoundLabel = new JLabel(Bundle.getMessage("East/SouthBound") + ": ");
                 panel21.add(eastBoundLabel);
-                setupComboBox(eastBoundSignalHeadComboBox);
                 panel21.add(eastBoundSignalHeadComboBox);
                 theContentPane.add(panel21);
                 eastBoundSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadEastNameHint"));
@@ -2064,7 +2120,6 @@ public class LayoutEditorTools {
                 JPanel panel31 = new JPanel(new FlowLayout());
                 JLabel westBoundLabel = new JLabel(Bundle.getMessage("West/NorthBound") + ": ");
                 panel31.add(westBoundLabel);
-                setupComboBox(westBoundSignalHeadComboBox);
                 panel31.add(westBoundSignalHeadComboBox);
                 theContentPane.add(panel31);
                 westBoundSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadWestNameHint"));
@@ -2140,7 +2195,7 @@ public class LayoutEditorTools {
             setSignalsAtBlockBoundaryOpenFlag = true;
         }
         setSignalsAtBlockBoundaryFrame.setVisible(true);
-    }   // setSignalsAtBlockBoundary
+    }	// setSignalsAtBlockBoundary
 
     private void getSavedAnchorSignals(ActionEvent a) {
         if (!getBlockInformation()) {
@@ -2200,7 +2255,7 @@ public class LayoutEditorTools {
                 boundary.setEastBoundSignal(newEastBoundSignalName);
             }
             //} else if ((eastBoundHead != null)
-            //                && (eastBoundHead == getHeadFromName(boundary.getWestBoundSignal()))) {
+            //				  && (eastBoundHead == getHeadFromName(boundary.getWestBoundSignal()))) {
             // need to figure out what to do in this case.
         }
         String newWestBoundSignalName = westBoundSignalHeadComboBox.getDisplayName();
@@ -2234,7 +2289,7 @@ public class LayoutEditorTools {
                 boundary.setWestBoundSignal(newWestBoundSignalName);
             }
             //} else if ((westBoundHead != null)
-            //        && (westBoundHead == getHeadFromName(boundary.getEastBoundSignal()))) {
+            //		  && (westBoundHead == getHeadFromName(boundary.getEastBoundSignal()))) {
             // need to figure out what to do in this case.
         }
         if ((eastBoundHead != null) && setupLogicEastBound.isSelected()) {
@@ -2251,7 +2306,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setSignalsAtBlockBoundaryDonePressed
+    }	// setSignalsAtBlockBoundaryDonePressed
 
     /*
      * Do some thing here for end bumpers.
@@ -2349,19 +2404,13 @@ public class LayoutEditorTools {
             }
         }
         return true;
-    }   // getBlockInformation
+    }	// getBlockInformation
 
     @CheckReturnValue
     private LayoutBlock getBlockFromEntry(@Nonnull JmriBeanComboBox blockNameComboBox) {
         return getBlockFromEntry(blockNameComboBox.getDisplayName());
     }
 
-    //TODO: Unused - dead code strip
-//    @CheckReturnValue
-//    private LayoutBlock getBlockFromEntry(@Nonnull JTextField blockNameTextField) {
-//        String theBlockName = NamedBean.normalizeUserName(blockNameTextField.getText());
-//        return getBlockFromEntry(theBlockName);
-//    }
     @CheckReturnValue
     private LayoutBlock getBlockFromEntry(@Nullable String theBlockName) {
         if ((theBlockName == null) || theBlockName.isEmpty()) {
@@ -2712,7 +2761,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("MakeLabel",
                             Bundle.getMessage("XContinuing", "A")));
             panel21.add(a1Label);
-            setupComboBox(a1ComboBox);
             panel21.add(a1ComboBox);
             theContentPane.add(panel21);
             a1ComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -2730,7 +2778,6 @@ public class LayoutEditorTools {
                 JLabel a2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "A")));
                 panel23.add(a2Label);
-                setupComboBox(a2ComboBox);
                 panel23.add(a2ComboBox);
                 theContentPane.add(panel23);
                 a2ComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -2748,7 +2795,6 @@ public class LayoutEditorTools {
             JLabel b1Label = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("XContinuing", "B")));
             panel31.add(b1Label);
-            setupComboBox(b1ComboBox);
             panel31.add(b1ComboBox);
             theContentPane.add(panel31);
             b1ComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -2766,7 +2812,6 @@ public class LayoutEditorTools {
                 JLabel b2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "B")));
                 panel33.add(b2Label);
-                setupComboBox(b2ComboBox);
                 panel33.add(b2ComboBox);
                 theContentPane.add(panel33);
                 b2ComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -2784,7 +2829,6 @@ public class LayoutEditorTools {
             JLabel c1Label = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("XContinuing", "C")));
             panel41.add(c1Label);
-            setupComboBox(c1ComboBox);
             panel41.add(c1ComboBox);
             theContentPane.add(panel41);
             c1ComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -2802,7 +2846,6 @@ public class LayoutEditorTools {
                 JLabel c2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "C")));
                 panel43.add(c2Label);
-                setupComboBox(c2ComboBox);
                 panel43.add(c2ComboBox);
                 theContentPane.add(panel43);
                 c2ComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -2820,7 +2863,6 @@ public class LayoutEditorTools {
             JLabel d1Label = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("XContinuing", "D")));
             panel51.add(d1Label);
-            setupComboBox(d1ComboBox);
             panel51.add(d1ComboBox);
             theContentPane.add(panel51);
             d1ComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -2838,7 +2880,6 @@ public class LayoutEditorTools {
                 JLabel d2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "D")));
                 panel53.add(d2Label);
-                setupComboBox(d2ComboBox);
                 panel53.add(d2ComboBox);
                 theContentPane.add(panel53);
                 d2ComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -2902,7 +2943,7 @@ public class LayoutEditorTools {
             setSignalsAtXoverTurnoutOpenFlag = true;
         }
         setSignalsAtXoverTurnoutFrame.setVisible(true);
-    }   // setSignalsAtXoverTurnout
+    }	// setSignalsAtXoverTurnout
 
     private void xoverTurnoutSignalsGetSaved(ActionEvent a) {
         a1ComboBox.setText(layoutTurnout.getSignalA1Name());
@@ -3267,7 +3308,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setXoverSignalsDonePressed
+    }	// setXoverSignalsDonePressed
 
     private boolean getXoverSignalHeadInformation() {
         a1Head = getSignalHeadFromEntry(a1ComboBox, true, setSignalsAtXoverTurnoutFrame);
@@ -3553,7 +3594,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
         }
-    }   // setLogicXover
+    }	// setLogicXover
 
     private void setLogicXoverContinuing(SignalHead head, TrackSegment track) {
         if (track == null) {
@@ -3597,7 +3638,7 @@ public class LayoutEditorTools {
             logic.setWatchedSignal1Alt(auxSignal.getSystemName());
         }
         finalizeBlockBossLogic();
-    }   // setLogicXoverContinuing
+    }	// setLogicXoverContinuing
 
     /*=======================*\
     |* setSignalsAtLevelXing *|
@@ -3705,7 +3746,6 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel(new FlowLayout());
             blockACNameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " AC")));
             panel11.add(blockACNameLabel);
-            setupComboBox(blockACComboBox);
             panel11.add(blockACComboBox);
             blockACComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel11);
@@ -3713,7 +3753,6 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel(new FlowLayout());
             blockBDNameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " BD")));
             panel12.add(blockBDNameLabel);
-            setupComboBox(blockBDComboBox);
             panel12.add(blockBDComboBox);
             blockBDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
 
@@ -3761,7 +3800,6 @@ public class LayoutEditorTools {
             JLabel aLabel = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("TrackXConnect", "A")));
             panel21.add(aLabel);
-            setupComboBox(aSignalHeadComboBox);
             panel21.add(aSignalHeadComboBox);
             theContentPane.add(panel21);
             aSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -3779,7 +3817,6 @@ public class LayoutEditorTools {
             JLabel bLabel = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("TrackXConnect", "B")));
             panel31.add(bLabel);
-            setupComboBox(bSignalHeadComboBox);
             panel31.add(bSignalHeadComboBox);
             theContentPane.add(panel31);
             bSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -3797,7 +3834,6 @@ public class LayoutEditorTools {
             JLabel cLabel = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("TrackXConnect", "C")));
             panel41.add(cLabel);
-            setupComboBox(cSignalHeadComboBox);
             panel41.add(cSignalHeadComboBox);
             theContentPane.add(panel41);
             cSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -3815,7 +3851,6 @@ public class LayoutEditorTools {
             JLabel dLabel = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("TrackXConnect", "D")));
             panel51.add(dLabel);
-            setupComboBox(dSignalHeadComboBox);
             panel51.add(dSignalHeadComboBox);
             theContentPane.add(panel51);
             dSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -3889,7 +3924,7 @@ public class LayoutEditorTools {
         }
 
         setSignalsAtLevelXingFrame.setVisible(true);
-    }   // setSignalsAtLevelXing
+    }	// setSignalsAtLevelXing
 
     private void xingSignalsGetSaved(ActionEvent a) {
         if (!getLevelCrossingInformation()) {
@@ -4114,7 +4149,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setXingSignalsDonePressed
+    }	// setXingSignalsDonePressed
 
     private boolean getLevelCrossingInformation() {
         if (!setSignalsAtLevelXingFromMenuFlag) {
@@ -4202,7 +4237,7 @@ public class LayoutEditorTools {
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsA));
 
         return true;
-    }   // getLevelCrossingInformation
+    }	// getLevelCrossingInformation
 
     private boolean getXingSignalHeadInformation() {
         // note that all heads are optional, but pairs must be present
@@ -4563,7 +4598,6 @@ public class LayoutEditorTools {
             ttotTurnoutName1Label = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 1 "
                     + Bundle.getMessage("Name"));
             panel1a.add(ttotTurnoutName1Label);
-            setupComboBox(turnout1ComboBox);
             panel1a.add(turnout1ComboBox);
             turnout1ComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1a);
@@ -4572,7 +4606,6 @@ public class LayoutEditorTools {
             ttotTurnoutName2Label = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 2 "
                     + Bundle.getMessage("Name"));
             panel1b.add(ttotTurnoutName2Label);
-            setupComboBox(turnout2ComboBox);
             panel1b.add(turnout2ComboBox);
             turnout2ComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1b);
@@ -4636,7 +4669,6 @@ public class LayoutEditorTools {
             panel21.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("ContinuingTrack"))));
-            setupComboBox(a1TToTSignalHeadComboBox);
             panel21.add(a1TToTSignalHeadComboBox);
             theContentPane.add(panel21);
             a1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -4654,7 +4686,6 @@ public class LayoutEditorTools {
             panel23.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("DivergingTrack"))));
-            setupComboBox(a2TToTSignalHeadComboBox);
             panel23.add(a2TToTSignalHeadComboBox);
             theContentPane.add(panel23);
             a2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -4678,7 +4709,6 @@ public class LayoutEditorTools {
             panel31.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("ContinuingTrack"))));
-            setupComboBox(b1TToTSignalHeadComboBox);
             panel31.add(b1TToTSignalHeadComboBox);
             theContentPane.add(panel31);
             b1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -4696,7 +4726,6 @@ public class LayoutEditorTools {
             panel33.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("DivergingTrack"))));
-            setupComboBox(b2TToTSignalHeadComboBox);
             panel33.add(b2TToTSignalHeadComboBox);
             theContentPane.add(panel33);
             b2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -4722,7 +4751,6 @@ public class LayoutEditorTools {
             panel33.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 1 - "
                     + Bundle.getMessage("ContinuingTrack"))));
-            setupComboBox(c1TToTSignalHeadComboBox);
             panel41.add(c1TToTSignalHeadComboBox);
             theContentPane.add(panel41);
             c1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -4740,7 +4768,6 @@ public class LayoutEditorTools {
             panel43.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 1 - "
                     + Bundle.getMessage("DivergingTrack"))));
-            setupComboBox(c2TToTSignalHeadComboBox);
             panel43.add(c2TToTSignalHeadComboBox);
             theContentPane.add(panel43);
             c2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -4764,7 +4791,6 @@ public class LayoutEditorTools {
             panel51.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 1 - "
                     + Bundle.getMessage("ContinuingTrack"))));
-            setupComboBox(d1TToTSignalHeadComboBox);
             panel51.add(d1TToTSignalHeadComboBox);
             theContentPane.add(panel51);
             d1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -4782,7 +4808,6 @@ public class LayoutEditorTools {
             panel53.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 1 - "
                     + Bundle.getMessage("DivergingTrack"))));
-            setupComboBox(d2TToTSignalHeadComboBox);
             panel53.add(d2TToTSignalHeadComboBox);
             theContentPane.add(panel53);
             d2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -4862,7 +4887,7 @@ public class LayoutEditorTools {
             setSignalsAtThroatToThroatTurnoutsOpenFlag = true;
         }
         setSignalsAtThroatToThroatTurnoutsFrame.setVisible(true);
-    }   // setSignalsAtTToTTurnouts
+    }	// setSignalsAtTToTTurnouts
 
     private void setSignalsAtTToTTurnoutsGetSaved(ActionEvent a) {
         if (!getTToTTurnoutInformation()) {
@@ -5049,7 +5074,7 @@ public class LayoutEditorTools {
         Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsCenter, coordsA));
         return true;
-    }   // getTToTTurnoutInformation
+    }	// getTToTTurnoutInformation
 
     private void setTToTSignalsDonePressed(ActionEvent a) {
         if (!getTToTTurnoutInformation()) {
@@ -5428,7 +5453,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setTToTSignalsDonePressed
+    }	// setTToTSignalsDonePressed
 
     private boolean getTToTSignalHeadInformation() {
         a1TToTHead = getSignalHeadFromEntry(a1TToTSignalHeadComboBox, true, setSignalsAtThroatToThroatTurnoutsFrame);
@@ -5776,16 +5801,16 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
         }
-    }   // setLogicTToT
+    }	// setLogicTToT
 
     /*
-	 * Sets up a Logix to set a sensor active if a turnout is set against
-	 *		a track.  This routine creates an internal sensor for the purpose.
-	 * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
-	 *	TTT is the system name of the turnout, X is either C or T depending
-	 *		on "continuing", and HHH is the system name of the signal head.
-	 * Note: If there is any problem, a string of "" is returned, and a warning
-	 *	message is issued.
+     * Sets up a Logix to set a sensor active if a turnout is set against
+     *		a track.  This routine creates an internal sensor for the purpose.
+     * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
+     *	TTT is the system name of the turnout, X is either C or T depending
+     *		on "continuing", and HHH is the system name of the signal head.
+     * Note: If there is any problem, a string of "" is returned, and a warning
+     *	message is issued.
      */
     private String setupNearLogix(LayoutTurnout nearTurnout, boolean continuing,
             SignalHead head) {
@@ -5840,11 +5865,11 @@ public class LayoutEditorTools {
             x.activateLogix();
         }
         return sensorName;
-    }   // setupNearLogix
+    }	// setupNearLogix
 
     /*
-	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
-	 *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+     * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
+     *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
      */
     private void addNearSensorToLogic(String name) {
         if ((name != null) && !name.isEmpty()) {
@@ -6022,7 +6047,6 @@ public class LayoutEditorTools {
             JPanel panel1A = new JPanel(new FlowLayout());
             turnoutANameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("TurnoutAName")));
             panel1A.add(turnoutANameLabel);
-            setupComboBox(turnoutAComboBox);
             panel1A.add(turnoutAComboBox);
             turnoutAComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1A);
@@ -6030,7 +6054,6 @@ public class LayoutEditorTools {
             JPanel panel1B = new JPanel(new FlowLayout());
             turnoutBNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("TurnoutBName")));
             panel1B.add(turnoutBNameLabel);
-            setupComboBox(turnoutBComboBox);
             panel1B.add(turnoutBComboBox);
             turnoutBComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1B);
@@ -6089,7 +6112,6 @@ public class LayoutEditorTools {
             panel21.add(new JLabel(Bundle.getMessage("MakeLabel",
                     throat + " - "
                     + continuing)));
-            setupComboBox(a1_3WaySignalHeadComboBox);
             panel21.add(a1_3WaySignalHeadComboBox);
             a1_3WaySignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
             theContentPane.add(panel21);
@@ -6107,7 +6129,6 @@ public class LayoutEditorTools {
             panel23.add(new JLabel(Bundle.getMessage("MakeLabel",
                     throat + " - "
                     + divergingA)));
-            setupComboBox(a2_3WaySignalHeadComboBox);
             panel23.add(a2_3WaySignalHeadComboBox);
             a2_3WaySignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
             theContentPane.add(panel23);
@@ -6125,7 +6146,6 @@ public class LayoutEditorTools {
             panel25.add(new JLabel(Bundle.getMessage("MakeLabel",
                     throat + " - "
                     + divergingB)));
-            setupComboBox(a3_3WaySignalHeadComboBox);
             panel25.add(a3_3WaySignalHeadComboBox);
             a3_3WaySignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
             theContentPane.add(panel25);
@@ -6142,7 +6162,6 @@ public class LayoutEditorTools {
             JPanel panel31 = new JPanel(new FlowLayout());
             panel31.add(new JLabel(Bundle.getMessage("MakeLabel",
                     divergingB)));
-            setupComboBox(b_3WaySignalHeadComboBox);
             panel31.add(b_3WaySignalHeadComboBox);
             b_3WaySignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
             theContentPane.add(panel31);
@@ -6166,7 +6185,6 @@ public class LayoutEditorTools {
             JPanel panel41 = new JPanel(new FlowLayout());
             panel41.add(new JLabel(Bundle.getMessage("MakeLabel",
                     continuing)));
-            setupComboBox(c_3WaySignalHeadComboBox);
             panel41.add(c_3WaySignalHeadComboBox);
             c_3WaySignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
             theContentPane.add(panel41);
@@ -6183,7 +6201,6 @@ public class LayoutEditorTools {
             JPanel panel43 = new JPanel(new FlowLayout());
             panel43.add(new JLabel(Bundle.getMessage("MakeLabel",
                     divergingB)));
-            setupComboBox(d_3WaySignalHeadComboBox);
             panel43.add(d_3WaySignalHeadComboBox);
             d_3WaySignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
             theContentPane.add(panel43);
@@ -6258,7 +6275,7 @@ public class LayoutEditorTools {
             setSignalsAt3WayTurnoutOpenFlag = true;
         }
         setSignalsAt3WayTurnoutFrame.setVisible(true);
-    }   // setSignalsAt3WayTurnout
+    }	// setSignalsAt3WayTurnout
 
     private void getSaved3WaySignals(ActionEvent a) {
         if (!get3WayTurnoutInformation()) {
@@ -6437,7 +6454,7 @@ public class LayoutEditorTools {
             }
         }
         return true;
-    }   // get3WayTurnoutInformation
+    }	// get3WayTurnoutInformation
 
     private void set3WaySignalsDonePressed(ActionEvent a) {
         // process turnout names
@@ -6706,7 +6723,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // set3WaySignalsDonePressed
+    }	// set3WaySignalsDonePressed
 
     private boolean get3WaySignalHeadInformation() {
         a13WayHead = getSignalHeadFromEntry(a1_3WaySignalHeadComboBox, true, setSignalsAt3WayTurnoutFrame);
@@ -6917,7 +6934,7 @@ public class LayoutEditorTools {
         JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                 Bundle.getMessage("InfoMessage9"), "", JOptionPane.INFORMATION_MESSAGE);
         return;
-    }   // set3WayLogicThroatContinuing
+    }	// set3WayLogicThroatContinuing
 
     private void set3WayLogicThroatDivergingA() {
         TrackSegment track = (TrackSegment) layoutTurnoutA.getConnectC();
@@ -6966,7 +6983,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
         }
         finalizeBlockBossLogic();
-    }   // set3WayLogicThroatDivergingA
+    }	// set3WayLogicThroatDivergingA
 
     private void set3WayLogicThroatDivergingB() {
         TrackSegment track = (TrackSegment) layoutTurnoutB.getConnectC();
@@ -7017,7 +7034,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
         }
         finalizeBlockBossLogic();
-    }   // set3WayLogicThroatDivergingB
+    }	// set3WayLogicThroatDivergingB
 
     private void set3WayLogicDivergingA() {
         TrackSegment track = (TrackSegment) layoutTurnoutA.getConnectA();
@@ -7066,7 +7083,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
         }
         finalizeBlockBossLogic();
-    }   // set3WayLogicDivergingA
+    }	// set3WayLogicDivergingA
 
     private void set3WayLogicContinuing() {
         TrackSegment track = (TrackSegment) layoutTurnoutA.getConnectA();
@@ -7117,7 +7134,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
         }
         finalizeBlockBossLogic();
-    }   // set3WayLogicContinuing
+    }	// set3WayLogicContinuing
 
     private void set3WayLogicDivergingB() {
         TrackSegment track = (TrackSegment) layoutTurnoutA.getConnectA();
@@ -7168,7 +7185,7 @@ public class LayoutEditorTools {
             logic.setLimitSpeed2(true);
         }
         finalizeBlockBossLogic();
-    }   // set3WayLogicDivergingB
+    }	// set3WayLogicDivergingB
 
     /*===========================*\
     |* setSensorsAtBlockBoundary *|
@@ -7241,7 +7258,6 @@ public class LayoutEditorTools {
                     + Bundle.getMessage("Name")));
             panel11.add(block1NameLabel);
 
-            setupComboBox(block1IDComboBox);
             panel11.add(block1IDComboBox);
             block1IDComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             header.add(panel11);
@@ -7252,7 +7268,6 @@ public class LayoutEditorTools {
                     + Bundle.getMessage("Name")));
             panel12.add(block2NameLabel);
 
-            setupComboBox(block2IDComboBox);
             panel12.add(block2IDComboBox);
             block2IDComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             header.add(panel12);
@@ -7378,7 +7393,7 @@ public class LayoutEditorTools {
             setSensorsAtBlockBoundaryOpenFlag = true;
         }
         setSensorsAtBlockBoundaryFrame.setVisible(true);
-    }   // setSensorsAtBlockBoundary
+    }	// setSensorsAtBlockBoundary
 
     /**
      * Returns the Sensor corresponding to an entry field in the specified
@@ -7513,7 +7528,7 @@ public class LayoutEditorTools {
             }
         }
         return false;
-    }   // isSensorAssignedAnywhere
+    }	// isSensorAssignedAnywhere
 
     boolean sensorAssignedElseWhere(@Nonnull String sensor) {
         int i = JOptionPane.showConfirmDialog(null, Bundle.getMessage("DuplicateSensorAssign",
@@ -7593,7 +7608,7 @@ public class LayoutEditorTools {
                 x.setSensorDName(null);
             }
         }
-    }   // removeSensorAssignment
+    }	// removeSensorAssignment
 
     /**
      * Removes the Sensor object from the panel and from assignment to any
@@ -7809,7 +7824,6 @@ public class LayoutEditorTools {
                     + Bundle.getMessage("Name")));
             panel11.add(block1NameLabel);
 
-            setupComboBox(block1IDComboBox);
             panel11.add(block1IDComboBox);
             block1IDComboBox.setToolTipText(Bundle.getMessage("SignalMastsBlockNameHint"));
             header.add(panel11);
@@ -7818,7 +7832,6 @@ public class LayoutEditorTools {
             block2NameLabel = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " 2 "
                     + Bundle.getMessage("Name")));
-            setupComboBox(block2IDComboBox);
             block2IDComboBox.setToolTipText(Bundle.getMessage("SignalMastsBlockNameHint"));
 
             // but only add them to the panel if we're an anchor
@@ -8833,10 +8846,10 @@ public class LayoutEditorTools {
             log.debug(Double.toString((bpo - ta) - (l.maxHeight() - iconAdjOpp)));
             log.debug(Double.toString(bpo - (iconAdj + ta)));
             /*if(angleDeg<45){
-			 y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
-			 } else {
-			 y_dist_to_Icon = bpo-(iconAdj+ta);
-			 }*/
+                     y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
+                     } else {
+                     y_dist_to_Icon = bpo-(iconAdj+ta);
+                     }*/
             //double y_dist_to_Icon = (l.maxHeight()-iconAdj)+(bpo-ta);
             xpos = (int) (p.getX() + x_dist_to_Icon);
             ypos = (int) (p.getY() + y_dist_to_Icon);
@@ -8940,7 +8953,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameTurnout")
                     + " " + Bundle.getMessage("Name"));
             panel1.add(turnoutMastNameLabel);
-            setupComboBox(signalMastsTurnoutComboBox);
             panel1.add(signalMastsTurnoutComboBox);
             signalMastsTurnoutComboBox.setToolTipText(Bundle.getMessage("SignalMastsTurnoutNameHint"));
 
@@ -9031,7 +9043,7 @@ public class LayoutEditorTools {
         }
         refreshSignalMastAtTurnoutComboBox();
         setSignalMastsAtTurnoutFrame.setVisible(true);
-    }   // setSignalMastsAtTurnout
+    }	// setSignalMastsAtTurnout
 
     private void turnoutSignalMastsGetSaved(ActionEvent a) {
         if (!getTurnoutMastInformation()) {
@@ -9076,7 +9088,7 @@ public class LayoutEditorTools {
         }
         setSignalMastsAtTurnoutFrame.setPreferredSize(null);
         setSignalMastsAtTurnoutFrame.pack();
-    }   // turnoutSignalMastsGetSaved
+    }	// turnoutSignalMastsGetSaved
 
     private void setSignalMastsDonePressed(ActionEvent a) {
         // process turnout name
@@ -9265,7 +9277,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setSignalMastsDonePressed
+    }	// setSignalMastsDonePressed
 
     List<NamedBean> usedMasts = new ArrayList<>();
 
@@ -9325,7 +9337,7 @@ public class LayoutEditorTools {
                 usedMasts.add(sl.getSignalDMast());
             }
         }
-    }   // createListUsedSignalMasts
+    }	// createListUsedSignalMasts
 
     void refreshSignalMastAtTurnoutComboBox() {
         turnoutSignalMastsGetSaved(null);
@@ -9367,7 +9379,7 @@ public class LayoutEditorTools {
             return B1;
         }
         return NONE;
-    }   // isMastAssignedHere
+    }	// isMastAssignedHere
 
     public void removeAssignment(@Nonnull SignalMast mast) {
         String sName = mast.getSystemName();
@@ -9420,7 +9432,7 @@ public class LayoutEditorTools {
                 x.setSignalDMast("");
             }
         }
-    }   // removeAssignment
+    }	// removeAssignment
 
     private boolean getTurnoutMastInformation() {
         turnout = null;
@@ -9586,7 +9598,6 @@ public class LayoutEditorTools {
             // note: this is just placeholder text; real text is set below
             slipSignalBlockANameLabel = new JLabel(" A ");
             panel11A.add(slipSignalBlockANameLabel);
-            setupComboBox(slipSignalBlockAComboBox);
             panel11A.add(slipSignalBlockAComboBox);
             slipSignalBlockAComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel11A);
@@ -9595,7 +9606,6 @@ public class LayoutEditorTools {
             // note: this is just placeholder text; real text is set below
             slipSignalBlockBNameLabel = new JLabel(" B ");
             panel11B.add(slipSignalBlockBNameLabel);
-            setupComboBox(slipSignalBlockBComboBox);
             panel11B.add(slipSignalBlockBComboBox);
             slipSignalBlockBComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel11B);
@@ -9604,7 +9614,6 @@ public class LayoutEditorTools {
             // note: this is just placeholder text; real text is set below
             slipSignalBlockCNameLabel = new JLabel(" C ");
             panel11C.add(slipSignalBlockCNameLabel);
-            setupComboBox(slipSignalBlockCComboBox);
             panel11C.add(slipSignalBlockCComboBox);
             slipSignalBlockCComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel11C);
@@ -9613,7 +9622,6 @@ public class LayoutEditorTools {
             // note: this is just placeholder text; real text is set below
             slipSignalBlockDNameLabel = new JLabel(" D ");
             panel11D.add(slipSignalBlockDNameLabel);
-            setupComboBox(slipSignalBlockDComboBox);
             panel11D.add(slipSignalBlockDComboBox);
             slipSignalBlockDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel11D);
@@ -10159,7 +10167,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameBlock") + " AC "
                     + Bundle.getMessage("Name")));
             panel11.add(xingSignalBlockACNameLabel);
-            setupComboBox(xingBlockACComboBox);
             panel11.add(xingBlockACComboBox);
             xingBlockACComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel11);
@@ -10169,7 +10176,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameBlock") + " BD "
                     + Bundle.getMessage("Name")));
             panel12.add(xingSignalBlockBDNameLabel);
-            setupComboBox(xingBlockBDComboBox);
             panel12.add(xingBlockBDComboBox);
             xingBlockBDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
             theContentPane.add(panel12);
@@ -10266,7 +10272,7 @@ public class LayoutEditorTools {
             setSignalMastsAtLevelXingOpenFlag = true;
         }
         setSignalMastsAtLevelXingFrame.setVisible(true);
-    }   // setSignalMastsAtLevelXing
+    }	// setSignalMastsAtLevelXing
 
     void refreshSignalMastAtXingComboBox() {
         xingSignalMastsGetSaved(null);
@@ -10325,7 +10331,7 @@ public class LayoutEditorTools {
         }
         setSignalMastsAtLevelXingFrame.setPreferredSize(null);
         setSignalMastsAtLevelXingFrame.pack();
-    }   // xingSignalMastsGetSaved
+    }	// xingSignalMastsGetSaved
 
     private boolean getLevelCrossingMastInformation() {
         if (!setSignalMastsAtLevelXingFromMenuFlag) {
@@ -10414,7 +10420,7 @@ public class LayoutEditorTools {
             }
         }
         return true;
-    }   // getLevelCrossingMastInformation
+    }	// getLevelCrossingMastInformation
 
     private void setXingSignalMastsCancelPressed(ActionEvent a) {
         setSignalMastsAtLevelXingOpenFlag = false;
@@ -10615,7 +10621,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setXingSignalMastsDonePressed
+    }	// setXingSignalMastsDonePressed
 
     /*=====================*\
     |* setSensorsAtTurnout *|
@@ -10691,7 +10697,6 @@ public class LayoutEditorTools {
             turnoutSensorNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                     + Bundle.getMessage("Name"));
             panel1.add(turnoutSensorNameLabel);
-            setupComboBox(sensorsTurnoutComboBox);
             panel1.add(sensorsTurnoutComboBox);
             sensorsTurnoutComboBox.setToolTipText(Bundle.getMessage("SensorsTurnoutNameHint"));
 
@@ -10786,7 +10791,7 @@ public class LayoutEditorTools {
             setSensorsAtTurnoutOpenFlag = true;
         }
         setSensorsAtTurnoutFrame.setVisible(true);
-    }   // setSensorsAtTurnout
+    }	// setSensorsAtTurnout
 
     private void turnoutSensorsGetSaved(ActionEvent a) {
         if (!getTurnoutSensorInformation()) {
@@ -10831,7 +10836,7 @@ public class LayoutEditorTools {
         }
         setSensorsAtTurnoutFrame.setPreferredSize(null);
         setSensorsAtTurnoutFrame.pack();
-    }   // turnoutSensorsGetSaved
+    }	// turnoutSensorsGetSaved
 
     private int isSensorAssignedHere(Sensor sensor, LayoutTurnout lTurnout) {
         if ((sensor == null) || (lTurnout == null)) {
@@ -10856,7 +10861,7 @@ public class LayoutEditorTools {
             return B1;
         }
         return NONE;
-    }   // isSensorAssignedHere
+    }	// isSensorAssignedHere
 
     public void removeAssignment(@Nonnull Sensor sensor) {
         for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
@@ -10911,7 +10916,7 @@ public class LayoutEditorTools {
                 x.setSensorDName(null);
             }
         }
-    }   // removeAssignment
+    }	// removeAssignment
 
     SensorIcon turnoutSensorBlockIcon;
 
@@ -11099,7 +11104,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setSensorsDonePressed
+    }	// setSensorsDonePressed
 
     private boolean getTurnoutSensorInformation() {
         turnout = null;
@@ -11133,7 +11138,7 @@ public class LayoutEditorTools {
             return false;
         }
         return true;
-    }   // getTurnoutSensorInformation
+    }	// getTurnoutSensorInformation
 
     private void setSensorsCancelPressed(ActionEvent a) {
         setSensorsAtTurnoutOpenFlag = false;
@@ -11223,7 +11228,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameBlock") + " AC "
                     + Bundle.getMessage("Name")));
             panel11.add(xingSensorsBlockACNameLabel);
-            setupComboBox(xingSensorsBlockACComboBox);
             panel11.add(xingSensorsBlockACComboBox);
             xingSensorsBlockACComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             theContentPane.add(panel11);
@@ -11233,7 +11237,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameBlock") + " BD "
                     + Bundle.getMessage("Name")));
             panel12.add(xingSensorsBlockBDNameLabel);
-            setupComboBox(xingSensorsBlockBDComboBox);
             panel12.add(xingSensorsBlockBDComboBox);
             xingSensorsBlockBDComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             theContentPane.add(panel12);
@@ -11805,7 +11808,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameBlock") + " A "
                     + Bundle.getMessage("Name")));
             panel11A.add(slipSignalBlockANameLabel);
-            setupComboBox(slipSensorsBlockAComboBox);
             panel11A.add(slipSensorsBlockAComboBox);
             slipSensorsBlockAComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             theContentPane.add(panel11A);
@@ -11815,7 +11817,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameBlock") + " B "
                     + Bundle.getMessage("Name")));
             panel11B.add(slipSignalBlockBNameLabel);
-            setupComboBox(slipSensorsBlockBComboBox);
             panel11B.add(slipSensorsBlockBComboBox);
             slipSensorsBlockBComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             theContentPane.add(panel11B);
@@ -11825,7 +11826,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameBlock") + " C "
                     + Bundle.getMessage("Name")));
             panel11C.add(slipSignalBlockCNameLabel);
-            setupComboBox(slipSensorsBlockCComboBox);
             panel11C.add(slipSensorsBlockCComboBox);
             slipSensorsBlockCComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             theContentPane.add(panel11C);
@@ -11835,7 +11835,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameBlock") + " D "
                     + Bundle.getMessage("Name")));
             panel11D.add(slipSignalBlockDNameLabel);
-            setupComboBox(slipSensorsBlockDComboBox);
             panel11D.add(slipSensorsBlockDComboBox);
             slipSensorsBlockDComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             theContentPane.add(panel11D);
@@ -11920,7 +11919,7 @@ public class LayoutEditorTools {
                     setSlipSensorsCancelPressed(null);
                 }
             });
-        }   // if (setSensorsAtSlipFrame == null)
+        }	// if (setSensorsAtSlipFrame == null)
 
         slipSensorsBlockAComboBox.setVisible(!setSensorsAtSlipFromMenuFlag);
         slipSensorsBlockBComboBox.setVisible(!setSensorsAtSlipFromMenuFlag);
@@ -12617,7 +12616,6 @@ public class LayoutEditorTools {
             panel21.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("ContinuingTrack"))));
-            setupComboBox(a1SlipSignalHeadComboBox);
             panel21.add(a1SlipSignalHeadComboBox);
             theContentPane.add(panel21);
             a1SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -12635,7 +12633,6 @@ public class LayoutEditorTools {
             panel23.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("DivergingTrack"))));
-            setupComboBox(a2SlipSignalHeadComboBox);
             panel23.add(a2SlipSignalHeadComboBox);
             theContentPane.add(panel23);
             a2SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -12659,7 +12656,6 @@ public class LayoutEditorTools {
             panel31.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("ContinuingTrack"))));
-            setupComboBox(b1SlipSignalHeadComboBox);
             panel31.add(b1SlipSignalHeadComboBox);
             theContentPane.add(panel31);
             b1SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -12680,7 +12676,6 @@ public class LayoutEditorTools {
             panel33.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("DivergingTrack"))));
-            setupComboBox(b2SlipSignalHeadComboBox);
             panel33.add(b2SlipSignalHeadComboBox);
             dblSlipB2SigPanel.add(panel33);
             b2SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -12709,7 +12704,6 @@ public class LayoutEditorTools {
             panel41.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 2 - "
                     + Bundle.getMessage("ContinuingTrack"))));
-            setupComboBox(c1SlipSignalHeadComboBox);
             panel41.add(c1SlipSignalHeadComboBox);
             theContentPane.add(panel41);
             c1SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -12729,7 +12723,6 @@ public class LayoutEditorTools {
             panel43.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 1 - "
                     + Bundle.getMessage("DivergingTrack"))));
-            setupComboBox(c2SlipSignalHeadComboBox);
             panel43.add(c2SlipSignalHeadComboBox);
             dblSlipC2SigPanel.add(panel43);
             c2SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -12754,7 +12747,6 @@ public class LayoutEditorTools {
             panel51.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 1 - "
                     + Bundle.getMessage("ContinuingTrack"))));
-            setupComboBox(d1SlipSignalHeadComboBox);
             panel51.add(d1SlipSignalHeadComboBox);
             theContentPane.add(panel51);
             d1SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -12772,7 +12764,6 @@ public class LayoutEditorTools {
             panel53.add(new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ProtectsTurnout") + " 1 - "
                     + Bundle.getMessage("DivergingTrack"))));
-            setupComboBox(d2SlipSignalHeadComboBox);
             panel53.add(d2SlipSignalHeadComboBox);
             theContentPane.add(panel53);
             d2SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
@@ -13280,7 +13271,7 @@ public class LayoutEditorTools {
             needRedraw = false;
             layoutEditor.setDirty();
         }
-    }   // setSlipSignalsDonePressed
+    }	// setSlipSignalsDonePressed
 
     private boolean getSlipSignalHeadInformation() {
         a1SlipHead = getSignalHeadFromEntry(a1SlipSignalHeadComboBox, true, setSignalsAtSlipFrame);
@@ -13660,7 +13651,7 @@ public class LayoutEditorTools {
             addNearSensorToSlipLogic(nearSensorName);
             finalizeBlockBossLogic();
         }
-    }   // setLogicSlip
+    }	// setLogicSlip
 
     private String setupNearLogixSlip(Turnout turn, int nearState,
             SignalHead head, Turnout farTurn, int farState, LayoutSlip slip, int number) {
@@ -13733,11 +13724,11 @@ public class LayoutEditorTools {
         }
         x.activateLogix();
         return sensorName;
-    }   // setupNearLogixSlip
+    }	// setupNearLogixSlip
 
     /*
-	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
-	 *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+     * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
+     *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
      */
     private void addNearSensorToSlipLogic(String name) {
         if ((name != null) && !name.isEmpty()) {
@@ -13898,10 +13889,10 @@ public class LayoutEditorTools {
         int after_mcc = inMenu.getMenuComponentCount();
         if (before_mcc != after_mcc) {
             inMenu.add(new JSeparator());
-            result = true;   // it's GOOD!
+            result = true;	 // it's GOOD!
         }
         return result;
-    }   // addLayoutTurnoutSignalHeadInfoToMenu
+    }	// addLayoutTurnoutSignalHeadInfoToMenu
 
     protected Boolean addBlockBoundarySignalHeadInfoToMenu(
             @Nonnull PositionablePoint inPositionablePoint,
@@ -13924,7 +13915,7 @@ public class LayoutEditorTools {
         int after_mcc = inMenu.getMenuComponentCount();
         if (before_mcc != after_mcc) {
             inMenu.add(new JSeparator());
-            result = true;   // it's GOOD!
+            result = true;	 // it's GOOD!
         }
 
         return result;
@@ -13961,7 +13952,7 @@ public class LayoutEditorTools {
         int after_mcc = inMenu.getMenuComponentCount();
         if (before_mcc != after_mcc) {
             inMenu.add(new JSeparator());
-            result = true;   // it's GOOD!
+            result = true;	 // it's GOOD!
         }
 
         return result;
@@ -13994,7 +13985,7 @@ public class LayoutEditorTools {
         int after_mcc = inMenu.getMenuComponentCount();
         if (before_mcc != after_mcc) {
             inMenu.add(new JSeparator());
-            result = true;   // it's GOOD!
+            result = true;	 // it's GOOD!
         }
 
         return result;
@@ -14043,11 +14034,6 @@ public class LayoutEditorTools {
         return result;
     }
 
-    private void setupComboBox(@Nonnull JmriBeanComboBox inComboBox) {
-        String temp = inComboBox.getText();
-        LayoutEditor.setupComboBox(inComboBox, true, true);
-        inComboBox.setText(temp);
-    }
     private final static Logger log = LoggerFactory.getLogger(
             LayoutEditorTools.class);
 }
