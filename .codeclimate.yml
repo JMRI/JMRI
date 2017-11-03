@@ -42,6 +42,8 @@ exclude_paths:
 ## third party code
 - lib/
 - web/app/node_modules/
+- web/css/bootstrap.css
+- web/css/bootstrap-theme.css
 - web/js/bootstrap.js
 - web/js/faq.js
 - web/js/jquery.iframe-transport.js
