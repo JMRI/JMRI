@@ -22,7 +22,6 @@ public class ServerActionTest {
    @Before
    public void setUp() {
         JUnitUtil.setUp();
-
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 

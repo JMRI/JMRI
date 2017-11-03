@@ -144,7 +144,6 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     @Override
     public void stop() throws Exception {
         server.stop();
-        zeroConfService.stop();
     }
 
     /**
@@ -366,6 +365,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleFailure(LifeCycle lc, Throwable thrwbl) {
+        if (zeroConfService != null) {
+            zeroConfService.stop();
+        }
         log.error("Web Server failed", thrwbl);
     }
 
@@ -379,6 +381,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleStopped(LifeCycle lc) {
+        if (zeroConfService != null) {
+            zeroConfService.stop();
+        }
         InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
             manager.deregister(shutDownTask);
         });
