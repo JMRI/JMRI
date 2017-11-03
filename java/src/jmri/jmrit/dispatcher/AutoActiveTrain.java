@@ -1231,8 +1231,8 @@ public class AutoActiveTrain implements ThrottleListener {
         // note: _stoppingBlock must be set before invoking this method
         //  verify that _stoppingBlock is actually occupied, if not stop immed
         if (_stoppingBlock.getState() == Block.OCCUPIED) {
-            _stoppingByBlockOccupancy = true;
             setTargetSpeedState(RESTRICTED_SPEED);
+            _stoppingByBlockOccupancy = true;
         } else {
             setStopNow();
         }
