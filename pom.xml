@@ -378,7 +378,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <shortRevisionLength>8</shortRevisionLength>
+                    <shortRevisionLength>7</shortRevisionLength>
+                    <revisionOnScmFailure>UNKNOWN</revisionOnScmFailure>
                     <timestampFormat>yyyyMMddHHmm</timestampFormat>
                     <timezone>UTC</timezone>
                     <!-- want false to generate Version.properties -->

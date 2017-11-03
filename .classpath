@@ -53,7 +53,6 @@
 	<classpathentry kind="lib" path="lib/jhall.jar"/>
 	<classpathentry kind="lib" path="lib/jhidrawplugin.jar"/>
 	<classpathentry kind="lib" path="lib/jinput.jar"/>
-	<classpathentry kind="lib" path="lib/jmdns.jar"/>
 	<classpathentry kind="lib" path="lib/joal.jar"/>
 	<classpathentry kind="lib" path="lib/jsr305.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.12.jar"/>
