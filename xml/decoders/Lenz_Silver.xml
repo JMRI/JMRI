@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Ronald Kuhn" version="8" lastUpdated="20171018"/>
+  <version author="Ronald Kuhn" version="8" lastUpdated="20171022"/>
   <version author="Alain Carasso" version="7" lastUpdated="20170112"/>
   <version author="Nigel Cliffe" version="6" lastUpdated="20091016"/>
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="4" lastUpdated="20070411"/>
@@ -168,7 +168,7 @@
       <variable CV="50" mask="XVXXXXXX" item="BEMF Control" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>BEMF Control</label>
-        <label xml:lang="de">Regelung</label>
+        <label xml:lang="de">Gegen-EMK</label>
       </variable>
       <variable CV="50" mask="VXXXXXXX" item="Motor Frequency" default="0">
         <enumVal>
@@ -182,7 +182,7 @@
           </enumChoice>
         </enumVal>
         <label>Motor Drive Frequency</label>
-        <label xml:lang="de">Motorfrequenz</label>
+        <label xml:lang="de">Motor-Ansteuerungsfrequenz</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>

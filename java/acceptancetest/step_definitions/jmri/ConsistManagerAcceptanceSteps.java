@@ -14,10 +14,12 @@ public class ConsistManagerAcceptanceSteps implements En {
       
    private jmri.ConsistManager cm = null; 
 
-   public ConsistManagerAcceptanceSteps() {
+   public ConsistManagerAcceptanceSteps(jmri.InstanceManager instance) {
 
       Given("^the InstanceManager is started$", () -> {
-          jmri.util.JUnitUtil.resetInstanceManager();
+          // do nothing, the instance manager should be created via 
+          // dependency injection.
+          //jmri.util.JUnitUtil.resetInstanceManager();
       });
  
       When("^I ask for the Consist Manager$", () -> {

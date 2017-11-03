@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
@@ -166,28 +167,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     private void commitToAcquireThrottle(LocoNetSlot s) {
+                tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
+        log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
+
         // haven't identified a particular reason to refuse throttle acquisition at this time...
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
-
-        // when the slot goes in use, which is not always very quick
-        // set the slot throttle-ID, and, potentially, other things like speed step.
-        // This is a blocking process as no-one must use the slot until it goes in-use.
-        int retrys = 0;
-        while (s.slotStatus() != LnConstants.LOCO_IN_USE && retrys < 10) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                log.error("Interrupted while waiting for status" , e);
-            }
-            retrys += 1;
-        }
-        if (retrys < 10 ) {
-            log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
-            tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
-        } else {
-            log.warn("Slot [{}} has not gone IN-USE in required time, slot is in unreliable state.",s.getSlot());
-        }
-
         s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
         notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));
         //end the waiting thread since we got a response

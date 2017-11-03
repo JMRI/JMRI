@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -185,6 +187,54 @@ public class TrackSegment extends LayoutTrack {
         type2 = connectionType;
     }
 
+
+    /**
+     * replace old track connection with new track connection
+     *
+     * @param oldTrack the old track connection
+     * @param newTrack the new track connection
+     * @return true if successful
+     */
+    public boolean replaceTrackConnection(@Nullable LayoutTrack oldTrack, @Nullable LayoutTrack newTrack, int newType) {
+        boolean result = false; // assume failure (pessimist!)
+        // trying to replace old track with null?
+        if (newTrack == null) {
+            // (yes) remove old connection
+            if (oldTrack != null) {
+                result = true;  // assume success (optimist!)
+                if (connect1 == oldTrack) {
+                    connect1 = null;
+                    type1 = NONE;
+                } else if (connect2 == oldTrack) {
+                    connect2 = null;
+                    type2 = NONE;
+                } else {
+                    result = false; // didn't find old connection
+                }
+            } else {
+                result = false; // can't replace null with null
+            }
+            if (!result) {
+                log.error("Attempt to remove non-existant track connection");
+            }
+        } else // already connected to newTrack?
+        if ((connect1 != newTrack) && (connect2 != newTrack)) {
+            // (no) find a connection we can connect to
+            result = true;  // assume success (optimist!)
+            if (connect1 == oldTrack) {
+                connect1 = newTrack;
+                type1 = newType;
+            } else if (connect2 == oldTrack) {
+                connect2 = newTrack;
+                type2 = newType;
+            } else {
+                log.error("Attempt to replace invalid connection");
+                result = false;
+            }
+        }
+        return result;
+    }
+    
     /**
      * @return true if track segment should be drawn dashed
      * @deprecated since 4.9.4; use {@link #isDashed()} instead
@@ -753,11 +803,12 @@ public class TrackSegment extends LayoutTrack {
         popup.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
             @Override
             public void actionPerformed(ActionEvent e) {
+                TrackSegment ts_this = TrackSegment.this;
                 // create a new anchor
                 Point2D p = getCentreSeg();
                 PositionablePoint newAnchor = layoutEditor.addAnchor(p);
                 // link it to me
-                layoutEditor.setLink(TrackSegment.this, TRACK, newAnchor, POS_POINT);
+                layoutEditor.setLink(newAnchor, POS_POINT, ts_this, TRACK);
 
                 //get unique name for a new track segment
                 String name = layoutEditor.getFinder().uniqueName("T", 0);
@@ -772,23 +823,28 @@ public class TrackSegment extends LayoutTrack {
                 layoutEditor.setDirty();
 
                 // copy attributes to new track segment
-                newTrackSegment.setArc(TrackSegment.this.isArc());
-                newTrackSegment.setCircle(TrackSegment.this.isCircle());
-                //newTrackSegment.setBezier(TrackSegment.this.isBezier());
-                newTrackSegment.setFlip(TrackSegment.this.isFlip());
+                newTrackSegment.setArc(ts_this.isArc());
+                newTrackSegment.setCircle(ts_this.isCircle());
+                //newTrackSegment.setBezier(ts_this.isBezier());
+                newTrackSegment.setFlip(ts_this.isFlip());
 
                 // link my connect2 to the new track segment
-                layoutEditor.setLink(newTrackSegment, TRACK, connect2, type2);
+                if (connect2 instanceof PositionablePoint) {
+                    PositionablePoint pp = (PositionablePoint) connect2;
+                    pp.replaceTrackConnection(ts_this, newTrackSegment);
+                } else {
+                    layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
+                }
 
                 // link the new anchor to the new track segment
-                layoutEditor.setLink(newTrackSegment, TRACK, newAnchor, POS_POINT);
+                layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
 
                 // link me to the new newAnchor
                 connect2 = newAnchor;
                 type2 = POS_POINT;
 
                 //check on layout block
-                LayoutBlock b = TrackSegment.this.getLayoutBlock();
+                LayoutBlock b = ts_this.getLayoutBlock();
 
                 if (b != null) {
                     newTrackSegment.setLayoutBlock(b);
@@ -1807,6 +1863,13 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        setLayoutBlock(layoutBlock);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
