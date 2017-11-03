@@ -1041,6 +1041,16 @@ public class PositionablePoint extends LayoutTrack {
 
         popup.add(lineType);
 
+        if (!blockBoundary && getType() == EDGE_CONNECTOR) {
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popup.add(new AbstractAction(Bundle.getMessage("EdgeEditLink")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setLink();
+                }
+            });
+        }
+
         if (blockBoundary) {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             if (getType() == EDGE_CONNECTOR) {
@@ -1079,19 +1089,19 @@ public class PositionablePoint extends LayoutTrack {
             addSensorsAndSignalMasksMenuItemsFlag = true;
         }
         if (addSensorsAndSignalMasksMenuItemsFlag) {
+            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    // bring up signals at block boundary tool dialog
+                    layoutEditor.getLETools().setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
+                }
+            });
             popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
                     layoutEditor.getLETools().setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
                             layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
-                }
-            });
-            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    // bring up signals at block boundary tool dialog
-                    layoutEditor.getLETools().setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
                 }
             });
         }
