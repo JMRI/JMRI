@@ -94,6 +94,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
@@ -234,8 +235,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private transient JLabel blockNameLabel = new JLabel();
     private transient JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
 
-    private transient JLabel blockSensorNameLabel = new JLabel();
+    private transient JLabel blockSensorNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
     private transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
     private transient JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -413,20 +415,19 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
     private JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
     private JMenu scrollMenu = null;
-    private JRadioButtonMenuItem scrollBoth = null;
-    private JRadioButtonMenuItem scrollNone = null;
-    private JRadioButtonMenuItem scrollHorizontal = null;
-    private JRadioButtonMenuItem scrollVertical = null;
+    private JRadioButtonMenuItem scrollBothMenuItem = null;
+    private JRadioButtonMenuItem scrollNoneMenuItem = null;
+    private JRadioButtonMenuItem scrollHorizontalMenuItem = null;
+    private JRadioButtonMenuItem scrollVerticalMenuItem = null;
     private JMenu tooltipMenu = null;
-    private JRadioButtonMenuItem tooltipAlways = null;
-    private JRadioButtonMenuItem tooltipNone = null;
-    private JRadioButtonMenuItem tooltipInEdit = null;
-    private JRadioButtonMenuItem tooltipNotInEdit = null;
+    private JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
+    private JRadioButtonMenuItem tooltipNoneMenuItem = null;
+    private JRadioButtonMenuItem tooltipInEditMenuItem = null;
+    private JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
 
     private JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
     private JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
     private JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem highlightSelectedBlockCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
     private JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
@@ -1234,12 +1235,20 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //Contains the block and sensor combo boxes.
         //It is moved to the appropriate detail pane when the tab changes.
         blockPropertiesPanel = new JPanel(floatContentLayout);
-        String blockNameString = Bundle.getMessage("BlockID");
-        blockSensorNameLabel = new JLabel(blockNameString);
         blockPropertiesPanel.add(blockNameLabel);
         blockPropertiesPanel.add(blockIDComboBox);
-        blockPropertiesPanel.add(blockSensorLabel);
-        blockPropertiesPanel.add(blockSensorComboBox);
+        blockPropertiesPanel.add(highlightBlockCheckBox);
+        highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
+        highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
+            setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
+        });
+        highlightBlockCheckBox.setSelected(highlightSelectedBlockFlag);
+
+        JPanel blockSensorPanel = new JPanel();
+        blockSensorPanel.add(blockSensorLabel);
+        blockSensorPanel.add(blockSensorComboBox);
+        blockSensorPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
+        blockPropertiesPanel.add(blockSensorPanel);
 
         //Build the window content
         JPanel floatingEditPanel = new JPanel();
@@ -1257,6 +1266,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         turnoutGroup1.add(turnoutRHButton);
         turnoutGroup1.add(turnoutLHButton);
         turnoutGroup1.add(turnoutWYEButton);
+        turnoutGroup1.add(layoutSingleSlipButton);
+        turnoutGroup1.add(layoutDoubleSlipButton);
         floatEditTurnout.add(turnoutGroup1);
 
         JPanel turnoutGroup2 = new JPanel(floatContentLayout);
@@ -1266,18 +1277,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         floatEditTurnout.add(turnoutGroup2);
 
         JPanel turnoutGroup3 = new JPanel(floatContentLayout);
-        turnoutGroup3.add(layoutSingleSlipButton);
-        turnoutGroup3.add(layoutDoubleSlipButton);
+        turnoutGroup3.add(turnoutNamePanel);
+        turnoutGroup3.add(extraTurnoutPanel);
         floatEditTurnout.add(turnoutGroup3);
 
         JPanel turnoutGroup4 = new JPanel(floatContentLayout);
-        turnoutGroup4.add(turnoutNamePanel);
-        turnoutGroup4.add(extraTurnoutPanel);
+        turnoutGroup4.add(rotationPanel);
         floatEditTurnout.add(turnoutGroup4);
-
-        JPanel turnoutGroup5 = new JPanel(floatContentLayout);
-        turnoutGroup5.add(rotationPanel);
-        floatEditTurnout.add(turnoutGroup5);
 
         floatEditTurnout.add(blockPropertiesPanel);
         floatEditTabsPane.addTab(Bundle.getMessage("Turnouts"), null, floatEditTurnout, null);
@@ -1536,16 +1542,23 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             blockNameLabel = new JLabel(blockNameString);
             vTop10Panel.add(blockNameLabel);
             vTop10Panel.add(blockIDComboBox);
+            vTop10Panel.add(highlightBlockCheckBox);
+            highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
+            highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
+                setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
+            });
+            highlightBlockCheckBox.setSelected(highlightSelectedBlockFlag);
             vTop10Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop10Panel.getPreferredSize().height));
             outerBorderPanel.add(vTop10Panel);
 
             JPanel vTop11Panel = new JPanel(verticalContentLayout);
-            blockSensorNameLabel = new JLabel(blockNameString);
+            //blockSensorNameLabel = new JLabel(blockNameString);
             vTop11Panel.add(blockSensorNameLabel);
             vTop11Panel.add(blockSensorLabel);
             vTop11Panel.add(blockSensorComboBox);
             vTop11Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop11Panel.getPreferredSize().height));
             outerBorderPanel.add(vTop11Panel);
+            vTop11Panel.setBorder(new EmptyBorder(0, 10, 0, 0));
 
             if (useBorders) {
                 editToolBarPanel.add(outerBorderPanel);
@@ -1754,8 +1767,18 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             blockNameLabel = new JLabel(blockNameString);
             hTop3Center.add(blockNameLabel);
             hTop3Center.add(blockIDComboBox);
-            hTop3Center.add(blockSensorLabel);
-            hTop3Center.add(blockSensorComboBox);
+            hTop3Center.add(highlightBlockCheckBox);
+            highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
+            highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
+                setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
+            });
+            highlightBlockCheckBox.setSelected(highlightSelectedBlockFlag);
+
+            JPanel hTop3CenterA = new JPanel(centerRowLayout);
+            hTop3CenterA.add(blockSensorLabel);
+            hTop3CenterA.add(blockSensorComboBox);
+            hTop3CenterA.setBorder(new EmptyBorder(0, 20, 0, 0));
+            hTop3Center.add(hTop3CenterA);
 
             hTop3Panel.add(hTop3Center);
             hTop3Panel.add(Box.createHorizontalGlue());
@@ -2000,22 +2023,22 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         switch (_scrollState) {
             case Editor.SCROLL_NONE: {
-                scrollNone.setSelected(true);
+                scrollNoneMenuItem.setSelected(true);
                 break;
             }
 
             case Editor.SCROLL_BOTH: {
-                scrollBoth.setSelected(true);
+                scrollBothMenuItem.setSelected(true);
                 break;
             }
 
             case Editor.SCROLL_HORIZONTAL: {
-                scrollHorizontal.setSelected(true);
+                scrollHorizontalMenuItem.setSelected(true);
                 break;
             }
 
             case Editor.SCROLL_VERTICAL: {
-                scrollVertical.setSelected(true);
+                scrollVerticalMenuItem.setSelected(true);
                 break;
             }
 
@@ -2143,7 +2166,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         optionMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("OptionsMnemonic")));
         menuBar.add(optionMenu);
 
-        //edit mode item
+        //
+        //  edit mode
+        //
         editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
         optionMenu.add(editModeCheckBoxMenuItem);
         editModeCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("EditModeMnemonic")));
@@ -2182,7 +2207,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         editModeCheckBoxMenuItem.setSelected(isEditable());
 
         //
-        //create our (top) toolbar menu
+        // toolbar
         //
         JMenu toolBarMenu = new JMenu(Bundle.getMessage("ToolBar")); //used for ToolBar SubMenu
         optionMenu.add(toolBarMenu);
@@ -2220,7 +2245,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         });
         toolBarSideFloatButton.setSelected(toolBarSide.equals(ToolBarSide.eFLOAT));
 
-        JMenu toolBarSideMenu = new JMenu(Bundle.getMessage("ToolBarSide")); //used for ScrollBarsSubMenu
+        JMenu toolBarSideMenu = new JMenu(Bundle.getMessage("ToolBarSide"));
         toolBarSideMenu.add(toolBarSideTopButton);
         toolBarSideMenu.add(toolBarSideLeftButton);
         toolBarSideMenu.add(toolBarSideBottomButton);
@@ -2373,49 +2398,93 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         toolBarMenu.add(dropDownListsDisplayOrderMenu);
 
         //
-        //positionable item
+        // Scroll Bars
         //
-        positionableCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowRepositioning"));
-        optionMenu.add(positionableCheckBoxMenuItem);
-        positionableCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setAllPositionable(positionableCheckBoxMenuItem.isSelected());
-        });
-        positionableCheckBoxMenuItem.setSelected(allPositionable());
-
-        //
-        //controlable item
-        //
-        controlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowLayoutControl"));
-        optionMenu.add(controlCheckBoxMenuItem);
-        controlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setAllControlling(controlCheckBoxMenuItem.isSelected());
+        scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable")); //used for ScrollBarsSubMenu
+        optionMenu.add(scrollMenu);
+        ButtonGroup scrollGroup = new ButtonGroup();
+        scrollBothMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
+        scrollGroup.add(scrollBothMenuItem);
+        scrollMenu.add(scrollBothMenuItem);
+        scrollBothMenuItem.setSelected(_scrollState == Editor.SCROLL_BOTH);
+        scrollBothMenuItem.addActionListener((ActionEvent event) -> {
+            _scrollState = Editor.SCROLL_BOTH;
+            setScroll(_scrollState);
             redrawPanel();
         });
-        controlCheckBoxMenuItem.setSelected(allControlling());
-
-        //
-        //add "use direct turnout control" menu item
-        //
-        useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); //IN18N
-        optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
-        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
+        scrollNoneMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
+        scrollGroup.add(scrollNoneMenuItem);
+        scrollMenu.add(scrollNoneMenuItem);
+        scrollNoneMenuItem.setSelected(_scrollState == Editor.SCROLL_NONE);
+        scrollNoneMenuItem.addActionListener((ActionEvent event) -> {
+            _scrollState = Editor.SCROLL_NONE;
+            setScroll(_scrollState);
+            redrawPanel();
         });
-        useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
-
-        //
-        //animation item
-        //
-        animationCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowTurnoutAnimation"));
-        optionMenu.add(animationCheckBoxMenuItem);
-        animationCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            boolean mode = animationCheckBoxMenuItem.isSelected();
-            setTurnoutAnimation(mode);
+        scrollHorizontalMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
+        scrollGroup.add(scrollHorizontalMenuItem);
+        scrollMenu.add(scrollHorizontalMenuItem);
+        scrollHorizontalMenuItem.setSelected(_scrollState == Editor.SCROLL_HORIZONTAL);
+        scrollHorizontalMenuItem.addActionListener((ActionEvent event) -> {
+            _scrollState = Editor.SCROLL_HORIZONTAL;
+            setScroll(_scrollState);
+            redrawPanel();
         });
-        animationCheckBoxMenuItem.setSelected(true);
+        scrollVerticalMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
+        scrollGroup.add(scrollVerticalMenuItem);
+        scrollMenu.add(scrollVerticalMenuItem);
+        scrollVerticalMenuItem.setSelected(_scrollState == Editor.SCROLL_VERTICAL);
+        scrollVerticalMenuItem.addActionListener((ActionEvent event) -> {
+            _scrollState = Editor.SCROLL_VERTICAL;
+            setScroll(_scrollState);
+            redrawPanel();
+        });
 
         //
-        //show help item
+        // Tooltips
+        //
+        tooltipMenu = new JMenu(Bundle.getMessage("TooltipSubMenu"));
+        optionMenu.add(tooltipMenu);
+        ButtonGroup tooltipGroup = new ButtonGroup();
+        tooltipNoneMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipNone"));
+        tooltipGroup.add(tooltipNoneMenuItem);
+        tooltipMenu.add(tooltipNoneMenuItem);
+        tooltipNoneMenuItem.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+        tooltipNoneMenuItem.addActionListener((ActionEvent event) -> {
+            tooltipsInEditMode = false;
+            tooltipsWithoutEditMode = false;
+            setAllShowToolTip(false);
+        });
+        tooltipAlwaysMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipAlways"));
+        tooltipGroup.add(tooltipAlwaysMenuItem);
+        tooltipMenu.add(tooltipAlwaysMenuItem);
+        tooltipAlwaysMenuItem.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        tooltipAlwaysMenuItem.addActionListener((ActionEvent event) -> {
+            tooltipsInEditMode = true;
+            tooltipsWithoutEditMode = true;
+            setAllShowToolTip(true);
+        });
+        tooltipInEditMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipEdit"));
+        tooltipGroup.add(tooltipInEditMenuItem);
+        tooltipMenu.add(tooltipInEditMenuItem);
+        tooltipInEditMenuItem.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+        tooltipInEditMenuItem.addActionListener((ActionEvent event) -> {
+            tooltipsInEditMode = true;
+            tooltipsWithoutEditMode = false;
+            setAllShowToolTip(isEditable());
+        });
+        tooltipNotInEditMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipNotEdit"));
+        tooltipGroup.add(tooltipNotInEditMenuItem);
+        tooltipMenu.add(tooltipNotInEditMenuItem);
+        tooltipNotInEditMenuItem.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        tooltipNotInEditMenuItem.addActionListener((ActionEvent event) -> {
+            tooltipsInEditMode = false;
+            tooltipsWithoutEditMode = true;
+            setAllShowToolTip(!isEditable());
+        });
+
+        //
+        // show edit help
         //
         showHelpCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowEditHelp"));
         optionMenu.add(showHelpCheckBoxMenuItem);
@@ -2426,143 +2495,38 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         showHelpCheckBoxMenuItem.setSelected(getShowHelpBar());
 
         //
-        //show grid item
+        // Allow Repositioning
         //
-        showGridCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowEditGrid"));
-        showGridCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
-        optionMenu.add(showGridCheckBoxMenuItem);
-        showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            drawGrid = showGridCheckBoxMenuItem.isSelected();
-            redrawPanel();
+        positionableCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowRepositioning"));
+        optionMenu.add(positionableCheckBoxMenuItem);
+        positionableCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setAllPositionable(positionableCheckBoxMenuItem.isSelected());
         });
-        showGridCheckBoxMenuItem.setSelected(getDrawGrid());
+        positionableCheckBoxMenuItem.setSelected(allPositionable());
 
         //
-        //snap to grid on add item
+        // Allow Layout Control
         //
-        snapToGridOnAddCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnAdd"));
-        snapToGridOnAddCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                Bundle.getMessage("SnapToGridOnAddAccelerator")),
-                primary_modifier | ActionEvent.SHIFT_MASK));
-        optionMenu.add(snapToGridOnAddCheckBoxMenuItem);
-        snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
+        controlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowLayoutControl"));
+        optionMenu.add(controlCheckBoxMenuItem);
+        controlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setAllControlling(controlCheckBoxMenuItem.isSelected());
             redrawPanel();
         });
-        snapToGridOnAddCheckBoxMenuItem.setSelected(snapToGridOnAdd);
+        controlCheckBoxMenuItem.setSelected(allControlling());
 
         //
-        //snap to grid on move item
+        // use direct turnout control
         //
-        snapToGridOnMoveCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnMove"));
-        snapToGridOnMoveCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                Bundle.getMessage("SnapToGridOnMoveAccelerator")),
-                primary_modifier | ActionEvent.SHIFT_MASK));
-        optionMenu.add(snapToGridOnMoveCheckBoxMenuItem);
-        snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
-            redrawPanel();
+        useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); //IN18N
+        optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
+        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
         });
-        snapToGridOnMoveCheckBoxMenuItem.setSelected(snapToGridOnMove);
+        useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         //
-        //specify grid square size
-        //
-        JMenuItem gridSizeItem = new JMenuItem(Bundle.getMessage("SetGridSizes") + "...");
-        optionMenu.add(gridSizeItem);
-        gridSizeItem.addActionListener((ActionEvent event) -> {
-            enterGridSizes();
-        });
-
-        //
-        //Show/Hide Scroll Bars
-        //
-        scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable")); //used for ScrollBarsSubMenu
-        optionMenu.add(scrollMenu);
-        ButtonGroup scrollGroup = new ButtonGroup();
-        scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
-        scrollGroup.add(scrollBoth);
-        scrollMenu.add(scrollBoth);
-        scrollBoth.setSelected(_scrollState == Editor.SCROLL_BOTH);
-        scrollBoth.addActionListener((ActionEvent event) -> {
-            _scrollState = Editor.SCROLL_BOTH;
-            setScroll(_scrollState);
-            redrawPanel();
-        });
-        scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
-        scrollGroup.add(scrollNone);
-        scrollMenu.add(scrollNone);
-        scrollNone.setSelected(_scrollState == Editor.SCROLL_NONE);
-        scrollNone.addActionListener((ActionEvent event) -> {
-            _scrollState = Editor.SCROLL_NONE;
-            setScroll(_scrollState);
-            redrawPanel();
-        });
-        scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
-        scrollGroup.add(scrollHorizontal);
-        scrollMenu.add(scrollHorizontal);
-        scrollHorizontal.setSelected(_scrollState == Editor.SCROLL_HORIZONTAL);
-        scrollHorizontal.addActionListener((ActionEvent event) -> {
-            _scrollState = Editor.SCROLL_HORIZONTAL;
-            setScroll(_scrollState);
-            redrawPanel();
-        });
-        scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
-        scrollGroup.add(scrollVertical);
-        scrollMenu.add(scrollVertical);
-        scrollVertical.setSelected(_scrollState == Editor.SCROLL_VERTICAL);
-        scrollVertical.addActionListener((ActionEvent event) -> {
-            _scrollState = Editor.SCROLL_VERTICAL;
-            setScroll(_scrollState);
-            redrawPanel();
-        });
-
-        //
-        //Tooltip options
-        //
-        tooltipMenu = new JMenu(Bundle.getMessage("TooltipSubMenu"));
-        optionMenu.add(tooltipMenu);
-        ButtonGroup tooltipGroup = new ButtonGroup();
-        tooltipNone = new JRadioButtonMenuItem(Bundle.getMessage("TooltipNone"));
-        tooltipGroup.add(tooltipNone);
-        tooltipMenu.add(tooltipNone);
-        tooltipNone.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
-        tooltipNone.addActionListener((ActionEvent event) -> {
-            tooltipsInEditMode = false;
-            tooltipsWithoutEditMode = false;
-            setAllShowToolTip(false);
-        });
-        tooltipAlways = new JRadioButtonMenuItem(Bundle.getMessage("TooltipAlways"));
-        tooltipGroup.add(tooltipAlways);
-        tooltipMenu.add(tooltipAlways);
-        tooltipAlways.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
-        tooltipAlways.addActionListener((ActionEvent event) -> {
-            tooltipsInEditMode = true;
-            tooltipsWithoutEditMode = true;
-            setAllShowToolTip(true);
-        });
-        tooltipInEdit = new JRadioButtonMenuItem(Bundle.getMessage("TooltipEdit"));
-        tooltipGroup.add(tooltipInEdit);
-        tooltipMenu.add(tooltipInEdit);
-        tooltipInEdit.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
-        tooltipInEdit.addActionListener((ActionEvent event) -> {
-            tooltipsInEditMode = true;
-            tooltipsWithoutEditMode = false;
-            setAllShowToolTip(isEditable());
-        });
-        tooltipNotInEdit = new JRadioButtonMenuItem(Bundle.getMessage("TooltipNotEdit"));
-        tooltipGroup.add(tooltipNotInEdit);
-        tooltipMenu.add(tooltipNotInEdit);
-        tooltipNotInEdit.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
-        tooltipNotInEdit.addActionListener((ActionEvent event) -> {
-            tooltipsInEditMode = false;
-            tooltipsWithoutEditMode = true;
-            setAllShowToolTip(!isEditable());
-        });
-
-        //
-        //antialiasing
+        // antialiasing
         //
         antialiasingOnCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AntialiasingOn"));
         optionMenu.add(antialiasingOnCheckBoxMenuItem);
@@ -2573,17 +2537,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
 
         //
-        //Highlight Selected Block
-        //
-        highlightSelectedBlockCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HighlightSelectedBlock"));
-        optionMenu.add(highlightSelectedBlockCheckBoxMenuItem);
-        highlightSelectedBlockCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setHighlightSelectedBlock(highlightSelectedBlockCheckBoxMenuItem.isSelected());
-        });
-        highlightSelectedBlockCheckBoxMenuItem.setSelected(highlightSelectedBlockFlag);
-
-        //
-        //edit title item
+        // edit title
         //
         optionMenu.addSeparator();
         JMenuItem titleItem = new JMenuItem(Bundle.getMessage("EditTitle") + "...");
@@ -2617,22 +2571,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         });
 
         //
-        //background image menu item
-        //
-        JMenuItem backgroundItem = new JMenuItem(Bundle.getMessage("AddBackground") + "...");
-        optionMenu.add(backgroundItem);
-        backgroundItem.addActionListener((ActionEvent event) -> {
-            addBackground();
-            //note: panel resized in addBackground
-            setDirty();
-            redrawPanel();
-        });
-
-        //
-        //background color menu item
+        // set background color 
         //
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor"));
-
+        optionMenu.add(backgroundColorMenuItem);
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
                     Bundle.getMessage("SetBackgroundColor"),
@@ -2645,117 +2587,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
         });
 
-        optionMenu.add(backgroundColorMenuItem);
-
         //
-        //add fast clock menu item
-        //
-        JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddItem", Bundle.getMessage("FastClock")));
-        optionMenu.add(clockItem);
-        clockItem.addActionListener((ActionEvent event) -> {
-            AnalogClock2Display c = addClock();
-            unionToPanelBounds(c.getBounds());
-            setDirty();
-            redrawPanel();
-        });
-
-        //
-        //add turntable menu item
-        //
-        JMenuItem turntableItem = new JMenuItem(Bundle.getMessage("AddTurntable"));
-        optionMenu.add(turntableItem);
-        turntableItem.addActionListener((ActionEvent event) -> {
-            addTurntable(windowCenter());
-            //note: panel resized in addTurntable
-            setDirty();
-            redrawPanel();
-        });
-
-        //
-        //add reporter menu item
-        //
-        JMenuItem reporterItem = new JMenuItem(Bundle.getMessage("AddReporter") + "...");
-        optionMenu.add(reporterItem);
-        reporterItem.addActionListener((ActionEvent event) -> {
-            Point2D pt = windowCenter();
-            enterReporter((int) pt.getX(), (int) pt.getY());
-            //note: panel resized in enterReporter
-            setDirty();
-            redrawPanel();
-        });
-
-        //
-        //set location and size menu item
-        //
-        JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
-        optionMenu.add(locationItem);
-        locationItem.addActionListener((ActionEvent event) -> {
-            setCurrentPositionAndSize();
-            log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
-        });
-
-        //
-        //set track width menu item
-        //
-        JMenuItem widthItem = new JMenuItem(Bundle.getMessage("SetTrackWidth") + "...");
-        optionMenu.add(widthItem);
-        widthItem.addActionListener((ActionEvent event) -> {
-            //bring up enter track width dialog
-            enterTrackWidth();
-        });
-
-        //
-        //track colors item menu item
-        //
-        JMenu trkColourMenu = new JMenu(Bundle.getMessage("TrackColorSubMenu"));
-        optionMenu.add(trkColourMenu);
-
-        JMenuItem trackColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTrackColor"));
-
-        trackColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("DefaultTrackColor"),
-                    defaultTrackColor);
-            if (desiredColor != null && !defaultTrackColor.equals(desiredColor)) {
-                setDefaultTrackColor(desiredColor);
-                setDirty();
-                redrawPanel();
-            }
-        });
-        trkColourMenu.add(trackColorMenuItem);
-
-        JMenuItem trackOccupiedColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultOccupiedTrackColor"));
-        trackOccupiedColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("DefaultOccupiedTrackColor"),
-                    defaultOccupiedTrackColor);
-            if (desiredColor != null && !defaultOccupiedTrackColor.equals(desiredColor)) {
-                setDefaultOccupiedTrackColor(desiredColor);
-                setDirty();
-                redrawPanel();
-            }
-        });
-        trkColourMenu.add(trackOccupiedColorMenuItem);
-
-        JMenuItem trackAlternativeColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultAlternativeTrackColor"));
-
-        trackAlternativeColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("DefaultAlternativeTrackColor"),
-                    defaultAlternativeTrackColor);
-            if (desiredColor != null && !defaultAlternativeTrackColor.equals(desiredColor)) {
-                setDefaultAlternativeTrackColor(desiredColor);
-                setDirty();
-                redrawPanel();
-            }
-        });
-        trkColourMenu.add(trackAlternativeColorMenuItem);
-
-        //
-        //add text color menu item
+        // set default text color
         //
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor"));
-
+        optionMenu.add(textColorMenuItem);
         textColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultTextColor"),
@@ -2766,13 +2602,208 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 redrawPanel();
             }
         });
-        optionMenu.add(textColorMenuItem);
+
+        //
+        //  save location and size
+        //
+        JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
+        optionMenu.add(locationItem);
+        locationItem.addActionListener((ActionEvent event) -> {
+            setCurrentPositionAndSize();
+            log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+        });
+
+        //
+        // Add Options
+        //
+        JMenu optionsAddMenu = new JMenu(Bundle.getMessage("AddMenuTitle"));
+        optionMenu.add(optionsAddMenu);
+
+        // add background image
+        JMenuItem backgroundItem = new JMenuItem(Bundle.getMessage("AddBackground") + "...");
+        optionsAddMenu.add(backgroundItem);
+        backgroundItem.addActionListener((ActionEvent event) -> {
+            addBackground();
+            //note: panel resized in addBackground
+            setDirty();
+            redrawPanel();
+        });
+
+        // add fast clock
+        JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddItem", Bundle.getMessage("FastClock")));
+        optionsAddMenu.add(clockItem);
+        clockItem.addActionListener((ActionEvent event) -> {
+            AnalogClock2Display c = addClock();
+            unionToPanelBounds(c.getBounds());
+            setDirty();
+            redrawPanel();
+        });
+
+        //add turntable
+        JMenuItem turntableItem = new JMenuItem(Bundle.getMessage("AddTurntable"));
+        optionsAddMenu.add(turntableItem);
+        turntableItem.addActionListener((ActionEvent event) -> {
+            addTurntable(windowCenter());
+            //note: panel resized in addTurntable
+            setDirty();
+            redrawPanel();
+        });
+
+        // add reporter
+        JMenuItem reporterItem = new JMenuItem(Bundle.getMessage("AddReporter") + "...");
+        optionsAddMenu.add(reporterItem);
+        reporterItem.addActionListener((ActionEvent event) -> {
+            Point2D pt = windowCenter();
+            enterReporter((int) pt.getX(), (int) pt.getY());
+            //note: panel resized in enterReporter
+            setDirty();
+            redrawPanel();
+        });
+
+        //
+        // grid menu
+        //
+        JMenu gridMenu = new JMenu(Bundle.getMessage("GridMenuTitle")); //used for Grid SubMenu
+        optionMenu.add(gridMenu);
+
+        //show grid
+        showGridCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowEditGrid"));
+        showGridCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
+        gridMenu.add(showGridCheckBoxMenuItem);
+        showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            drawGrid = showGridCheckBoxMenuItem.isSelected();
+            redrawPanel();
+        });
+        showGridCheckBoxMenuItem.setSelected(getDrawGrid());
+
+        //snap to grid on add
+        snapToGridOnAddCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnAdd"));
+        snapToGridOnAddCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                Bundle.getMessage("SnapToGridOnAddAccelerator")),
+                primary_modifier | ActionEvent.SHIFT_MASK));
+        gridMenu.add(snapToGridOnAddCheckBoxMenuItem);
+        snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
+            redrawPanel();
+        });
+        snapToGridOnAddCheckBoxMenuItem.setSelected(snapToGridOnAdd);
+
+        //snap to grid on move
+        snapToGridOnMoveCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnMove"));
+        snapToGridOnMoveCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                Bundle.getMessage("SnapToGridOnMoveAccelerator")),
+                primary_modifier | ActionEvent.SHIFT_MASK));
+        gridMenu.add(snapToGridOnMoveCheckBoxMenuItem);
+        snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
+            redrawPanel();
+        });
+        snapToGridOnMoveCheckBoxMenuItem.setSelected(snapToGridOnMove);
+
+        //specify grid square size
+        JMenuItem gridSizeItem = new JMenuItem(Bundle.getMessage("SetGridSizes") + "...");
+        gridMenu.add(gridSizeItem);
+        gridSizeItem.addActionListener((ActionEvent event) -> {
+            enterGridSizes();
+        });
+
+        //
+        // track menu
+        //
+        JMenu trackMenu = new JMenu(Bundle.getMessage("TrackMenuTitle"));
+        optionMenu.add(trackMenu);
+
+        //set track width menu item
+        JMenuItem widthItem = new JMenuItem(Bundle.getMessage("SetTrackWidth") + "...");
+        trackMenu.add(widthItem);
+        widthItem.addActionListener((ActionEvent event) -> {
+            //bring up enter track width dialog
+            enterTrackWidth();
+        });
+
+        //track colors item menu item
+        JMenu trkColourMenu = new JMenu(Bundle.getMessage("TrackColorSubMenu"));
+        trackMenu.add(trkColourMenu);
+
+        JMenuItem trackColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTrackColor"));
+        trkColourMenu.add(trackColorMenuItem);
+        trackColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                    Bundle.getMessage("DefaultTrackColor"),
+                    defaultTrackColor);
+            if (desiredColor != null && !defaultTrackColor.equals(desiredColor)) {
+                setDefaultTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
+        });
+
+        JMenuItem trackOccupiedColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultOccupiedTrackColor"));
+        trkColourMenu.add(trackOccupiedColorMenuItem);
+        trackOccupiedColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                    Bundle.getMessage("DefaultOccupiedTrackColor"),
+                    defaultOccupiedTrackColor);
+            if (desiredColor != null && !defaultOccupiedTrackColor.equals(desiredColor)) {
+                setDefaultOccupiedTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
+        });
+
+        JMenuItem trackAlternativeColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultAlternativeTrackColor"));
+        trkColourMenu.add(trackAlternativeColorMenuItem);
+        trackAlternativeColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                    Bundle.getMessage("DefaultAlternativeTrackColor"),
+                    defaultAlternativeTrackColor);
+            if (desiredColor != null && !defaultAlternativeTrackColor.equals(desiredColor)) {
+                setDefaultAlternativeTrackColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
+        });
+
+        //Automatically Assign Blocks to Track
+        autoAssignBlocksCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AutoAssignBlock"));
+        trackMenu.add(autoAssignBlocksCheckBoxMenuItem);
+        autoAssignBlocksCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            autoAssignBlocks = autoAssignBlocksCheckBoxMenuItem.isSelected();
+        });
+        autoAssignBlocksCheckBoxMenuItem.setSelected(autoAssignBlocks);
+
+        //add hideTrackSegmentConstructionLines menu item
+        hideTrackSegmentConstructionLinesCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HideTrackConLines"));
+        trackMenu.add(hideTrackSegmentConstructionLinesCheckBoxMenuItem);
+        hideTrackSegmentConstructionLinesCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            int show = TrackSegment.SHOWCON;
+
+            if (hideTrackSegmentConstructionLinesCheckBoxMenuItem.isSelected()) {
+                show = TrackSegment.HIDECONALL;
+            }
+
+            for (TrackSegment ts : getTrackSegments()) {
+                ts.hideConstructionLines(show);
+            }
+            redrawPanel();
+        });
+        hideTrackSegmentConstructionLinesCheckBoxMenuItem.setSelected(autoAssignBlocks);
 
         //
         //add turnout options submenu
         //
         JMenu turnoutOptionsMenu = new JMenu(Bundle.getMessage("TurnoutOptions"));
         optionMenu.add(turnoutOptionsMenu);
+
+        //animation item
+        animationCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowTurnoutAnimation"));
+        turnoutOptionsMenu.add(animationCheckBoxMenuItem);
+        animationCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            boolean mode = animationCheckBoxMenuItem.isSelected();
+            setTurnoutAnimation(mode);
+        });
+        animationCheckBoxMenuItem.setSelected(true);
 
         //circle on Turnouts
         turnoutCirclesOnCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("TurnoutCirclesOn"));
@@ -2813,9 +2844,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "10", 10);
         turnoutOptionsMenu.add(turnoutCircleSizeMenu);
 
-        //
         //add "enable drawing of unselected leg " menu item (helps when diverging angle is small)
-        //
         turnoutDrawUnselectedLegCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("TurnoutDrawUnselectedLeg"));
         turnoutOptionsMenu.add(turnoutDrawUnselectedLegCheckBoxMenuItem);
         turnoutDrawUnselectedLegCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
@@ -2823,33 +2852,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             redrawPanel();
         });
         turnoutDrawUnselectedLegCheckBoxMenuItem.setSelected(turnoutDrawUnselectedLeg);
-
-        //add show grid menu item
-        autoAssignBlocksCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AutoAssignBlock"));
-        optionMenu.add(autoAssignBlocksCheckBoxMenuItem);
-        autoAssignBlocksCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            autoAssignBlocks = autoAssignBlocksCheckBoxMenuItem.isSelected();
-        });
-        autoAssignBlocksCheckBoxMenuItem.setSelected(autoAssignBlocks);
-
-        //
-        //add hideTrackSegmentConstructionLines menu item
-        //
-        hideTrackSegmentConstructionLinesCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HideTrackConLines"));
-        optionMenu.add(hideTrackSegmentConstructionLinesCheckBoxMenuItem);
-        hideTrackSegmentConstructionLinesCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            int show = TrackSegment.SHOWCON;
-
-            if (hideTrackSegmentConstructionLinesCheckBoxMenuItem.isSelected()) {
-                show = TrackSegment.HIDECONALL;
-            }
-
-            for (TrackSegment ts : getTrackSegments()) {
-                ts.hideConstructionLines(show);
-            }
-            redrawPanel();
-        });
-        hideTrackSegmentConstructionLinesCheckBoxMenuItem.setSelected(autoAssignBlocks);
 
         return optionMenu;
     } //setupOptionMenu
@@ -9289,12 +9291,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             highlightSelectedBlockFlag = state;
 
             //this may not be set up yet...
-            if (highlightSelectedBlockCheckBoxMenuItem != null) {
-                highlightSelectedBlockCheckBoxMenuItem.setSelected(highlightSelectedBlockFlag);
-
+            if (highlightBlockCheckBox != null) {
+                highlightBlockCheckBox.setSelected(highlightSelectedBlockFlag);
             }
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag);
             });
 
@@ -9315,11 +9316,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //
     private boolean highlightBlockInComboBox(@Nonnull JmriBeanComboBox inComboBox) {
         boolean result = false;
-
+        Block block = null;
         if (inComboBox != null) {
-            Block b = (Block) inComboBox.getNamedBean();
-            result = highlightBlock(b);
+            block = (Block) inComboBox.getNamedBean();
         }
+        result = highlightBlock(block);
         return result;
     } //highlightBlockInComboBox
 
@@ -9394,11 +9395,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //setTooltipsInEdit
 
     private void setTooltipSubMenu() {
-        if (tooltipNone != null) {
-            tooltipNone.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
-            tooltipAlways.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
-            tooltipInEdit.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
-            tooltipNotInEdit.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        if (tooltipNoneMenuItem != null) {
+            tooltipNoneMenuItem.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+            tooltipAlwaysMenuItem.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
+            tooltipInEditMenuItem.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+            tooltipNotInEditMenuItem.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
         }
     } //setTooltipSubMenu
 
