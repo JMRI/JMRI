@@ -167,7 +167,7 @@
         <pathelement location="${libdir}/jdom.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
-        <pathelement location="${libdir}/jmdns.jar"/>
+        <pathelement location="${libdir}/jmdns-3.5.3.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
@@ -196,9 +196,9 @@
         <pathelement location="${libdir}/websocket-common-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/websocket-server-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/websocket-servlet-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
-        <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
-        <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
+        <pathelement location="${libdir}/slf4j-api-1.7.25.jar"/>
+        <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
+        <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
         <pathelement location="${libdir}/xbee-java-library-1.2.0.jar"/>
         <pathelement location="${libdir}/pi4j-core.jar"/>
         <pathelement location="${libdir}/pi4j-device.jar"/>
@@ -258,9 +258,11 @@
         <pathelement location="${libdir}/cucumber-java8-1.2.5.jar"/>
         <pathelement location="${libdir}/cucumber-junit-1.2.5.jar"/>
         <pathelement location="${libdir}/cucumber-jvm-deps-1.0.5.jar"/>
+        <pathelement location="${libdir}/cucumber-picocontainer-1.2.5.jar"/>
         <pathelement location="${libdir}/gherkin-2.12.2.jar"/>
         <pathelement location="${libdir}/gherkin3-3.0.0.jar"/>
         <pathelement location="${libdir}/gherkin-jvm-deps-1.0.3.jar"/>
+        <pathelement location="${libdir}/picocontainer-2.15.jar"/>
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
     </path>
@@ -576,6 +578,7 @@
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
                 <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
+                <compilerarg value="-Xpkginfo:always"/>  <!-- reduce warning messages during normal compile -->
                 <compilerarg value="-Xmaxerrs"/><compilerarg value="1000"/><!-- change from default 100 errors -->
             </javac>
         </sequential>
