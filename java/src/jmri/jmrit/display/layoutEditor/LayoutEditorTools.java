@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.PositionablePoint.EDGE_CONNECTOR;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -242,17 +244,13 @@ public class LayoutEditorTools {
         layoutTurnout = to;
         turnout = to.getTurnout();
         turnoutComboBox.setText(to.getTurnoutName());
-        setSignalsAtTurnout(theEditor, theFrame, true);
+        setSignalsAtTurnoutFromMenuFlag = true;
+        setSignalsAtTurnout(theEditor, theFrame);
+        setSignalsAtTurnoutFromMenuFlag = false;
     }
 
     public void setSignalsAtTurnout(@Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        setSignalsAtTurnout(theEditor, theFrame, false);
-    }
-
-    private void setSignalsAtTurnout(@Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame, boolean fromMenuFlag) {
-        setSignalsAtTurnoutFromMenuFlag = fromMenuFlag;
         signalIconEditor = theEditor;
         signalFrame = theFrame;
 
@@ -452,7 +450,6 @@ public class LayoutEditorTools {
 
     private void setSignalsCancelPressed(ActionEvent a) {
         setSignalsAtTurnoutOpenFlag = false;
-        setSignalsAtTurnoutFromMenuFlag = false;
         setSignalsAtTurnoutFrame.setVisible(false);
     }
 
@@ -637,7 +634,6 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
         setSignalsAtTurnoutOpenFlag = false;
-        setSignalsAtTurnoutFromMenuFlag = false;
         setSignalsAtTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -2048,21 +2044,26 @@ public class LayoutEditorTools {
             JFrame theFrame) {
         boundary = p;
 
-        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
-        block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
-
-        setSignalsAtBlockBoundary(theEditor, theFrame, true);
+        if ((p.getType() == EDGE_CONNECTOR) && ((p.getLinkedPoint() == null)
+                || (p.getLinkedPoint().getConnect1() == null))) {
+            if (p.getConnect1Dir() == Path.EAST || p.getConnect1Dir() == Path.SOUTH) {
+                showWest = false;
+            } else {
+                showEast = false;
+            }
+            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
+        } else {
+            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
+            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
+        }
+        setSignalsAtBlockBoundaryFromMenuFlag = true;
+        setSignalsAtBlockBoundary(theEditor, theFrame);
+        setSignalsAtBlockBoundaryFromMenuFlag = false;
     }
 
     public void setSignalsAtBlockBoundary(MultiIconEditor theEditor, JFrame theFrame) {
-        setSignalsAtBlockBoundary(theEditor, theFrame, false);
-    }
-
-    private void setSignalsAtBlockBoundary(MultiIconEditor theEditor,
-            JFrame theFrame, boolean fromMenuFlag) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        setSignalsAtBlockBoundaryFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSignalsAtBlockBoundaryFrame == null) {
@@ -2215,7 +2216,6 @@ public class LayoutEditorTools {
 
     private void setSignalsAtBlockBoundaryCancelPressed(ActionEvent a) {
         setSignalsAtBlockBoundaryOpenFlag = false;
-        setSignalsAtBlockBoundaryFromMenuFlag = false;
         setSignalsAtBlockBoundaryFrame.setVisible(false);
     }
 
@@ -2307,7 +2307,6 @@ public class LayoutEditorTools {
             setLogicWestBound();
         }
         setSignalsAtBlockBoundaryOpenFlag = false;
-        setSignalsAtBlockBoundaryFromMenuFlag = false;
         setSignalsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -2555,24 +2554,6 @@ public class LayoutEditorTools {
         finalizeBlockBossLogic();
     }
 
-    public void setSignalAtEdgeConnector(@Nonnull PositionablePoint p,
-            @Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame) {
-        boundary = p;
-        if (p.getLinkedPoint() == null || p.getLinkedPoint().getConnect1() == null) {
-            if (p.getConnect1Dir() == Path.EAST || p.getConnect1Dir() == Path.SOUTH) {
-                showWest = false;
-            } else {
-                showEast = false;
-            }
-            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
-        } else {
-            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
-            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
-        }
-        setSignalsAtBlockBoundary(theEditor, theFrame, true);
-    }
-
     /*==========================*\
     |* setSignalsAtXoverTurnout *|
     \*==========================*/
@@ -2666,38 +2647,39 @@ public class LayoutEditorTools {
             return;
         }
         xoverTurnoutName = layoutTurnout.getTurnoutName();
-        setSignalsAtXoverTurnout(theEditor, theFrame, true);
+        setSignalsAtXoverTurnoutFromMenuFlag = true;
+        setSignalsAtXoverTurnout(theEditor, theFrame);
+        setSignalsAtXoverTurnoutFromMenuFlag = false;
     }
 
     public void setSignalsAtXoverTurnout(@Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        List<LayoutTurnout> xovers = new ArrayList<>();
-        for (LayoutTurnout layoutTurnout : layoutEditor.getLayoutTurnouts()) {
-            if ((layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                    || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                    || (layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
-                xovers.add(layoutTurnout);
-            }
-        }
-        JComboBox<LayoutTurnout> jcb = new JComboBox(xovers.toArray());
-        jcb.setEditable(true);
-        JOptionPane.showMessageDialog(layoutEditor, jcb,
-                Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("EnterXOverTurnout")),
-                JOptionPane.QUESTION_MESSAGE);
-        LayoutTurnout layoutTurnout = (LayoutTurnout) jcb.getSelectedItem();
-        xoverTurnoutName = layoutTurnout.getTurnoutName();
-
-        if (xoverTurnoutName.length() >= 3) {
-            setSignalsAtXoverTurnout(theEditor, theFrame, false);
-        }
-    }
-
-    private void setSignalsAtXoverTurnout(@Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame, boolean fromMenuFlag) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        setSignalsAtXoverTurnoutFromMenuFlag = fromMenuFlag;
+
+        if (!setSignalsAtXoverTurnoutFromMenuFlag) {
+
+            List<LayoutTurnout> xovers = new ArrayList<>();
+            for (LayoutTurnout layoutTurnout : layoutEditor.getLayoutTurnouts()) {
+                if ((layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
+                        || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)
+                        || (layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                    xovers.add(layoutTurnout);
+                }
+            }
+            JComboBox<LayoutTurnout> jcb = new JComboBox(xovers.toArray());
+            jcb.setEditable(true);
+            JOptionPane.showMessageDialog(layoutEditor, jcb,
+                    Bundle.getMessage("MakeLabel",
+                            Bundle.getMessage("EnterXOverTurnout")),
+                    JOptionPane.QUESTION_MESSAGE);
+            LayoutTurnout layoutTurnout = (LayoutTurnout) jcb.getSelectedItem();
+            xoverTurnoutName = layoutTurnout.getTurnoutName();
+
+            if (xoverTurnoutName.length() < 3) {
+                return;
+            }
+        }
 
         if (!getTurnoutInformation(true)) {
             return;
@@ -2966,7 +2948,6 @@ public class LayoutEditorTools {
 
     private void setXoverSignalsCancelPressed(ActionEvent a) {
         setSignalsAtXoverTurnoutOpenFlag = false;
-        setSignalsAtXoverTurnoutFromMenuFlag = false;
         setSignalsAtXoverTurnoutFrame.setVisible(false);
     }
 
@@ -3309,7 +3290,6 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
         setSignalsAtXoverTurnoutOpenFlag = false;
-        setSignalsAtXoverTurnoutFromMenuFlag = false;
         setSignalsAtXoverTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -3722,24 +3702,16 @@ public class LayoutEditorTools {
         levelXing = xing;
         blockACComboBox.setText(levelXing.getBlockNameAC());
         blockBDComboBox.setText(levelXing.getBlockNameBD());
-        setSignalsAtLevelXing(theEditor, theFrame, true);
+        setSignalsAtLevelXingFromMenuFlag = true;
+        setSignalsAtLevelXing(theEditor, theFrame);
+        setSignalsAtLevelXingFromMenuFlag = false;
     }
 
     public void setSignalsAtLevelXing(@Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        setSignalsAtLevelXing(theEditor, theFrame, false);
-    }
-
-    private void setSignalsAtLevelXing(@Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame, boolean fromMenuFlag) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        setSignalsAtLevelXingFromMenuFlag = fromMenuFlag;
 
-        aSignalHeadComboBox.setText("");
-        bSignalHeadComboBox.setText("");
-        cSignalHeadComboBox.setText("");
-        dSignalHeadComboBox.setText("");
         // Initialize if needed
         if (setSignalsAtLevelXingFrame == null) {
             setSignalsAtLevelXingOpenFlag = false;
@@ -3906,6 +3878,12 @@ public class LayoutEditorTools {
                 }
             });
         }
+
+        aSignalHeadComboBox.setText("");
+        bSignalHeadComboBox.setText("");
+        cSignalHeadComboBox.setText("");
+        dSignalHeadComboBox.setText("");
+
         setPlaceAllHeads.setSelected(false);
         setupAllLogic.setSelected(false);
 
@@ -3946,7 +3924,6 @@ public class LayoutEditorTools {
 
     private void setXingSignalsCancelPressed(ActionEvent a) {
         setSignalsAtLevelXingOpenFlag = false;
-        setSignalsAtLevelXingFromMenuFlag = false;
         setSignalsAtLevelXingFrame.setVisible(false);
     }
 
@@ -4150,7 +4127,6 @@ public class LayoutEditorTools {
         }
         // finish up
         setSignalsAtLevelXingOpenFlag = false;
-        setSignalsAtLevelXingFromMenuFlag = false;
         setSignalsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -4574,22 +4550,15 @@ public class LayoutEditorTools {
         d1TToTSignalHeadComboBox.setText("");
         d2TToTSignalHeadComboBox.setText("");
 
-        setSignalsAtThroatToThroatTurnouts(theEditor, theFrame, true);
+        setSignalsAtThroatToThroatTurnoutsFromMenuFlag = true;
+        setSignalsAtThroatToThroatTurnouts(theEditor, theFrame);
+        setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
     }
 
     public void setSignalsAtThroatToThroatTurnouts(
             @Nonnull MultiIconEditor theEditor, @Nonnull JFrame theFrame) {
-        setSignalsAtThroatToThroatTurnouts(theEditor, theFrame, false);
-
-    }
-
-    private void setSignalsAtThroatToThroatTurnouts(
-            @Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame,
-            boolean fromMenuFlag) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        setSignalsAtThroatToThroatTurnoutsFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSignalsAtThroatToThroatTurnoutsFrame == null) {
@@ -4913,7 +4882,6 @@ public class LayoutEditorTools {
 
     private void setTToTSignalsCancelPressed(ActionEvent a) {
         setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
-        setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
         setSignalsAtThroatToThroatTurnoutsFrame.setVisible(false);
     }
 
@@ -5454,7 +5422,6 @@ public class LayoutEditorTools {
         layoutTurnout2.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
         // finish up
         setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
-        setSignalsAtThroatToThroatTurnoutsFromMenuFlag = false;
         setSignalsAtThroatToThroatTurnoutsFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -6025,21 +5992,15 @@ public class LayoutEditorTools {
         b_3WaySignalHeadComboBox.setText("");
         c_3WaySignalHeadComboBox.setText("");
         d_3WaySignalHeadComboBox.setText("");
-        setSignalsAt3WayTurnout(theEditor, theFrame, true);
+        setSignalsAt3WayTurnoutFromMenuFlag = true;
+        setSignalsAt3WayTurnout(theEditor, theFrame);
+        setSignalsAt3WayTurnoutFromMenuFlag = false;
     }
 
     public void setSignalsAt3WayTurnout(@Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-
-        setSignalsAt3WayTurnout(theEditor, theFrame, false);
-
-    }
-
-    private void setSignalsAt3WayTurnout(@Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame, boolean fromMenuFlag) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        setSignalsAt3WayTurnoutFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSignalsAt3WayTurnoutFrame == null) {
@@ -6299,7 +6260,6 @@ public class LayoutEditorTools {
 
     private void set3WaySignalsCancelPressed(ActionEvent a) {
         setSignalsAt3WayTurnoutOpenFlag = false;
-        setSignalsAt3WayTurnoutFromMenuFlag = false;
         setSignalsAt3WayTurnoutFrame.setVisible(false);
     }
 
@@ -6724,7 +6684,6 @@ public class LayoutEditorTools {
         layoutTurnoutB.setLinkType(LayoutTurnout.SECOND_3_WAY);
         // finish up
         setSignalsAt3WayTurnoutOpenFlag = false;
-        setSignalsAt3WayTurnoutFromMenuFlag = false;
         setSignalsAt3WayTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -7229,21 +7188,16 @@ public class LayoutEditorTools {
         } else {
             block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
         }
-        setSensorsAtBlockBoundary(theEditor, theFrame, true);
-        return;
+        setSensorsAtBlockBoundaryFromMenuFlag = true;
+        setSensorsAtBlockBoundary(theEditor, theFrame);
+        setSensorsAtBlockBoundaryFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
     public void setSensorsAtBlockBoundary(@Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        setSensorsAtBlockBoundary(theEditor, theFrame, false);
-    }
-
-    private void setSensorsAtBlockBoundary(@Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame, boolean fromMenuFlag) {
         sensorIconEditor = theEditor;
         sensorFrame = theFrame;
-        setSensorsAtBlockBoundaryFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSensorsAtBlockBoundaryFrame == null) {
@@ -7678,7 +7632,6 @@ public class LayoutEditorTools {
 
     private void setSensorsAtBlockBoundaryCancelPressed(ActionEvent a) {
         setSensorsAtBlockBoundaryOpenFlag = false;
-        setSensorsAtBlockBoundaryFromMenuFlag = false;
         setSensorsAtBlockBoundaryFrame.setVisible(false);
     }
 
@@ -7762,7 +7715,6 @@ public class LayoutEditorTools {
             boundary.setWestBoundSensor(westBoundSensor.getText());
         }
         setSensorsAtBlockBoundaryOpenFlag = false;
-        setSensorsAtBlockBoundaryFromMenuFlag = false;
         setSensorsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -7803,16 +7755,13 @@ public class LayoutEditorTools {
         if (boundary.getType() == PositionablePoint.ANCHOR) {
             block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
         }
-        setSignalMastsAtBlockBoundary(true);
+        setSignalMastsAtBlockBoundaryFromMenuFlag = true;
+        setSignalMastsAtBlockBoundary();
+        setSignalMastsAtBlockBoundaryFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
     public void setSignalMastsAtBlockBoundary() {
-        setSignalMastsAtBlockBoundary(false);
-    }
-
-    private void setSignalMastsAtBlockBoundary(boolean fromMenuFlag) {
-        setSignalMastsAtBlockBoundaryFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSignalMastsAtBlockBoundaryFrame == null) {
@@ -8193,7 +8142,6 @@ public class LayoutEditorTools {
 
     private void setSignalMastsAtBlockBoundaryCancelPressed(ActionEvent a) {
         setSignalMastsAtBlockBoundaryOpenFlag = false;
-        setSignalMastsAtBlockBoundaryFromMenuFlag = false;
         setSignalMastsAtBlockBoundaryFrame.setVisible(false);
     }
 
@@ -8215,7 +8163,7 @@ public class LayoutEditorTools {
 
         if (block1BoundSignalMast == null) {
             if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()
-            && InstanceManager.getDefault(SignalMastLogicManager.class).isSignalMastUsed(oldBlock1SignalMast)) {
+                    && InstanceManager.getDefault(SignalMastLogicManager.class).isSignalMastUsed(oldBlock1SignalMast)) {
                 SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, oldBlock1SignalMast);
             }
 
@@ -8229,8 +8177,8 @@ public class LayoutEditorTools {
 
         if (block2BoundSignalMast == null) {
             if (InstanceManager.getDefault(LayoutBlockManager.class
-                    ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(SignalMastLogicManager.class
-                    ).isSignalMastUsed(oldBlock2SignalMast)) {
+            ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(SignalMastLogicManager.class
+            ).isSignalMastUsed(oldBlock2SignalMast)) {
                 SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBlockBoundaryFrame, oldBlock2SignalMast);
             }
 
@@ -8359,7 +8307,6 @@ public class LayoutEditorTools {
             }
         }
         setSignalMastsAtBlockBoundaryOpenFlag = false;
-        setSignalMastsAtBlockBoundaryFromMenuFlag = false;
         setSignalMastsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -8940,28 +8887,25 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             turnoutBlocks[i] = blocks[i];
         }
-        setSignalMastsAtTurnout(true);
+        setSignalMastsAtTurnoutFromMenuFlag = true;
+        setSignalMastsAtTurnout();
+        setSignalMastsAtTurnoutFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
     public void setSignalMastsAtTurnout() {
-        setSignalMastsAtTurnout(false);
-    }
-
-    private void setSignalMastsAtTurnout(boolean fromMenuFlag) {
-        setSignalMastsAtTurnoutFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSignalMastsAtTurnoutFrame == null) {
             setSignalMastsAtTurnoutOpenFlag = false;
 
-            turnoutSignalMastA = new BeanDetails("SignalMast",  // NOI18N
+            turnoutSignalMastA = new BeanDetails("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastB = new BeanDetails("SignalMast",  // NOI18N
+            turnoutSignalMastB = new BeanDetails("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastC = new BeanDetails("SignalMast",  // NOI18N
+            turnoutSignalMastC = new BeanDetails("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastD = new BeanDetails("SignalMast",  // NOI18N
+            turnoutSignalMastD = new BeanDetails("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
 
             turnoutSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
@@ -9272,7 +9216,6 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
         setSignalMastsAtTurnoutOpenFlag = false;
-        setSignalMastsAtTurnoutFromMenuFlag = false;
         setSignalMastsAtTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -9461,8 +9404,7 @@ public class LayoutEditorTools {
         }
         layoutTurnout = layoutEditor.getFinder().findLayoutTurnoutByBean(turnout);
 
-        LayoutTurnout t = layoutTurnout;
-        if (t == null) {
+        if (layoutTurnout == null) {
             JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                     Bundle.getMessage("SignalsError3",
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
@@ -9501,7 +9443,6 @@ public class LayoutEditorTools {
 
     private void setSignalMastsCancelPressed(ActionEvent a) {
         setSignalMastsAtTurnoutOpenFlag = false;
-        setSignalMastsAtTurnoutFromMenuFlag = false;
         setSignalMastsAtTurnoutFrame.setVisible(false);
     }
 
@@ -9562,18 +9503,14 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             slipBlocks[i] = blocks[i];
         }
-        setSignalMastsAtLayoutSlip(theFrame, true);
+        setSignalMastsAtLayoutSlipFromMenuFlag = true;
+        setSignalMastsAtLayoutSlip(theFrame);
+        setSignalMastsAtLayoutSlipFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
     public void setSignalMastsAtLayoutSlip(@Nonnull JFrame theFrame) {
-        setSignalMastsAtLayoutSlip(theFrame, false);
-    }
-
-    private void setSignalMastsAtLayoutSlip(@Nonnull JFrame theFrame,
-            boolean fromMenuFlag) {
         signalFrame = theFrame;
-        setSignalMastsAtLayoutSlipFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSignalMastsAtLayoutSlipFrame == null) {
@@ -9864,7 +9801,6 @@ public class LayoutEditorTools {
 
     private void setSlipSignalMastsCancelPressed(ActionEvent a) {
         setSignalMastsAtLayoutSlipOpenFlag = false;
-        setSignalMastsAtLayoutSlipFromMenuFlag = false;
         setSignalMastsAtLayoutSlipFrame.setVisible(false);
     }
 
@@ -10052,7 +9988,6 @@ public class LayoutEditorTools {
         // setup logic if requested
         // finish up
         setSignalMastsAtLayoutSlipOpenFlag = false;
-        setSignalMastsAtLayoutSlipFromMenuFlag = false;
         setSignalMastsAtLayoutSlipFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -10105,18 +10040,14 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             xingBlocks[i] = blocks[i];
         }
-        setSignalMastsAtLevelXing(theFrame, true);
+        setSignalMastsAtLevelXingFromMenuFlag = true;
+        setSignalMastsAtLevelXing(theFrame);
+        setSignalMastsAtLevelXingFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
     public void setSignalMastsAtLevelXing(@Nonnull JFrame theFrame) {
-        setSignalMastsAtLevelXing(theFrame, false);
-    }
-
-    private void setSignalMastsAtLevelXing(@Nonnull JFrame theFrame,
-            boolean fromMenuFlag) {
         signalFrame = theFrame;
-        setSignalMastsAtLevelXingFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSignalMastsAtLevelXingFrame == null) {
@@ -10139,7 +10070,6 @@ public class LayoutEditorTools {
             xingSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
             xingSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
             xingSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
-
 
             setSignalMastsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLevelXing"), false, true);
             oneFrameToRuleThemAll(setSignalMastsAtLevelXingFrame);
@@ -10398,7 +10328,6 @@ public class LayoutEditorTools {
 
     private void setXingSignalMastsCancelPressed(ActionEvent a) {
         setSignalMastsAtLevelXingOpenFlag = false;
-        setSignalMastsAtLevelXingFromMenuFlag = false;
         setSignalMastsAtLevelXingFrame.setVisible(false);
     }
 
@@ -10588,7 +10517,6 @@ public class LayoutEditorTools {
         // setup logic if requested
         // finish up
         setSignalMastsAtLevelXingOpenFlag = false;
-        setSignalMastsAtLevelXingFromMenuFlag = false;
         setSignalMastsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -10638,18 +10566,14 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             turnoutSenBlocks[i] = blocks[i];
         }
-        setSensorsAtTurnout(frame, true);
+        setSensorsAtTurnoutFromMenuFlag = true;
+        setSensorsAtTurnout(frame);
+        setSensorsAtTurnoutFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
     public void setSensorsAtTurnout(@Nonnull JFrame frame) {
-        setSensorsAtTurnout(frame, false);
-    }
-
-    private void setSensorsAtTurnout(@Nonnull JFrame frame,
-            boolean fromMenuFlag) {
         turnoutSensorFrame = frame;
-        setSensorsAtTurnoutFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSensorsAtTurnoutFrame == null) {
@@ -11050,7 +10974,6 @@ public class LayoutEditorTools {
         layoutTurnout.setLinkedTurnoutName("");
         // finish up
         setSensorsAtTurnoutOpenFlag = false;
-        setSensorsAtTurnoutFromMenuFlag = false;
         setSensorsAtTurnoutFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -11095,7 +11018,6 @@ public class LayoutEditorTools {
 
     private void setSensorsCancelPressed(ActionEvent a) {
         setSensorsAtTurnoutOpenFlag = false;
-        setSensorsAtTurnoutFromMenuFlag = false;
         setSensorsAtTurnoutFrame.setVisible(false);
     }
 
@@ -11145,20 +11067,16 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             xingSensorBlocks[i] = blocks[i];
         }
-        setSensorsAtLevelXing(theEditor, theFrame, true);
+        setSensorsAtLevelXingFromMenuFlag = true;
+        setSensorsAtLevelXing(theEditor, theFrame);
+        setSensorsAtLevelXingFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
     public void setSensorsAtLevelXing(@Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        setSensorsAtLevelXing(theEditor, theFrame, false);
-    }
-
-    private void setSensorsAtLevelXing(@Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame, boolean fromMenuFlag) {
         sensorIconEditor = theEditor;
         sensorXingFrame = theFrame;
-        setSensorsAtLevelXingFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSensorsAtLevelXingFrame == null) {
@@ -11416,7 +11334,6 @@ public class LayoutEditorTools {
 
     private void setXingSensorsCancelPressed(ActionEvent a) {
         setSensorsAtLevelXingOpenFlag = false;
-        setSensorsAtLevelXingFromMenuFlag = false;
         setSensorsAtLevelXingFrame.setVisible(false);
     }
 
@@ -11596,7 +11513,6 @@ public class LayoutEditorTools {
         // setup logic if requested
         // finish up
         setSensorsAtLevelXingOpenFlag = false;
-        setSensorsAtLevelXingFromMenuFlag = false;
         setSensorsAtLevelXingFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -11715,20 +11631,16 @@ public class LayoutEditorTools {
         for (int i = 0; i < blocks.length; i++) {
             slipSensorBlocks[i] = blocks[i];
         }
-        setSensorsAtSlip(theEditor, theFrame, true);
+        setSensorsAtSlipFromMenuFlag = true;
+        setSensorsAtSlip(theEditor, theFrame);
+        setSensorsAtSlipFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
     public void setSensorsAtSlip(@Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        setSensorsAtSlip(theEditor, theFrame, false);
-    }
-
-    private void setSensorsAtSlip(@Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame, boolean fromMenuFlag) {
         sensorIconEditor = theEditor;
         sensorSlipFrame = theFrame;
-        setSensorsAtSlipFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSensorsAtSlipFrame == null) {
@@ -11842,16 +11754,16 @@ public class LayoutEditorTools {
         if (setSensorsAtSlipFromMenuFlag) {
             slipSignalBlockANameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " A "
-                    + Bundle.getMessage("Name")) +  " " + layoutSlip.getBlockName());
+                    + Bundle.getMessage("Name")) + " " + layoutSlip.getBlockName());
             slipSignalBlockBNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " B "
-                    + Bundle.getMessage("Name")) +  " " + layoutSlip.getBlockBName());
+                    + Bundle.getMessage("Name")) + " " + layoutSlip.getBlockBName());
             slipSignalBlockCNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " C "
-                    + Bundle.getMessage("Name")) +  " " + layoutSlip.getBlockCName());
+                    + Bundle.getMessage("Name")) + " " + layoutSlip.getBlockCName());
             slipSignalBlockDNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " D "
-                    + Bundle.getMessage("Name")) +  " " + layoutSlip.getBlockDName());
+                    + Bundle.getMessage("Name")) + " " + layoutSlip.getBlockDName());
             slipSensorsGetSaved(null);
         } else {
             slipSignalBlockANameLabel.setText(Bundle.getMessage("MakeLabel",
@@ -12003,7 +11915,6 @@ public class LayoutEditorTools {
 
     private void setSlipSensorsCancelPressed(ActionEvent a) {
         setSensorsAtSlipOpenFlag = false;
-        setSensorsAtSlipFromMenuFlag = false;
         setSensorsAtSlipFrame.setVisible(false);
     }
 
@@ -12183,7 +12094,6 @@ public class LayoutEditorTools {
         // setup logic if requested
         // finish up
         setSensorsAtSlipOpenFlag = false;
-        setSensorsAtSlipFromMenuFlag = false;
         setSensorsAtSlipFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
@@ -12421,19 +12331,15 @@ public class LayoutEditorTools {
         d1SlipSignalHeadComboBox.setText("");
         d2SlipSignalHeadComboBox.setText("");
 
-        setSignalsAtSlip(theEditor, theFrame, true);
+        setSignalsAtSlipFromMenuFlag = true;
+        setSignalsAtSlip(theEditor, theFrame);
+        setSignalsAtSlipFromMenuFlag = false;
     }
 
     public void setSignalsAtSlip(@Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
-        setSignalsAtSlip(theEditor, theFrame, false);
-    }
-
-    private void setSignalsAtSlip(@Nonnull MultiIconEditor theEditor,
-            @Nonnull JFrame theFrame, boolean fromMenuFlag) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
-        setSignalsAtSlipFromMenuFlag = fromMenuFlag;
 
         // Initialize if needed
         if (setSignalsAtSlipFrame == null) {
@@ -12747,7 +12653,6 @@ public class LayoutEditorTools {
 
     private void setSlipSignalsCancelPressed(ActionEvent a) {
         setSignalsAtSlipOpenFlag = false;
-        setSignalsAtSlipFromMenuFlag = false;
         setSignalsAtSlipFrame.setVisible(false);
     }
 
@@ -13171,7 +13076,6 @@ public class LayoutEditorTools {
         }
         // finish up
         setSignalsAtSlipOpenFlag = false;
-        setSignalsAtSlipFromMenuFlag = false;
         setSignalsAtSlipFrame.setVisible(false);
 
         if (needRedraw) {

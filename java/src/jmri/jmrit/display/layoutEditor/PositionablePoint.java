@@ -1063,8 +1063,8 @@ public class PositionablePoint extends LayoutTrack {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // bring up signals at level crossing tool dialog
-                        layoutEditor.getLETools().setSignalAtEdgeConnector(PositionablePoint.this,
+                        // bring up signals at edge connector tool dialog
+                        layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
                 });

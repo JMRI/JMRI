@@ -132,28 +132,37 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public Turnout getTurnoutB() {
+        Turnout result = null;
         if (namedTurnoutB == null) {
-            // set physical turnout if possible and needed
-            setTurnoutB(turnoutBName);
-            if (namedTurnoutB == null) {
-                return null;
+            if (!turnoutBName.isEmpty()) {
+                setTurnoutB(turnoutBName);
             }
         }
-        return namedTurnoutB.getBean();
+        if (namedTurnoutB != null) {
+            result = namedTurnoutB.getBean();
+        }
+        return result;
     }
 
-    public void setTurnoutB(String tName) {
+    public void setTurnoutB(@Nonnull String tName) {
+        boolean reactivate = false;
         if (namedTurnoutB != null) {
             deactivateTurnout();
+            reactivate = (namedTurnout != null);
         }
-        turnoutBName = tName;
-        Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutBName);
+        turnoutBName = "";
+        namedTurnoutB = null;
+        Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(tName);
         if (turnout != null) {
-            namedTurnoutB = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutBName, turnout);
+            namedTurnoutB = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tName, turnout);
+            if (namedTurnoutB != null) {
+                turnoutBName = tName;
+            }
+        }
+        if (reactivate) {
+            // this has to be called even on a delete in order 
+            // to re-activate namedTurnout (A) (if necessary)
             activateTurnout();
-        } else {
-            turnoutBName = "";
-            namedTurnoutB = null;
         }
     }
 
@@ -387,7 +396,9 @@ public class LayoutSlip extends LayoutTurnout {
 
     private void deactivateTurnout() {
         if (mTurnoutListener != null) {
-            namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
+            if (namedTurnout != null) {
+                namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
+            }
             if (namedTurnoutB != null) {
                 namedTurnoutB.getBean().removePropertyChangeListener(mTurnoutListener);
             }
@@ -731,13 +742,29 @@ public class LayoutSlip extends LayoutTurnout {
             jmi.setEnabled(false);
 
             boolean blockAssigned = false;
-            if ((blockName == null) || (blockName.isEmpty())) {
+            if (getLayoutBlock() == null) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
+                jmi.setEnabled(false);
             } else {
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
                 blockAssigned = true;
+
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "A")) + getLayoutBlock().getDisplayName());
+                jmi.setEnabled(false);
+
+                // check if extra blocks have been entered
+                if ((getLayoutBlockB() != null) && (getLayoutBlockB() != getLayoutBlock())) {
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "B")) + getLayoutBlockB().getDisplayName());
+                    jmi.setEnabled(false);
+                }
+                if ((getLayoutBlockC() != null) && (getLayoutBlockC() != getLayoutBlock())) {
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "C")) + getLayoutBlockC().getDisplayName());
+                    jmi.setEnabled(false);
+                }
+                if ((getLayoutBlockD() != null) && (getLayoutBlockD() != getLayoutBlock())) {
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "D")) + getLayoutBlockD().getDisplayName());
+                    jmi.setEnabled(false);
+                }
             }
-            jmi.setEnabled(false);
 
             // if there are any track connections
             if ((connectA != null) || (connectB != null)
@@ -881,58 +908,59 @@ public class LayoutSlip extends LayoutTurnout {
                         }
                 );
             }
-            if (blockAssigned) {
-                AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        layoutEditor.getLETools().setSignalsAtSlipFromMenu(
-                                LayoutSlip.this,
-                                layoutEditor.signalIconEditor,
-                                layoutEditor.signalFrame);
-                    }
-                };
-                JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (layoutEditor.getLETools().addLayoutSlipSignalHeadInfoToMenu(
-                        LayoutSlip.this, jm)) {
-                    jm.add(ssaa);
-                    popup.add(jm);
-                } else {
-                    popup.add(ssaa);
-                }
-
-            }
-
-            final String[] boundaryBetween = getBlockBoundaries();
-            boolean blockBoundaries = false;
-
-            for (int i = 0; i < 4; i++) {
-                if (boundaryBetween[i] != null) {
-                    blockBoundaries = true;
-                }
-            }
-            if (blockBoundaries) {
-                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        layoutEditor.getLETools().setSignalMastsAtSlipFromMenu(
-                                LayoutSlip.this, 
-                                boundaryBetween, 
-                                layoutEditor.signalFrame);
-                    }
-                });
-                popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        layoutEditor.getLETools().setSensorsAtSlipFromMenu(
-                                LayoutSlip.this, boundaryBetween,
-                                layoutEditor.sensorIconEditor, 
-                                layoutEditor.sensorFrame);
-                    }
-                });
-            }
-
-            if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+            if ((getTurnout() != null) && (getTurnoutB() != null)) {
                 if (blockAssigned) {
+                    AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            layoutEditor.getLETools().setSignalsAtSlipFromMenu(
+                                    LayoutSlip.this,
+                                    layoutEditor.signalIconEditor,
+                                    layoutEditor.signalFrame);
+                        }
+                    };
+                    JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
+                    if (layoutEditor.getLETools().addLayoutSlipSignalHeadInfoToMenu(
+                            LayoutSlip.this, jm)) {
+                        jm.add(ssaa);
+                        popup.add(jm);
+                    } else {
+                        popup.add(ssaa);
+                    }
+
+                }
+
+                final String[] boundaryBetween = getBlockBoundaries();
+                boolean blockBoundaries = false;
+
+                for (int i = 0; i < 4; i++) {
+                    if (boundaryBetween[i] != null) {
+                        blockBoundaries = true;
+                    }
+                }
+                if (blockBoundaries) {
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            layoutEditor.getLETools().setSignalMastsAtSlipFromMenu(
+                                    LayoutSlip.this,
+                                    boundaryBetween,
+                                    layoutEditor.signalFrame);
+                        }
+                    });
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            layoutEditor.getLETools().setSensorsAtSlipFromMenu(
+                                    LayoutSlip.this, boundaryBetween,
+                                    layoutEditor.sensorIconEditor,
+                                    layoutEditor.sensorFrame);
+                        }
+                    });
+                }
+
+                if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()
+                        && blockAssigned) {
                     popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                         @Override
                         public void actionPerformed(ActionEvent event) {

@@ -2960,7 +2960,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         jmi.setToolTipText(Bundle.getMessage("SignalsAtXoverTurnoutToolTip"));
         toolsMenu.add(jmi);
         jmi.addActionListener((ActionEvent event) -> {
-            //bring up signals at double crossover tool dialog
+            //bring up signals at crossover tool dialog
             getLETools().setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
         });
 
