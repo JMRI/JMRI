@@ -7217,6 +7217,8 @@ public class LayoutEditorTools {
     private JFrame sensorFrame = null;
     private MultiIconEditor sensorIconEditor = null;
 
+    JPanel sensorBlockPanel = new JPanel(new FlowLayout());
+
     public void setSensorsAtBlockBoundaryFromMenu(@Nonnull PositionablePoint p,
             @Nonnull MultiIconEditor theEditor,
             @Nonnull JFrame theFrame) {
@@ -7246,16 +7248,17 @@ public class LayoutEditorTools {
         // Initialize if needed
         if (setSensorsAtBlockBoundaryFrame == null) {
             setSensorsAtBlockBoundaryOpenFlag = false;
+
             westBoundSensor = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
             eastBoundSensor = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
 
             setSensorsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SensorsAtBoundary"), false, true);
             oneFrameToRuleThemAll(setSensorsAtBlockBoundaryFrame);
             setSensorsAtBlockBoundaryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setSensorsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtBoundary", true);
+//             setSensorsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtBoundary", true);
             setSensorsAtBlockBoundaryFrame.setLocation(70, 30);
             Container theContentPane = setSensorsAtBlockBoundaryFrame.getContentPane();
-            theContentPane.setLayout(new BorderLayout());
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel header = new JPanel();
             header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
@@ -7279,14 +7282,11 @@ public class LayoutEditorTools {
             panel12.add(block2IDComboBox);
             block2IDComboBox.setToolTipText(Bundle.getMessage("SensorsBlockNameHint"));
             header.add(panel12);
+
             header.add(new JSeparator(JSeparator.HORIZONTAL));
-            theContentPane.add(header, BorderLayout.NORTH);
+            theContentPane.add(header);
 
             JPanel panel2 = new JPanel(new FlowLayout());
-
-            JPanel main = new JPanel();
-            main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-
             JLabel shTitle = new JLabel(Bundle.getMessage("Sensors"));
             panel2.add(shTitle);
             panel2.add(new JLabel("	  "));
@@ -7295,47 +7295,12 @@ public class LayoutEditorTools {
                 getSavedAnchorSensors(e);
             });
             getAnchorSavedSensors.setToolTipText(Bundle.getMessage("GetSavedHint"));
-            if (boundary.getType() != PositionablePoint.END_BUMPER) {
-                main.add(panel2);
-            }
+            theContentPane.add(panel2);
 
-            if (boundary.getType() != PositionablePoint.END_BUMPER) {
-                eastBoundSensor.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
-                if ((setSensorsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
-                    if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                        eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
-                    } else {
-                        eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                    }
-                }
-                eastBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
-                main.add(eastBoundSensor.getDetailsPanel());
+            sensorBlockPanel.setLayout(new GridLayout(0, 1));
+            theContentPane.add(sensorBlockPanel);
 
-                westBoundSensor.setBoundaryTitle(Bundle.getMessage("West/NorthBound"));
-                if (setSensorsAtBlockBoundaryFromMenuFlag) {
-                    if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                        westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                    } else {
-                        westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
-                    }
-                }
-                westBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
-                main.add(westBoundSensor.getDetailsPanel());
-            } else {
-                if (setSensorsAtBlockBoundaryFromMenuFlag) {
-                    if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                        eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                        eastBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
-                        main.add(eastBoundSensor.getDetailsPanel());
-                    } else {
-                        westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                        westBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
-                        main.add(westBoundSensor.getDetailsPanel());
-                    }
-                }
-            }
-            main.add(new JSeparator(JSeparator.HORIZONTAL));
-            theContentPane.add(main, BorderLayout.CENTER);
+            theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JPanel panel6 = new JPanel(new FlowLayout());
             panel6.add(changeSensorAtBoundaryIcon = new JButton(Bundle.getMessage("ChangeSensorIcon")));
@@ -7370,16 +7335,58 @@ public class LayoutEditorTools {
                 }
             });
         }
+
+        sensorBlockPanel.removeAll();
+
+        if (boundary.getType() != PositionablePoint.END_BUMPER) {
+            eastBoundSensor.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
+            if ((setSensorsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
+                if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                } else {
+                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                }
+            }
+            eastBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
+            sensorBlockPanel.add(eastBoundSensor.getDetailsPanel());
+
+            westBoundSensor.setBoundaryTitle(Bundle.getMessage("West/NorthBound"));
+            if (setSensorsAtBlockBoundaryFromMenuFlag) {
+                if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                } else {
+                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                }
+            }
+            westBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
+            sensorBlockPanel.add(westBoundSensor.getDetailsPanel());
+        } else {
+            if (setSensorsAtBlockBoundaryFromMenuFlag) {
+                if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
+                    sensorBlockPanel.add(eastBoundSensor.getDetailsPanel());
+                } else {
+                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
+                    sensorBlockPanel.add(westBoundSensor.getDetailsPanel());
+                }
+            }
+        }
+
+        block1IDComboBox.setVisible(!setSensorsAtBlockBoundaryFromMenuFlag);
+        block2IDComboBox.setVisible(!setSensorsAtBlockBoundaryFromMenuFlag);
+
         if (setSensorsAtBlockBoundaryFromMenuFlag) {
             block1NameLabel.setText(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("BeanNameTurnout") + " 1 "
+                    Bundle.getMessage("BeanNameBlock") + " 1 "
                     + Bundle.getMessage("Name"))
-                    + boundary.getConnect1().getLayoutBlock().getId());
+                    + " " + boundary.getConnect1().getLayoutBlock().getId());
             if (boundary.getConnect2() != null) {
                 block2NameLabel.setText(Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("BeanNameTurnout") + " 2 "
+                        Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name"))
-                        + boundary.getConnect2().getLayoutBlock().getId());
+                        + " " + boundary.getConnect2().getLayoutBlock().getId());
             }
             getSavedAnchorSensors(null);
         } else {
@@ -7387,13 +7394,12 @@ public class LayoutEditorTools {
                     Bundle.getMessage("Name") + " 1 "
                     + Bundle.getMessage("Name")));
             block2NameLabel.setText(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("Name") + " 2 - "
+                    Bundle.getMessage("Name") + " 2  "
                     + Bundle.getMessage("Name")));
         }
         // boundary should never be null... however, just in case...
-        boolean enable = ((boundary != null) && (boundary.getType() == PositionablePoint.ANCHOR));
+        boolean enable = ((boundary != null) && (boundary.getType() != PositionablePoint.END_BUMPER));
         block2NameLabel.setVisible(enable);
-        block2IDComboBox.setVisible(enable);
 
         if (!setSensorsAtBlockBoundaryOpenFlag) {
             setSensorsAtBlockBoundaryFrame.setPreferredSize(null);
@@ -7812,15 +7818,15 @@ public class LayoutEditorTools {
         if (setSignalMastsAtBlockBoundaryFrame == null) {
             setSignalMastsAtBlockBoundaryOpenFlag = false;
 
-            eastSignalMast = new BeanDetails("SignalMast",
-                    InstanceManager.getDefault(SignalMastManager.class)); // NOI18N
-            westSignalMast = new BeanDetails("SignalMast",
-                    InstanceManager.getDefault(SignalMastManager.class)); // NOI18N
+            eastSignalMast = new BeanDetails("SignalMast", // NOI18N
+                    InstanceManager.getDefault(SignalMastManager.class));
+            westSignalMast = new BeanDetails("SignalMast", // NOI18N
+                    InstanceManager.getDefault(SignalMastManager.class));
 
             setSignalMastsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtBoundary"), false, true);
             oneFrameToRuleThemAll(setSignalMastsAtBlockBoundaryFrame);
             setSignalMastsAtBlockBoundaryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setSignalMastsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtBoundary", true);
+//             setSignalMastsAtBlockBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtBoundary", true);
             setSignalMastsAtBlockBoundaryFrame.setLocation(70, 30);
             Container theContentPane = setSignalMastsAtBlockBoundaryFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
@@ -7840,7 +7846,7 @@ public class LayoutEditorTools {
 
             // Create the block 2 label and combo box, visibility will be controlled later
             block2NameLabel = new JLabel(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("BeanNameBlock") + " 2x "
+                    Bundle.getMessage("BeanNameBlock") + " 2 "
                     + Bundle.getMessage("Name")));
             block2IDComboBox.setToolTipText(Bundle.getMessage("SignalMastsBlockNameHint"));
 
@@ -7887,7 +7893,6 @@ public class LayoutEditorTools {
                 setSignalMastsAtBlockBoundaryCancelPressed(e);
             });
             setSignalMastsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-//             theContentPane.add(panel6, BorderLayout.SOUTH);
             theContentPane.add(panel6);
             setSignalMastsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
@@ -7897,7 +7902,10 @@ public class LayoutEditorTools {
             });
         }
 
+        eastSignalMast.getCombo().excludeItems(new ArrayList<NamedBean>());
+        westSignalMast.getCombo().excludeItems(new ArrayList<NamedBean>());
         signalMastBlockPanel.removeAll();
+
         if (boundary.getType() != PositionablePoint.END_BUMPER) {   // Anchor points and Edge Connectors
             eastSignalMast.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
             if (boundary.getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -7948,26 +7956,23 @@ public class LayoutEditorTools {
                     + Bundle.getMessage("Name"))
                     + " " + boundary.getConnect1().getLayoutBlock().getId());
             if (boundary.getConnect2() != null) {
-                log.info("setup label 2 for A and EC");
                 block2NameLabel.setText(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name"))
                         + " " + boundary.getConnect2().getLayoutBlock().getId());
                 block2NameLabel.setVisible(true);
-                log.info("show label");
             } else {
-                log.info("label should not show");
                 block2NameLabel.setVisible(false);
             }
             getSavedAnchorSignalMasts(null);
         }
 
         if (!setSignalMastsAtBlockBoundaryOpenFlag) {
-            refreshSignalMastAtBoundaryComboBox();
             setSignalMastsAtBlockBoundaryFrame.setPreferredSize(null);
             setSignalMastsAtBlockBoundaryFrame.pack();
             setSignalMastsAtBlockBoundaryOpenFlag = true;
         }
+        refreshSignalMastAtBoundaryComboBox();
         setSignalMastsAtBlockBoundaryFrame.setVisible(true);
     }
 
@@ -8949,24 +8954,30 @@ public class LayoutEditorTools {
         // Initialize if needed
         if (setSignalMastsAtTurnoutFrame == null) {
             setSignalMastsAtTurnoutOpenFlag = false;
+
+            turnoutSignalMastA = new BeanDetails("SignalMast",  // NOI18N
+                    InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastB = new BeanDetails("SignalMast",  // NOI18N
+                    InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastC = new BeanDetails("SignalMast",  // NOI18N
+                    InstanceManager.getDefault(SignalMastManager.class));
+            turnoutSignalMastD = new BeanDetails("SignalMast",  // NOI18N
+                    InstanceManager.getDefault(SignalMastManager.class));
+
+            turnoutSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
+            turnoutSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
+            turnoutSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
+            turnoutSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
+
             setSignalMastsAtTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtTurnout"), false, true);
             oneFrameToRuleThemAll(setSignalMastsAtTurnoutFrame);
             setSignalMastsAtTurnoutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setSignalMastsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtTurnout", true);
+//             setSignalMastsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtTurnout", true);
             setSignalMastsAtTurnoutFrame.setLocation(70, 30);
             Container theContentPane = setSignalMastsAtTurnoutFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
-
-            turnoutSignalMastA = new BeanDetails("SignalMast",
-                    InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastB = new BeanDetails("SignalMast",
-                    InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastC = new BeanDetails("SignalMast",
-                    InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastD = new BeanDetails("SignalMast",
-                    InstanceManager.getDefault(SignalMastManager.class));
 
             turnoutMastNameLabel = new JLabel(
                     Bundle.getMessage("BeanNameTurnout")
@@ -8991,7 +9002,6 @@ public class LayoutEditorTools {
 
             signalMastTurnoutPanel.setLayout(new GridLayout(0, 2));
             theContentPane.add(signalMastTurnoutPanel);
-
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JPanel panel6 = new JPanel(new FlowLayout());
@@ -9017,29 +9027,11 @@ public class LayoutEditorTools {
             theContentPane.add(panel6);
         }
 
-        turnoutSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-        turnoutSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-        turnoutSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-        turnoutSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
-
-        turnoutSignalMastA.setBoundaryLabel(turnoutBlocks[0]);
-        turnoutSignalMastB.setBoundaryLabel(turnoutBlocks[1]);
-        turnoutSignalMastC.setBoundaryLabel(turnoutBlocks[2]);
-        turnoutSignalMastD.setBoundaryLabel(turnoutBlocks[3]);
-
+        turnoutSignalMastA.getCombo().excludeItems(new ArrayList<>());
+        turnoutSignalMastB.getCombo().excludeItems(new ArrayList<>());
+        turnoutSignalMastC.getCombo().excludeItems(new ArrayList<>());
+        turnoutSignalMastD.getCombo().excludeItems(new ArrayList<>());
         signalMastTurnoutPanel.removeAll();
-        if (turnoutBlocks[0] != null) {
-            signalMastTurnoutPanel.add(turnoutSignalMastA.getDetailsPanel());
-        }
-        if (turnoutBlocks[1] != null) {
-            signalMastTurnoutPanel.add(turnoutSignalMastB.getDetailsPanel());
-        }
-        if (turnoutBlocks[2] != null) {
-            signalMastTurnoutPanel.add(turnoutSignalMastC.getDetailsPanel());
-        }
-        if (turnoutBlocks[3] != null) {
-            signalMastTurnoutPanel.add(turnoutSignalMastD.getDetailsPanel());
-        }
 
         signalMastsTurnoutComboBox.setVisible(!setSignalMastsAtTurnoutFromMenuFlag);
 
@@ -9048,7 +9040,6 @@ public class LayoutEditorTools {
                     Bundle.getMessage("BeanNameTurnout")
                     + " " + Bundle.getMessage("Name"))
                     + " " + layoutTurnout.getTurnoutName());
-            turnoutSignalMastsGetSaved(null);
         }
 
         if (!setSignalMastsAtTurnoutOpenFlag) {
@@ -9076,11 +9067,7 @@ public class LayoutEditorTools {
         turnoutSignalMastC.setBoundaryLabel(turnoutBlocks[2]);
         turnoutSignalMastD.setBoundaryLabel(turnoutBlocks[3]);
 
-        signalMastTurnoutPanel.remove(turnoutSignalMastA.getDetailsPanel());
-        signalMastTurnoutPanel.remove(turnoutSignalMastB.getDetailsPanel());
-        signalMastTurnoutPanel.remove(turnoutSignalMastC.getDetailsPanel());
-        signalMastTurnoutPanel.remove(turnoutSignalMastD.getDetailsPanel());
-
+        signalMastTurnoutPanel.removeAll();
         boolean boundaryFlag = false;
         if (turnoutBlocks[0] != null) {
             signalMastTurnoutPanel.add(turnoutSignalMastA.getDetailsPanel());
@@ -9601,10 +9588,15 @@ public class LayoutEditorTools {
             slipSignalMastD = new BeanDetails("SignalMast",
                     InstanceManager.getDefault(SignalMastManager.class));
 
+            slipSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
+            slipSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
+            slipSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
+            slipSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
+
             setSignalMastsAtLayoutSlipFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLayoutSlip"), false, true);
             oneFrameToRuleThemAll(setSignalMastsAtLayoutSlipFrame);
             setSignalMastsAtLayoutSlipFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setSignalMastsAtLayoutSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
+//             setSignalMastsAtLayoutSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
             setSignalMastsAtLayoutSlipFrame.setLocation(70, 30);
             Container theContentPane = setSignalMastsAtLayoutSlipFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
@@ -9654,31 +9646,7 @@ public class LayoutEditorTools {
             getSavedSlipSignalMasts.setToolTipText(Bundle.getMessage("GetSavedHint"));
             theContentPane.add(panel2);
 
-            slipSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-            slipSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-            slipSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-            slipSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
-
             signalMastLayoutSlipPanel.setLayout(new GridLayout(0, 2));
-
-            slipSignalMastA.setBoundaryLabel(slipBlocks[0]);
-            slipSignalMastB.setBoundaryLabel(slipBlocks[1]);
-            slipSignalMastC.setBoundaryLabel(slipBlocks[2]);
-            slipSignalMastD.setBoundaryLabel(slipBlocks[3]);
-
-            if (slipBlocks[0] != null) {
-                signalMastLayoutSlipPanel.add(slipSignalMastA.getDetailsPanel());
-            }
-            if (slipBlocks[1] != null) {
-                signalMastLayoutSlipPanel.add(slipSignalMastB.getDetailsPanel());
-            }
-            if (slipBlocks[2] != null) {
-                signalMastLayoutSlipPanel.add(slipSignalMastC.getDetailsPanel());
-            }
-            if (slipBlocks[3] != null) {
-                signalMastLayoutSlipPanel.add(slipSignalMastD.getDetailsPanel());
-            }
-
             theContentPane.add(signalMastLayoutSlipPanel);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -9703,6 +9671,14 @@ public class LayoutEditorTools {
                 }
             });
         }
+
+        // Unhide any excluded masts
+        slipSignalMastA.getCombo().excludeItems(new ArrayList<>());
+        slipSignalMastB.getCombo().excludeItems(new ArrayList<>());
+        slipSignalMastC.getCombo().excludeItems(new ArrayList<>());
+        slipSignalMastD.getCombo().excludeItems(new ArrayList<>());
+        signalMastLayoutSlipPanel.removeAll();
+
         slipSignalBlockAComboBox.setVisible(!setSignalMastsAtLayoutSlipFromMenuFlag);
         slipSignalBlockBComboBox.setVisible(!setSignalMastsAtLayoutSlipFromMenuFlag);
         slipSignalBlockCComboBox.setVisible(!setSignalMastsAtLayoutSlipFromMenuFlag);
@@ -9712,24 +9688,19 @@ public class LayoutEditorTools {
             slipSignalBlockANameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " A "
                     + Bundle.getMessage("Name"))
-                    + layoutSlip.getBlockName());
+                    + " " + layoutSlip.getBlockName());
             slipSignalBlockBNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " B "
                     + Bundle.getMessage("Name"))
-                    + layoutSlip.getBlockBName());
+                    + " " + layoutSlip.getBlockBName());
             slipSignalBlockCNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " C "
                     + Bundle.getMessage("Name"))
-                    + layoutSlip.getBlockCName());
+                    + " " + layoutSlip.getBlockCName());
             slipSignalBlockDNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " D "
                     + Bundle.getMessage("Name"))
-                    + layoutSlip.getBlockDName());
-
-            slipSignalMastA.setTextField(layoutSlip.getSignalAMastName());
-            slipSignalMastB.setTextField(layoutSlip.getSignalBMastName());
-            slipSignalMastC.setTextField(layoutSlip.getSignalCMastName());
-            slipSignalMastD.setTextField(layoutSlip.getSignalDMastName());
+                    + " " + layoutSlip.getBlockDName());
             refreshSignalMastAtSlipComboBox();
         } else {
             slipSignalBlockANameLabel.setText(Bundle.getMessage("MakeLabel",
@@ -10154,18 +10125,21 @@ public class LayoutEditorTools {
             xingSignalMastA = new BeanDetails("SignalMast",
                     InstanceManager.getDefault(SignalMastManager.class
                     ));
-            xingSignalMastB
-                    = new BeanDetails("SignalMast",
-                            InstanceManager.getDefault(SignalMastManager.class
-                            ));
-            xingSignalMastC
-                    = new BeanDetails("SignalMast",
-                            InstanceManager.getDefault(SignalMastManager.class
-                            ));
-            xingSignalMastD
-                    = new BeanDetails("SignalMast",
-                            InstanceManager.getDefault(SignalMastManager.class
-                            ));
+            xingSignalMastB = new BeanDetails("SignalMast",
+                    InstanceManager.getDefault(SignalMastManager.class
+                    ));
+            xingSignalMastC = new BeanDetails("SignalMast",
+                    InstanceManager.getDefault(SignalMastManager.class
+                    ));
+            xingSignalMastD = new BeanDetails("SignalMast",
+                    InstanceManager.getDefault(SignalMastManager.class
+                    ));
+
+            xingSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
+            xingSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
+            xingSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
+            xingSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
+
 
             setSignalMastsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtLevelXing"), false, true);
             oneFrameToRuleThemAll(setSignalMastsAtLevelXingFrame);
@@ -10205,30 +10179,7 @@ public class LayoutEditorTools {
             getSavedXingSignalMasts.setToolTipText(Bundle.getMessage("GetSavedHint"));
             theContentPane.add(panel2);
 
-            xingSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-            xingSignalMastB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-            xingSignalMastC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-            xingSignalMastD.getDetailsPanel().setBackground(new Color(255, 200, 200));
-
             signalMastLevelXingPanel.setLayout(new GridLayout(0, 2));
-
-            xingSignalMastA.setBoundaryLabel(xingBlocks[0]);
-            xingSignalMastB.setBoundaryLabel(xingBlocks[1]);
-            xingSignalMastC.setBoundaryLabel(xingBlocks[2]);
-            xingSignalMastD.setBoundaryLabel(xingBlocks[3]);
-
-            if (xingBlocks[0] != null) {
-                signalMastLevelXingPanel.add(xingSignalMastA.getDetailsPanel());
-            }
-            if (xingBlocks[1] != null) {
-                signalMastLevelXingPanel.add(xingSignalMastB.getDetailsPanel());
-            }
-            if (xingBlocks[2] != null) {
-                signalMastLevelXingPanel.add(xingSignalMastC.getDetailsPanel());
-            }
-            if (xingBlocks[3] != null) {
-                signalMastLevelXingPanel.add(xingSignalMastD.getDetailsPanel());
-            }
 
             theContentPane.add(signalMastLevelXingPanel);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -10255,13 +10206,23 @@ public class LayoutEditorTools {
             });
         } // if (setSignalMastsAtLevelXingFrame == null)
 
+        // Unhide any excluded masts
+        xingSignalMastA.getCombo().excludeItems(new ArrayList<>());
+        xingSignalMastB.getCombo().excludeItems(new ArrayList<>());
+        xingSignalMastC.getCombo().excludeItems(new ArrayList<>());
+        xingSignalMastD.getCombo().excludeItems(new ArrayList<>());
+        signalMastLevelXingPanel.removeAll();
+
         if (setSignalMastsAtLevelXingFromMenuFlag) {
+            xingBlockACComboBox.setVisible(false);
+            xingBlockBDComboBox.setVisible(false);
+
             xingSignalBlockACNameLabel.setText(Bundle.getMessage("MakeLabel",
                     (Bundle.getMessage("BeanNameBlock") + " AC"))
-                    + levelXing.getBlockNameAC());
+                    + " " + levelXing.getBlockNameAC());
             xingSignalBlockBDNameLabel.setText(Bundle.getMessage("MakeLabel",
                     (Bundle.getMessage("BeanNameBlock") + " BD"))
-                    + levelXing.getBlockNameBD());
+                    + " " + levelXing.getBlockNameBD());
 
             xingSignalMastA.setTextField(levelXing.getSignalAMastName());
             xingSignalMastB.setTextField(levelXing.getSignalBMastName());
@@ -10693,19 +10654,26 @@ public class LayoutEditorTools {
         // Initialize if needed
         if (setSensorsAtTurnoutFrame == null) {
             setSensorsAtTurnoutOpenFlag = false;
+
+            turnoutSensorA = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());  // NOI18N
+            turnoutSensorB = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());  // NOI18N
+            turnoutSensorC = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());  // NOI18N
+            turnoutSensorD = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());  // NOI18N
+
+            turnoutSensorA.getDetailsPanel().setBackground(new Color(255, 255, 200));
+            turnoutSensorB.getDetailsPanel().setBackground(new Color(200, 255, 255));
+            turnoutSensorC.getDetailsPanel().setBackground(new Color(200, 200, 255));
+            turnoutSensorD.getDetailsPanel().setBackground(new Color(255, 200, 200));
+
             setSensorsAtTurnoutFrame = new JmriJFrame(Bundle.getMessage("SensorsAtTurnout"), false, true);
             oneFrameToRuleThemAll(setSensorsAtTurnoutFrame);
             setSensorsAtTurnoutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setSensorsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtTurnout", true);
+//             setSensorsAtTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtTurnout", true);
             setSensorsAtTurnoutFrame.setLocation(70, 30);
             Container theContentPane = setSensorsAtTurnoutFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
-            turnoutSensorA = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            turnoutSensorB = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            turnoutSensorC = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            turnoutSensorD = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
 
             turnoutSensorNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                     + Bundle.getMessage("Name"));
@@ -10727,30 +10695,7 @@ public class LayoutEditorTools {
             getSavedSensors.setToolTipText(Bundle.getMessage("GetSavedHint"));
             theContentPane.add(panel2);
 
-            turnoutSensorA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-            turnoutSensorB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-            turnoutSensorC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-            turnoutSensorD.getDetailsPanel().setBackground(new Color(255, 200, 200));
-
-            sensorTurnoutPanel.setLayout(new GridLayout(0, 2));
-
-            turnoutSensorA.setBoundaryLabel(turnoutSenBlocks[0]);
-            turnoutSensorB.setBoundaryLabel(turnoutSenBlocks[1]);
-            turnoutSensorC.setBoundaryLabel(turnoutSenBlocks[2]);
-            turnoutSensorD.setBoundaryLabel(turnoutSenBlocks[3]);
-
-            if (turnoutSenBlocks[0] != null) {
-                sensorTurnoutPanel.add(turnoutSensorA.getDetailsPanel());
-            }
-            if (turnoutSenBlocks[1] != null) {
-                sensorTurnoutPanel.add(turnoutSensorB.getDetailsPanel());
-            }
-            if (turnoutSenBlocks[2] != null) {
-                sensorTurnoutPanel.add(turnoutSensorC.getDetailsPanel());
-            }
-            if (turnoutSenBlocks[3] != null) {
-                sensorTurnoutPanel.add(turnoutSensorD.getDetailsPanel());
-            }
+            sensorTurnoutPanel.setLayout(new GridLayout(0, 2)); // Content added as needed
             theContentPane.add(sensorTurnoutPanel);
 
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -10780,18 +10725,16 @@ public class LayoutEditorTools {
                 }
             });
         }
+
+        sensorTurnoutPanel.removeAll();
+
         sensorsTurnoutComboBox.setVisible(!setSensorsAtTurnoutFromMenuFlag);
 
         if (setSensorsAtTurnoutFromMenuFlag) {
             turnoutSensorNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameTurnout")
-                    + Bundle.getMessage("Name"))
-                    + layoutTurnout.getTurnoutName());
-
-            turnoutSensorA.setTextField(layoutTurnout.getSensorAName());
-            turnoutSensorB.setTextField(layoutTurnout.getSensorBName());
-            turnoutSensorC.setTextField(layoutTurnout.getSensorCName());
-            turnoutSensorD.setTextField(layoutTurnout.getSensorDName());
+                    + " " + Bundle.getMessage("Name"))
+                    + " " + layoutTurnout.getTurnoutName());
             turnoutSensorsGetSaved(null);
         } else {
             turnoutSensorNameLabel.setText(Bundle.getMessage("BeanNameTurnout") + " "
@@ -10942,14 +10885,11 @@ public class LayoutEditorTools {
         // process signal head names
         //if ( !getSensorTurnoutInformation() ) return;
         Sensor sensorA = getSensorFromEntry(turnoutSensorA.getText(), false, setSensorsAtTurnoutFrame);
-        //if (turnoutSensor==null) return false;
         Sensor sensorB = getSensorFromEntry(turnoutSensorB.getText(), false, setSensorsAtTurnoutFrame);
-        //if (turnoutSensorB==null) return false;
         Sensor sensorC = getSensorFromEntry(turnoutSensorC.getText(), false, setSensorsAtTurnoutFrame);
-        //if (turnoutSensorC==null) return false;
         Sensor sensorD = getSensorFromEntry(turnoutSensorD.getText(), false, setSensorsAtTurnoutFrame);
-        // place signals as requested
-        if (turnoutSensorA.addToPanel()) {
+        // place sensors as requested
+        if (sensorA != null && turnoutSensorA.addToPanel()) {
             if (isSensorOnPanel(sensorA)
                     && (sensorA != layoutTurnout.getSensorA())) {
                 JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
@@ -11223,19 +11163,26 @@ public class LayoutEditorTools {
         // Initialize if needed
         if (setSensorsAtLevelXingFrame == null) {
             setSensorsAtLevelXingOpenFlag = false;
+
+            xingSensorA = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
+            xingSensorB = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
+            xingSensorC = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
+            xingSensorD = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
+
+            xingSensorA.getDetailsPanel().setBackground(new Color(255, 255, 200));
+            xingSensorB.getDetailsPanel().setBackground(new Color(200, 255, 255));
+            xingSensorC.getDetailsPanel().setBackground(new Color(200, 200, 255));
+            xingSensorD.getDetailsPanel().setBackground(new Color(255, 200, 200));
+
             setSensorsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SensorsAtLevelXing"), false, true);
             oneFrameToRuleThemAll(setSensorsAtLevelXingFrame);
             setSensorsAtLevelXingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setSensorsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelXing", true);
+//             setSensorsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelXing", true);
             setSensorsAtLevelXingFrame.setLocation(70, 30);
             Container theContentPane = setSensorsAtLevelXingFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel11 = new JPanel(new FlowLayout());
-            xingSensorA = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            xingSensorB = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            xingSensorC = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            xingSensorD = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
 
             xingSensorsBlockACNameLabel = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " AC "
@@ -11267,35 +11214,8 @@ public class LayoutEditorTools {
             getSavedXingSensors.setToolTipText(Bundle.getMessage("GetSavedHint"));
             theContentPane.add(panel2);
 
-            xingSensorA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-
-            xingSensorB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-
-            xingSensorC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-
-            xingSensorD.getDetailsPanel().setBackground(new Color(255, 200, 200));
-
             sensorXingPanel.setLayout(new GridLayout(0, 2));
-
-            xingSensorA.setBoundaryLabel(xingSensorBlocks[0]);
-            xingSensorB.setBoundaryLabel(xingSensorBlocks[1]);
-            xingSensorC.setBoundaryLabel(xingSensorBlocks[2]);
-            xingSensorD.setBoundaryLabel(xingSensorBlocks[3]);
-
-            if (xingSensorBlocks[0] != null) {
-                sensorXingPanel.add(xingSensorA.getDetailsPanel());
-            }
-            if (xingSensorBlocks[1] != null) {
-                sensorXingPanel.add(xingSensorB.getDetailsPanel());
-            }
-            if (xingSensorBlocks[2] != null) {
-                sensorXingPanel.add(xingSensorC.getDetailsPanel());
-            }
-            if (xingSensorBlocks[3] != null) {
-                sensorXingPanel.add(xingSensorD.getDetailsPanel());
-            }
             theContentPane.add(sensorXingPanel);
-
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JPanel panel6 = new JPanel(new FlowLayout());
@@ -11325,13 +11245,18 @@ public class LayoutEditorTools {
             });
         }
 
+        sensorXingPanel.removeAll();
+
+        xingSensorsBlockACComboBox.setVisible(!setSensorsAtLevelXingFromMenuFlag);
+        xingSensorsBlockBDComboBox.setVisible(!setSensorsAtLevelXingFromMenuFlag);
+
         if (setSensorsAtLevelXingFromMenuFlag) {
             xingSensorsBlockACNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " AC "
-                    + Bundle.getMessage("Name")) + levelXing.getBlockNameAC());
+                    + Bundle.getMessage("Name")) + " " + levelXing.getBlockNameAC());
             xingSensorsBlockBDNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " BD "
-                    + Bundle.getMessage("Name")) + levelXing.getBlockNameBD());
+                    + Bundle.getMessage("Name")) + " " + levelXing.getBlockNameBD());
 
             xingSensorA.setTextField(levelXing.getSensorAName());
             xingSensorB.setTextField(levelXing.getSensorBName());
@@ -11808,10 +11733,21 @@ public class LayoutEditorTools {
         // Initialize if needed
         if (setSensorsAtSlipFrame == null) {
             setSensorsAtSlipOpenFlag = false;
+
+            slipSensorA = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
+            slipSensorB = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
+            slipSensorC = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
+            slipSensorD = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
+
+            slipSensorA.getDetailsPanel().setBackground(new Color(255, 255, 200));
+            slipSensorB.getDetailsPanel().setBackground(new Color(200, 255, 255));
+            slipSensorC.getDetailsPanel().setBackground(new Color(200, 200, 255));
+            slipSensorD.getDetailsPanel().setBackground(new Color(255, 200, 200));
+
             setSensorsAtSlipFrame = new JmriJFrame(Bundle.getMessage("SensorsAtSlip"), false, true);
             oneFrameToRuleThemAll(setSensorsAtSlipFrame);
             setSensorsAtSlipFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setSensorsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelSlip", true);
+//             setSensorsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelSlip", true);
             setSensorsAtSlipFrame.setLocation(70, 30);
             Container theContentPane = setSensorsAtSlipFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
@@ -11865,46 +11801,8 @@ public class LayoutEditorTools {
             getSavedSlipSensors.setToolTipText(Bundle.getMessage("GetSavedHint"));
             theContentPane.add(panel2);
 
-            slipSensorA = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            slipSensorB = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            slipSensorC = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-            slipSensorD = new BeanDetails("Sensor", InstanceManager.sensorManagerInstance());
-
-            slipSensorA.getDetailsPanel().setBackground(new Color(255, 255, 200));
-            slipSensorB.getDetailsPanel().setBackground(new Color(200, 255, 255));
-            slipSensorC.getDetailsPanel().setBackground(new Color(200, 200, 255));
-            slipSensorD.getDetailsPanel().setBackground(new Color(255, 200, 200));
-
-            sensorSlipPanel.setLayout(new GridLayout(2, 2));
-
-            slipSensorA.setBoundaryLabel(slipSensorBlocks[0]);
-            slipSensorB.setBoundaryLabel(slipSensorBlocks[1]);
-            slipSensorC.setBoundaryLabel(slipSensorBlocks[2]);
-            slipSensorD.setBoundaryLabel(slipSensorBlocks[3]);
-
-            if (slipSensorBlocks[0] != null) {
-                sensorSlipPanel.add(slipSensorA.getDetailsPanel());
-            } else {
-                sensorSlipPanel.add(new JPanel());
-            }
-            if (slipSensorBlocks[3] != null) {
-                sensorSlipPanel.add(slipSensorD.getDetailsPanel());
-            } else {
-                sensorSlipPanel.add(new JPanel());
-            }
-            if (slipSensorBlocks[1] != null) {
-                sensorSlipPanel.add(slipSensorB.getDetailsPanel());
-            } else {
-                sensorSlipPanel.add(new JPanel());
-            }
-            if (slipSensorBlocks[2] != null) {
-                sensorSlipPanel.add(slipSensorC.getDetailsPanel());
-            } else {
-                sensorSlipPanel.add(new JPanel());
-            }
-
+            sensorSlipPanel.setLayout(new GridLayout(0, 2));
             theContentPane.add(sensorSlipPanel);
-
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JPanel panel6 = new JPanel(new FlowLayout());
@@ -11934,6 +11832,8 @@ public class LayoutEditorTools {
             });
         }   // if (setSensorsAtSlipFrame == null)
 
+        sensorSlipPanel.removeAll();
+
         slipSensorsBlockAComboBox.setVisible(!setSensorsAtSlipFromMenuFlag);
         slipSensorsBlockBComboBox.setVisible(!setSensorsAtSlipFromMenuFlag);
         slipSensorsBlockCComboBox.setVisible(!setSensorsAtSlipFromMenuFlag);
@@ -11942,21 +11842,16 @@ public class LayoutEditorTools {
         if (setSensorsAtSlipFromMenuFlag) {
             slipSignalBlockANameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " A "
-                    + Bundle.getMessage("Name")) + layoutSlip.getBlockName());
+                    + Bundle.getMessage("Name")) +  " " + layoutSlip.getBlockName());
             slipSignalBlockBNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " B "
-                    + Bundle.getMessage("Name")) + layoutSlip.getBlockBName());
+                    + Bundle.getMessage("Name")) +  " " + layoutSlip.getBlockBName());
             slipSignalBlockCNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " C "
-                    + Bundle.getMessage("Name")) + layoutSlip.getBlockCName());
+                    + Bundle.getMessage("Name")) +  " " + layoutSlip.getBlockCName());
             slipSignalBlockDNameLabel.setText(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " D "
-                    + Bundle.getMessage("Name")) + layoutSlip.getBlockDName());
-
-            slipSensorA.setTextField(layoutSlip.getSensorAName());
-            slipSensorB.setTextField(layoutSlip.getSensorBName());
-            slipSensorC.setTextField(layoutSlip.getSensorCName());
-            slipSensorD.setTextField(layoutSlip.getSensorDName());
+                    + Bundle.getMessage("Name")) +  " " + layoutSlip.getBlockDName());
             slipSensorsGetSaved(null);
         } else {
             slipSignalBlockANameLabel.setText(Bundle.getMessage("MakeLabel",
