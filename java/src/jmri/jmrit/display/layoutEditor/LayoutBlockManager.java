@@ -1960,7 +1960,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * If the panel variable is null, search all LE panels.
      * This was added to support multi panel entry/exit.
      * @param bean The sensor, mast or head to be located.
-     * @param panel The panel to search.  Search all LE panels if null.
+     * @param panel The panel to search.  If null, search all LE panels.
      * @return a list of protected layout blocks.
      */
     @Nonnull
