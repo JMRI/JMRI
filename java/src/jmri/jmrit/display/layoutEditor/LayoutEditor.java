@@ -9323,10 +9323,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return result;
     } //highlightBlockInComboBox
 
-    //
-    //
-    //
-    private boolean highlightBlock(@Nullable Block inBlock) {
+    /**
+     * highlight the specified block
+     * @param inBlock the block
+     * @return true if block was highlighted
+     */
+    public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -9340,12 +9342,24 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             if (lb != null) {
                 boolean enable = ((inBlock != null) && b.equals(inBlock));
+                if (enable) {
+                    blockIDComboBox.setSelectedBean(nb);
+                }
                 lb.setUseExtraColor(enable);
                 result |= enable;
             }
         }
         return result;
     } //highlightBlock
+
+    /**
+     * highlight the specified layout block
+     * @param inLayoutBlock the layout block
+     * @return true if layout block was highlighted
+     */
+    public boolean highlightLayoutBlock(@Nullable LayoutBlock inLayoutBlock) {
+        return highlightBlock(inLayoutBlock.getBlock());
+    } //highlightLayoutBlock
 
     public void setTurnoutCircles(boolean state) {
         if (turnoutCirclesWithoutEditMode != state) {
