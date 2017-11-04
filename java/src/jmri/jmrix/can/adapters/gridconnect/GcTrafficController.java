@@ -25,6 +25,7 @@ public class GcTrafficController extends TrafficController {
 
     public GcTrafficController() {
         super();
+        this.setSynchronizeRx(false);
     }
 
     /**
