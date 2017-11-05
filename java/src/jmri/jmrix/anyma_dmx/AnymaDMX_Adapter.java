@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.usb.UsbDevice;
+import jmri.jmrix.AbstractPortController;
+import jmri.jmrix.PortAdapter;
 import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +19,8 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_Adapter extends jmri.jmrix.AbstractPortController
-        implements jmri.jmrix.PortAdapter {
+public class AnymaDMX_Adapter extends AbstractPortController
+        implements PortAdapter {
 
     private AnymaDMX_Controller dmx = null;
     private String[] option1Values = null;
