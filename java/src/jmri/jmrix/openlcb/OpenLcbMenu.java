@@ -16,14 +16,11 @@ public class OpenLcbMenu extends JMenu {
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        String title;
         if (memo != null) {
-            title = memo.getUserName();
+            setText(memo.getUserName());
         } else {
-            title = rb.getString("MenuItemCAN"); // would expect this to be MenuItemOpenLCB
+            setText(rb.getString("MenuItemCAN")); // would expect this to be called MenuItemOpenLCB
         }
-
-        setText(title);
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 

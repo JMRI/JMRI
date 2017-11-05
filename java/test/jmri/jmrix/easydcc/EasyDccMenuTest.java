@@ -10,11 +10,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class EasyDCCMenuTest {
+public class EasyDccMenuTest {
 
     @Test
     public void testCTor() {
-        EasyDCCMenu t = new EasyDCCMenu();
+        EasyDccMenu t = new EasyDccMenu(new EasyDccSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 

@@ -74,7 +74,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     //@SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     //protected int _mClosed = jmri.Turnout.CLOSED;
 
-    protected String _prefix = "DCCPP"; // TODO: Shouldn't this be fetched from the system memo?
+    protected String _prefix = "DCCPP";
     protected DCCppTrafficController tc = null;
 
     public DCCppTurnout(String prefix, int pNumber, DCCppTrafficController controller) {  // a human-readable turnout number must be specified!

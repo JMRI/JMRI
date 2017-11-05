@@ -9,17 +9,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements the jmri.Programmer interface via commands for the EasyDcc
- * powerstation
+ * Implements the jmri.Programmer interface via commands for the EasyDCC
+ * powerstation.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
-    public EasyDccProgrammer() {
+    public EasyDccProgrammer(EasyDccSystemConnectionMemo memo) {
+        tc = memo.getTrafficController();
         // need a longer LONG_TIMEOUT
         LONG_TIMEOUT = 180000;
     }
+
+    private EasyDccTrafficController tc = null;
 
     /**
      * Types implemented here.
@@ -58,7 +61,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
             startLongTimer();
 
             // format and send the write message
-            controller().sendEasyDccMessage(progTaskStart(getMode(), _val, _cv), this);
+            tc.sendEasyDccMessage(progTaskStart(getMode(), _val, _cv), this);
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -86,7 +89,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
             startLongTimer();
 
             // format and send the write message
-            controller().sendEasyDccMessage(progTaskStart(getMode(), -1, _cv), this);
+            tc.sendEasyDccMessage(progTaskStart(getMode(), -1, _cv), this);
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -110,7 +113,9 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         }
     }
 
-    // internal method to create the EasyDccMessage for programmer task start
+    /**
+     * Internal method to create the EasyDccMessage for programmer task start.
+     */
     protected EasyDccMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) throws jmri.ProgrammerException {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
@@ -132,7 +137,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 
     @Override
     public void message(EasyDccMessage m) {
-        log.error("message received unexpectedly: " + m.toString());
+        log.error("message received unexpectedly: {}", m.toString());
     }
 
     @Override
@@ -170,7 +175,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     @Override
     synchronized protected void timeout() {
@@ -188,12 +193,12 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 
     /**
      * Internal method to send a cleanup message (if needed) on timeout.
-     * <P>
+     * <p>
      * Here, it sends a request to exit from programming mode. But subclasses,
      * e.g. ops mode, may redefine that.
      */
     void cleanup() {
-        controller().sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
+        tc.sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
     }
 
     // internal method to notify of the final result
@@ -208,14 +213,12 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         temp.programmingOpReply(value, status);
     }
 
-    EasyDccTrafficController _controller = null;
-
+    /**
+     * @deprecated since 4.9.5
+     */
+    @Deprecated
     protected EasyDccTrafficController controller() {
-        // connect the first time
-        if (_controller == null) {
-            _controller = EasyDccTrafficController.instance();
-        }
-        return _controller;
+        return tc;
     }
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammer.class);

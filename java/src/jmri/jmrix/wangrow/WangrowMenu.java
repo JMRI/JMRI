@@ -4,7 +4,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**
  * Create a "Systems" menu containing the Jmri NCE-specific tools.
- * <P>
+ * <p>
  * Note that this is still using specific tools from the {@link jmri.jmrix.nce}
  * package.
  *
@@ -16,4 +16,5 @@ public class WangrowMenu extends jmri.jmrix.nce.swing.NceMenu {
     public WangrowMenu(NceSystemConnectionMemo memo) {
         super(memo);
     }
+
 }
