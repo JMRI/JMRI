@@ -812,7 +812,8 @@ public class TrackSegment extends LayoutTrack {
             @Override
             public void actionPerformed(ActionEvent e) {
                 splitTrackSegment();
-            };
+            }
+        ;
         });
 
         JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
@@ -1504,12 +1505,16 @@ public class TrackSegment extends LayoutTrack {
             AffineTransform at = new AffineTransform();
             at.translate(-bounds.getX(), -bounds.getY());
             gI.transform(at);
-            Color transparentColor = new Color(0xA5A5A5);
+
+            Color drawingColor = setColorForTrackBlock(gI, getLayoutBlock());
+            float trackWidth = layoutEditor.setTrackStrokeWidth(gI, mainline);
+
+            int transparentColorRGB = 0xFF | (drawingColor.getRGB() ^ 0xA5A5A5);
+            Color transparentColor = new Color(transparentColorRGB);
             gI.setColor(transparentColor);
             gI.fill(bounds);
 
-            setColorForTrackBlock(gI, getLayoutBlock());
-            float trackWidth = layoutEditor.setTrackStrokeWidth(gI, mainline);
+            gI.setColor(drawingColor);
 
             for (int pass = 0; pass < 2; pass++) {
                 if (isHidden()) {
@@ -1528,14 +1533,14 @@ public class TrackSegment extends LayoutTrack {
                 drawSolid(gI);
 
                 gI.setColor(transparentColor);
-                trackWidth -= 2.F;
+                trackWidth -= 2.5F;
                 if (trackWidth < 1.F) {
                     break;
                 }
             }
             int[] buf = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
             for (int i = 0; i < buf.length; i++) {
-                if (buf[i] == 0xFFA5A5A5) {
+                if (buf[i] == transparentColorRGB) {
                     buf[i] = 0x00000000;
                 }
             }
