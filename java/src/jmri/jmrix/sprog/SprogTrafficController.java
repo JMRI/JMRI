@@ -22,7 +22,7 @@ import purejavacomm.SerialPortEventListener;
  * Removed Runnable implementation and methods for it.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener {
 
     private SprogReply reply = new SprogReply();
@@ -188,8 +188,9 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Forward a preformatted message to the actual interface (by calling
-     * SendSprogMessage(SprogMessage) after notifying any listeners Notifies
-     * listeners.
+     * SendSprogMessage(SprogMessage) after notifying any listeners.
+     * <p>
+     * Notifies listeners.
      *
      * @param m         Message to send
      * @param replyTo   Who is sending the message
@@ -200,7 +201,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         if (waitingForReply) {
             try {
                 log.debug("Waiting for a reply");
-                wait(100);  //Will wait until notify()ed or 100ms timeout
+                wait(100); // Will wait until notify()ed or 100ms timeout
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
             }
@@ -217,7 +218,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         // notify all _other_ listeners
         notifyMessage(m, replyTo);
         this.sendSprogMessage(m);
-
     }
 
     // methods to connect/disconnect to a source of data in a SprogPortController
@@ -283,6 +283,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     private SprogSystemConnectionMemo memo = null;
+
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
@@ -299,6 +300,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * <p>
      * In this case we are only dealing with DATA_AVAILABLE but the other
      * events are left here for reference.
+     *
      * @author AJB Jan 2010
      */
     @Override

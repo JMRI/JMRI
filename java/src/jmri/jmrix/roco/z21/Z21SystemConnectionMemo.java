@@ -83,7 +83,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {

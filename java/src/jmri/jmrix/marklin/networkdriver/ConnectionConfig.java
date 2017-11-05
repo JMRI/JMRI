@@ -7,7 +7,6 @@ import javax.swing.JPanel;
  * via a NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * 
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
@@ -43,6 +42,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /*public String getMode() {
      return opt2Box.getSelectedItem().toString();
      }*/
+
     @Override
     protected void setInstance() {
         if (adapter == null) {

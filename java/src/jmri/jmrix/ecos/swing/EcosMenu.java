@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Create a "Systems" menu containing the Jmri ECoS-specific tools.
  *
  * @author Kevin Dickerson
  */
@@ -20,7 +21,6 @@ public class EcosMenu extends JMenu {
         } else {
             title = Bundle.getMessage("MenuEcos");
         }
-
         setText(title);
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
@@ -43,8 +43,9 @@ public class EcosMenu extends JMenu {
 
         add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemDatabase"), "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
         add(new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECoS", title));
-        if (memo != null) add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos(Bundle.getMessage("MenuItemAddLocoToEcos"), memo));
-
+        if (memo != null) {
+            add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos(Bundle.getMessage("MenuItemAddLocoToEcos"), memo));
+        }
     }
 
     Item[] panelItems = new Item[]{

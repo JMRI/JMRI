@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a XpressNet
+ * An implementation of DccThrottle with code specific to an XpressNet
  * connection.
  *
  * @author Paul Bender (C) 2002-2010
