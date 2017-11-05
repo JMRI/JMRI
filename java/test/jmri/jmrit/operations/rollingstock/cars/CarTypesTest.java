@@ -25,13 +25,20 @@ public class CarTypesTest {
     private Locale defaultLocale;
 
     @Test
-    public void testCarTypes() {
+    public void testDefaultCarTypes() {
         String carTypes[]=Bundle.getMessage("carTypeNames").split(","); 
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
 
         Assert.assertTrue("Predefined Car Type 1", ct1.containsName(carTypes[1]));
         Assert.assertTrue("Predefined Car Type 2", ct1.containsName(carTypes[2]));
+    }
+    
+    @Test
+    public void testAddAndDeleteCarTypes() {
+        String carTypes[]=Bundle.getMessage("carTypeNames").split(","); 
+        CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
+        ct1.getNames();	//Load predefined car types
 
         ct1.addName("Type New1");
         Assert.assertTrue("Car Types Add New1", ct1.containsName("Type New1"));
