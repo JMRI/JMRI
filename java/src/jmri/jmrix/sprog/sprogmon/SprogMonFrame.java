@@ -8,7 +8,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 /**
  * Frame displaying (and logging) Sprog command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
 
@@ -21,7 +21,7 @@ public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogL
 
     @Override
     protected String title() {
-        return "Sprog Command Monitor";
+        return Bundle.getMessage("MonitorXTitle", "SPROG");
     }
 
     @Override

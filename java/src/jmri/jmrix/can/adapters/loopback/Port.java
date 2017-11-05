@@ -65,7 +65,7 @@ public class Port extends AbstractSerialPortController {
     @Override
     public java.util.Vector<String> getPortNames() {
         java.util.Vector<String> v = new java.util.Vector<String>();
-        v.addElement("(None)");
+        v.addElement(Bundle.getMessage("none"));
         return v;
     }
 
@@ -78,6 +78,5 @@ public class Port extends AbstractSerialPortController {
     public CanSystemConnectionMemo getSystemConnectionMemo() {
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
 }
-
-

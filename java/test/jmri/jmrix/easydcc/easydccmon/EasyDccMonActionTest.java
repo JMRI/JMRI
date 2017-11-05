@@ -1,12 +1,11 @@
 /**
- * EasyDccMonActionTest.java
- *
- * Description:	JUnit tests for the EasyDccProgrammer class
+ * JUnit tests for the EasyDccProgrammer class
  *
  * @author	Bob Jacobsen
  */
 package jmri.jmrix.easydcc.easydccmon;
 
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,7 +14,7 @@ import org.junit.Assert;
 public class EasyDccMonActionTest extends TestCase {
 
     public void testCreate() {
-        EasyDccMonAction a = new EasyDccMonAction();
+        EasyDccMonAction a = new EasyDccMonAction("Monitor", new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
         Assert.assertNotNull("exists", a);
     }
 

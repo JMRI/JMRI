@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 /**
  * Override default XpressNet classes to use z21 specific versions.
  *
- * @author	Paul Bender Copyright (C) 2004,2010,2014
+ * @author Paul Bender Copyright (C) 2004, 2010, 2014
  */
 public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortController {
 

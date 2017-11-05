@@ -451,4 +451,5 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500;
     private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class);
+
 }

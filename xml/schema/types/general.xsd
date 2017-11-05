@@ -365,5 +365,18 @@
     <xs:restriction base="xs:string" />
   </xs:simpleType>
   
+  <xs:simpleType name="familyModelNameType">
+    <xs:annotation>
+        <xs:documentation>
+          Exclude vertical bar "|",
+            used as a separator in replacementFamily and replacementModel
+            suggestion lists.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="[^|]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   
 </xs:schema>

@@ -45,7 +45,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     public void connect() throws IOException {
         opened = false;
         if (getHostAddress() == null || m_port == 0) {
-            log.error("No host name or port set :{}:{}", m_HostName, m_port);
+            log.error("No host name or port set: {}:{}", m_HostName, m_port);
             return;
         }
         try {
@@ -54,7 +54,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
         } catch (IOException e) {
-            log.error("error opening network connection:", e);
+            log.error("error opening network connection: ", e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
                         m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);

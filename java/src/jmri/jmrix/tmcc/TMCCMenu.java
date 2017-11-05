@@ -16,16 +16,12 @@ public class TMCCMenu extends JMenu {
     }
 
     public TMCCMenu() {
-
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.tmcc.TMCCBundle");
+        setText(Bundle.getMessage("MenuTMCC"));
 
-        setText(rb.getString("MenuTMCC"));
-
-        add(new jmri.jmrix.tmcc.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.tmcc.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
-
+        add(new jmri.jmrix.tmcc.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor")));
+        add(new jmri.jmrix.tmcc.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand")));
     }
 
 }
