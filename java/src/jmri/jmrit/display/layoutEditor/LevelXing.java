@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -998,27 +999,42 @@ public class LevelXing extends LayoutTrack {
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
             if ((blockNameAC == null) || (blockNameAC.isEmpty())) {
-                jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
+                jmi = popup.add(Bundle.getMessage("NoBlockX", "AC"));
+                jmi.setEnabled(false);
             } else {
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + getLayoutBlockAC().getDisplayName());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "AC")) + getLayoutBlockAC().getDisplayName());
+                jmi.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        layoutEditor.highlightLayoutBlock(getLayoutBlockAC());
+                    } //actionPerformed
+                });
                 blockACAssigned = true;
             }
-            jmi.setEnabled(false);
 
             if ((blockNameBD == null) || (blockNameBD.isEmpty())) {
-                jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
+                jmi = popup.add(Bundle.getMessage("NoBlockX", "BD"));
+                jmi.setEnabled(false);
             } else {
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + getLayoutBlockBD().getDisplayName());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "BD")) + getLayoutBlockBD().getDisplayName());
+                jmi.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        layoutEditor.highlightLayoutBlock(getLayoutBlockBD());
+                    } //actionPerformed
+                });
                 blockBDAssigned = true;
             }
-            jmi.setEnabled(false);
 
             // if there are any track connections
             if ((connectA != null) || (connectB != null)
                     || (connectC != null) || (connectD != null)) {
-                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
+                popup.add(new JSeparator(JSeparator.HORIZONTAL));
+                jmi = popup.add(new JMenuItem(Bundle.getMessage("Connections"))); // there is no pane opening (which is what ... implies)
+                popup.add(jmi);
+                jmi.setEnabled(false);
                 if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
+                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -1032,7 +1048,7 @@ public class LevelXing extends LayoutTrack {
                     });
                 }
                 if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
+                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -1046,7 +1062,7 @@ public class LevelXing extends LayoutTrack {
                     });
                 }
                 if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
+                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -1060,7 +1076,7 @@ public class LevelXing extends LayoutTrack {
                     });
                 }
                 if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
+                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -1073,7 +1089,6 @@ public class LevelXing extends LayoutTrack {
                         }
                     });
                 }
-                popup.add(connectionsMenu);
             }
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -1182,8 +1197,8 @@ public class LevelXing extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         layoutEditor.getLETools().setSensorsAtLevelXingFromMenu(
-                                LevelXing.this, boundaryBetween, 
-                                layoutEditor.sensorIconEditor, 
+                                LevelXing.this, boundaryBetween,
+                                layoutEditor.sensorIconEditor,
                                 layoutEditor.sensorFrame);
                     }
                 });
