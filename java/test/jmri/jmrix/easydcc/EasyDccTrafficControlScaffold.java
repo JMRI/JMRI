@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
  */
 public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
 
-    public EasyDccTrafficControlScaffold() {
+    public EasyDccTrafficControlScaffold(EasyDccSystemConnectionMemo memo) {
+        super(memo);
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }

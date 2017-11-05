@@ -54,7 +54,7 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @SuppressWarnings("deprecation")
     @Override
@@ -109,6 +109,7 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
 
         super.dispose();
     }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TMCCSystemConnectionMemo.class);
 
 }

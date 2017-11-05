@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement light manager for DCC++ systems
- * <P>
+ * <p>
  * System names are "DCCppLnnnnn", where nnnnn is the bit number without padding.
- * <P>
+ * <p>
  * Based in part on SerialLightManager.java
  *
  * @author Paul Bender Copyright (C) 2008
@@ -26,7 +26,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for DCC++
+     * Returns the system letter for DCC++.
      */
     @Override
     public String getSystemPrefix() {
@@ -56,7 +56,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -72,22 +72,23 @@ public class DCCppLightManager extends AbstractLightManager {
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.debug("illegal character in number field of system name: " + systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.warn("invalid DCC++ light system name: " + systemName);
+            log.debug("invalid DCC++ light system name: " + systemName);
             return (0);
         } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.warn("bit number out of range in DCC++ light system name: " + systemName);
+            log.debug("bit number out of range in DCC++ light system name: {}", systemName);
             return (0);
         }
         return (num);
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Public method to validate system name format.
+     *
+     * @return VALID if system name has a valid format, else returns INVALID
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -95,10 +96,11 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false' for now, this method always returns 'true'; it is needed for the
-     * Abstract Light class
+     * Public method to validate system name for configuration.
+     * Needed for the Abstract Light class.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else returns 'false' for now, this method always returns 'true'
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -126,7 +128,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Allow access to DCCppLightManager
+     * Allow access to DCCppLightManager.
      */
     @Deprecated
     static public DCCppLightManager instance() {
