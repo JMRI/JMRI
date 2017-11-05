@@ -113,6 +113,9 @@
 
       <p>Note that the first build can take a while and will require Internet
         access.</p>
+        
+      <p>If you get the error "Cannot read lifecycle mapping for artifact", open the "Run" menu, select "Run As",
+      and then select "Maven generate-sources" to fix the error and start the first build.</p>
 
       <p>To run an application do the following:</p>
 
