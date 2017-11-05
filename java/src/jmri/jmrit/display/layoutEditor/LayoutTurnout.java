@@ -2395,7 +2395,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             jmi.setEnabled(false);
 
-            if (getBlockName().isEmpty()) {
+            if (getLayoutBlock() == null) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
                 jmi.setEnabled(false);
             } else {
