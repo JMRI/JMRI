@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
  * other sources and suppress messages from here to prevent queueing messages in
  * the traffic controller.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003 
- * @author      Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 

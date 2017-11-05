@@ -20,7 +20,7 @@ import purejavacomm.SerialPort;
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the necessary state in each
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001

@@ -11,10 +11,8 @@ public interface EasyDccInterface {
 
     public void removeEasyDccListener(EasyDccListener l);
 
-    boolean status();   // true if the implementation is operational
+    boolean status(); // true if the implementation is operational
 
-    void sendEasyDccMessage(EasyDccMessage m, EasyDccListener l);  // 2nd arg gets the reply
+    void sendEasyDccMessage(EasyDccMessage m, EasyDccListener l); // 2nd arg gets the reply
+
 }
-
-
-

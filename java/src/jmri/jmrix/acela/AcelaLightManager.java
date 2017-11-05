@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement light manager for Acela systems.
- * <P>
+ * <p>
  * System names are "ALnnn", where nnn is the bit number without padding.
- * <P>
+ * <p>
  * Based in part on AcelaTurnoutManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -34,9 +34,13 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
-     * system name is not in a valid format Assumes calling method has checked
-     * that a Light with this system name does not already exist
+     * Method to create a new Light based on the system name.
+     * <p>
+     * Assumes calling method has checked that a Light with this system
+     * name does not already exist.
+     * </p>
+     *
+     * @return null if the system name is not in a valid format
      */
     @Override
     protected Light createNewLight(String systemName, String userName) {
@@ -59,7 +63,7 @@ public class AcelaLightManager extends AbstractLightManager {
                 log.warn("Light System Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.error("Invalid Light System Name format: " + systemName);
+            log.error("Invalid Light System Name format: {}", systemName);
             throw new IllegalArgumentException("Invalid Light System Name format: " + systemName);
         }
         return lgt;
@@ -98,7 +102,7 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to convert system name to its alternate format
+     * Public method to convert system name to its alternate format.
      *
      * @return a normalized system name if system name is valid and has a valid
      * alternate representation, else return ""
@@ -109,7 +113,7 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Allow access to AcelaLightManager
+     * Allow access to AcelaLightManager.
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated

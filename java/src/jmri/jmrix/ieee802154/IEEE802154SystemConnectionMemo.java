@@ -56,7 +56,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     private IEEE802154TrafficController _tc = null;
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {

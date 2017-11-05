@@ -6,12 +6,9 @@ import jmri.jmrix.ecos.EcosTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*import java.io.*;
- import java.net.*;
- import java.util.Vector;*/
 /**
  * Implements SerialPortAdapter for the ECOS system network connection.
- * <P>
+ * <p>
  * This connects an ECOS command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
@@ -26,8 +23,8 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     }
 
     /**
-     * set up all of the other objects to operate with an ECOS command station
-     * connected to this port
+     * Set up all of the other objects to operate with an ECOS command station
+     * connected to this port.
      */
     @Override
     public void configure() {

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * EasyDCC implementation of a ThrottleManager.
- * <P>
+ * <p>
  * Based on early NCE code.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005
@@ -17,11 +17,14 @@ import org.slf4j.LoggerFactory;
  */
 public class EasyDccThrottleManager extends AbstractThrottleManager {
 
+    private EasyDccSystemConnectionMemo _memo = null;
+
     /**
-     * Constructor.
+     * Constructor
      */
     public EasyDccThrottleManager(EasyDccSystemConnectionMemo memo) {
         super(memo);
+        _memo = memo;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
          This was tested on v418 - also appears as an issue with the
          radio throttles. 
          */
-        log.debug("new EasyDccThrottle for " + address);
+        log.debug("new EasyDccThrottle for {}", address);
         notifyThrottleKnown(new EasyDccThrottle((EasyDccSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
     }
 
@@ -46,8 +49,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * Address 100 and above is a long address
-     *
+     * Address 100 and above is a long address.
      */
     @Override
     public boolean canBeLongAddress(int address) {
@@ -55,8 +57,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * Address 99 and below is a short address
-     *
+     * Address 99 and below is a short address.
      */
     @Override
     public boolean canBeShortAddress(int address) {
@@ -72,7 +73,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     }
 
     /*
-     * Local method for deciding short/long address
+     * Local method for deciding short/long address.
      */
     static boolean isLongAddress(int num) {
         return (num >= 100);
@@ -116,7 +117,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
                 i = i + 2;
             }
 
-            EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+            _memo.getTrafficController().sendEasyDccMessage(m, null);
             EasyDccThrottle lnt = (EasyDccThrottle) t;
             lnt.throttleDispose();
             return true;

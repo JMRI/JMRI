@@ -4,16 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base for classes representing a LocoNet communications port
+ * Base for classes representing a LocoNet communications port.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetworkPortController {
-    // base class. Implementations will provide InputStream and OutputStream
-    // objects to LnTrafficController classes, who in turn will deal in messages.
 
-    private final static Logger log = LoggerFactory.getLogger(LnNetworkPortController.class);
-    
+    /**
+     * Base class. Implementations will provide InputStream and OutputStream
+     * objects to LnTrafficController classes, who in turn will deal in messages.
+     *
+     * @param connectionMemo associated memo for this connection
+     */
     protected LnNetworkPortController(LocoNetSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
         setManufacturer(LnConnectionTypeList.DIGITRAX);
@@ -60,7 +62,6 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
             log.error("Invalid command station name: \"{}\", defaulting to {}", name, commandStationTypes[0]);
             setCommandStationType(commandStationTypes[0]);
         }
-
     }
 
     /**
@@ -100,4 +101,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         log.debug("configureOption3: " + value);
         setTurnoutHandling(value);
     }
+
+    private final static Logger log = LoggerFactory.getLogger(LnNetworkPortController.class);
+
 }
