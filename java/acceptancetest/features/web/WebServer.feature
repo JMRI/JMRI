@@ -15,6 +15,7 @@ Scenario Outline: Basic Http requests
    | firefox | http://localhost:12080/roster | Roster \| My JMRI Railroad |
    | firefox | http://localhost:12080/operations | Trains \| My JMRI Railroad |
    | firefox | http://localhost:12080/frame | Panels \| My JMRI Railroad |
+   | firefox | http://localhost:12080/web/webThrottle.html | JMRI Web Throttle |
 
    @chrome
    Examples: Chrome Tests
@@ -25,3 +26,4 @@ Scenario Outline: Basic Http requests
    | chrome  | http://localhost:12080/roster | Roster \| My JMRI Railroad |
    | chrome  | http://localhost:12080/operations | Trains \| My JMRI Railroad |
    | chrome  | http://localhost:12080/frame | Panels \| My JMRI Railroad |
+   | chrome  | http://localhost:12080/web/webThrottle.html | JMRI Web Throttle |

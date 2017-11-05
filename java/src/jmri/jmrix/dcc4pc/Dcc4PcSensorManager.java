@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement SensorManager for Dcc4Pc systems. The Manager handles all the state
  * changes.
- * <P>
+ * <p>
  * System names are "DPnn:yy", where nnn is the board id and yy is the port on
  * that board.
  *
@@ -216,7 +216,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void reply(Dcc4PcReply r) {
         if (log.isDebugEnabled()) {
-            log.debug("Reply details sm: " + r.toHexString());
+            log.debug("Reply details sm: {}", r.toHexString());
         }
 
         if (r.getNumDataElements() == 0 && r.getElement(0) == 0x00) {
@@ -228,7 +228,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             return;
         }
         if (r.isError()) {
-            log.debug("Reply is in error " + r.toHexString());
+            log.debug("Reply is in error {}", r.toHexString());
             synchronized (this) {
                 awaitingReply = false;
                 this.notify();
@@ -239,7 +239,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 this.notify();
             }
             if (log.isDebugEnabled()) {
-                log.debug("Get Data inputs " + r.toHexString());
+                log.debug("Get Data inputs {}", r.toHexString());
             }
             class ProcessPacket implements Runnable {
 
@@ -255,7 +255,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     if (curBoard != null) {
                         curBoard.processInputPacket(reply);
                     } else {
-                        log.error("Board disappeared from system " + r.getBoard());
+                        log.error("Board disappeared from system {}", r.getBoard());
                     }
                 }
             }
@@ -398,8 +398,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     public final static int LONG_ADDRESS = 0x04;
     public final static int CONSIST_ADDRESS = 0x08;
 
-    //Handles determining if the railcommdata is duplicated, if it is then this
-    //instructs the rc input to move things about.
+    /**
+     * Determining if the railcommdata is duplicated. If it is then this
+     * instructs the rc input to move things about.
+     */
     int decodeDuplicatePacket(int value, int seq, Dcc4PcReporter rc) {
         int lastbit = 7;
         //probably a better way of doing this..
@@ -431,7 +433,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         return tempValue;
     }
 
-    private final int shortCycleInterval = 1; //Time to wait between sending out poll messages
+    private final int shortCycleInterval = 1; // Time to wait between sending out poll messages
     private final int pollTimeout = 600;    // in case of lost response
     private boolean awaitingReply = false;
 
@@ -452,11 +454,11 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 for (int boardAddress : activeBoards.keySet()) {
                     if (!activeBoards.get(boardAddress).doNotPoll()) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Poll board " + boardAddress);
+                            log.debug("Poll board {}", boardAddress);
                         }
                         Dcc4PcMessage m = Dcc4PcMessage.pollBoard(boardAddress);
                         if (log.isDebugEnabled()) {
-                            log.debug("queueing poll request for board " + boardAddress);
+                            log.debug("queueing poll request for board {}", boardAddress);
                         }
                         tc.sendDcc4PcMessage(m, this);
                         synchronized (this) {
@@ -470,7 +472,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         int delay = shortCycleInterval;
                         synchronized (this) {
                             if (awaitingReply) {
-                                log.warn("timeout awaiting poll response for board " + boardAddress);
+                                log.warn("timeout awaiting poll response for board {}", boardAddress);
                                 delay = pollTimeout;
                             }
                             try {
@@ -483,12 +485,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         }
                     } else {
                         if (log.isDebugEnabled()) {
-                            log.debug("Board set to Do Not Poll" + boardAddress);
+                            log.debug("Board set to Do Not Poll {}", boardAddress);
                         }
                     }
                     synchronized (this) {
                         if (stopPolling) {
-                            log.debug("Polling stopped " + stopPolling);
+                            log.debug("Polling stopped {}", stopPolling);
                             Thread.currentThread().interrupt();
                             return;
                         }
@@ -501,7 +503,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     ConcurrentHashMap<Integer, ActiveBoard> activeBoards = new ConcurrentHashMap<Integer, ActiveBoard>(5);
 
     /**
-     * This procedure generates all the sensor and reporter details based upon
+     * Generate all the sensor and reporter details based upon
      * the reply message from the board.
      *
      * @param r Reply that we build the information from
@@ -553,12 +555,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     public void changeBoardAddress(int oldAddress, int newAddress) {
-        //Block polling on this board
+        // Block polling on this board
         ActiveBoard board = activeBoards.get(oldAddress);
         board.setDoNotPoll(true);
         Dcc4PcMessage m = new jmri.jmrix.dcc4pc.Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) oldAddress, (byte) 0x03, (byte) newAddress});
         tc.sendDcc4PcMessage(m, null);
-        //Need to stop polling otherwise we get a concurrent modification exception
+        // Need to stop polling otherwise we get a concurrent modification exception
         stopPolling();
         activeBoards.remove(oldAddress);
         activeBoards.put(newAddress, board);
@@ -566,7 +568,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         startPolling();
         String sensorPrefix = getSystemPrefix() + typeLetter() + newAddress + ":";
         String reporterPrefix = getSystemPrefix() + "R" + newAddress + ":";
-        //We create a new set of sensors and reporters, but leave the old ones.
+        // We create a new set of sensors and reporters, but leave the old ones.
         for (int i = 1; i < board.getNumEnabledSensors() + 1; i++) {
             board.getSensorAtIndex(i).setEnabled(false);
             int input = board.getSensorAtIndex(i).getInput();
@@ -578,7 +580,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             Dcc4PcReporter report = (Dcc4PcReporter) reportManager.createNewReporter(reporterPrefix + (input), null);
             board.addReporter(input, report);
         }
-        //Need to update the sensors used.
+        // Need to update the sensors used.
         board.setDoNotPoll(false);
     }
 
@@ -677,7 +679,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             int packetTypeCmd = 0x00;
             int currentByteLocation = 0;
             while (currentByteLocation < r.getNumDataElements()) {
-                log.debug("--- Start " + currentByteLocation + " ---");
+                log.debug("--- Start {} ---", currentByteLocation);
                 int oldstart = currentByteLocation;
                 if ((r.getElement(currentByteLocation) & 0x80) == 0x80) {
                     log.debug("Error at head");
@@ -696,14 +698,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         buf.append(Integer.toHexString(r.getElement(i) & 0xff) + ",");
                     }
                     log.debug(buf.toString());
-                    log.debug("--- finish packet " + (currentByteLocation - 1) + " ---");
+                    log.debug("--- finish packet {} ---", (currentByteLocation - 1));
                 }
             }
             log.debug("==== Finish Processing Packet ====");
         }
 
         public int processPacket(Dcc4PcReply r, int packetType, int packetTypeCmd, int currentByteLocation) {
-            //int packetType;
+            // int packetType;
             int dccpacketlength;
             if (packetType == 0x02) {
                 dccpacketlength = (r.getElement(currentByteLocation) - 0x40) + 1;
@@ -735,18 +737,16 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             for (int i = 1; i < getNumEnabledSensors() + 1; i++) {
                 if (getReporterAtIndex(i).getRailComState() >= Dcc4PcSensor.ORIENTA) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Adding reporter for input " + getReporterAtIndex(i).getSystemName());
+                        log.debug("Adding reporter for input {}", getReporterAtIndex(i).getSystemName());
                     }
                     railCommDataForSensor.add(getReporterAtIndex(i));
                 }
             }
 
             int railComDupPacket = (int) Math.ceil((railCommDataForSensor.size()) / 4.0f);
-            if (log.isDebugEnabled()) {
-                log.debug("We have " + railComDupPacket + " Byte(s) to read on data");
-            }
+            log.debug("We have {} Byte(s) to read on data", railComDupPacket);
 
-            //        log.debug("Now to handle the duplicate packet data");
+            log.debug("Now to handle the duplicate packet data");
             int j = 0;
 
             for (int i = 0; i < railComDupPacket; i++) {
@@ -806,13 +806,13 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     log.debug("Data for sensor " + railCommDataForSensor.get(i).getDisplayName());
                 }
             }
-            //re-use the variable to gather the size of each railcom input data
+            // re-use the variable to gather the size of each railcom input data
             railComDupPacket = (int) Math.ceil((railCommDataForSensor.size()) / 2.0f);
             if (log.isDebugEnabled()) {
                 log.debug("We have " + railComDupPacket + " size byte(s) to read on data");
             }
 
-            //This now becomes the length bytes for the rail comm information
+            // This now becomes the length bytes for the rail comm information
             j = 0;
             for (int i = 0; i < railComDupPacket; i++) {
                 int tempValue = r.getElement(currentByteLocation) << (31 - 3);
@@ -853,7 +853,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             for (int idx = 0; idx < packet.length; ++idx) {
                 lastDCCPacketSeen = packet.clone();
             }
-            //lastDCCPacketSeen = packet;
+            // lastDCCPacketSeen = packet;
             speed = 0;
             addr = 0;
             dcc_addr_type = NO_ADDRESS;
@@ -866,24 +866,24 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 String s = buf.toString();
                 log.debug("bytes to process " + s);
             }
-            //Basic Accessory Decoder packet 10aaaaaa 1aaacddd eeeeeeee
-            //Extended Accessory decoder packet starts 10aaaaaa 0aaa0aa1 000xxxxx eeeeeeee
+            // Basic Accessory Decoder packet 10aaaaaa 1aaacddd eeeeeeee
+            // Extended Accessory decoder packet starts 10aaaaaa 0aaa0aa1 000xxxxx eeeeeeee
             int i = 0;
-            //Skip accessory decoder packets at this point
+            // Skip accessory decoder packets at this point
             if ((packet[i] & 0xFF) == 0x00) {
                 return;
                 //Broadcast packet
             } else if ((packet[i] & 0xff) == 0xff) {
-                //log.debug("Idle Packet");
+                // log.debug("Idle Packet");
                 return;
             } else if ((packet[i] & 0x80) == 0x80) {
-                //Accessory decoinfoder packet
+                // Accessory decoinfoder packet
                 if ((packet[i] & 0x80) == 0x80) {
-                    //i++;  don't increment as the for loop will do this
-                    //basic Accessory Decoder packet one byte to follow
+                    // i++;  don't increment as the for loop will do this
+                    // basic Accessory Decoder packet one byte to follow
                 } else {
                     i++;
-                    //extended decoder packet two bytes to follow
+                    // extended decoder packet two bytes to follow
                 }
                 return;
             } else {
@@ -929,29 +929,29 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         i++;
                         cvNumber = ((packet[i] & 0xff) + 1);
                         log.debug("CV Access cv:" + cvNumber);
-                        //two byte instruction when 1111
-                        //three byte instuction when 1110
+                        // two byte instruction when 1111
+                        // three byte instuction when 1110
                     } else if ((packet[i] & 0xC0) == 0xC0) {
                         log.debug("Future");
                         i++;
                         if ((packet[i] & 0x1F) == 0x1F) {
-                            //F21-F28 Two byte instruction
+                            // F21-F28 Two byte instruction
                             i++;
                         } else if ((packet[i] & 0x1E) == 0x1E) {
-                            //F13-F20 Two byte instruction
+                            // F13-F20 Two byte instruction
                             i++;
                         } else if ((packet[i] & 0x1D) == 0x1D) {
-                            //Two byte instruction
+                            // Two byte instruction
                             i++;
 
                         } else if ((packet[i] >> 3) == 0x00) {
-                            //This should fall through to 00000 three byte instruction
+                            // This should fall through to 00000 three byte instruction
                             i = i + 2;
 
                         } else {
-                            //Remainder are reserved
+                            // Remainder are reserved
                         }
-                        //Two or three byte instruction
+                        // Two or three byte instruction
                     } else if ((packet[i] & 0xA0) == 0xa0) {
                         log.debug("For Function Group 2");
                         if ((packet[i] & 0x10) == 0x10) {
@@ -999,8 +999,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                                 log.debug("Function 9 off");
                             }
                         }
-                        //Single byte instruction
-                        //i++;
+                        // Single byte instruction
+                        // i++;
                     } else if ((packet[i] & 0x80) == 0x80) {
                         log.debug("For Function Group 1");
                     } else if ((packet[i] & 0x60) == 0x60) {
@@ -1027,14 +1027,13 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         }
                     } else {
                         log.debug("Decoder and Consist Instruction");
-                        //decoder control is 0000
-                        //consist control is 0001
+                        // decoder control is 0000
+                        // consist control is 0001
                     }
                 }
 
             }
-            //}
-//            log.debug("---End Decode DCC Packet---");
+            log.debug("---End Decode DCC Packet---");
         }
 
         int getInputs() {

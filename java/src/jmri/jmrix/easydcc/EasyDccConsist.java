@@ -1,11 +1,3 @@
-/**
- * EasyDccConsist.java
- *
- * This is the Consist definition for a consist on an EasyDCC system. it uses
- * the EasyDcc specific commands to build a consist.
- *
- * @author Paul Bender Copyright (C) 2006
- */
 package jmri.jmrix.easydcc;
 
 import jmri.Consist;
@@ -14,27 +6,42 @@ import jmri.DccLocoAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This is the Consist definition for a consist on an EasyDCC system. it uses
+ * the EasyDcc specific commands to build a consist.
+ *
+ * @author Paul Bender Copyright (C) 2006
+ */
 public class EasyDccConsist extends jmri.implementation.DccConsist implements EasyDccListener {
 
-    // Initialize a consist for the specific address
-    // the Default consist type is an advanced consist 
-    public EasyDccConsist(int address) {
+    private EasyDccSystemConnectionMemo _memo = null;
+    private EasyDccTrafficController trafficController = null;
+
+    // Initialize a consist for the specific address.
+    // The Default consist type is an advanced consist
+    public EasyDccConsist(int address, EasyDccSystemConnectionMemo memo) {
         super(address);
+        _memo = memo;
+        // connect to the TrafficManager
+        trafficController = memo.getTrafficController();
     }
 
-    // Initialize a consist for the specific address
-    // the Default consist type is an advanced consist 
-    public EasyDccConsist(DccLocoAddress address) {
+    // Initialize a consist for the specific address.
+    // The Default consist type is an advanced consist
+    public EasyDccConsist(DccLocoAddress address, EasyDccSystemConnectionMemo memo) {
         super(address);
+        _memo = memo;
+        // connect to the TrafficManager
+        trafficController = memo.getTrafficController();
     }
 
-    // Clean Up local storag
+    // Clean Up local storage.
     @Override
     public void dispose() {
         super.dispose();
     }
 
-    // Set the Consist Type
+    // Set the Consist Type.
     @Override
     public void setConsistType(int consist_type) {
         if (consist_type == Consist.ADVANCED_CONSIST) {
@@ -48,9 +55,10 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
     }
 
-    /* is this address allowed?
-     * On EasyDCC systems, All addresses but 0 can be used in a consist 
-     * (Either an Advanced Consist or a Standard Consist).
+    /**
+     * Is this address allowed?
+     * On EasyDCC systems, all addresses but 0 can be used in a consist
+     * (either an Advanced Consist or a Standard Consist).
      */
     @Override
     public boolean isAddressAllowed(DccLocoAddress address) {
@@ -61,10 +69,12 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
     }
 
-    /* is there a size limit for this consist?
-     * For EasyDcc Standard Consist, returns 8
-     * For Decoder Assisted Consists, returns -1 (no limit)
-     * return 0 for any other consist type.
+    /**
+     * Is there a size limit for this consist?
+     *
+     * @return 8 for EasyDcc Standard Consist,
+     * -1 for Decoder Assisted Consists (no limit),
+     * 0 for any other consist type
      */
     @Override
     public int sizeLimit() {
@@ -77,7 +87,9 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
     }
 
-    // does the consist contain the specified address?
+    /**
+     * Does the consist contain the specified address?
+     */
     @Override
     public boolean contains(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
@@ -89,8 +101,10 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         return false;
     }
 
-    // get the relative direction setting for a specific
-    // locomotive in the consist
+    /**
+     * Get the relative direction setting for a specific
+     * locomotive in the consist.
+     */
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
@@ -103,8 +117,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         return false;
     }
 
-    /*
-     * Method for adding an Address to the internal consist list object.
+    /**
+     * Add an Address to the internal consist list object.
      */
     private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
         Boolean Direction = Boolean.valueOf(directionNormal);
@@ -122,8 +136,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
     }
 
-    /*
-     * Method for removing an address from the internal consist list object.
+    /**
+     * Remove an address from the internal consist list object.
      */
     private synchronized void removeFromConsistList(DccLocoAddress LocoAddress) {
         consistDir.remove(LocoAddress);
@@ -131,10 +145,11 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
     }
 
-    /*
-     * Add a Locomotive to a Consist
-     *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling 
+    /**
+     * Add a Locomotive to a Consist.
+     *
+     * @param LocoAddress is the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
     @Override
@@ -157,12 +172,13 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
     }
 
-    /*
+    /**
      * Restore a Locomotive to an Advanced Consist, but don't write to
      * the command station.  This is used for restoring the consist
      * from a file or adding a consist read from the command station.
-     *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling
+     *
+     * @param LocoAddress is the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
     @Override
@@ -177,9 +193,10 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
     }
 
-    /*
-     *  Remove a Locomotive from this Consist
-     *  @param address is the Locomotive address to add to the locomotive
+    /**
+     * Remove a Locomotive from this Consist.
+     *
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      */
     @Override
     public synchronized void remove(DccLocoAddress LocoAddress) {
@@ -195,10 +212,11 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
     }
 
-    /*
-     *  Add a Locomotive to an Advanced Consist
-     *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling 
+    /**
+     * Add a Locomotive to an Advanced Consist.
+     *
+     * @param LocoAddress is the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
     @Override
@@ -229,12 +247,13 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
 
         // send it
-        EasyDccTrafficController.instance().sendEasyDccMessage(msg, this);
+        _memo.getTrafficController().sendEasyDccMessage(msg, this);
     }
 
-    /*
-     *  Remove a Locomotive from an Advanced Consist
-     *  @param address is the Locomotive address to add to the locomotive
+    /**
+     * Remove a Locomotive from an Advanced Consist
+     *
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      */
     @Override
     protected synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
@@ -261,13 +280,14 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
 
         // send it
-        EasyDccTrafficController.instance().sendEasyDccMessage(msg, this);
+        _memo.getTrafficController().sendEasyDccMessage(msg, this);
     }
 
-    /*
-     *  Add a Locomotive to an EasyDCC Standard Consist.
-     *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling 
+    /**
+     * Add a Locomotive to an EasyDCC Standard Consist.
+     *
+     * @param LocoAddress is the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
     private synchronized void addToCSConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
@@ -285,12 +305,13 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         } else {
             m = EasyDccMessage.getAddConsistReverse(consistAddress.getNumber(), LocoAddress);
         }
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, this);
+        _memo.getTrafficController().sendEasyDccMessage(m, this);
     }
 
-    /*
-     *  Remove a Locomotive from an EasyDCC Standard Consist.
-     *  @param address is the Locomotive address to add to the locomotive
+    /**
+     * Remove a Locomotive from an EasyDCC Standard Consist.
+     *
+     * @param LocoAddress is the Locomotive address to add to the locomotive
      */
     public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
         if (log.isDebugEnabled()) {
@@ -301,20 +322,22 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
                     + ".");
         }
         EasyDccMessage m = EasyDccMessage.getSubtractConsist(consistAddress.getNumber(), LocoAddress);
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, this);
+        _memo.getTrafficController().sendEasyDccMessage(m, this);
     }
 
-    // Listeners for messages from the command station
+    /**
+     * Listeners for messages from the command station.
+     */
     @Override
     public void message(EasyDccMessage m) {
-        log.error("message received unexpectedly: " + m.toString());
+        log.error("message received unexpectedly: {}", m.toString());
     }
 
     @Override
     public void reply(EasyDccReply r) {
         // There isn't anything meaningful coming back at this time.
         if (log.isDebugEnabled()) {
-            log.debug("reply received unexpectedly: " + r.toString());
+            log.debug("reply received unexpectedly: {}", r.toString());
         }
     }
 

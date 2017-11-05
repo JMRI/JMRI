@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.6ish+heap+20171008T0138Z+Rc65e3b3 on Sun Oct 08 12:38:51 AEDT 2017-->
-  <decoderIndex version="844">
+  <!--Written by JMRI version 4.9.6ish+heap+20171104T0557Z+R43de154 on Sat Nov 04 16:57:23 AEDT 2017-->
+  <decoderIndex version="856">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7653,22 +7653,46 @@
       </family>
       <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="82" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Silver.xml">
         <model model="Silver" numOuts="4" numFns="12" nmraWarrant="yes" nmraWarrantStart="200604" lowVersionID="65" highVersionID="75" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Violet" />
+          <output name="1" label="A - White">
+            <label xml:lang="de">A - Weiß</label>
+          </output>
+          <output name="2" label="B - Yellow">
+            <label xml:lang="de">B - Gelb</label>
+          </output>
+          <output name="3" label="C - Green">
+            <label xml:lang="de">C - Grün</label>
+          </output>
+          <output name="4" label="D - Violet">
+            <label xml:lang="de">D - Violett</label>
+          </output>
         </model>
         <model model="Silver Direct" numOuts="4" numFns="12" lowVersionID="78" highVersionID="78" maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Violet" />
+          <output name="1" label="A - White">
+            <label xml:lang="de">A - Weiß</label>
+          </output>
+          <output name="2" label="B - Yellow">
+            <label xml:lang="de">B - Gelb</label>
+          </output>
+          <output name="3" label="C - Green">
+            <label xml:lang="de">C - Grün</label>
+          </output>
+          <output name="4" label="D - Violet">
+            <label xml:lang="de">D - Violett</label>
+          </output>
         </model>
         <model model="Silver 21 Pin" numOuts="4" numFns="12" lowVersionID="82" highVersionID="82" maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Violet" />
+          <output name="1" label="A - White">
+            <label xml:lang="de">A - Weiß</label>
+          </output>
+          <output name="2" label="B - Yellow">
+            <label xml:lang="de">B - Gelb</label>
+          </output>
+          <output name="3" label="C - Green">
+            <label xml:lang="de">C - Grün</label>
+          </output>
+          <output name="4" label="D - Violet">
+            <label xml:lang="de">D - Violett</label>
+          </output>
         </model>
       </family>
       <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="0" lowVersionID="0" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Silver_Mini.xml">
@@ -10120,7 +10144,7 @@
         <model model="N12K1a" numOuts="7" numFns="12" />
         <model model="N12K2" numOuts="7" numFns="12" />
       </family>
-      <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="36" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007" file="NCE_D13SR_TC.xml">
+      <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="38" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007" file="NCE_D13SR_TC.xml">
         <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
@@ -10138,12 +10162,26 @@
           <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
           <size length="1.65" width="0.63" height="0.12" units="inches" />
         </model>
-        <model model="D13SRJ" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+        <model model="D13SRJ" numOuts="4" numFns="8" connector="9pin" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
           <size length="1.65" width="0.63" height="0.12" units="inches" />
+        </model>
+        <model model="D13W" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
+          <size length="1.03" width="0.63" height="0.185" units="inches" />
+        </model>
+        <model model="D13J" numOuts="4" numFns="8" connector="9pin" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
+          <size length="1.03" width="0.63" height="0.185" units="inches" />
         </model>
         <model model="D14SR" numOuts="6" numFns="8" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.5A)" formFactor="HO">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
@@ -20367,22 +20405,10 @@
         <model show="no" model="A1X" numOuts="4" numFns="2" lowVersionID="32" replacementModel="A1X" replacementFamily="Jan 2000" />
       </family>
       <family name="TCS DP2X decoder" mfg="Train Control Systems" file="TCS_DP2X.xml">
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="1" highVersionID="40" replacementModel="DP2X" replacementFamily="Jan 2000">
+        <model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000|June 2007|Jan 2012">
           <output name="4" label="Purple" />
         </model>
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50" replacementModel="DP2X" replacementFamily="June 2007">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="86" highVersionID="88" replacementModel="DP2X" replacementFamily="Jan 2012">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="1" highVersionID="40" replacementModel="DP2X-UK" replacementFamily="Jan 2000">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50" replacementModel="DP2X-UK" replacementFamily="June 2007">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="86" highVersionID="88" replacementModel="DP2X-UK" replacementFamily="Jan 2012">
+        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" replacementModel="DP2X-UK" replacementFamily="query:Jan 2000|June 2007|Jan 2012">
           <output name="4" label="Purple" />
         </model>
       </family>
@@ -23970,7 +23996,7 @@
           <output name="BEMF" />
         </model>
       </family>
-      <family name="TCS Mx series decoders" mfg="Train Control Systems" file="TCS_zMx.xml">
+      <family name="TCS Mx series decoders old" mfg="Train Control Systems" file="TCS_zMx.xml">
         <model show="no" model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24" replacementModel="M1" replacementFamily="Jan 2000">
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>

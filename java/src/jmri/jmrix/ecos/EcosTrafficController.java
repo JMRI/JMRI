@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the necessary state in each
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -27,9 +27,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
 
     public EcosTrafficController() {
         super();
-        if (log.isDebugEnabled()) {
-            log.debug("creating a new EcosTrafficController object");
-        }
+        log.debug("creating a new EcosTrafficController object");
         // set as command station too
         jmri.InstanceManager.setCommandStation(this);
         this.setAllowUnexpectedReply(true);
@@ -284,7 +282,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                             modeMsg = new EcosMessage("set(" + ecosObject + ", stop)");
                             break;
                         default:
-                            modeMsg = new EcosMessage("request(" + ecosObject + ",control)");
+                            modeMsg = new EcosMessage("request(" + ecosObject + ", control)");
                             break;
                     }
                     modeMsg.setTimeout(50);
@@ -324,6 +322,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
+
     private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class);
 
 }

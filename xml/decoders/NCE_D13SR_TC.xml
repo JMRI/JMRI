@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Marc N Fournier" version="12" lastUpdated="20171031"/>
   <version author="Alain Le Marchand" version="11" lastUpdated="20140628"/>
   <version author="Michael Mosher" version="10" lastUpdated="20120425"/>
   <version author="Michael Mosher" version="9" lastUpdated="20080331"/>
@@ -34,9 +35,10 @@
   <!-- Version 8 - added D408SR V3.6 which has different function mapping then V3.5 -->
   <!-- Version 9 - added Factory Direct Trains Trackmobile -->
   <!-- Version 10 - added BLI Hi-Rail pickup and track inspection sedan -->
-  <!-- Version 10 - added N12K0a and N12K0b plus a few comments/tooltips -->  
+  <!-- Version 11 - added N12K0a and N12K0b plus a few comments/tooltips -->
+  <!-- Version 12 - added D13NHJ, D13NHP, D13W, D13J,  high Ver ID 38 (2014) -->  
   <decoder>
-    <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="36" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
+    <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="38" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
       <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="plug" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA"/>
@@ -54,13 +56,28 @@
         <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
         <size length="1.65" width="0.63" height="0.12" units="inches"/>
       </model>
-      <model model="D13SRJ" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model model="D13SRJ" numOuts="4" numFns="8" connector="9pin" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
         <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
         <size length="1.65" width="0.63" height="0.12" units="inches"/>
       </model>
+      <model model="D13W" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+        <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
+        <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
+        <size length="1.03" width="0.63" height="0.185" units="inches"/>
+      </model>
+      <model model="D13J" numOuts="4" numFns="8" connector="9pin" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+        <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
+        <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
+        <size length="1.03" width="0.63" height="0.185" units="inches"/>
+      </model>
+	  
       <model model="D14SR" numOuts="6" numFns="8" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.5A)" formFactor="HO">
         <output name="1" label="White" connection="plug" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA"/>

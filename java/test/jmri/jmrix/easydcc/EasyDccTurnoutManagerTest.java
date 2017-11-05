@@ -25,7 +25,7 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
         JUnitUtil.setUp();
 
         // create and register the manager object
-        l = new EasyDccTurnoutManager();
+        l = new EasyDccTurnoutManager(new EasyDccSystemConnectionMemo("E", "EasyDCC Test"));
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

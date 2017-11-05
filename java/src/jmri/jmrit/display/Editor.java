@@ -637,7 +637,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             Graphics2D g2d = null;
             if (g instanceof Graphics2D) {
                 g2d = (Graphics2D) g;
-                g2d.scale(_paintScale, _paintScale);                
+                g2d.scale(_paintScale, _paintScale);
             }
 
             super.paint(g);
@@ -647,11 +647,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (g2d != null) {
                 stroke = g2d.getStroke();
             }
-            Color color = g.getColor();                
+            Color color = g.getColor();
             if (_selectRect != null) {
                 //Draw a rectangle on top of the image.
                 if (g2d != null) {
-                    g2d.setStroke(_selectRectStroke);                    
+                    g2d.setStroke(_selectRectStroke);
                 }
                 g.setColor(_selectRectColor);
                 g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
@@ -659,7 +659,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_selectionGroup != null) {
                 g.setColor(_selectGroupColor);
                 if (g2d != null) {
-                    g2d.setStroke(new BasicStroke(2.0f));                    
+                    g2d.setStroke(new BasicStroke(2.0f));
                 }
                 for (Positionable p : _selectionGroup) {
                     if (!(p instanceof PositionableShape)) {
@@ -674,7 +674,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_highlightcomponent != null) {
                 g.setColor(_highlightColor);
                 if (g2d != null) {
-                    g2d.setStroke(new BasicStroke(2.0f));                    
+                    g2d.setStroke(new BasicStroke(2.0f));
                 }
                 g.drawRect(_highlightcomponent.x, _highlightcomponent.y,
                         _highlightcomponent.width, _highlightcomponent.height);
@@ -1170,26 +1170,18 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         //if (showCoordinates()) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
-        JMenuItem jmi = null;
+        JMenuItem edit = null;
         if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
             MemoryIcon pm = (MemoryIcon) p;
 
-            jmi = edit.add("x = " + pm.getOriginalX());
-            jmi.setEnabled(false);
+            edit = new JMenuItem(Bundle.getMessage(
+                "EditLocationXY", pm.getOriginalX(), pm.getOriginalY()));
 
-            jmi = edit.add("y = " + pm.getOriginalY());
-            jmi.setEnabled(false);
-
-            edit.add(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
+            edit.addActionListener(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
         } else {
-            jmi = edit.add("x = " + p.getX());
-            jmi.setEnabled(false);
-
-            jmi = edit.add("y = " + p.getY());
-            jmi.setEnabled(false);
-
-            edit.add(CoordinateEdit.getCoordinateEditAction(p));
+            edit = new JMenuItem(Bundle.getMessage(
+                "EditLocationXY", p.getX(), p.getY()));
+            edit.addActionListener(CoordinateEdit.getCoordinateEditAction(p));
         }
         popup.add(edit);
         return true;
@@ -1206,11 +1198,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @return always returns true
      */
     public boolean setShowRotationMenu(Positionable p, JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("Rotation", "..."));
-        JMenuItem jmi = edit.add(Bundle.getMessage("Rotation", " = " + p.getDegrees()));
-        jmi.setEnabled(false);
-        edit.add(CoordinateEdit.getRotateEditAction(p));
-        popup.add(edit);
+        popup.add(CoordinateEdit.getRotateEditAction(p));
         return true;
     }
 
@@ -1400,10 +1388,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param popup the menu to add entries to
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        JMenuItem jmi = edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
-        jmi.setEnabled(false);
-        edit.add(CoordinateEdit.getLevelEditAction(p));
+        JMenuItem edit = new JMenuItem(Bundle.getMessage("EditLevel_", p.getDisplayLevel()));
+        edit.addActionListener(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
     }
 

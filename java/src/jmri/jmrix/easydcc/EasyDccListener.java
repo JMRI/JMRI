@@ -11,6 +11,5 @@ public interface EasyDccListener extends jmri.jmrix.AbstractMRListener {
     public void message(EasyDccMessage m);
 
     public void reply(EasyDccReply m);
+
 }
-
-

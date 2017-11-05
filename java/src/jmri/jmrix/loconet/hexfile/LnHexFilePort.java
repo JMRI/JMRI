@@ -187,7 +187,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null;  // this is provided to class who want data from us
+    private DataInputStream pin = null;  // this is provided to classes who want data from us
 
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin

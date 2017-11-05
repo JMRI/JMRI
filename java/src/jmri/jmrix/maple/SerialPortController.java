@@ -3,7 +3,7 @@ package jmri.jmrix.maple;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
- * Abstract base for classes representing a communications port
+ * Abstract base for classes representing a communications port.
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */
@@ -14,7 +14,5 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
     protected SerialPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
+
 }
-
-
-

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
 
 /**
- * Abstract base for classes representing a XNet communications port
+ * Abstract base for classes representing an XNet communications port
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2004,2010
