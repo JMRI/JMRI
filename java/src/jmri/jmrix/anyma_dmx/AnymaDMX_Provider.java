@@ -1,6 +1,6 @@
 package jmri.jmrix.anyma_dmx;
 
-public interface DMX_Provider {
+public interface AnymaDMX_Provider {
 
     public String getName();
 

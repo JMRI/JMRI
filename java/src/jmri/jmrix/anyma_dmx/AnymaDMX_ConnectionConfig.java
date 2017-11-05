@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This uses the {@link AnymaDMX_Adapter} class to do the actual connection.
  *
- * @author Paul Bender Copyright (C) 2015
  * @author George Warner Copyright (C) 2017
  * @since       4.9.6
  *
@@ -33,6 +32,7 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
      */
     public AnymaDMX_ConnectionConfig(AnymaDMX_Adapter p) {
         super();
+        log.info("*	AnymaDMX_ConnectionConfig constructor called.");
         adapter = p;
     }
 
@@ -41,6 +41,7 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
      */
     public AnymaDMX_ConnectionConfig() {
         super();
+        log.info("*	AnymaDMX_ConnectionConfig constructor called.");
         adapter = new AnymaDMX_Adapter();
     }
 
@@ -48,9 +49,7 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
 
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("*	init called for " + name());
-        }
+        log.info("*	AnymaDMX_ConnectionConfig.checkInitDone() called.");
         if (init) {
             return;
         }
@@ -101,6 +100,7 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
 
     @Override
     public void updateAdapter() {
+        log.info("*	AnymaDMX_ConnectionConfig.updateAdapter() called.");
         if ((adapter.getSystemConnectionMemo() != null)
                 && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
@@ -111,10 +111,12 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
 
     @Override
     protected void showAdvancedItems() {
+        log.info("*	AnymaDMX_ConnectionConfig.showAdvancedItems() called.");
     }
 
     @Override
     public void loadDetails(final javax.swing.JPanel details) {
+        log.info("*	AnymaDMX_ConnectionConfig.loadDetails() called.");
         _details = details;
         setInstance();
         if (!init) {
@@ -131,6 +133,7 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
 
     @Override
     protected void setInstance() {
+        log.info("*	AnymaDMX_ConnectionConfig.setInstance() called.");
         if (adapter == null) {
             adapter = new AnymaDMX_Adapter();
 
@@ -150,40 +153,48 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
 
     @Override
     public AnymaDMX_Adapter getAdapter() {
+        log.info("*	AnymaDMX_ConnectionConfig.getAdapter() called.");
         return adapter;
     }
 
     @Override
     public String getInfo() {
+        log.info("*	AnymaDMX_ConnectionConfig.getInfo() called.");
         return "DMX";
     }
 
     @Override
     public String getManufacturer() {
+        log.info("*	AnymaDMX_ConnectionConfig.getManufacturer() called.");
         return AnymaDMX_ConnectionTypeList.ANYMA_DMX;
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
+        log.info("*	AnymaDMX_ConnectionConfig.setManufacturer() called.");
     }
 
     @Override
     public String name() {
+        log.info("*	AnymaDMX_ConnectionConfig.name() called.");
         return getConnectionName();
     }
 
     @Override
     public String getConnectionName() {
+        log.info("*	AnymaDMX_ConnectionConfig.getConnectionName() called.");
         return "Anyma DMX";
     }
 
     @Override
     public boolean getDisabled() {
+        log.info("*	AnymaDMX_ConnectionConfig.getDisabled() called.");
         return disabled;
     }
 
     @Override
     public void setDisabled(boolean disable) {
+        log.info("*	AnymaDMX_ConnectionConfig.setDisabled() called.");
         this.disabled = disable;
     }
 

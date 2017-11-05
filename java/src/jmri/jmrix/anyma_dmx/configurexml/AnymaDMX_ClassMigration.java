@@ -9,7 +9,6 @@ import org.openide.util.lookup.ServiceProvider;
  * Anyma DMX class migrations for the
  * {@link jmri.configurexml.ConfigXmlManager} to use.
  *
- * @author Randall Wood Copyright 2017
  * @author George Warner Copyright (C) 2017
  * @since       4.9.6
  */

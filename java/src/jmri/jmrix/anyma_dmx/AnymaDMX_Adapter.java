@@ -14,23 +14,21 @@ import org.slf4j.LoggerFactory;
  * Provides an Adapter to allow the system connection memo and multiple
  * AnymaDMX_ managers to be handled.
  * <P>
- * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @author Paul Bender Copyright (C) 2015
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
 public class AnymaDMX_Adapter extends jmri.jmrix.AbstractPortController
         implements jmri.jmrix.PortAdapter {
 
-    private DMX_Controller dmx = null;
+    private AnymaDMX_Controller dmx = null;
     private String[] option1Values = null;
 
     public AnymaDMX_Adapter() {
         super(new AnymaDMX_SystemConnectionMemo());
-        log.debug("*	AnymaDMX_Adapter Constructor called");
+        log.info("*	AnymaDMX_Adapter Constructor called");
         this.manufacturerName = AnymaDMX_ConnectionTypeList.ANYMA_DMX;
         try {
-            dmx = DMX_Factory.getInstance();
+            dmx = AnymaDMX_Factory.getInstance();
             opened = true;
         } catch (UnsatisfiedLinkError er) {
             log.error("Expected to run on Anyma DMX, but does not appear to be.");
@@ -55,45 +53,58 @@ public class AnymaDMX_Adapter extends jmri.jmrix.AbstractPortController
         option1Values = productNames.toArray(option1Values);
 
         options.put(option1Name, new Option(option1Name + ":", option1Values, false));
+
+        options.remove(option2Name);
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
     }
 
     @Override
     public String getCurrentPortName() {
+        log.info("*	AnymaDMX_Adapter.getCurrentPortName() called.");
         return "DMX";
     }
 
     @Override
     public void dispose() {
+        log.info("*	AnymaDMX_Adapter.dispose() called.");
         super.dispose();
         dmx.shutdown(); // terminate all DMX connections.
     }
 
     @Override
     public void connect() {
+        log.info("*	AnymaDMX_Adapter.connect() called.");
     }
 
     @Override
     public void configure() {
+        log.info("*	AnymaDMX_Adapter.configure() called.");
+        log.info("*         getOptionState(option2Name): {0}", getOptionState(option2Name));
+
         this.getSystemConnectionMemo().configureManagers();
     }
 
     @Override
     public DataInputStream getInputStream() {
+        log.info("*	AnymaDMX_Adapter.getInputStream() called.");
         return null;
     }
 
     @Override
     public DataOutputStream getOutputStream() {
+        log.info("*	AnymaDMX_Adapter.getOutputStream() called.");
         return null;
     }
 
     @Override
     public AnymaDMX_SystemConnectionMemo getSystemConnectionMemo() {
+        log.info("*	AnymaDMX_Adapter.getSystemConnectionMemo() called.");
         return (AnymaDMX_SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
     @Override
     public void recover() {
+        log.info("*	AnymaDMX_Adapter.recover() called.");
     }
 
     /*
@@ -102,8 +113,13 @@ public class AnymaDMX_Adapter extends jmri.jmrix.AbstractPortController
     * @return the associaed DMX Controller or null if none exists
      */
     @CheckForNull
-    public DMX_Controller getDMX_Controller() {
+    public AnymaDMX_Controller getAnymaDMX_Controller() {
+        log.info("*	AnymaDMX_Adapter.getAnymaDMX_Controller() called.");
         return dmx;
+    }
+
+    private String[] commandStationOptions() {
+        return new String[] { "Goodby", "cruel", "world" };
     }
 
     private final static Logger log = LoggerFactory.getLogger(AnymaDMX_Adapter.class

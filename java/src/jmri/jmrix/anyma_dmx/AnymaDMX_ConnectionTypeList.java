@@ -6,7 +6,6 @@ import org.openide.util.lookup.ServiceProvider;
 /**
  * Returns a list of valid Anyma DMX Connection Types
  * <P>
- * @author Paul Bender Copyright (C) 2015
  * @author George Warner Copyright (C) 2017
  * @since       4.9.6
  */

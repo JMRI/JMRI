@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Paul Bender Copyright: Copyright (c) 2015
  * @author George Warner Copyright (C) 2017
  * @since       4.9.6
  */
@@ -27,14 +26,15 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     public AnymaDMX_ConnectionConfigXml() {
         super();
+        log.info("*	AnymaDMX_ConnectionConfigXml constructor called");
     }
 
     @Override
     protected void getInstance() {
-        log.debug("*	getInstance without Parameter called");
+        log.info("*	AnymaDMX_ConnectionConfigXml.getInstance() called");
         if (adapter == null) {
             adapter = new AnymaDMX_Adapter();
-            if (adapter.getDMX_Controller() == null) {
+            if (adapter.getAnymaDMX_Controller() == null) {
                 //try {
                 //    this.creationErrorEncountered("Not running on Anyma DMX.", adapter.getSystemPrefix(), adapter.getUserName(), null);
                 //} catch (JmriConfigureXmlException ex) {
@@ -45,12 +45,13 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     protected void getInstance(Object object) {
-        log.debug("*	getInstance with Parameter called");
+        log.info("*	AnymaDMX_ConnectionConfigXml.getInstance() called");
         adapter = ((AnymaDMX_ConnectionConfig) object).getAdapter();
     }
 
     @Override
     protected void register() {
+        log.info("*	AnymaDMX_ConnectionConfigXml.register() called");
         this.register(new AnymaDMX_ConnectionConfig(adapter));
     }
 
@@ -63,6 +64,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
      */
     @Override
     public Element store(Object o) {
+        log.info("*	AnymaDMX_ConnectionConfigXml.store() called");
         getInstance(o);
         Element e = new Element("connection");
         storeCommon(e, adapter);
@@ -72,6 +74,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     @Override
     public boolean load(Element shared, Element perNode) {
+        log.info("*	AnymaDMX_ConnectionConfigXml.load() called");
         getInstance();
         loadCommon(shared, perNode, adapter);
 
@@ -83,5 +86,4 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     private final static Logger log = LoggerFactory.getLogger(AnymaDMX_ConnectionConfigXml.class);
-
 }

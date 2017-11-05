@@ -1,6 +1,6 @@
 package jmri.jmrix.anyma_dmx;
 
-public interface DMX_Controller {
+public interface AnymaDMX_Controller {
 
 //    public void unexportAll();
 //    public void removeAllListeners();
