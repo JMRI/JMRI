@@ -524,7 +524,7 @@ public class AutoAllocate {
             int numberAllocatedButUnoccupied = 0;
             for (int i = aSectionList.size() - 1; i >= 0; i--) {
                 AllocatedSection as = aSectionList.get(i);
-                if ((as != null) && (as.getSection().getOccupancy() != jmri.Section.OCCUPIED && as.getExited())) {
+                if ((as != null) && (as.getSection().getOccupancy() != jmri.Section.OCCUPIED && !as.getExited())) {
                     numberAllocatedButUnoccupied++;
                 }
             }
