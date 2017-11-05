@@ -9324,32 +9324,27 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         if (inComboBox != null) {
             block = (Block) inComboBox.getNamedBean();
         }
-        result = highlightBlock(block);
-        return result;
+        return highlightBlock(block);
     } //highlightBlockInComboBox
 
     /**
      * highlight the specified block
+     *
      * @param inBlock the block
      * @return true if block was highlighted
      */
     public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
+        blockIDComboBox.setSelectedBean(inBlock);
+
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-
-        Manager m = blockIDComboBox.getManager();
-        List<NamedBean> l = m.getNamedBeanList();
-
+        List<NamedBean> l = blockIDComboBox.getManager().getNamedBeanList();
         for (NamedBean nb : l) {
             Block b = (Block) nb;
             LayoutBlock lb = lbm.getLayoutBlock(b);
-
             if (lb != null) {
                 boolean enable = ((inBlock != null) && b.equals(inBlock));
-                if (enable) {
-                    blockIDComboBox.setSelectedBean(nb);
-                }
                 lb.setUseExtraColor(enable);
                 result |= enable;
             }
@@ -9359,6 +9354,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /**
      * highlight the specified layout block
+     *
      * @param inLayoutBlock the layout block
      * @return true if layout block was highlighted
      */
