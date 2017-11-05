@@ -76,4 +76,5 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     @Override
     public void dispose() {
     }
+
 }
