@@ -4,10 +4,11 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 /**
- * Frame for user input of EasyDcc messages
+ * Frame for user input of EasyDCC messages
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */
@@ -17,9 +18,11 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
+    private EasyDccSystemConnectionMemo _memo = null;
 
-    public EasyDccPacketGenFrame() {
+    public EasyDccPacketGenFrame(EasyDccSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     /**
@@ -29,22 +32,22 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
     public void initComponents() {
         // the following code sets the frame's initial state
 
-        jLabel1.setText("Command:");
+        jLabel1.setText(Bundle.getMessage("CommandLabel"));
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");
+        sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
+        sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command as ASCII string (hex not yet available)");
+        packetTextField.setToolTipText(Bundle.getMessage("EnterASCIIToolTip"));
         packetTextField.setMaximumSize(
                 new Dimension(packetTextField.getMaximumSize().width,
                         packetTextField.getPreferredSize().height
                 )
         );
 
-        setTitle("Send EasyDcc command");
+        setTitle(Bundle.getMessage("SendCommandTitle"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(jLabel1);
@@ -68,7 +71,7 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
             m.setElement(i, packetTextField.getText().charAt(i));
         }
 
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, this);
+        _memo.getTrafficController().sendEasyDccMessage(m, this);
     }
 
     /**
@@ -84,4 +87,5 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
     @Override
     public void reply(EasyDccReply r) {
     } // ignore replies
+
 }

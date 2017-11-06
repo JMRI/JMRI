@@ -1,12 +1,12 @@
 package jmri.jmrix.easydcc;
 
+import jmri.DccLocoAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message to an EasyDCC command station. The EasyDccReply class
- * handles the response from the command station.
- * <P>
+ * Encodes a message to an EasyDCC command station.
+ * <p>
  * The {@link EasyDccReply} class handles the response from the command station.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2004
@@ -28,8 +28,8 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // from String
-    public EasyDccMessage(String m) {
-        super(m);
+    public EasyDccMessage(String s) {
+        super(s);
     }
 
     // diagnose format
@@ -56,15 +56,16 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /* 
-     * get a static message to add a locomotive to a Standard Consist 
-     * in the normal direction
+    /**
+     * Get a static message to add a locomotive to a Standard Consist
+     * in the normal direction.
+     *
      * @param ConsistAddress - a consist address in the range 1-255
      * @param LocoAddress - a jmri.DccLocoAddress object representing the 
      * locomotive to add
      * @return an EasyDccMessage of the form GN cc llll 
      */
-    static public EasyDccMessage getAddConsistNormal(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
+    static public EasyDccMessage getAddConsistNormal(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
@@ -76,15 +77,16 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /* 
-     * get a static message to add a locomotive to a standard consist in 
-     * the reverse direction
+    /**
+     * Get a static message to add a locomotive to a Standard Consist in
+     * the reverse direction.
+     *
      * @param ConsistAddress - a consist address in the range 1-255
      * @param LocoAddress - a jmri.DccLocoAddress object representing the 
      * locomotive to add
      * @return an EasyDccMessage of the form GS cc llll 
      */
-    static public EasyDccMessage getAddConsistReverse(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
+    static public EasyDccMessage getAddConsistReverse(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
@@ -96,14 +98,15 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /* 
-     * get a static message to subtract a locomotive from a Standard Consist
+    /**
+     * Get a static message to subtract a locomotive from a Standard Consist.
+     *
      * @param ConsistAddress - a consist address in the range 1-255
      * @param LocoAddress - a jmri.DccLocoAddress object representing the 
      * locomotive to remove
      * @return an EasyDccMessage of the form GS cc llll 
      */
-    static public EasyDccMessage getSubtractConsist(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
+    static public EasyDccMessage getSubtractConsist(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
@@ -115,8 +118,9 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /* 
-     * get a static message to delete a standard consist
+    /**
+     * Get a static message to delete a Standard Consist.
+     *
      * @param ConsistAddress - a consist address in the range 1-255
      * @return an EasyDccMessage of the form GK cc 
      */
@@ -130,8 +134,9 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /* 
-     * get a static message to display a standard consist
+    /**
+     * Get a static message to display a Standard Consist.
+     *
      * @param ConsistAddress - a consist address in the range 1-255
      * @return an EasyDccMessage of the form GD cc 
      */
@@ -213,11 +218,8 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static protected final int LONG_TIMEOUT = 180000;  // e.g. for programming options
+    static protected final int LONG_TIMEOUT = 180000; // e.g. for programming options
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccMessage.class);
 
 }
-
-
-

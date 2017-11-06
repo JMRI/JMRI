@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements a XNetInterface by doing a scatter-gather to another, simpler
+ * Implements an XNetInterface by doing a scatter-gather to another, simpler
  * implementation.
  * <P>
  * This is intended for remote operation, where only one copy of each message
@@ -49,7 +49,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     }
 
     /**
-     * Receive a XNet message from upstream and forward it to all the local
+     * Receive an XNet message from upstream and forward it to all the local
      * clients.
      */
     @Override
@@ -103,7 +103,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     }
 
     /**
-     * Forward a XNetMessage to all registered listeners.
+     * Forward an XNetMessage to all registered listeners.
      *
      * @param m Message to forward. Listeners should not modify it!
      */

@@ -1,5 +1,6 @@
 package jmri.jmrix.easydcc.packetgen;
 
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +15,7 @@ public class EasyDccPacketGenActionTest {
 
     @Test
     public void testCTor() {
-        EasyDccPacketGenAction t = new EasyDccPacketGenAction();
+        EasyDccPacketGenAction t = new EasyDccPacketGenAction("SendPacket", new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
         Assert.assertNotNull("exists",t);
     }
 

@@ -23,7 +23,7 @@ public class AcelaMonAction extends AbstractAction {
     }
 
     public AcelaMonAction() {
-        this(Bundle.getMessage("AcelaMonitorTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+        this(Bundle.getMessage("MonitorXTitle", "Acela"), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
     @Override

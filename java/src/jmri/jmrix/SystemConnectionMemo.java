@@ -234,4 +234,5 @@ abstract public class SystemConnectionMemo extends Bean {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
+
 }

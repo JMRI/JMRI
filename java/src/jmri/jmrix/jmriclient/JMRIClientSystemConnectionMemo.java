@@ -1,4 +1,3 @@
-//JMRIClientSystemConnectionMemo.java
 package jmri.jmrix.jmriclient;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,7 @@ import jmri.TurnoutManager;
 
 /**
  * Lightweight class to denote that a system is active and provide general
- * information
+ * information.
  * <p>
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
@@ -32,7 +31,6 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         // create and register the JMRIClientComponentFactory
         InstanceManager.store(cf = new jmri.jmrix.jmriclient.swing.JMRIClientComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
-
     }
 
     public JMRIClientSystemConnectionMemo() {
@@ -43,7 +41,6 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
         // create and register the JMRIClientComponentFactory
         InstanceManager.store(cf = new jmri.jmrix.jmriclient.swing.JMRIClientComponentFactory(this), jmri.jmrix.swing.ComponentFactory.class);
-
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -229,7 +226,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -255,4 +252,3 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
 }
-

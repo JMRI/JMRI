@@ -69,7 +69,7 @@ public class SprogTurnout extends AbstractTurnout {
     }
 
     // data members
-    int _number;   // turnout number
+    int _number; // turnout number
 
     protected void sendMessage(boolean closed) {
         // get the packet
@@ -114,7 +114,6 @@ public class SprogTurnout extends AbstractTurnout {
         }
 
         _memo.getSprogTrafficController().sendSprogMessage(m, null);
-
     }
 
     @Override
