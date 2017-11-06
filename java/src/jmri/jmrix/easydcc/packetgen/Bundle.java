@@ -1,4 +1,3 @@
-
 package jmri.jmrix.easydcc.packetgen;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

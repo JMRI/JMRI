@@ -203,14 +203,13 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to normalize an Acela system name
-     * <P>
+     * Public static method to normalize an Acela system name.
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one Acela bit, by removing extra zeros inserted by the user.
      *
      * @return a normalized name is returned in the same format as the input name,
      * or an empty string if the supplied system name does not have a valid format.
-     *
      */
     public static String normalizeSystemName(String systemName, String prefix) {
         // ensure that input system name has a valid format

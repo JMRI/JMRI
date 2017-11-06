@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register an EasyDccMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class EasyDccMonAction extends AbstractAction {
 
     private EasyDccSystemConnectionMemo _memo = null;
@@ -21,7 +21,7 @@ public class EasyDccMonAction extends AbstractAction {
     }
 
     public EasyDccMonAction() {
-        this(Bundle.getMessage("MonitorXTitle", "EasyDCC"), jmri.InstanceManager.getDefault(jmri.jmrix.easydcc.EasyDccSystemConnectionMemo.class));
+        this(Bundle.getMessage("MonitorXTitle", "EasyDCC"), jmri.InstanceManager.getDefault(EasyDccSystemConnectionMemo.class));
     }
 
     @Override
