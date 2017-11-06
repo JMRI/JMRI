@@ -76,7 +76,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
 
         // create the turnout
-        t = new SerialTurnout(sName, userName,_memo);
+        t = new SerialTurnout(sName, userName, _memo);
 
         // does system name correspond to configured hardware
         if (!_memo.validSystemNameConfig(sName, 'T', _memo.getTrafficController())) {

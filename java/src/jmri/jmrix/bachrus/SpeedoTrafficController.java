@@ -9,21 +9,20 @@ import purejavacomm.SerialPortEvent;
 import purejavacomm.SerialPortEventListener;
 
 /**
- * Converts Stream-based I/O to/from speedo messages. The "SpeedoInterface" side
+ * Converts Stream-based I/O to/from Speedo messages. The "SpeedoInterface" side
  * sends/receives message objects. The connection to a SpeedoPortController is
  * via a pair of *Streams, which then carry sequences of characters for
  * transmission. Note that this processing is handled in an independent thread.
- *
- * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged
- * with "AJB" indicate changes or observations by me
- *
- * Removed Runnable implementation and methods for it
+ * <p>
+ * Removed Runnable implementation and methods for it.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2010
+ * @author Andrew Berridge Copyright (C) 2010 for gnu io (RXTX)
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
+    private SpeedoSystemConnectionMemo memo = null;
     private SpeedoReply reply = new SpeedoReply();
 
     public SpeedoTrafficController(SpeedoSystemConnectionMemo adaptermemo) {
@@ -31,6 +30,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     // The methods to implement the SpeedoInterface
+
     protected Vector<SpeedoListener> cmdListeners = new Vector<SpeedoListener>();
 
     @Override
@@ -79,9 +79,9 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
             }
         }
 
-        // forward to the last listener who send a message
-        // this is done _second_ so monitoring can have already stored the reply
-        // before a response is sent
+        // Forward to the last listener who send a message.
+        // This is done _second_ so monitoring can have already stored the reply
+        // before a response is sent.
         if (lastSender != null) {
             lastSender.reply(r);
         }
@@ -128,7 +128,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         return null;
     }
 
-    private SpeedoSystemConnectionMemo memo = null;
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
@@ -154,7 +153,8 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      * Respond to an event triggered by RXTX. In this case we are
      * only dealing with DATA_AVAILABLE but the other events are left here for
      * reference.
-     * @author AJB Jan 2010
+     *
+     * @author Andrew Berridge Jan 2010
      */
     @Override
     public void serialEvent(SerialPortEvent event) {
@@ -199,7 +199,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     /**
-     * Send the current reply - built using data from seriaEvent.
+     * Send the current reply - built using data from serialEvent.
      */
     private void sendreply() {
         //send the reply

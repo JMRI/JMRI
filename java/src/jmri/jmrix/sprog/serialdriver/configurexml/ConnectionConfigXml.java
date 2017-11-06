@@ -14,7 +14,7 @@ import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen Copyright (c) 2003
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

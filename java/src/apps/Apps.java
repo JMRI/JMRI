@@ -619,11 +619,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Show only active systems in the menu bar.
-     * <P>
-     * Alternately, you might want to do
-     * <PRE>
-     *    menuBar.add(new jmri.jmrix.SystemsMenu());
-     * </PRE>
      *
      * @param menuBar the menu bar to add systems to
      * @param wi      the containing WindowInterface

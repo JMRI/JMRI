@@ -4,13 +4,11 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri Maple-specific tools
+ * Create a "Systems" menu containing the Jmri Maple-specific tools.
  *
  * @author Bob Jacobsen Copyright 2008
  */
 public class MapleMenu extends JMenu {
-
-    MapleSystemConnectionMemo _memo = null;
 
     public MapleMenu(String name, MapleSystemConnectionMemo memo) {
         this(memo);
@@ -20,8 +18,6 @@ public class MapleMenu extends JMenu {
     public MapleMenu(MapleSystemConnectionMemo memo) {
 
         super();
-        _memo = memo;
-
         if (memo != null) {
             setText(memo.getUserName());
         } else {
@@ -31,9 +27,13 @@ public class MapleMenu extends JMenu {
         add(new jmri.jmrix.maple.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"))); // TODO more memo, cf CMRI
         add(new jmri.jmrix.maple.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand")));
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.maple.nodeconfig.NodeConfigAction(_memo));
+        if (memo != null) {
+            add(new jmri.jmrix.maple.nodeconfig.NodeConfigAction(memo));
+        }
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.maple.assignment.ListAction(Bundle.getMessage("MenuItemAssignments"), _memo));
+        if (memo != null) {
+            add(new jmri.jmrix.maple.assignment.ListAction(Bundle.getMessage("MenuItemAssignments"), memo));
+        }
     }
 
 }
