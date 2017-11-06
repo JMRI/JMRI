@@ -732,7 +732,7 @@ public class LayoutSlip extends LayoutTurnout {
             jmi.setEnabled(false);
 
             boolean blockAssigned = false;
-            if ((blockName == null) || (blockName.isEmpty())) {
+            if (getLayoutBlock() == null) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
                 jmi.setEnabled(false);
             } else {
@@ -740,7 +740,7 @@ public class LayoutSlip extends LayoutTurnout {
                 jmi.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                            layoutEditor.highlightLayoutBlock(getLayoutBlock());
+                        layoutEditor.highlightLayoutBlock(getLayoutBlock());
                     } //actionPerformed
                 });
                 blockAssigned = true;

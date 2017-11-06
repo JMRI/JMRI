@@ -6,13 +6,12 @@ import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
 
 /**
- * An implementation of DccThrottle with code specific to an NCE connection.
- * <P>
+ * An implementation of DccThrottle with code specific to an EasyDCC connection.
+ * <p>
  * Addresses of 99 and below are considered short addresses, and over 100 are
- * considered long addresses. This is not the NCE system standard, but is used
- * as an expedient here.
- * <P>
- * Based on Glen Oberhauser's original LnThrottleManager implementation
+ * considered long addresses.
+ * <p>
+ * Based on Glen Oberhauser's original LnThrottleManager implementation and NCEThrottle
  *
  * @author Bob Jacobsen Copyright (C) 2001, modified 2004 by Kelly Loyd
  */
@@ -20,6 +19,9 @@ public class EasyDccThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     *
+     * @param memo the connected EasyDccTrafficController
+     * @param address Loco ID
      */
     public EasyDccThrottle(EasyDccSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
@@ -221,7 +223,6 @@ public class EasyDccThrottle extends AbstractThrottle {
     }
 
     private DccLocoAddress address;
-
     EasyDccTrafficController tc;
 
     @Override
