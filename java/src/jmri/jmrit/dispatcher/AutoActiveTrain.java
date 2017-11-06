@@ -1262,9 +1262,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile().getThrottleSettingFromSignalMapSpeed(speedState, _forward);
                 log.debug("{}:setTargetSpeedByProfile: SpeedState[{}]",_activeTrain.getTrainName(),throttleSetting,speedState);
                 if (throttleSetting > 0.009) {
-                    _stoppingBySensor = false;
-                    _stoppingByBlockOccupancy = false;
-                    _stoppingUsingSpeedProfile = false;
                     _autoEngineer.setHalt(false);
                     _autoEngineer.slowToStop(false);
                     _targetSpeed = throttleSetting * _speedFactor;
