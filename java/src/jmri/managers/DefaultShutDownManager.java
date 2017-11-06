@@ -119,10 +119,12 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * Run the shutdown tasks, and then terminate the program if not aborted.
-     * Does not return under normal circumstances. Does return if the shutdown
-     * was aborted by the user, in which case the program should continue to
-     * operate.
+     * First asks the shutdown tasks if shutdown is allowed. If not return false.
+     * <p>
+     * Then run the shutdown tasks, and then terminate the program with status 0
+     * if not aborted. Does not return under normal circumstances. Does return
+     * false if the shutdown was aborted by the user, in which case the program
+     * should continue to operate.
      * <p>
      * Executes all registered {@link jmri.ShutDownTask}s before closing any
      * displayable windows.

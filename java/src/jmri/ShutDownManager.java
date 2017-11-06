@@ -65,7 +65,7 @@ public interface ShutDownManager {
     public boolean restart();
 
     /**
-     * First asks the shutdown tasks if shutdown is allowed. If not return true.
+     * First asks the shutdown tasks if shutdown is allowed. If not return false.
      * <p>
      * Then run the shutdown tasks, and then terminate the program with status 0
      * if not aborted. Does not return under normal circumstances. Does return
@@ -75,8 +75,8 @@ public interface ShutDownManager {
      * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
      *
-     * @return true if any shutdown task aborts the shutdown or if anything goes
-     * wrong, false if shutdown is successfull.
+     * @return false if any shutdown task aborts the shutdown or if anything goes
+     * wrong.
      */
     public boolean shutdown();
 
