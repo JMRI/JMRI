@@ -9,8 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the jmrit.mastbuilder package & jmrit.mastbuilder.MastBuilder
+ * Tests for the jmrit.mastbuilder package and jmrit.mastbuilder.MastBuilder
  * class.
+ * Note MastBuilder for now is only a demo.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  */
