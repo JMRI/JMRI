@@ -63,7 +63,7 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Set the traffic controller instance associated with this connection memo.
      *
-     * @param tc jmri.jmrix.acela.AcelaTrafficController object to use.
+     * @param tc jmri.jmrix.acela.AcelaTrafficController object to use
      */
     public void setAcelaTrafficController(AcelaTrafficController tc) {
         this.tc = tc;

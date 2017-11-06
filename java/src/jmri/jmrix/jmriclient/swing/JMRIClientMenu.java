@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "JMRIClient" menu containing the system-specific tools
+ * Create a "JMRIClient" menu containing the system-specific tools.
  *
  * @author Bob Jacobsen Copyright 2008
  */
@@ -16,18 +16,20 @@ public class JMRIClientMenu extends JMenu {
     }
 
     public JMRIClientMenu(jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
-
         super();
-        _memo = memo;
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        setText(rb.getString("MenuItemJMRIClient"));
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(rb.getString("MenuItemJMRIClient"));
+        }
 
-        add(new jmri.jmrix.jmriclient.swing.mon.JMRIClientMonAction(rb.getString("MenuItemCommandMonitor"), _memo));
-        add(new jmri.jmrix.jmriclient.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendCommand"), _memo));
+        if (memo != null) {
+            add(new jmri.jmrix.jmriclient.swing.mon.JMRIClientMonAction(rb.getString("MenuItemCommandMonitor"), memo));
+            add(new jmri.jmrix.jmriclient.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendCommand"), memo));
+        }
     }
-
-    jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo = null;
 
 }

@@ -16,9 +16,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     public AbstractSerialConnectionConfigXml() {
     }
 
-    final static protected java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-
     protected SerialPortAdapter adapter;
 
     protected void getInstance(Object object) {
@@ -50,13 +47,13 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         if (adapter.getCurrentPortName() != null) {
             e.setAttribute("port", adapter.getCurrentPortName());
         } else {
-            e.setAttribute("port", rb.getString("noneSelected"));
+            e.setAttribute("port", Bundle.getMessage("noneSelected"));
         }
 
         if (adapter.getCurrentBaudRate() != null) {
             e.setAttribute("speed", adapter.getCurrentBaudRate());
         } else {
-            e.setAttribute("speed", rb.getString("noneSelected"));
+            e.setAttribute("speed", Bundle.getMessage("noneSelected"));
         }
 
         e.setAttribute("class", this.getClass().getName());

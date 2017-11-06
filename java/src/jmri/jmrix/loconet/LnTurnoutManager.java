@@ -54,8 +54,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
     boolean mTurnoutNoRetry;
-
-    String prefix;
+    private String prefix;
 
     @Override
     public String getSystemPrefix() {
@@ -72,20 +71,24 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
 
     protected boolean _binaryOutput = false;
     protected boolean _useOffSwReqAsConfirmation = false;
+
     public void setUhlenbrockMonitoring() {
         _binaryOutput = true;
         mTurnoutNoRetry = true;
         _useOffSwReqAsConfirmation = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Turnout createNewTurnout(String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Can't convert " +  // NOI18N
-                    systemName.substring(getSystemPrefix().length() + 1) + 
+                    systemName.substring(prefix.length() + 1) +
                     " to LocoNet turnout address"); // NOI18N
         }
         LnTurnout t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
@@ -101,10 +104,12 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     // holds last seen turnout request for possible resend
     LocoNetMessage lastSWREQ = null;
 
-    // listen for turnouts, creating them as needed
+    /**
+     * Listen for turnouts, creating them as needed
+     */
     @Override
     public void message(LocoNetMessage l) {
-        //log.info("LnTurnoutManager message "+l);
+        log.debug("LnTurnoutManager message {}", l);
         // parse message type
         int addr;
         switch (l.getOpCode()) {
@@ -121,9 +126,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
                 if (((sw1 & 0xFC) == 0x78) && ((sw2 & 0xCF) == 0x07)) {
                     return;  // turnout interrogate msg
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("SW_REQ received with address " + addr);
-                }
+                log.debug("SW_REQ received with address {}", addr);
                 break;
             }
             case LnConstants.OPC_SW_REP: {                /* page 9 of Loconet PE */
@@ -136,9 +139,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
                 addr = address(sw1, sw2);
-                if (log.isDebugEnabled()) {
-                    log.debug("SW_REP received with address " + addr);
-                }
+                log.debug("SW_REP received with address {}", addr);
                 break;
             }
             case LnConstants.OPC_LONG_ACK: {
@@ -161,8 +162,8 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         // reach here for loconet switch command; make sure we know about this one
         String s = prefix + "T" + addr; // NOI18N
         if (getBySystemName(s) == null) {
-            // no turnout with this address, is there a light
-            String sx = "LL" + addr; // NOI18N
+            // no turnout with this address, is there a light?
+            String sx = prefix + "L" + addr; // NOI18N
             if (jmri.InstanceManager.lightManagerInstance().getBySystemName(sx) == null) {
                 // no light, create a turnout
                 LnTurnout t = (LnTurnout) provideTurnout(s);
@@ -196,7 +197,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "T"))) {
+        if (!systemName.startsWith(prefix + "T")) {
             // here if an illegal loconet turnout system name
             log.error("invalid character in header field of loconet turnout system name: {}", systemName);
             return (0);
@@ -205,7 +206,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())
+                    prefix.length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
             log.debug("invalid character in number field of system name: {}", systemName);

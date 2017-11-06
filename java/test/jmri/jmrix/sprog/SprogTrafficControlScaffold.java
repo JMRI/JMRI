@@ -1,7 +1,5 @@
 /**
- * SprogInterfaceScaffold.java
- *
- * Description:	Stands in for the SprogTrafficController class
+ * Stands in for the SprogTrafficController class
  *
  * @author	Bob Jacobsen
  */

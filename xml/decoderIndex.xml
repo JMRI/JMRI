@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.6ish+heap+20171101T0727Z+R361c1d0 on Wed Nov 01 18:27:12 AEDT 2017-->
-  <decoderIndex version="846">
+  <!--Written by JMRI version 4.9.6ish+heap+20171104T0557Z+R43de154 on Sat Nov 04 16:57:23 AEDT 2017-->
+  <decoderIndex version="856">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -20405,22 +20405,10 @@
         <model show="no" model="A1X" numOuts="4" numFns="2" lowVersionID="32" replacementModel="A1X" replacementFamily="Jan 2000" />
       </family>
       <family name="TCS DP2X decoder" mfg="Train Control Systems" file="TCS_DP2X.xml">
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="1" highVersionID="40" replacementModel="DP2X" replacementFamily="Jan 2000">
+        <model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000|June 2007|Jan 2012">
           <output name="4" label="Purple" />
         </model>
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50" replacementModel="DP2X" replacementFamily="June 2007">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="86" highVersionID="88" replacementModel="DP2X" replacementFamily="Jan 2012">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="1" highVersionID="40" replacementModel="DP2X-UK" replacementFamily="Jan 2000">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50" replacementModel="DP2X-UK" replacementFamily="June 2007">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="86" highVersionID="88" replacementModel="DP2X-UK" replacementFamily="Jan 2012">
+        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" replacementModel="DP2X-UK" replacementFamily="query:Jan 2000|June 2007|Jan 2012">
           <output name="4" label="Purple" />
         </model>
       </family>
@@ -24008,7 +23996,7 @@
           <output name="BEMF" />
         </model>
       </family>
-      <family name="TCS Mx series decoders" mfg="Train Control Systems" file="TCS_zMx.xml">
+      <family name="TCS Mx series decoders old" mfg="Train Control Systems" file="TCS_zMx.xml">
         <model show="no" model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24" replacementModel="M1" replacementFamily="Jan 2000">
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>

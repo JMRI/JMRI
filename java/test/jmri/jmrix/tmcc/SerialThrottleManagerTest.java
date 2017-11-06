@@ -21,7 +21,7 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tm = new SerialThrottleManager();
+        tm = new SerialThrottleManager(new TmccSystemConnectionMemo());
     }
 
     @After

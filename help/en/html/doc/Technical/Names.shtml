@@ -11,7 +11,7 @@
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content=
   "JMRI technical code names user name system name">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- The combination of "Define" and {Header, Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
@@ -710,6 +710,17 @@
           <td>2044</td>
         </tr>
         <tr>
+          <td>TMCC (Lionel)</td>
+          <td>o</td>
+          <td>16</td>
+          <td>Output (Turnout) 16</td>
+          <td>NT16</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>511</td>
+        </tr>
+        <tr>
           <td>X10</td>
           <td>o</td>
           <td>A3</td>
@@ -915,9 +926,9 @@ SENSOR GROUP:my group:LS2
         <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">NamedBeanHandleManager</a>
         see the page on
         <a href="Patterns.shtml">code patterns page</a>.
-        
-        
+
         </ul>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
