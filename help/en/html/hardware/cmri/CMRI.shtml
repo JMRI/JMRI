@@ -48,8 +48,8 @@ Standards and Recommendations Section, Layout Control Specifications:
 are used interchangeably.  The C/MRI communication protocol is referred to as
 <strong>CMRInet</strong>.</p>
 <ul>
-  <p style="margin-left:0em">The documentation below is divided into sections;
-  for easy access click an item in this list:</p>
+<li>The documentation below is divided into sections;
+  for easy access click an item in this list:</li>
 </ul>
 
 <div class="toc">
@@ -101,28 +101,12 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
       <li><a href="#L652">Using An Ethernet Network Connection</a></li>
       <li><a href="#L662">Running JMRI when disconnected from your C/MRI
         system</a></li>
-      <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>
-    </ul>
-  </li>
-  <li><a href="#L737">Documentation</a>
-    <ul>
+      <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>  
       <li><a href="#L739">JMRI Help</a></li>
       <li><a href="#L746">Third Party info</a></li>
+      <li><a href="#L145">Supported Hardware</a></li>
     </ul>
-  </li>
-</ul>
-</div>
-<ul>
-  <a name="hardware" id="hardware"></a> 
-
-  <h2 id="L145">Supported Hardware</h2>
-  <ul>
-    <li>Chubb C/MRI USIC</li>
-    <li>Chubb C/MRI SMINI</li>
-    <li>Chubb C/MRI SUSIC</li>
-    <li>Model Railroad Control Systems (MRCS) CPNODE</li>
-  </ul>
-
+    
   <h2 id="L164">Limitations</h2>
   <p>Original Chubb IBEC and UBEC interfaces for older PC system buses (ISA,
   PCI) are not supported.</p>
@@ -582,7 +566,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   The next character in the System Name is the type of physical entity the
   bit or port is connected. Sensors are designated with a "<strong>S"</strong>,
   Turnouts with a "<strong>T"</strong>, and Lights with an
-  "<strong>L</strong>".</p>
+  "<strong>L</strong>".
 
   <p>Next, is the node address as a decimal value, in the range of 0-127. While
   a node address of zero does not need to be inserted, it is preferred to
@@ -955,8 +939,8 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   message type (e.g Receive) and node address (ua) are displayed next. The "IB"
   are the input data bytes, displayed as hexadecimal digits, one digit per 8
   bit byte.</p>
-</ul>
-<ul>
+
+
   <p><img alt="" src="images/cmrinetmonitor-pollresponsetimestamp.png"
   width="1040" height="559"></p>
 
@@ -968,8 +952,8 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
 
   <p><img alt="" src="images/cmrinetinit-SMINI.png" width="427"
   height="169"></p>
-</ul>
-<ul>
+
+
   <p></p>
 
   <p>The following screen shows the node initialization message sequence for
@@ -983,8 +967,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
 
   <p><img alt="" src="images/cmrinetmonitor-pollinitialization.png"
   width="904" height="559"></p>
-</ul>
-<ul>
+
   <p>If a node goes off line and stops responding to polls, JMRI will initiate
   an initialization sequence consisting of five polls. If five polls result in
   no responses (timeouts) the Init/Transmit message sequence will be done. This
@@ -996,11 +979,12 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
 
   <p>The following screen shows a poll to node 20, followed by a response, then
   output bytes sent to the node.</p>
-</ul>
+  
+  
 
 <p><img alt="" src="images/cmrinetmonitor-transmitmessage.png" width="1040"
 height="586"></p>
-<ul>
+
   <p>The following screen shows all of the display options enabled. The order
   of options is:</p>
 
@@ -1273,12 +1257,20 @@ height="586"></p>
   <a name="documentation" id="documentation"></a>
   <h2 id="L737">Documentation</h2>
 
-  <h2 id="L739">JMRI Help</h3>
+  <h2 id="L739">JMRI Help</h2>
   <ul>
     <li><a href="Signals.shtml">C/MRI signals</a></li>
   </ul>
 
-  <h2 id="L746">Third Party info</h3>
+  <h2 id="L746">Third Party info</h2>
+
+  <h2 id="L145">Supported Hardware</h2>
+      <ul>
+        <li>Chubb C/MRI USIC</li>
+        <li>Chubb C/MRI SMINI</li>
+        <li>Chubb C/MRI SUSIC</li>
+        <li>Model Railroad Control Systems (MRCS) CPNODE</li>
+     </ul>
 
   <p>For more information on C/MRI (including the C/MRI User Manual), please
   see:</p>
@@ -1286,26 +1278,9 @@ height="586"></p>
     <li><a href="http://www.jlcenterprises.net/">JLC Enterprises web
     site</a></li>
     <li><a href="http://www.sliqelectronics.com/">SLIQ Electronics</a></li>
-  </ul>
-  <ul>
-    <li><a href="https://groups.yahoo.com/neo/groups/CMRI_Users/info">C/MRI
+    <li><a href="http://groups.yahoo.com/neo/groups/CMRI_Users/info">C/MRI
       Users Yahoo group</a></li>
     <li><a href="http://www.modelrailroadcontrolsystems.com/">Model Railroad
       Control Systems (MRCS)</a></li>
   </ul>
-
-  <p></p>
-
-  <p></p>
-  <!--#include virtual="/Footer" -->
-  <li></li>
-</ul>
-</div>
-<!-- closes #mainContent-->
-</div>
-<!-- closes #mBody-->
-</body>
-</div>
-</div>
-</body>
-</html>
+  
