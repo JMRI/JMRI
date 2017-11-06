@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.EDGE_CONNECTOR;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -2044,7 +2042,7 @@ public class LayoutEditorTools {
             JFrame theFrame) {
         boundary = p;
 
-        if ((p.getType() == EDGE_CONNECTOR) && ((p.getLinkedPoint() == null)
+        if ((p.getType() == PositionablePoint.EDGE_CONNECTOR) && ((p.getLinkedPoint() == null)
                 || (p.getLinkedPoint().getConnect1() == null))) {
             if (p.getConnect1Dir() == Path.EAST || p.getConnect1Dir() == Path.SOUTH) {
                 showWest = false;
