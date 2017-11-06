@@ -21,6 +21,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Operations:
  * <ol>
+ * <li>Asks each {@link ShutDownTask} by calling isShutdownAllowed(), allowing
+ * it to abort the shutdown if needed, without getting JMRI in an inconsistent
+ * state.
  * <li>Execute each {@link ShutDownTask} in order, allowing it to abort the
  * shutdown if needed.
  * <li>If not aborted, terminate the program.
@@ -134,8 +137,15 @@ public class DefaultShutDownManager implements ShutDownManager {
         if (!shuttingDown) {
             Date start = new Date();
             log.debug("Shutting down with {} tasks", this.tasks.size());
-            long timeout = 30; // all shut down tasks must complete within n seconds
             setShuttingDown(true);
+            // First check if shut down is allowed
+            for (ShutDownTask task : tasks) {
+                if (! task.isShutdownAllowed()) {
+                    setShuttingDown(false);
+                    return false;
+                }
+            }
+            long timeout = 30; // all shut down tasks must complete within n seconds
             // trigger parallel tasks (see jmri.ShutDownTask#isParallel())
             if (!this.runShutDownTasks(true)) {
                 return false;
