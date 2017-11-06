@@ -7791,7 +7791,7 @@ public class LayoutEditorTools {
             block1IDComboBox.setToolTipText(Bundle.getMessage("SignalMastsBlockNameHint"));
             header.add(panel11);
 
-            // we'll go ahead and set these up…
+            // we'll go ahead and set these up
             block2NameLabel = new JLabel(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("BeanNameBlock") + " 2 "
                     + Bundle.getMessage("Name")));

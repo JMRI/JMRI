@@ -34,7 +34,6 @@ public class EasyDccTurnoutManagerXml extends jmri.managers.configurexml.Abstrac
         return loadTurnouts(shared, perNode);
     }
 
-    // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerXml.class);
 
 }

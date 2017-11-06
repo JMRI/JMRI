@@ -161,7 +161,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("Rotate", " (" + pos.getDegrees() + "°)")) {
+        return new AbstractAction(Bundle.getMessage("RotateSign", pos.getDegrees())) { // Bundle property includes degree symbol
 
             @Override
             public void actionPerformed(ActionEvent e) {

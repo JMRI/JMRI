@@ -114,6 +114,10 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
         return null;
     }
 
+    /**
+     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used
+     */
+    @Deprecated
     static volatile protected EasyDccTrafficController self = null;
 
     /**
