@@ -52,25 +52,25 @@ public class NXFrame extends WarrantRoute {
     private float _stopDist;    // mm stop distance from portal
     private float _totalLen;    // route length of warrant
 
-    private JTextField _maxThrottleBox = new JTextField(6);
-    private JTextField _maxSpeedBox = new JTextField(6);
+    private final JTextField _maxThrottleBox = new JTextField(6);
+    private final JTextField _maxSpeedBox = new JTextField(6);
     private JButton _speedUnits;
-    private JTextField _originDist = new JTextField(6);
+    private final JTextField _originDist = new JTextField(6);
     private JButton _originUnits;
-    private JTextField _destDist = new JTextField(6);
+    private final JTextField _destDist = new JTextField(6);
     private JButton _destUnits;
-    private JRadioButton _forward = new JRadioButton();
-    private JRadioButton _reverse = new JRadioButton();
-    private JCheckBox _noRamp = new JCheckBox();
-    private JCheckBox _stageEStop = new JCheckBox();
-    private JCheckBox _shareRouteBox = new JCheckBox();
-    private JCheckBox _haltStartBox = new JCheckBox();
-    private JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
-    private JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
+    private final JRadioButton _forward = new JRadioButton();
+    private final JRadioButton _reverse = new JRadioButton();
+    private final JCheckBox _noRamp = new JCheckBox();
+    private final JCheckBox _stageEStop = new JCheckBox();
+    private final JCheckBox _shareRouteBox = new JCheckBox();
+    private final JCheckBox _haltStartBox = new JCheckBox();
+    private final JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
+    private final JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
 
     private JPanel _routePanel = new JPanel();
     private JPanel _autoRunPanel;
-    private JPanel __trainHolder = new JPanel();
+    private final JPanel __trainHolder = new JPanel();
     private JPanel _switchPanel;
     private JPanel _trainPanel;
     
@@ -693,7 +693,7 @@ public class NXFrame extends WarrantRoute {
         float incre = _throttleIncr;
         float momentumTime = _speedUtil.getMomentumTime(true);
         while (speed < _maxThrottle) {
-            float dist = _speedUtil.getTrackSpeed(speed,  _forward.isSelected()) * momentumTime;
+            float dist = _speedUtil.getTrackSpeed(speed + incre/2,  _forward.isSelected()) * momentumTime;
             if (_intervalTime > momentumTime) {
                 dist += _speedUtil.getTrackSpeed(speed + incre, _forward.isSelected()) * (_intervalTime - momentumTime);
             }
@@ -741,7 +741,7 @@ public class NXFrame extends WarrantRoute {
         speed = _maxThrottle;     // throttle setting
         float maxIncre = incre;
         while (speed > 0.0f) {
-            float dist = _speedUtil.getTrackSpeed(speed, isForward) * momentumTime;
+            float dist = _speedUtil.getTrackSpeed(speed - incre/2, isForward) * momentumTime;
             if (_intervalTime > momentumTime) {
                 dist += _speedUtil.getTrackSpeed(speed - incre, isForward) * (_intervalTime - momentumTime);
             }
@@ -821,7 +821,7 @@ public class NXFrame extends WarrantRoute {
         float momentumTime = _speedUtil.getMomentumTime(false);
         float upRampLength;
         float dnRampLength ;
-        if (_intervalTime > momentumTime) {   // do longer ramp first
+        if (_intervalTime >= momentumTime) {   // do longer ramp first
             dnRampLength = getDownRampLength();            
             upRampLength = getUpRampLength();            
         } else {

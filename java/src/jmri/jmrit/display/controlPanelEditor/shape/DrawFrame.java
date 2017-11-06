@@ -36,8 +36,6 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     int _lineWidth;
     Color _lineColor;
     Color _fillColor;
-    int _lineAlpha = 255;
-    int _fillAlpha = 0;
     JColorChooser _chooser;
     JRadioButton _lineColorButon;
     JRadioButton _fillColorButon;
@@ -61,8 +59,11 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _contentPanel.setLayout(new java.awt.BorderLayout(10, 10));
         _contentPanel.setLayout(new BoxLayout(_contentPanel, BoxLayout.Y_AXIS));
 
-        _contentPanel.add(makeInstructions((_shape == null), title));
-        _contentPanel.add(makePanel());
+        if (_shape == null) {
+            _contentPanel.add(makeCreatePanel(title));
+        } else {
+            _contentPanel.add(makeEditPanel());
+        }
 
         JScrollPane scrollPane = new JScrollPane(_contentPanel);
         super.setContentPane(scrollPane);
@@ -86,29 +87,24 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         setAlwaysOnTop(true);
     }
 
-    private JPanel makeInstructions(boolean newShape, String type) {
+    private JPanel makeInstructions() {
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        p.add(Box.createHorizontalGlue());
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-      
-       if (newShape) {
-            if (type != null && type.equals("Polygon")) {
-                addLabel(panel, "drawInstructions2a");
-                addLabel(panel, "drawInstructions2b");
-            } else {
-                addLabel(panel, "drawInstructions2");
-           }
-            addLabel(panel, "drawInstructions1");
-       } else {
-           
-           addLabel(panel, "drawInstructions1");
-           addLabel(panel, "drawInstructions3a");
-           JLabel l = new JLabel(Bundle.getMessage("drawInstructions3b", Bundle.getMessage("VisibleSensor")));
-           l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-           panel.add(l);
-       }
-       JPanel p = new JPanel();
-       p.add(panel);
-       return p;    
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        addLabel(panel, "drawInstructions1");
+        addLabel(panel, "drawInstructions3a");
+        JLabel l = new JLabel(Bundle.getMessage("drawInstructions3b", Bundle.getMessage("VisibleSensor")));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        if (this instanceof DrawPolygon) {
+            addLabel(panel, "drawInstructions2c");
+        }
+        panel.add(Box.createVerticalStrut(10));
+        p.add(panel);
+        p.add(Box.createHorizontalGlue());
+        return p;    
     }
     
     private void addLabel(JPanel panel, String text) {
@@ -116,8 +112,30 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(label);
     }
+    private final JPanel makeCreatePanel(String type) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        java.awt.Dimension dim = new java.awt.Dimension(250, 40);
+        panel.add(Box.createRigidArea(dim));
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        p.add(Box.createHorizontalStrut(20));
+        JPanel pp = new JPanel();
+        pp.setLayout(new BoxLayout(pp, BoxLayout.PAGE_AXIS));
+        if (type != null && type.equals("Polygon")) {
+            addLabel(pp, "drawInstructions2a");
+            addLabel(pp, "drawInstructions2b");
+        } else {
+            addLabel(pp, "drawInstructions2");
+       }
+        p.add(pp);
+        p.add(Box.createHorizontalStrut(20));
+        panel.add(p);
+        panel.add(Box.createRigidArea(dim));
+        return panel;
+    }
 
-    private final JPanel makePanel() {
+    private final JPanel makeEditPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
@@ -260,6 +278,10 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
      * both for creation and editing. (don't make a copy for Cancel)
      */
     protected void setDisplayParams() {
+        _contentPanel.removeAll();
+        _contentPanel.add(makeInstructions());
+        _contentPanel.add(makeEditPanel());
+        
         _lineWidth = _shape.getLineWidth();
         _lineSlider.setValue(_lineWidth);
         _lineColor = _shape.getLineColor();
@@ -276,8 +298,6 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             _fillColorButon.setSelected(true);
         }
 
-        _contentPanel.remove(0);
-        _contentPanel.add(makeInstructions(false, null), 0);
         _contentPanel.add(makeParamsPanel());
         _contentPanel.add(makeSensorPanel());            
         _sensorName.setText(_shape.getSensorName());
@@ -304,7 +324,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _originalShape.remove();
     }
 
-    protected JPanel makeDoneButtonPanel() {
+    private JPanel makeDoneButtonPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -335,62 +355,64 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         } else if (_fillColor != null) {
             _chooser.getSelectionModel().setSelectedColor(_fillColor);
             _alphaSlider.setValue(_fillColor.getAlpha());
+        } else {
+            _alphaSlider.setValue(255);
         }
         _alphaSlider.revalidate();
         _alphaSlider.repaint();
     }
 
     private void widthChange() {
+        _lineWidth = _lineSlider.getValue();
         if (_shape == null) {
             return;
         }
-        _lineWidth = _lineSlider.getValue();
         _shape.setLineWidth(_lineWidth);
         updateShape();
     }
 
     private void colorChange() {
-        if (_shape == null) {
-            return;
-        }
+        Color c = _chooser.getColor();
+        int alpha = _alphaSlider.getValue();
         if (_lineColorButon.isSelected()) {
-            Color c = _chooser.getColor();
             _lineColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _lineColor.getAlpha());
-            _shape.setLineColor(_lineColor);
-        } else {
-            Color c = _chooser.getColor();
-            int alpha;
-            if (_fillColor != null) {
-                alpha = _fillColor.getAlpha();
-            } else {
-                alpha = _alphaSlider.getValue();
+            if (_shape != null) {
+                _shape.setLineColor(_lineColor);
             }
+        } else {
             _fillColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
-            _shape.setFillColor(_fillColor);
+            if (_shape != null) {
+                _shape.setFillColor(_fillColor);                
+            }
         }
         updateShape();
     }
 
     private void alphaChange() {
-        if (_shape == null) {
-            return;
-        }
         int alpha = _alphaSlider.getValue();
         if (_lineColorButon.isSelected()) {
             _lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), alpha);
-            _shape.setLineColor(_lineColor);
+            if (_shape != null) {
+                _shape.setLineColor(_lineColor);
+            }
         } else if (_fillColorButon.isSelected() && _fillColor != null) {
             _fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), alpha);
-            _shape.setFillColor(_fillColor);
+            if (_shape != null) {
+                _shape.setFillColor(_fillColor);
+            }
         }
         updateShape();
     }
 
-/*    protected void setDrawParams() {
+/*
+ *   disabled for deal to satisfy P Bender    
+    protected void setDrawParams() {
         TargetPane targetPane = (TargetPane) _parent.getEditor().getTargetPanel();
-        Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10f);
+        Stroke stroke = new BasicStroke(_lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10f);
         targetPane.setSelectRectStroke(stroke);
-        targetPane.setSelectRectColor(Color.green);
+        if (_fillColor != null) {
+            targetPane.setSelectRectColor(_fillColor);
+        }
     }*/
 
     protected void closingEvent(boolean cancel) {
@@ -429,6 +451,9 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     }
 
     protected void updateShape() {
+        if (_shape == null) {
+            return;
+        }
         _shape.removeHandles();
         _shape.drawHandles();
         _shape.updateSize();

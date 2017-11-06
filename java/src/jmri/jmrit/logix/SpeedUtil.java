@@ -571,12 +571,9 @@ public class SpeedUtil {
 
         if (increasing) {
             while (fromSpeed < toSpeed) {
-                float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime;
+                float dist = getTrackSpeed(fromSpeed + deltaThrottle/2, isForward) * momentumTime;
                 if (deltaTime > momentumTime) {
                     dist += getTrackSpeed(fromSpeed + deltaThrottle, isForward) * (deltaTime - momentumTime);
-                }
-                if (dist <= 0.0f) {
-                    break;
                 }
                 fromSpeed += deltaThrottle;
                 if (fromSpeed <= toSpeed) {
@@ -601,7 +598,7 @@ public class SpeedUtil {
                 } else {
                     nextSpeed = fromSpeed - deltaThrottle;
                 }
-                float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime;
+                float dist = getTrackSpeed((fromSpeed + nextSpeed)/2, isForward) * momentumTime;
                 if (deltaTime > momentumTime) {
                     dist += getTrackSpeed(nextSpeed, isForward) * (deltaTime - momentumTime);
                 }
