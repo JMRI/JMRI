@@ -15,8 +15,9 @@ import javax.swing.JTextField;
 import jmri.util.FileUtil;
 
 /**
- * Pane for building mast definitions.
+ * Pane for building Signal Mast definitions.
  * Demo, not in any JMRI menu or tool as of 4.9.6
+ *
  * TODO: add code behind buttons, add to jmri.jmrit.ToolsMenu using
  * {@literal add(new jmri.jmrit.mastbuilder.MastBuilderAction(Bundle.getMessage("MastBuilderTitle") + "..."));}
  *
