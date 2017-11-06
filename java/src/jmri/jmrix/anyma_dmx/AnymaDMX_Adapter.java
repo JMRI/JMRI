@@ -51,9 +51,8 @@ public class AnymaDMX_Adapter extends AbstractPortController
             }
             productNames.add(fullProductName);
         }
-        option1Values = new String[productNames.size()];
-        option1Values = productNames.toArray(option1Values);
 
+        option1Values = productNames.toArray(new String[productNames.size()]);
         options.put(option1Name, new Option(option1Name + ":", option1Values, false));
 
         options.remove(option2Name);
