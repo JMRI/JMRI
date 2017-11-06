@@ -1636,7 +1636,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     public boolean checkForUnAssignedBlocks() {
-        // Positionable Points don't have blocks so…
+        // Positionable Points don't have blocks so...
         // nothing to see here... move along...
         return true;
     }

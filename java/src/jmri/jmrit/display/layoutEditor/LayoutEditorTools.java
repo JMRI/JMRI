@@ -2042,6 +2042,7 @@ public class LayoutEditorTools {
             JFrame theFrame) {
         boundary = p;
 
+        // if this is an edge connector...
         if ((p.getType() == PositionablePoint.EDGE_CONNECTOR) && ((p.getLinkedPoint() == null)
                 || (p.getLinkedPoint().getConnect1() == null))) {
             if (p.getConnect1Dir() == Path.EAST || p.getConnect1Dir() == Path.SOUTH) {
@@ -11565,7 +11566,7 @@ public class LayoutEditorTools {
                     }
                 }
             }
-            // if all that failed…
+            // if all that failed...
             if (boundary == null) {
                 JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                         Bundle.getMessage("SignalsError7"),
