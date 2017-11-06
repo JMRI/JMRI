@@ -29,20 +29,18 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        // KSL 20040409 - EasyDcc does not require feedback afaik
-        // don't quite know if the EasyDcc requires feedback.
-        // may need to extend this.
-        /* KSL - appears that the first command sent to the Queue in EasyDcc
+        // Not sure if EasyDcc requires feedback. May need to extend this.
+        /* It appears that the first command sent to the Queue in EasyDcc
          is 'lost' - so it may be beneficial to send a 'Send' command 
          just to wake up the command station.
          This was tested on v418 - also appears as an issue with the
          radio throttles. 
          */
         log.debug("new EasyDccThrottle for {}", address);
-        notifyThrottleKnown(new EasyDccThrottle((EasyDccSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
+        notifyThrottleKnown(new EasyDccThrottle((EasyDccSystemConnectionMemo) _memo, (DccLocoAddress) address), address);
     }
 
-    // KSL 20040409 - EasyDcc does not have a 'dispatch' function.
+    // EasyDcc does not have a 'dispatch' function.
     @Override
     public boolean hasDispatchFunction() {
         return false;
