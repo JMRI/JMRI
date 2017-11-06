@@ -276,6 +276,12 @@ public class TrainBuilderTest {
         train.setRoute(route);
         setUpRoute(route);
 
+        // delete all the engines
+        emanager.deregister(emanager.getByRoadAndNumber("E", "1"));
+        emanager.deregister(emanager.getByRoadAndNumber("E", "2"));
+        emanager.deregister(emanager.getByRoadAndNumber("E", "3"));
+        emanager.deregister(emanager.getByRoadAndNumber("E", "4"));
+
         // Auto Engines calculates the number of engines based on requested moves in the route
         train.reset();
         new TrainBuilder().build(train);
@@ -294,20 +300,6 @@ public class TrainBuilderTest {
         train.setRoute(route);
         setUpRoute(route);
 
-        Engine e1 = emanager.newEngine("E", "1");
-        e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("E", "2");
-        e2.setModel("GP40");
-        Engine e3 = emanager.newEngine("E", "3");
-        e3.setModel("GP40");
-        Engine e4 = emanager.newEngine("E", "4");
-        e4.setModel("GP40");
-
-        e1.setLocation(A, A.getTrackById("track"));
-        e2.setLocation(A, A.getTrackById("track"));
-        e3.setLocation(A, A.getTrackById("track"));
-        e4.setLocation(A, A.getTrackById("track"));
-
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build, only needs a single engine", train.isBuilt());
@@ -325,19 +317,10 @@ public class TrainBuilderTest {
         train.setRoute(route);
         setUpRoute(route);
 
-        Engine e1 = emanager.newEngine("E", "1");
-        e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("E", "2");
-        e2.setModel("GP40");
-        Engine e3 = emanager.newEngine("E", "3");
-        e3.setModel("GP40");
-        Engine e4 = emanager.newEngine("E", "4");
-        e4.setModel("GP40");
-
-        e1.setLocation(A, A.getTrackById("track"));
-        e2.setLocation(A, A.getTrackById("track"));
-        e3.setLocation(A, A.getTrackById("track"));
-        e4.setLocation(A, A.getTrackById("track"));
+        Engine e1 = emanager.getByRoadAndNumber("E", "1");
+        Engine e2 = emanager.getByRoadAndNumber("E", "2");
+        Engine e3 = emanager.getByRoadAndNumber("E", "3");
+        Engine e4 = emanager.getByRoadAndNumber("E", "4");
 
         // change requirements
         rA.setMaxCarMoves(12);
@@ -382,19 +365,10 @@ public class TrainBuilderTest {
 
         rB.setGrade(2.5); // 2.5% grade!
 
-        Engine e1 = emanager.newEngine("E", "1");
-        e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("E", "2");
-        e2.setModel("GP40");
-        Engine e3 = emanager.newEngine("E", "3");
-        e3.setModel("GP40");
-        Engine e4 = emanager.newEngine("E", "4");
-        e4.setModel("GP40");
-
-        e1.setLocation(A, A.getTrackById("track"));
-        e2.setLocation(A, A.getTrackById("track"));
-        e3.setLocation(A, A.getTrackById("track"));
-        e4.setLocation(A, A.getTrackById("track"));
+        Engine e1 = emanager.getByRoadAndNumber("E", "1");
+        Engine e2 = emanager.getByRoadAndNumber("E", "2");
+        Engine e3 = emanager.getByRoadAndNumber("E", "3");
+        Engine e4 = emanager.getByRoadAndNumber("E", "4");
 
         Consist c = emanager.newConsist("c");
         e1.setConsist(c);
@@ -497,19 +471,10 @@ public class TrainBuilderTest {
         rC.setMaxCarMoves(12);
         rB.setGrade(2.5); // 2.5% grade!
 
-        Engine e1 = emanager.newEngine("E", "1");
-        e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("E", "2");
-        e2.setModel("GP40");
-        Engine e3 = emanager.newEngine("E", "3");
-        e3.setModel("GP40");
-        Engine e4 = emanager.newEngine("E", "4");
-        e4.setModel("GP40");
-
-        e1.setLocation(A, A.getTrackById("track"));
-        e2.setLocation(A, A.getTrackById("track"));
-        e3.setLocation(A, A.getTrackById("track"));
-        e4.setLocation(A, A.getTrackById("track"));
+        Engine e1 = emanager.getByRoadAndNumber("E", "1");
+        Engine e2 = emanager.getByRoadAndNumber("E", "2");
+        Engine e3 = emanager.getByRoadAndNumber("E", "3");
+        Engine e4 = emanager.getByRoadAndNumber("E", "4");
 
         Consist c = emanager.newConsist("c");
         e1.setConsist(c);
@@ -3176,7 +3141,7 @@ public class TrainBuilderTest {
         Schedule sch1 = smanager.newSchedule("Schedule 1");
         ScheduleItem sch1Item1 = sch1.addItem(carTypes[1]);
         // request a UP Boxcar
-        sch1Item1.setRoadName("UP");
+        sch1Item1.setRoadName(roadNames[1]);
         ScheduleItem sch1Item2 = sch1.addItem(carTypes[2]);
         // request an empty car and load it with Scrap
         sch1Item2.setReceiveLoadName("E");
@@ -3536,7 +3501,7 @@ public class TrainBuilderTest {
         sch1Item2.setReceiveLoadName("Metal 2");
         sch1Item3.setReceiveLoadName("Metal 3");
 
-        InstanceManager.getDefault(CarLoads.class).addName(carTypes[4], "Metal 3"); // Allows c13 which is part of a kernel to get a new load
+        InstanceManager.getDefault(CarLoads.class).addName(carTypes[3], "Metal 3"); // Allows c13 which is part of a kernel to get a new load
 
         train1.setRoute(rte3);
         train1.setName("BCW");
@@ -4919,7 +4884,6 @@ public class TrainBuilderTest {
     public void testTrainBuildOptions() {
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-        EngineTypes et = new EngineTypes();
 
         // register the car and engine types used
         ct.addName(carTypes[1]);
@@ -5598,7 +5562,6 @@ public class TrainBuilderTest {
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
-        EngineTypes et = new EngineTypes();
         et.addName("Diesel");
 
         // create 5 locations with tracks
@@ -5944,12 +5907,10 @@ public class TrainBuilderTest {
     public void testAutoHP() {
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
 
         Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
 
-        EngineTypes et = new EngineTypes();
-        et.addName(engineTypes[2]);
+        et.addName("");
 
         // create 5 locations with tracks
         Location harvard = lmanager.newLocation("Harvard");
@@ -6085,8 +6046,6 @@ public class TrainBuilderTest {
         String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setBuildAggressive(true);
         Setup.setStagingTrackImmediatelyAvail(false);
-
-        EngineTypes et = InstanceManager.getDefault(EngineTypes.class);
 
         // register the car and engine types used
         ct.addName(carTypes[1]);
@@ -6766,6 +6725,21 @@ public class TrainBuilderTest {
         rA.setMaxCarMoves(5);
         rB.setMaxCarMoves(5);
         rC.setMaxCarMoves(5);
+
+        Engine e1 = emanager.newEngine("E", "1");
+        e1.setModel("GP40");
+        Engine e2 = emanager.newEngine("E", "2");
+        e2.setModel("GP40");
+        Engine e3 = emanager.newEngine("E", "3");
+        e3.setModel("GP40");
+        Engine e4 = emanager.newEngine("E", "4");
+        e4.setModel("GP40");
+
+        e1.setLocation(A, At);
+        e2.setLocation(A, At);
+        e3.setLocation(A, At);
+        e4.setLocation(A, At);
+
     }
 
     // from here down is testing infrastructure
