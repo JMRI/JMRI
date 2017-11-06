@@ -11,7 +11,7 @@ engines:
       - java
       - javascript
   eslint:
-    enabled: true
+    enabled: false
   fixme:
     enabled: true
   phpmd:
