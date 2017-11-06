@@ -442,22 +442,24 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (_nextBlock != null) {
                     if ((_currentBlock == _activeTrain.getEndBlock()) && _activeTrain.getReverseAtEnd()
                             && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
-                        // entered last block of Transit, must stop and reverse
+                        // entered last block of Transit, must stop and reverse - ignore signal changes till train stopped.
+                        removeCurrentSignal();
                         stopInCurrentSection(END_REVERSAL);
                         _activeTrain.setRestart();
                     } else if ((_currentBlock == _activeTrain.getStartBlock())
                             && _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed()
                             && (as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber())) {
-                        // entered start block of Transit, must stop and reset for continuing
+                        // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
+                        removeCurrentSignal();
                         stopInCurrentSection(BEGINNING_RESET);
                         _activeTrain.setRestart();
                     } else if ((_currentBlock == _activeTrain.getEndBlock())
                             && _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() != ActiveTrain.NODELAY
                             && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
-                        // entered start block of Transit, must stop and reset for continuing
+                        // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
+                        removeCurrentSignal();
                         stopInCurrentSection(BEGINNING_RESET);
                         _activeTrain.setRestart();
-                        removeCurrentSignal();
                     } else {
                         setupNewCurrentSignal(as);
                     }
@@ -754,7 +756,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             // a held signal always stop
-            if ( _controllingSignal.getAppearance() == SignalHead.HELD ) {
+            if ( _controllingSignal != null && _controllingSignal.getAppearance() == SignalHead.HELD ) {
                 // Held - Stop
                 stopInCurrentSection(NO_TASK);
                 _stoppingForStopSignal = true;
