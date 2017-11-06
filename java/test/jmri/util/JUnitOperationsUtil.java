@@ -302,6 +302,7 @@ public class JUnitOperationsUtil {
 
         // Place Cabooses on Staging tracks
         c1.setLocation(l1, l1s1);
+        c2.setLocation(l1, l1s1);
 
         // Define the route.
         Route route1 = new Route("1", "Southbound Main Route");
