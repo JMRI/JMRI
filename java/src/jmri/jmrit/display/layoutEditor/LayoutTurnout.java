@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.lang.Float.POSITIVE_INFINITY;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -1766,110 +1768,74 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
+        //note: optimization here: instead of creating rectangles for all the
+        // points to check below, we create a rectangle for the test point
+        // and test if the points below are in that rectangle instead.
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Point2D p, minP = MathUtil.zeroPoint2D;
 
-        if (useRectangles) {
-            // calculate points control rectangle
-            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+        double distance, minDistance = POSITIVE_INFINITY;
 
-            if (!requireUnconnected) {
-                if (r.contains(center)) {
-                    result = TURNOUT_CENTER;
+        // check center coordinates
+        p = getCoordsCenter();
+        distance = MathUtil.distance(p, hitPoint);
+        if (distance < minDistance) {
+            minDistance = distance;
+            minP = p;
+            result = TURNOUT_CENTER;
+        }
+
+        //check the A connection point
+        if (!requireUnconnected || (getConnectA() == null)) {
+            p = getCoordsA();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minP = p;
+                result = TURNOUT_A;
+            }
+        }
+
+        //check the B connection point
+        if (!requireUnconnected || (getConnectB() == null)) {
+            p = getCoordsB();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minP = p;
+                result = TURNOUT_B;
+            }
+        }
+
+        //check the C connection point
+        if (!requireUnconnected || (getConnectB() == null)) {
+            p = getCoordsC();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minP = p;
+                result = TURNOUT_C;
+            }
+        }
+
+        //check the D connection point
+        if ((getTurnoutType() == DOUBLE_XOVER)
+                || (getTurnoutType() == LH_XOVER)
+                || (getTurnoutType() == RH_XOVER)) {
+            if (!requireUnconnected || (getConnectD() == null)) {
+                p = getCoordsD();
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minP = p;
+                    result = TURNOUT_D;
                 }
             }
-            //check the A connection point
-            if (NONE == result) {
-                if (!requireUnconnected || (getConnectA() == null)) {
-                    if (r.contains(getCoordsA())) {
-                        result = TURNOUT_A;
-                    }
-                }
-            }
-
-            //check the B connection point
-            if (NONE == result) {
-                if (!requireUnconnected || (getConnectB() == null)) {
-                    if (r.contains(getCoordsB())) {
-                        result = TURNOUT_B;
-                    }
-                }
-            }
-
-            //check the C connection point
-            if (NONE == result) {
-                if (!requireUnconnected || (getConnectC() == null)) {
-                    if (r.contains(getCoordsC())) {
-                        result = TURNOUT_C;
-                    }
-                }
-            }
-
-            //check the D connection point
-            if (NONE == result) {
-                if ((getTurnoutType() == DOUBLE_XOVER)
-                        || (getTurnoutType() == LH_XOVER)
-                        || (getTurnoutType() == RH_XOVER)) {
-                    if (!requireUnconnected || (getConnectD() == null)) {
-                        if (r.contains(getCoordsD())) {
-                            result = TURNOUT_D;
-                        }
-                    }
-                }
-            }
-        } else {
-            // calculate radius of turnout control circle
-            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-
-            if (!requireUnconnected) {
-                // calculate the distance to the center point of this turnout
-                Double distance = hitPoint.distance(getCoordsCenter());
-                if (distance <= circleRadius) {
-                    result = TURNOUT_CENTER;
-                }
-            }
-
-            //check the A connection point
-            if (NONE == result) {
-                if (!requireUnconnected || (getConnectA() == null)) {
-                    Double distance = hitPoint.distance(getCoordsA());
-                    if (distance <= circleRadius) {
-                        result = TURNOUT_A;
-                    }
-                }
-            }
-
-            //check the B connection point
-            if (NONE == result) {
-                if (!requireUnconnected || (getConnectB() == null)) {
-                    Double distance = hitPoint.distance(getCoordsB());
-                    if (distance <= circleRadius) {
-                        result = TURNOUT_B;
-                    }
-                }
-            }
-
-            //check the C connection point
-            if (NONE == result) {
-                if (!requireUnconnected || (getConnectC() == null)) {
-                    Double distance = hitPoint.distance(getCoordsC());
-                    if (distance <= circleRadius) {
-                        result = TURNOUT_C;
-                    }
-                }
-            }
-
-            //check the D connection point
-            if (NONE == result) {
-                if ((getTurnoutType() == DOUBLE_XOVER)
-                        || (getTurnoutType() == LH_XOVER)
-                        || (getTurnoutType() == RH_XOVER)) {
-                    if (!requireUnconnected || (getConnectD() == null)) {
-                        Double distance = hitPoint.distance(getCoordsD());
-                        if (distance <= circleRadius) {
-                            result = TURNOUT_D;
-                        }
-                    }
-                }
-            }
+        }
+        if ((useRectangles && !r.contains(minP))
+                || (!useRectangles && (minDistance > circleRadius))) {
+            result = NONE;
         }
         return result;
     }
@@ -2312,8 +2278,10 @@ public class LayoutTurnout extends LayoutTrack {
         //Do the second one first then the activate is only called the once
         if (!tSecondTurnoutName.isEmpty()) {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tSecondTurnoutName);
+
             if (turnout != null) {
-                secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tSecondTurnoutName, turnout);
+                secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                ).getNamedBeanHandle(tSecondTurnoutName, turnout);
                 secondTurnoutName = tSecondTurnoutName;
             } else {
                 log.error("bad turnoutname '" + tSecondTurnoutName + "' in layoutturnout " + getId());
@@ -2323,8 +2291,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if (!tTurnoutName.isEmpty()) {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tTurnoutName);
+
             if (turnout != null) {
-                namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tTurnoutName, turnout);
+                namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                ).getNamedBeanHandle(tTurnoutName, turnout);
                 turnoutName = tTurnoutName;
                 activateTurnout();
             } else {
@@ -2634,9 +2604,11 @@ public class LayoutTurnout extends LayoutTrack {
                 for (int i = 0; i < 4; i++) {
                     if (boundaryBetween[i] != null) {
                         blockBoundaries = true;
+
                     }
                 }
-                if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+                if (InstanceManager.getDefault(LayoutBlockManager.class
+                ).isAdvancedRoutingEnabled()) {
                     Map<String, LayoutBlock> map = new HashMap<>();
                     if (!getBlockName().isEmpty()) {
                         map.put(getBlockName(), getLayoutBlock());
@@ -2984,8 +2956,11 @@ public class LayoutTurnout extends LayoutTrack {
     protected void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
             return;
+
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class
+        ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class
+        ).isSignalMastUsed(signalMast)) {
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }

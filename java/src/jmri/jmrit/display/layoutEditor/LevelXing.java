@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.lang.Float.POSITIVE_INFINITY;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -896,43 +898,72 @@ public class LevelXing extends LayoutTrack {
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
-
+        //note: optimization here: instead of creating rectangles for all the
+        // points to check below, we create a rectangle for the test point
+        // and test if the points below are in that rectangle instead.
         Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Point2D p, minP = MathUtil.zeroPoint2D;
+
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+        double distance, minDistance = POSITIVE_INFINITY;
 
         if (!requireUnconnected) {
             //check the center point
-            if (r.contains(getCoordsCenter())) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minP = p;
                 result = LEVEL_XING_CENTER;
             }
         }
 
         if (!requireUnconnected || (getConnectA() == null)) {
             //check the A connection point
-            if (r.contains(getCoordsA())) {
+            p = getCoordsA();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minP = p;
                 result = LEVEL_XING_A;
             }
         }
 
         if (!requireUnconnected || (getConnectB() == null)) {
             //check the B connection point
-            if (r.contains(getCoordsB())) {
-                //mouse was pressed on this connection point
-                result = LEVEL_XING_B;
+            p = getCoordsB();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minP = p;
+                result = LEVEL_XING_A;
             }
         }
 
         if (!requireUnconnected || (getConnectC() == null)) {
             //check the C connection point
-            if (r.contains(getCoordsC())) {
-                result = LEVEL_XING_C;
+            p = getCoordsC();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minP = p;
+                result = LEVEL_XING_A;
             }
         }
 
         if (!requireUnconnected || (getConnectD() == null)) {
             //check the D connection point
-            if (r.contains(getCoordsD())) {
-                result = LEVEL_XING_D;
+            p = getCoordsD();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minP = p;
+                result = LEVEL_XING_A;
             }
+        }
+        if ((useRectangles && !r.contains(minP))
+                || (!useRectangles && (minDistance > circleRadius))) {
+            result = NONE;
         }
         return result;
     }
