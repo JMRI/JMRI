@@ -20,6 +20,15 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super("E", "EasyDCC");
         this.et = et;
         register();
+//        super(st.getController().getSystemConnectionMemo().getSystemPrefix(), SprogConnectionTypeList.SPROG);
+//        if (log.isDebugEnabled()) {
+//            log.debug("SprogSystemConnectionMemo, prefix='{}'", st.getController().getSystemConnectionMemo().getSystemPrefix());
+//        }
+        super("E", EasyDccConnectionTypeList.EASYDCC);
+        this.et = et;
+        register();
+        log.debug("EasyDCC SystemConnectionMemo with TC");
+
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
         /*InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.ComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);*/

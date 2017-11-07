@@ -1,7 +1,5 @@
 /**
- * EasyDccMonActionTest.java
- *
- * Description:	JUnit tests for the EasyDccProgrammer class
+ * JUnit tests for the EasyDccProgrammer class
  *
  * @author	Bob Jacobsen
  */

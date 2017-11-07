@@ -160,7 +160,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
         if (reactivate) {
-            // this has to be called even on a delete in order 
+            // this has to be called even on a delete in order
             // to re-activate namedTurnout (A) (if necessary)
             activateTurnout();
         }
@@ -742,7 +742,7 @@ public class LayoutSlip extends LayoutTurnout {
             jmi.setEnabled(false);
 
             boolean blockAssigned = false;
-            if (getLayoutBlock() == null) {
+            if ((blockName == null) || (blockName.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
                 jmi.setEnabled(false);
             } else {
@@ -1602,7 +1602,7 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
-    //NOTE: LayoutSlip uses the checkForNonContiguousBlocks 
+    //NOTE: LayoutSlip uses the checkForNonContiguousBlocks
     //      and collectContiguousTracksNamesInBlockNamed methods
     //      inherited from LayoutTurnout
     private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class);

@@ -6,9 +6,7 @@ import org.junit.Assume;
 import org.junit.Test;
 
 /**
- * EasyDccPacketGenFrameTest.java
- *
- * Description:	tests for the jmri.jmrix.nce.packetgen.EasyDccPacketGenFrame
+ * Tests for the jmri.jmrix.nce.packetgen.EasyDccPacketGenFrame
  * class
  *
  * @author	Bob Jacobsen
