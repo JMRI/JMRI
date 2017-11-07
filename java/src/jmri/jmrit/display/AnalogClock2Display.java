@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
 import javax.swing.ButtonGroup;
+import javax.swing.JColorChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -40,7 +41,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     double minuteAngle;
     double hourAngle;
     String amPm;
-    Colors color = Colors.Black;
+    Color color = Color.black;
 
     // Define common variables
     Image logo;
@@ -86,41 +87,6 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     int centreY;
 
     String _url;
-
-    public enum Colors {
-
-        Black(Color.BLACK, Bundle.getMessage("Black")),
-        DarkGray(Color.DARK_GRAY, Bundle.getMessage("DarkGray")),
-        Gray(Color.GRAY, Bundle.getMessage("Gray")),
-        LightGray(Color.LIGHT_GRAY, Bundle.getMessage("LightGray")),
-        White(Color.WHITE, Bundle.getMessage("White")),
-        Red(Color.RED, Bundle.getMessage("Red")),
-        Pink(Color.PINK, Bundle.getMessage("Pink")),
-        Yellow(Color.YELLOW, Bundle.getMessage("Yellow")),
-        Green(Color.GREEN, Bundle.getMessage("Green")),
-        Orange(Color.ORANGE, Bundle.getMessage("Orange")),
-        Blue(Color.BLUE, Bundle.getMessage("Blue")),
-        Magenta(Color.MAGENTA, Bundle.getMessage("Magenta")),
-        Cyan(Color.CYAN, Bundle.getMessage("Cyan"));
-
-        private final Color value;
-        private final String name;
-
-        private Colors(Color value, String name) {
-            this.value = value;
-            this.name = name;
-        }
-
-        public Color getValue() {
-            return this.value;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-
-    }
 
     public AnalogClock2Display(Editor editor) {
         super(editor);
@@ -222,12 +188,16 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         popup.add(runMenu);
         popup.add(CoordinateEdit.getScaleEditAction(this));
         popup.addSeparator();
-        JMenu colorMenu = new JMenu(Bundle.getMessage("Color"));
-        colorButtonGroup = new ButtonGroup();
-        for (Colors c : Colors.values()) {
-            addColorMenuEntry(colorMenu, c);
-        }
-        popup.add(colorMenu);
+        JMenuItem colorMenuItem = new JMenuItem(Bundle.getMessage("Color"));
+        colorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("DefaultTextColor"),
+                                 color);
+            if (desiredColor!=null && !color.equals(desiredColor)) {
+               setColor(desiredColor);
+           }
+        });
+        popup.add(colorMenuItem);
 
         return true;
     }
@@ -285,30 +255,11 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         menu.add(button);
     }
 
-    void addColorMenuEntry(JMenu menu, final Colors newcolor) {
-        final Colors c = newcolor;
-        JRadioButtonMenuItem button = new JRadioButtonMenuItem(newcolor.toString());
-        log.debug("New Color Entry: {}", newcolor.toString());
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setColor(c);
-            }
-        });
-        colorButtonGroup.add(button);
-        if (color == newcolor) {
-            button.setSelected(true);
-        } else {
-            button.setSelected(false);
-        }
-        menu.add(button);
-    }
-
-    public Colors getColor() {
+    public Color getColor() {
         return this.color;
     }
 
-    public void setColor(Colors color) {
+    public void setColor(Color color) {
         this.color = color;
         update();
     }
@@ -316,7 +267,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     @Override
     public void paint(Graphics g) {
         // overridden Paint method to draw the clock
-        g.setColor(color.getValue());
+        g.setColor(color);
         g.translate(centreX, centreY);
 
         // Draw the clock face

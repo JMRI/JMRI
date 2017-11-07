@@ -49,7 +49,8 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         /* Next we check the command station type, and add the
            apropriate managers */
- /* If we still don't  know what we have, load everything */
+
+        /* If we still don't  know what we have, load everything */
         if (log.isDebugEnabled()) {
             log.debug("Command Station is type {} build {}", base_station, code_build);
         }
@@ -61,11 +62,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
         }
         systemMemo.setCommandStation(systemMemo.getDCCppTrafficController().getCommandStation());
-        //jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
-        /* the consist manager has to be set up AFTER the programmer, to
-           prevent the default consist manager from being loaded on top of it */
-        //systemMemo.setConsistManager(new jmri.jmrix.dccpp.DCCppConsistManager(systemMemo));
-        //jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
+        jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
         systemMemo.setTurnoutManager(new jmri.jmrix.dccpp.DCCppTurnoutManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         systemMemo.setLightManager(new jmri.jmrix.dccpp.DCCppLightManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));

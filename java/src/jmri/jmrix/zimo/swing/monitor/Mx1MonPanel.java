@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a MonFrame object
+ * Swing action to create and register a MonFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
@@ -25,7 +25,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel";
-    }//IN18N
+    } // NOI18N
 
     @Override
     public String getTitle() {
@@ -33,10 +33,10 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         if (memo != null) {
             x.append(memo.getUserName());
         } else {
-            x.append("Mx1_"); //IN18N
+            x.append("Mx1_"); // NOI18N
         }
         x.append(": "); //IN18N
-        x.append("Command Monitor"); //IN18N
+        x.append("Command Monitor"); // I18N
         return x.toString();
     }
 
@@ -107,7 +107,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         nextLine(l.getStringMsg() + "\n", raw.toString());
     }
 
-    private void logMessage(Date timestamp, Mx1Message m, String src) {  // receive a Mrc message and log it
+    private void logMessage(Date timestamp, Mx1Message m, String src) { // receive a Mrc message and log it
         StringBuilder raw = new StringBuilder("");
         for (int i = 0; i < m.getNumDataElements(); i++) {
             if (i > 0) {
@@ -122,7 +122,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
 

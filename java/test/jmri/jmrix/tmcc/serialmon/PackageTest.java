@@ -10,11 +10,10 @@ import org.junit.runners.Suite;
     SerialMonFrameTest.class
 })
 /**
- * Tests for the jmri.jmrix.swing package
+ * Tests for the jmri.jmrix.tmcc.serialmon package
  *
- * @author      Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PackageTest {
-
 
 }

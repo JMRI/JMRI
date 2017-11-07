@@ -22,10 +22,10 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -1290,77 +1290,16 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     public void setBackgroundMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("FontBackgroundColor"));
-        makeColorMenu(edit);
+        JMenuItem edit = new JMenuItem(Bundle.getMessage("FontBackgroundColor"));
+        edit.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JColorChooser.showDialog(this,
+                                 Bundle.getMessage("FontBackgroundColor"),
+                                 getBackgroundColor());
+            if (desiredColor!=null ) {
+               setBackgroundColor(desiredColor);
+           }
+        });
         popup.add(edit);
-
-    }
-
-    protected void makeColorMenu(JMenu colorMenu) {
-        ButtonGroup buttonGrp = new ButtonGroup();
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"), Color.darkGray);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Gray"), Color.gray);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("LightGray"), Color.lightGray);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("White"), Color.white);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Red"), Color.red);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Orange"), Color.orange);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Yellow"), Color.yellow);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Green"), Color.green);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"), Color.blue);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"), Color.magenta);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null);
-    }
-
-    protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
-            final String name, Color color) {
-        ActionListener a = new ActionListener() {
-            //final String desiredName = name;
-            Color desiredColor;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (desiredColor != null) {
-                    setBackgroundColor(desiredColor);
-                } else {
-                    clearBackgroundColor();
-                }
-            }
-
-            ActionListener init(Color c) {
-                desiredColor = c;
-                return this;
-            }
-        }.init(color);
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-        r.addActionListener(a);
-
-        if (color == null) {
-            color = defaultBackgroundColor;
-        }
-        setColorButton(getBackgroundColor(), color, r);
-        colorButtonGroup.add(r);
-        menu.add(r);
-    }
-
-    protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
-        if (log.isDebugEnabled()) {
-            log.debug("setColorButton: color=" + color + " (RGB= " + (color == null ? "" : color.getRGB())
-                    + ") buttonColor= " + buttonColor + " (RGB= " + (buttonColor == null ? "" : buttonColor.getRGB()) + ")");
-        }
-        if (buttonColor != null) {
-            if (color != null && buttonColor.getRGB() == color.getRGB()) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-        } else {
-            if (color == null) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-        }
     }
 
     /**

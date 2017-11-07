@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for messages in a message/reply protocol.
- *
+ * <p>
  * Carries a sequence of characters, with accessors.
  *
  * @author Bob Jacobsen Copyright (C) 2003
@@ -19,7 +19,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setBinary(false);
         setNeededMode(AbstractMRTrafficController.NORMALMODE);
         setTimeout(SHORT_TIMEOUT);  // default value is the short timeout
-        setRetries(0);  // Default to no retries
+        setRetries(0); // default to no retries
     }
 
     // create a new one
@@ -66,6 +66,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
     // accessors to the bulk data
+
     // state info
     int mNeededMode;
 
@@ -135,6 +136,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
     // display format
+
     // contents (private)
     public void addIntAsThree(int val, int offset) {
         String s = "" + val;

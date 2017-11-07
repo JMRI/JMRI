@@ -29,7 +29,7 @@ public class SimulatorAdapter extends MrcPortController implements
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null; // this is provided to class who want data from us
+    private DataInputStream pin = null; // this is provided to classes who want data from us
 
     // internal ends of the pipes
     private DataOutputStream outpipe = null; // feed pin
@@ -56,7 +56,7 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     /**
-     * set up all of the other objects to simulate operation with an MRC command
+     * Set up all of the other objects to simulate operation with an MRC command
      * station.
      */
     @Override
@@ -116,8 +116,8 @@ public class SimulatorAdapter extends MrcPortController implements
 
     @Override
     public void run() { // start a new thread
-        // this thread has one task.  It repeatedly reads from the input pipe
-        // and writes an appropriate response to the output pipe.  This is the heart
+        // This thread has one task. It repeatedly reads from the input pipe
+        // and writes an appropriate response to the output pipe. This is the heart
         // of the MRC command station simulation.
         // report status?
         if (log.isInfoEnabled()) {
@@ -136,7 +136,7 @@ public class SimulatorAdapter extends MrcPortController implements
             MrcMessage m = readMessage();
             if (log.isDebugEnabled()) {
                 StringBuffer buf = new StringBuffer();
-                buf.append("Mrc Simulator Thread received message: ");//IN18N
+                buf.append("Mrc Simulator Thread received message: "); //NOI18N
                 if (m != null) {
                     for (int i = 0; i < m.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
@@ -160,7 +160,7 @@ public class SimulatorAdapter extends MrcPortController implements
                 }
                 if (log.isDebugEnabled()) {
                     StringBuffer buf = new StringBuffer();
-                    buf.append("Mrc Simulator Thread sent reply: ");//IN18N
+                    buf.append("Mrc Simulator Thread sent reply: "); // NOI18N
                     for (int i = 0; i < r.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
                     }

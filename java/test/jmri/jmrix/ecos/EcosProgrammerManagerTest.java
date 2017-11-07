@@ -16,7 +16,7 @@ public class EcosProgrammerManagerTest {
     public void testCTor() {
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
-        EcosProgrammerManager t = new EcosProgrammerManager(new EcosProgrammer(tc),memo);
+        EcosProgrammerManager t = new EcosProgrammerManager(new EcosProgrammer(tc), memo);
         Assert.assertNotNull("exists",t);
     }
 

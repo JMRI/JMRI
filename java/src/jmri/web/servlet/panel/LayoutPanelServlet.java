@@ -63,9 +63,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
             panel.setAttribute("turnoutdrawunselectedleg", (editor.getTurnoutDrawUnselectedLeg()) ? "yes" : "no");
             if (editor.getBackgroundColor() == null) {
-                panel.setAttribute("backgroundcolor", ColorUtil.colorToString(Color.lightGray));
+                panel.setAttribute("backgroundcolor", ColorUtil.colorToColorName(Color.lightGray));
             } else {
-                panel.setAttribute("backgroundcolor", ColorUtil.colorToString(editor.getBackgroundColor()));
+                panel.setAttribute("backgroundcolor", ColorUtil.colorToColorName(editor.getBackgroundColor()));
             }
             panel.setAttribute("defaulttrackcolor", editor.getDefaultTrackColor());
             panel.setAttribute("defaultoccupiedtrackcolor", editor.getDefaultOccupiedTrackColor());
@@ -135,9 +135,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     }
 
                     elem.setAttribute("occupiedsense", Integer.toString(b.getOccupiedSense()));
-                    elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
-                    elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
-                    elem.setAttribute("extracolor", ColorUtil.colorToString(b.getBlockExtraColor()));
+                    elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
+                    elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
+                    elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
                     if (!b.getMemoryName().isEmpty()) {
                         elem.setAttribute("memory", b.getMemoryName());
                     }

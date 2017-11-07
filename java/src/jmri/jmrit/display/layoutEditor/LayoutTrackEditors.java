@@ -64,6 +64,28 @@ public class LayoutTrackEditors {
         this.layoutEditor = layoutEditor;
     }
 
+    /*=================*\
+    | Edit Layout Track |
+    \*=================*/
+    protected void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        if (layoutTrack instanceof PositionablePoint) {
+            // PositionablePoint's don't have an editor...
+        } else if (layoutTrack instanceof TrackSegment) {
+            editTrackSegment((TrackSegment) layoutTrack);
+        } else // this has to be before LayoutTurnout
+        if (layoutTrack instanceof LayoutSlip) {
+            editLayoutSlip((LayoutSlip) layoutTrack);
+        } else if (layoutTrack instanceof LayoutTurnout) {
+            editLayoutTurnout((LayoutTurnout) layoutTrack);
+        } else if (layoutTrack instanceof LevelXing) {
+            editLevelXing((LevelXing) layoutTrack);
+        } else if (layoutTrack instanceof LayoutTurntable) {
+            editLayoutTurntable((LayoutTurntable) layoutTrack);
+        } else {
+            log.error("editLayoutTrack unknown LayoutTrack subclass:" + layoutTrack.getClass().getName());
+        }
+    }
+
     /*==================*\
     | Edit Track Segment |
     \*==================*/
@@ -165,12 +187,12 @@ public class LayoutTrackEditors {
             // Edit Block
             panel5.add(editTrackSegmentSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));
             editTrackSegmentSegmentEditBlockButton.addActionListener((ActionEvent e) -> {
-                segmentEditBlockPressed(e);
+                editTrackSegmentEditBlockPressed(e);
             });
             editTrackSegmentSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             panel5.add(editTrackSegmentSegmentEditDoneButton = new JButton(Bundle.getMessage("ButtonDone")));
             editTrackSegmentSegmentEditDoneButton.addActionListener((ActionEvent e) -> {
-                segmentEditDonePressed(e);
+                editTracksegmentDonePressed(e);
             });
             editTrackSegmentSegmentEditDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
@@ -184,7 +206,7 @@ public class LayoutTrackEditors {
             // Cancel
             panel5.add(editTrackSegmentSegmentEditCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             editTrackSegmentSegmentEditCancelButton.addActionListener((ActionEvent e) -> {
-                segmentEditCancelPressed(e);
+                editTrackSegmentCancelPressed(e);
             });
             editTrackSegmentSegmentEditCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -213,22 +235,19 @@ public class LayoutTrackEditors {
         editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                segmentEditCancelPressed(null);
+                editTrackSegmentCancelPressed(null);
             }
         });
         editTrackSegmentFrame.pack();
         editTrackSegmentFrame.setVisible(true);
         editTrackSegmentOpen = true;
-    }
+    }   // editTrackSegment
 
-    void segmentEditBlockPressed(ActionEvent a) {
+    private void editTrackSegmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
-        if (!trackSegment.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if (trackSegment.getLayoutBlock() != null) {
-                trackSegment.getLayoutBlock().decrementUse();
-            }
+        if ((trackSegment.getBlockName() == null)
+                || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -249,9 +268,9 @@ public class LayoutTrackEditors {
         trackSegment.getLayoutBlock().editLayoutBlock(editTrackSegmentFrame);
         layoutEditor.setDirty();
         editTrackSegmentNeedsRedraw = true;
-    }
+    }   // editTrackSegmentEditBlockPressed
 
-    void segmentEditDonePressed(ActionEvent a) {
+    private void editTracksegmentDonePressed(ActionEvent a) {
         // set dashed
         boolean oldDashed = trackSegment.isDashed();
         trackSegment.setDashed(editTrackSegmentDashedComboBox.getSelectedIndex() == editTrackSegmentDashedIndex);
@@ -283,10 +302,6 @@ public class LayoutTrackEditors {
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
         if ((trackSegment.getBlockName() == null)
                 || !trackSegment.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if (trackSegment.getLayoutBlock() != null) {
-                trackSegment.getLayoutBlock().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -308,9 +323,9 @@ public class LayoutTrackEditors {
             editTrackSegmentNeedsRedraw = false;
         }
         layoutEditor.setDirty();
-    }
+    }   // editTracksegmentDonePressed
 
-    void segmentEditCancelPressed(ActionEvent a) {
+    private void editTrackSegmentCancelPressed(ActionEvent a) {
         editTrackSegmentOpen = false;
         editTrackSegmentFrame.setVisible(false);
         editTrackSegmentFrame.dispose();
@@ -492,7 +507,7 @@ public class LayoutTrackEditors {
             editLayoutTurnoutBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));
             panel2.add(editLayoutTurnoutBlockButton = new JButton(Bundle.getMessage("CreateEdit")));
             editLayoutTurnoutBlockButton.addActionListener((ActionEvent e) -> {
-                turnoutEditBlockPressed(e);
+                editLayoutTurnoutEditBlockPressed(e);
             });
             contentPane.add(panel2);
             if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
@@ -509,7 +524,7 @@ public class LayoutTrackEditors {
 
                 panel21.add(editLayoutTurnoutBlockBButton = new JButton(Bundle.getMessage("CreateEdit")));
                 editLayoutTurnoutBlockBButton.addActionListener((ActionEvent e) -> {
-                    turnoutEditBlockBPressed(e);
+                    editLayoutTurnoutEditBlockBPressed(e);
                 });
                 editLayoutTurnoutBlockBButton.setToolTipText(Bundle.getMessage("EditBlockHint", "2"));
                 contentPane.add(panel21);
@@ -524,7 +539,7 @@ public class LayoutTrackEditors {
                 panel22.add(editLayoutTurnoutBlockCNameComboBox);
                 panel22.add(editLayoutTurnoutBlockCButton = new JButton(Bundle.getMessage("CreateEdit")));
                 editLayoutTurnoutBlockCButton.addActionListener((ActionEvent e) -> {
-                    turnoutEditBlockCPressed(e);
+                    editLayoutTurnoutEditBlockCPressed(e);
                 });
                 editLayoutTurnoutBlockCButton.setToolTipText(Bundle.getMessage("EditBlockHint", "3"));
                 contentPane.add(panel22);
@@ -539,7 +554,7 @@ public class LayoutTrackEditors {
                 panel23.add(editLayoutTurnoutBlockDNameComboBox);
                 panel23.add(editLayoutTurnoutBlockDButton = new JButton(Bundle.getMessage("CreateEdit")));
                 editLayoutTurnoutBlockDButton.addActionListener((ActionEvent e) -> {
-                    turnoutEditBlockDPressed(e);
+                    editLayoutTurnoutEditBlockDPressed(e);
                 });
                 editLayoutTurnoutBlockDButton.setToolTipText(Bundle.getMessage("EditBlockHint", "4"));
                 contentPane.add(panel23);
@@ -561,13 +576,13 @@ public class LayoutTrackEditors {
             });
 
             editLayoutTurnoutDoneButton.addActionListener((ActionEvent e) -> {
-                turnoutEditDonePressed(e);
+                editLayoutTurnoutDonePressed(e);
             });
             editLayoutTurnoutDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(editLayoutTurnoutCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             editLayoutTurnoutCancelButton.addActionListener((ActionEvent e) -> {
-                turnoutEditCancelPressed(e);
+                editLayoutTurnoutCancelPressed(e);
             });
             editLayoutTurnoutCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -619,7 +634,7 @@ public class LayoutTrackEditors {
         editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                turnoutEditCancelPressed(null);
+                editLayoutTurnoutCancelPressed(null);
             }
         });
         editLayoutTurnoutFrame.pack();
@@ -628,29 +643,16 @@ public class LayoutTrackEditors {
         editLayoutTurnoutNeedsBlockUpdate = false;
     }   // editLayoutTurnout
 
-    void turnoutEditBlockPressed(ActionEvent a) {
+    private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockNameComboBox.getUserName();
-        if (!layoutTurnout.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlock() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockB())
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlock().decrementUse();
-            }
+        if ((layoutTurnout.getBlockName() != null)
+                || !layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlock(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlock() != null)
-                    && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockB())
-                    || (layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlock().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -665,31 +667,17 @@ public class LayoutTrackEditors {
         layoutTurnout.getLayoutBlock().editLayoutBlock(editLayoutTurnoutFrame);
         editLayoutTurnoutNeedRedraw = true;
         layoutEditor.setDirty();
-    }   // turnoutEditBlockPressed
+    }   // editLayoutTurnoutEditBlockPressed
 
-    void turnoutEditBlockBPressed(ActionEvent a) {
+    private void editLayoutTurnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockBNameComboBox.getUserName();
         if (!layoutTurnout.getBlockBName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlockB() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockB())
-                    && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlockB().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlockB(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlockB() != null)
-                    && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockB())
-                    || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlockB().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -704,31 +692,17 @@ public class LayoutTrackEditors {
         layoutTurnout.getLayoutBlockB().editLayoutBlock(editLayoutTurnoutFrame);
         editLayoutTurnoutNeedRedraw = true;
         layoutEditor.setDirty();
-    }   // turnoutEditBlockBPressed
+    }   // editLayoutTurnoutEditBlockBPressed
 
-    void turnoutEditBlockCPressed(ActionEvent a) {
+    private void editLayoutTurnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockCNameComboBox.getUserName();
         if (!layoutTurnout.getBlockCName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlockC() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlockC() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlockC().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlockC(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlockC() != null)
-                    && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlockC() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlockD().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -743,30 +717,17 @@ public class LayoutTrackEditors {
         layoutTurnout.getLayoutBlockC().editLayoutBlock(editLayoutTurnoutFrame);
         editLayoutTurnoutNeedRedraw = true;
         layoutEditor.setDirty();
-    }   // turnoutEditBlockCPressed
+    }   // editLayoutTurnoutEditBlockCPressed
 
-    void turnoutEditBlockDPressed(ActionEvent a) {
+    private void editLayoutTurnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockDNameComboBox.getUserName();
         if (!layoutTurnout.getBlockDName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlockD() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockD())
-                    && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockD())
-                    && (layoutTurnout.getLayoutBlockC() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlockD().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlockD(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlockD() != null) && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockD())
-                    || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockD())
-                    || (layoutTurnout.getLayoutBlockC() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlockD().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -781,9 +742,9 @@ public class LayoutTrackEditors {
         layoutTurnout.getLayoutBlockD().editLayoutBlock(editLayoutTurnoutFrame);
         editLayoutTurnoutNeedRedraw = true;
         layoutEditor.setDirty();
-    }   // turnoutEditBlockDPressed
+    }   // editLayoutTurnoutEditBlockDPressed
 
-    void turnoutEditDonePressed(ActionEvent a) {
+    private void editLayoutTurnoutDonePressed(ActionEvent a) {
         // check if Turnout changed
         String newName = editLayoutTurnout1stTurnoutComboBox.getDisplayName();
         if (!layoutTurnout.getTurnoutName().equals(newName)) {
@@ -835,25 +796,11 @@ public class LayoutTrackEditors {
         // check if Block changed
         newName = editLayoutTurnoutBlockNameComboBox.getUserName();
         if (!layoutTurnout.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutTurnout.getLayoutBlock() != null)
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockB())
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockC())
-                    && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockD())) {
-                layoutTurnout.getLayoutBlock().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutTurnout.setLayoutBlock(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutTurnout.getLayoutBlock() != null)
-                    && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockB())
-                    || (layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockC())
-                    || (layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockD()))) {
-                layoutTurnout.getLayoutBlock().decrementUse();
             }
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
@@ -864,25 +811,11 @@ public class LayoutTrackEditors {
             // check if Block 2 changed
             newName = editLayoutTurnoutBlockBNameComboBox.getUserName();
             if (!layoutTurnout.getBlockBName().equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((layoutTurnout.getLayoutBlockB() != null)
-                        && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockB())
-                        && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockC())
-                        && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockD())) {
-                    layoutTurnout.getLayoutBlockB().decrementUse();
-                }
                 // get new block, or null if block has been removed
                 try {
                     layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
                 } catch (IllegalArgumentException ex) {
                     layoutTurnout.setLayoutBlockB(null);
-                }
-                // decrement use if block was already counted
-                if ((layoutTurnout.getLayoutBlockB() != null)
-                        && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockB())
-                        || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockC())
-                        || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockD()))) {
-                    layoutTurnout.getLayoutBlockB().decrementUse();
                 }
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
@@ -890,26 +823,11 @@ public class LayoutTrackEditors {
             // check if Block 3 changed
             newName = editLayoutTurnoutBlockCNameComboBox.getUserName();
             if (!layoutTurnout.getBlockCName().equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((layoutTurnout.getLayoutBlockC() != null)
-                        && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockC())
-                        && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockC())
-                        && (layoutTurnout.getLayoutBlockC() != layoutTurnout.getLayoutBlockD())) {
-                    layoutTurnout.getLayoutBlockC().decrementUse();
-                }
                 // get new block, or null if block has been removed
                 try {
                     layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
                 } catch (IllegalArgumentException ex) {
                     layoutTurnout.setLayoutBlockC(null);
-                }
-
-                // decrement use if block was already counted
-                if ((layoutTurnout.getLayoutBlockC() != null)
-                        && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockC())
-                        || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockC())
-                        || (layoutTurnout.getLayoutBlockC() == layoutTurnout.getLayoutBlockD()))) {
-                    layoutTurnout.getLayoutBlockC().decrementUse();
                 }
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
@@ -917,25 +835,11 @@ public class LayoutTrackEditors {
             // check if Block 4 changed
             newName = editLayoutTurnoutBlockDNameComboBox.getUserName();
             if (!layoutTurnout.getBlockDName().equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((layoutTurnout.getLayoutBlockD() != null)
-                        && (layoutTurnout.getLayoutBlock() != layoutTurnout.getLayoutBlockD())
-                        && (layoutTurnout.getLayoutBlockB() != layoutTurnout.getLayoutBlockD())
-                        && (layoutTurnout.getLayoutBlockC() != layoutTurnout.getLayoutBlockD())) {
-                    layoutTurnout.getLayoutBlockD().decrementUse();
-                }
                 // get new block, or null if block has been removed
                 try {
                     layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
                 } catch (IllegalArgumentException ex) {
                     layoutTurnout.setLayoutBlockD(null);
-                }
-                // decrement use if block was already counted
-                if ((layoutTurnout.getLayoutBlockD() != null)
-                        && ((layoutTurnout.getLayoutBlock() == layoutTurnout.getLayoutBlockD())
-                        || (layoutTurnout.getLayoutBlockB() == layoutTurnout.getLayoutBlockD())
-                        || (layoutTurnout.getLayoutBlockC() == layoutTurnout.getLayoutBlockD()))) {
-                    layoutTurnout.getLayoutBlockD().decrementUse();
                 }
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
@@ -960,9 +864,9 @@ public class LayoutTrackEditors {
             layoutEditor.setDirty();
             editLayoutTurnoutNeedRedraw = false;
         }
-    }   // turnoutEditDonePressed
+    }   // editLayoutTurnoutDonePressed
 
-    void turnoutEditCancelPressed(ActionEvent a) {
+    private void editLayoutTurnoutCancelPressed(ActionEvent a) {
         editLayoutTurnoutOpen = false;
         editLayoutTurnoutFrame.setVisible(false);
         editLayoutTurnoutFrame.dispose();
@@ -1131,7 +1035,7 @@ public class LayoutTrackEditors {
             panel4.add(editLayoutSlipBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));
             editLayoutSlipBlockButton.addActionListener(
                     (ActionEvent event) -> {
-                        slipEditBlockPressed(event);
+                        editLayoutSlipEditBlockPressed(event);
                     }
             );
             editLayoutSlipBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
@@ -1151,13 +1055,13 @@ public class LayoutTrackEditors {
             );
 
             editLayoutSlipDoneButton.addActionListener((ActionEvent event) -> {
-                slipEditDonePressed(event);
+                editLayoutSlipDonePressed(event);
             });
             editLayoutSlipDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(editLayoutSlipCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             editLayoutSlipCancelButton.addActionListener((ActionEvent event) -> {
-                slipEditCancelPressed(event);
+                editLayoutSlipCancelPressed(event);
             });
             editLayoutSlipCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -1173,14 +1077,14 @@ public class LayoutTrackEditors {
         editLayoutSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                slipEditCancelPressed(null);
+                editLayoutSlipCancelPressed(null);
             }
         });
         editLayoutSlipFrame.pack();
         editLayoutSlipFrame.setVisible(true);
         editLayoutSlipOpen = true;
         editLayoutSlipNeedsBlockUpdate = false;
-    }
+    }   // editLayoutSlip
 
     private void drawSlipState(Graphics2D g2, int state) {
         Point2D cenP = layoutSlip.getCoordsCenter();
@@ -1262,7 +1166,7 @@ public class LayoutTrackEditors {
                 g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
             }
         }
-    }
+    }   // drawSlipState
 
     class SampleStates extends JPanel {
 
@@ -1282,7 +1186,7 @@ public class LayoutTrackEditors {
         }
     }
 
-    int testState = LayoutTurnout.UNKNOWN;
+    private int testState = LayoutTurnout.UNKNOWN;
 
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
@@ -1329,7 +1233,7 @@ public class LayoutTrackEditors {
         if (testPanel != null) {
             testPanel.repaint();
         }
-    }
+    }   // togleStateTest
 
     class TestState extends JPanel {
 
@@ -1344,29 +1248,15 @@ public class LayoutTrackEditors {
 
     private TestState testPanel;
 
-    private void slipEditBlockPressed(ActionEvent a) {
+    private void editLayoutSlipEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutSlipBlockNameComboBox.getUserName();
         if (!layoutSlip.getBlockName().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((layoutSlip.getLayoutBlock() != null)
-                    && (layoutSlip.getLayoutBlock() != layoutSlip.getLayoutBlockB())
-                    && (layoutSlip.getLayoutBlock() != layoutSlip.getLayoutBlockC())
-                    && (layoutSlip.getLayoutBlock() != layoutSlip.getLayoutBlockD())) {
-                layoutSlip.getLayoutBlock().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             } catch (IllegalArgumentException ex) {
                 layoutSlip.setLayoutBlock(null);
-            }
-            // decrement use if block was already counted
-            if ((layoutSlip.getLayoutBlock() != null)
-                    && ((layoutSlip.getLayoutBlock() == layoutSlip.getLayoutBlockB())
-                    || (layoutSlip.getLayoutBlock() == layoutSlip.getLayoutBlockC())
-                    || (layoutSlip.getLayoutBlock() == layoutSlip.getLayoutBlockD()))) {
-                layoutSlip.getLayoutBlock().decrementUse();
             }
             editLayoutSlipNeedsRedraw = true;
             editLayoutSlipNeedsBlockUpdate = true;
@@ -1381,9 +1271,9 @@ public class LayoutTrackEditors {
         layoutSlip.getLayoutBlock().editLayoutBlock(editLayoutSlipFrame);
         editLayoutSlipNeedsRedraw = true;
         layoutEditor.setDirty();
-    }   // slipEditBlockPressed
+    }   // editLayoutSlipEditBlockPressed(
 
-    private void slipEditDonePressed(ActionEvent a) {
+    private void editLayoutSlipDonePressed(ActionEvent a) {
         String newName = editLayoutSlipTurnoutAComboBox.getDisplayName();
         if (!layoutSlip.getTurnoutName().equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutSlipFrame)) {
@@ -1406,10 +1296,6 @@ public class LayoutTrackEditors {
 
         newName = editLayoutSlipBlockNameComboBox.getUserName();
         if (!layoutSlip.getBlockName().equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((layoutSlip.getLayoutBlock() != null)) {
-                layoutSlip.getLayoutBlock().decrementUse();
-            }
             // get new block, or null if block has been removed
             try {
                 layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -1445,9 +1331,9 @@ public class LayoutTrackEditors {
             layoutEditor.setDirty();
             editLayoutSlipNeedsRedraw = false;
         }
-    }   // slipEditDonePressed
+    }   // editLayoutSlipDonePressed
 
-    private void slipEditCancelPressed(ActionEvent a) {
+    private void editLayoutSlipCancelPressed(ActionEvent a) {
         editLayoutSlipOpen = false;
         editLayoutSlipFrame.setVisible(false);
         editLayoutSlipFrame.dispose();
@@ -1532,13 +1418,13 @@ public class LayoutTrackEditors {
             // Edit 1 Block
             panel4.add(editLevelXingBlock1Button = new JButton(Bundle.getMessage("EditBlock", 1)));
             editLevelXingBlock1Button.addActionListener((ActionEvent e) -> {
-                xingEdit1BlockPressed(e);
+                editLevelXingBlockACPressed(e);
             });
             editLevelXingBlock1Button.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Edit 2 Block
             panel4.add(editLevelXingBlock2Button = new JButton(Bundle.getMessage("EditBlock", 2)));
             editLevelXingBlock2Button.addActionListener((ActionEvent e) -> {
-                xingEdit2BlockPressed(e);
+                editLevelXingBlockBCPressed(e);
             });
             editLevelXingBlock2Button.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             contentPane.add(panel4);
@@ -1547,7 +1433,7 @@ public class LayoutTrackEditors {
             panel5.setLayout(new FlowLayout());
             panel5.add(editLevelXingDoneButton = new JButton(Bundle.getMessage("ButtonDone")));
             editLevelXingDoneButton.addActionListener((ActionEvent e) -> {
-                xingEditDonePressed(e);
+                editLevelXingDonePressed(e);
             });
             editLevelXingDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
@@ -1561,7 +1447,7 @@ public class LayoutTrackEditors {
             // Cancel
             panel5.add(editLevelXingCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             editLevelXingCancelButton.addActionListener((ActionEvent e) -> {
-                xingEditCancelPressed(e);
+                editLevelXingCancelPressed(e);
             });
             editLevelXingCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -1575,33 +1461,23 @@ public class LayoutTrackEditors {
         editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                xingEditCancelPressed(null);
+                editLevelXingCancelPressed(null);
             }
         });
         editLevelXingFrame.pack();
         editLevelXingFrame.setVisible(true);
         editLevelXingOpen = true;
         editLevelXingNeedsBlockUpdate = false;
-    }
+    }   // editLevelXing
 
-    void xingEdit1BlockPressed(ActionEvent a) {
+    private void editLevelXingBlockACPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLevelXingBlock1NameComboBox.getUserName();
         if (!levelXing.getBlockNameAC().equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((levelXing.getLayoutBlockAC() != null)
-                    && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
-                levelXing.getLayoutBlockAC().decrementUse();
-            }
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
                 try {
                     levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
-                    // decrement use if block was previously counted
-                    if ((levelXing.getLayoutBlockAC() != null)
-                            && (levelXing.getLayoutBlockAC() == levelXing.getLayoutBlockBD())) {
-                        levelXing.getLayoutBlockAC().decrementUse();
-                    }
                 } catch (IllegalArgumentException ex) {
                     levelXing.setLayoutBlockAC(null);
                     editLevelXingBlock1NameComboBox.setText("");
@@ -1623,30 +1499,21 @@ public class LayoutTrackEditors {
         }
         levelXing.getLayoutBlockAC().editLayoutBlock(editLevelXingFrame);
         editLevelXingNeedsRedraw = true;
-    }
+    }   // editLevelXingBlockACPressed
 
-    void xingEdit2BlockPressed(ActionEvent a) {
+    private void editLevelXingBlockBCPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLevelXingBlock2NameComboBox.getUserName();
         if (-1 != editLevelXingBlock2NameComboBox.getSelectedIndex()) {
             newName = editLevelXingBlock2NameComboBox.getSelectedDisplayName();
         } else {
-            newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
+            newName = (newName != null) ? NamedBean.normalizeUserName(newName) : "";
         }
         if (!levelXing.getBlockNameBD().equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((levelXing.getLayoutBlockBD() != null) && (levelXing.getLayoutBlockBD() != levelXing.getLayoutBlockAC())) {
-                levelXing.getLayoutBlockBD().decrementUse();
-            }
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
                 try {
                     levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
-                    // decrement use if block was previously counted
-                    if ((levelXing.getLayoutBlockBD() != null)
-                            && (levelXing.getLayoutBlockAC() == levelXing.getLayoutBlockBD())) {
-                        levelXing.getLayoutBlockBD().decrementUse();
-                    }
                 } catch (IllegalArgumentException ex) {
                     levelXing.setLayoutBlockBD(null);
                     editLevelXingBlock2NameComboBox.setText("");
@@ -1668,25 +1535,16 @@ public class LayoutTrackEditors {
         }
         levelXing.getLayoutBlockBD().editLayoutBlock(editLevelXingFrame);
         editLevelXingNeedsRedraw = true;
-    }
+    }   // editLevelXingBlockBCPressed
 
-    void xingEditDonePressed(ActionEvent a) {
+    private void editLevelXingDonePressed(ActionEvent a) {
         // check if Blocks changed
         String newName = editLevelXingBlock1NameComboBox.getUserName();
         if (!levelXing.getBlockNameAC().equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((levelXing.getLayoutBlockAC() != null) && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
-                levelXing.getLayoutBlockAC().decrementUse();
-            }
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
                 try {
                     levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
-                    // decrement use if block was previously counted
-                    if ((levelXing.getLayoutBlockAC() != null)
-                            && (levelXing.getLayoutBlockAC() == levelXing.getLayoutBlockBD())) {
-                        levelXing.getLayoutBlockAC().decrementUse();
-                    }
                 } catch (IllegalArgumentException ex) {
                     levelXing.setLayoutBlockAC(null);
                     editLevelXingBlock1NameComboBox.setText("");
@@ -1701,18 +1559,10 @@ public class LayoutTrackEditors {
         }
         newName = editLevelXingBlock2NameComboBox.getUserName();
         if (!levelXing.getBlockNameBD().equals(newName)) {
-            // block 2 has changed, if old block exists, decrement use
-            if ((levelXing.getLayoutBlockBD() != null) && (levelXing.getLayoutBlockBD() != levelXing.getLayoutBlockAC())) {
-                levelXing.getLayoutBlockBD().decrementUse();
-            }
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
                 try {
                     levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
-                    // decrement use if block was previously counted
-                    if ((levelXing.getLayoutBlockBD() != null) && (levelXing.getLayoutBlockAC() == levelXing.getLayoutBlockBD())) {
-                        levelXing.getLayoutBlockBD().decrementUse();
-                    }
                 } catch (IllegalArgumentException ex) {
                     levelXing.setLayoutBlockBD(null);
                     editLevelXingBlock2NameComboBox.setText("");
@@ -1745,9 +1595,9 @@ public class LayoutTrackEditors {
             layoutEditor.setDirty();
             editLevelXingNeedsRedraw = false;
         }
-    }
+    }   // editLevelXingDonePressed
 
-    void xingEditCancelPressed(ActionEvent a) {
+    private void editLevelXingCancelPressed(ActionEvent a) {
         editLevelXingOpen = false;
         editLevelXingFrame.setVisible(false);
         editLevelXingFrame.dispose();
@@ -1768,35 +1618,35 @@ public class LayoutTrackEditors {
     // variables for Edit Turntable pane
     private LayoutTurntable layoutTurntable = null;
 
-    private JmriJFrame editTurntableFrame = null;
-    private JTextField editTurntableRadiusTextField = new JTextField(8);
-    private JTextField editTurntableAngleTextField = new JTextField(8);
-    private JButton editTurntableDoneButton;
-    private JButton editTurntableCancelButton;
+    private JmriJFrame editLayoutTurntableFrame = null;
+    private JTextField editLayoutTurntableRadiusTextField = new JTextField(8);
+    private JTextField editLayoutTurntableAngleTextField = new JTextField(8);
+    private JButton editLayoutTurntableDoneButton;
+    private JButton editLayoutTurntableCancelButton;
 
-    private JPanel editTurntableRayPanel;
-    private JButton editTurntableAddRayTrackButton;
-    //private JButton editTurntableDeleteRayTrackButton;
-    private JCheckBox editTurntableDccControlledCheckBox;
+    private JPanel editLayoutTurntableRayPanel;
+    private JButton editLayoutTurntableAddRayTrackButton;
+    //private JButton editLayoutTurntableDeleteRayTrackButton;
+    private JCheckBox editLayoutTurntableDccControlledCheckBox;
 
-    private String editTurntableOldRadius = "";
-    private boolean editTurntableOpen = false;
-    private boolean editTurntableNeedsRedraw = false;
+    private String editLayoutTurntableOldRadius = "";
+    private boolean editLayoutTurntableOpen = false;
+    private boolean editLayoutTurntableNeedsRedraw = false;
 
     /**
      * Edit a Turntable
      */
-    protected void editTurntable(LayoutTurntable layoutTurntable) {
+    protected void editLayoutTurntable(LayoutTurntable layoutTurntable) {
         this.layoutTurntable = layoutTurntable;
-        if (editTurntableOpen) {
-            editTurntableFrame.setVisible(true);
+        if (editLayoutTurntableOpen) {
+            editLayoutTurntableFrame.setVisible(true);
         } else // Initialize if needed
-        if (editTurntableFrame == null) {
-            editTurntableFrame = new JmriJFrame(Bundle.getMessage("EditTurntable"), false, true);
-            editTurntableFrame.addHelpMenu("package.jmri.jmrit.display.EditTurntable", true);
-            editTurntableFrame.setLocation(50, 30);
+        if (editLayoutTurntableFrame == null) {
+            editLayoutTurntableFrame = new JmriJFrame(Bundle.getMessage("EditTurntable"), false, true);
+            editLayoutTurntableFrame.addHelpMenu("package.jmri.jmrit.display.EditTurntable", true);
+            editLayoutTurntableFrame.setLocation(50, 30);
 
-            Container contentPane = editTurntableFrame.getContentPane();
+            Container contentPane = editLayoutTurntableFrame.getContentPane();
             JPanel headerPane = new JPanel();
             JPanel footerPane = new JPanel();
             headerPane.setLayout(new BoxLayout(headerPane, BoxLayout.Y_AXIS));
@@ -1810,8 +1660,8 @@ public class LayoutTrackEditors {
             panel1.setLayout(new FlowLayout());
             JLabel radiusLabel = new JLabel(Bundle.getMessage("TurntableRadius"));
             panel1.add(radiusLabel);
-            panel1.add(editTurntableRadiusTextField);
-            editTurntableRadiusTextField.setToolTipText(Bundle.getMessage("TurntableRadiusHint"));
+            panel1.add(editLayoutTurntableRadiusTextField);
+            editLayoutTurntableRadiusTextField.setToolTipText(Bundle.getMessage("TurntableRadiusHint"));
             headerPane.add(panel1);
 
             // setup add ray track
@@ -1819,96 +1669,96 @@ public class LayoutTrackEditors {
             panel2.setLayout(new FlowLayout());
             JLabel rayAngleLabel = new JLabel(Bundle.getMessage("RayAngle"));
             panel2.add(rayAngleLabel);
-            panel2.add(editTurntableAngleTextField);
-            editTurntableAngleTextField.setToolTipText(Bundle.getMessage("RayAngleHint"));
+            panel2.add(editLayoutTurntableAngleTextField);
+            editLayoutTurntableAngleTextField.setToolTipText(Bundle.getMessage("RayAngleHint"));
             headerPane.add(panel2);
 
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
-            panel3.add(editTurntableAddRayTrackButton = new JButton(Bundle.getMessage("AddRayTrack")));
-            editTurntableAddRayTrackButton.setToolTipText(Bundle.getMessage("AddRayTrackHint"));
-            editTurntableAddRayTrackButton.addActionListener((ActionEvent e) -> {
+            panel3.add(editLayoutTurntableAddRayTrackButton = new JButton(Bundle.getMessage("AddRayTrack")));
+            editLayoutTurntableAddRayTrackButton.setToolTipText(Bundle.getMessage("AddRayTrackHint"));
+            editLayoutTurntableAddRayTrackButton.addActionListener((ActionEvent e) -> {
                 addRayTrackPressed(e);
                 updateRayPanel();
             });
 
-            panel3.add(editTurntableDccControlledCheckBox = new JCheckBox(Bundle.getMessage("TurntableDCCControlled")));
+            panel3.add(editLayoutTurntableDccControlledCheckBox = new JCheckBox(Bundle.getMessage("TurntableDCCControlled")));
             headerPane.add(panel3);
 
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(editTurntableDoneButton = new JButton(Bundle.getMessage("ButtonDone")));
-            editTurntableDoneButton.addActionListener((ActionEvent e) -> {
-                turntableEditDonePressed(e);
+            panel5.add(editLayoutTurntableDoneButton = new JButton(Bundle.getMessage("ButtonDone")));
+            editLayoutTurntableDoneButton.addActionListener((ActionEvent e) -> {
+                editLayoutTurntableDonePressed(e);
             });
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
             SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editTurntableDoneButton);
-                rootPane.setDefaultButton(editTurntableDoneButton);
+                JRootPane rootPane = SwingUtilities.getRootPane(editLayoutTurntableDoneButton);
+                rootPane.setDefaultButton(editLayoutTurntableDoneButton);
             });
 
-            editTurntableDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+            editLayoutTurntableDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
-            panel5.add(editTurntableCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
-            editTurntableCancelButton.addActionListener((ActionEvent e) -> {
+            panel5.add(editLayoutTurntableCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
+            editLayoutTurntableCancelButton.addActionListener((ActionEvent e) -> {
                 turntableEditCancelPressed(e);
             });
-            editTurntableCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
+            editLayoutTurntableCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             footerPane.add(panel5);
 
-            editTurntableRayPanel = new JPanel();
-            editTurntableRayPanel.setLayout(new BoxLayout(editTurntableRayPanel, BoxLayout.Y_AXIS));
-            JScrollPane rayScrollPane = new JScrollPane(editTurntableRayPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            editLayoutTurntableRayPanel = new JPanel();
+            editLayoutTurntableRayPanel.setLayout(new BoxLayout(editLayoutTurntableRayPanel, BoxLayout.Y_AXIS));
+            JScrollPane rayScrollPane = new JScrollPane(editLayoutTurntableRayPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             contentPane.add(rayScrollPane, BorderLayout.CENTER);
         }
-        editTurntableDccControlledCheckBox.setSelected(layoutTurntable.isTurnoutControlled());
-        editTurntableDccControlledCheckBox.addActionListener((ActionEvent e) -> {
-            layoutTurntable.setTurnoutControlled(editTurntableDccControlledCheckBox.isSelected());
+        editLayoutTurntableDccControlledCheckBox.setSelected(layoutTurntable.isTurnoutControlled());
+        editLayoutTurntableDccControlledCheckBox.addActionListener((ActionEvent e) -> {
+            layoutTurntable.setTurnoutControlled(editLayoutTurntableDccControlledCheckBox.isSelected());
 
-            for (Component comp : editTurntableRayPanel.getComponents()) {
+            for (Component comp : editLayoutTurntableRayPanel.getComponents()) {
                 if (comp instanceof TurntableRayPanel) {
                     TurntableRayPanel trp = (TurntableRayPanel) comp;
                     trp.showTurnoutDetails();
                 }
             }
-            editTurntableFrame.pack();
+            editLayoutTurntableFrame.pack();
         });
         updateRayPanel();
         // Set up for Edit
-        editTurntableRadiusTextField.setText(" " + layoutTurntable.getRadius());
-        editTurntableOldRadius = editTurntableRadiusTextField.getText();
-        editTurntableAngleTextField.setText("0");
-        editTurntableFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+        editLayoutTurntableRadiusTextField.setText(" " + layoutTurntable.getRadius());
+        editLayoutTurntableOldRadius = editLayoutTurntableRadiusTextField.getText();
+        editLayoutTurntableAngleTextField.setText("0");
+        editLayoutTurntableFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 turntableEditCancelPressed(null);
             }
         });
-        editTurntableFrame.pack();
-        editTurntableFrame.setVisible(true);
-        editTurntableOpen = true;
-    }
+        editLayoutTurntableFrame.pack();
+        editLayoutTurntableFrame.setVisible(true);
+        editLayoutTurntableOpen = true;
+    }   // editLayoutTurntable
 
     //Remove old rays and add them back in
     private void updateRayPanel() {
-        for (Component comp : editTurntableRayPanel.getComponents()) {
-            editTurntableRayPanel.remove(comp);
+        for (Component comp : editLayoutTurntableRayPanel.getComponents()) {
+            editLayoutTurntableRayPanel.remove(comp);
         }
 
-        editTurntableRayPanel.setLayout(new BoxLayout(editTurntableRayPanel, BoxLayout.Y_AXIS));
+        editLayoutTurntableRayPanel.setLayout(new BoxLayout(editLayoutTurntableRayPanel, BoxLayout.Y_AXIS));
         for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
-            editTurntableRayPanel.add(new TurntableRayPanel(rt));
+            editLayoutTurntableRayPanel.add(new TurntableRayPanel(rt));
         }
-        editTurntableRayPanel.revalidate();
-        editTurntableRayPanel.repaint();
-        editTurntableFrame.pack();
+        editLayoutTurntableRayPanel.revalidate();
+        editLayoutTurntableRayPanel.repaint();
+        editLayoutTurntableFrame.pack();
     }
 
     private void saveRayPanelDetail() {
-        for (Component comp : editTurntableRayPanel.getComponents()) {
+        for (Component comp : editLayoutTurntableRayPanel.getComponents()) {
             if (comp instanceof TurntableRayPanel) {
                 TurntableRayPanel trp = (TurntableRayPanel) comp;
                 trp.updateDetails();
@@ -1919,9 +1769,9 @@ public class LayoutTrackEditors {
     private void addRayTrackPressed(ActionEvent a) {
         double ang = 0.0;
         try {
-            ang = Float.parseFloat(editTurntableAngleTextField.getText());
+            ang = Float.parseFloat(editLayoutTurntableAngleTextField.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(editTurntableFrame, Bundle.getMessage("EntryError") + ": "
+            JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "
                     + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
@@ -1929,15 +1779,15 @@ public class LayoutTrackEditors {
         layoutTurntable.addRay(ang);
         layoutEditor.redrawPanel();
         layoutEditor.setDirty();
-        editTurntableNeedsRedraw = false;
+        editLayoutTurntableNeedsRedraw = false;
     }
 
-    void deleteRayTrackPressed(ActionEvent a) {
+    private void deleteRayTrackPressed(ActionEvent a) {
         double ang = 0.0;
         try {
-            ang = Float.parseFloat(editTurntableAngleTextField.getText());
+            ang = Float.parseFloat(editLayoutTurntableAngleTextField.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(editTurntableFrame, Bundle.getMessage("EntryError") + ": "
+            JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "
                     + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
@@ -1953,51 +1803,51 @@ public class LayoutTrackEditors {
             }
         }
         if (bestDel > 30.0) {
-            JOptionPane.showMessageDialog(editTurntableFrame, Bundle.getMessage("Error13"),
+            JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("Error13"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         layoutTurntable.deleteRay(closest);
     }
 
-    void turntableEditDonePressed(ActionEvent a) {
+    private void editLayoutTurntableDonePressed(ActionEvent a) {
         // check if new radius was entered
-        String str = editTurntableRadiusTextField.getText();
-        if (!str.equals(editTurntableOldRadius)) {
+        String str = editLayoutTurntableRadiusTextField.getText();
+        if (!str.equals(editLayoutTurntableOldRadius)) {
             double rad = 0.0;
             try {
                 rad = Float.parseFloat(str);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(editTurntableFrame, Bundle.getMessage("EntryError") + ": "
+                JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "
                         + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
             layoutTurntable.setRadius(rad);
-            editTurntableNeedsRedraw = true;
+            editLayoutTurntableNeedsRedraw = true;
         }
         // clean up
-        editTurntableOpen = false;
-        editTurntableFrame.setVisible(false);
-        editTurntableFrame.dispose();
-        editTurntableFrame = null;
+        editLayoutTurntableOpen = false;
+        editLayoutTurntableFrame.setVisible(false);
+        editLayoutTurntableFrame.dispose();
+        editLayoutTurntableFrame = null;
         saveRayPanelDetail();
-        if (editTurntableNeedsRedraw) {
+        if (editLayoutTurntableNeedsRedraw) {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
-            editTurntableNeedsRedraw = false;
+            editLayoutTurntableNeedsRedraw = false;
         }
-    }
+    }   // editLayoutTurntableDonePressed
 
-    void turntableEditCancelPressed(ActionEvent a) {
-        editTurntableOpen = false;
-        editTurntableFrame.setVisible(false);
-        editTurntableFrame.dispose();
-        editTurntableFrame = null;
-        if (editTurntableNeedsRedraw) {
+    private void turntableEditCancelPressed(ActionEvent a) {
+        editLayoutTurntableOpen = false;
+        editLayoutTurntableFrame.setVisible(false);
+        editLayoutTurntableFrame.dispose();
+        editLayoutTurntableFrame = null;
+        if (editLayoutTurntableNeedsRedraw) {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
-            editTurntableNeedsRedraw = false;
+            editLayoutTurntableNeedsRedraw = false;
         }
     }
 
@@ -2039,7 +1889,7 @@ public class LayoutTrackEditors {
                     try {
                         Float.parseFloat(rayAngleTextField.getText());
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(editTurntableFrame, Bundle.getMessage("EntryError") + ": "
+                        JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "
                                 + ex + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
@@ -2131,6 +1981,6 @@ public class LayoutTrackEditors {
             rayTurnoutStateComboBox.setVisible(vis);
             rayTurnoutStateLabel.setVisible(vis);
         }
-    }
+    }   // class TurntableRayPanel
     private final static Logger log = LoggerFactory.getLogger(LayoutTrackEditors.class);
-}
+}   // class LayoutTrackEditors

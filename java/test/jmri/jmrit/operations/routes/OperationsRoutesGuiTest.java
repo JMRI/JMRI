@@ -113,7 +113,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         //f.deleteRouteButton.doClick();
         enterClickAndLeave(f.deleteRouteButton);
         // click "Yes" in the confirm popup
-        pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
 
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 

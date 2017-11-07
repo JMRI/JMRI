@@ -7,7 +7,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
 /**
- * Definition of objects to handle configuring a layout connection via an C/MRI
+ * Definition of objects to handle configuring a layout connection via a C/MRI
  * Simulator object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
@@ -48,8 +48,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
         details.add(b);
 
-        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo())); //c2
-//        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        // b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
 
     }
 

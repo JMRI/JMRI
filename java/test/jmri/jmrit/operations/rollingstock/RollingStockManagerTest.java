@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock;
 
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +15,7 @@ public class RollingStockManagerTest {
 
     @Test
     public void testCTor() {
-        RollingStockManager t = new RollingStockManager();
+        RollingStockManager<Car> t = new RollingStockManager<Car>();
         Assert.assertNotNull("exists",t);
     }
 

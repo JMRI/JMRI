@@ -5,27 +5,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stands in for the SerialTrafficController class
+ * Stands in for the SerialTrafficController class.
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
   */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
-    public SerialTrafficControlScaffold() {
+    public SerialTrafficControlScaffold(TmccSystemConnectionMemo memo) {
+        super(memo);
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
         self = this;
     }
 
-    // override some SerialTrafficController methods for test purposes
+    // Override some SerialTrafficController methods for test purposes.
     @Override
     public boolean status() {
         return true;
     }
 
     /**
-     * record messages sent, provide access for making sure they are OK
+     * Record messages sent, provide access for making sure they are OK.
      */
     public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
 
@@ -41,8 +42,9 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     }
 
     // test control member functions
+
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt.
      */
     protected void sendTestMessage(SerialMessage m, SerialListener l) {
         // forward a test message to NceListeners
@@ -54,7 +56,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     }
 
     /*
-     * Check number of listeners, used for testing dispose()
+     * Check number of listeners, used for testing dispose().
      */
     public int numListeners() {
         return cmdListeners.size();

@@ -6,15 +6,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting parsing and testing of addresses for Acela.
- * <P>
+ * <p>
  * One address format is supported: Atxxxx where: t is the type code, 'T' for
  * turnouts, 'S' for sensors, and 'L' for lights xxxx is a bit number of the
  * input or output bit (0-1023) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
- * (bit134).
+ * (bit134).<p>
  * Note: Not fully supporting long system connection prefix yet
  *
  * @author Dave Duchamp, Copyright (C) 2004 - 2006
- *
  * @author Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
  * example, modified to establish Acela support.
  */
@@ -118,16 +117,16 @@ public class AcelaAddress {
      */
     public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
-        if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
+        if (!systemName.startsWith(prefix + type )) {
             // here if an illegal format 
-            log.debug("invalid character in header field of system name: {}", systemName);
+            log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
         int num;
         try {
             num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
         } catch (NumberFormatException e) {
-            log.debug("invalid character in number field of system name: " + systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
         if (num >= 0) {
@@ -204,14 +203,13 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to normalize an Acela system name
-     * <P>
+     * Public static method to normalize an Acela system name.
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one Acela bit, by removing extra zeros inserted by the user.
      *
      * @return a normalized name is returned in the same format as the input name,
      * or an empty string if the supplied system name does not have a valid format.
-     *
      */
     public static String normalizeSystemName(String systemName, String prefix) {
         // ensure that input system name has a valid format
