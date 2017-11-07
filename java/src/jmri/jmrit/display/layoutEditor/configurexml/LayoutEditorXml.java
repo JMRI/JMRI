@@ -1,9 +1,7 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
-import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -219,7 +217,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 panelWidth = windowWidth - 18;
             }
 
-            // For files created by the new version, 
+            // For files created by the new version,
             // retrieve window and panel sizes
             if ((a = shared.getAttribute("windowheight")) != null) {
                 windowHeight = a.getIntValue();
@@ -270,7 +268,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             int n = JOptionPane.showConfirmDialog(frame,
-                    Bundle.getMessage("DuplicatePanel",name),
+                    Bundle.getMessage("DuplicatePanel", name),
                     Bundle.getMessage("DuplicatePanelTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.NO_OPTION) {
@@ -291,7 +289,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
             defaultColor = a.getValue();
         }
-        panel.setDefaultTrackColor(defaultColor);
+        panel.setDefaultTrackColor(ColorUtil.stringToColor(defaultColor));
 
         String defaultTextColor = ColorUtil.ColorBlack;
         if ((a = shared.getAttribute("defaulttextcolor")) != null) {
