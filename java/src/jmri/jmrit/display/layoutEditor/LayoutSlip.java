@@ -144,7 +144,7 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
-    public void setTurnout(@Nullable String tName) {
+    public void setTurnoutB(@Nullable String tName) {
         boolean reactivate = false;
         if (namedTurnoutB != null) {
             deactivateTurnout();
