@@ -122,6 +122,7 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.tmcc.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
         }
+
         m.add(new javax.swing.JSeparator());
 
         if (jmri.jmrix.direct.ActiveFlag.isActive()) {

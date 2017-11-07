@@ -17,9 +17,6 @@ import jmri.ThrottleManager;
 public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
-        super("E", "EasyDCC");
-        this.et = et;
-        register();
 //        super(st.getController().getSystemConnectionMemo().getSystemPrefix(), SprogConnectionTypeList.SPROG);
 //        if (log.isDebugEnabled()) {
 //            log.debug("SprogSystemConnectionMemo, prefix='{}'", st.getController().getSystemConnectionMemo().getSystemPrefix());
