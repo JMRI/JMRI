@@ -7751,8 +7751,10 @@ public class LayoutEditorTools {
             @Nonnull PositionablePoint p) {
         boundary = p;
         block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
-        if (boundary.getType() == PositionablePoint.ANCHOR) {
+        if (boundary.getType() != PositionablePoint.END_BUMPER) {
             block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
+        } else {
+            block2IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         }
         setSignalMastsAtBlockBoundaryFromMenuFlag = true;
         setSignalMastsAtBlockBoundary();
@@ -11538,9 +11540,6 @@ public class LayoutEditorTools {
                         boundary = p;
                         break;
                     }
-                }
-                if (boundary == null) {
-                    return false;
                 }
             }
 
