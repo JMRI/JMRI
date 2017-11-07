@@ -35,12 +35,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialTrafficControllerTest.class));
         suite.addTest(SerialAddressTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.serialdriver.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.simulator.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.packetgen.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(TmccMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(TMCCMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.serialmon.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(TmccSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(TMCCSystemConnectionMemoTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialThrottleManagerTest.class));
@@ -59,5 +58,4 @@ public class PackageTest extends TestCase {
     protected void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }

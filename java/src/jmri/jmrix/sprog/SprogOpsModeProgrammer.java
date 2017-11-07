@@ -23,9 +23,10 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
 
     int mAddress;
     boolean mLongAddr;
+
     private SprogSystemConnectionMemo _memo = null;
 
-    public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr, SprogSystemConnectionMemo memo) {
+    public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr,SprogSystemConnectionMemo memo) {
         super(memo);
         mAddress = pAddress;
         mLongAddr = pLongAddr;

@@ -7,15 +7,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the ConnectionConfigXml class
+ * ConnectionConfigXmlTest.java
  *
- * @author Paul Bender  Copyright (C) 2016
+ * Description: tests for the ConnectionConfigXml class
+ *
+ * @author   Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor", new ConnectionConfigXml());
+      Assert.assertNotNull("ConnectionConfigXml constructor",new ConnectionConfigXml());
     }
 
     // The minimal setup for log4J
@@ -30,3 +32,4 @@ public class ConnectionConfigXmlTest {
     }
 
 }
+

@@ -25,14 +25,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return Bundle.getMessage("AdapterSerialName");
+        return "Serial";
     }
 
     @Override
     protected void setInstance() {
-        if (adapter == null) {
-            adapter = new SerialDriverAdapter();
-        }
+        adapter = SerialDriverAdapter.instance();
     }
-
 }

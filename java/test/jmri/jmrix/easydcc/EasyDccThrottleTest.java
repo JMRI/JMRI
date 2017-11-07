@@ -8,13 +8,13 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", instance);
+        Assert.assertNotNull("exists",instance);
     }
 
     /**
@@ -198,10 +198,10 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
-        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold(null);
+        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold();
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new EasyDccThrottleManager(memo));
-        instance = new EasyDccThrottle(memo, new jmri.DccLocoAddress(100, true));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new EasyDccThrottleManager(memo));
+        instance = new EasyDccThrottle(memo, new jmri.DccLocoAddress(100,true));
     }
 
     @After

@@ -18,9 +18,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for common implementation of the Simulator
- * ConnectionConfig.
- * <p>
- * Currently uses the serial adapter, but this will change to
+ * ConnectionConfig Currently uses the serial adapter, but this will change to
  * the simulator adapter in due course.
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
@@ -28,7 +26,7 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractSimulatorConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process. Currently uses the
+     * Ctor for an object being created during load process Currently uses the
      * serialportadapter, but this will change to a simulator port adapter in
      * due course.
      */
@@ -140,7 +138,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
 
     /**
      * Load the adapter with an appropriate object
-     * <i>unless</I> it's already been set.
+     * <i>unless</I> its already been set.
      */
     @Override
     abstract protected void setInstance();
@@ -289,5 +287,4 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class);
-
 }

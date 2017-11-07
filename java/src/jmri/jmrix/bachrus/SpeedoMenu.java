@@ -10,7 +10,9 @@ import javax.swing.JMenu;
  */
 public class SpeedoMenu extends JMenu {
 
-    public SpeedoMenu(String name, SpeedoSystemConnectionMemo memo) {
+    private SpeedoSystemConnectionMemo _memo = null;
+
+    public SpeedoMenu(String name,SpeedoSystemConnectionMemo memo) {
         this(memo);
         setText(name);
     }
@@ -18,17 +20,14 @@ public class SpeedoMenu extends JMenu {
     public SpeedoMenu(SpeedoSystemConnectionMemo memo) {
 
         super();
+        _memo = memo;
+
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        if (memo != null) {
-            setText(memo.getUserName());
-        } else {
-            setText("Speedo");
-        }
+        // setText(rb.getString("MenuSystems"));
+        setText("Speedo");
 
-        if (memo != null) {
-            add(new jmri.jmrix.bachrus.SpeedoConsoleAction(rb.getString("MenuItemSpeedo"), memo));
-        }
+        add(new jmri.jmrix.bachrus.SpeedoConsoleAction(rb.getString("MenuItemSpeedo"), _memo));
     }
 
 }

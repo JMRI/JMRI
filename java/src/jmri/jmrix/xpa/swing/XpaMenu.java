@@ -19,17 +19,18 @@ public class XpaMenu extends JMenu {
 
         super();
 
-        if (memo != null) {
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
+
+        if(memo != null) {
            setText(memo.getUserName());
         } else {
            setText(Bundle.getMessage("MenuXpa"));
         }
 
         add(new jmri.jmrix.xpa.swing.xpamon.XpaMonAction());
-        if (memo != null) {
-            add(new jmri.jmrix.xpa.swing.packetgen.XpaPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
-            add(new jmri.jmrix.xpa.swing.xpaconfig.XpaConfigureAction(Bundle.getMessage("MenuItemXpaConfigTool"), memo));
-        }
+        add(new jmri.jmrix.xpa.swing.packetgen.XpaPacketGenAction(rb.getString("MenuItemSendCommand"),memo));
+        add(new jmri.jmrix.xpa.swing.xpaconfig.XpaConfigureAction(Bundle.getMessage("MenuItemXpaConfigTool"),memo));
+
     }
 
 }

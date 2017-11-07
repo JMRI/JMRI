@@ -3,7 +3,7 @@ package jmri.jmrix.powerline.simulator;
 import javax.swing.JPanel;
 
 /**
- * Definition of objects to handle configuring a layout connection via a
+ * Definition of objects to handle configuring a layout connection via an
  * Powerline Simulator object.
  *
  * @author Ken Cameron Copyright (C) 2011 based on NceSimulator by Bob Jacobson

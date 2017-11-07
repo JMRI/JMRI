@@ -5,7 +5,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanNamedPaneAction;
 
 /**
- * Create a menu containing the Jmri CAN- and CBUS-specific tools for NMRAnet
+ * Create a menu containing the Jmri CAN- and CBUS-specific tools
  *
  * @author Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
@@ -15,11 +15,14 @@ public class NmraNetMenu extends JMenu {
     public NmraNetMenu(CanSystemConnectionMemo memo) {
         super();
 
+        String title;
         if (memo != null) {
-            setText(memo.getUserName());
+            title = memo.getUserName();
         } else {
-            setText(Bundle.getMessage("NMRAnet"));
+            title = Bundle.getMessage("NMRAnet");
         }
+
+        setText(title);
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
@@ -30,6 +33,7 @@ public class NmraNetMenu extends JMenu {
                 add(new CanNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
+
     }
 
     Item[] panelItems = new Item[]{
@@ -46,5 +50,4 @@ public class NmraNetMenu extends JMenu {
         String name;
         String load;
     }
-
 }

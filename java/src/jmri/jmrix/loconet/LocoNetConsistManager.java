@@ -1,5 +1,7 @@
 /**
- * Consist Manager for use with the LocoNetConsist class for the
+ * LocoNetConsistManager.java
+ *
+ * Description: Consist Manager for use with the LocoNetConsist class for the
  * consists it builds
  *
  * @author Paul Bender Copyright (C) 2011

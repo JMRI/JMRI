@@ -104,7 +104,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     //public MarklinReporterManager getReporterManager() { return reporterManager; }
 
     /**
-     * Tells which managers this class provides.
+     * Tells which managers this provides by class
      */
     @Override
     public boolean provides(Class<?> type) {

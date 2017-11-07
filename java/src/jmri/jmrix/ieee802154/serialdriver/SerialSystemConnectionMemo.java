@@ -23,7 +23,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154
     }
 
     /**
-     * Tells which managers this class provides.
+     * Tells which managers this provides by class
      */
     @Override
     public boolean provides(Class<?> type) {

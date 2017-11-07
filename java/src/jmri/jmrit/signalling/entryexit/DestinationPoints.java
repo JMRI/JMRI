@@ -1071,17 +1071,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                 routeDetails = pathToUse.getListOfBlocks();
 
                 if (log.isDebugEnabled()) {
-                    log.debug("Path chosen start = {}, dest = {}, protect = {}", startlBlock.getDisplayName(),  // NOI18N
-                            destinationLBlock.getDisplayName(), protectLBlock.getDisplayName());
+                    log.debug("Path chossen " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());  // NOI18N
                 }
                 synchronized (this) {
                     destination = destinationLBlock;
                 }
 
                 if (log.isDebugEnabled()) {
-                    log.debug("Route details:");
                     for (LayoutBlock blk : routeDetails) {
-                        log.debug("  {}", blk.getDisplayName());
+                        log.debug(blk.getDisplayName());
                     }
                 }
 

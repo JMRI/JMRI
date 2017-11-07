@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for implementations of DCCppInterface.
- * <p>
+ * <P>
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation.
  *
@@ -23,25 +23,10 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class DCCppTrafficController extends AbstractMRTrafficController implements DCCppInterface {
 
-    /**
-     * Must provide a DCCppCommandStation reference at creation time.
-     *
-     * @param pCommandStation reference to associated command station object,
-     *                        preserved for later.
-     */
-    DCCppTrafficController(DCCppCommandStation pCommandStation) {
-        mCommandStation = pCommandStation;
-        setAllowUnexpectedReply(true);
-        mListenerMasks = new HashMap<>();
-        highPriorityQueue = new LinkedBlockingQueue<>();
-        highPriorityListeners = new LinkedBlockingQueue<>();
-        log.debug("DCCppTrafficController created");
-    }
-
     protected HashMap<DCCppListener, Integer> mListenerMasks;
 
     /**
-     * Static function returning the TrafficController instance to use.
+     * static function returning the TrafficController instance to use.
      *
      * @return The registered TrafficController instance for general use, if
      *         need be creating one.
@@ -52,7 +37,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Static function setting this object as the TrafficController instance to
+     * static function setting this object as the TrafficController instance to
      * use.
      */
     @Override
@@ -65,8 +50,22 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 
     static DCCppTrafficController self = null;
 
-    // Abstract methods for the DCCppInterface
+    /**
+     * Must provide a DCCppCommandStation reference at creation time
+     *
+     * @param pCommandStation reference to associated command station object,
+     *                        preserved for later.
+     */
+    DCCppTrafficController(DCCppCommandStation pCommandStation) {
+        mCommandStation = pCommandStation;
+        setAllowUnexpectedReply(true);
+        mListenerMasks = new HashMap<>();
+        highPriorityQueue = new LinkedBlockingQueue<>();
+        highPriorityListeners = new LinkedBlockingQueue<>();
+        log.debug("DCCppTrafficController created.");
+    }
 
+    // Abstract methods for the DCCppInterface
     /**
      * Forward a preformatted DCCppMessage to the actual interface.
      *
@@ -95,8 +94,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      * Forward a preformatted DCCppMessage to the registered DCCppListeners.
      * NOTE: this drops the packet if the checksum is bad.
      *
-     * @param client Client to send message to
-     * @param m      Message to send
+     * @param client : Client to send message to
+     * @param m      Message to send # @param client is the client getting the
+     *               message
      */
     // TODO: This should be fleshed out to allow listeners to register for only
     // certain types of DCCppReply-s.  The analogous code from the Lenz interface
@@ -217,8 +217,8 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Has to be available, even though it doesn't do anything
-     * on DCC++.
+     * enterProgMode(); has to be available, even though it doesn't do anything
+     * on lenz
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -226,8 +226,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     *
-     * @return the value of getExitProgModeMsg();
+     * enterNormalMode() returns the value of getExitProgModeMsg();
      */
     @Override
     protected AbstractMRMessage enterNormalMode() {
@@ -236,7 +235,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Check to see if the programmer associated with this
+     * programmerIdle() checks to see if the programmer associated with this
      * interface is idle or not.
      */
     @Override
@@ -310,7 +309,6 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     // log.debug("Complete message = {}", s);
     //        ((DCCppReply)msg).parseReply(s);
     //    }
-
     @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         super.handleTimeout(msg, l);
@@ -320,12 +318,12 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Reference to the command station in communication here.
+     * Reference to the command station in communication here
      */
     DCCppCommandStation mCommandStation;
 
     /**
-     * Get access to communicating command station object.
+     * Get access to communicating command station object
      *
      * @return associated Command Station object
      */
@@ -334,13 +332,13 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Reference to the system connection memo.
+     * Reference to the system connection memo *
      */
     DCCppSystemConnectionMemo mMemo = null;
 
     /**
      * Get access to the system connection memo associated with this traffic
-     * controller.
+     * controller
      *
      * @return associated systemConnectionMemo object
      */
@@ -349,7 +347,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Set the system connection memo associated with this traffic controller.
+     * Set the system connection memo associated with this traffic controller
      *
      * @param m associated systemConnectionMemo object
      */
@@ -360,9 +358,8 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     private DCCppTurnoutReplyCache _TurnoutReplyCache = null;
 
     /**
-     *
-     * @return an DCCppTurnoutReplyCache object associated with this traffic
-     * controller
+     * return an DCCppTurnoutReplyCache object associated with this traffic
+     * controller.
      */
     public DCCppTurnoutReplyCache getTurnoutReplyCache() {
         if (_TurnoutReplyCache == null) {
@@ -370,7 +367,5 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         }
         return _TurnoutReplyCache;
     }
-
     private final static Logger log = LoggerFactory.getLogger(DCCppTrafficController.class);
-
 }

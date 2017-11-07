@@ -25,7 +25,7 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     /**
-     * Tells which managers this class provides.
+     * Tells which managers this provides by class
      */
     @Override
     public boolean provides(Class<?> type) {

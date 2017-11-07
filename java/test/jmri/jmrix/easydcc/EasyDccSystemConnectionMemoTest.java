@@ -8,8 +8,9 @@ import org.junit.Test;
 
 /**
  * JUnit tests for the EasyDccSystemConnectionMemo class
+ * <p>
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class EasyDccSystemConnectionMemoTest {
 
@@ -17,7 +18,7 @@ public class EasyDccSystemConnectionMemoTest {
 
     @Test
     public void testCtor(){
-       Assert.assertNotNull("exists", memo);
+       Assert.assertNotNull("exists",memo); 
     }
 
     @Before
@@ -30,5 +31,4 @@ public class EasyDccSystemConnectionMemoTest {
     public void tearDown(){
        JUnitUtil.tearDown();
     }
-
 }

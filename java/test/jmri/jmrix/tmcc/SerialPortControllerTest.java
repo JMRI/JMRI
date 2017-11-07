@@ -5,9 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the SerialPortController class.
+ * JUnit tests for the SerialPortController class
+ * <p>
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
@@ -15,12 +16,12 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo();
-       SerialTrafficController tc = new SerialTrafficController(memo){
+       SerialTrafficController tc = new SerialTrafficController(){
           @Override
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
           }
        };
+       TMCCSystemConnectionMemo memo = new TMCCSystemConnectionMemo();
        apc = new SerialPortController(memo){
             @Override
             public boolean status(){

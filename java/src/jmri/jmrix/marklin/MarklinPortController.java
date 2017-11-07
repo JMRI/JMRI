@@ -19,5 +19,4 @@ public abstract class MarklinPortController extends jmri.jmrix.AbstractNetworkPo
     public MarklinSystemConnectionMemo getSystemConnectionMemo() {
         return (MarklinSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-
 }

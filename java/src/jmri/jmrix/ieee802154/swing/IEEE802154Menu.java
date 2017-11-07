@@ -27,10 +27,8 @@ public class IEEE802154Menu extends JMenu {
             setText(rb.getString("MenuIEEE802154"));
         }
 
-        if (memo != null) {
-            add(new jmri.jmrix.ieee802154.swing.mon.IEEE802154MonAction(rb.getString("jmri.jmrix.ieee802154.swing.mon.IEEE802154MonAction"), memo));
-            add(new jmri.jmrix.ieee802154.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.ieee802154.swing.packetgen.PacketGenAction"), memo));
-        }
+        add(new jmri.jmrix.ieee802154.swing.mon.IEEE802154MonAction(rb.getString("jmri.jmrix.ieee802154.swing.mon.IEEE802154MonAction"), memo));
+        add(new jmri.jmrix.ieee802154.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.ieee802154.swing.packetgen.PacketGenAction"), memo));
     }
 
 }

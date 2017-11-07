@@ -6,8 +6,9 @@ import org.junit.Before;
 
 /**
  * JUnit tests for the EasyDccNetworkPortController class
+ * <p>
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class EasyDccNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
@@ -28,5 +29,4 @@ public class EasyDccNetworkPortControllerTest extends jmri.jmrix.AbstractNetwork
     public void tearDown(){
        JUnitUtil.tearDown();
     }
-
 }

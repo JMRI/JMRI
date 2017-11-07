@@ -4,41 +4,37 @@ import jmri.jmrix.tmcc.SerialListener;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
-import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 
 /**
- * Frame displaying (and logging) TMCC serial command messages.
+ * Frame displaying (and logging) TMCC serial command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    private TmccSystemConnectionMemo _memo = null;
-
-    public SerialMonFrame(TmccSystemConnectionMemo memo) {
+    public SerialMonFrame() {
         super();
-        _memo = memo;
     }
 
     @Override
     protected String title() {
-        return Bundle.getMessage("MonitorXTitle", "TMCC");
+        return "TMCC Serial Command Monitor";
+    }
+
+    @Override
+    public void dispose() {
+        SerialTrafficController.instance().removeSerialListener(this);
+        super.dispose();
     }
 
     @Override
     protected void init() {
         // connect to TrafficController
-        _memo.getTrafficController().addSerialListener(this);
+        SerialTrafficController.instance().addSerialListener(this);
     }
 
     @Override
-    public void dispose() {
-        _memo.getTrafficController().removeSerialListener(this);
-        super.dispose();
-    }
-
-    @Override
-    public synchronized void message(SerialMessage l) { // receive a message and log it
+    public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 3) {
             nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
@@ -50,7 +46,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     @Override
-    public synchronized void reply(SerialReply l) { // receive a reply message and log it
+    public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated reply of length " + l.getNumDataElements() + ": \"" + l.toString() + "\"\n",

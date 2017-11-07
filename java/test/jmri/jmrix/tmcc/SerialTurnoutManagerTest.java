@@ -4,12 +4,15 @@ import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the SerialTurnoutManager class.
+ * SerialTurnoutManagerTest.java
+ *
+ * Description:	tests for the SerialTurnoutManager class
  *
  * @author	Bob Jacobsen
  */
@@ -21,12 +24,11 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     }
 
     @Override
+    @Before
     public void setUp(){
         apps.tests.Log4JFixture.setUp();
-
         // create and register the manager object
-        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo("T", "TMCC Test");
-        l = new SerialTurnoutManager(memo);
+        l = new SerialTurnoutManager();
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

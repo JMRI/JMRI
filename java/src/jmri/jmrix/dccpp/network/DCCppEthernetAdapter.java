@@ -47,7 +47,9 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     @Override
     public void connect() throws java.io.IOException {
         super.connect();
-        log.debug("openPort called");
+        if (log.isDebugEnabled()) {
+            log.debug("openPort called");
+        }
         keepAliveTimer();
     }
     

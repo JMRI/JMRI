@@ -13,9 +13,8 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 public class MrcMenu extends JMenu {
 
     /**
-     * Create an MRC menu and load the MrcSystemConnectionMemo to the various
+     * Create a MRC menu. And loads the MrcSystemConnectionMemo to the various
      * actions. Actions will open new windows.
-     *
      * @param memo sytem connection memo
      */
     // Need to Sort out the MRC server menu items;
@@ -41,7 +40,7 @@ public class MrcMenu extends JMenu {
             }
         }
 
-        // do we have an MrcTrafficController?
+        // do we have a MrcTrafficController?
         setEnabled(memo.getMrcTrafficController() != null); // disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
@@ -61,5 +60,4 @@ public class MrcMenu extends JMenu {
         String name;
         String load;
     }
-
 }

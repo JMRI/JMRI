@@ -240,41 +240,31 @@ public class PointDetails {
     }
 
     public void setRefObject(NamedBean refObs) {
-        List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
-                getLayoutEditorPanelList();
-        for (LayoutEditor pnl : panels) {
-            if (refLoc == null) {
-                setRefObjectByPanel(refObs, pnl);
-            }
-        }
-    }
-
-    public void setRefObjectByPanel(NamedBean refObs, LayoutEditor pnl) {
         refObj = refObs;
-        if (pnl != null && refObj != null) {
+        if (panel != null && refObj != null) {
             if (refObj instanceof SignalMast || refObj instanceof Sensor) {
                 //String mast = ((SignalMast)refObj).getUserName();
-                refLoc = pnl.getFinder().findPositionablePointByEastBoundBean(refObj);
+                refLoc = panel.getFinder().findPositionablePointByEastBoundBean(refObj);
                 if (refLoc == null) {
-                    refLoc = pnl.getFinder().findPositionablePointByWestBoundBean(refObj);
+                    refLoc = panel.getFinder().findPositionablePointByWestBoundBean(refObj);
                 }
                 if (refLoc == null) {
-                    refLoc = pnl.getFinder().findLayoutTurnoutByBean(refObj);
+                    refLoc = panel.getFinder().findLayoutTurnoutByBean(refObj);
                 }
                 if (refLoc == null) {
-                    refLoc = pnl.getFinder().findLevelXingByBean(refObj);
+                    refLoc = panel.getFinder().findLevelXingByBean(refObj);
                 }
                 if (refLoc == null) {
-                    refLoc = pnl.getFinder().findLayoutSlipByBean(refObj);
+                    refLoc = panel.getFinder().findLayoutSlipByBean(refObj);
                 }
                 if (refObj instanceof Sensor) {
                     setSensor((Sensor) refObj);
                 }
             } else if (refObj instanceof SignalHead) {
                 String signal = ((SignalHead) refObj).getDisplayName();
-                refLoc = pnl.getFinder().findPositionablePointByEastBoundSignal(signal);
+                refLoc = panel.getFinder().findPositionablePointByEastBoundSignal(signal);
                 if (refLoc == null) {
-                    refLoc = pnl.getFinder().findPositionablePointByWestBoundSignal(signal);
+                    refLoc = panel.getFinder().findPositionablePointByWestBoundSignal(signal);
                 }
             }
         }
@@ -494,7 +484,7 @@ public class PointDetails {
                     foundSensor = sm.getSensor(sl.getSensorDName());
                 }
             }
-        } else //note: you have to do this after LayoutSlip
+        } else //note: you have to do this after LayoutSlip 
         // because LayoutSlip extends LayoutTurnout
         // (So a LayoutSlip would be an instance of LayoutTurnout.)
         if (objLoc instanceof LayoutTurnout) {  //<== this includes LayoutSlips
@@ -585,7 +575,6 @@ public class PointDetails {
 
         Sensor sen = (Sensor) getRefObject();
         log.debug("looking at Sensor " + sen.getDisplayName());
-        log.debug("Sensor location " + getRefLocation());
         if (getRefLocation() instanceof PositionablePoint) {
             PositionablePoint p = (PositionablePoint) getRefLocation();
             if (p.getEastBoundSensor() == sen) {
@@ -628,7 +617,7 @@ public class PointDetails {
                     signal = sh.getSignalHead(t.getSignalD1Name());
                 }
             }
-        } else //note: you have to do this after LayoutSlip
+        } else //note: you have to do this after LayoutSlip 
         // because LayoutSlip extends LayoutTurnout
         // (So a LayoutSlip would be an instance of LayoutTurnout.)
         if (getRefLocation() instanceof LayoutTurnout) {  //<== this includes LayoutSlips

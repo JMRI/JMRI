@@ -1,6 +1,6 @@
 /**
- * Frame for user input of Xpa+Modem (dialing) messages.
- *
+ * Description:	Frame for user input of Xpa+Modem (dialing) messages
+ * <p>
  * @author	Paul Bender Copyright (C) 2004
  */
 package jmri.jmrix.xpa.swing.packetgen;
@@ -79,5 +79,4 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
     @Override
     public void reply(XpaMessage r) {
     } // ignore replies
-
 }

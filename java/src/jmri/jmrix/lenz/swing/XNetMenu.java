@@ -36,6 +36,7 @@ public class XNetMenu extends JMenu {
         // The LV102 configuration works with OpsModeProgramming, so does not
         // need the system connection memo.
         add(new jmri.jmrix.lenz.swing.lv102.LV102Action(Bundle.getMessage("MenuItemLV102ConfigurationManager")));
+
     }
 
 }

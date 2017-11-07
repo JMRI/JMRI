@@ -7,7 +7,7 @@ import jmri.jmrix.AbstractThrottle;
 
 /**
  * An implementation of DccThrottle.
- * <p>
+ * <P>
  * Addresses of 99 and below are considered short addresses, and over 100 are
  * considered long addresses.
  *
@@ -17,13 +17,11 @@ public class SerialThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
-     *
-     * @param memo the connected SerialTrafficController
-     * @param address Loco ID
+     * @param address Loco
      */
-    public SerialThrottle(TmccSystemConnectionMemo memo, DccLocoAddress address) {
-        super(memo);
-        tc = memo.getTrafficController();
+    public SerialThrottle(DccLocoAddress address) {
+        //This will need to include system adapter memo once converted
+        super(null);
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -55,8 +53,7 @@ public class SerialThrottle extends AbstractThrottle {
 
     }
 
-    private DccLocoAddress address;
-    SerialTrafficController tc;
+    DccLocoAddress address;
 
     @Override
     public LocoAddress getLocoAddress() {
@@ -218,8 +215,8 @@ public class SerialThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed.
-     *
+     * Set the speed
+     * <P>
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
@@ -241,10 +238,10 @@ public class SerialThrottle extends AbstractThrottle {
             m.putAsWord(0x0060 + address.getNumber() * 128 + value);
         }
 
-        tc.sendSerialMessage(m, null);
-        tc.sendSerialMessage(m, null);
-        tc.sendSerialMessage(m, null);
-        tc.sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
         if (oldSpeed != this.speedSetting) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
         }
@@ -263,28 +260,28 @@ public class SerialThrottle extends AbstractThrottle {
         } else {
             m.putAsWord(0x0003 + address.getNumber() * 128);
         }
-        tc.sendSerialMessage(m, null);
-        tc.sendSerialMessage(m, null);
-        tc.sendSerialMessage(m, null);
-        tc.sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
         if (old != isForward) {
             notifyPropertyChangeListener("IsForward", old, isForward);
         }
     }
 
     protected void sendToLayout(int value) {
-        tc.sendSerialMessage(new SerialMessage(value), null);
-        tc.sendSerialMessage(new SerialMessage(value), null);
-        tc.sendSerialMessage(new SerialMessage(value), null);
-        tc.sendSerialMessage(new SerialMessage(value), null);
+        SerialTrafficController.instance().sendSerialMessage(new SerialMessage(value), null);
+        SerialTrafficController.instance().sendSerialMessage(new SerialMessage(value), null);
+        SerialTrafficController.instance().sendSerialMessage(new SerialMessage(value), null);
+        SerialTrafficController.instance().sendSerialMessage(new SerialMessage(value), null);
     }
 
     /*
-     * Set the speed step value.
-     * <p>
+     * setSpeedStepMode - set the speed step value.
+     * <P>
      * Only 32 steps is available
-     *
-     * @param Mode ignored, as only 32 is valid
+     * <P>
+     * @param Mode Ignored, as only 32 is valid
      */
     @Override
     public void setSpeedStepMode(int Mode) {

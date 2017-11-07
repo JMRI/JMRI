@@ -1,7 +1,6 @@
 package jmri.jmrix.tmcc;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,16 +9,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of TmccMenu.
+ * Test simple functioning of TMCCMenu
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author	Paul Bender Copyright (C) 2016
  */
-public class TmccMenuTest {
+public class TMCCMenuTest {
+
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        TmccMenu action = new TmccMenu(new TmccSystemConnectionMemo("T", "TMCC Test"));
+        TMCCMenu action = new TMCCMenu();
         Assert.assertNotNull("exists", action);
     }
 
@@ -29,6 +29,5 @@ public class TmccMenuTest {
     }
 
     @After
-    public void tearDown() { JUnitUtil.tearDown(); }
-
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

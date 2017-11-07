@@ -17,7 +17,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -34,5 +34,4 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
             adapter = new LnHexFilePort();
         }
     }
-
 }

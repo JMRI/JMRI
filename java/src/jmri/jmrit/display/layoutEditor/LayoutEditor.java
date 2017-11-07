@@ -2094,6 +2094,19 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         inComboBox.setValidateMode(inValidateMode);
         inComboBox.setText("");
         log.debug("LE setupComboBox called");
+
+        setupComboBoxMaxRows(inComboBox);
+
+        inComboBox.setFirstItemBlank(inFirstBlank);
+        inComboBox.setSelectedIndex(-1);
+    } //setupComboBox
+
+    /**
+     * set the maximum number of rows based on screen size
+     *
+     * @param inComboBox
+     */
+    public static void setupComboBoxMaxRows(@Nonnull JmriBeanComboBox inComboBox) {
         // find the max height of all popup items
         BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
         JList list = popup.getList();
@@ -2106,7 +2119,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
         }
 
-        int itemsPerScreen = inComboBox.getItemCount();
+        int itemsPerScreen = inComboBox.getMaximumRowCount();
         // calculate the number of items that will fit on the screen
         if (!GraphicsEnvironment.isHeadless()) {
             // note: this line returns the maximum available size, accounting all
@@ -2122,9 +2135,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             c /= 2; // keeps this a even division of the number of items
         };
         inComboBox.setMaximumRowCount(c);
-        inComboBox.setFirstItemBlank(inFirstBlank);
-        inComboBox.setSelectedIndex(-1);
-    } //setupComboBox
+    }
 
     /**
      * Grabs a subset of the possible KeyEvent constants and puts them into a
@@ -2951,7 +2962,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         jmi.setToolTipText(Bundle.getMessage("SignalsAtXoverTurnoutToolTip"));
         toolsMenu.add(jmi);
         jmi.addActionListener((ActionEvent event) -> {
-            //bring up signals at double crossover tool dialog
+            //bring up signals at crossover tool dialog
             getLETools().setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
         });
 
@@ -8732,16 +8743,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return conTools;
     } //getConnectivityUtil
 
-    //private transient LayoutEditorTools tools = null;
+    private transient LayoutEditorTools tools = null;
+
     public LayoutEditorTools getLETools() {
-        //if (tools == null) {
-        //    tools = new LayoutEditorTools(this);
-        //}
-        //return tools;
-        // note: we're going to always return a new instance here
-        // (the indivual dialogs are responsible for disposing of it
-        // when no longer needed.)
-        return new LayoutEditorTools(this);
+        if (tools == null) {
+            tools = new LayoutEditorTools(this);
+        }
+        return tools;
     } //getLETools
 
     private transient LayoutEditorAuxTools auxTools = null;
@@ -9099,7 +9107,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut track color to.
+     * @param color value to set the default track color to.
      */
     public void setDefaultTrackColor(@Nonnull Color color) {
         LayoutTrack.setDefaultTrackColor(color);
@@ -9116,7 +9124,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut occupied track color to.
+     * @param color value to set the default occupied track color to.
      */
     public void setDefaultOccupiedTrackColor(@Nonnull Color color) {
         defaultOccupiedTrackColor = color;
@@ -9132,7 +9140,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut alternate track color to.
+     * @param color value to set the default alternate track color to.
      */
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
@@ -9188,7 +9196,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut text color to.
+     * @param color value to set the default text color to.
      */
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
@@ -9324,12 +9332,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return result;
     } //highlightBlockInComboBox
 
-    /**
-     * highlight the specified block
-     * @param inBlock the block
-     * @return true if block was highlighted
-     */
-    public boolean highlightBlock(@Nullable Block inBlock) {
+    //
+    // highlight the specified block
+    //
+    private boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -9343,24 +9349,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             if (lb != null) {
                 boolean enable = ((inBlock != null) && b.equals(inBlock));
-                if (enable) {
-                    blockIDComboBox.setSelectedBean(nb);
-                }
                 lb.setUseExtraColor(enable);
                 result |= enable;
             }
         }
         return result;
     } //highlightBlock
-
-    /**
-     * highlight the specified layout block
-     * @param inLayoutBlock the layout block
-     * @return true if layout block was highlighted
-     */
-    public boolean highlightLayoutBlock(@Nullable LayoutBlock inLayoutBlock) {
-        return highlightBlock(inLayoutBlock.getBlock());
-    } //highlightLayoutBlock
 
     public void setTurnoutCircles(boolean state) {
         if (turnoutCirclesWithoutEditMode != state) {

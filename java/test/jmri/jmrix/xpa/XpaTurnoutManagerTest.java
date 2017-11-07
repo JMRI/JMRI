@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the jmri.jmrix.xpa.XpaTurnoutManager class
+ * XpaTurnoutManagerTest.java
+ *
+ * Description:	tests for the jmri.jmrix.xpa.XpaTurnoutManager class
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */

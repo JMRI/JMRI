@@ -11,13 +11,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from NMRA packets and controls sending to the
  * direct interface.
- * <p>
+ * <P>
  * This is much simpler than many other "TrafficHandler" classes, because
- *   <ul>
- *   <li>It's not handling mode information, or even any information back from the
- *   device; it's just sending.
- *   <li>It can work with the direct packets.
- *   </ul>
+ * <UL>
+ * <LI>It's not handling mode information, or even any information back from the
+ * device; it's just sending
+ * <LI>It can work with the direct packets.
+ * </UL>
  * This actually bears more similarity to a pure implementation of the
  * CommandStation interface, which is where the real guts of it is. In
  * particular, note that transmission is not a threaded operation.
@@ -31,7 +31,7 @@ public class TrafficController implements jmri.CommandStation {
     }
 
     /**
-     * Static function returning the instance to use.
+     * static function returning the instance to use.
      *
      * @return The registered instance for general use, if need be creating one.
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
@@ -113,8 +113,7 @@ public class TrafficController implements jmri.CommandStation {
 
     }
 
-    // methods to connect/disconnect to a source of data in an AbstractSerialPortController
-
+    // methods to connect/disconnect to a source of data in a AbstractSerialPortController
     private AbstractSerialPortController controller = null;
 
     public boolean status() {
@@ -167,5 +166,4 @@ public class TrafficController implements jmri.CommandStation {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrafficController.class);
-
 }

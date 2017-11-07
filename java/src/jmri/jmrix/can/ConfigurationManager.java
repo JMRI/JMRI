@@ -54,7 +54,7 @@ abstract public class ConfigurationManager {
     abstract public void configureManagers();
 
     /**
-     * Tells which managers this class provides.
+     * Tells which managers this provides by class
      */
     abstract public boolean provides(Class<?> type);
 

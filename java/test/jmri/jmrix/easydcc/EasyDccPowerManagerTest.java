@@ -9,16 +9,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * JUnit tests for the EasyDccPowerManager class
+ * Description:	JUnit tests for the EasyDccPowerManager class
  *
  * @author	Bob Jacobsen Copyright 2006
  */
 public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
 
-    // service routines to simulate receiving on, off from interface
+    // service routines to simulate recieving on, off from interface
     @Override
     protected void hearOn() {
-        // this does nothing, as there is no unsollicited on
+        // this does nothing, as there is no unsolicited on
     }
 
     @Override
@@ -63,10 +63,8 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
-        controller = new EasyDccTrafficControlScaffold(memo);
-        memo.setEasyDccTrafficController(controller); // important for successful getTrafficController()
-        p = new EasyDccPowerManager(memo);
+        controller = new EasyDccTrafficControlScaffold();
+        p = new EasyDccPowerManager();
     }
 
     EasyDccTrafficControlScaffold controller;  // holds dummy EasyDccTrafficController for testing

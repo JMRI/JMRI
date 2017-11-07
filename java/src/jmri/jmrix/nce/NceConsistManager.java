@@ -1,6 +1,8 @@
 /**
- * Consist Manager for use with the NceConsist class for the
- * consists it builds.
+ * NceConsistManager.java
+ *
+ * Description: Consist Manager for use with the NceConsist class for the
+ * consists it builds
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
@@ -24,8 +26,7 @@ public class NceConsistManager extends AbstractConsistManager {
         memo = m;
     }
 
-    /**
-     * Request an update from the layout, loading
+    /* request an update from the layout, loading
      * Consists from the command station.
      */
     @Override

@@ -6,11 +6,10 @@ import javax.swing.JSeparator;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
-import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
- * Frame for user input of serial messages.
+ * Frame for user input of serial messages
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006
  */
@@ -20,11 +19,9 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
-    private TmccSystemConnectionMemo _memo = null;
 
-    public SerialPacketGenFrame(TmccSystemConnectionMemo memo) {
+    public SerialPacketGenFrame() {
         super();
-        _memo = memo;
     }
 
     /** 
@@ -34,22 +31,22 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     public void initComponents() {
         // the following code sets the frame's initial state
 
-        jLabel1.setText(Bundle.getMessage("CommandLabel"));
+        jLabel1.setText("Command:");
         jLabel1.setVisible(true);
 
-        sendButton.setText(Bundle.getMessage("ButtonSend"));
+        sendButton.setText("Send");
         sendButton.setVisible(true);
-        sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
+        sendButton.setToolTipText("Send packet");
 
         packetTextField.setText("");
-        packetTextField.setToolTipText(Bundle.getMessage("EnterHexBytesToolTip"));
+        packetTextField.setToolTipText("Enter command as hexadecimal bytes separated by a space");
         packetTextField.setMaximumSize(
                 new Dimension(packetTextField.getMaximumSize().width,
                         packetTextField.getPreferredSize().height
                 )
         );
 
-        setTitle(Bundle.getMessage("SendCommandTitle"));
+        setTitle("Send TMCC command");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(jLabel1);
@@ -70,7 +67,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        _memo.getTrafficController().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
     }
 
     SerialMessage createPacket(String s) {
@@ -93,5 +90,4 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     @Override
     public void reply(SerialReply r) {
     } // ignore replies
-
 }

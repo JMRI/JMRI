@@ -7,11 +7,13 @@ import jmri.jmrix.srcp.swing.packetgen.PacketGenAction;
 import jmri.jmrix.srcp.swing.srcpmon.SRCPMonAction;
 
 /**
- * Create a "Systems" menu containing the system-specific SRCP tools.
+ * Create a "Systems" menu containing the system-specific tools
  *
  * @author	Bob Jacobsen Copyright 2008
  */
 public class SystemMenu extends JMenu {
+
+    private SRCPSystemConnectionMemo _memo = null;
 
     public SystemMenu(String name, SRCPSystemConnectionMemo memo) {
         this(memo);
@@ -19,20 +21,18 @@ public class SystemMenu extends JMenu {
     }
 
     public SystemMenu(SRCPSystemConnectionMemo memo) {
+
         super();
+        _memo = memo;
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        if (memo != null) {
-            setText(memo.getUserName());
-        } else {
-            setText(rb.getString("MenuItemSRCP"));
-        }
+        // setText(rb.getString("MenuSystems"));
+        setText(rb.getString("MenuItemSRCP"));
 
-        if (memo != null) {
-            add(new SRCPMonAction(rb.getString("MenuItemCommandMonitor"), memo));
-            add(new PacketGenAction(rb.getString("MenuItemSendCommand"), memo));
-        }
+        add(new SRCPMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
+        add(new PacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
+
     }
 
 }

@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements NetworkPortAdapter for the Marklin system network connection.
+ * Implements SerialPortAdapter for the Marklin system network connection.
  * <P>
- * This connects a Marklin command station via a UDP connection. Normally
+ * This connects an Marklin command station via a UDP connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008

@@ -1170,18 +1170,26 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         //if (showCoordinates()) {
-        JMenuItem edit = null;
+        JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
+        JMenuItem jmi = null;
         if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
             MemoryIcon pm = (MemoryIcon) p;
 
-            edit = new JMenuItem(Bundle.getMessage(
-                "EditLocationXY", pm.getOriginalX(), pm.getOriginalY()));
+            jmi = edit.add("x = " + pm.getOriginalX());
+            jmi.setEnabled(false);
 
-            edit.addActionListener(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
+            jmi = edit.add("y = " + pm.getOriginalY());
+            jmi.setEnabled(false);
+
+            edit.add(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
         } else {
-            edit = new JMenuItem(Bundle.getMessage(
-                "EditLocationXY", p.getX(), p.getY()));
-            edit.addActionListener(CoordinateEdit.getCoordinateEditAction(p));
+            jmi = edit.add("x = " + p.getX());
+            jmi.setEnabled(false);
+
+            jmi = edit.add("y = " + p.getY());
+            jmi.setEnabled(false);
+
+            edit.add(CoordinateEdit.getCoordinateEditAction(p));
         }
         popup.add(edit);
         return true;
@@ -1388,8 +1396,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param popup the menu to add entries to
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
-        JMenuItem edit = new JMenuItem(Bundle.getMessage("EditLevel_", p.getDisplayLevel()));
-        edit.addActionListener(CoordinateEdit.getLevelEditAction(p));
+        JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
+        JMenuItem jmi = edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
+        jmi.setEnabled(false);
+        edit.add(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
     }
 

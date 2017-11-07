@@ -4,8 +4,8 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types.
- *
+ * Returns a list of valid lenz XpressNet Connection Types
+ * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
   *
@@ -19,8 +19,7 @@ public class EasyDccConnectionTypeList implements jmri.jmrix.ConnectionTypeList 
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.easydcc.serialdriver.ConnectionConfig",
-            "jmri.jmrix.easydcc.networkdriver.ConnectionConfig",
-            "jmri.jmrix.easydcc.simulator.ConnectionConfig"
+            "jmri.jmrix.easydcc.networkdriver.ConnectionConfig"
         };
     }
 

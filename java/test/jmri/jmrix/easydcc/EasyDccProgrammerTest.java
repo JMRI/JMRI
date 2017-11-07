@@ -1,5 +1,7 @@
 /**
- * JUnit tests for the EasyDccProgrammer class
+ * EasyDccProgrammerTest.java
+ *
+ * Description:	JUnit tests for the EasyDccProgrammer class
  *
  * @author	Bob Jacobsen
  */
@@ -21,10 +23,9 @@ public class EasyDccProgrammerTest extends TestCase {
     public void testWriteSequence() throws JmriException {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
-        memo.setEasyDccTrafficController(t);
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the write
@@ -37,16 +38,15 @@ public class EasyDccProgrammerTest extends TestCase {
     }
 
     // Test names ending with "String" are for the new writeCV(String, ...)
-    // etc methods. If you remove the older writeCV(int, ...) tests,
+    // etc methods.  If you remove the older writeCV(int, ...) tests,
     // you can rename these. Note that not all (int,...) tests may have a
     // String(String, ...) test defined, in which case you should create those.
     public void testWriteSequenceString() throws JmriException {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
-        memo.setEasyDccTrafficController(t);
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the write
@@ -62,9 +62,8 @@ public class EasyDccProgrammerTest extends TestCase {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
-        memo.setEasyDccTrafficController(t);
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -82,9 +81,8 @@ public class EasyDccProgrammerTest extends TestCase {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
-        memo.setEasyDccTrafficController(t);
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -102,9 +100,8 @@ public class EasyDccProgrammerTest extends TestCase {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
-        memo.setEasyDccTrafficController(t);
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
@@ -132,9 +129,8 @@ public class EasyDccProgrammerTest extends TestCase {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
-        memo.setEasyDccTrafficController(t);
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
@@ -162,9 +158,8 @@ public class EasyDccProgrammerTest extends TestCase {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
-        memo.setEasyDccTrafficController(t);
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -192,9 +187,8 @@ public class EasyDccProgrammerTest extends TestCase {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
-        memo.setEasyDccTrafficController(t);
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -228,9 +222,8 @@ public class EasyDccProgrammerTest extends TestCase {
         // infrastructure objects
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
-        memo.setEasyDccTrafficController(t);
 
-        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammer p = new EasyDccProgrammer();
         p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
@@ -253,7 +246,7 @@ public class EasyDccProgrammerTest extends TestCase {
         Assert.assertEquals(" programmer listener not invoked again", 1, rcvdInvoked);
     }
 
-    // internal class to simulate an EasyDccListener
+    // internal class to simulate a EasyDccListener
     class EasyDccListenerScaffold implements jmri.ProgListener {
 
         public EasyDccListenerScaffold() {
@@ -277,7 +270,6 @@ public class EasyDccProgrammerTest extends TestCase {
     class EasyDccInterfaceScaffold extends EasyDccTrafficController {
 
         public EasyDccInterfaceScaffold() {
-            super(memo);
         }
 
         // override some EasyDccInterfaceController methods for test purposes
@@ -351,21 +343,17 @@ public class EasyDccProgrammerTest extends TestCase {
         return suite;
     }
 
-    private EasyDccSystemConnectionMemo memo;
+    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class);
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
-        memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
     }
 
     @Override
     protected void tearDown() {
-        memo = null;
         JUnitUtil.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class);
 
 }

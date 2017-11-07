@@ -47,7 +47,7 @@ abstract public class AbstractMRTrafficController {
         // in a clean state prior to exiting.  This is required on systems
         // which have a service mode to ensure we don't leave the system 
         // in an unusable state (This code predates the ShutdownTask 
-        // mechanisim).  Once the shutdown hook executes, the connection
+        // mechanisim).  Once the , shutdown hook executes, the connection
         // must be considered closed.
         shutdownHook = new Thread(new CleanupHook(this));
         Runtime.getRuntime().addShutdownHook(shutdownHook);
@@ -1198,5 +1198,4 @@ abstract public class AbstractMRTrafficController {
     } // end cleanUpHook
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class);
-
 }

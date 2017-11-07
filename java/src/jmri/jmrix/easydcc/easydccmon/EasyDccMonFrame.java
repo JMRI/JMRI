@@ -3,37 +3,33 @@ package jmri.jmrix.easydcc.easydccmon;
 import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
-import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 /**
- * Frame displaying (and logging) EasyDCC command messages.
+ * Frame displaying (and logging) EasyDcc command messages
  *
  * @author Bob Jacobsen Copyright (C) 2001
- */
+  */
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
 
-    private EasyDccSystemConnectionMemo _memo = null;
-
-    public EasyDccMonFrame(EasyDccSystemConnectionMemo memo) {
+    public EasyDccMonFrame() {
         super();
-        _memo = memo;
     }
 
     @Override
     protected String title() {
-        return Bundle.getMessage("MonitorXTitle", "EasyDCC");
+        return "EasyDcc Command Monitor";
     }
 
     @Override
     protected void init() {
         // connect to TrafficController
-        _memo.getTrafficController().addEasyDccListener(this);
+        EasyDccTrafficController.instance().addEasyDccListener(this);
     }
 
     @Override
     public void dispose() {
-        _memo.getTrafficController().removeEasyDccListener(this);
+        EasyDccTrafficController.instance().removeEasyDccListener(this);
         super.dispose();
     }
 

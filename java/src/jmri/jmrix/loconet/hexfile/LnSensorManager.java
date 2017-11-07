@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author Kevin Dickerson Copyright (C) 2001
+ * 
  */
 
 public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implements LocoNetListener {
@@ -51,5 +52,4 @@ public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implemen
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnSensorManager.class);
-
 }

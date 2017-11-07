@@ -81,7 +81,7 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this class provides.
+     * Tells which managers this provides by class
      *
      * @param type manager type to check
      * @return true if provided

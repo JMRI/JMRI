@@ -7,29 +7,28 @@ import jmri.jmrix.JmrixConfigPane;
  * a NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
-     */
-    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
-        super(p);
-    }
-
-    /**
-     * Ctor for a functional Swing object with no preexisting adapter.
+     * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
         super();
     }
 
-    @Override
-    public String name() {
-        return Bundle.getMessage("AdapterNetworkName");
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
+        super(p);
     }
 
+    @Override
+    public String name() {
+        return "EasyDCC via network";
+    }
+
+    /*public String getMode() {
+     return opt2Box.getSelectedItem().toString();
+     }*/
     /**
      * Reimplement this method to show the connected host, rather than the usual
      * port name.
@@ -48,14 +47,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     protected void setInstance() {
-        if (adapter == null) {
-            adapter = new NetworkDriverAdapter();
-        }
+        adapter = NetworkDriverAdapter.instance();
     }
 
     @Override
     public boolean isPortAdvanced() {
         return false;
     }
-
 }

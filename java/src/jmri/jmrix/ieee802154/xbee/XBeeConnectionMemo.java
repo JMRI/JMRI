@@ -40,7 +40,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     }
 
     /**
-     * Tells which managers this class provides.
+     * Tells which managers this provides by class
      */
     @Override
     public boolean provides(Class<?> type) {

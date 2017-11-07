@@ -5,10 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the Light Object for DCC++
+ * DCCppLight.java
  * <p>
- * NOTE: This is a simplification of the DCCppTurnout class.
- * <p>
+ * Implementation of the Light Object for DCC++ NOTE: This is a simplification
+ * of the DCCppTurnout class.
+ * <P>
  * Based in part on SerialLight.java
  *
  * @author Paul Bender Copyright (C) 2008-2010
@@ -21,7 +22,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 
     /**
      * Create a Light object, with only system name.
-     * <p>
+     * <P>
      * 'systemName' was previously validated in DCCppLightManager
      *
      * @param tc         the traffic controller for the connection
@@ -38,7 +39,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 
     /**
      * Create a Light object, with both system and user names.
-     * <p>
+     * <P>
      * 'systemName' was previously validated in DCCppLightManager
      *
      * @param tc         the traffic controller for the connection
@@ -54,8 +55,8 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         initializeLight(systemName);
     }
 
-    /**
-     * Dispose of the light object.
+    /*
+     * Dispose of the light object
      */
     @Override
     public void dispose() {
@@ -63,8 +64,8 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         super.dispose();
     }
 
-    /**
-     * Initialize the light object's parameters.
+    /*
+     *  Initilize the light object's parameters
      */
     private synchronized void initializeLight(String systemName) {
         // Extract the Bit from the name
@@ -77,12 +78,10 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     }
 
     /**
-     * Sets up system dependent instance variables and set system independent
-     * instance variables to default values.
-     * <p>
-     * Note: most instance variables are in AbstractLight.java
+     * Sets up system dependent instance variables and sets system independent
+     * instance variables to default values Note: most instance variables are in
+     * AbstractLight.java
      */
-
     /**
      * System dependent instance variables
      */
@@ -97,8 +96,8 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     //private int InternalState = IDLE;
 
     /**
-     * Set the current state of this Light.
-     * This routine requests the hardware to change.
+     * Set the current state of this Light This routine requests the hardware to
+     * change.
      */
     @Override
     synchronized public void setState(int newState) {
@@ -126,15 +125,16 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         }
     }
 
-    /**
-     * Handle an incoming message from the DCC++ Base Station.
-     * <p>
-     * NOTE: We aren't registered as a listener, so this is only triggered
-     * when we send out a message
+    /*
+     *  Handle an incoming message from the DCC++ Base Station
+     *  NOTE: We aren't registered as a listener, so This is only triggered
+     *  when we send out a message
      */
     @Override
     synchronized public void message(DCCppReply l) {
-        log.debug("received message: {}", l);
+        if (log.isDebugEnabled()) {
+            log.debug("recieved message: " + l);
+        }
         // We don't expect a reply, so we don't do anything with replies.
     }
 
@@ -147,10 +147,9 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message {}", msg.toString());
+            log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppLight.class);
-
 }

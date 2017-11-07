@@ -15,14 +15,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active and provide general
- * information.
+ * information
  * <p>
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
- * Based on XNetSystemConnectionMemo by Paul Bender.
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015
+ *
+ * Based on XNetSystemConnectionMemo by Paul Bender
  */
 public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -37,7 +38,9 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(cf = new jmri.jmrix.dccpp.swing.DCCppComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
-        log.debug("Created DCCppSystemConnectionMemo");
+        if (log.isDebugEnabled()) {
+            log.debug("Created DCCppSystemConnectionMemo");
+        }
     }
 
     public DCCppSystemConnectionMemo() {
@@ -46,10 +49,11 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(this, DCCppSystemConnectionMemo.class); // also register as specific type
 
         // create and register the DCCppComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.dccpp.swing.DCCppComponentFactory(this),
-                jmri.jmrix.swing.ComponentFactory.class);
+        InstanceManager.store(cf = new jmri.jmrix.dccpp.swing.DCCppComponentFactory(this), jmri.jmrix.swing.ComponentFactory.class);
 
-        log.debug("Created DCCppSystemConnectionMemo");
+        if (log.isDebugEnabled()) {
+            log.debug("Created DCCppSystemConnectionMemo");
+        }
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;

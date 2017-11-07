@@ -1,7 +1,6 @@
 package jmri.jmrix.tmcc.packetgen;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -19,14 +18,14 @@ public class SerialPacketGenActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction("TMCC test Action", new TmccSystemConnectionMemo("T", "TMCC Test"));
+        SerialPacketGenAction action = new SerialPacketGenAction("TMCC test Action"); 
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction(new TmccSystemConnectionMemo("T", "TMCC Test"));
+        SerialPacketGenAction action = new SerialPacketGenAction(); 
         Assert.assertNotNull("exists", action);
     }
 
@@ -36,8 +35,5 @@ public class SerialPacketGenActionTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

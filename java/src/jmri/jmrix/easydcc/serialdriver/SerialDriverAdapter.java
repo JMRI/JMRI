@@ -16,11 +16,10 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Implements SerialPortAdapter for the EasyDCC system.
- * <p>
- * This connects an EasyDCC command station via a serial com port.
- * Normally controlled by the SerialDriverFrame class.
- * <p>
+ * Implements SerialPortAdapter for the EasyDcc system. This connects an EasyDcc
+ * command station via a serial com port. Normally controlled by the
+ * SerialDriverFrame class.
+ * <P>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
@@ -29,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
 public class SerialDriverAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
-        super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial")); // pass customized user name
+        super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
@@ -42,7 +41,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000); // name of program, msec to wait
+                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
@@ -92,25 +91,25 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
         }
 
         return null; // indicates OK return
+
     }
 
     /**
-     * Set up all of the other objects to operate with an EasyDCC command
-     * station connected to this port.
+     * set up all of the other objects to operate with an EasyDcc command
+     * station connected to this port
      */
     @Override
     public void configure() {
         // connect to the traffic controller
-        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
+        EasyDccTrafficController control = EasyDccTrafficController.instance();
         control.connectPort(this);
         this.getSystemConnectionMemo().setEasyDccTrafficController(control);
-        // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
+
+        jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
 
-    // Base class methods for the EasyDccPortController interface
-
+    // base class methods for the EasyDccPortController interface
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -139,24 +138,27 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 9,600 bps.
+     * Get an array of valid baud rates. This is currently only 19,200 bps
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{Bundle.getMessage("Baud9600")};
+        return new String[]{"9,600 bps"};
     }
 
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
 
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
     static public SerialDriverAdapter instance() {
-        return null;
+        if (mInstance == null) {
+            mInstance = new SerialDriverAdapter();
+        }
+        return mInstance;
     }
+    static SerialDriverAdapter mInstance = null;
 
+    //The following needs to be enabled once systemconnectionmemo has been correctly implemented
+    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

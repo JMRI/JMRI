@@ -1,5 +1,5 @@
 /**
- * Swing action to create and register an XpressNet PacketGenFrame
+ * Swing action to create and register a XpressNet PacketGenFrame
  * object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002

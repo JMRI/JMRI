@@ -6,8 +6,9 @@ import org.junit.Before;
 
 /**
  * JUnit tests for the EasyDccPortController class
+ * <p>
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
@@ -16,8 +17,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
     public void setUp(){
        JUnitUtil.setUp();
        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo();
-       EasyDccTrafficController tc = new EasyDccTrafficControlScaffold(memo);
-       memo.setEasyDccTrafficController(tc); // important for successful getTrafficController()
+       EasyDccTrafficController tc = new EasyDccTrafficControlScaffold();
        apc = new EasyDccPortController(memo){
             @Override
             public boolean status(){

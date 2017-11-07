@@ -1,7 +1,9 @@
 /**
- * Tests for the jmri.jmrix.nce.EasyDccConsistManager class
+ * EasyDccConsistManagerTest.java
  *
- * @author Paul Bender Copyright (C) 2012,2017
+ * Description:	tests for the jmri.jmrix.nce.EasyDccConsistManager class
+ *
+ * @author	Paul Bender Copyright (C) 2012,2017
  */
 package jmri.jmrix.easydcc;
 
@@ -14,10 +16,10 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
 
     private EasyDccTrafficControlScaffold t = null;
 
-    // test the initialization loop
+    // test the initilization loop
     @Test
     public void testInitSequence() {
-        EasyDccConsistManager m = (EasyDccConsistManager) cm;
+        EasyDccConsistManager m = (EasyDccConsistManager)cm;
         // we need to call requestUpdateFromLayout() to trigger the 
         // init sequence.
         m.requestUpdateFromLayout();
@@ -99,17 +101,15 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
-        t = new EasyDccTrafficControlScaffold(memo);
-        memo.setEasyDccTrafficController(t); // important for successful getTrafficController()
-        cm = new EasyDccConsistManager(memo);
+        t = new EasyDccTrafficControlScaffold();
+        cm = new EasyDccConsistManager();
     }
 
     @After
     @Override
     public void tearDown() {
-        cm = null;
         apps.tests.Log4JFixture.tearDown();
+        cm = null;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class);

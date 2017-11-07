@@ -83,7 +83,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     }
 
     /**
-     * Tell if the output buffer is empty or full. This should only be set to
+     * Tell if the output buffer is empty or full this should only be set to
      * false by external processes.
      *
      * @param s true if the buffer is empty; false otherwise
@@ -111,7 +111,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     }
 
     /**
-     * Set up all of the other objects to operate with an XNetSimulator connected
+     * Set up all of the other objects to operate with a XNetSimulator connected
      * to this port.
      */
     @Override
@@ -130,8 +130,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         new XNetInitializationManager(this.getSystemConnectionMemo());
     }
 
-    // Base class methods for the XNetSimulatorPortController interface
-
+    // base class methods for the XNetSimulatorPortController interface
     @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
@@ -185,8 +184,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         }
     }
 
-    // Read one incoming message from the buffer
-    // and set outputBufferEmpty to true.
+    // readMessage reads one incoming message from the buffer
+    // and sets outputBufferEmpty to true.
     private XNetMessage readMessage() {
         XNetMessage msg = null;
         try {
@@ -202,7 +201,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         return (msg);
     }
 
-    // This is the heart of the simulation. It translates an
+    // generateReply is the heart of the simulation.  It translates an
     // incoming XNetMessage into an outgoing XNetReply.
     @SuppressWarnings("fallthrough")
     private XNetReply generateReply(XNetMessage m) {

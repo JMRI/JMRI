@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
 
 /**
- * Abstract base for classes representing a DCC++ communications port.
- * Based on XNetSerialPortController by Bob Jacobsen and Paul Bender.
+ * Abstract base for classes representing a DCC++ communications port
+ * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2004,2010
  * @author Mark Underwood Copyright (C) 2015
+  *
+ * Based on XNetSerialPortController by Bob Jacobsen and Paul Bender
  */
 public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSerialPortController implements DCCppPortController {
 
@@ -71,8 +73,9 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     }
     
     /**
-     * Say if the output buffer is empty or full.
-     * This should only be set to false by external processes.
+     * we need a way to say if the output buffer is empty or full this should
+     * only be set to false by external processes
+     *
      */
     @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
@@ -92,9 +95,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     protected String[] validOption2 = new String[]{"yes", "no"};
     private boolean checkBuffer = false;
 
-    /**
-     * Allow derived classes to set the private checkBuffer value.
-     */
+    /* Allow derived classes to set the private checkBuffer value */
     protected void setCheckBuffer(boolean b) {
         checkBuffer = b;
     }
@@ -107,3 +108,6 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     private final static Logger log = LoggerFactory.getLogger(DCCppSerialPortController.class);
 
 }
+
+
+
