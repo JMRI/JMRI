@@ -144,20 +144,23 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
-    public void setTurnoutB(@Nonnull String tName) {
+    public void setTurnout(@Nullable String tName) {
         boolean reactivate = false;
         if (namedTurnoutB != null) {
             deactivateTurnout();
             reactivate = (namedTurnout != null);
         }
-        turnoutBName = "";
-        namedTurnoutB = null;
-        Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(tName);
+        turnoutBName = tName;
+        Turnout turnout = null;
+        if (turnoutBName != null && !turnoutBName.isEmpty()) {
+            turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutBName);
+        }
         if (turnout != null) {
-            namedTurnoutB = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tName, turnout);
-            if (namedTurnoutB != null) {
-                turnoutBName = tName;
-            }
+            namedTurnoutB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutBName, turnout);
+            activateTurnout();
+        } else {
+            turnoutBName = "";
+            namedTurnoutB = null;
         }
         if (reactivate) {
             // this has to be called even on a delete in order
