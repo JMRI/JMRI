@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JUnit tests for the SerialTrafficController class
+ * JUnit tests for the SerialTrafficController class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
@@ -37,7 +37,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
     @Test
     public void testAddListener() {
-        SerialTrafficController m = (SerialTrafficController)tc;
+        SerialTrafficController m = (SerialTrafficController) tc;
         SerialListenerScaffold c = new SerialListenerScaffold();
 
         m.addSerialListener(c);
@@ -46,7 +46,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @Test
     @Ignore("this test is disabled until the threading can be worked out")
     public void testSendOK() throws Exception {
-        c = new SerialTrafficController() {
+        c = new SerialTrafficController(new TmccSystemConnectionMemo("T", "TMCC Test")) {
             // skip timeout message
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -80,7 +80,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
     @Test
     public void testRcvReplyOK() throws Exception {
-        c = new SerialTrafficController() {
+        c = new SerialTrafficController(new TmccSystemConnectionMemo("T", "TMCC Test")) {
             // skip timeout message
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -131,7 +131,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
     @Test
     public void testRcvReplyShort() throws Exception {
-        c = new SerialTrafficController() {
+        c = new SerialTrafficController(new TmccSystemConnectionMemo("T", "TMCC Test")) {
             // skip timeout message
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -222,7 +222,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }
 
         protected SerialPortControllerScaffold() throws Exception {
-            super(new TMCCSystemConnectionMemo());
+            super(new TmccSystemConnectionMemo());
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
             tostream = new DataInputStream(tempPipe);
@@ -251,17 +251,17 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }
     }
     static DataOutputStream ostream;  // Traffic controller writes to this
-    static DataInputStream tostream; // so we can read it from this
+    static DataInputStream tostream;  // so we can read it from this
 
     static DataOutputStream tistream; // tests write to this
-    static DataInputStream istream;  // so the traffic controller can read from this
+    static DataInputStream istream;   // so the traffic controller can read from this
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new SerialTrafficController();
+        tc = new SerialTrafficController(new TmccSystemConnectionMemo("T", "TMCC Test"));
         c = null;
     }
 

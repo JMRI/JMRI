@@ -5,6 +5,7 @@ import static java.lang.Integer.parseInt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -731,20 +732,29 @@ public class LayoutSlip extends LayoutTurnout {
             jmi.setEnabled(false);
 
             boolean blockAssigned = false;
-            if ((blockName == null) || (blockName.isEmpty())) {
+            if (getLayoutBlock() == null) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
+                jmi.setEnabled(false);
             } else {
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
+                jmi.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        layoutEditor.highlightLayoutBlock(getLayoutBlock());
+                    } //actionPerformed
+                });
                 blockAssigned = true;
             }
-            jmi.setEnabled(false);
 
             // if there are any track connections
             if ((connectA != null) || (connectB != null)
                     || (connectC != null) || (connectD != null)) {
-                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
+                popup.add(new JSeparator(JSeparator.HORIZONTAL));
+                jmi = popup.add(new JMenuItem(Bundle.getMessage("Connections"))); // there is no pane opening (which is what ... implies)
+                popup.add(jmi);
+                jmi.setEnabled(false);
                 if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
+                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -758,7 +768,7 @@ public class LayoutSlip extends LayoutTurnout {
                     });
                 }
                 if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
+                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -772,7 +782,7 @@ public class LayoutSlip extends LayoutTurnout {
                     });
                 }
                 if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
+                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -786,7 +796,7 @@ public class LayoutSlip extends LayoutTurnout {
                     });
                 }
                 if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
+                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -799,7 +809,6 @@ public class LayoutSlip extends LayoutTurnout {
                         }
                     });
                 }
-                popup.add(connectionsMenu);
             }
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -915,8 +924,8 @@ public class LayoutSlip extends LayoutTurnout {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         layoutEditor.getLETools().setSignalMastsAtSlipFromMenu(
-                                LayoutSlip.this, 
-                                boundaryBetween, 
+                                LayoutSlip.this,
+                                boundaryBetween,
                                 layoutEditor.signalFrame);
                     }
                 });
@@ -925,7 +934,7 @@ public class LayoutSlip extends LayoutTurnout {
                     public void actionPerformed(ActionEvent e) {
                         layoutEditor.getLETools().setSensorsAtSlipFromMenu(
                                 LayoutSlip.this, boundaryBetween,
-                                layoutEditor.sensorIconEditor, 
+                                layoutEditor.sensorIconEditor,
                                 layoutEditor.sensorFrame);
                     }
                 });

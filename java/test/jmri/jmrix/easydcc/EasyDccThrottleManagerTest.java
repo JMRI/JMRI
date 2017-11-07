@@ -22,7 +22,7 @@ public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold();
+        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold(null);
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
         tm = new EasyDccThrottleManager(memo);
     }

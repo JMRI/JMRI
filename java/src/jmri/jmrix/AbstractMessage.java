@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMessage implements Message {
 
     /**
-     * Creates a new instance of AbstractMessage
+     * Creates a new instance of AbstractMessage.
      */
     public AbstractMessage() {
     }
@@ -47,6 +47,7 @@ public abstract class AbstractMessage implements Message {
     }
 
     // accessors to the bulk data
+
     @Override
     public int getNumDataElements() {
         return _nDataChars;
@@ -65,8 +66,8 @@ public abstract class AbstractMessage implements Message {
     protected int _nDataChars = 0;
 
 
-    /*
-     * Equals operator compares only base data
+    /**
+     * Equals operator compares only base data.
      */
     @Override
     public boolean equals(Object obj){
@@ -99,4 +100,5 @@ public abstract class AbstractMessage implements Message {
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMessage.class);
+
 }

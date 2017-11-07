@@ -485,9 +485,10 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-    /**
+    /*
      * ***** Methods to add menu items to popup *******
      */
+
     /**
      * Call to a Positionable that has unique requirements - e.g.
      * RpsPositionIcon, SecurityElementIcon
@@ -504,8 +505,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
-            popup.add(new AbstractAction(Bundle.getMessage("RotateOrthogonal")
-                    + " (" + (_namedIcon.getRotation() * 90) + "°)") {
+            popup.add(new AbstractAction(Bundle.getMessage("RotateOrthoSign",
+                    (_namedIcon.getRotation() * 90))) { // Bundle property includes degree symbol
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     rotateOrthogonal();
@@ -529,8 +530,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * ********** Methods for Item Popups in Panel editor
-     * ************************
+     * ********** Methods for Item Popups in Panel editor ************************
      */
     JFrame _iconEditorFrame;
     IconAdder _iconEditor;

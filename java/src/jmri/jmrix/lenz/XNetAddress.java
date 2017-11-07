@@ -55,11 +55,11 @@ public class XNetAddress {
      * Public static method to validate system name format.
      * Logging of handled cases no higher than WARN.
      *
-     * @return 'true' if system name has a valid format, else return 'false'
+     * @return VALID if system name has a valid format, else return INVALID
      */
     public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
-        if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
+        if (!(systemName.startsWith(prefix + type))) {
             // here if an illegal format 
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;

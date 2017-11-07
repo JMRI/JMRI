@@ -221,7 +221,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @Nullable
     public LayoutBlock getBlockWithSensorAssigned(@Nullable Sensor s) {
         LayoutBlock result = null;
-        
+
         java.util.Iterator<String> iter = getSystemNameList().iterator();
         while (iter.hasNext()) {
             String sName = iter.next();
@@ -1956,8 +1956,35 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return getProtectingBlocksByBean(nb, panel);
     }	//getProtectingBlocksByNamedBean
 
+    /**
+     * If the panel variable is null, search all LE panels.
+     * This was added to support multi panel entry/exit.
+     * @param bean The sensor, mast or head to be located.
+     * @param panel The panel to search.  If null, search all LE panels.
+     * @return a list of protected layout blocks.
+     */
     @Nonnull
     private List<LayoutBlock> getProtectingBlocksByBean(
+            @Nullable NamedBean bean,
+            @Nullable LayoutEditor panel) {
+        if (panel == null) {
+            List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
+                    getLayoutEditorPanelList();
+            List<LayoutBlock> protectingBlocks = new ArrayList<>();
+            for (LayoutEditor p : panels) {
+                protectingBlocks = getProtectingBlocksByBeanByPanel(bean, p);
+                if (!protectingBlocks.isEmpty()) {
+                    break;
+                }
+            }
+            return protectingBlocks;
+        } else {
+            return getProtectingBlocksByBeanByPanel(bean, panel);
+        }
+    }
+
+    @Nonnull
+    private List<LayoutBlock> getProtectingBlocksByBeanByPanel(
             @Nullable NamedBean bean,
             @Nullable LayoutEditor panel) {
         List<LayoutBlock> protectingBlocks = new ArrayList<>();
@@ -2197,9 +2224,37 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return getFacingBlockByBean(signalMast, panel);
     }
 
+    /**
+     * If the panel variable is null, search all LE panels.
+     * This was added to support multi panel entry/exit.
+     * @param bean The sensor, mast or head to be located.
+     * @param panel The panel to search.  Search all LE panels if null.
+     * @return the facing layout block.
+     */
     @CheckReturnValue
     @Nullable
     private LayoutBlock getFacingBlockByBean(
+            @Nonnull NamedBean bean,
+            LayoutEditor panel) {
+        if (panel == null) {
+            List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
+                    getLayoutEditorPanelList();
+            LayoutBlock returnBlock = null;
+            for (LayoutEditor p : panels) {
+                returnBlock = getFacingBlockByBeanByPanel(bean, p);
+                if (returnBlock != null) {
+                    break;
+                }
+            }
+            return returnBlock;
+        } else {
+            return getFacingBlockByBeanByPanel(bean, panel);
+        }
+    }
+
+    @CheckReturnValue
+    @Nullable
+    private LayoutBlock getFacingBlockByBeanByPanel(
             @Nonnull NamedBean bean,
             @Nonnull LayoutEditor panel) {
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);

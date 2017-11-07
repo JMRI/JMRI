@@ -21,7 +21,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         tc = etc;
     }
 
-    EcosTrafficController tc; 
+    EcosTrafficController tc;
     
     /**
      * @return list of programming modes implemented for ECoS

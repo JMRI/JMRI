@@ -11,24 +11,34 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from EasyDcc messages. The "EasyDccInterface"
  * side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a EasyDccPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
+ * <p>
+ * Migrated for multiple connections, multi char connection prefix and Simulator.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EasyDccTrafficController extends AbstractMRTrafficController
         implements EasyDccInterface {
 
-    public EasyDccTrafficController() {
+    /**
+     * Ctor
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
+     */
+    public EasyDccTrafficController(EasyDccSystemConnectionMemo adaptermemo) {
         super();
+        mMemo = adaptermemo;
+        log.debug("creating a new EasyDccTrafficController object");
     }
 
-    // The methods to implement the EasyDccInterface
+    // Methods to implement the EasyDccInterface
+
     @Override
     public synchronized void addEasyDccListener(EasyDccListener l) {
         this.addListener(l);
@@ -40,7 +50,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Forward a EasyDccMessage to all registered EasyDccInterface listeners.
+     * Forward an EasyDccMessage to all registered EasyDccInterface listeners.
      */
     @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
@@ -48,7 +58,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Forward a EasyDccReply to all registered EasyDccInterface listeners.
+     * Forward an EasyDccReply to all registered EasyDccInterface listeners.
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
@@ -73,6 +83,11 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
      */
     @Override
     public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener reply) {
+        if (m == null) {
+            log.debug("empty message");
+            return;
+        }
+        log.debug("EasyDccTrafficController sendMessage() {}", m.toString());
         sendMessage(m, reply);
     }
 
@@ -87,29 +102,55 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * static function returning the EasyDccTrafficController instance to use.
+     * Static function returning the EasyDccTrafficController instance to use.
      *
      * @return The registered EasyDccTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public EasyDccTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new EasyDccTrafficController object");
-            }
-            self = new EasyDccTrafficController();
-        }
-        return self;
+        log.warn("deprecated instance() call for EasyDccTrafficController");
+        return null;
     }
 
+    /**
+     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used
+     */
+    @Deprecated
     static volatile protected EasyDccTrafficController self = null;
 
+    /**
+     * Reference to the system connection memo.
+     */
+    EasyDccSystemConnectionMemo mMemo = null;
+
+    /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public EasyDccSystemConnectionMemo getSystemConnectionMemo() {
+        return mMemo;
+    }
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(EasyDccSystemConnectionMemo m) {
+        mMemo = m;
+    }
+
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
+            justification = "temporary until multi-system; only set at startup")
     @Override
     @Deprecated
     protected void setInstance() {
-        self = this;
+        // this is called from AbstractMRTrafficController, so suppress this
+        // error.
     }
 
     @Override
@@ -119,7 +160,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // note special case:  CV read / register read messages dont actually
+        // note special case:  CV read / register read messages don't actually
         // end until a P is received!
         if ((msg.getElement(0) == 'C' && msg.getElement(1) == 'V') || (msg.getElement(0) == 'V')) {
             // require the P
@@ -137,4 +178,5 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     }
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficController.class);
+
 }

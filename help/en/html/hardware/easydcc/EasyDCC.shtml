@@ -26,7 +26,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: EasyDCC</h1><a name="hardware" id=
+      <h1>Hardware Support: CVP Products EasyDCC</h1><a name="hardware" id=
       "hardware"></a>
 
       <h2>Supported Hardware</h2>
@@ -34,23 +34,23 @@
       <h3>Command Station</h3>
 
       <ul>
-        <li>EDCSK - EasyDCC Kit Command Station</li>
+        <li>#EDCSK - EasyDCC Kit Command Station</li>
 
-        <li>EDCSA - EasyDCC Assembled Command Station</li>
+        <li>#EDCSA - EasyDCC Assembled Command Station</li>
 
-        <li>EDCSB - EasyDCC "board alone" Command Station</li>
+        <li>#EDCSB - EasyDCC "board alone" Command Station</li>
       </ul><a name="limitations" id="limitations"></a>
 
       <h2>Limitations</h2>
 
       <p>Some older EasyDCC systems may need an update to their
-      program. This is done by replacing the "PROM" chips in the
+      built in program. This is done by replacing the "PROM" chips in the
       command station with a newer version. Version 207 is known to
       work well, but version 022 is known to have some problems
-      communicating with a computer. Most recent EasyDCC command
-      stations will be OK.</p><a name="connecting" id=
-      "connecting"></a>
+      communicating with a computer. Later EasyDCC command
+      stations will connect OK.</p>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
 
       <h3>Wiring</h3>
@@ -58,8 +58,8 @@
       <ol>
         <li>To connect your computer to an EasyDCC system, you need
         to connect the Command Station to the computer's serial
-        port using a special cable. Unfortunately, this is not an
-        item that computer stores generally stock, due to the
+        port using a special cable.
+        This is not an item that computer stores generally stock, due to the
         special RJ11 connector needed at the command station end of
         the cable. You'll probably have to make this cable
         yourself, or have another CVP user make it for you.
@@ -73,8 +73,11 @@
           <p>One easy way to connect the system to your computer is
           to buy a 9-pin serial cable and a phone cable, then cut
           them and splice them together.<br>
-          A more modern alternative is to use a USB-to-Serial
-          adapter.</p>
+          With computers without a dedicated serial port, use a
+          USB-to-Serial adapter.</p>
+          <p>Alternatively, you can connect your EasyDCC command station
+          to your computer running JMRI over a networked
+          serial box as (see <a href="#network">below</a>).</p>
         </li>
       </ol>
 
@@ -85,8 +88,9 @@
         program. This opens automatically the first time a program
         is run, or you can select it from the "Edit" menu.</li>
 
-        <li>In the <strong>Connections</strong> tab, select "Easy
-        DCC" from the System Manufacturer selection box.</li>
+        <li>Open the <strong>Connections</strong> tab, select "Easy
+        DCC" from the System Manufacturer selection box and choose
+        from the following set-ups.</li>
       </ul>
 
       <h4>Serial</h4>
@@ -95,27 +99,49 @@
         <li>Select "EasyDCC via Serial" as the System Connection.
         You can then select the proper serial port from the
         drop-down list under Settings.</li>
-
+        <li>Accept the suggested Connection Name and prefix,
+        or replace it with a more fitting one. Make sure it is unique.</li>
         <li>Under Additional Connection Settings, the baud rate box
         will be fixed at 9,600 baud.</li>
+        <li>Click "Save". You'll be asked if it's OK for the
+        program to quit; click "Yes".</li>
       </ul>
 
+      <a name="network" id="network"></a>
       <h4>Network</h4>
-
+      <p>Connect to a networked serial box such as the
+      <a href="https://www.lantronix.com/products/eds8pr16pr32pr/">Lantronix
+      EDS8PR/16PR/32PR</a> as a virtualized EasyDCC over Serial
+      connection in JMRI, as demonstrated by david zuhn.
+      </p>
       <ul>
         <li>Select "EasyDCC via Network" as the System
         Connection.</li>
-
+        <li>Review the suggested Connection Name and prefix.</li>
         <li>Under Settings, enter the IP Address (optional for
-        zeroConfig/mDNS) and Port number.</li>
-      </ul>
-
-      <ul>
+        zeroConfig/mDNS) and Port number
+        (on Lantronix boxes, the port number is calculated as
+        2000 + the physical port number on the back of the box).<br>
+        On the Lantronix box, set up the serial communications as described
+        above under "Serial".</li>
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit; click "Yes".</li>
-
-        <li>Restart JMRI. You should now be up and running.</li>
       </ul>
+
+      <h4>Simulator</h4>
+
+      <ul>
+        <li>If no hardware is attached, select "EasyDCC Simulator"
+        as System Connection.</li>
+        <li>Review the suggested Connection Name and prefix.</li>
+        <li>No other settings are needed.</li>
+        <li>Click "Save". You'll be asked if it's OK for the
+        program to quit; click "Yes".</li>
+      </ul>
+
+        <p>To complete the configuration, restart JMRI.
+        You should now be up and running.<br>
+        Notice the EasyDCC menu on the main JMRI screen.</p>
 
       <h3>Debugging</h3>
 
@@ -140,11 +166,23 @@
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
+      With connected EasyDCC command stations, JMRI supports:
+      <ul>
+        <a>Control <a
+                href="../../tools/Turnouts.shtml">Turnouts</a></li>
+        <li>Send <a
+                href="../../tools/throttle/ThrottleMain.shtml">Throttle</a> commands</li>
+        <li><a
+                href="../../tools/consisttool/ConsistTool.shtml">Consisting</a></li>
+        <li><a
+                href="../../apps/DecoderPro/index.shtml">Programming</a></li>
+      </ul>
 
       <h3>Third Party info</h3>
 
       <p>The <a href="http://www.cvpusa.com/easydcc_system.php">CVP
-      EasyDCC Manuals</a> <!--#include virtual="/Footer" --></p>
+      EasyDCC Manuals</a></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
