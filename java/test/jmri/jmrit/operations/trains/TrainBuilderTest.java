@@ -2976,6 +2976,7 @@ public class TrainBuilderTest {
         new TrainBuilder().build(train2);
         Assert.assertTrue("Train 2 will build no road restrictions", train2.isBuilt());
 
+        cr.addName("BM");  // BM is not a road in all languges, so add it.
         l3s3.addRoadName("BM");
         Assert.assertEquals("Number of road names", 1, l3s3.getRoadNames().length);
 
