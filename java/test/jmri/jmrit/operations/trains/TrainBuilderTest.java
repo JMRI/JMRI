@@ -1489,7 +1489,7 @@ public class TrainBuilderTest {
         train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertEquals("Train 1 After Build with engines but exclude Caboose", false, train1.isBuilt());
-        train1.addTypeName(Bundle.getMessage(Bundle.getMessage(Bundle.getMessage("Caboose"))));
+        train1.addTypeName(Bundle.getMessage("Caboose"));
     }
 
     @Test
@@ -1663,7 +1663,7 @@ public class TrainBuilderTest {
         train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertFalse("Train 1 build, caboose destination is terminal", train1.isBuilt());
-        l3.addTypeName(Bundle.getMessage(Bundle.getMessage("Caboose")));
+        l3.addTypeName(Bundle.getMessage("Caboose"));
     }
 
     @Test
