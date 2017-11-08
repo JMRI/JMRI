@@ -1659,7 +1659,7 @@ public class TrainBuilderTest {
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(l1, l1s2));
 
         // don't allow cabooses road
-        l3.deleteTypeName(Bundle.getMessage(Bundle.getMessage("Caboose")));
+        l3.deleteTypeName(Bundle.getMessage("Caboose"));
         train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertFalse("Train 1 build, caboose destination is terminal", train1.isBuilt());
