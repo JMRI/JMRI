@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * User interface for Command Station Option Programming
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -32,11 +32,11 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -49,12 +49,12 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     int CONFIG_SLOT = 127;
     int MIN_OPTION = 1;
     int MAX_OPTION = 72;
-    String labelT = "T";
-    String labelC = "C";
-    String labelTop = "Configure Command Station";
 
-    String read = "Read";
-    String write = "Write";
+    String labelT;
+    String labelC;
+    String labelTop;
+    String read;
+    String write;
 
     int[] oldcontent = new int[10];
 
@@ -110,17 +110,18 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         } catch (Exception e) {
             log.warn("Failed to find properties for /{}/ command station type", name, e); // NOI18N
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions"); // NOI18N
+            // Localized strings common to all LocoNet command station models are fetched using Bundle.
         }
 
         try {
             CONFIG_SLOT = Integer.parseInt(rb.getString("CONFIG_SLOT"));
             MIN_OPTION = Integer.parseInt(rb.getString("MIN_OPTION"));
             MAX_OPTION = Integer.parseInt(rb.getString("MAX_OPTION"));
-            labelT = rb.getString("LabelT");
-            labelC = rb.getString("LabelC");
+            labelT = Bundle.getMessage("LabelT");
+            labelC = Bundle.getMessage("LabelC");
             labelTop = rb.getString("LabelTop");
-            read = rb.getString("ButtonRead");
-            write = rb.getString("ButtonWrite");
+            read = Bundle.getMessage("ButtonRead");
+            write = Bundle.getMessage("ButtonWrite");
         } catch (NumberFormatException e) {
             log.error("Failed to load values from /{}/ properties", name); // NOI18N
         }
@@ -140,11 +141,11 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             pane.add(writeButton);
             add(pane);
 
-            optionBox = new JCheckBox(rb.getString("CheckBoxReserved"));
+            optionBox = new JCheckBox(Bundle.getMessage("CheckBoxReserved"));
             add(optionBox);
 
             // heading
-            add(new JLabel(rb.getString("HeadingText")));
+            add(new JLabel(Bundle.getMessage("HeadingText")));
 
             // section holding options
             JPanel options = new JPanel();
@@ -178,10 +179,10 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 gc.anchor = GridBagConstraints.WEST;
                 String label;
                 try {
-                    label = rb.getString("Option" + i);
+                    label = rb.getString("Option" + i); // model specific Option descriptions NOI18N
                     isReserved[i - MIN_OPTION] = false;
                 } catch (java.util.MissingResourceException e) {
-                    label = "" + i + ": " + rb.getString("Reserved");
+                    label = "" + i + ": " + Bundle.getMessage("Reserved");
                     isReserved[i - MIN_OPTION] = true;
                 }
                 JLabel l = new JLabel(label);
@@ -330,4 +331,5 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(CmdStnConfigPane.class);
+
 }
