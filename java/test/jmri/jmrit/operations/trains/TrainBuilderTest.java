@@ -2515,7 +2515,11 @@ public class TrainBuilderTest {
         Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(l1, l1s2));
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(l1, l1s2));
         train2.addTypeName("Boxcar");
-        train2.setRoadOption(Train.ALL_ROADS);
+        train1.setEngineRoad("PC");
+        train1.setEngineModel("GP40");
+        train1.setNumberEngines("2");
+        train2.setNumberEngines("2");
+        new TrainBuilder().build(train1);
 
         // take engine out of service
         e3.setOutOfService(true);
@@ -2526,7 +2530,7 @@ public class TrainBuilderTest {
         e3.setOutOfService(false);
         train2.reset();
         new TrainBuilder().build(train2);
-        Assert.assertEquals("Train 2 After Build engine in service", true, train2.isBuilt());
+        Assert.assertTrue("Train 2 After Build engine in service", train2.isBuilt());
     }
 
     @Test
