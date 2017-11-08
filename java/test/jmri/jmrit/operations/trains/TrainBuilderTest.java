@@ -1485,7 +1485,7 @@ public class TrainBuilderTest {
 
         // Try again, but exclude caboose
         // there are cabooses waiting in staging so build should fail
-        train1.deleteTypeName(Bundle.getMessage(Bundle.getMessage(Bundle.getMessage("Caboose"))));
+        train1.deleteTypeName(Bundle.getMessage("Caboose"));
         train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertEquals("Train 1 After Build with engines but exclude Caboose", false, train1.isBuilt());
