@@ -31,7 +31,7 @@ public class PanelProTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void testLaunch() throws IOException {
+    public void testLaunchLocoNet() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
                 
         try {
@@ -75,6 +75,55 @@ public class PanelProTest {
         }
     }
 
+    @Test
+    public void testLaunchEasyDcc() throws IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        try {
+            // create a custom profile
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/EasyDcc_Simulator"), folder.newFolder());
+            System.setProperty("org.jmri.profile", "temp/EasyDcc_Simulator");
+
+            // launch!
+            PanelPro.main(new String[]{"PanelPro"});
+
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
+
+            // PanelPro
+        } finally {
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
+        }
+    }
+
+    @Test
+    public void testLaunchTmcc() throws IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        try {
+            // create a custom profile
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/TMCC_Simulator"), folder.newFolder());
+            System.setProperty("org.jmri.profile", "temp/TMCC_Simulator");
+
+            // launch!
+            PanelPro.main(new String[]{"PanelPro"});
+
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
+
+            // PanelPro
+        } finally {
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
+        }
+    }
 
     @Test
     public void testLaunchInitLoop() throws IOException {
@@ -131,4 +180,5 @@ public class PanelProTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }
