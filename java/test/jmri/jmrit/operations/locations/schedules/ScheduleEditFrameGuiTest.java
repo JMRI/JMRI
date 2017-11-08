@@ -104,7 +104,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         i1.setRoadName("new road");
         i1.setReceiveLoadName("new load");
         i1.setShipLoadName("new ship load");
-        ScheduleItem i2 = s1.addItem("Caboose");
+        ScheduleItem i2 = s1.addItem(Bundle.getMessage("Caboose"));
         i2.setRoadName("road");
         i2.setReceiveLoadName("load");
         i2.setShipLoadName("ship load");

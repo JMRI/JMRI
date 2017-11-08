@@ -233,15 +233,15 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
         // Caboose is one of the default car types
-        Assert.assertTrue("Train accepts type name Caboose", train1.acceptsTypeName("Caboose"));
+        Assert.assertTrue("Train accepts type name Caboose", train1.acceptsTypeName(Bundle.getMessage("Caboose")));
         Assert.assertFalse("Train does not accept type name HopperTest", train1.acceptsTypeName("HopperTest"));
 
         train1.addTypeName("HopperTest");
-        Assert.assertTrue("Train still accepts type name Caboose", train1.acceptsTypeName("Caboose"));
+        Assert.assertTrue("Train still accepts type name Caboose", train1.acceptsTypeName(Bundle.getMessage("Caboose")));
         Assert.assertTrue("Train accepts type name HopperTest", train1.acceptsTypeName("HopperTest"));
 
-        train1.deleteTypeName("Caboose");
-        Assert.assertFalse("Train no longer accepts type name Caboose", train1.acceptsTypeName("Caboose"));
+        train1.deleteTypeName(Bundle.getMessage("Caboose"));
+        Assert.assertFalse("Train no longer accepts type name Caboose", train1.acceptsTypeName(Bundle.getMessage("Caboose")));
         Assert.assertTrue("Train still accepts type name HopperTest", train1.acceptsTypeName("HopperTest"));
     }
 
@@ -790,18 +790,18 @@ public class TrainTest extends OperationsTestCase {
 
         // register the car and engine types used
         ct.addName("Boxcar");
-        ct.addName("Caboose");
+        ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Flat");
 
         // Set up two cabooses and six box cars
         Car c1 = cmanager.newCar("CP", "10");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
         c1.setCaboose(true);
 
         Car c2 = cmanager.newCar("CP", "200");
-        c2.setTypeName("Caboose");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("32");
         c2.setMoves(11);
         c2.setCaboose(true);
@@ -1373,7 +1373,7 @@ public class TrainTest extends OperationsTestCase {
 
         // register the car and engine types used
         ct.addName("Boxcar");
-        ct.addName("Caboose");
+        ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Flat");
         et.addName("Diesel");
 
@@ -1417,7 +1417,7 @@ public class TrainTest extends OperationsTestCase {
 
         // Set up two cabooses and six box cars
         Car c1 = new Car("CP", "C10099");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(23);
         c1.setOwner("AT");
@@ -1427,7 +1427,7 @@ public class TrainTest extends OperationsTestCase {
         cmanager.register(c1);
 
         Car c2 = new Car("CP", "C20099");
-        c2.setTypeName("Caboose");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("32");
         c2.setMoves(54);
         c2.setOwner("DAB");
@@ -1952,10 +1952,10 @@ public class TrainTest extends OperationsTestCase {
 
         // Try again, but exclude caboose
         // there are cabooses waiting in staging so build should fail
-        train1.deleteTypeName("Caboose");
+        train1.deleteTypeName(Bundle.getMessage("Caboose"));
         train1.build();
         Assert.assertEquals("Train 1 After Build with engines but exclude Caboose", false, train1.isBuilt());
-        train1.addTypeName("Caboose");
+        train1.addTypeName(Bundle.getMessage("Caboose"));
 
         // Try again, but exclude road name CP
         train1.setRoadOption(Train.EXCLUDE_ROADS);
@@ -1978,10 +1978,10 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 build, caboose destination is terminal", true, train1.isBuilt());
 
         // don't allow cabooses road
-        l3.deleteTypeName("Caboose");
+        l3.deleteTypeName(Bundle.getMessage("Caboose"));
         train1.build();
         Assert.assertEquals("Train 1 build, caboose destination is terminal", false, train1.isBuilt());
-        l3.addTypeName("Caboose");
+        l3.addTypeName(Bundle.getMessage("Caboose"));
 
         // Try again, but only allow rolling stock built before 1985
         train2.reset();
@@ -2632,11 +2632,11 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Bob Test CarRoads Road3 true", true, cr.containsName("Road3"));
 
         // register the car types used
-        Assert.assertEquals("Bob Test CarType Caboose false", false, ct.containsName("Caboose"));
+        Assert.assertEquals("Bob Test CarType Caboose false", false, ct.containsName(Bundle.getMessage("Caboose")));
         Assert.assertEquals("Bob Test CarType Tanker false", false, ct.containsName("Tanker"));
         Assert.assertEquals("Bob Test CarType Boxcar false", false, ct.containsName("Boxcar"));
-        ct.addName("Caboose");
-        Assert.assertEquals("Bob Test CarType Caboose true", true, ct.containsName("Caboose"));
+        ct.addName(Bundle.getMessage("Caboose"));
+        Assert.assertEquals("Bob Test CarType Caboose true", true, ct.containsName(Bundle.getMessage("Caboose")));
         ct.addName("Tanker");
         Assert.assertEquals("Bob Test CarType Tanker true", true, ct.containsName("Tanker"));
         ct.addName("Boxcar");
@@ -2667,7 +2667,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Bob Test Location Westend Directions", 3, loc1.getTrainDirections());
         Assert.assertEquals("Bob Test Location Westend Type Diesel", true, loc1.acceptsTypeName("Diesel"));
         Assert.assertEquals("Bob Test Location Westend Type Boxcar", true, loc1.acceptsTypeName("Boxcar"));
-        Assert.assertEquals("Bob Test Location Westend Type Caboose", true, loc1.acceptsTypeName("Caboose"));
+        Assert.assertEquals("Bob Test Location Westend Type Caboose", true, loc1.acceptsTypeName(Bundle.getMessage("Caboose")));
 
         Location loc2;
         loc2 = lmanager.newLocation("Midtown");
@@ -2676,7 +2676,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Bob Test Location Midtown Directions", 3, loc2.getTrainDirections());
         Assert.assertEquals("Bob Test Location Midtown Type Diesel", true, loc2.acceptsTypeName("Diesel"));
         Assert.assertEquals("Bob Test Location Midtown Type Boxcar", true, loc2.acceptsTypeName("Boxcar"));
-        Assert.assertEquals("Bob Test Location Midtown Type Caboose", true, loc2.acceptsTypeName("Caboose"));
+        Assert.assertEquals("Bob Test Location Midtown Type Caboose", true, loc2.acceptsTypeName(Bundle.getMessage("Caboose")));
 
         Location loc3;
         loc3 = lmanager.newLocation("Eastend");
@@ -2685,7 +2685,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Bob Test Location Eastend Directions", 3, loc3.getTrainDirections());
         Assert.assertEquals("Bob Test Location Eastend Type Diesel", true, loc3.acceptsTypeName("Diesel"));
         Assert.assertEquals("Bob Test Location Eastend Type Boxcar", true, loc3.acceptsTypeName("Boxcar"));
-        Assert.assertEquals("Bob Test Location Eastend Type Caboose", true, loc3.acceptsTypeName("Caboose"));
+        Assert.assertEquals("Bob Test Location Eastend Type Caboose", true, loc3.acceptsTypeName(Bundle.getMessage("Caboose")));
 
         Track loc1trk1;
         loc1trk1 = loc1.addTrack("Westend Staging 1", Track.YARD);
@@ -2699,7 +2699,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Bob Test Track Westend Staging 1 Type Boxcar", true, loc1trk1
                 .acceptsTypeName("Boxcar"));
         Assert.assertEquals("Bob Test Track Westend Staging 1 Type Caboose", true, loc1trk1
-                .acceptsTypeName("Caboose"));
+                .acceptsTypeName(Bundle.getMessage("Caboose")));
 
         Track loc2trk1;
         loc2trk1 = loc2.addTrack("Midtown Inbound from West", Track.YARD);
@@ -2793,7 +2793,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Bob Test Track Eastend Staging 1 Type Boxcar", true, loc3trk1
                 .acceptsTypeName("Boxcar"));
         Assert.assertEquals("Bob Test Track Eastend Staging 1 Type Caboose", true, loc3trk1
-                .acceptsTypeName("Caboose"));
+                .acceptsTypeName(Bundle.getMessage("Caboose")));
 
         Assert.assertEquals("Bob Test Location Westend Length", 500, loc1.getLength());
         Assert.assertEquals("Bob Test Location Midtown Length", 2600, loc2.getLength());
@@ -2926,7 +2926,7 @@ public class TrainTest extends OperationsTestCase {
         // Create cars used
         Car c1;
         c1 = cmanager.newCar("CP", "12345678");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setCaboose(true);
         c1.setMoves(5);
@@ -2942,7 +2942,7 @@ public class TrainTest extends OperationsTestCase {
 
         Car c2;
         c2 = cmanager.newCar("CP", "12345679");
-        c2.setTypeName("Caboose");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("32");
         c2.setCaboose(true);
         Assert.assertEquals("Bob Test Caboose CP12345679 Length", "32", c2.getLength());
@@ -3006,7 +3006,7 @@ public class TrainTest extends OperationsTestCase {
         train1.setRequirements(Train.CABOOSE);
         // train1.addTypeName("Diesel");
         // train1.addTypeName("Boxcar");
-        // train1.addTypeName("Caboose");
+        // train1.addTypeName(Bundle.getMessage("Caboose"));
         Assert.assertEquals("Bob Test Train train1 Name", "MET", train1.getName());
         Assert.assertEquals("Bob Test Train train1 Departs Name", "Midtown", train1.getTrainDepartsName());
         Assert.assertEquals("Bob Test Train train1 Terminates Name", "Eastend", train1
@@ -3019,7 +3019,7 @@ public class TrainTest extends OperationsTestCase {
         train2.setRequirements(Train.CABOOSE);
         // train2.addTypeName("Diesel");
         // train2.addTypeName("Boxcar");
-        // train2.addTypeName("Caboose");
+        // train2.addTypeName(Bundle.getmessage("Caboose"));
         Assert.assertEquals("Bob Test Train train2 Name", "MWT", train2.getName());
         Assert.assertEquals("Bob Test Train train2 Departs Name", "Midtown", train2.getTrainDepartsName());
         Assert.assertEquals("Bob Test Train train2 Terminates Name", "Westend", train2
@@ -4697,7 +4697,7 @@ public class TrainTest extends OperationsTestCase {
 
         // register the car and engine types used
         ct.addName("Boxcar");
-        ct.addName("Caboose");
+        ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Flat");
         et.addName("Diesel");
 
@@ -4713,19 +4713,19 @@ public class TrainTest extends OperationsTestCase {
 
         // Set up three cabooses and six box cars
         Car c1 = cmanager.newCar("UP", "1");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
         c1.setCaboose(true);
 
         Car c2 = cmanager.newCar("SP", "2");
-        c2.setTypeName("Caboose");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
         c2.setCaboose(true);
 
         Car c3 = cmanager.newCar("NH", "3");
-        c3.setTypeName("Caboose");
+        c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setCaboose(true);
 
@@ -4793,7 +4793,7 @@ public class TrainTest extends OperationsTestCase {
         loc3trk2.setLength(200);
         loc3trk2.deleteTypeName("Boxcar");
         loc3trk2.deleteTypeName("Flat");
-        loc3trk2.deleteTypeName("Caboose");
+        loc3trk2.deleteTypeName(Bundle.getMessage("Caboose"));
 
         // Create route with 3 location
         Route rte1 = rmanager.newRoute("Route 2 Boston");
@@ -5168,12 +5168,12 @@ public class TrainTest extends OperationsTestCase {
 
         // Don't allow cabooses at Boston, should cause build failure
         rl2.setMaxCarMoves(7);
-        loc3.deleteTypeName("Caboose");
+        loc3.deleteTypeName(Bundle.getMessage("Caboose"));
         train1.build();
         Assert.assertEquals("Train 1 After Build 16", false, train1.isBuilt());
 
         // Don't allow boxcars, should also cause build failure
-        loc3.addTypeName("Caboose");
+        loc3.addTypeName(Bundle.getMessage("Caboose"));
         loc3.deleteTypeName("Boxcar");
         train1.setRequirements(Train.NO_CABOOSE_OR_FRED);
         train1.build();
@@ -5260,10 +5260,10 @@ public class TrainTest extends OperationsTestCase {
 
         train1.reset();
         // send caboose SP 2 from staging to track that will not service it
-        loc3trk2.addTypeName("Caboose");
+        loc3trk2.addTypeName(Bundle.getMessage("Caboose"));
         loc3trk2.setLength(200);
         c2.setDestination(loc3, loc3trk2);
-        loc3trk2.deleteTypeName("Caboose");
+        loc3trk2.deleteTypeName(Bundle.getMessage("Caboose"));
         train1.build();
 
         Assert.assertEquals("Train 1 After Build with caboose bad destination", false, train1.isBuilt());
@@ -5304,7 +5304,7 @@ public class TrainTest extends OperationsTestCase {
 
         // register the car and engine types used
         ct.addName("Boxcar");
-        ct.addName("Caboose");
+        ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Flat");
         et.addName("Diesel");
 
@@ -5369,7 +5369,7 @@ public class TrainTest extends OperationsTestCase {
 
         // Set up three cabooses and six box cars
         Car c1 = cmanager.newCar("PU", "1");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
         c1.setOwner("AT");
@@ -5377,7 +5377,7 @@ public class TrainTest extends OperationsTestCase {
         c1.setCaboose(true);
 
         Car c2 = cmanager.newCar("SP", "2");
-        c2.setTypeName("Caboose");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
         c2.setOwner("DAB");
@@ -5385,7 +5385,7 @@ public class TrainTest extends OperationsTestCase {
         c2.setCaboose(true);
 
         Car c3 = cmanager.newCar("UP", "3");
-        c3.setTypeName("Caboose");
+        c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setMoves(0);
         c3.setOwner("DAB");
@@ -5696,7 +5696,7 @@ public class TrainTest extends OperationsTestCase {
 
         // register the car and engine types used
         ct.addName("Boxcar");
-        ct.addName("Caboose");
+        ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Flat");
         et.addName("Diesel");
 
@@ -5761,7 +5761,7 @@ public class TrainTest extends OperationsTestCase {
 
         // Set up cars
         Car c1 = cmanager.newCar("PU", "13");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
         c1.setOwner("AT");
