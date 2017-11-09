@@ -5193,6 +5193,11 @@ public class TrainBuilderTest {
         ct.addName(carTypes[5]);
         et.addName("Diesel");
 
+        // register the road names used
+        cr.addName("UP");
+        cr.addName("SP");
+        cr.addName("NH");
+
         // place two engines in a consist
         Consist con1 = emanager.newConsist("C1");
 

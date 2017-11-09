@@ -8,6 +8,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
@@ -642,7 +643,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-
+        InstanceManager.getDefault(CarTypes.class).addName("Boxcar");
         loadTrains();
     }
 

@@ -54,8 +54,10 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
     public void changeDefaultNames(String type) {
         String[] convert = CONVERT_TYPES.split(","); // NOI18N
         String[] types = TYPES.split(","); // NOI18N
+        // this conversion has internationalization problems, so we can't call
+        // this an error.
         if (convert.length != types.length) {
-            log.error(
+            log.warn(
                     "Properties file doesn't have equal length conversion strings, carTypeNames {}, carTypeConvert {}", // NOI18N
                     types.length, convert.length);
             return;

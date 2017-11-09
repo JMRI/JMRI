@@ -159,6 +159,16 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         CarOwners co = InstanceManager.getDefault(CarOwners.class);
         co.addName("Owner1");
         co.addName("Owner2");
+        // register the road names used
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
+        cr.addName("UP");
+        cr.addName("SP");
+        cr.addName("NH");
+        CarLengths cl = InstanceManager.getDefault(CarLengths.class);
+        cl.addName("40");
+        cl.addName("38");
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        ct.addName(Bundle.getMessage("Caboose"));
         // add 5 cars to table
         Car c1 = cManager.newCar("NH", "1");
         c1.setBuilt("2009");

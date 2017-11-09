@@ -308,6 +308,13 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
+        // add type names
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        ct.addName("Gondola");
+        ct.addName("Boxcar");
+        ct.addName(Bundle.getMessage("Caboose"));
+        ct.addName("Tank Food");
+        ct.addName("Coilcar");
     }
 
     @Override

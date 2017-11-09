@@ -3025,6 +3025,12 @@ public class TrainTest extends OperationsTestCase {
         ct.addName("Flat");
         et.addName("Diesel");
 
+        // register the road names used
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
+        cr.addName("UP");
+        cr.addName("SP");
+        cr.addName("NH");
+
         // place two engines in a consist
         Consist con1 = emanager.newConsist("C1");
 
@@ -4468,6 +4474,9 @@ public class TrainTest extends OperationsTestCase {
         InstanceManager.getDefault(TrainManager.class).setBuildMessagesEnabled(false);
         // disable build reports
         InstanceManager.getDefault(TrainManager.class).setBuildReportEnabled(false);
+        InstanceManager.getDefault(CarTypes.class).addName("Boxcar");
+        InstanceManager.getDefault(CarTypes.class).addName("HopperTest");
+        InstanceManager.getDefault(CarTypes.class).addName(Bundle.getMessage("Caboose"));
 
     }
 

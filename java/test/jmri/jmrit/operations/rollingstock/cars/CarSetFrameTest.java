@@ -36,6 +36,12 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
         // remove previous cars
         cManager.dispose();
+
+        // register the road names used
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
+        cr.addName("UP");
+        cr.addName("SP");
+        cr.addName("NH");
         // add 5 cars to table
         Car c1 = cManager.newCar("NH", "1");
         c1.setBuilt("2009");
