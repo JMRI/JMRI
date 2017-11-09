@@ -486,7 +486,10 @@
           <code>"abc-2015-09-14"</code>,
           <code>"abc-next-cool-thing"</code>, and
           <code>"abc-patch-NNNN"</code> are all fine. That way, we
-          know it's you, and you can sort out the rest.</p>
+          know it's you, and you can sort out the rest.
+          Keep the name short &amp; simple enough to easily type (because people
+          will sometimes have to), and limit it to letters, numbers and 
+          use the "-" instead of spaces; that'll make it easier to work with.</p>
 
           <ul>
             <li>Using git:
