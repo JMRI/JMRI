@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="1" lastUpdated="20140706"/>  
+  <version author="Alain Le Marchand" version="1" lastUpdated="20140706"/>
+  <version author="Marc Fournier" version="2" lastUpdated="20171014"/>  
   <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
   <!-- version 1	Created from "Soundtraxx_Tsu_Diesel.xml" version 14.					-->
   <!--				Based on Soundtraxx SoundCar Manuals version 0, software 1.01			-->
@@ -21,9 +22,10 @@
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Airhorn=output 5, etc. 
                 FX5 or FX6 are either physical or logical outputs used for "Rule 17 mode"         -->
-  <!-- 			For SoundCar decoders outputs "7" and "10" are reserved (not used).  Associated bits are skipped -->				
+  <!-- 			For SoundCar decoders outputs "7" and "10" are reserved (not used).  Associated bits are skipped -->
+  <!-- 	version 2	Added Livestock related CV's 144,203,266 to definition -->
   <!-- Decoder Model information follows -->
-  <decoder>
+<decoder>
     <family name="Tsunami SoundCar" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami SoundCar decoders">  
       <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar" comment="Tsunami SoundCar Digital Sound Decoder">
         <versionCV lowVersionID="69" highVersionID="69"/>
@@ -1791,6 +1793,13 @@
         <label>Hand Brake Release Volume</label>
         <label xml:lang="it">Volume Rilascio Freno a mano</label>
       </variable>
+      <variable CV="144" mask="VVVVVVVV" item="Sound Setting 30" default="100" tooltip="Sets the volume of the livestock">
+        <decVal/>
+        <label>Livestock Volume</label>
+        <label xml:lang="it">Volume Livestock</label>
+      </variable>
+
+
       <!-- The following sounds CVs (currently) don't map to generic -->
       <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
       <!-- appear on pane definitions in this file -->
@@ -1944,7 +1953,14 @@
         <decVal max="255"/>
         <label>Generator Probability</label>
         <label xml:lang="it">Probabilità suono Generatore</label>
-      </variable>	  
+      </variable>
+	  
+	  <variable CV="203" mask="VVVVVVVV" item="Livestock Probability" default="50" tooltip="&lt;html&gt;Sets the frequency of occurrence for the livestock sound effect.&lt;br&gt; - 0 = Lowest level of anxiety.&lt;br&gt; - 255 = Highest level of anxiety.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Livestock Probability</label>
+        <label xml:lang="it">Probabilità suono Livestock</label>
+      </variable>
+	  
       <!-- End of variables for file-specific panes -->
       <!-- Advanced Motor Control Features follow -->
 	  <!-- Not Used in this decoder - Sound only
@@ -1969,6 +1985,22 @@
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
 	  -->
+	  <!-- Livestock Select follows -->
+  	  <variable CV="226" mask="XXXXXXVV" item="Sound Option 18" default="0" tooltip="Livestock Select option">
+        <enumVal>
+          <enumChoice choice="Disable">
+            <choice>Disable</choice>
+          </enumChoice>
+          <enumChoice choice="Cattle">
+            <choice>Cattle</choice>
+          </enumChoice>
+          <enumChoice choice="Sheep">
+            <choice>Sheep</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Livestock Select</label>
+      </variable>
+	  
       <!-- Bell Selection follows -->
       <variable CV="227" mask="XXXXXXVV" item="Sound Option 19" default="0" tooltip="Selects which bell to use">
         <enumVal>

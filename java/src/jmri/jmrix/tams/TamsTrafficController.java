@@ -76,7 +76,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
     @Override
     protected int enterProgModeDelayTime() {
-        // we should to wait at least a second after enabling the programming
+        // we should wait at least a second after enabling the programming
         // track
         return 1000;
     }

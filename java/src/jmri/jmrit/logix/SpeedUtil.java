@@ -84,7 +84,7 @@ public class SpeedUtil {
     }
 
     public void setRosterId(String id) {
-       if (log.isDebugEnabled()) log.debug("setRosterId({}) _rosterId= {}", id, _rosterId);
+       if (log.isTraceEnabled()) log.debug("setRosterId({}) _rosterId= {}", id, _rosterId);
        if (id == null || !id.equals(_rosterId)) {
             _mergeProfile = null;
             _sessionProfile = null;
@@ -133,7 +133,7 @@ public class SpeedUtil {
      * @return true if address found for id
      */
     public boolean setDccAddress(String id) {
-        if (log.isDebugEnabled()) log.debug("setDccAddress({}) _rosterId= {}", id, _rosterId);
+        if (log.isTraceEnabled()) log.debug("setDccAddress({}) _rosterId= {}", id, _rosterId);
         if (id == null || id.trim().length()==0) {
             setRosterId(null);   // set _rosterId
             _dccAddress = null;           
@@ -184,7 +184,7 @@ public class SpeedUtil {
             _dccAddress = _rosterEntry.getDccLocoAddress();
 //            _rosterId = _rosterEntry.getId();
         }
-        if (log.isDebugEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
+        if (log.isTraceEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
         return true;
     }
 
@@ -383,26 +383,6 @@ public class SpeedUtil {
         getSpeedProfile();
     }
     
-    /**
-     * Calculates the scale speed of the current throttle setting for display
-     * @param speedType name of current speed
-     * @return text message
-     */
-//    @SuppressFBWarnings(value="IS2_INCONSISTENT_SYNC", justification="speed type name in message is ok")
-    public String getSpeedMessage(String speedType) {
-        float speed = getTrackSpeed(_throttle.getSpeedSetting(), _throttle.getIsForward()) * _signalSpeedMap.getLayoutScale();
-
-        String units;
-        if (_signalSpeedMap.getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
-            units = "Kmph";
-            speed = speed * 3.6f;
-        } else {
-            units = "Mph";
-            speed = speed * 2.2369363f;
-        }
-        return Bundle.getMessage("atSpeed", speedType, Math.round(speed), units);
-    }
-
     // return true if the speed named 'speed2' is strictly greater than that of 'speed1'
     protected boolean secondGreaterThanFirst(String speed1, String speed2) {
         if (speed2 == null) {
@@ -476,7 +456,7 @@ public class SpeedUtil {
                 log.error("Unknown speed interpretation {}", _signalSpeedMap.getInterpretation());
                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _signalSpeedMap.getInterpretation());
         }
-        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, signalSpeed= {} using interpretation {}",
+        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, signalSpeed= {}. interpretation= {}",
                 tSpeed, throttleSpeed, signalSpeed, _signalSpeedMap.getInterpretation());
         return throttleSpeed;
     }
@@ -591,10 +571,9 @@ public class SpeedUtil {
 
         if (increasing) {
             while (fromSpeed < toSpeed) {
-                float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
-                        + getTrackSpeed(fromSpeed + deltaThrottle, isForward) * (deltaTime - momentumTime);
-                if (dist <= 0.0f) {
-                    break;
+                float dist = getTrackSpeed(fromSpeed + deltaThrottle/2, isForward) * momentumTime;
+                if (deltaTime > momentumTime) {
+                    dist += getTrackSpeed(fromSpeed + deltaThrottle, isForward) * (deltaTime - momentumTime);
                 }
                 fromSpeed += deltaThrottle;
                 if (fromSpeed <= toSpeed) {
@@ -619,8 +598,10 @@ public class SpeedUtil {
                 } else {
                     nextSpeed = fromSpeed - deltaThrottle;
                 }
-                float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
-                        + getTrackSpeed(nextSpeed, isForward) * (deltaTime - momentumTime);
+                float dist = getTrackSpeed((fromSpeed + nextSpeed)/2, isForward) * momentumTime;
+                if (deltaTime > momentumTime) {
+                    dist += getTrackSpeed(nextSpeed, isForward) * (deltaTime - momentumTime);
+                }
                 if (dist <= 0.0f) {
                     break;
                 }

@@ -840,7 +840,6 @@ public class PositionablePoint extends LayoutTrack {
                     jmi.setEnabled(false);
                     blockBoundary = true;
                 }
-                blockBoundary = true;
                 break;
             default:
                 break;
@@ -1012,10 +1011,9 @@ public class PositionablePoint extends LayoutTrack {
 
         jmi.setSelected(getType() == ANCHOR);
 
-        // you can't set it to an anchor if it has a 2nd connection
+        // you can't change it to an anchor if it has a 2nd connection
         // TODO: add error dialog if you try?
-        if ((getType()
-                == EDGE_CONNECTOR) && (getConnect2() != null)) {
+        if ((getType() == EDGE_CONNECTOR) && (getConnect2() != null)) {
             jmi.setEnabled(false);
         }
 
@@ -1043,6 +1041,16 @@ public class PositionablePoint extends LayoutTrack {
 
         popup.add(lineType);
 
+        if (!blockBoundary && getType() == EDGE_CONNECTOR) {
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popup.add(new AbstractAction(Bundle.getMessage("EdgeEditLink")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setLink();
+                }
+            });
+        }
+
         if (blockBoundary) {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             if (getType() == EDGE_CONNECTOR) {
@@ -1055,24 +1063,9 @@ public class PositionablePoint extends LayoutTrack {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // bring up signals at level crossing tool dialog
-                        layoutEditor.getLETools().setSignalAtEdgeConnector(PositionablePoint.this,
+                        // bring up signals at edge connector tool dialog
+                        layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
-                    }
-                });
-                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        // bring up signal masts at block boundary tool dialog
-                        layoutEditor.getLETools().setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
-                    }
-                });
-                popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        // bring up sensors at block boundary tool dialog
-                        layoutEditor.getLETools().setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                                layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
             } else {
@@ -1092,30 +1085,23 @@ public class PositionablePoint extends LayoutTrack {
                 } else {
                     popup.add(ssaa);
                 }
-                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        // bring up signals at block boundary tool dialog
-                        layoutEditor.getLETools().setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
-                    }
-                });
             }
             addSensorsAndSignalMasksMenuItemsFlag = true;
         }
         if (addSensorsAndSignalMasksMenuItemsFlag) {
+            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    // bring up signals at block boundary tool dialog
+                    layoutEditor.getLETools().setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
+                }
+            });
             popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
                     layoutEditor.getLETools().setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
                             layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
-                }
-            });
-            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    // bring up signals at block boundary tool dialog
-                    layoutEditor.getLETools().setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
                 }
             });
         }
@@ -1650,7 +1636,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     public boolean checkForUnAssignedBlocks() {
-        // Positionable Points don't have blocks so…
+        // Positionable Points don't have blocks so...
         // nothing to see here... move along...
         return true;
     }

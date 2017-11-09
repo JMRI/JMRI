@@ -8,13 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Base for TurnoutManager tests in specific jmrix.packages
+ * Base for TurnoutManager tests in specific jmrix.* packages
  * <p>
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
- * common tests
+ * common tests.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public abstract class AbstractTurnoutMgrTestBase {
 
@@ -44,7 +44,6 @@ public abstract class AbstractTurnoutMgrTestBase {
     @Test
     public void testCreate() {
     }
-
 
     @Test
     public void testDispose() {

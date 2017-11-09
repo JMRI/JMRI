@@ -232,7 +232,7 @@ public class TrackSegment extends LayoutTrack {
         }
         return result;
     }
-    
+
     /**
      * @return true if track segment should be drawn dashed
      * @deprecated since 4.9.4; use {@link #isDashed()} instead

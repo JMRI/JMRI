@@ -1182,8 +1182,8 @@ public class LevelXing extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         layoutEditor.getLETools().setSensorsAtLevelXingFromMenu(
-                                LevelXing.this, boundaryBetween, 
-                                layoutEditor.sensorIconEditor, 
+                                LevelXing.this, boundaryBetween,
+                                layoutEditor.sensorIconEditor,
                                 layoutEditor.sensorFrame);
                     }
                 });

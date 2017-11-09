@@ -65,5 +65,4 @@ public class XpaMonPane extends jmri.jmrix.AbstractMonPane implements XpaListene
         }
     }
 
-
 }

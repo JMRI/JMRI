@@ -4,7 +4,7 @@ import javax.swing.JMenu;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 
 /**
- * Create a "Systems" menu containing the JMRI MRC-specific tools.
+ * Create a "Systems" menu containing the JMRI Zimo-specific tools.
  *
  * @author	Bob Jacobsen Copyright 2003, 2010 Copied from nce.swing
  * @author Ken Cameron 2014
@@ -39,15 +39,15 @@ public class Mx1Menu extends JMenu {
             }
         }
 
-        // do we have a MrcTrafficController?
+        // do we have an Mx1TrafficController?
         setEnabled(memo.getMx1TrafficController() != null);	// disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
     }
 
     private Item[] panelItems = new Item[]{
-        new Item("MenuItemCommandMonitor", "jmri.jmrix.zimo.swing.monitor.Mx1MonPanel"), //IN18N
-        new Item("MenuItemSendCommand", "jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel"), //IN18N
+        new Item("MenuItemCommandMonitor", "jmri.jmrix.zimo.swing.monitor.Mx1MonPanel"), // NOI18N
+        new Item("MenuItemSendCommand", "jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel"), // NOI18N
     };
 
     static class Item {
@@ -59,4 +59,5 @@ public class Mx1Menu extends JMenu {
         String name;
         String load;
     }
+
 }

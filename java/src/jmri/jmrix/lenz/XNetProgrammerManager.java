@@ -1,4 +1,3 @@
-/* XNetProgrammerManager.java */
 package jmri.jmrix.lenz;
 
 import jmri.AddressedProgrammer;

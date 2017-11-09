@@ -24,7 +24,7 @@ public class AcelaPacketGenAction extends AbstractAction {
     }
 
     public AcelaPacketGenAction() {
-        this(Bundle.getMessage("AcelaSendCommandTitle"),jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+        this(Bundle.getMessage("AcelaSendCommandTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
     @Override

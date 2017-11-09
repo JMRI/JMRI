@@ -399,7 +399,7 @@
             <xs:element name="functionlabels" type="functionlabelsType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="soundlabels" type="soundlabelsType" minOccurs="0" maxOccurs="1"/>
           </xs:sequence>
-          <xs:attribute name="model" type="xs:string" use="required"/>
+          <xs:attribute name="model" type="familyModelNameType" use="required" />
           <xs:attribute name="show" type="yesNoMaybeType" default="yes" >
             <xs:annotation><xs:documentation>&quot;yes&quot; always shows in the full decoder model list; &quot;no&quot; never shows in the full decoder model list; &quot;maybe&quot; shows when this model has been detected</xs:documentation></xs:annotation>
           </xs:attribute>
@@ -480,7 +480,7 @@
       </xs:element>
 
     </xs:sequence>
-    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="name" type="familyModelNameType" />
     <xs:attribute name="mfg" type="xs:string" />
     <xs:attribute name="lowVersionID" type="xs:int" />
     <xs:attribute name="highVersionID" type="xs:int" />
