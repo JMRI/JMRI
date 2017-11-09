@@ -35,4 +35,5 @@ public abstract class AcelaPortController extends jmri.jmrix.AbstractSerialPortC
     public AcelaSystemConnectionMemo getSystemConnectionMemo() {
         return (AcelaSystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
 }

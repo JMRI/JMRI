@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Create a "Systems" menu containing the Tams-specific tools
  *
  * Based on work by Bob Jacobsen
- *
  * @author	Kevin Dickerson Copyright (C) 2012
  */
 public class TamsMenu extends JMenu {
@@ -18,14 +18,12 @@ public class TamsMenu extends JMenu {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle");
-        String title;
-        if (memo != null) {
-            title = memo.getUserName();
-        } else {
-            title = rb.getString("MenuTams");
-        }
 
-        setText(title);
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(rb.getString("MenuTams"));
+        }
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
@@ -44,7 +42,6 @@ public class TamsMenu extends JMenu {
                 log.error("Unable to register Tams table");
             }
         }
-
     }
 
     Item[] panelItems = new Item[]{
@@ -65,4 +62,5 @@ public class TamsMenu extends JMenu {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsMenu.class);
+
 }

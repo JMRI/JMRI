@@ -49,7 +49,8 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         /* Next we check the command station type, and add the
            apropriate managers */
- /* If we still don't  know what we have, load everything */
+
+        /* If we still don't  know what we have, load everything */
         if (log.isDebugEnabled()) {
             log.debug("Command Station is type {} build {}", base_station, code_build);
         }

@@ -310,7 +310,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                         if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
                         {
                             if (id.getName().equals(mPort)) {
-                                log.info(mPort + " port has reappeared as being valid trying to reconnect");
+                                log.info(mPort + " port has reappeared as being valid, trying to reconnect");
                                 openPort(mPort, "jmri");
                             }
                         }

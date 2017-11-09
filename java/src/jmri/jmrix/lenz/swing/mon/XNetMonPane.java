@@ -51,7 +51,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     }
 
     @Override
-    public synchronized void message(XNetReply l) { // receive a XpressNet message and log it
+    public synchronized void message(XNetReply l) { // receive an XpressNet message and log it
         // display the raw data if requested
         StringBuilder raw = new StringBuilder();
         if (rawCheckBox.isSelected()) {

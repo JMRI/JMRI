@@ -7,56 +7,85 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for TMCC serial systems
- * <P>
+ * Implement turnout manager for TMCC serial systems.
+ * <p>
  * System names are "TTnnn", where nnn is the turnout number without padding.
+ * T prefix is user configurable.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  */
-public class SerialTurnoutManager extends AbstractTurnoutManager {
+public class SerialTurnoutManager extends AbstractTurnoutManager implements SerialListener {
+
+    TmccSystemConnectionMemo _memo = null;
+    private String prefix = "T";
+    private SerialTrafficController trafficController = null;
 
     public SerialTurnoutManager() {
+        log.debug("TMCC Turnout Manager null");
+    }
 
+    public SerialTurnoutManager(TmccSystemConnectionMemo memo) {
+        _memo = memo;
+        prefix = memo.getSystemPrefix();
+        // connect to the TrafficManager
+        trafficController = memo.getTrafficController();
+        // listen for turnout creation
+        trafficController.addSerialListener(this);
+        log.debug("TMCC Turnout Manager prefix={}", prefix);
     }
 
     @Override
     public String getSystemPrefix() {
-        return "T";
+        return prefix;
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        log.debug("Start createNewTurnout, prefix = {} memo ={}", prefix, _memo.getUserName());
+        String sName = SerialAddress.normalizeSystemName(systemName, prefix);
         if (sName.equals("")) {
             // system name is not valid
+            log.debug("System Name not valid");
             return null;
         }
-        // does this turnout already exist
+        // does this turnout already exist?
         Turnout t = getBySystemName(sName);
         if (t != null) {
+            log.debug("Turnout already exists");
             return null;
         }
-        // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
-        t = getBySystemName(altName);
-        if (t != null) {
-            return null;
-        }
+        // check under alternate name - not supported on TMCC
         // create the turnout
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        t = new SerialTurnout(addr);
+        log.debug("new SerialTurnout with addr = {}", systemName.substring(prefix.length() + 1));
+        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // this won't work for B-names
+        t = new SerialTurnout(prefix, addr, _memo);
         t.setUserName(userName);
 
-        // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        // does system name correspond to configured hardware?
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', prefix)) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
     }
 
-    //Turnout address format is more than a simple number.
+    /**
+     * Listeners for messages from the command station.
+     */
+    @Override
+    public void message(SerialMessage m) {
+        log.debug("message received unexpectedly: {}", m.toString());
+    }
+
+    // Listen for status changes from TMCC system
+    @Override
+    public void reply(SerialReply r) {
+        // There isn't anything meaningful coming back at this time.
+        log.debug("reply received unexpectedly: {}", r.toString());
+    }
+
+    // Turnout address format is more than a simple number.
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
@@ -68,10 +97,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Deprecated
     static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+        log.warn("deprecated instance() call for TMCC SerialTurnoutManager");
+        return null;
     }
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
@@ -84,7 +111,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         String tmpSName;
 
         if (curAddress.contains(":")) {
-            //Address format passed is in the form node:address
+            // Address format passed is in the form node:address (not used in TMCC)
             int seperator = curAddress.indexOf(":");
             try {
                 nAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
@@ -92,12 +119,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             } catch (NumberFormatException ex) {
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
-            tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+            tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum, prefix); // T for Turnout
         } else {
             tmpSName = prefix + "T" + curAddress;
             try {
-                bitNum = SerialAddress.getBitFromSystemName(tmpSName);
-                nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+                bitNum = SerialAddress.getBitFromSystemName(tmpSName, prefix);
+                nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName, prefix);
             } catch (NumberFormatException ex) {
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
@@ -136,13 +163,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         bitNum = bitNum + t.getNumberOutputBits();
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
-        tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+        tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum, prefix);
         t = getBySystemName(tmpSName);
         if (t != null) {
             for (int x = 1; x < 10; x++) {
                 bitNum = bitNum + t.getNumberOutputBits();
                 //This should increment " + bitNum
-                tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+                tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum, prefix);
                 t = getBySystemName(tmpSName);
                 if (t == null) {
                     int seperator = tmpSName.lastIndexOf("T") + 1;
@@ -164,7 +191,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * @return 'true' if system name has a valid format, else return 'false'
      */
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+        return (SerialAddress.validSystemNameFormat(systemName, 'T', prefix));
     }
 
     /**

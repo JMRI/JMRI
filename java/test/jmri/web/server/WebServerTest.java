@@ -46,6 +46,15 @@ public class WebServerTest {
         Assert.assertNull("URI for Other directory",WebServer.URIforPortablePath("roster:"));
     }
 
+    @Test
+    public void testStartAndStop() throws Exception{
+        WebServer a = new WebServer();
+        a.start();
+        JUnitUtil.waitFor(()->{ return a.isStarted();}, "server failed to start in time");
+        a.stop();
+        JUnitUtil.waitFor(()->{ return a.isStopped();}, "server failed to stop in time");
+    }
+
     @Before
     public void setUp(){
         JUnitUtil.setUp();
@@ -55,6 +64,10 @@ public class WebServerTest {
 
     @After
     public void tearDown(){
+        jmri.util.zeroconf.ZeroConfService.stopAll();
+        JUnitUtil.waitFor(() -> {
+            return (jmri.util.zeroconf.ZeroConfService.allServices().isEmpty());
+        }, "Stopping all ZeroConf Services");
         JUnitUtil.tearDown();
     }
 }

@@ -261,8 +261,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /**
      * {@inheritDoc}
-     * 
-     * @return always 'VALID' 
+     *
+     * @return always 'VALID'
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -356,8 +356,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public PointDetails providePoint(NamedBean source, LayoutEditor panel) {
         PointDetails sourcePoint = getPointDetails(source, panel);
         if (sourcePoint == null) {
-            LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, panel);
-            List<LayoutBlock> protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectingBlocksByNamedBean(source, panel);
+            LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, null);
+            List<LayoutBlock> protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectingBlocksByNamedBean(source, null);
             if ((facing == null) && (protecting == null)) {
                 log.error("Unable to find facing and protecting block");  // NOI18N
                 return null;
@@ -1012,7 +1012,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");  // NOI18N
             return;
         }
-        Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
+        Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().
+                discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
         Enumeration<NamedBean> en = validPaths.keys();
         EntryExitPairs eep = this;
         while (en.hasMoreElements()) {

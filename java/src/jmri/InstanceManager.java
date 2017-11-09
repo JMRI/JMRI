@@ -76,8 +76,8 @@ public final class InstanceManager {
     private final HashMap<Class<?>, InstanceInitializer> initializers = new HashMap<>();
     private final HashMap<Class<?>, StateHolder> initState = new HashMap<>();
 
-
     /* properties */
+
     /**
      *
      * @deprecated since 4.5.4 use
@@ -465,6 +465,7 @@ public final class InstanceManager {
      *          These are so extensively used that we're leaving for later
      *                      Please don't create any more of these
      * ****************************************************************************/
+
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
      *
@@ -946,4 +947,5 @@ public final class InstanceManager {
         traceFileWriter.flush();
         log.trace(text);
     }
+
 }

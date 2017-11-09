@@ -22,9 +22,6 @@ public class ServerAction
 
     public ServerAction() {
         this("DCC++OverTcp Server");
-        // Get a server instance to cause the config to be read and the server
-        // started if necessary
-        InstanceManager.getDefault(Server.class);
     }
 
     @Override

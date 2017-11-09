@@ -55,8 +55,8 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     EcosTrafficController tc;
     EcosSystemConnectionMemo adaptermemo;
 
-    //The hash table simply holds the object number against the EcosTurnout ref.
-    private Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>();   // stores known Ecos Object ids to DCC
+    // The hash table simply holds the object number against the EcosTurnout ref.
+    private Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>(); // stores known Ecos Object ids to DCC
 
     String prefix;
 
@@ -88,14 +88,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     // to listen for status changes from Ecos system
     @Override
     public void reply(EcosReply m) {
-        log.debug("reply "+m);
+        log.debug("reply " + m);
         // is this a list of turnouts?
         EcosTurnout et;
 
         if (m.getResultCode() == 0) {
             int ecosObjectId = m.getEcosObjectId();
             if ((ecosObjectId != 11) && ((ecosObjectId < 20000) || (ecosObjectId > 30000))) {
-                log.debug("message receieved that is not within the valid turnout object range");
+                log.debug("message received that is not within the valid turnout object range");
                 return;
             }
             List<String> headerDetails = m.getReplyHeaderDetails();
