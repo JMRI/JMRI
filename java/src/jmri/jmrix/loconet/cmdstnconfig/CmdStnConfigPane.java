@@ -107,7 +107,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             }
             log.debug("match /{}/", name); // NOI18N
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig." + name + "options"); // NOI18N
-        } catch (Exception e) {
+        } catch (Exception e) { // use standard option set
             log.warn("Failed to find properties for /{}/ command station type", name, e); // NOI18N
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions"); // NOI18N
             // Localized strings common to all LocoNet command station models are fetched using Bundle.
@@ -117,21 +117,22 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             CONFIG_SLOT = Integer.parseInt(rb.getString("CONFIG_SLOT"));
             MIN_OPTION = Integer.parseInt(rb.getString("MIN_OPTION"));
             MAX_OPTION = Integer.parseInt(rb.getString("MAX_OPTION"));
-            labelT = Bundle.getMessage("LabelT");
-            labelC = Bundle.getMessage("LabelC");
-            labelTop = rb.getString("LabelTop");
-            read = Bundle.getMessage("ButtonRead");
-            write = Bundle.getMessage("ButtonWrite");
         } catch (NumberFormatException e) {
             log.error("Failed to load values from /{}/ properties", name); // NOI18N
         }
-
         log.debug("Constants: {} {} {}", CONFIG_SLOT, MIN_OPTION, MAX_OPTION); // NOI18N
+
+        labelT = Bundle.getMessage("LabelT");
+        labelC = Bundle.getMessage("LabelC");
+        labelTop = rb.getString("LabelTop");
+        read = Bundle.getMessage("ButtonRead");
+        write = Bundle.getMessage("ButtonWrite");
+        String tooltip = Bundle.getMessage("CmdStnConfigFxToolTip");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         {
-            // section holding buttons buttons
+            // section holding buttons
             readButton = new JButton(read);
             writeButton = new JButton(write);
 
@@ -186,6 +187,11 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                     isReserved[i - MIN_OPTION] = true;
                 }
                 JLabel l = new JLabel(label);
+                if (i > 20 && i < 24) {
+                    t.setToolTipText(tooltip);
+                    c.setToolTipText(tooltip);
+                    l.setToolTipText(tooltip);
+                }
                 labels[i - MIN_OPTION] = l;
                 gl.setConstraints(l, gc);
                 options.add(l);
