@@ -379,9 +379,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.9.5.Rff24066.dmg](https://github.com/JMRI/JMRI/releases/download/v4.9.5/JMRI.4.9.5.Rff24066.dmg) | 61cc6eb66a6a7600376990e7181ae119fef33846824073f86483a18f5e7ad725
-[JMRI.4.9.5.Rff24066.exe](https://github.com/JMRI/JMRI/releases/download/v4.9.5/JMRI.4.9.5.Rff24066.exe) | 2b21fa42fd1979cc65450a9e8ed97c1274e1a6c5ac2f68955a130f33383e0f98
-[JMRI.4.9.5.Rff24066.tgz](https://github.com/JMRI/JMRI/releases/download/v4.9.5/JMRI.4.9.5.Rff24066.tgz) | 794fd80964d710aee2a962d2597b8a7e9329e238e16399a7f8cb6e64595b1c98
+[JMRI.4.9.5.Re5a0179.dmg](https://github.com/JMRI/JMRI/releases/download/v4.9.5/JMRI.4.9.5.Re5a0179.dmg) | 9e7e4fcd9cfe6a5cadf50c2b1bdf6f1e838d524ff4ce5fd90191e254fd584525
+[JMRI.4.9.5.Re5a0179.exe](https://github.com/JMRI/JMRI/releases/download/v4.9.5/JMRI.4.9.5.Re5a0179.exe) | fd7a4b12d119761e44d2441e2a715ddbd9b6cf857d0418d5470303bd9aefd2e6
+[JMRI.4.9.5.Re5a0179.tgz](https://github.com/JMRI/JMRI/releases/download/v4.9.5/JMRI.4.9.5.Re5a0179.tgz) | 9e22b0dd001c8c541ad6899058d3e25140ddd3dac229098eece1899ff064dbfc
 
 ```
 
@@ -389,7 +389,7 @@ File | SHA256 checksum
 ```
 curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.9.5/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
-and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
+and expansion; it's slow to upload from a typical home connection, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
 ```
 ssh user,jmri@shell.sf.net create
 scp user,jmri@shell.sf.net:release.zip .
@@ -414,7 +414,7 @@ github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.9.5 -n "JMRI.4.9.
 
 ### Final Branch Management
 
-It's important that any changes that were made on the branch also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then (*need a cleaner, more robust mechanism for this*; maybe GitX?):
+It's important that any changes that were made on the branch also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then (*need a cleaner, more robust mechanism for this*; maybe GitX or a PR?):
 
 ```
 git fetch
@@ -455,7 +455,7 @@ git push github
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.9.6". Add the next release milestone (created above) to it. Typical text:
 
- This is the third release of the 4.9.6.10 cycle. It's intended to be released around September 8 2017 from HEAD of master.
+ This is the third release of the 4.10 cycle. It's intended to be released around Novemebr 18 from HEAD of master.
 
 - Confirm that the tag for the current release (release-4.9.5) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 

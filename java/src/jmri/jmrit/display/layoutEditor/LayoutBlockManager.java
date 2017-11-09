@@ -653,7 +653,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             return lt.getSignalHead(LayoutTurnout.POINTA2);
                         }
                     } else if (state == Turnout.CLOSED) {
-                        LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                        LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
                         state = tLinked.getTurnout().getKnownState();
 
                         if (state == Turnout.CLOSED) {
@@ -839,7 +839,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
 
                 //There are two signals here get linked turnout and decide which to return from linked turnout state
-                LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
                 int state = tLinked.getTurnout().getKnownState();
 
                 if (state == Turnout.CLOSED) {
@@ -872,7 +872,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 } else {
                     //signal is at the linked turnout - the throat of the 3-way turnout
-                    LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                    LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
 
                     if (lt.getContinuingSense() == Turnout.CLOSED) {
                         return tLinked.getSignalHead(LayoutTurnout.POINTA);
@@ -1029,7 +1029,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
 
                 //There are two signals here get linked turnout and decide which to return from linked turnout state
-                LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
                 int state = tLinked.getTurnout().getKnownState();
 
                 if (state == Turnout.CLOSED) {
@@ -1070,7 +1070,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 } else {
                     //signal is at the linked turnout - the throat of the 3-way turnout
-                    LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                    LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
 
                     if (lt.getContinuingSense() == Turnout.CLOSED) {
                         if (tLinked.getSignalHead(LayoutTurnout.POINTA3) == null) {
@@ -1304,20 +1304,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }	//switch
         return null;
     }	//getFacingSignalHead
-
-    private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
-        Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-
-        if (t == null) {
-            return null;
-        }
-        for (LayoutTurnout lt : panel.getLayoutTurnouts()) {
-            if (lt.getTurnout() == t) {
-                return lt;
-            }
-        }
-        return null;
-    }	//getLayoutTurnoutFromTurnoutName
 
     /**
      * Method to return the named bean of either a Sensor or signalmast facing
@@ -1672,7 +1658,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         if (cType == LayoutTrack.TRACK) {
             //block boundary is at an Anchor Point
-//            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
 
             boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(tr, p);
