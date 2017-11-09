@@ -226,30 +226,30 @@
     <layoutturnout ident="TO3" type="6" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="330.0" ycen="250.0" xa="320.0" ya="240.0" xb="360.0" yb="240.0" xc="340.0" yc="260.0" xd="300.0" yd="260.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT9" blockname="Yard" connectaname="T5" connectbname="T20" connectcname="T7" connectdname="T3" />
     <layoutturnout ident="TO5" type="3" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="216.13423843904454" ya="92.10246276855469" xb="180.0000015154656" yb="100.0" xc="187.7315216064453" yc="115.79507446289062" xd="219.9999984845344" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT4" blockname="Yard" connectaname="T9" connectbname="T13" connectcname="T14" />
     <layoutturnout ident="TO6" type="2" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="400.0" ycen="40.0" xa="420.0" ya="40.0" xb="380.0" yb="40.0" xc="380.0" yc="50.0" xd="420.0" yd="40.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT3" blockname="East" connectaname="T21" connectbname="T15" connectcname="T17" />
-    <tracksegment ident="T10" blockname="Yard" connect1name="TO4" type1="4" connect2name="X1" type2="6" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T11" blockname="Yard" connect1name="X1" type1="9" connect2name="TO8" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T12" blockname="North" connect1name="TO4" type1="3" connect2name="TO8" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T10" blockname="Yard" connect1name="TO4" type1="4" connect2name="X1" type2="6" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T11" blockname="Yard" connect1name="X1" type1="9" connect2name="TO8" type2="4" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T12" blockname="North" connect1name="TO4" type1="3" connect2name="TO8" type2="3" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T1" blockname="West" connect1name="TO4" type1="2" connect2name="TO1" type2="2" dashed="no" mainline="yes" hidden="no" arc="yes" flip="yes" circle="yes" angle="180.0" hideConLines="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T2" blockname="Yard" connect1name="TO2" type1="5" connect2name="TO1" type2="4" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T3" blockname="Yard" connect1name="TO3" type1="5" connect2name="TO2" type2="4" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T4" blockname="Yard" connect1name="TO1" type1="3" connect2name="TO2" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T5" blockname="Yard" connect1name="TO2" type1="3" connect2name="TO3" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T6" blockname="SW Sliding" connect1name="EB1" type1="1" connect2name="TO1" type2="5" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T7" blockname="SE Sliding" connect1name="TO3" type1="4" connect2name="EB2" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T9" blockname="Yard" connect1name="TO5" type1="2" connect2name="X1" type2="7" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T13" blockname="Yard" connect1name="A2" type1="1" connect2name="TO5" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T14" blockname="Yard" connect1name="TO5" type1="4" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T15" blockname="North" connect1name="TO6" type1="3" connect2name="TO8" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T17" blockname="Yard" connect1name="SL1" type1="24" connect2name="TO6" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T18" blockname="Yard" connect1name="SL1" type1="22" connect2name="A4" type2="1" dashed="no" mainline="no" hidden="no" arc="no" bezier="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+    <tracksegment ident="T2" blockname="Yard" connect1name="TO2" type1="5" connect2name="TO1" type2="4" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="Yard" connect1name="TO3" type1="5" connect2name="TO2" type2="4" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="Yard" connect1name="TO1" type1="3" connect2name="TO2" type2="2" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="Yard" connect1name="TO2" type1="3" connect2name="TO3" type2="2" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="SW Sliding" connect1name="EB1" type1="1" connect2name="TO1" type2="5" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="SE Sliding" connect1name="TO3" type1="4" connect2name="EB2" type2="1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="Yard" connect1name="TO5" type1="2" connect2name="X1" type2="7" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T13" blockname="Yard" connect1name="A2" type1="1" connect2name="TO5" type2="3" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T14" blockname="Yard" connect1name="TO5" type1="4" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T15" blockname="North" connect1name="TO6" type1="3" connect2name="TO8" type2="2" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T17" blockname="Yard" connect1name="SL1" type1="24" connect2name="TO6" type2="4" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T18" blockname="Yard" connect1name="SL1" type1="22" connect2name="A4" type2="1" dashed="no" mainline="no" hidden="no" bezier="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
       <controlpoints>
         <controlpoint index="0" x="220.0" y="130.0" />
         <controlpoint index="1" x="180.0" y="170.0" />
       </controlpoints>
     </tracksegment>
-    <tracksegment ident="T20" blockname="East" connect1name="TO3" type1="3" connect2name="A5" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T20" blockname="East" connect1name="TO3" type1="3" connect2name="A5" type2="1" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T21" blockname="East" connect1name="TO6" type1="2" connect2name="A5" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="180.0" hideConLines="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T22" blockname="Yard" connect1name="SL1" type1="23" connect2name="A6" type2="1" dashed="no" mainline="no" hidden="no" arc="no" bezier="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+    <tracksegment ident="T22" blockname="Yard" connect1name="SL1" type1="23" connect2name="A6" type2="1" dashed="no" mainline="no" hidden="no" bezier="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
       <controlpoints>
         <controlpoint index="0" x="400.0" y="140.0" />
         <controlpoint index="1" x="420.0" y="140.0" />
@@ -294,5 +294,5 @@
   </LayoutEditor>
   <filehistory>
   </filehistory>
-  <!--Written by JMRI version 4.9.5ish+geowar+20170919T1934Z+R34d7bea83b on Tue Sep 19 12:35:00 PDT 2017-->
+  <!--Written by JMRI version 4.9.6ish+geowar+20171107T0451Z+Ra3650b9413 on Mon Nov 06 20:52:38 PST 2017-->
 </layout-config>

@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -187,11 +189,13 @@ public class LayoutEditorFindItems {
 
     }
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
-    public LayoutTurnout findLayoutTurnoutByBean(NamedBean bean) {
+    @CheckReturnValue
+    public LayoutTurnout findLayoutTurnoutByBean(@Nullable NamedBean bean) {
         List<LayoutTurnout> layoutTurnouts = layoutEditor.getLayoutTurnouts();
         if (bean instanceof SignalMast) {
             for (LayoutTurnout t : layoutTurnouts) {
@@ -262,6 +266,7 @@ public class LayoutEditorFindItems {
         return null;
     }   // findLayoutTurnoutByBean
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutBySensor(String sensorName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
@@ -417,6 +422,7 @@ public class LayoutEditorFindItems {
         return result;
     }
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutByName(String name) {
         LayoutTurnout result = null;
         if ((name != null) && !name.isEmpty()) {
@@ -430,11 +436,12 @@ public class LayoutEditorFindItems {
         return result;
     }
 
-    public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
+    @CheckReturnValue
+    public LayoutTurnout findLayoutTurnoutByTurnoutName(String turnoutName) {
         LayoutTurnout result = null;
-        if ((name != null) && !name.isEmpty()) {
+        if ((turnoutName != null) && !turnoutName.isEmpty()) {
             for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
-                if (t.getTurnoutName().equals(name)) {
+                if (t.getTurnoutName().equals(turnoutName)) {
                     result = t;
                 }
             }
