@@ -232,6 +232,10 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
         Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
+        // add the HopperTest cartype here, so that the train doesn't 
+        // know about it.
+        InstanceManager.getDefault(CarTypes.class).addName("HopperTest");
+
         // Caboose is one of the default car types
         Assert.assertTrue("Train accepts type name Caboose", train1.acceptsTypeName(Bundle.getMessage("Caboose")));
         Assert.assertFalse("Train does not accept type name HopperTest", train1.acceptsTypeName("HopperTest"));
@@ -4475,7 +4479,6 @@ public class TrainTest extends OperationsTestCase {
         // disable build reports
         InstanceManager.getDefault(TrainManager.class).setBuildReportEnabled(false);
         InstanceManager.getDefault(CarTypes.class).addName("Boxcar");
-        InstanceManager.getDefault(CarTypes.class).addName("HopperTest");
         InstanceManager.getDefault(CarTypes.class).addName(Bundle.getMessage("Caboose"));
 
     }
