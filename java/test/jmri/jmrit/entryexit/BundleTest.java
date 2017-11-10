@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.entryexit;
+package jmri.jmrit.signalling;
 
 import java.util.Locale;
 import org.junit.Assert;

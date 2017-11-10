@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.entryexit;
+package jmri.jmrit.entryexit;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -8,7 +8,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")  // NOI18N
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
 @javax.annotation.concurrent.Immutable
 
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrit.signalling.Bundle {
+public class Bundle extends jmri.jmrit.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrit.signalling.entryexit.Bundle"; // NOI18N
+    private static final String name = "jmri.jmrit.entryexit.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
