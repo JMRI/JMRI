@@ -17,8 +17,8 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is more of an acceptance test than a unit test. It confirms that the entire
@@ -43,7 +43,7 @@ public class PanelProTest {
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
-//            log.debug("started LocoNetSim");
+            log.debug("started LocoNetSim");
             // last few messages from a normal startup are:
                 // INFO  - Starting with profile LocoNet_Simulator.3eac0cdc [main] apps.Apps.?()
                 // INFO  - Using jmri-92FD61C1C87D-3eac0cdc as the JMRI Node identity [main] jmri.util.node.NodeIdentity.?()
@@ -88,7 +88,7 @@ public class PanelProTest {
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
-//            log.debug("started EasyDccSim");
+            log.debug("started EasyDccSim");
             // last few messages from a normal startup are:
                 // INFO  - Starting with profile EasyDcc_Simulator.3f033c2b [main]
                 // INFO  - Using jmri-406C8F33A40D-3f033c2b as the JMRI Node identity [main]
@@ -125,7 +125,7 @@ public class PanelProTest {
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
-
+            log.debug("started TmcccSim");
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
@@ -195,6 +195,6 @@ public class PanelProTest {
         JUnitUtil.tearDown();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(PanelProTest.class);
+    private final static Logger log = LoggerFactory.getLogger(PanelProTest.class);
 
 }
