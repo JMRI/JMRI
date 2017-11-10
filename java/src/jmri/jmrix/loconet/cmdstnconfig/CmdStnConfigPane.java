@@ -23,23 +23,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * User interface for Command Station Option Programming
+ * User interface for Command Station Option Programming.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <hr>
- * This file is part of JMRI.
- * <p>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006
@@ -106,6 +96,9 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 name = name.substring(0, name.indexOf(' '));
             }
             log.debug("match /{}/", name); // NOI18N
+            if (name.startsWith("Intellibox")) {
+                name = "Default"; // use one (default) properties bundle for both IB-I and IB-II, prevent Resource Not Found
+            }
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig." + name + "options"); // NOI18N
         } catch (Exception e) { // use standard option set
             log.warn("Failed to find properties for /{}/ command station type", name, e); // NOI18N
@@ -188,6 +181,10 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 }
                 JLabel l = new JLabel(label);
                 if (i > 20 && i < 24) {
+                    log.debug("CS name: {}", name);
+                    if (name.startsWith("DB150")) { // DB150 is the only model using different OpSw 21-23 combos than the common set in LocoNetBundle
+                        tooltip = rb.getString("DB150ConfigFxToolTip");
+                    }
                     t.setToolTipText(tooltip);
                     c.setToolTipText(tooltip);
                     l.setToolTipText(tooltip);
