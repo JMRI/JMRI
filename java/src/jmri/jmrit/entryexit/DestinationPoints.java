@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.entryexit;
+package jmri.jmrit.entryexit;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
@@ -26,7 +26,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
-import jmri.jmrit.signalling.EntryExitPairs;
+// import jmri.jmrit.entryexit.EntryExitPairs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +46,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     LayoutBlock destination;
     boolean disposed = false;
 
-    transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+    transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
 
     transient jmri.SignalMastLogic sml;
 

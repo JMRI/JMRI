@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.entryexit;
+package jmri.jmrit.entryexit;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -17,7 +17,7 @@ import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
-import jmri.jmrit.signalling.EntryExitPairs;
+// import jmri.jmrit.signalling.EntryExitPairs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -162,7 +162,7 @@ public class PointDetails {
                 setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
             }
         }
-        jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).setMultiPointRoute(this, panel);
+        jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).setMultiPointRoute(this, panel);
     }
 
     void setSignalMast(SignalMast mast) {

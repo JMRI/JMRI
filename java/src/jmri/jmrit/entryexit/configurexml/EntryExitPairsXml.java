@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.configurexml;
+package jmri.jmrit.entryexit.configurexml;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.signalling.EntryExitPairs;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.util.ColorUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -299,7 +299,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * @param string String describing a color
      * @return integer representing a screen color
      * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#stringToColor(String)} instead
-     * 
+     *
      */
     @Deprecated
     public static Color stringToColor(String string) {

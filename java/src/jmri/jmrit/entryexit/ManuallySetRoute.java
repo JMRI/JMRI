@@ -1,10 +1,10 @@
-package jmri.jmrit.signalling.entryexit;
+package jmri.jmrit.entryexit;
 
 import jmri.Block;
 import jmri.NamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.signalling.EntryExitPairs;
+// import jmri.jmrit.signalling.EntryExitPairs;
 
 public class ManuallySetRoute {
 
@@ -14,7 +14,7 @@ public class ManuallySetRoute {
     public ManuallySetRoute(PointDetails pd) {
         sourcePoint = pd;
         LayoutBlock facing = lbm.getFacingBlockByNamedBean(pd.getSensor(), pd.getPanel());
-        EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+        EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
         for (LayoutBlock pro : lbm.getProtectingBlocksByNamedBean(pd.getSensor(), pd.getPanel())) {
             if (findDestPoint(pro, facing)) {
                 PointDetails dest = manager.providePoint(destLoc, pd.getPanel());
