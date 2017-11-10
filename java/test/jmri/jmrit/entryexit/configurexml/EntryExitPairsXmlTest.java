@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.configurexml;
+package jmri.jmrit.entryexit.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -8,14 +8,14 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EntryExitPairsXmlTest {
 
     @Test
     public void testCTor() {
         EntryExitPairsXml t = new EntryExitPairsXml();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

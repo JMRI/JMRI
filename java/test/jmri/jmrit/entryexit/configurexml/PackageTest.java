@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.configurexml;
+package jmri.jmrit.entryexit.configurexml;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
