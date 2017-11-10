@@ -17,6 +17,8 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * This is more of an acceptance test than a unit test. It confirms that the entire
@@ -41,7 +43,7 @@ public class PanelProTest {
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
-        
+//            log.debug("started LocoNetSim");
             // last few messages from a normal startup are:
                 // INFO  - Starting with profile LocoNet_Simulator.3eac0cdc [main] apps.Apps.?()
                 // INFO  - Using jmri-92FD61C1C87D-3eac0cdc as the JMRI Node identity [main] jmri.util.node.NodeIdentity.?()
@@ -86,6 +88,18 @@ public class PanelProTest {
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
+//            log.debug("started EasyDccSim");
+            // last few messages from a normal startup are:
+                // INFO  - Starting with profile EasyDcc_Simulator.3f033c2b [main]
+                // INFO  - Using jmri-406C8F33A40D-3f033c2b as the JMRI Node identity [main]
+                // INFO  - EasyDCC Simulator Started [EasyDCC Simulator]
+                // INFO  - File path program: is /Users/me/Documents/JMRI/ [main]
+                // INFO  - File path preference: is /Users/me/Library/Preferences/JMRI/EasyDcc_Simulator/ [main]
+                // INFO  - File path profile: is /Users/me/Library/Preferences/JMRI/EasyDcc_Simulator/ [main]
+                // INFO  - File path settings: is /Users/me/Library/Preferences/JMRI/ [main]
+                // INFO  - File path home: is /Users/me/ [main]
+                // INFO  - File path scripts: is /Users/me/Documents/JMRI/jython/ [main]
+                // INFO  - Main initialization done [main]
 
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
 
@@ -180,5 +194,7 @@ public class PanelProTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+//    private final static Logger log = LoggerFactory.getLogger(PanelProTest.class);
 
 }

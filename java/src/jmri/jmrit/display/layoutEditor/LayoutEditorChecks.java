@@ -328,7 +328,7 @@ public class LayoutEditorChecks {
         //if (layoutTrack.getName().equals("TO1")
         //        || layoutTrack.getName().equals("TO2")
         //        || layoutTrack.getName().equals("TO3")) {
-        //    log.info("•Stop here!");
+        //    log.info("-Stop here!"); // encode the dash as \u2022 to show a bullet in UTF-8
         //}
             layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
         }
@@ -412,6 +412,6 @@ public class LayoutEditorChecks {
         return results;
     }   // getCheckMarkedMenuItemNames
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorChecks.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorChecks.class);
+
 }   // class LayoutEditorChecks
