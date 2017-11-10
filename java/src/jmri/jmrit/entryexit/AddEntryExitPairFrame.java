@@ -52,7 +52,7 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
         });
 
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.signalling.EntryExitFrame", true);  // NOI18N
+        addHelpMenu("package.jmri.jmrit.entryexit.EntryExitFrame", true);  // NOI18N
         // pack for display
         pack();
     }
