@@ -16,7 +16,7 @@ public class SerialDriverAdapterTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("SimulatorAdapter constructor",new SimulatorAdapter());
+      Assert.assertNotNull("SimulatorAdapter constructor", new SimulatorAdapter());
    }
 
    @Before

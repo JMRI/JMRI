@@ -33,13 +33,9 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      * @param et the associated TrafficController
      */
     public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
-//        super(st.getController().getSystemConnectionMemo().getSystemPrefix(), SprogConnectionTypeList.SPROG);
-//        if (log.isDebugEnabled()) {
-//            log.debug("SprogSystemConnectionMemo, prefix='{}'", st.getController().getSystemConnectionMemo().getSystemPrefix());
-//        }
         super("E", EasyDccConnectionTypeList.EASYDCC);
         this.et = et;
-        register();
+        register(); // registers general type
         log.debug("EasyDCC SystemConnectionMemo with TC");
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
         // create and register the ComponentFactory for the GUI (menu)

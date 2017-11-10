@@ -1,8 +1,3 @@
-/**
- * JUnit tests for the EasyDccProgrammer class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.easydcc.easydccmon;
 
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
@@ -11,6 +6,11 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.junit.Assert;
 
+/**
+ * JUnit tests for the EasyDccProgrammer class
+ *
+ * @author	Bob Jacobsen
+ */
 public class EasyDccMonActionTest extends TestCase {
 
     public void testCreate() {
