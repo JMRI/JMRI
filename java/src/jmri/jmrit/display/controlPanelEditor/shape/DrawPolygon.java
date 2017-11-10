@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -60,6 +59,10 @@ public class DrawPolygon extends DrawFrame {
         }*/
         Point spt = getStartPoint();
         _shape = new PositionablePolygon(ed, makePath(spt));
+        if (_vertices.size() < 2) {
+            closingEvent(true);
+            return;
+        }
         _shape.setLocation(spt);
         _shape.updateSize();
         _shape.setEditFrame(this);
@@ -81,6 +84,8 @@ public class DrawPolygon extends DrawFrame {
     }
 
     protected void anchorPoint(int x, int y) {
+        _curX = x;
+        _curY = y;
         Point anchorPt = new Point(x, y);
         for (int i = 0; i < _vertices.size(); i++) {
             if (near(_vertices.get(i), anchorPt)) {
@@ -93,14 +98,15 @@ public class DrawPolygon extends DrawFrame {
 
     protected void drawShape(Graphics g) {
         if (!_editing) {
-            if (_vertices.isEmpty() || !(g instanceof Graphics2D)) {
+            if (_vertices.size() < 1 || !(g instanceof Graphics2D)) {
                 return;
             }
             Graphics2D g2d = (Graphics2D)g;
-            _lineWidth = _lineSlider.getValue();
-            BasicStroke stroke = new BasicStroke(_lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f);
-            g2d.setColor(_lineColor);
-            g2d.setStroke(stroke);
+            // disabled to satisfy P Bender
+            //_lineWidth = _lineSlider.getValue();
+            //BasicStroke stroke = new BasicStroke(_lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f);
+            //g2d.setColor(_lineColor);
+            //g2d.setStroke(stroke);
             GeneralPath path = makePath(new Point(0, 0));
             path.lineTo(_curX, _curY);
             g2d.draw(path);
@@ -122,7 +128,9 @@ public class DrawPolygon extends DrawFrame {
         Point p = _vertices.get(hitIndex);
         p.x += pt.x;
         p.y += pt.y;
-        _shape.setShape(makePath(getStartPoint()));
+        if (_editing) {
+            _shape.setShape(makePath(getStartPoint()));            
+        }
         return false;
     }
 
@@ -146,14 +154,18 @@ public class DrawPolygon extends DrawFrame {
      * <p>
      */
     private Point getStartPoint() {
-        int x = _vertices.get(0).x;
-        int y = _vertices.get(0).y;
-        for (int i = 1; i < _vertices.size(); i++) {
-            x = Math.min(x, _vertices.get(i).x);
-            y = Math.min(y, _vertices.get(i).y);
+        if (_vertices.size() > 0) {
+            int x = _vertices.get(0).x;
+            int y = _vertices.get(0).y;
+            for (int i = 1; i < _vertices.size(); i++) {
+                x = Math.min(x, _vertices.get(i).x);
+                y = Math.min(y, _vertices.get(i).y);
+            }
+            return new Point(x, y);
+        } else {
+            _vertices.add( new Point(_curX, _curY));
+            return new Point(_curX, _curY);
         }
-        Point p = new Point(x, y);
-        return p;
     }
 
     static private boolean near(Point p1, Point p2) {
@@ -175,29 +187,36 @@ public class DrawPolygon extends DrawFrame {
     protected void addVertex(boolean up) {
         if (_editing) {
             int hitIndex = _shape._hitIndex;
+            if (hitIndex < 0) {
+                if (_vertices.size() > 1) {
+                    hitIndex = _vertices.size() - 1;
+                } else {
+                    hitIndex = 0;
+                    if (_vertices.size() == 0) {
+                        _vertices.add(new Point(_curX, _curY));
+                    }
+                }
+                up = true;
+            }
             Point r1 = _vertices.get(hitIndex);
             Point newVertex;
             if (up) {
                 if (hitIndex == _vertices.size() - 1) {
                     newVertex = new Point(r1.x + 20, r1.y + 20);
-                } else if (hitIndex >= 0) {
+                } else {
                     Point r2 = _vertices.get(hitIndex + 1);
                     newVertex = new Point((r1.x + r2.x) / 2, (r1.y + r2.y) / 2);
-                } else {
-                    return;
                 }
                 _shape._hitIndex++;
             } else {
-                if (hitIndex > 0) {
+               if (hitIndex > 0) {
                     Point r2 = _vertices.get(hitIndex - 1);
                     newVertex = new Point((r1.x + r2.x) / 2, (r1.y + r2.y) / 2);
-                } else if (hitIndex == 0) {
-                    newVertex = new Point(r1.x + 20, r1.y + 20);
                 } else {
-                    return;
+                    newVertex = new Point(r1.x + 20, r1.y + 20);
                 }
             }
-            _vertices.add(_shape._hitIndex, newVertex);
+            _vertices.add(hitIndex, newVertex);
             _shape.setShape(makePath(getStartPoint()));
             _shape.drawHandles();
         }
@@ -205,9 +224,12 @@ public class DrawPolygon extends DrawFrame {
 
     protected void deleteVertex() {
         if (_editing) {
+            if (_vertices.size() <= 2) {
+                return;
+            }
             int hitIndex = _shape._hitIndex;
             if (hitIndex < 0) {
-                return;
+                hitIndex = _vertices.size() - 1;
             }
             _vertices.remove(hitIndex);
             _shape._hitIndex--;
