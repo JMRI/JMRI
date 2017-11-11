@@ -10,20 +10,17 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CanSystemConnectionMemoTest {
-
-    @Test
-    public void testCTor() {
-        CanSystemConnectionMemo t = new CanSystemConnectionMemo();
-        Assert.assertNotNull("exists",t);
-    }
+public class CanSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = new CanSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
