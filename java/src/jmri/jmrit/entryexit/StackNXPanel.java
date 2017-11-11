@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.entryexit;
+package jmri.jmrit.entryexit;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ import jmri.jmrit.signalling.EntryExitPairs;
 
 public class StackNXPanel extends JPanel {
 
-    transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+    transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
 
     private JPanel entryExitPanel;
 

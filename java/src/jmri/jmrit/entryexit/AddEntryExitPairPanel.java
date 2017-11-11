@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling;
+package jmri.jmrit.entryexit;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -53,7 +53,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     List<LayoutEditor> panels;
 
-    EntryExitPairs nxPairs = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+    EntryExitPairs nxPairs = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
 
     // signalling.EntryExitBundle via Bundle method
 

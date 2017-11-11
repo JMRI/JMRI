@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling;
+package jmri.jmrit.entryexit;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AddEntryExitPairFrameTest {
 

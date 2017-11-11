@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling;
+package jmri.jmrit.entryexit;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -26,10 +26,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.signalling.entryexit.DestinationPoints;
-import jmri.jmrit.signalling.entryexit.PointDetails;
-import jmri.jmrit.signalling.entryexit.Source;
-import jmri.jmrit.signalling.entryexit.StackNXPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

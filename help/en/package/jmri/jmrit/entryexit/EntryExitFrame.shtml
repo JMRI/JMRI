@@ -27,6 +27,7 @@
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
 
+    <div id="mainContent">
     <h1>JMRI: Entry/Exit (NX)</h1>
 
     <h2>Overview</h2>The Entry/Exit system uses Sensors assigned to
@@ -225,8 +226,9 @@
     that the blocks are made Occupied, then Unoccupied in the
     correct order, leaving the last block Occupied, thus simulating
     a train passing through the interlock. To do this, reselect the
-    route and select "Clear Down". 
+    route and select "Clear Down".
     <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
   </div>
 </body>
 </html>

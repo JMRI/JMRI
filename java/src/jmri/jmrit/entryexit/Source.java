@@ -1,4 +1,4 @@
-package jmri.jmrit.signalling.entryexit;
+package jmri.jmrit.entryexit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +11,6 @@ import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.signalling.EntryExitPairs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +29,7 @@ public class Source {
     //String ref = "Empty";
     transient PointDetails pd = null;
 
-    EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+    EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
 
     //Using Object here rather than sourceSensor, working on the basis that it might
     //one day be possible to have a signal icon selectable on a panel and
