@@ -11,7 +11,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import jmri.jmrit.signalling.EntryExitPairs;
 
 public class StackNXPanel extends JPanel {
 
