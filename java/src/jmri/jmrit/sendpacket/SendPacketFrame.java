@@ -7,8 +7,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.SpinnerNumberModel;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.util.StringUtil;
@@ -17,11 +19,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * User interface for sending DCC packets.
- * <P>
+ * <p>
  * This was originally made from jmrix.loconet.logogen, but note that the logic
  * is somewhat different here. The LocoNet version waited for the sent (LocoNet)
  * packet to be echo'd, while this starts the timeout immediately.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
@@ -39,29 +41,29 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     static final int MAXSEQUENCE = 4;
     JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
-    JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton("Go");
+    JSpinner mDelaySpinner[] = new JSpinner[MAXSEQUENCE];
+    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonGo"));
 
     @Override
     public void initComponents() {
 
-        setTitle("Send DCC Packet");
+        setTitle(Bundle.getMessage("SendPacketTitle"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // handle single-packet part
-        getContentPane().add(new JLabel("Send one packet:"));
+        getContentPane().add(new JLabel(Bundle.getMessage("SendOneLabel")));
         {
             JPanel pane1 = new JPanel();
             pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
 
-            jLabel1.setText("Packet:");
+            jLabel1.setText(Bundle.getMessage("PacketLabel"));
             jLabel1.setVisible(true);
 
-            sendButton.setText("Send");
+            sendButton.setText(Bundle.getMessage("ButtonSend"));
             sendButton.setVisible(true);
-            sendButton.setToolTipText("Send packet");
+            sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
-            packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
+            packetTextField.setToolTipText(Bundle.getMessage("EnterHexBytesToolTip"));
 
             pane1.add(jLabel1);
             pane1.add(packetTextField);
@@ -81,21 +83,21 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
         getContentPane().add(new JSeparator());
 
         // Configure the sequence
-        getContentPane().add(new JLabel("Send sequence of packets:"));
+        getContentPane().add(new JLabel(Bundle.getMessage("SendSequenceLabel")));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new GridLayout(MAXSEQUENCE + 2, 4));
         pane2.add(new JLabel(""));
-        pane2.add(new JLabel("Send"));
-        pane2.add(new JLabel("packet"));
-        pane2.add(new JLabel("wait (msec)"));
+        pane2.add(new JLabel(Bundle.getMessage("ButtonSend")));
+        pane2.add(new JLabel(Bundle.getMessage("Packet")));
+        pane2.add(new JLabel(Bundle.getMessage("WaitMsec")));
         for (int i = 0; i < MAXSEQUENCE; i++) {
             pane2.add(new JLabel(Integer.toString(i + 1)));
             mUseField[i] = new JCheckBox();
             mPacketField[i] = new JTextField(10);
-            mDelayField[i] = new JTextField(10);
+            mDelaySpinner[i] = new JSpinner(new SpinnerNumberModel(100, 0, 1000, 1));
             pane2.add(mUseField[i]);
             pane2.add(mPacketField[i]);
-            pane2.add(mDelayField[i]);
+            pane2.add(mDelaySpinner[i]);
         }
         pane2.add(mRunButton); // starts a new row in layout
         getContentPane().add(pane2);
@@ -130,7 +132,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts {@literal &} restarts.
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -148,7 +150,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Run button pressed down, start the sequence operation
+     * Run button pressed down, start the sequence operation.
      *
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -172,14 +174,14 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Echo has been heard, start delay for next packet
+     * Echo has been heard, start delay for next packet.
      */
     void startSequenceDelay() {
         // at the start, mNextSequenceElement contains index we're
         // working on
         int delay = 500;   // default delay if non specified, or format bad
         try {
-            delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
+            delay = (Integer) mDelaySpinner[mNextSequenceElement].getValue();
         } catch (NumberFormatException e) {
         }
 
@@ -226,9 +228,9 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Create a well-formed DCC packet from a String
+     * Create a well-formed DCC packet from a String.
      *
-     * @return The packet, with contents filled-in
+     * @return the packet, with contents filled-in
      */
     byte[] createPacket(String s) {
         // gather bytes in result
@@ -240,7 +242,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * When the window closes, stop any sequences running
+     * When the window closes, stop any sequences running.
      */
     @Override
     public void dispose() {
