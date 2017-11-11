@@ -719,6 +719,7 @@ public class LayoutEditorTest {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             le = new LayoutEditor("Test Layout");
+            jmri.InstanceManager.setDefault(LayoutBlockManager.class,new LayoutBlockManager());
         }
     }
 

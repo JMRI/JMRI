@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a LogFrame object
+ * Swing action to create and register a LogFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
@@ -17,7 +17,7 @@ public class LogAction extends AbstractAction {
     }
 
     public LogAction() {
-        this("Add Log Entry");
+        this("Add Log Entry"); // NOI18N
     }
 
     @Override
@@ -30,7 +30,7 @@ public class LogAction extends AbstractAction {
         }
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(LogAction.class);
+
 }
-
-

@@ -19,18 +19,20 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of getSpeedStepMode method, of class AbstractThrottle.
+     * {@inheritDoc}
+     * 
+     * The default mode is 28 speed steps
      */
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
+        int expResult = jmri.DccThrottle.SpeedStepMode28;
         int result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
     /**
-     * Test of getSpeedIncrement method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -41,7 +43,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of intSpeed method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -60,7 +62,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF0 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -70,7 +72,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF1 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -80,7 +82,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF2 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -90,7 +92,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF3 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -100,7 +102,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF4 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -110,7 +112,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF5 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -120,7 +122,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF6 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -130,7 +132,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF7 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -140,7 +142,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF8 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -150,7 +152,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF9 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -160,7 +162,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF10 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -170,7 +172,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF11 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -180,7 +182,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF12 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -190,7 +192,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF13 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -200,7 +202,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF14 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -210,7 +212,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF15 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -220,7 +222,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF16 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -230,7 +232,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF17 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -240,7 +242,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF18 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -250,7 +252,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF19 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -260,7 +262,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF20 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -270,7 +272,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF21 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -280,7 +282,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF22 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -290,7 +292,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF23 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -300,7 +302,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF24 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -310,7 +312,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF25 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -320,7 +322,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF26 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -330,7 +332,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF27 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -340,7 +342,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of setF28 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -350,7 +352,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of sendFunctionGroup1 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -358,7 +360,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of sendFunctionGroup2 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -366,7 +368,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of sendFunctionGroup3 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -374,7 +376,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of sendFunctionGroup4 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -382,7 +384,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of sendFunctionGroup5 method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -390,7 +392,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of release method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override
@@ -400,7 +402,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test of dispatch method, of class AbstractThrottle.
+     * {@inheritDoc}
      */
     @Test
     @Override

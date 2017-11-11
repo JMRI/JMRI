@@ -728,7 +728,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             } else if (e.getPropertyName().equals("throttleFail")) {
                 _frame.setStatusText(Bundle.getMessage("ThrottleFail",
                         bean.getTrainName(), e.getNewValue()), Color.red, true);
-            }
+            } else if (e.getPropertyName().equals("Command")) {
+                _frame.setStatusText(Bundle.getMessage("TrainReady",
+                        bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
+           }
             if (log.isDebugEnabled())
                 log.debug("propertyChange of \"" + e.getPropertyName() + "\" for warrant "
                         + bean.getDisplayName());
