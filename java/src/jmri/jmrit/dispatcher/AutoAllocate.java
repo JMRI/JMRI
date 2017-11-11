@@ -522,19 +522,10 @@ public class AutoAllocate {
             }
             log.debug("Auto allocating by count");
             int numberAllocatedButUnoccupied = 0;
-            while ((curAS != null) && (curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED)) {
-                //last allocated section exists and is not occupied, test previous one
-                numberAllocatedButUnoccupied+=1;
-                curSeq = curSeq - 1;
-                if ((curSeq == 1) && ar.getActiveTrain().getResetWhenDone()) {
-                    curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
-                }
-                curAS = null;
-                for (int i = aSectionList.size() - 1; i >= 0; i--) {
-                    AllocatedSection as = aSectionList.get(i);
-                    if ((as != null) && (as.getSequence() == curSeq)) {
-                        curAS = as;
-                    }
+            for (int i = aSectionList.size() - 1; i >= 0; i--) {
+                AllocatedSection as = aSectionList.get(i);
+                if ((as != null) && (as.getSection().getOccupancy() != jmri.Section.OCCUPIED && !as.getExited())) {
+                    numberAllocatedButUnoccupied++;
                 }
             }
             log.debug("FinalCounter[{}]",numberAllocatedButUnoccupied);

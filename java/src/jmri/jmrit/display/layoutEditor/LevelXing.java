@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -999,42 +998,27 @@ public class LevelXing extends LayoutTrack {
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
             if ((blockNameAC == null) || (blockNameAC.isEmpty())) {
-                jmi = popup.add(Bundle.getMessage("NoBlockX", "AC"));
-                jmi.setEnabled(false);
+                jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "AC")) + getLayoutBlockAC().getDisplayName());
-                jmi.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        layoutEditor.highlightLayoutBlock(getLayoutBlockAC());
-                    } //actionPerformed
-                });
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + getLayoutBlockAC().getDisplayName());
                 blockACAssigned = true;
             }
+            jmi.setEnabled(false);
 
             if ((blockNameBD == null) || (blockNameBD.isEmpty())) {
-                jmi = popup.add(Bundle.getMessage("NoBlockX", "BD"));
-                jmi.setEnabled(false);
+                jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "BD")) + getLayoutBlockBD().getDisplayName());
-                jmi.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        layoutEditor.highlightLayoutBlock(getLayoutBlockBD());
-                    } //actionPerformed
-                });
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + getLayoutBlockBD().getDisplayName());
                 blockBDAssigned = true;
             }
+            jmi.setEnabled(false);
 
             // if there are any track connections
             if ((connectA != null) || (connectB != null)
                     || (connectC != null) || (connectD != null)) {
-                popup.add(new JSeparator(JSeparator.HORIZONTAL));
-                jmi = popup.add(new JMenuItem(Bundle.getMessage("Connections"))); // there is no pane opening (which is what ... implies)
-                popup.add(jmi);
-                jmi.setEnabled(false);
+                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
                 if (connectA != null) {
-                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -1048,7 +1032,7 @@ public class LevelXing extends LayoutTrack {
                     });
                 }
                 if (connectB != null) {
-                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -1062,7 +1046,7 @@ public class LevelXing extends LayoutTrack {
                     });
                 }
                 if (connectC != null) {
-                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -1076,7 +1060,7 @@ public class LevelXing extends LayoutTrack {
                     });
                 }
                 if (connectD != null) {
-                    popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -1089,6 +1073,7 @@ public class LevelXing extends LayoutTrack {
                         }
                     });
                 }
+                popup.add(connectionsMenu);
             }
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -1553,7 +1538,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.info("-New block ('{}') trackNameSets", theBlockName);
+                log.info("•New block ('{}') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -1562,7 +1547,7 @@ public class LevelXing extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.info("-    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -1581,7 +1566,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameAC != null) && (blockNameAC.equals(blockName))) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // it's time to play... flood your neighbours!
                 if (connectA != null) {
@@ -1595,7 +1580,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameBD != null) && (blockNameBD.equals(blockName))) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // it's time to play... flood your neighbours!
                 if (connectB != null) {

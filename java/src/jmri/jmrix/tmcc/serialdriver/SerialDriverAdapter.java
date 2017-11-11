@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.TooManyListenersException;
 import jmri.jmrix.tmcc.SerialPortController;
 import jmri.jmrix.tmcc.SerialTrafficController;
-import jmri.jmrix.tmcc.TMCCSystemConnectionMemo;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -29,7 +29,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(new TMCCSystemConnectionMemo());
+        super(new TmccSystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL;
     }
 
@@ -171,19 +171,21 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {
         // connect to the traffic controller
-        SerialTrafficController.instance().connectPort(this);
-
+        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
+        SerialTrafficController control = new SerialTrafficController(getSystemConnectionMemo());
+        control.connectPort(this);
+        this.getSystemConnectionMemo().setTrafficController(control);
+        // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.tmcc.ActiveFlag.setActive();
     }
 
-    // base class methods for the SerialPortController interface
+    // Base class methods for the SerialPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -250,7 +252,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super.configureBaudRate(rate);
     }
 
-    protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "57,600 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
+            Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{9600, 19200, 57600};
     protected String selectedSpeed = validSpeeds[0];
 
@@ -280,8 +283,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     /**
      * @return the default adapter
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
-     * multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used
      */
     @Deprecated
     static public SerialDriverAdapter instance() {
@@ -291,8 +293,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return mInstance;
     }
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
-     * multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used
      */
     @Deprecated
     static SerialDriverAdapter mInstance = null;
