@@ -154,7 +154,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @SuppressWarnings("unchecked")
@@ -191,7 +191,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     @Override
