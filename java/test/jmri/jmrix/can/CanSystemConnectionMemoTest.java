@@ -12,6 +12,14 @@ import org.junit.Test;
  */
 public class CanSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       // without knowing which system is connected via can, there is no
+       // way to provide a consist manager.
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    }
+
     // The minimal setup for log4J
     @Override
     @Before
