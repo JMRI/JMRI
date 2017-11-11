@@ -1859,6 +1859,6 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+
 }
