@@ -1,4 +1,4 @@
-package jmri.jmrit.sendpacket;
+package jmri.jmrit.mastbuilder;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -6,13 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SendPacketFrame object.
+ * Swing action to create and register a MastBuilder object
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public class SendPacketAction extends AbstractAction {
+public class MastBuilderAction extends AbstractAction {
 
-    public SendPacketAction(String s) {
+    public MastBuilderAction(String s) {
         super(s);
 
         // disable ourself if there is no command Station object available
@@ -21,14 +21,14 @@ public class SendPacketAction extends AbstractAction {
         }
     }
 
-    public SendPacketAction() {
-        this(Bundle.getMessage("SendPacketTitle"));
+    public MastBuilderAction() {
+        this(Bundle.getMessage("MastBuilderTitle"));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // create a SendPacketFrame
-        SendPacketFrame f = new SendPacketFrame();
+        // create a MastBuilderPane
+        MastBuilderPane f = new MastBuilderPane();
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -37,6 +37,6 @@ public class SendPacketAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class);
+    private final static Logger log = LoggerFactory.getLogger(MastBuilderAction.class);
 
 }
