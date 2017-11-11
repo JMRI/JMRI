@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the SwingShutDownTask class.
+ * Demo runner for the SwingShutDownTask class.
  * <p>
- * Invoked from higher-level tests, this does not display the modal dialogs that
+ * Invoked from higher-level JUnit test as a test class, this does not display the modal dialogs that
  * stop execution until clicked/closed. When invoked via its own main() start
  * point, this does show the modal dialogs.
  * <p>
@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  */
-public class SwingShutDownTaskTest extends TestCase {
+public class SwingShutDownTaskDemo extends TestCase {
 
     static boolean modalDialogStopsTest = false;
-    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskTest.class);
+    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskDemo.class);
 
     public void testCreate1() {
 
@@ -39,8 +39,6 @@ public class SwingShutDownTaskTest extends TestCase {
 
         // and display
         t.execute();
-
-        // Assert.assertTrue("NONE must be zero", 0==Path.NONE);
     }
 
     public void testCreate2() {
@@ -64,12 +62,10 @@ public class SwingShutDownTaskTest extends TestCase {
 
         // and display
         t.execute();
-
-        // Assert.assertTrue("NONE must be zero", 0==Path.NONE);
     }
 
     // from here down is testing infrastructure
-    public SwingShutDownTaskTest(String s) {
+    public SwingShutDownTaskDemo(String s) {
         super(s);
     }
 
@@ -77,13 +73,13 @@ public class SwingShutDownTaskTest extends TestCase {
     static public void main(String[] args) {
         modalDialogStopsTest = true;
         // -noloading needed so we can set the same class-loaded static variable
-        String[] testCaseName = {"-noloading", SwingShutDownTaskTest.class.getName()};
+        String[] testCaseName = {"-noloading", SwingShutDownTaskDemo.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(SwingShutDownTaskTest.class);
+        TestSuite suite = new TestSuite(SwingShutDownTaskDemo.class);
         return suite;
     }
 
@@ -98,6 +94,4 @@ public class SwingShutDownTaskTest extends TestCase {
         JUnitUtil.tearDown();
     }
 
-//    don't want log defined here, as makes the "log" references above ambiguous
-//    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskTest.class);
 }
