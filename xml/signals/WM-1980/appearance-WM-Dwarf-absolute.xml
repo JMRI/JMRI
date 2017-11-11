@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd">
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
+        <email>gpmccartney@gmail.com</email>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2015-10-19</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Initial version of the signal set.</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>WM 1980</aspecttable>
+  <name>WM Absolute Dwarf Signal</name>
+  <reference>As described in the 1980 version of the Chessie System Railroads Operating Rules.</reference>
+  <description>Appearances for WM absolute dwarf signals</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Slow Clear</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 144</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_Dwarf/Rule-W287.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 144</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_Dwarf/Rule-W288.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Page 145</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_Dwarf/Rule-W290.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <reference>Page 146</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_Dwarf/Rule-W292.gif</imagelink>
+    </appearance>
+	
+	<appearance>
+      <aspectname>Stop-Throw Switch</aspectname>
+      <show>dark</show>
+      <show>flashred</show>
+      <reference>Page 100 of 1973 WM Rule Book</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_Dwarf/Rule-W293.gif</imagelink>
+    </appearance>
+
+  </appearances>
+
+  <specificappearances>
+
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+
+  </specificappearances>
+
+  <aspectMappings>
+
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+	
+	<aspectMapping>
+      <advancedAspect>Stop-Throw Switch</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+
+</appearancetable>
