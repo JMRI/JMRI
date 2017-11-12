@@ -35,7 +35,6 @@ public class AnymaDMX_Adapter extends AbstractPortController
         } catch (UnsatisfiedLinkError er) {
             log.error("Expected to run on Anyma DMX, but does not appear to be.");
         }
-        option1Name = "USB Device"; // NOI18N
 
         List<String> productNames = new ArrayList<>();
         List<UsbDevice> usbDevices = USBUtil.getMatchingDevices((short) 0x16C0, (short) 0x05DC);
@@ -51,7 +50,7 @@ public class AnymaDMX_Adapter extends AbstractPortController
             }
             productNames.add(fullProductName);
         }
-
+        option1Name = "USB Device"; // NOI18N
         option1Values = productNames.toArray(new String[productNames.size()]);
         options.put(option1Name, new Option(option1Name + ":", option1Values, false));
 
