@@ -94,7 +94,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
                     int choice = JOptionPane.showOptionDialog(null,
                             Bundle.getMessage("NoImagesInDir", dir), Bundle.getMessage("QuestionTitle"),
                             JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ButtonKeepLooking")}, 1);
+                            new String[]{Bundle.getMessage("ButtonStop"), Bundle.getMessage("ButtonKeepLooking")}, 1);
                     switch (choice) {
                         case 0:
                             return null;
@@ -200,7 +200,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         }
         closeWaitFrame();
         JOptionPane.showMessageDialog(null, Bundle.getMessage("numFound", count, dir.getAbsolutePath()),
-                Bundle.getMessage("info"), JOptionPane.INFORMATION_MESSAGE);
+                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
     }
 
     class Seacher extends Thread implements Runnable {
