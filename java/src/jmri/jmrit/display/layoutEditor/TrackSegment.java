@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.lang.Float.POSITIVE_INFINITY;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
 import java.awt.BasicStroke;
@@ -184,7 +185,6 @@ public class TrackSegment extends LayoutTrack {
         connect2 = connectTrack;
         type2 = connectionType;
     }
-
 
     /**
      * replace old track connection with new track connection
@@ -628,21 +628,36 @@ public class TrackSegment extends LayoutTrack {
             //note: optimization here: instead of creating rectangles for all the
             // points to check below, we create a rectangle for the test point
             // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+            Point2D p, minP = MathUtil.zeroPoint2D;
+
+            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+            double distance, minDistance = POSITIVE_INFINITY;
 
             if (isCircle()) {
-                if (r.contains(getCoordsCenterCircle())) {
+                p = getCoordsCenterCircle();
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minP = p;
                     result = TRACK_CIRCLE_CENTRE;
                 }
             } else if (isBezier()) {
                 // hit testing for the control points
                 // note: control points will override center circle
                 for (int index = 0; index < bezierControlPoints.size(); index++) {
-                    if (r.contains(bezierControlPoints.get(index))) {
-                        result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
-                        break;
+                    p = bezierControlPoints.get(index);
+                    distance = MathUtil.distance(p, hitPoint);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        minP = p;
+                        result = TRACK_CIRCLE_CENTRE;
                     }
                 }
+            }
+            if ((useRectangles && !r.contains(minP))
+                    || (!useRectangles && (minDistance > circleRadius))) {
+                result = NONE;
             }
             if (result == NONE) {
                 if (r.contains(getCentreSeg())) {
