@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
         suite.addTest(TrainManagerTest.suite());
         suite.addTest(TrainTest.suite());
         suite.addTest(TrainCommonTest.suite());
-        suite.addTest(TrainBuilderTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainBuilderTest.class));
         suite.addTest(XmlTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.operations.trains.tools.PackageTest.suite());

@@ -124,7 +124,7 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST);
         manager.getLocationByName("Test Location 1").addTypeName("Baggage");
         manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
-        manager.getLocationByName("Test Location 1").addTypeName("Caboose");
+        manager.getLocationByName("Test Location 1").addTypeName(Bundle.getMessage("Caboose"));
         manager.getLocationByName("Test Location 1").addTypeName("Coal");
         manager.getLocationByName("Test Location 1").addTypeName("Engine");
         manager.getLocationByName("Test Location 1").addTypeName("Hopper");
@@ -134,7 +134,7 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 2").setTrainDirections(Location.WEST);
         manager.getLocationByName("Test Location 2").addTypeName("Baggage");
         manager.getLocationByName("Test Location 2").addTypeName("Boxcar");
-        manager.getLocationByName("Test Location 2").addTypeName("Caboose");
+        manager.getLocationByName("Test Location 2").addTypeName(Bundle.getMessage("Caboose"));
         manager.getLocationByName("Test Location 2").addTypeName("Coal");
         manager.getLocationByName("Test Location 2").addTypeName("Engine");
         manager.getLocationByName("Test Location 2").addTypeName("Hopper");
@@ -145,7 +145,7 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST + Location.WEST + Location.NORTH);
         manager.getLocationByName("Test Location 3").addTypeName("Baggage");
         manager.getLocationByName("Test Location 3").addTypeName("boxCar");
-        manager.getLocationByName("Test Location 3").addTypeName("Caboose");
+        manager.getLocationByName("Test Location 3").addTypeName(Bundle.getMessage("Caboose"));
         manager.getLocationByName("Test Location 3").addTypeName("Coal");
         manager.getLocationByName("Test Location 3").addTypeName("Engine");
         manager.getLocationByName("Test Location 3").addTypeName("Hopper");
@@ -378,6 +378,7 @@ public class XmlTest extends OperationsTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
     }
 
     public XmlTest(String s) {
