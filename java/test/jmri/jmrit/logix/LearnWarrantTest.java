@@ -238,8 +238,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
-         // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
