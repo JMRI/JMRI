@@ -44,7 +44,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="15" width="9.5" height="2.9" units="mm"/>
       </model>
-	  <model model="860016" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860016" formFactor="HO" connector="Plux22" comment="HO-scale, with Plux22 harness">
+	  <model model="860016" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860016" formFactor="HO" connector="PluX22" comment="HO-scale, with PluX22 harness">
         <output name="1" label="White|Pin 7" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 13" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 16" connection="plug" maxcurrent="100 mA"/>
@@ -97,10 +97,10 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="15" width="7" height="2.7" units="mm"/>
       </model>
-      <model model="860014" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860014" formFactor="HO" connector="Wire" comment="9 Wire">
-        <output name="1" label="White|Wire" connection="Wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow|Wire" connection="Wire" maxcurrent="100 mA"/>
-		<output name="3" label="Green|Wire" connection="Wire" maxcurrent="100 mA"/>
+      <model model="860014" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860014" formFactor="HO" connector="Wires" comment="9 Wire">
+        <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA"/>
+		<output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA"/>
         <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA"/>
         <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
         <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
