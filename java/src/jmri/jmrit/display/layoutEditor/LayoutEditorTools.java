@@ -12126,7 +12126,7 @@ public class LayoutEditorTools {
         BeanDetails(@Nonnull String beanType, @Nonnull Manager manager) {
             beanCombo = new JmriBeanComboBox(manager);
             beanCombo.setFirstItemBlank(true);
-            LayoutEditor.setupComboBoxMaxRows(beanCombo);
+            JmriBeanComboBox.setupComboBoxMaxRows(beanCombo);
 
             // I18N translate from type (Sensor) to BeanNameSensor
             // to use NamedBeanBundle property
