@@ -50,10 +50,6 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
     JCheckBox optionBox;
 
-    public CmdStnConfigPane() {
-        super();
-    }
-
     ResourceBundle rb;
     // internal members to hold widgets
     JButton readButton;
@@ -63,6 +59,13 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     JRadioButton[] thrownButtons = new JRadioButton[MAX_OPTION];
     JLabel[] labels = new JLabel[MAX_OPTION];
     boolean[] isReserved = new boolean[MAX_OPTION];
+
+    /**
+     * Ctor
+     */
+    public CmdStnConfigPane() {
+        super();
+    }
 
     @Override
     public String getHelpTarget() {
@@ -96,14 +99,11 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 name = name.substring(0, name.indexOf(' '));
             }
             log.debug("match /{}/", name); // NOI18N
-            if (name.startsWith("Intellibox")) {
-                name = "Default"; // use one (default) properties bundle for both IB-I and IB-II, prevent Resource Not Found
-            }
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig." + name + "options"); // NOI18N
         } catch (Exception e) { // use standard option set
             log.warn("Failed to find properties for /{}/ command station type", name, e); // NOI18N
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions"); // NOI18N
-            // Localized strings common to all LocoNet command station models are fetched using Bundle.
+            // Localized strings common to all LocoNet command station models are fetched using Bundle.getMessage()
         }
 
         try {
@@ -125,6 +125,9 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         {
+            // start with the CS title
+            add(new JLabel(labelTop));
+
             // section holding buttons
             readButton = new JButton(read);
             writeButton = new JButton(write);
@@ -133,6 +136,10 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             pane.setLayout(new FlowLayout());
             pane.add(readButton);
             pane.add(writeButton);
+            if (CONFIG_SLOT == -1) { // disable reading/writing for non-configurable CS types, ie. Intellibox-I/-II
+                readButton.setEnabled(false);
+                writeButton.setEnabled(false);
+            }
             add(pane);
 
             optionBox = new JCheckBox(Bundle.getMessage("CheckBoxReserved"));
@@ -182,7 +189,8 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 JLabel l = new JLabel(label);
                 if (i > 20 && i < 24) {
                     log.debug("CS name: {}", name);
-                    if (name.startsWith("DB150")) { // DB150 is the only model using different OpSw 21-23 combos than the common set in LocoNetBundle
+                    if (name.startsWith("DB150")) {
+                        // DB150 is the only model using different OpSw 21-23 combos than the common tooltip, which is stored in LocoNetBundle
                         tooltip = rb.getString("DB150ConfigFxToolTip");
                     }
                     t.setToolTipText(tooltip);
@@ -271,8 +279,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     }
 
     /**
-     *
-     * Start the Frame operating by asking for a read
+     * Start the Frame operating by asking for a read.
      */
     public void start() {
         // format and send request for slot contents
@@ -285,7 +292,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     }
 
     /**
-     * Process the incoming message to look for Slot 127 Read
+     * Process the incoming message to look for Slot 127 Read.
      */
     @Override
     public void message(LocoNetMessage msg) {

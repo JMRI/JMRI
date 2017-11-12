@@ -21,8 +21,8 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         super(new LocoNetSystemConnectionMemo());
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
-        options.put(option2Name, new Option("Command station type:", commandStationNames, false)); // TODO I18N
-        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
+        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
     }
 
     /**
