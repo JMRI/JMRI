@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -413,39 +411,22 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
-        //note: optimization here: instead of creating rectangles for all the
-        // points to check below, we create a rectangle for the test point
-        // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
-        Point2D p, minP = MathUtil.zeroPoint2D;
 
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double distance, minDistance = POSITIVE_INFINITY;
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+
         if (!requireUnconnected) {
             //check the center point
-            p = getCoordsCenter();
-            distance = MathUtil.distance(p, hitPoint);
-            if (distance < minDistance) {
-                minDistance = distance;
-                minP = p;
+            if (r.contains(getCoordsCenter())) {
                 result = TURNTABLE_CENTER;
             }
         }
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
-                p = getCoordsCenter();
-                distance = MathUtil.distance(p, hitPoint);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    minP = p;
+                if (r.contains(getRayCoordsOrdered(k))) {
                     result = TURNTABLE_RAY_OFFSET + getRayIndex(k);
                 }
             }
-        }
-        if ((useRectangles && !r.contains(minP))
-                || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
         }
         return result;
     }

@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
 import java.awt.BasicStroke;
@@ -702,8 +701,8 @@ public class PositionablePoint extends LayoutTrack {
                 result = false;
             }
         } else {
-            log.error("Already connected to {}", newTrack.getName());
-            result = false;
+                log.error("Already connected to {}", newTrack.getName());
+                result = false;
         }
         return result;
     }   // replaceTrackConnection
@@ -1322,29 +1321,14 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
-        //note: optimization here: instead of creating rectangles for all the
-        // points to check below, we create a rectangle for the test point
-        // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
-        Point2D p, minP = MathUtil.zeroPoint2D;
-
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double distance, minDistance = POSITIVE_INFINITY;
 
         if (!requireUnconnected || (getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
             // test point control rectangle
-            p = getCoordsCenter();
-            distance = MathUtil.distance(p, hitPoint);
-            if (distance < minDistance) {
-                minDistance = distance;
-                minP = p;
+            Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoordsCenter());
+            if (r.contains(hitPoint)) {
                 result = POS_POINT;
             }
-        }
-        if ((useRectangles && !r.contains(minP))
-                || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
         }
         return result;
     }
@@ -1790,7 +1774,7 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    /**
+   /**
      * {@inheritDoc}
      */
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
