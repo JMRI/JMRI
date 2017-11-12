@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd">
+
+    <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+    </copyright>
+
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+        <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
+            <email>gpmccartney@gmail.com</email>
+        </author>
+    </authorgroup>
+
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2016-12-15</date>
+            <authorinitials>GPM</authorinitials>
+            <revremark>Initial version of the signal set.</revremark>
+        </revision>
+    </revhistory>
+
+    <aspecttable>WM 1980</aspecttable>
+    <name>US&amp;S R-2 Single Arm with Low Marker Absolute Mast Signal</name>
+    <reference>As described in the 1980 version of the Chessie System Railroads Operating Rules.</reference>
+    <description>Appearances of WM single arm absolute US&amp;S R-2 mast signals with a low red marker</description>
+
+    <appearances>
+
+        <appearance>
+            <aspectname>Clear</aspectname>
+            <show>green</show>
+			<show>dark</show>
+            <reference>Page 142</reference>
+            <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W281.gif</imagelink>
+        </appearance>
+
+        <appearance>
+            <aspectname>Approach</aspectname>
+            <show>yellow</show>
+			<show>dark</show>
+            <reference>Page 143</reference>
+            <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W285.gif</imagelink>
+        </appearance>
+
+        <appearance>
+            <aspectname>Stop</aspectname>
+            <show>red</show>
+			<show>red</show>
+            <reference>Page 146</reference>
+            <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W292.gif</imagelink>
+        </appearance>
+		
+		<appearance>
+            <aspectname>Stop-Throw Switch</aspectname>
+            <show>red</show>
+			<show>flashred</show>
+            <reference>Page 100 of the 1973 WM Rule Book</reference>
+            <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W293.gif</imagelink>
+        </appearance>
+
+    </appearances>
+
+    <specificappearances>
+        <danger>
+            <aspect>Stop</aspect>
+        </danger>
+        <held>
+            <aspect>Stop</aspect>
+        </held>
+    </specificappearances>
+
+    <aspectMappings>
+
+        <aspectMapping>
+            <advancedAspect>Clear</advancedAspect>
+            <ourAspect>Clear</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Approach Diverging</advancedAspect>
+            <ourAspect>Clear</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Diverging Clear</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Approach</advancedAspect>
+            <ourAspect>Clear</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Diverging Approach</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Slow Clear</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Slow Approach</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Restricting</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Stop and Proceed</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Stop</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+		
+		<aspectMapping>
+            <advancedAspect>Stop-Throw Switch</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+    </aspectMappings>
+
+</appearancetable>
