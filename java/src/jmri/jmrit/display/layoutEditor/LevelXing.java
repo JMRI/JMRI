@@ -901,7 +901,7 @@ public class LevelXing extends LayoutTrack {
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
         Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
-        Point2D p, minP = MathUtil.zeroPoint2D;
+        Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double distance, minDistance = POSITIVE_INFINITY;
@@ -912,7 +912,7 @@ public class LevelXing extends LayoutTrack {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minP = p;
+                minPoint = p;
                 result = LEVEL_XING_CENTER;
             }
         }
@@ -923,7 +923,7 @@ public class LevelXing extends LayoutTrack {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minP = p;
+                minPoint = p;
                 result = LEVEL_XING_A;
             }
         }
@@ -934,7 +934,7 @@ public class LevelXing extends LayoutTrack {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minP = p;
+                minPoint = p;
                 result = LEVEL_XING_A;
             }
         }
@@ -945,7 +945,7 @@ public class LevelXing extends LayoutTrack {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minP = p;
+                minPoint = p;
                 result = LEVEL_XING_A;
             }
         }
@@ -956,16 +956,16 @@ public class LevelXing extends LayoutTrack {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minP = p;
+                minPoint = p;
                 result = LEVEL_XING_A;
             }
         }
-        if ((useRectangles && !r.contains(minP))
+        if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
             result = NONE;
         }
         return result;
-    }
+    }   // findHitPointType
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";

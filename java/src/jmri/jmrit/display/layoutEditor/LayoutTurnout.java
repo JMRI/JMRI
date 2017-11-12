@@ -1771,7 +1771,7 @@ public class LayoutTurnout extends LayoutTrack {
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
         Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
-        Point2D p, minP = MathUtil.zeroPoint2D;
+        Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double distance, minDistance = POSITIVE_INFINITY;
@@ -1781,7 +1781,7 @@ public class LayoutTurnout extends LayoutTrack {
         distance = MathUtil.distance(p, hitPoint);
         if (distance < minDistance) {
             minDistance = distance;
-            minP = p;
+            minPoint = p;
             result = TURNOUT_CENTER;
         }
 
@@ -1791,7 +1791,7 @@ public class LayoutTurnout extends LayoutTrack {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minP = p;
+                minPoint = p;
                 result = TURNOUT_A;
             }
         }
@@ -1802,7 +1802,7 @@ public class LayoutTurnout extends LayoutTrack {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minP = p;
+                minPoint = p;
                 result = TURNOUT_B;
             }
         }
@@ -1813,7 +1813,7 @@ public class LayoutTurnout extends LayoutTrack {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minP = p;
+                minPoint = p;
                 result = TURNOUT_C;
             }
         }
@@ -1827,17 +1827,17 @@ public class LayoutTurnout extends LayoutTrack {
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    minP = p;
+                    minPoint = p;
                     result = TURNOUT_D;
                 }
             }
         }
-        if ((useRectangles && !r.contains(minP))
+        if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
             result = NONE;
         }
         return result;
-    }
+    }   // findHitPointType
 
     /*
      * Modify coordinates methods
@@ -2584,8 +2584,28 @@ public class LayoutTurnout extends LayoutTrack {
 
                     }
                 }
-                if (InstanceManager.getDefault(LayoutBlockManager.class
-                ).isAdvancedRoutingEnabled()) {
+
+                if (blockBoundaries) {
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            layoutEditor.getLETools().setSignalMastsAtTurnoutFromMenu(LayoutTurnout.this,
+                                    boundaryBetween);
+                        }
+                    });
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
+                                    LayoutTurnout.this,
+                                    boundaryBetween,
+                                    layoutEditor.sensorIconEditor,
+                                    layoutEditor.sensorFrame);
+                        }
+                    });
+                }
+
+                if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                     Map<String, LayoutBlock> map = new HashMap<>();
                     if (!getBlockName().isEmpty()) {
                         map.put(getBlockName(), getLayoutBlock());
@@ -2600,65 +2620,32 @@ public class LayoutTurnout extends LayoutTrack {
                         map.put(getBlockDName(), getLayoutBlockD());
                     }
                     if (blockBoundaries) {
-                        popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                layoutEditor.getLETools().setSignalMastsAtTurnoutFromMenu(LayoutTurnout.this,
-                                        boundaryBetween);
-                            }
-                        });
-                        popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
-                                        LayoutTurnout.this,
-                                        boundaryBetween,
-                                        layoutEditor.sensorIconEditor,
-                                        layoutEditor.sensorFrame);
-                            }
-                        });
-
-                        if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-                            Map<String, LayoutBlock> map = new HashMap<>();
-                            if (!getBlockName().isEmpty()) {
-                                map.put(getBlockName(), getLayoutBlock());
-                            }
-                            if (!getBlockBName().isEmpty()) {
-                                map.put(getBlockBName(), getLayoutBlockB());
-                            }
-                            if (!getBlockCName().isEmpty()) {
-                                map.put(getBlockCName(), getLayoutBlockC());
-                            }
-                            if (!getBlockDName().isEmpty()) {
-                                map.put(getBlockDName(), getLayoutBlockD());
-                            }
-                            if (map.size() == 1) {
-                                popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
+                        if (map.size() == 1) {
+                            popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                                    routeTableAction.actionPerformed(e);
+                                }
+                            });
+                        } else if (map.size() > 1) {
+                            JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
+                            for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
+                                String blockName = entry.getKey();
+                                LayoutBlock layoutBlock = entry.getValue();
+                                viewRouting.add(new AbstractAction(getBlockBName()) {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {
-                                        AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                                        AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
                                         routeTableAction.actionPerformed(e);
                                     }
                                 });
-                            } else if (map.size() > 1) {
-                                JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
-                                for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
-                                    String blockName = entry.getKey();
-                                    LayoutBlock layoutBlock = entry.getValue();
-                                    viewRouting.add(new AbstractAction(getBlockBName()) {
-                                        @Override
-                                        public void actionPerformed(ActionEvent e) {
-                                            AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
-                                            routeTableAction.actionPerformed(e);
-                                        }
-                                    });
-                                }
-                                popup.add(viewRouting);
                             }
-                        }   // isAdvancedRoutingEnabled()
+                            popup.add(viewRouting);
+                        }
                     }   // if (blockBoundaries)
-                }
-            }
+                }   // .isAdvancedRoutingEnabled()
+            }   // getBlockName().isEmpty()
             setAdditionalEditPopUpMenu(popup);
             layoutEditor.setShowAlignmentMenu(popup);
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());

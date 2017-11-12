@@ -630,7 +630,7 @@ public class TrackSegment extends LayoutTrack {
             // points to check below, we create a rectangle for the test point
             // and test if the points below are in that rectangle instead.
             Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
-            Point2D p, minP = MathUtil.zeroPoint2D;
+            Point2D p, minPoint = MathUtil.zeroPoint2D;
 
             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
             double distance, minDistance = POSITIVE_INFINITY;
@@ -640,7 +640,7 @@ public class TrackSegment extends LayoutTrack {
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    minP = p;
+                    minPoint = p;
                     result = TRACK_CIRCLE_CENTRE;
                 }
             } else if (isBezier()) {
@@ -651,12 +651,12 @@ public class TrackSegment extends LayoutTrack {
                     distance = MathUtil.distance(p, hitPoint);
                     if (distance < minDistance) {
                         minDistance = distance;
-                        minP = p;
+                        minPoint = p;
                         result = TRACK_CIRCLE_CENTRE;
                     }
                 }
             }
-            if ((useRectangles && !r.contains(minP))
+            if ((useRectangles && !r.contains(minPoint))
                     || (!useRectangles && (minDistance > circleRadius))) {
                 result = NONE;
             }
@@ -893,6 +893,62 @@ public class TrackSegment extends LayoutTrack {
         popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popup;
     }   // showPopup
+
+    /**
+     * split this TrackSegment
+     */
+    private void splitTrackSegment() {
+        // create a new anchor
+        Point2D p = getCentreSeg();
+        PositionablePoint newAnchor = layoutEditor.addAnchor(p);
+        // link it to me
+        layoutEditor.setLink(newAnchor, POS_POINT, this, TRACK);
+
+        //get unique name for a new track segment
+        String name = layoutEditor.getFinder().uniqueName("T", 0);
+
+        //create it between the new anchor and my connect2(/type2)
+        TrackSegment newTrackSegment = new TrackSegment(name,
+                newAnchor, POS_POINT,
+                connect2, type2,
+                isDashed(), isMainline(), layoutEditor);
+        // add it to known tracks
+        layoutEditor.getLayoutTracks().add(newTrackSegment);
+        layoutEditor.setDirty();
+
+        // copy attributes to new track segment
+        newTrackSegment.setLayoutBlock(this.getLayoutBlock());
+        newTrackSegment.setArc(this.isArc());
+        newTrackSegment.setCircle(this.isCircle());
+        //newTrackSegment.setBezier(this.isBezier());
+        newTrackSegment.setFlip(this.isFlip());
+
+        // link my connect2 to the new track segment
+        if (connect2 instanceof PositionablePoint) {
+            PositionablePoint pp = (PositionablePoint) connect2;
+            pp.replaceTrackConnection(this, newTrackSegment);
+        } else {
+            layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
+        }
+
+        // link the new anchor to the new track segment
+        layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
+
+        // link me to the new newAnchor
+        connect2 = newAnchor;
+        type2 = POS_POINT;
+
+        //check on layout block
+        LayoutBlock b = this.getLayoutBlock();
+
+        if (b != null) {
+            newTrackSegment.setLayoutBlock(b);
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            newTrackSegment.updateBlockInfo();
+        }
+        layoutEditor.setDirty();
+        layoutEditor.redrawPanel();
+    }
 
     /**
      * Display popup menu for information and editing.
