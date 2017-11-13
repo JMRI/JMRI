@@ -5,6 +5,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import jmri.jmrix.AbstractUSBConnectionConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +15,11 @@ import org.slf4j.LoggerFactory;
  * This uses the {@link AnymaDMX_Adapter} class to do the actual connection.
  *
  * @author George Warner Copyright (C) 2017
- * @since       4.9.6
+ * @since 4.9.6
  *
  * @see AnymaDMX_Adapter
  */
-public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConfig {
+public class AnymaDMX_ConnectionConfig extends AbstractUSBConnectionConfig {
 
     private boolean disabled = false;
     private AnymaDMX_Adapter adapter = null;
@@ -50,53 +51,50 @@ public class AnymaDMX_ConnectionConfig extends jmri.jmrix.AbstractConnectionConf
     @Override
     protected void checkInitDone() {
         log.info("*	AnymaDMX_ConnectionConfig.checkInitDone() called.");
-        if (init) {
-            return;
-        }
-        if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.addActionListener((ActionEvent e) -> {
-                if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                    JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                    systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
-                }
-            });
-            systemPrefixField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
+        if (!init) {
+            if (adapter.getSystemConnectionMemo() != null) {
+                systemPrefixField.addActionListener((ActionEvent e) -> {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
-                }
+                });
+                systemPrefixField.addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
+                            JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                        }
+                    }
 
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            connectionNameField.addActionListener((ActionEvent e) -> {
-                if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                    JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
-                    connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                }
-            });
-            connectionNameField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                    }
+                });
+                connectionNameField.addActionListener((ActionEvent e) -> {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
-                }
+                });
+                connectionNameField.addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
+                            JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
+                        }
+                    }
 
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-
-        }
-        init = true;
-
-    }
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                    }
+                });
+            }   // if (adapter.getSystemConnectionMemo() != null)
+            init = true;
+        }   // if (!init)
+    }   // checkInitDone()
 
     @Override
     public void updateAdapter() {

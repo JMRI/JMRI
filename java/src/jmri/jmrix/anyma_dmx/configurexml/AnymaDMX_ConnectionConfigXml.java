@@ -2,7 +2,7 @@ package jmri.jmrix.anyma_dmx.configurexml;
 
 import jmri.jmrix.anyma_dmx.AnymaDMX_Adapter;
 import jmri.jmrix.anyma_dmx.AnymaDMX_ConnectionConfig;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractUsbConnectionConfigXml;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (C) 2017
  * @since       4.9.6
  */
-public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml {
 
     private AnymaDMX_Adapter adapter = null;
 
@@ -68,6 +68,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractConnectionConfigXml {
         getInstance(o);
         Element e = new Element("connection");
         storeCommon(e, adapter);
+
         e.setAttribute("class", this.getClass().getName());
         return e;
     }

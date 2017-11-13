@@ -1,6 +1,5 @@
 package jmri.jmrix.anyma_dmx;
 
-
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
@@ -36,14 +35,15 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, AnymaDMX_SystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory for the GUI
-//        AnymaDMX_Factory cf = new AnymaDMX_Factory(this);
-//        InstanceManager.store(cf, jmri.jmrix.swing.ComponentFactory.class);
+        AnymaDMX_Factory cf = new AnymaDMX_Factory(this);
+        InstanceManager.store(cf, AnymaDMX_Factory.class);
     }
 
     /**
      * Public static method to the user name for a valid system name.
      *
-     * @return "" (null string) if the system name is not valid or does not exist
+     * @return "" (null string) if the system name is not valid or does not
+     *         exist
      */
     public String getUserNameFromSystemName(String systemName) {
         log.info("*	AnymaDMX_SystemConnectionMemo.getUserNameFromSystemName() called");
@@ -64,8 +64,8 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to parse a anyma dmx system name and return the channel
-     * number. Notes:
+     * Public static method to parse a anyma dmx system name and return the
+     * channel number. Notes:
      * <ul>
      * <li>Channels are numbered from 1 to 512.</li>
      * <li>Does not check whether that node is defined on current system.</li>
@@ -105,11 +105,11 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to check and skip the System Prefix
-     * string on a system name.
+     * Public static method to check and skip the System Prefix string on a
+     * system name.
      *
      * @return offset of the 1st character past the prefix, or -1 if not valid
-     * for this connection
+     *         for this connection
      */
     public int checkSystemPrefix(String systemName) {
         log.info("*	AnymaDMX_SystemConnectionMemo.checkSystemPrefix() called");
@@ -121,11 +121,13 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to test if a anyma dmx output channel is free for assignment.
-     * Test is not performed if the node address or channel number is invalid.
+     * Public static method to test if a anyma dmx output channel is free for
+     * assignment. Test is not performed if the node address or channel number
+     * is invalid.
      *
      * @return "" (empty string) if the specified output channel is free for
-     * assignment, else returns the system name of the conflicting assignment.
+     *         assignment, else returns the system name of the conflicting
+     *         assignment.
      */
     public String isOutputChannelFree(int nAddress, int channelNum) {
         log.info("*	AnymaDMX_SystemConnectionMemo.isOutputChannelFree() called");
@@ -158,10 +160,12 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * Public static method to normalize a anyma dmx system name.
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
-     * to one anyma dmx channel, by removing any extra zeros inserted by the user.
+     * to one anyma dmx channel, by removing any extra zeros inserted by the
+     * user.
      *
-     * @return "" (empty string) if the supplied system name does not have a valid format.
-     * Otherwise a normalized name is returned in the same format as the input name.
+     * @return "" (empty string) if the supplied system name does not have a
+     *         valid format. Otherwise a normalized name is returned in the same
+     *         format as the input name.
      */
     public String normalizeSystemName(String systemName) {
         log.info("*	AnymaDMX_SystemConnectionMemo.normalizeSystemName() called");
@@ -186,7 +190,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
             }
         }
         if (noB) {
-            int num = Integer.valueOf(systemName.substring(offset+1)).intValue();
+            int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
             int nAddress = num / 1000;
             int channelNum = num - (nAddress * 1000);
             nName = systemName.substring(0, offset + 1) + Integer.toString((nAddress * 1000) + channelNum);
@@ -202,8 +206,9 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * Public static method to convert one format anyma dmx system name to the
      * alternate format.
      *
-     * @return "" (empty string) if the supplied system name does not have a valid
-     * format, or if there is no representation in the alternate naming scheme
+     * @return "" (empty string) if the supplied system name does not have a
+     *         valid format, or if there is no representation in the alternate
+     *         naming scheme
      */
     public String convertSystemNameToAlternate(String systemName) {
         log.info("*	AnymaDMX_SystemConnectionMemo.convertSystemNameToAlternate() called");
@@ -245,8 +250,8 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to validate system name format.
-     * Does not check whether that node is defined on current system.
+     * Public static method to validate system name format. Does not check
+     * whether that node is defined on current system.
      *
      * @return enum indicating current validity, which might be just as a prefix
      */
@@ -275,7 +280,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
             // This is a CLnnnxxx pattern address
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(offset+1)).intValue();
+                num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
             } catch (Exception e) {
                 log.debug("invalid character in number field of anyma dmx system name: {}", systemName);
                 return NameValidity.INVALID;
@@ -329,12 +334,13 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to test if a anyma dmx input channel is free for assignment.
-     * Test is not performed if the node address is invalid or channel number is
-     * greater than 512.
+     * Public static method to test if a anyma dmx input channel is free for
+     * assignment. Test is not performed if the node address is invalid or
+     * channel number is greater than 512.
      *
      * @return "" (empty string) if the specified input channel is free for
-     * assignment, else returns the system name of the conflicting assignment.
+     *         assignment, else returns the system name of the conflicting
+     *         assignment.
      */
     public String isInputChannelFree(int nAddress, int channelNum) {
         log.info("*	AnymaDMX_SystemConnectionMemo.isInputChannelFree() called");
@@ -368,13 +374,13 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * character, node address, and channel number.
      * <p>
      * If the supplied character is not valid, or the node address is out of the
-     * 0 - 127 range, or the channel number is out of the 1 - 512 range, an error
-     * message is logged and the null string "" is returned.
+     * 0 - 127 range, or the channel number is out of the 1 - 512 range, an
+     * error message is logged and the null string "" is returned.
      *
-     * @return a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx
-     * format if the channel number is 1 - 999. If the channel number is 1000 - 512,
-     * the system name is returned in the CLnnnBxxxx, CTnnnBxxxx, or CSnnnBxxxx
-     * format. The returned name is normalized.
+     * @return a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx format if
+     *         the channel number is 1 - 999. If the channel number is 1000 -
+     *         512, the system name is returned in the CLnnnBxxxx, CTnnnBxxxx,
+     *         or CSnnnBxxxx format. The returned name is normalized.
      */
     public String makeSystemName(String type, int nAddress, int channelNum) {
         log.info("*	AnymaDMX_SystemConnectionMemo.makeSystemName() called");
@@ -419,8 +425,8 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * Public static method to validate anyma dmx system name for configuration.
      * Does validate node number and system prefix.
      *
-     * @return 'true' if system name has a valid meaning in current configuration,
-     * else returns 'false'.
+     * @return 'true' if system name has a valid meaning in current
+     *         configuration, else returns 'false'.
      */
     public boolean validSystemNameConfig(String systemName, char type) {
         log.info("*	AnymaDMX_SystemConnectionMemo.validSystemNameConfig() called");
@@ -448,11 +454,11 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to parse a anyma dmx system name and 
-     * return the Usb Node Address
+     * Public static method to parse a anyma dmx system name and return the Usb
+     * Node Address
      * <p>
-     * Nodes are numbered from 0 - 127. Does not check
-     * whether that node is defined on current system.
+     * Nodes are numbered from 0 - 127. Does not check whether that node is
+     * defined on current system.
      *
      * @return '-1' if invalid systemName format or if the node is not found.
      */
@@ -476,7 +482,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         }
         int ua;
         if (noB) {
-            int num = Integer.valueOf(systemName.substring(offset+1)).intValue();
+            int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
             if (num > 0) {
                 ua = num / 1000;
             } else {
@@ -535,13 +541,14 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     public UsbLightManager getLightManager() {
         log.info("*	AnymaDMX_SystemConnectionMemo.getLightManager() called");
-        if (getDisabled()) {
-            return null;
+        UsbLightManager result = null;
+        if (!getDisabled()) {
+            if (lightManager == null) {
+                lightManager = new UsbLightManager(this);
+            }
+            result = lightManager;
         }
-        if (lightManager == null) {
-            lightManager = new UsbLightManager(this);
-        }
-        return lightManager;
+        return result;
     }
 
     @Override

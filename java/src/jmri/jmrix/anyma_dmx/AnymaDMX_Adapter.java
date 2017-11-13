@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.usb.UsbDevice;
-import jmri.jmrix.AbstractPortController;
-import jmri.jmrix.PortAdapter;
+import jmri.jmrix.USBPortAdapter;
 import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,22 +18,14 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_Adapter extends AbstractPortController
-        implements PortAdapter {
+public class AnymaDMX_Adapter extends USBPortAdapter {
 
     private AnymaDMX_Controller dmx = null;
-    private String[] option1Values = null;
 
     public AnymaDMX_Adapter() {
         super(new AnymaDMX_SystemConnectionMemo());
+
         log.info("*	AnymaDMX_Adapter Constructor called");
-        this.manufacturerName = AnymaDMX_ConnectionTypeList.ANYMA_DMX;
-        try {
-            dmx = AnymaDMX_Factory.getInstance();
-            opened = true;
-        } catch (UnsatisfiedLinkError er) {
-            log.error("Expected to run on Anyma DMX, but does not appear to be.");
-        }
 
         List<String> productNames = new ArrayList<>();
         List<UsbDevice> usbDevices = USBUtil.getMatchingDevices((short) 0x16C0, (short) 0x05DC);
@@ -48,14 +39,16 @@ public class AnymaDMX_Adapter extends AbstractPortController
             if (!location.isEmpty()) {
                 fullProductName += " (" + location + ")";
             }
+            log.info("*full product name: " + fullProductName);
             productNames.add(fullProductName);
         }
-        option1Name = "USB Device"; // NOI18N
-        option1Values = productNames.toArray(new String[productNames.size()]);
-        options.put(option1Name, new Option(option1Name + ":", option1Values, false));
+//        option1Name = "USB Device"; // NOI18N
+//        option1Values = productNames.toArray(new String[productNames.size()]);
+//        options.put(option1Name, new Option(option1Name + ":", option1Values, false));
+//
+//        options.remove(option2Name);
+//        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
 
-        options.remove(option2Name);
-        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
     }
 
     @Override
@@ -79,9 +72,20 @@ public class AnymaDMX_Adapter extends AbstractPortController
     @Override
     public void configure() {
         log.info("*	AnymaDMX_Adapter.configure() called.");
-        log.info("*         getOptionState(option2Name): {0}", getOptionState(option2Name));
 
-        this.getSystemConnectionMemo().configureManagers();
+        String opt1 = getOptionState(option1Name);
+        log.info("*opt1: " + opt1);
+        String opt2 = getOptionState(option2Name);
+        log.info("*opt2: " + opt2);
+        String opt3 = getOptionState(option3Name);
+        log.info("*opt3: " + opt3);
+        String opt4 = getOptionState(option4Name);
+        log.info("*opt4: " + opt4);
+
+        // Why is memo null here when it was new'd in the constructor for this class?!?
+        if (getSystemConnectionMemo() != null) {
+            getSystemConnectionMemo().configureManagers();
+        }
     }
 
     @Override
@@ -119,7 +123,7 @@ public class AnymaDMX_Adapter extends AbstractPortController
     }
 
     private String[] commandStationOptions() {
-        return new String[] { "Goodby", "cruel", "world" };
+        return new String[]{"Goodby", "cruel", "world"};
     }
 
     private final static Logger log = LoggerFactory.getLogger(AnymaDMX_Adapter.class

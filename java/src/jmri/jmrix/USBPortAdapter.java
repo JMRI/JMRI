@@ -13,11 +13,16 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @author George Warner Copyright (C) 2017
  */
-public class USBPortAdapter implements PortAdapter {
+public class USBPortAdapter extends AbstractPortController {
+
+    public USBPortAdapter(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void connect() throws java.io.IOException {
         log.debug("*	connect()");
     }
@@ -27,6 +32,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getManufacturer() {
         log.debug("*	getManufacturer()");
         return manufacturer;
@@ -35,6 +41,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setManufacturer(String manufacturer) {
         log.debug("*	setManufacturer('{}')", manufacturer);
         this.manufacturer = manufacturer;
@@ -43,6 +50,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public DataInputStream getInputStream() {
         log.debug("*	getInputStream()");
         return null;
@@ -51,16 +59,18 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public DataOutputStream getOutputStream() {
         log.debug("*	getOutputStream()");
         return null;
     }
 
-    boolean disabled = false;
+    private boolean disabled = false;
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean getDisabled() {
         log.debug("*	getDisabled()");
         return disabled;
@@ -69,6 +79,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setDisabled(boolean disabled) {
         log.debug("*	setDisabled()");
         this.disabled = disabled;
@@ -79,6 +90,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getUserName() {
         log.debug("*	getUserName()");
         return userName;
@@ -87,6 +99,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setUserName(String userName) throws IllegalArgumentException {
         log.debug("*	setUserName('{}')", userName);
         this.userName = userName;
@@ -97,6 +110,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getSystemPrefix() {
         log.debug("*	getSystemPrefix()");
         return systemPrefix;
@@ -105,6 +119,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setSystemPrefix(String systemPrefix) throws IllegalArgumentException {
         log.debug("*	setSystemPrefix('{}')", systemPrefix);
         this.systemPrefix = systemPrefix;
@@ -115,6 +130,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public SystemConnectionMemo getSystemConnectionMemo() {
         log.debug("*	getSystemConnectionMemo()");
         return systemConnectionMemo;
@@ -123,6 +139,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException {
         log.debug("*	setSystemConnectionMemo()");
         systemConnectionMemo = connectionMemo;
@@ -131,6 +148,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void dispose() {
         log.debug("*	dispose()");
     }
@@ -138,6 +156,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void recover() {
         log.debug("*	recover()");
     }
@@ -145,6 +164,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isDirty() {
         log.debug("*	isDirty()");
         return false;
@@ -153,9 +173,29 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isRestartRequired() {
         log.debug("*	isRestartRequired()");
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void configure() {
+        log.debug("*	configure()");
+    }
+
+    private boolean status = true;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean status() {
+        log.debug("*	status()");
+        return status;
     }
 
     /**
@@ -177,23 +217,6 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
-    public void configure() {
-        log.debug("*	configure()");
-    }
-
-    private boolean status = true;
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean status() {
-        log.debug("*	status()");
-        return status;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public void setPort(String s) {
         log.debug("*	setPort('{}')", manufacturer);
     }
@@ -201,6 +224,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getCurrentPortName() {
         log.debug("*	getCurrentPortName()");
         return null;
@@ -209,6 +233,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getOption1Name() {
         log.debug("*	getOption1Name()");
         return null;
@@ -217,6 +242,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getOption2Name() {
         log.debug("*	getOption2Name()");
         return null;
@@ -225,6 +251,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getOption3Name() {
         log.debug("*	getOption3Name()");
         return null;
@@ -233,6 +260,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getOption4Name() {
         log.debug("*	getOption4Name()");
         return null;
@@ -241,6 +269,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void configureOption1(String value) {
         log.debug("*	configureOption1('{}')", value);
     }
@@ -248,6 +277,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void configureOption2(String value) {
         log.debug("*	configureOption2('{}')", value);
     }
@@ -255,6 +285,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void configureOption3(String value) {
         log.debug("*	configureOption3('{}')", value);
     }
@@ -262,6 +293,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void configureOption4(String value) {
         log.debug("*	configureOption4('{}')", value);
     }
@@ -269,14 +301,16 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getOptions() {
         log.debug("*	getOptions()");
-        return null;
+        return new String[]{"Goodby", "cruel", "world"};
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isOptionAdvanced(String option) {
         log.debug("*	isOptionAdvanced('{}')", option);
         return false;
@@ -285,6 +319,7 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getOptionDisplayName(String option) {
         log.debug("*	getOptionDisplayName('{}')", option);
         return null;
@@ -293,13 +328,15 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setOptionState(String option, String value) {
-        log.debug("*	setOptionState('{}')", value);
+        log.debug("*	setOptionState('{}', '{}')", option, value);
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getOptionState(String option) {
         log.debug("*	getOptionState('{}')", option);
         return null;
@@ -308,10 +345,11 @@ public class USBPortAdapter implements PortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getOptionChoices(String option) {
         log.debug("*	getOptionChoices('{}')", option);
         return new String[]{};
     }
-    private final static Logger log = LoggerFactory.getLogger(USBPortAdapter.class);
 
+    private final static Logger log = LoggerFactory.getLogger(USBPortAdapter.class);
 }

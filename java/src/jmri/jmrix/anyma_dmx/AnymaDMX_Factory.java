@@ -1,23 +1,18 @@
 package jmri.jmrix.anyma_dmx;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class AnymaDMX_Factory {
 
-    private static AnymaDMX_Controller controller;
-    private static AnymaDMX_Provider provider;
+    private static AnymaDMX_SystemConnectionMemo memo;
 
-    public AnymaDMX_Factory(AnymaDMX_Controller controller) {
-        AnymaDMX_Factory.controller = controller;
+    public AnymaDMX_Factory(AnymaDMX_SystemConnectionMemo memo) {
+        log.info("*	AnymaDMX_Factory constructor called");
+        //AnymaDMX_Factory.controller = controller;
+        this.memo = memo;
     }
 
-    public static AnymaDMX_Controller getInstance() {
-        return controller;
-    }
-
-    public static AnymaDMX_Provider getDefaultProvider() {
-        return provider;
-    }
-
-    public static void setDefaultProvider(AnymaDMX_Provider provider) {
-        AnymaDMX_Factory.provider = provider;
-    }
+    private final static Logger log = 
+            LoggerFactory.getLogger(AnymaDMX_Factory.class);
 }
