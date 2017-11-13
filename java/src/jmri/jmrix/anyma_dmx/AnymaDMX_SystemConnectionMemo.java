@@ -1,12 +1,15 @@
 package jmri.jmrix.anyma_dmx;
 
+
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.LightManager;
 import jmri.Manager.NameValidity;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.anyma_dmx.usb.UsbLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,17 +20,17 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     public AnymaDMX_SystemConnectionMemo() {
         this("DX", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "DX" prefix
-        log.info("*	AnymaDMX_SystemConnectionMemo Constructor called");
+        log.info("*	AnymaDMX_SystemConnectionMemo Constructor() called");
     }
 
     public AnymaDMX_SystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
 
-        log.info("*	AnymaDMX_SystemConnectionMemo Constructor called");
+        log.info("*	AnymaDMX_SystemConnectionMemo Constructor ({}, {}) called", prefix, userName);
 
         register(); // registers general type
         InstanceManager.store(this, AnymaDMX_SystemConnectionMemo.class); // also register as specific type
@@ -499,7 +502,7 @@ public class AnymaDMX_SystemConnectionMemo extends jmri.jmrix.SystemConnectionMe
     @Override
     public boolean provides(Class<?> type) {
         log.info("*	AnymaDMX_SystemConnectionMemo.provides() called");
-        if (type.equals(jmri.LightManager.class)) {
+        if (type.equals(LightManager.class)) {
             return true;
         } else {
             return false; // nothing, by default
@@ -513,7 +516,7 @@ public class AnymaDMX_SystemConnectionMemo extends jmri.jmrix.SystemConnectionMe
         if (getDisabled()) {
             return null;
         }
-        if (T.equals(jmri.LightManager.class)) {
+        if (T.equals(LightManager.class)) {
             return (T) getLightManager();
         }
         return null; // nothing by default
@@ -543,7 +546,7 @@ public class AnymaDMX_SystemConnectionMemo extends jmri.jmrix.SystemConnectionMe
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        log.info("*	AnymaDMX_SystemConnectionMemo.getActionModelResourceBundle() called");
+        log.debug("*	AnymaDMX_SystemConnectionMemo.getActionModelResourceBundle() called");
         return ResourceBundle.getBundle("jmri.jmrix.anyma_dmx.AnymaDMX_ActionListBundle");
     }
 
@@ -552,7 +555,7 @@ public class AnymaDMX_SystemConnectionMemo extends jmri.jmrix.SystemConnectionMe
         log.info("*	AnymaDMX_SystemConnectionMemo.dispose() called");
         InstanceManager.deregister(this, AnymaDMX_SystemConnectionMemo.class);
         if (lightManager != null) {
-            InstanceManager.deregister(lightManager, jmri.jmrix.anyma_dmx.usb.UsbLightManager.class);
+            InstanceManager.deregister(lightManager, UsbLightManager.class);
         }
         super.dispose();
     }
