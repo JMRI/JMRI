@@ -8,6 +8,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.WindowOperator;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JMenuOperator;
 
 
 /**
@@ -48,4 +50,31 @@ public class EditorFrameOperator extends JFrameOperator {
         // Click button to delete panel and close window
         bo.push();
     }
+
+    public void deleteViaFileMenuWithConfirmations(){
+        JMenuOperator jmo = new JMenuOperator(this,Bundle.getMessage("MenuFile"));
+        jmo.press();
+        JMenuItemOperator jmio = new JMenuItemOperator(this,Bundle.getMessage("DeletePanel"));
+        jmio.press();
+
+        // that pops dialog, find and press Delete
+        // JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));
+
+        // Find the button that deletes the panel
+        // JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonDeletePanel"));
+
+        // Click button to delete panel and close window
+        // bo.push();
+
+        // that pops dialog, find and press Yes - Delete
+        JDialogOperator d = new JDialogOperator(Bundle.getMessage("DeleteVerifyTitle"));
+
+        // Find the button that deletes the panel
+        JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonYesDelete"));
+
+        // Click button to delete panel and close window
+        bo.push();
+    }
+    
+
 }

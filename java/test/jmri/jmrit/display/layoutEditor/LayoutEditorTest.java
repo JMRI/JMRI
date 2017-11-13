@@ -10,14 +10,22 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import jmri.jmrit.display.EditorFrameOperator;
+import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.operators.JMenuBarOperator;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
  * Test simple functioning of LayoutEditor
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class LayoutEditorTest {
+public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
 
     private LayoutEditor le = null;
 
@@ -713,21 +721,83 @@ public class LayoutEditorTest {
         Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", le.getHighlightSelectedBlock());
     }
 
+    @Test
+    public void checkOptionsMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
+        Assert.assertNotNull("Options Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",18,jmo.getItemCount());
+    }
+
+    @Test
+    public void checkToolsMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuTools"));
+        Assert.assertNotNull("Tools Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",16,jmo.getItemCount());
+    }
+
+    @Test
+    public void checkZoomMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuZoom"));
+        Assert.assertNotNull("Zoom Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",16,jmo.getItemCount());
+    }
+
+    @Test
+    public void checkMarkerMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuMarker"));
+        Assert.assertNotNull("Marker Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",3,jmo.getItemCount());
+    }
+
+    @Test
+    public void checkDispatcherMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuDispatcher"));
+        Assert.assertNotNull("Dispatcher Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",2,jmo.getItemCount());
+    }
+
+    @Test
+    @Ignore("WIP")
+    public void testToolBarPostionOptions(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setHighlightSelectedBlock(false);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        //JMenuOperator jmo = JMenuBarOperator.findJMenuBar(le);
+        
+    }
+
     // from here down is testing infrastructure
     @Before
-    public void setUp() throws Exception {
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            le = new LayoutEditor("Test Layout");
+            e = le = new LayoutEditor("Test Layout");
             jmri.InstanceManager.setDefault(LayoutBlockManager.class,new LayoutBlockManager());
         }
     }
 
     @After
-    public void tearDown() throws Exception {
+    @Override
+    public void tearDown() {
         if (le != null) {
             JUnitUtil.dispose(le);
-            le = null;
+            e = le = null;
         }
         JUnitUtil.tearDown();
     }
