@@ -73,12 +73,12 @@ public class EditorFrameOperator extends JFrameOperator {
         bo.push();
 
         // join t
-        try {
+       /* try {
             t.join();
         } catch( java.lang.InterruptedException ie) {
            // do nothing, this isn't an error in this test.
            return;
-        }
+        }*/
     }    
 
 }
