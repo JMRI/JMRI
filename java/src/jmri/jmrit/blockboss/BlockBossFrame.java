@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,7 +21,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
+import jmri.SensorManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,18 +49,26 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2005
  * @author Dick Bronson 2006: Revisions to add facing point sensors,
  * approach lighting, limited speed, changed layout, and tool tips.
+ * @author Egbert Broerse 2017
  */
 public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     JPanel modeSingle = new JPanel();
     JRadioButton buttonSingle;
-    JTextField sSensorField1 = new JTextField(6);
-    JTextField sSensorField2 = new JTextField(6);
-    JTextField sSensorField3 = new JTextField(6);
-    JTextField sSensorField4 = new JTextField(6);
-    JTextField sSensorField5 = new JTextField(6);
-    JTextField sNextSignalField1 = new JTextField(6);
-    JTextField sNextSignalField1Alt = new JTextField(6);
+    private transient JmriBeanComboBox sSensorComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox sSensorComboBox2 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox sSensorComboBox3 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox sSensorComboBox4 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox sSensorComboBox5 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox sNextSignalComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox sNextSignalComboBox1Alt = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     JCheckBox sLimitBox;
     JCheckBox sRestrictingBox;
     JCheckBox sFlashBox;
@@ -64,14 +76,23 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     JPanel modeTrailMain = new JPanel();
     JRadioButton buttonTrailMain;
-    JTextField tmSensorField1 = new JTextField(6);
-    JTextField tmSensorField2 = new JTextField(6);
-    JTextField tmSensorField3 = new JTextField(6);
-    JTextField tmSensorField4 = new JTextField(6);
-    JTextField tmSensorField5 = new JTextField(6);
-    JTextField tmProtectTurnoutField = new JTextField(6);
-    JTextField tmNextSignalField1 = new JTextField(6);
-    JTextField tmNextSignalField1Alt = new JTextField(6);
+    private transient JmriBeanComboBox tmSensorComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tmSensorComboBox2 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tmSensorComboBox3 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tmSensorComboBox4 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tmSensorComboBox5 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final JmriBeanComboBox tmProtectTurnoutComboBox = new JmriBeanComboBox(
+            InstanceManager.turnoutManagerInstance(),
+            null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tmNextSignalComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tmNextSignalComboBox1Alt = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     JCheckBox tmLimitBox;
     JCheckBox tmRestrictingBox;
     JCheckBox tmFlashBox;
@@ -79,14 +100,23 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     JPanel modeTrailDiv = new JPanel();
     JRadioButton buttonTrailDiv;
-    JTextField tdSensorField1 = new JTextField(6);
-    JTextField tdSensorField2 = new JTextField(6);
-    JTextField tdSensorField3 = new JTextField(6);
-    JTextField tdSensorField4 = new JTextField(6);
-    JTextField tdSensorField5 = new JTextField(6);
-    JTextField tdProtectTurnoutField = new JTextField(6);
-    JTextField tdNextSignalField1 = new JTextField(6);
-    JTextField tdNextSignalField1Alt = new JTextField(6);
+    private transient JmriBeanComboBox tdSensorComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tdSensorComboBox2 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tdSensorComboBox3 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tdSensorComboBox4 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tdSensorComboBox5 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final JmriBeanComboBox tdProtectTurnoutComboBox = new JmriBeanComboBox(
+            InstanceManager.turnoutManagerInstance(),
+            null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tdNextSignalComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox tdNextSignalComboBox1Alt = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     JCheckBox tdLimitBox;
     JCheckBox tdRestrictingBox;
     JCheckBox tdFlashBox;
@@ -94,39 +124,59 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     JPanel modeFacing = new JPanel();
     JRadioButton buttonFacing;
-    JTextField fSensorField1 = new JTextField(6);
-    JTextField fSensorField2 = new JTextField(6);
-    JTextField fSensorField3 = new JTextField(6);
-    JTextField fSensorField4 = new JTextField(6);
-    JTextField fSensorField5 = new JTextField(6);
-    JTextField fProtectTurnoutField = new JTextField(6);
-    JTextField fNextSignalField1 = new JTextField(6);
-    JTextField fNextSignalField1Alt = new JTextField(6);
-    JTextField fNextSignalField2 = new JTextField(6);
-    JTextField fNextSignalField2Alt = new JTextField(6);
-    JTextField fNextSensorField1 = new JTextField(6);
-    JTextField fNextSensorField1Alt = new JTextField(6);
-    JTextField fNextSensorField2 = new JTextField(6);
-    JTextField fNextSensorField2Alt = new JTextField(6);
+
+    private transient JmriBeanComboBox fSensorComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fSensorComboBox2 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fSensorComboBox3 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fSensorComboBox4 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fSensorComboBox5 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final JmriBeanComboBox fProtectTurnoutComboBox = new JmriBeanComboBox(
+            InstanceManager.turnoutManagerInstance(),
+            null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fNextSignalComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fNextSignalComboBox1Alt = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fNextSignalComboBox2 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fNextSignalComboBox2Alt = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fNextSensorComboBox1 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fNextSensorComboBox1Alt = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fNextSensorComboBox2 = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox fNextSensorComboBox2Alt = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     JCheckBox fmLimitBox;
     JCheckBox fmRestrictingBox;
     JCheckBox fdLimitBox;
     JCheckBox fdRestrictingBox;
     JCheckBox fFlashBox;
     JCheckBox fDistantBox;
-
-    JTextField outSignalField;
-    JTextField approachSensorField1;
+    
+    private transient JmriBeanComboBox approachSensor1ComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient JmriBeanComboBox outSignalHeadComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     JLabel statusBar;
     JTextField commentField;
-    
+    JButton cancel;
+
+    // ToolTip strings
     String buttonSingleTooltip = Bundle.getMessage("In_direction_of_traffic");
     String buttonTrailMainTooltip = Bundle.getMessage("Signal_head_for_main_track")
             + " " + Bundle.getMessage("through_turnout_in_either_direction");
     String buttonTrailDivTooltip = Bundle.getMessage("Signal_head_for_branching_track")
             + " " + Bundle.getMessage("through_turnout_in_either_direction");
     String buttonFacingTooltip = Bundle.getMessage("Single_signal_head_on_single");
-    String outSignalFieldTooltip = "<html>"
+    String outSignalHeadTooltip = "<html>"
             + Bundle.getMessage("Enter_a_new_signal_head_number_or")
             + "<br>" + Bundle.getMessage("then_hit_return_to_load_its_information.")
             + "</html>";
@@ -148,10 +198,18 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     String distantBoxTooltip = Bundle.getMessage("Mirrors_the_protected_(following)_signals_status")
             + " " + Bundle.getMessage("unless_over_ridden_by_an_intermediate_stop_sensor.");
 
+    /**
+     * Ctor for default SSL edit frame.
+     */
     public BlockBossFrame() {
         this(Bundle.getMessage("Simple_Signal_Logic"));
     }
 
+    /**
+     * Ctor for named SSL edit frame.
+     *
+     * @param frameName
+     */
     public BlockBossFrame(String frameName) {
 
         // create the frame
@@ -223,43 +281,86 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         buttonTrailDiv.addActionListener(a);
         buttonFacing.addActionListener(a);
 
-        // share data models
-        tmSensorField1.setDocument(sSensorField1.getDocument());
-        tdSensorField1.setDocument(sSensorField1.getDocument());
-        fSensorField1.setDocument(sSensorField1.getDocument());
+        // share sensor data models
+        tmSensorComboBox1.setModel(sSensorComboBox1.getModel());
+        tdSensorComboBox1.setModel(sSensorComboBox1.getModel());
+        fSensorComboBox1.setModel(sSensorComboBox1.getModel());
 
-        tmSensorField2.setDocument(sSensorField2.getDocument());
-        tdSensorField2.setDocument(sSensorField2.getDocument());
-        fSensorField2.setDocument(sSensorField2.getDocument());
+        tmSensorComboBox2.setModel(sSensorComboBox2.getModel());
+        tdSensorComboBox2.setModel(sSensorComboBox2.getModel());
+        fSensorComboBox2.setModel(sSensorComboBox2.getModel());
 
-        tmSensorField3.setDocument(sSensorField3.getDocument());
-        tdSensorField3.setDocument(sSensorField3.getDocument());
-        fSensorField3.setDocument(sSensorField3.getDocument());
+        tmSensorComboBox3.setModel(sSensorComboBox3.getModel());
+        tdSensorComboBox3.setModel(sSensorComboBox3.getModel());
+        fSensorComboBox3.setModel(sSensorComboBox3.getModel());
 
-        tmSensorField4.setDocument(sSensorField4.getDocument());
-        tdSensorField4.setDocument(sSensorField4.getDocument());
-        fSensorField4.setDocument(sSensorField4.getDocument());
+        tmSensorComboBox4.setModel(sSensorComboBox4.getModel());
+        tdSensorComboBox4.setModel(sSensorComboBox4.getModel());
+        fSensorComboBox4.setModel(sSensorComboBox4.getModel());
 
-        tmSensorField5.setDocument(sSensorField5.getDocument());
-        tdSensorField5.setDocument(sSensorField5.getDocument());
-        fSensorField5.setDocument(sSensorField5.getDocument());
+        tmSensorComboBox5.setModel(sSensorComboBox5.getModel());
+        tdSensorComboBox5.setModel(sSensorComboBox5.getModel());
+        fSensorComboBox5.setModel(sSensorComboBox5.getModel());
+        // share turnout data model
+        tmProtectTurnoutComboBox.setModel(tdProtectTurnoutComboBox.getModel());
+        fProtectTurnoutComboBox.setModel(tdProtectTurnoutComboBox.getModel());
+        
+        tdNextSignalComboBox1.setModel(sNextSignalComboBox1.getModel());
+        tdNextSignalComboBox1Alt.setModel(sNextSignalComboBox1Alt.getModel());
+        tmNextSignalComboBox1.setModel(sNextSignalComboBox1.getModel());
+        tmNextSignalComboBox1Alt.setModel(sNextSignalComboBox1Alt.getModel());
+        fNextSignalComboBox1.setModel(sNextSignalComboBox1.getModel());
+        fNextSignalComboBox1Alt.setModel(sNextSignalComboBox1Alt.getModel());
 
-        tdProtectTurnoutField.setDocument(tmProtectTurnoutField.getDocument());
-        fProtectTurnoutField.setDocument(tmProtectTurnoutField.getDocument());
-
-        tdNextSignalField1.setDocument(sNextSignalField1.getDocument());
-        tdNextSignalField1Alt.setDocument(sNextSignalField1Alt.getDocument());
-        tmNextSignalField1.setDocument(sNextSignalField1.getDocument());
-        tmNextSignalField1Alt.setDocument(sNextSignalField1Alt.getDocument());
-        fNextSignalField1.setDocument(sNextSignalField1.getDocument());
-        fNextSignalField1Alt.setDocument(sNextSignalField1Alt.getDocument());
+        // configure sensor combobox options
+        setupComboBox(sSensorComboBox1, false, true, true);
+        setupComboBox(sSensorComboBox2, false, true, true);
+        setupComboBox(sSensorComboBox3, false, true, true);
+        setupComboBox(sSensorComboBox4, false, true, true);
+        setupComboBox(sSensorComboBox5, false, true, true);
+        setupComboBox(tmSensorComboBox1, false, true, true);
+        setupComboBox(tmSensorComboBox2, false, true, true);
+        setupComboBox(tmSensorComboBox3, false, true, true);
+        setupComboBox(tmSensorComboBox4, false, true, true);
+        setupComboBox(tmSensorComboBox5, false, true, true);
+        setupComboBox(tdSensorComboBox1, false, true, true);
+        setupComboBox(tdSensorComboBox2, false, true, true);
+        setupComboBox(tdSensorComboBox3, false, true, true);
+        setupComboBox(tdSensorComboBox4, false, true, true);
+        setupComboBox(tdSensorComboBox5, false, true, true);
+        setupComboBox(fSensorComboBox1, false, true, true);
+        setupComboBox(fSensorComboBox2, false, true, true);
+        setupComboBox(fSensorComboBox3, false, true, true);
+        setupComboBox(fSensorComboBox4, false, true, true);
+        setupComboBox(fSensorComboBox5, false, true, true);
+        // configure turnout combobox options
+        setupComboBox(tdProtectTurnoutComboBox, false, true, true);
+        setupComboBox(tmProtectTurnoutComboBox, false, true, true);
+        setupComboBox(fProtectTurnoutComboBox, false, true, true);
+        // configure next signal combobox options
+        setupComboBox(sNextSignalComboBox1, false, true, true);
+        setupComboBox(sNextSignalComboBox1Alt, false, true, true);
+        setupComboBox(tdNextSignalComboBox1, false, true, true);
+        setupComboBox(tdNextSignalComboBox1Alt, false, true, true);
+        setupComboBox(tmNextSignalComboBox1, false, true, true);
+        setupComboBox(tmNextSignalComboBox1Alt, false, true, true);
+        setupComboBox(fNextSignalComboBox1, false, true, true);
+        setupComboBox(fNextSignalComboBox1Alt, false, true, true);
+        setupComboBox(fNextSignalComboBox2, false, true, true);
+        setupComboBox(fNextSignalComboBox2Alt, false, true, true);
+        // configure next sensor combobox options
+        setupComboBox(fNextSensorComboBox1, false, true, true);
+        setupComboBox(fNextSensorComboBox1Alt, false, true, true);
+        setupComboBox(fNextSensorComboBox2, false, true, true);
+        setupComboBox(fNextSensorComboBox2Alt, false, true, true);
 
         // add top part of GUI, holds signal head name to drive
         JPanel line = new JPanel();
         line.add(new JLabel(Bundle.getMessage("SSLHeadNamedLabel")));
-        line.add(outSignalField = new JTextField(12));
-        outSignalField.setToolTipText(outSignalFieldTooltip);
-        outSignalField.addActionListener(new ActionListener() {
+        setupComboBox(outSignalHeadComboBox, true, true, true);
+        line.add(outSignalHeadComboBox);
+        outSignalHeadComboBox.setToolTipText(outSignalHeadTooltip);
+        outSignalHeadComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // user hit enter, use this name to fill in the rest of the fields
@@ -292,8 +393,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         line = new JPanel();
         line.add(new JLabel(Bundle.getMessage("ApproachLightingSensorLabel")));
-        line.add(approachSensorField1 = new JTextField(6));
-        approachSensorField1.setToolTipText(approachSensor1Tooltip);
+        line.add(approachSensor1ComboBox);
+        setupComboBox(approachSensor1ComboBox, false, true, true);
+        approachSensor1ComboBox.setToolTipText(approachSensor1Tooltip);
         line.setAlignmentX(0.5f);
         getContentPane().add(line);
 
@@ -309,7 +411,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         line = new JPanel();
         line.setLayout(new FlowLayout());
         statusBar = new JLabel(Bundle.getMessage("StatusSslStart"));
-        statusBar.setFont(statusBar.getFont().deriveFont(0.9f * outSignalField.getFont().getSize())); // a bit smaller
+        statusBar.setFont(statusBar.getFont().deriveFont(0.9f * commentField.getFont().getSize())); // a bit smaller
         statusBar.setForeground(Color.gray);
         line.add(statusBar);
         getContentPane().add(line);
@@ -319,7 +421,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout());
         // add OK button at bottom
-        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
+        cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         buttons.add(cancel);
         cancel.addActionListener(new ActionListener() {
             @Override
@@ -369,20 +471,20 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeSingle.add(new JLabel(Bundle.getMessage("ProtectsSensor")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        sSensorField1.setToolTipText(sensorFieldTooltip);
-        modeSingle.add(sSensorField1, constraints);
+        sSensorComboBox1.setToolTipText(sensorFieldTooltip);
+        modeSingle.add(sSensorComboBox1, constraints);
         constraints.gridx = 2;
-        sSensorField2.setToolTipText(sensorFieldTooltip);
-        modeSingle.add(sSensorField2, constraints);
+        sSensorComboBox2.setToolTipText(sensorFieldTooltip);
+        modeSingle.add(sSensorComboBox2, constraints);
         constraints.gridx = 3;
-        sSensorField3.setToolTipText(sensorFieldTooltip);
-        modeSingle.add(sSensorField3, constraints);
+        sSensorComboBox3.setToolTipText(sensorFieldTooltip);
+        modeSingle.add(sSensorComboBox3, constraints);
         constraints.gridx = 4;
-        sSensorField4.setToolTipText(sensorFieldTooltip);
-        modeSingle.add(sSensorField4, constraints);
+        sSensorComboBox4.setToolTipText(sensorFieldTooltip);
+        modeSingle.add(sSensorComboBox4, constraints);
         constraints.gridx = 5;
-        sSensorField5.setToolTipText(sensorFieldTooltip);
-        modeSingle.add(sSensorField5, constraints);
+        sSensorComboBox5.setToolTipText(sensorFieldTooltip);
+        modeSingle.add(sSensorComboBox5, constraints);
 
         insets.top = 2;
         constraints.gridx = 0;
@@ -392,11 +494,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeSingle.add(new JLabel(Bundle.getMessage("Protects_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        sNextSignalField1.setToolTipText(highSignalFieldTooltip);
-        modeSingle.add(sNextSignalField1, constraints);
+        sNextSignalComboBox1.setToolTipText(highSignalFieldTooltip);
+        modeSingle.add(sNextSignalComboBox1, constraints);
         constraints.gridx = 2;
-        sNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
-        modeSingle.add(sNextSignalField1Alt, constraints);
+        sNextSignalComboBox1Alt.setToolTipText(nextSignalFieldTooltip);
+        modeSingle.add(sNextSignalComboBox1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
         // ??
@@ -444,20 +546,20 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailMain.add(new JLabel(Bundle.getMessage("ProtectsSensor")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        tmSensorField1.setToolTipText(sensorFieldTooltip);
-        modeTrailMain.add(tmSensorField1, constraints);
+        tmSensorComboBox1.setToolTipText(sensorFieldTooltip);
+        modeTrailMain.add(tmSensorComboBox1, constraints);
         constraints.gridx = 2;
-        tmSensorField2.setToolTipText(sensorFieldTooltip);
-        modeTrailMain.add(tmSensorField2, constraints);
+        tmSensorComboBox2.setToolTipText(sensorFieldTooltip);
+        modeTrailMain.add(tmSensorComboBox2, constraints);
         constraints.gridx = 3;
-        tmSensorField3.setToolTipText(sensorFieldTooltip);
-        modeTrailMain.add(tmSensorField3, constraints);
+        tmSensorComboBox3.setToolTipText(sensorFieldTooltip);
+        modeTrailMain.add(tmSensorComboBox3, constraints);
         constraints.gridx = 4;
-        tmSensorField4.setToolTipText(sensorFieldTooltip);
-        modeTrailMain.add(tmSensorField4, constraints);
+        tmSensorComboBox4.setToolTipText(sensorFieldTooltip);
+        modeTrailMain.add(tmSensorComboBox4, constraints);
         constraints.gridx = 5;
-        tmSensorField5.setToolTipText(sensorFieldTooltip);
-        modeTrailMain.add(tmSensorField5, constraints);
+        tmSensorComboBox5.setToolTipText(sensorFieldTooltip);
+        modeTrailMain.add(tmSensorComboBox5, constraints);
 
         insets.top = 2;
         constraints.fill = GridBagConstraints.NONE;
@@ -467,8 +569,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailMain.add(new JLabel(Bundle.getMessage("Red_When_Turnout")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        tmProtectTurnoutField.setToolTipText(turnoutFieldTooltip);
-        modeTrailMain.add(tmProtectTurnoutField, constraints);
+        tmProtectTurnoutComboBox.setToolTipText(turnoutFieldTooltip);
+        modeTrailMain.add(tmProtectTurnoutComboBox, constraints);
         constraints.gridx = 2;
         constraints.gridwidth = 2;
         modeTrailMain.add(new JLabel(Bundle.getMessage("IsState", InstanceManager.turnoutManagerInstance().getThrownText())), constraints);
@@ -481,11 +583,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailMain.add(new JLabel(Bundle.getMessage("Protects_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        tmNextSignalField1.setToolTipText(highSignalFieldTooltip);
-        modeTrailMain.add(tmNextSignalField1, constraints);
+        tmNextSignalComboBox1.setToolTipText(highSignalFieldTooltip);
+        modeTrailMain.add(tmNextSignalComboBox1, constraints);
         constraints.gridx = 2;
-        tmNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
-        modeTrailMain.add(tmNextSignalField1Alt, constraints);
+        tmNextSignalComboBox1Alt.setToolTipText(nextSignalFieldTooltip);
+        modeTrailMain.add(tmNextSignalComboBox1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
         // ??
@@ -533,20 +635,20 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailDiv.add(new JLabel(Bundle.getMessage("ProtectsSensor")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        tdSensorField1.setToolTipText(sensorFieldTooltip);
-        modeTrailDiv.add(tdSensorField1, constraints);
+        tdSensorComboBox1.setToolTipText(sensorFieldTooltip);
+        modeTrailDiv.add(tdSensorComboBox1, constraints);
         constraints.gridx = 2;
-        tdSensorField2.setToolTipText(sensorFieldTooltip);
-        modeTrailDiv.add(tdSensorField2, constraints);
+        tdSensorComboBox2.setToolTipText(sensorFieldTooltip);
+        modeTrailDiv.add(tdSensorComboBox2, constraints);
         constraints.gridx = 3;
-        tdSensorField3.setToolTipText(sensorFieldTooltip);
-        modeTrailDiv.add(tdSensorField3, constraints);
+        tdSensorComboBox3.setToolTipText(sensorFieldTooltip);
+        modeTrailDiv.add(tdSensorComboBox3, constraints);
         constraints.gridx = 4;
-        tdSensorField4.setToolTipText(sensorFieldTooltip);
-        modeTrailDiv.add(tdSensorField4, constraints);
+        tdSensorComboBox4.setToolTipText(sensorFieldTooltip);
+        modeTrailDiv.add(tdSensorComboBox4, constraints);
         constraints.gridx = 5;
-        tdSensorField5.setToolTipText(sensorFieldTooltip);
-        modeTrailDiv.add(tdSensorField5, constraints);
+        tdSensorComboBox5.setToolTipText(sensorFieldTooltip);
+        modeTrailDiv.add(tdSensorComboBox5, constraints);
 
         insets.top = 2;
         constraints.fill = GridBagConstraints.NONE;
@@ -556,8 +658,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailDiv.add(new JLabel(Bundle.getMessage("Red_When_Turnout")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        tdProtectTurnoutField.setToolTipText(turnoutFieldTooltip);
-        modeTrailDiv.add(tdProtectTurnoutField, constraints);
+        tdProtectTurnoutComboBox.setToolTipText(turnoutFieldTooltip);
+        modeTrailDiv.add(tdProtectTurnoutComboBox, constraints);
         constraints.gridx = 2;
         constraints.gridwidth = 2;
         modeTrailDiv.add(new JLabel(Bundle.getMessage("IsState", InstanceManager.turnoutManagerInstance().getClosedText())), constraints);
@@ -570,11 +672,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailDiv.add(new JLabel(Bundle.getMessage("Protects_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        tdNextSignalField1.setToolTipText(highSignalFieldTooltip);
-        modeTrailDiv.add(tdNextSignalField1, constraints);
+        tdNextSignalComboBox1.setToolTipText(highSignalFieldTooltip);
+        modeTrailDiv.add(tdNextSignalComboBox1, constraints);
         constraints.gridx = 2;
-        tdNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
-        modeTrailDiv.add(tdNextSignalField1Alt, constraints);
+        tdNextSignalComboBox1Alt.setToolTipText(nextSignalFieldTooltip);
+        modeTrailDiv.add(tdNextSignalComboBox1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
         // ??
@@ -623,20 +725,20 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(new JLabel(Bundle.getMessage("ProtectsSensor")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        fSensorField1.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fSensorField1, constraints);
+        fSensorComboBox1.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fSensorComboBox1, constraints);
         constraints.gridx = 2;
-        fSensorField2.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fSensorField2, constraints);
+        fSensorComboBox2.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fSensorComboBox2, constraints);
         constraints.gridx = 3;
-        fSensorField3.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fSensorField3, constraints);
+        fSensorComboBox3.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fSensorComboBox3, constraints);
         constraints.gridx = 4;
-        fSensorField4.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fSensorField4, constraints);
+        fSensorComboBox4.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fSensorComboBox4, constraints);
         constraints.gridx = 5;
-        fSensorField5.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fSensorField5, constraints);
+        fSensorComboBox5.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fSensorComboBox5, constraints);
 
         insets.top = 2;
         constraints.fill = GridBagConstraints.NONE;
@@ -646,8 +748,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(new JLabel(Bundle.getMessage("WatchesTurnout")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        fProtectTurnoutField.setToolTipText(turnoutFieldTooltip);
-        modeFacing.add(fProtectTurnoutField, constraints);
+        fProtectTurnoutComboBox.setToolTipText(turnoutFieldTooltip);
+        modeFacing.add(fProtectTurnoutComboBox, constraints);
 
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridx = 0;
@@ -656,11 +758,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(new JLabel(Bundle.getMessage("To_Protect_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        fNextSignalField1.setToolTipText(highSignalFieldTooltip);
-        modeFacing.add(fNextSignalField1, constraints);
+        fNextSignalComboBox1.setToolTipText(highSignalFieldTooltip);
+        modeFacing.add(fNextSignalComboBox1, constraints);
         constraints.gridx = 2;
-        fNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
-        modeFacing.add(fNextSignalField1Alt, constraints);
+        fNextSignalComboBox1Alt.setToolTipText(nextSignalFieldTooltip);
+        modeFacing.add(fNextSignalComboBox1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
         // ??
@@ -680,11 +782,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(new JLabel(Bundle.getMessage("And_Sensors")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        fNextSensorField1.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fNextSensorField1, constraints);
+        fNextSensorComboBox1.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fNextSensorComboBox1, constraints);
         constraints.gridx = 2;
-        fNextSensorField1Alt.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fNextSensorField1Alt, constraints);
+        fNextSensorComboBox1Alt.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fNextSensorComboBox1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
         modeFacing.add(new JLabel(Bundle.getMessage("WhenTurnoutIsX", InstanceManager.turnoutManagerInstance().getClosedText())), constraints);
@@ -697,14 +799,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(new JLabel(Bundle.getMessage("And_Protect_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        fNextSignalField2.setToolTipText(highSignalFieldTooltip);
-        modeFacing.add(fNextSignalField2, constraints);
+        fNextSignalComboBox2.setToolTipText(highSignalFieldTooltip);
+        modeFacing.add(fNextSignalComboBox2, constraints);
         constraints.gridx = 2;
-        fNextSignalField2Alt.setToolTipText(nextSignalFieldTooltip);
-        modeFacing.add(fNextSignalField2Alt, constraints);
+        fNextSignalComboBox2Alt.setToolTipText(nextSignalFieldTooltip);
+        modeFacing.add(fNextSignalComboBox2Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
-        // ?? 
+
         q = new JPanel();
         q.setLayout(new FlowLayout());
         q.add(fdLimitBox);
@@ -721,11 +823,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(new JLabel(Bundle.getMessage("And_Sensors")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        fNextSensorField2.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fNextSensorField2, constraints);
+        fNextSensorComboBox2.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fNextSensorComboBox2, constraints);
         constraints.gridx = 2;
-        fNextSensorField2Alt.setToolTipText(sensorFieldTooltip);
-        modeFacing.add(fNextSensorField2Alt, constraints);
+        fNextSensorComboBox2Alt.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fNextSensorComboBox2Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
         modeFacing.add(new JLabel(Bundle.getMessage("WhenTurnoutIsX", InstanceManager.turnoutManagerInstance().getThrownText())), constraints);
@@ -748,22 +850,24 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     void applyPressed() {
         // check signal head exists
-        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText()) == null) {
+        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalHeadComboBox.getDisplayName()) == null) {
             setTitle(Bundle.getMessage("Simple_Signal_Logic"));
-            statusBar.setText(Bundle.getMessage("HeadXNotDefined", outSignalField.getText()));
-            // JOptionPane.showMessageDialog(this, Bundle.getMessage("HeadXNotDefined", outSignalField.getText()));
+            statusBar.setText(Bundle.getMessage("HeadXNotDefined", outSignalHeadComboBox.getDisplayName()));
+            // JOptionPane.showMessageDialog(this, Bundle.getMessage("HeadXNotDefined", outSignalHeadComboBox.getDisplayName()));
             return;
         }
         SignalHead head = sh;
         if (sh == null) {
-            head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText());
-            statusBar.setText(Bundle.getMessage("StatusSslCreated", outSignalField.getText()));
+            head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalHeadComboBox.getDisplayName());
+            statusBar.setText(Bundle.getMessage("StatusSslCreated", outSignalHeadComboBox.getDisplayName()));
+        } else {
+            statusBar.setText(Bundle.getMessage("StatusSslUpdated", outSignalHeadComboBox.getDisplayName()));
         }
 
         // it does
         try {
             BlockBossLogic b = BlockBossLogic.getStoppedObject(head);
-            b.setApproachSensor1(approachSensorField1.getText());
+            b.setApproachSensor1(approachSensor1ComboBox.getDisplayName());
             if (buttonSingle.isSelected()) {
                 loadSingle(b);
             } else if (buttonTrailMain.isSelected()) {
@@ -776,12 +880,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
                 log.error("no SSL type radio button was selected"); // NOI18N
                 return;
             }
-            statusBar.setText(Bundle.getMessage("StatusSslUpdated", outSignalField.getText()));
+            cancel.setText(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Cancel
         } catch (Exception e) {
             log.error("An error occurred creating the Simple Signal Logic for" + e.toString());
             statusBar.setText(Bundle.getMessage("ApplyErrorDialog"));
             // JOptionPane.showMessageDialog(this, Bundle.getMessage("ApplyErrorDialog"));
-
         }
     }
 
@@ -793,15 +896,15 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     void loadSingle(BlockBossLogic b) {
-        b.setSensor1(sSensorField1.getText());
-        b.setSensor2(sSensorField2.getText());
-        b.setSensor3(sSensorField3.getText());
-        b.setSensor4(sSensorField4.getText());
-        b.setSensor5(sSensorField5.getText());
+        b.setSensor1(sSensorComboBox1.getDisplayName());
+        b.setSensor2(sSensorComboBox2.getDisplayName());
+        b.setSensor3(sSensorComboBox3.getDisplayName());
+        b.setSensor4(sSensorComboBox4.getDisplayName());
+        b.setSensor5(sSensorComboBox5.getDisplayName());
         b.setMode(BlockBossLogic.SINGLEBLOCK);
 
-        b.setWatchedSignal1(sNextSignalField1.getText(), sFlashBox.isSelected());
-        b.setWatchedSignal1Alt(sNextSignalField1Alt.getText());
+        b.setWatchedSignal1(sNextSignalComboBox1.getDisplayName(), sFlashBox.isSelected());
+        b.setWatchedSignal1Alt(sNextSignalComboBox1Alt.getDisplayName());
         b.setLimitSpeed1(sLimitBox.isSelected());
         b.setRestrictingSpeed1(sRestrictingBox.isSelected());
         b.setDistantSignal(sDistantBox.isSelected());
@@ -813,17 +916,17 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     void loadTrailMain(BlockBossLogic b) {
-        b.setSensor1(tmSensorField1.getText());
-        b.setSensor2(tmSensorField2.getText());
-        b.setSensor3(tmSensorField3.getText());
-        b.setSensor4(tmSensorField4.getText());
-        b.setSensor5(tmSensorField5.getText());
+        b.setSensor1(tmSensorComboBox1.getDisplayName());
+        b.setSensor2(tmSensorComboBox2.getDisplayName());
+        b.setSensor3(tmSensorComboBox3.getDisplayName());
+        b.setSensor4(tmSensorComboBox4.getDisplayName());
+        b.setSensor5(tmSensorComboBox5.getDisplayName());
         b.setMode(BlockBossLogic.TRAILINGMAIN);
 
-        b.setTurnout(tmProtectTurnoutField.getText());
+        b.setTurnout(tmProtectTurnoutComboBox.getDisplayName());
 
-        b.setWatchedSignal1(tmNextSignalField1.getText(), tmFlashBox.isSelected());
-        b.setWatchedSignal1Alt(tmNextSignalField1Alt.getText());
+        b.setWatchedSignal1(tmNextSignalComboBox1.getDisplayName(), tmFlashBox.isSelected());
+        b.setWatchedSignal1Alt(tmNextSignalComboBox1Alt.getDisplayName());
         b.setLimitSpeed1(tmLimitBox.isSelected());
         b.setRestrictingSpeed1(tmRestrictingBox.isSelected());
         b.setDistantSignal(tmDistantBox.isSelected());
@@ -835,17 +938,17 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     void loadTrailDiv(BlockBossLogic b) {
-        b.setSensor1(tdSensorField1.getText());
-        b.setSensor2(tdSensorField2.getText());
-        b.setSensor3(tdSensorField3.getText());
-        b.setSensor4(tdSensorField4.getText());
-        b.setSensor5(tdSensorField5.getText());
+        b.setSensor1(tdSensorComboBox1.getDisplayName());
+        b.setSensor2(tdSensorComboBox2.getDisplayName());
+        b.setSensor3(tdSensorComboBox3.getDisplayName());
+        b.setSensor4(tdSensorComboBox4.getDisplayName());
+        b.setSensor5(tdSensorComboBox5.getDisplayName());
         b.setMode(BlockBossLogic.TRAILINGDIVERGING);
 
-        b.setTurnout(tdProtectTurnoutField.getText());
+        b.setTurnout(tdProtectTurnoutComboBox.getDisplayName());
 
-        b.setWatchedSignal1(tdNextSignalField1.getText(), tdFlashBox.isSelected());
-        b.setWatchedSignal1Alt(tdNextSignalField1Alt.getText());
+        b.setWatchedSignal1(tdNextSignalComboBox1.getDisplayName(), tdFlashBox.isSelected());
+        b.setWatchedSignal1Alt(tdNextSignalComboBox1Alt.getDisplayName());
         b.setLimitSpeed2(tdLimitBox.isSelected());
         b.setRestrictingSpeed1(tdRestrictingBox.isSelected());
         b.setDistantSignal(tdDistantBox.isSelected());
@@ -857,23 +960,23 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     void loadFacing(BlockBossLogic b) {
-        b.setSensor1(fSensorField1.getText());
-        b.setSensor2(fSensorField2.getText());
-        b.setSensor3(fSensorField3.getText());
-        b.setSensor4(fSensorField4.getText());
-        b.setSensor5(fSensorField5.getText());
+        b.setSensor1(fSensorComboBox1.getDisplayName());
+        b.setSensor2(fSensorComboBox2.getDisplayName());
+        b.setSensor3(fSensorComboBox3.getDisplayName());
+        b.setSensor4(fSensorComboBox4.getDisplayName());
+        b.setSensor5(fSensorComboBox5.getDisplayName());
         b.setMode(BlockBossLogic.FACING);
 
-        b.setTurnout(fProtectTurnoutField.getText());
+        b.setTurnout(fProtectTurnoutComboBox.getDisplayName());
 
-        b.setWatchedSignal1(fNextSignalField1.getText(), fFlashBox.isSelected());
-        b.setWatchedSignal1Alt(fNextSignalField1Alt.getText());
-        b.setWatchedSignal2(fNextSignalField2.getText());
-        b.setWatchedSignal2Alt(fNextSignalField2Alt.getText());
-        b.setWatchedSensor1(fNextSensorField1.getText());
-        b.setWatchedSensor1Alt(fNextSensorField1Alt.getText());
-        b.setWatchedSensor2(fNextSensorField2.getText());
-        b.setWatchedSensor2Alt(fNextSensorField2Alt.getText());
+        b.setWatchedSignal1(fNextSignalComboBox1.getDisplayName(), fFlashBox.isSelected());
+        b.setWatchedSignal1Alt(fNextSignalComboBox1Alt.getDisplayName());
+        b.setWatchedSignal2(fNextSignalComboBox2.getDisplayName());
+        b.setWatchedSignal2Alt(fNextSignalComboBox2Alt.getDisplayName());
+        b.setWatchedSensor1(fNextSensorComboBox1.getDisplayName());
+        b.setWatchedSensor1Alt(fNextSensorComboBox1Alt.getDisplayName());
+        b.setWatchedSensor2(fNextSensorComboBox2.getDisplayName());
+        b.setWatchedSensor2Alt(fNextSensorComboBox2Alt.getDisplayName());
         b.setLimitSpeed1(fmLimitBox.isSelected());
         b.setRestrictingSpeed1(fmRestrictingBox.isSelected());
         b.setLimitSpeed2(fdLimitBox.isSelected());
@@ -889,7 +992,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     void activate() {
         // check signal head exists
-        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText()) == null) {
+        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalHeadComboBox.getDisplayName()) == null) {
             // head not exist, just title the window and leave
             setTitle(Bundle.getMessage("Simple_Signal_Logic"));
             return;
@@ -900,31 +1003,31 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         if (sh != null) {
             b = BlockBossLogic.getExisting(sh);
         } else {
-            b = BlockBossLogic.getExisting(outSignalField.getText());
+            b = BlockBossLogic.getExisting(outSignalHeadComboBox.getDisplayName());
         }
 
-        setTitle(Bundle.getMessage("SignalLogicForX", outSignalField.getText()));
+        setTitle(Bundle.getMessage("SignalLogicForX", outSignalHeadComboBox.getDisplayName()));
 
-        approachSensorField1.setText(b.getApproachSensor1());
+        approachSensor1ComboBox.setText(b.getApproachSensor1());
 
-        sSensorField1.setText(b.getSensor1());
-        sSensorField2.setText(b.getSensor2());
-        sSensorField3.setText(b.getSensor3());
-        sSensorField4.setText(b.getSensor4());
-        sSensorField5.setText(b.getSensor5());
+        sSensorComboBox1.setText(b.getSensor1());
+        sSensorComboBox2.setText(b.getSensor2());
+        sSensorComboBox3.setText(b.getSensor3());
+        sSensorComboBox4.setText(b.getSensor4());
+        sSensorComboBox5.setText(b.getSensor5());
 
-        tmProtectTurnoutField.setText(b.getTurnout());
+        tmProtectTurnoutComboBox.setText(b.getTurnout());
 
-        sNextSignalField1.setText(b.getWatchedSignal1());
-        sNextSignalField1Alt.setText(b.getWatchedSignal1Alt());
+        sNextSignalComboBox1.setText(b.getWatchedSignal1());
+        sNextSignalComboBox1Alt.setText(b.getWatchedSignal1Alt());
 
-        fNextSignalField2.setText(b.getWatchedSignal2());
-        fNextSignalField2Alt.setText(b.getWatchedSignal2Alt());
+        fNextSignalComboBox2.setText(b.getWatchedSignal2());
+        fNextSignalComboBox2Alt.setText(b.getWatchedSignal2Alt());
 
-        fNextSensorField1.setText(b.getWatchedSensor1());
-        fNextSensorField1Alt.setText(b.getWatchedSensor1Alt());
-        fNextSensorField2.setText(b.getWatchedSensor2());
-        fNextSensorField2Alt.setText(b.getWatchedSensor2Alt());
+        fNextSensorComboBox1.setText(b.getWatchedSensor1());
+        fNextSensorComboBox1Alt.setText(b.getWatchedSensor1Alt());
+        fNextSensorComboBox2.setText(b.getWatchedSensor2());
+        fNextSensorComboBox2Alt.setText(b.getWatchedSensor2Alt());
 
         sLimitBox.setSelected(b.getLimitSpeed1());
         sRestrictingBox.setSelected(b.getRestrictingSpeed1());
@@ -987,8 +1090,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
      */
     public void setSignal(SignalHead sh) {
         this.sh = sh;
-        outSignalField.setText(sh.getDisplayName());
-        outSignalField.setEnabled(false);
+        outSignalHeadComboBox.setText(sh.getDisplayName());
+        outSignalHeadComboBox.setEnabled(false);
         activate();
     }
 
@@ -999,9 +1102,34 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
      */
     public void setSignal(String name) {
         sh = null;
-        outSignalField.setText(name);
-        outSignalField.setEnabled(true);
+        outSignalHeadComboBox.setText(name);
+        outSignalHeadComboBox.setEnabled(true);
         activate();
+    }
+
+    /**
+     * Set up editable JmriBeanComboBoxes for SSL pane.
+     * Copied from LayoutEditor
+     * @see jmri.jmrit.display.layoutEditor.LayoutEditor#setupComboBox(JmriBeanComboBox, boolean, boolean, boolean)
+     * @author G. Warner 2017
+     *
+     * @param inComboBox     the editable JmriBeanComboBoxes to set up
+     * @param inValidateMode boolean: if true, valid text == green, invalid text
+     *                       == red background; if false, valid text == green,
+     *                       invalid text == yellow background
+     * @param inEnable       boolean to enable / disable the JmriBeanComboBox
+     * @param inFirstBlank   boolean to enable / disable the first item being
+     *                       blank
+     */
+    public static void setupComboBox(@Nonnull JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
+        inComboBox.setEnabled(inEnable);
+        inComboBox.setEditable(true);
+        inComboBox.setValidateMode(inValidateMode);
+        inComboBox.setText("");
+        log.debug("SSL setupComboBox called");
+        inComboBox.setMaximumRowCount(15); // no context sensitive calculation
+        inComboBox.setFirstItemBlank(inFirstBlank);
+        inComboBox.setSelectedIndex(-1);
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
