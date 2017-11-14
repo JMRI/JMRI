@@ -18,6 +18,14 @@ public class ControlPanelEditorTest extends jmri.jmrit.display.AbstractEditorTes
     private ControlPanelEditor frame = new ControlPanelEditor();
 
     @Test
+    public void testDefaultCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor f = new ControlPanelEditor();
+        Assert.assertNotNull("exists", f );
+        f.dispose();
+    }
+
+    @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", frame );
@@ -27,7 +35,7 @@ public class ControlPanelEditorTest extends jmri.jmrit.display.AbstractEditorTes
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            e = frame = new ControlPanelEditor();
+            e = frame = new ControlPanelEditor("Control Panel Editor Test");
         }
     }
 

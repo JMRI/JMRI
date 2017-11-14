@@ -53,9 +53,9 @@ public class EditorFrameOperator extends JFrameOperator {
 
     public void deleteViaFileMenuWithConfirmations(){
         JMenuOperator jmo = new JMenuOperator(this,Bundle.getMessage("MenuFile"));
-        jmo.press();
-        JMenuItemOperator jmio = new JMenuItemOperator(this,Bundle.getMessage("DeletePanel"));
-        jmio.press();
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuFile") +"/"+ Bundle.getMessage("DeletePanel"), "/");
+
+        // the delete dialog doesn't appear every time we do this
 
         // that pops dialog, find and press Delete
         // JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));

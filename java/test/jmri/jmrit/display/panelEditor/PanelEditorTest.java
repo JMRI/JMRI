@@ -17,6 +17,14 @@ public class PanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
     private PanelEditor pe = new PanelEditor();
 
     @Test
+    public void testDefaultCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PanelEditor p = new PanelEditor();
+        Assert.assertNotNull("exists",p);
+        p.dispose();
+    }
+
+    @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists",pe);
@@ -27,7 +35,7 @@ public class PanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            e = pe = new PanelEditor();
+            e = pe = new PanelEditor("Panel Editor Test");
         }
     }
 
