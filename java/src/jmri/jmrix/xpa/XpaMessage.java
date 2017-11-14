@@ -14,7 +14,7 @@ public class XpaMessage implements jmri.jmrix.Message {
     public final static int MAX_SIZE = 64;
 
     private int _nDataChars = 0;
-    private byte _dataChars[] = null;
+    private byte[] _dataChars = null;
 
     // create a new one
     public XpaMessage(int i) {

@@ -504,7 +504,7 @@ public class MrcPacketizer extends MrcTrafficController {
     int consecutiveMissedPolls = 0;
 
     final MrcMessage noData = MrcMessage.setNoData();
-    final byte noDataMsg[] = new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
+    final byte[] noDataMsg = new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
 
     /**
      * Captive class to handle transmission
@@ -513,7 +513,7 @@ public class MrcPacketizer extends MrcTrafficController {
 
         @Override
         public void run() {
-            byte msg[];
+            byte[] msg;
             MrcMessage m;
             int x = 0;
             int state = WAITFORCMDRECEIVED;

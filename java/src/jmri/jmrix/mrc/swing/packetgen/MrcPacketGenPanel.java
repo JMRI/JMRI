@@ -109,7 +109,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
 
     MrcMessage createPacket(String s) {
         // gather bytes in result
-        byte b[];
+        byte[] b;
         try {
             b = StringUtil.bytesFromHexString(s);
         } catch (NumberFormatException e) {

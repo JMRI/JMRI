@@ -484,7 +484,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
+    protected void printColumns(HardcopyWriter w, String[] columnStrings, int columnSize) {
         // create a base string the width of the column
         StringBuilder spaces = new StringBuilder(""); // NOI18N
         for (int i = 0; i < columnSize; i++) {

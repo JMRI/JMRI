@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-    private String headers[] = null;
+    private String[] headers = null;
 
     private Vector<VariableValue> rowVector = new Vector<VariableValue>();  // vector of Variable items
     private CvTableModel _cvModel = null;          // reference to external table model
@@ -45,7 +45,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * "Read", "Write", "Comment", "CV", "Mask", "State".
      * For each, a property key in SymbolicProgBundle by the same name allows i18n
      */
-    public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
+    public VariableTableModel(JLabel status, String[] h, CvTableModel cvModel) {
         super();
         _status = status;
         _cvModel = cvModel;

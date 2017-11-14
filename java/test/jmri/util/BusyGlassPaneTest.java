@@ -20,7 +20,7 @@ public class BusyGlassPaneTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame f = new JmriJFrame("BusyGlassPane ConstructorTest");
-        java.awt.Component comp[] = f.getComponents();
+        java.awt.Component[] comp = f.getComponents();
         java.util.ArrayList<javax.swing.JComponent> cal = new java.util.ArrayList<javax.swing.JComponent>();
         java.util.ArrayList<java.awt.Rectangle> ral = new java.util.ArrayList<java.awt.Rectangle>();
         java.util.Arrays.stream(comp).forEach(i -> { 

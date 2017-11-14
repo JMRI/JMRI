@@ -121,7 +121,7 @@ public class GraphPane extends JPanel implements Printable {
         FontRenderContext frc = g2.getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("0", frc);
 
-        float dash1[] = {1.0f};
+        float[] dash1 = {1.0f};
         BasicStroke dashed = new BasicStroke(1.0f,
                 BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER,

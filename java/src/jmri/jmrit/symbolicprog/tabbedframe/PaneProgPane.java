@@ -2778,7 +2778,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     speedWindow.getContentPane().setLayout(null);
                     // in preparation for display, extract the speed table values into an array
                     StringTokenizer valueTokens = new StringTokenizer(originalValue, ",", false);
-                    int speedVals[] = new int[28];
+                    int[] speedVals = new int[28];
                     int k = 0;
                     while (valueTokens.hasMoreTokens()) {
                         speedVals[k] = Integer.parseInt(valueTokens.nextToken());

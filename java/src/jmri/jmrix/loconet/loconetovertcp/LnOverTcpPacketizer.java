@@ -239,7 +239,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                 try {
                     // get content; failure is a NoSuchElementException
                     log.debug("check for input");
-                    byte msg[] = null;
+                    byte[] msg = null;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }

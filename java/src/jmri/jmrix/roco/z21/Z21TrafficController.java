@@ -112,7 +112,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         javax.swing.SwingUtilities.invokeLater(r);
 
         // stream to port in single write, as that's needed by serial
-        byte msg[] = new byte[lengthOfByteStream(m)];
+        byte[] msg = new byte[lengthOfByteStream(m)];
         // add header
         int offset = addHeaderToOutput(msg, m);
 
@@ -137,7 +137,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 if (portReadyToSend(controller)) {
                     // create a datagram with the data from the
                     // message.
-                    byte data[] = ((Z21Message) m).getBuffer();
+                    byte[] data = ((Z21Message) m).getBuffer();
                     DatagramPacket sendPacket
                             = new DatagramPacket(data, ((Z21Message) m).getLength(), host, port);
                     // and send it.
@@ -283,7 +283,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         // threading to let other stuff happen
 
         // create a buffer to hold the incoming data.
-        byte buffer[] = new byte[100];  // the size here just needs to be longer
+        byte[] buffer = new byte[100];  // the size here just needs to be longer
         // than the longest protocol message.  
         // Otherwise, the receive will truncate.
 

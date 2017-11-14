@@ -22,7 +22,7 @@ public class FileDropEventTest {
 
     @Test
     public void testCTor() throws java.io.IOException  {
-        File fl[] = new File[3];
+        File[] fl = new File[3];
         fl[0]=folder.newFile();
         fl[1]=folder.newFile();
         fl[2]=folder.newFile();

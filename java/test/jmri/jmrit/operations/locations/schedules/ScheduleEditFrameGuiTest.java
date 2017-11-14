@@ -48,7 +48,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertNotNull("Test Schedule A exists", s);
 
         // now add some car types to the schedule
-        String carTypes[]=Bundle.getMessage("carTypeNames").split(",");
+        String[] carTypes=Bundle.getMessage("carTypeNames").split(",");
         f.typeBox.setSelectedItem(carTypes[1]);
         enterClickAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem(carTypes[2]);

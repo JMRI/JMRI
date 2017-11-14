@@ -140,7 +140,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
 
     TamsMessage createPacket(String s) {
         // gather bytes in result
-        byte b[];
+        byte[] b;
         try {
             b = StringUtil.bytesFromHexString(s);
         } catch (NumberFormatException e) {

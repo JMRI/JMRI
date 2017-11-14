@@ -28,7 +28,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     private DccThrottle mThrottle;
 
     private JPanel mainPanel;
-    private FunctionButton functionButton[];
+    private FunctionButton[] functionButton;
     private JToggleButton alt1Button = new JToggleButton();
     private JToggleButton alt2Button = new JToggleButton();
 

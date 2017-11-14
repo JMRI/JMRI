@@ -265,9 +265,9 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             for (int funcNum = 0; funcNum < 29; funcNum++) {
                 try {
 
-                    Class<?> partypes[] = {Boolean.TYPE};
+                    Class<?>[] partypes = {Boolean.TYPE};
                     Method setMomentary = t.getClass().getMethod("setF" + funcNum + "Momentary", partypes);
-                    Object data[] = {!(re.getFunctionLockable(funcNum))};
+                    Object[] data = {!(re.getFunctionLockable(funcNum))};
 
                     setMomentary.invoke(t, data);
 
@@ -651,11 +651,11 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             try {
                 Method getF = functionThrottle.getClass().getMethod("getF" + receivedFunction, (Class[]) null);
 
-                Class<?> partypes[] = {Boolean.TYPE};
+                Class<?>[] partypes = {Boolean.TYPE};
                 Method setF = functionThrottle.getClass().getMethod("setF" + receivedFunction, partypes);
 
                 state = (Boolean) getF.invoke(functionThrottle, (Object[]) null);
-                Object data[] = {!state};
+                Object[] data = {!state};
 
                 setF.invoke(functionThrottle, data);
 
@@ -677,11 +677,11 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             try {
                 Method getFMom = functionThrottle.getClass().getMethod("getF" + receivedFunction + "Momentary", (Class[]) null);
 
-                Class<?> partypes[] = {Boolean.TYPE};
+                Class<?>[] partypes = {Boolean.TYPE};
                 Method setF = functionThrottle.getClass().getMethod("setF" + receivedFunction, partypes);
 
                 if ((Boolean) getFMom.invoke(functionThrottle, (Object[]) null)) {
-                    Object data[] = {false};
+                    Object[] data = {false};
 
                     setF.invoke(functionThrottle, data);
                     log.debug("Throttle: {}, Momentary Function: {}, set false", functionThrottle.getLocoAddress(), receivedFunction);
@@ -697,7 +697,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     protected void forceFunction(String inPackage) {
         String receivedFunction = inPackage.substring(1);
-        Object data[] = new Object[1];
+        Object[] data = new Object[1];
 
         if (inPackage.charAt(0) == '1') { // Set function on
             data[0] = true;
@@ -707,7 +707,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             log.debug("Trying to set function {} to OFF", receivedFunction);
         }
         try {
-            Class<?> partypes[] = {Boolean.TYPE};
+            Class<?>[] partypes = {Boolean.TYPE};
             Method setF = throttle.getClass().getMethod("setF" + receivedFunction, partypes);
 
             setF.invoke(throttle, data);
@@ -724,7 +724,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     protected void handleMomentary(String inPackage) {
         String receivedFunction = inPackage.substring(1);
-        Object data[] = new Object[1];
+        Object[] data = new Object[1];
 
         if (inPackage.charAt(0) == '1') { // Set Momentary TRUE
             data[0] = true;
@@ -734,7 +734,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             log.debug("Trying to set function {} to Locking", receivedFunction);
         }
         try {
-            Class<?> partypes[] = {Boolean.TYPE};
+            Class<?>[] partypes = {Boolean.TYPE};
             Method setF = throttle.getClass().getMethod("setF" + receivedFunction + "Momentary", partypes);
 
             setF.invoke(throttle, data);

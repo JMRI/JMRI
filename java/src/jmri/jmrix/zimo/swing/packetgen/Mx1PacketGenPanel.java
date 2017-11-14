@@ -106,7 +106,7 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
 
     Mx1Message createPacket(String s) {
         // gather bytes in result
-        byte b[];
+        byte[] b;
         try {
             b = StringUtil.bytesFromHexString(s);
         } catch (NumberFormatException e) {

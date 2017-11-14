@@ -24,7 +24,7 @@ public class Z21XNetSimulatorAdapter {
     private final static int csNormalMode = 0x00;
 
     // package protected array of Z21SimulatorLocoData objects.
-    Z21SimulatorLocoData locoData[];
+    Z21SimulatorLocoData[] locoData;
     int locoCount; // counter for locoData array.
     int locoPosition; // Position for locoData array.
 

@@ -116,9 +116,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
 
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
-    JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
-    JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
-    JSpinner numberSpinner[] =  new JSpinner[MAXSEQUENCE];
+    JTextField[] mPacketField = new JTextField[MAXSEQUENCE];
+    JCheckBox[] mUseField = new JCheckBox[MAXSEQUENCE];
+    JSpinner[] numberSpinner =  new JSpinner[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonStart"));
 
     @Override
@@ -272,7 +272,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
                 s = s.substring(i + 1, s.length());
             }
             // Try to get hex bytes
-            byte b[] = StringUtil.bytesFromHexString(s);
+            byte[] b = StringUtil.bytesFromHexString(s);
             m.setNumDataElements(b.length);
             // Use &0xff to ensure signed bytes are stored as unsigned ints
             for (int i = 0; i < b.length; i++) {

@@ -166,49 +166,49 @@ public class StringUtilTest extends TestCase {
     }
 
     public void testJoinA1() {
-        String input[] = new String[]{"A", "B", "C"};
+        String[] input = new String[]{"A", "B", "C"};
         String results = StringUtil.join(input, ".");
         Assert.assertEquals("output", "A.B.C", results);
     }
 
     public void testSort1() {
-        String input[] = new String[]{"A", "B", "C"};
-        String output[] = new String[]{"A", "B", "C"};
+        String[] input = new String[]{"A", "B", "C"};
+        String[] output = new String[]{"A", "B", "C"};
         StringUtil.sort(input);
         Assert.assertArrayEquals(input, output);
     }
 
     public void testSort2() {
-        String input[] = new String[]{"A", "b", "C"};
-        String output[] = new String[]{"A", "C", "b"};
+        String[] input = new String[]{"A", "b", "C"};
+        String[] output = new String[]{"A", "C", "b"};
         StringUtil.sort(input);
         Assert.assertArrayEquals(input, output);
     }
 
     public void testSort3() {
-        String input[] = new String[]{"B", "C", "A"};
-        String output[] = new String[]{"A", "B", "C"};
+        String[] input = new String[]{"B", "C", "A"};
+        String[] output = new String[]{"A", "B", "C"};
         StringUtil.sort(input);
         Assert.assertArrayEquals(input, output);
     }
 
     public void testSort4() {
-        String input[] = new String[]{"c", "b", "a"};
-        String output[] = new String[]{"a", "b", "c"};
+        String[] input = new String[]{"c", "b", "a"};
+        String[] output = new String[]{"a", "b", "c"};
         StringUtil.sort(input);
         Assert.assertArrayEquals(input, output);
     }
 
     public void testSort5() {
-        String input[] = new String[]{"A", "c", "b"};
-        String output[] = new String[]{"A", "b", "c"};
+        String[] input = new String[]{"A", "c", "b"};
+        String[] output = new String[]{"A", "b", "c"};
         StringUtil.sort(input);
         Assert.assertArrayEquals(input, output);
     }
 
     public void testSort6() {
-        String input[] = new String[]{"A", "A", "b"};
-        String output[] = new String[]{"A", "A", "b"};
+        String[] input = new String[]{"A", "A", "b"};
+        String[] output = new String[]{"A", "A", "b"};
         StringUtil.sort(input);
         Assert.assertArrayEquals(input, output);
     }

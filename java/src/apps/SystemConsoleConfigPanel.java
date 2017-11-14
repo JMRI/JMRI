@@ -40,7 +40,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
     private static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
-    private static final Integer fontSizes[] = {
+    private static final Integer[] fontSizes = {
         8,
         9,
         10,
@@ -53,12 +53,12 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         20,
         24};
 
-    private static final Integer wrapStyles[] = {
+    private static final Integer[] wrapStyles = {
         SystemConsole.WRAP_STYLE_NONE,
         SystemConsole.WRAP_STYLE_LINE,
         SystemConsole.WRAP_STYLE_WORD};
 
-    private static final String wrapStyleNames[] = {
+    private static final String[] wrapStyleNames = {
         rbc.getString("ConsoleWrapStyleNone"),
         rbc.getString("ConsoleWrapStyleLine"),
         rbc.getString("ConsoleWrapStyleWord")};

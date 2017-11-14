@@ -30,16 +30,16 @@ public abstract class IEEE802154Node extends AbstractNode {
     public IEEE802154Node() {
     }
 
-    public IEEE802154Node(byte pan[], byte user[], byte global[]) {
+    public IEEE802154Node(byte[] pan, byte[] user, byte[] global) {
         panaddress = pan;
         useraddress = user;
         globaladdress = global;
         setNodeAddress((user[0] << 8) + ( user[1] & 0xff) );
     }
 
-    protected byte panaddress[] = {0, 0}; // default pan address to 0
-    protected byte useraddress[] = {0, 0}; // default user address to 0
-    protected byte globaladdress[] = {0, 0, 0, 0, 0, 0, 0, 0}; // default global address to 0
+    protected byte[] panaddress = {0, 0}; // default pan address to 0
+    protected byte[] useraddress = {0, 0}; // default user address to 0
+    protected byte[] globaladdress = {0, 0, 0, 0, 0, 0, 0, 0}; // default global address to 0
 
     /**
      * Public method to set the node address. Address range is checked in
@@ -75,7 +75,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      * @param addr byte array containing upper and lower bytes of the 16 bit PAN
      *             address.
      */
-    public void setPANAddress(byte addr[]) {
+    public void setPANAddress(byte[] addr) {
         for (int i = 0; i < panaddress.length; i++) {
             panaddress[i] = addr[i];
         }
@@ -97,7 +97,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      * @param addr byte array containing upper and lower bytes of the 16 bit
      *             user assigned address.
      */
-    public void setUserAddress(byte addr[]) {
+    public void setUserAddress(byte[] addr) {
         for (int i = 0; i < useraddress.length; i++) {
             useraddress[i] = addr[i];
         }
@@ -118,7 +118,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      *
      * @param addr byte array containing bytes of the 64 bit global address.
      */
-    public void setGlobalAddress(byte addr[]) {
+    public void setGlobalAddress(byte[] addr) {
         for (int i = 0; i < globaladdress.length; i++) {
             globaladdress[i] = addr[i];
         }

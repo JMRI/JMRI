@@ -44,8 +44,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
     MultiMeter meter;
 
-    NamedIcon digits[] = new NamedIcon[10];
-    NamedIcon baseDigits[] = new NamedIcon[10];
+    NamedIcon[] digits = new NamedIcon[10];
+    NamedIcon[] baseDigits = new NamedIcon[10];
     NamedIcon percentIcon;
     NamedIcon basePercent;
     NamedIcon decimalIcon;

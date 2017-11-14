@@ -19,7 +19,7 @@ public class MemoryComboIconTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor ef = new EditorScaffold();
-        String args[] = {"foo","bar"};
+        String[] args = {"foo","bar"};
         MemoryComboIcon bci = new MemoryComboIcon(ef,args);
         Assert.assertNotNull("MemoryComboIcon Constructor",bci);
     }

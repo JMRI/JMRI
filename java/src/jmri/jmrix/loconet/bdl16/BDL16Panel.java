@@ -44,7 +44,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     int[] boardNumbers;
     int origAccessBoardNum = 0;
     java.util.ArrayList<Integer> boardNumsEntryValue = new java.util.ArrayList<Integer>();
-    JComboBox<String> comboBox[];
+    JComboBox<String>[] comboBox;
     
     /**
      * BDL16x Programming tool

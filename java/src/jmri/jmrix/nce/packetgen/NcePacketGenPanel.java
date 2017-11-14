@@ -159,7 +159,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     NceMessage createPacket(String s) {
         // gather bytes in result
-        byte b[];
+        byte[] b;
         try {
             b = StringUtil.bytesFromHexString(s);
         } catch (NumberFormatException e) {

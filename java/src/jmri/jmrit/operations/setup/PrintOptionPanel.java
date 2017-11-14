@@ -209,7 +209,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pPickupColor.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutPickupColor")));
         pickupColorChooser = new JColorChooser(Setup.getPickupColor());
-        AbstractColorChooserPanel pickupColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel[] pickupColorPanels = { new ButtonSwatchColorChooserPanel()};
         pickupColorChooser.setChooserPanels(pickupColorPanels);
         pickupColorChooser.setPreviewPanel(new JPanel());
         pPickupColor.add(pickupColorChooser);
@@ -217,7 +217,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         JPanel pDropColor = new JPanel();
         pDropColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDropColor")));
         dropColorChooser = new JColorChooser(Setup.getDropColor());
-        AbstractColorChooserPanel dropColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel[] dropColorPanels = { new ButtonSwatchColorChooserPanel()};
         dropColorChooser.setChooserPanels(dropColorPanels);
         dropColorChooser.setPreviewPanel(new JPanel());
         pDropColor.add(dropColorChooser);
@@ -226,7 +226,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pLocalColor.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutLocalColor")));
         localColorChooser = new JColorChooser(Setup.getLocalColor());
-        AbstractColorChooserPanel localColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel[] localColorPanels = { new ButtonSwatchColorChooserPanel()};
         localColorChooser.setChooserPanels(localColorPanels);
         localColorChooser.setPreviewPanel(new JPanel());
         pLocalColor.add(localColorChooser);

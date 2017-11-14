@@ -418,7 +418,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
+    protected void printColumns(HardcopyWriter w, String[] columnStrings, int columnSize) {
         String columnString = "";
         StringBuilder lineString = new StringBuilder("");
         // create a base string the width of the column

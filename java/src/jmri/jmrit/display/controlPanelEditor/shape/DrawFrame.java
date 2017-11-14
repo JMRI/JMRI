@@ -165,7 +165,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _lineColorButon.setSelected(true);
         panel.add(p);
         _chooser = new JColorChooser(Color.LIGHT_GRAY);
-        AbstractColorChooserPanel _chooserColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel[] _chooserColorPanels = { new ButtonSwatchColorChooserPanel()};
         _chooser.setChooserPanels(_chooserColorPanels);
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
             colorChange();

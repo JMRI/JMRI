@@ -129,7 +129,7 @@ public class MemoryIconTest {
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
-        int colors[] = getColor("Expect empty", "| Expect empty", 0, 6, 10);
+        int[] colors = getColor("Expect empty", "| Expect empty", 0, 6, 10);
         Assert.assertTrue("Expect red X", (colors[3] == 0xff800000) || (colors[4] == 0xff800000) || (colors[5] == 0xff800000));
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {

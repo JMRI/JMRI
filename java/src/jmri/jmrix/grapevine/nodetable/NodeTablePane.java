@@ -167,7 +167,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     }
 
     // indicate whether node has been seen
-    boolean scanSeen[] = new boolean[128];
+    boolean[] scanSeen = new boolean[128];
 
     /**
      * Ignore messages being sent

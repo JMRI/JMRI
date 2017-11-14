@@ -88,7 +88,7 @@ public class LnPacketizer extends LnTrafficController {
 
         // stream to port in single write, as that's needed by serial
         int len = m.getNumDataElements();
-        byte msg[] = new byte[len];
+        byte[] msg = new byte[len];
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) m.getElement(i);
         }
@@ -471,7 +471,7 @@ public class LnPacketizer extends LnTrafficController {
                 try {
                     // get content; failure is a NoSuchElementException
                     log.trace("check for input"); // NOI18N
-                    byte msg[] = null;
+                    byte[] msg = null;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }

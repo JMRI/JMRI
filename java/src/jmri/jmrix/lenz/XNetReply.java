@@ -41,7 +41,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         super();
         setBinary(true);
         // gather bytes in result
-        byte b[] = jmri.util.StringUtil.bytesFromHexString(message);
+        byte[] b = jmri.util.StringUtil.bytesFromHexString(message);
         if (b.length == 0) {
             // no such thing as a zero-length message
             _nDataChars = 0;

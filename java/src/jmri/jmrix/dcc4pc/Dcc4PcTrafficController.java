@@ -166,7 +166,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     private void forwardToPort(AbstractMRMessage m) {
         mLastSentMessage = (Dcc4PcMessage) m;
         // stream to port in single write, as that's needed by serial
-        byte msg[] = new byte[lengthOfByteStream(m)];
+        byte[] msg = new byte[lengthOfByteStream(m)];
 
         // add data content
         int len = m.getNumDataElements();

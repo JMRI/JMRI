@@ -69,7 +69,7 @@ public class DecoderFile extends XmlFile {
     }
 
     // store acceptable version numbers
-    boolean versions[] = new boolean[256];
+    boolean[] versions = new boolean[256];
 
     public void setOneVersion(int i) {
         versions[i] = true;
@@ -340,7 +340,7 @@ public class DecoderFile extends XmlFile {
         if (test.contains("," + checkFor + ",")) {
             return true;
         } else if (checkFor != null) {
-            String testList[] = checkFor.split(",");
+            String[] testList = checkFor.split(",");
             if (testList.length > 1) {
                 for (String item : testList) {
                     if (test.contains("," + item + ",")) {

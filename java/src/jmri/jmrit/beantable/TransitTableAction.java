@@ -959,7 +959,7 @@ public class TransitTableAction extends AbstractTableAction {
         }
         int k = 0;
         if (possibles.size() > 1) {
-            Object choices[] = new Object[possibles.size()];
+            Object[] choices = new Object[possibles.size()];
             for (int j = 0; j < possibles.size(); j++) {
                 choices[j] = possibleNames.get(j);
             }
@@ -1172,7 +1172,7 @@ public class TransitTableAction extends AbstractTableAction {
         }
         int k = 0;
         if (possibles.size() > 1) {
-            Object choices[] = new Object[possibles.size()];
+            Object[] choices = new Object[possibles.size()];
             for (int j = 0; j < possibles.size(); j++) {
                 choices[j] = possibleNames.get(j);
             }

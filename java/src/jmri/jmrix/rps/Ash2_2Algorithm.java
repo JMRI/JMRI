@@ -268,7 +268,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
     static public int NERR = 6;			//  No. of rcvrs w/error reject
 
     //  Compute RPS Position  using
-    RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   many
+    RetVal RPSpos(int nr, double[] Tr, double[] Xr, double[] Yr, double[] Zr,//   many
             double Vs, double Xt, double Yt, double Zt) {//         receivers
 
         int i = 0, j = 0, jmax = 0, k = 0, l = 0, ns, nss, nxx, nox = 0, S, cmax;

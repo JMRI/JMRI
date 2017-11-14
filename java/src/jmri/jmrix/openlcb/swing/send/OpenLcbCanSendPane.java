@@ -61,9 +61,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
-    JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
-    JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
-    JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
+    JTextField[] mPacketField = new JTextField[MAXSEQUENCE];
+    JCheckBox[] mUseField = new JCheckBox[MAXSEQUENCE];
+    JTextField[] mDelayField = new JTextField[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton("Go");
 
     JTextField srcAliasField = new JTextField(4);
@@ -608,7 +608,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 s = s.substring(i + 1, s.length());
             }
             // Try to get hex bytes
-            byte b[] = StringUtil.bytesFromHexString(s);
+            byte[] b = StringUtil.bytesFromHexString(s);
             m.setNumDataElements(b.length);
             // Use &0xff to ensure signed bytes are stored as unsigned ints
             for (int i = 0; i < b.length; i++) {

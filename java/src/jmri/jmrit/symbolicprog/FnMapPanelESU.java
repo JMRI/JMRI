@@ -153,7 +153,7 @@ public class FnMapPanelESU extends JPanel {
     final String[] itemLabel = new String[MAX_ITEMS];
     final String[][] itemName = new String[MAX_ITEMS][3];
     final boolean[] itemIsUsed = new boolean[MAX_ITEMS];
-    final int iVarIndex[][] = new int[MAX_ITEMS][MAX_ROWS];
+    final int[][] iVarIndex = new int[MAX_ITEMS][MAX_ROWS];
 
     // default values
     int numItems = MAX_ITEMS;
@@ -161,7 +161,7 @@ public class FnMapPanelESU extends JPanel {
 
     // for row moves
     int selectedRow = -1;
-    final JRadioButton rowButton[];
+    final JRadioButton[] rowButton;
 
     public FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model, RosterEntry rosterEntry, CvTableModel cvModel) {
         log.debug("ESU Function map starts");
@@ -487,7 +487,7 @@ public class FnMapPanelESU extends JPanel {
                 button.addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        String params[] = e.getActionCommand().split(",");
+                        String[] params = e.getActionCommand().split(",");
                         JOptionPane.showMessageDialog(
                                 blockPanel, blockItemsScrollPane, "Row " + (Integer.parseInt(params[0]) + 1) + ", "
                                 + outBlockName[Integer.parseInt(params[1])], JOptionPane.PLAIN_MESSAGE);
@@ -813,7 +813,7 @@ public class FnMapPanelESU extends JPanel {
     // split and load labels
     void loadSplitLabel(int item, String theLabel) {
         if (item < MAX_ITEMS) {
-            String itemList[] = theLabel.split("\\|");
+            String[] itemList = theLabel.split("\\|");
             if (theLabel.equals("|")) {
                 itemName[item][0] = "";
                 itemName[item][1] = "";

@@ -33,7 +33,7 @@ public class Ash1_0AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 0.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 0.0f);
         Point3d s5 = new Point3d(0.0f, 0.0f, 15.0f);
-        Point3d s[] = new Point3d[]{s1, s2, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s2, s3, s4, s5};
 
         Calculator c = new Ash1_0Algorithm(s, vs);
 
@@ -54,7 +54,7 @@ public class Ash1_0AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 0.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 0.0f);
         Point3d s5 = new Point3d(0.0f, 0.0f, 15.0f);
-        Point3d s[] = new Point3d[]{s2, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s2, s3, s4, s5};
 
         Calculator c = new Ash1_0Algorithm(s, vs);
 
@@ -75,7 +75,7 @@ public class Ash1_0AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 0.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 0.0f);
         Point3d s5 = new Point3d(0.0f, 0.0f, 15.0f);
-        Point3d s[] = new Point3d[]{s1, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s3, s4, s5};
 
         Calculator c = new Ash1_0Algorithm(s, vs);
 
@@ -96,7 +96,7 @@ public class Ash1_0AlgorithmTest {
         //Point3d s3 = new Point3d(-3.0f,-4.0f, 0.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 0.0f);
         Point3d s5 = new Point3d(0.0f, 0.0f, 15.0f);
-        Point3d s[] = new Point3d[]{s1, s2, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s2, s4, s5};
 
         Calculator c = new Ash1_0Algorithm(s, vs);
 

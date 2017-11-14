@@ -45,7 +45,7 @@ public class IEEE802154NodeTest{
 
     @Test
     public void checkSetAndGetPanAddress() {
-        byte ba[]={0x01,0x02};
+        byte[] ba={0x01,0x02};
         m.setPANAddress(ba);
         Assert.assertEquals("PAN Address after set",ba[0],m.getPANAddress()[0]);
         Assert.assertEquals("PAN Address after set",ba[1],m.getPANAddress()[1]);
@@ -53,7 +53,7 @@ public class IEEE802154NodeTest{
 
     @Test
     public void checkSetAndGetUserAddress() {
-        byte ba[]={0x01,0x02};
+        byte[] ba={0x01,0x02};
         m.setUserAddress(ba);
         Assert.assertEquals("User Address after set",ba[0],m.getUserAddress()[0]);
         Assert.assertEquals("User Address after set",ba[1],m.getUserAddress()[1]);
@@ -61,7 +61,7 @@ public class IEEE802154NodeTest{
 
     @Test
     public void checkSetAndGetGlobalAddress() {
-        byte ba[]={0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08};
+        byte[] ba={0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08};
         m.setGlobalAddress(ba);
         for(int i=0;i<8;i++) {
            Assert.assertEquals("Global Address after set",ba[i],m.getGlobalAddress()[i]);

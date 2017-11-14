@@ -19,7 +19,7 @@ public class MakePacketTest extends TestCase {
     public void testSimplePacket() {
         int[] result = new int[100];
 
-        byte buffer[] = new byte[3];
+        byte[] buffer = new byte[3];
         boolean test_retval;
         test_retval = MakePacket.setPreambleLength(15);
 
@@ -53,7 +53,7 @@ public class MakePacketTest extends TestCase {
 
     public void testPreamble() {
         int[] result = new int[100];
-        byte buffer[] = new byte[3];
+        byte[] buffer = new byte[3];
         boolean test_retval;
         test_retval = MakePacket.setPreambleLength(20);
         Assert.assertEquals("Preamble set to 20", true, test_retval);
@@ -89,7 +89,7 @@ public class MakePacketTest extends TestCase {
     public void suppressTestAll3BytePacket() {
         int[] result = new int[100];
         byte i, j;
-        byte buffer[] = new byte[3];
+        byte[] buffer = new byte[3];
         boolean test_retval;
         test_retval = MakePacket.setPreambleLength(15);
         Assert.assertTrue(test_retval);
@@ -120,7 +120,7 @@ public class MakePacketTest extends TestCase {
     public void suppressTestAllSpeed128Packets() {
         int[] result = new int[100];
         int addressRange, speedRange;
-        byte buffer[] = new byte[6];
+        byte[] buffer = new byte[6];
         boolean test_retval, Direction;
         Direction = true; /*Set direction to forwards */
 
@@ -170,7 +170,7 @@ public class MakePacketTest extends TestCase {
     public void suppressTestAllOpsCvWrite() {
         int[] result = new int[100];
         int addressRange, cvNum, data;
-        byte buffer[] = new byte[6];
+        byte[] buffer = new byte[6];
         boolean test_retval;
 
         test_retval = MakePacket.setPreambleLength(15);

@@ -786,7 +786,7 @@ public class LnSv2MessageContents {
      * @return  LocoNet message containing the reply, or null if preceeding 
      *          message isn't a query.
      */
-    public static LocoNetMessage createSvReadReply(LocoNetMessage m, int svValues[]) {
+    public static LocoNetMessage createSvReadReply(LocoNetMessage m, int[] svValues) {
         if (!isSupportedSv2Message(m)) {
             return null;
         }

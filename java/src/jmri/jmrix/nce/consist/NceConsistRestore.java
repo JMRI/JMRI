@@ -133,7 +133,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                for (int i = 0; i < 8; i++) {
                    int j = i << 1;    // i = word index, j = byte index
 
-                   byte b[] = StringUtil.bytesFromHexString(consistLine[i + 1]);
+                   byte[] b = StringUtil.bytesFromHexString(consistLine[i + 1]);
 
                    consistData[j] = b[0];
                    consistData[j + 1] = b[1];

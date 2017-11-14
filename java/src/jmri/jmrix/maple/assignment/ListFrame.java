@@ -436,7 +436,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
          * column. Can only handle 4 columns of data as strings. Adapted from
          * routines in BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
          */
-        public void printTable(HardcopyWriter w, int colWidth[]) {
+        public void printTable(HardcopyWriter w, int[] colWidth) {
             // determine the column sizes - proportionately sized, with space between for lines
             int[] columnSize = new int[4];
             int charPerLine = w.getCharactersPerLine();
@@ -494,7 +494,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+        protected void printColumns(HardcopyWriter w, String[] columnStrings, int[] columnSize) {
             String columnString = "";
             StringBuilder lineString = new StringBuilder("");
             StringBuilder[] spaces = new StringBuilder[4];

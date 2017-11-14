@@ -81,7 +81,7 @@ abstract public class AbstractCanTrafficController
         log.debug("Encoded for hardware: [" + hm.toString() + "]");
 
         // stream to port in single write, as that's needed by serial
-        byte msg[] = new byte[lengthOfByteStream(hm)];
+        byte[] msg = new byte[lengthOfByteStream(hm)];
 
         // add header
         int offset = addHeaderToOutput(msg, hm);

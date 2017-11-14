@@ -112,32 +112,32 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         XBeeTrafficController xtc = (XBeeTrafficController) xcm.getTrafficController();
         for (int i = 0; i < l.size(); i++) {
             Element n = l.get(i);
-            byte GUID[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "GUID"));
+            byte[] GUID = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "GUID"));
             XBee64BitAddress guid = new XBee64BitAddress(GUID);
-            byte addr[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "address"));
+            byte[] addr = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "address"));
             XBee16BitAddress address = new XBee16BitAddress(addr);
             String Identifier = findParmValue(n, "name");
             // create the RemoteXBeeDevice for the node.
             RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
                          guid,address,Identifier);
-            // Check to see if the node is a duplicate, if it is, move 
+            // Check to see if the node is a duplicate, if it is, move
             // to the next one.
             // get a XBeeNode corresponding to this node address if one exists
            XBeeNode curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
            if (curNode != null) {
                log.info("Read duplicate node {} from file",remoteDevice);
-               continue; 
+               continue;
            }
-    
+
             try {
                // and then add it to the network
                xtc.getXBee().getNetwork().addRemoteDevice(remoteDevice);
                // create node (they register themselves)
                XBeeNode node = new XBeeNode(remoteDevice);
-            
+
                String polled = findParmValue(n, "polled");
                node.setPoll(polled.equals("yes"));
-                     
+
                xtc.registerNode(node);
 
                // if there is a stream port controller stored for this

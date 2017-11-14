@@ -1346,7 +1346,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
 
         // Copy the entries to the final array
-        String sbox[] = new String[np];
+        String[] sbox = new String[np];
         int n = 0;
         if (sp != null && np > 0) {
             for (i = 0; i < sp.length; i++) {

@@ -26,7 +26,7 @@ public class CarTypesTest {
 
     @Test
     public void testDefaultCarTypes() {
-        String carTypes[]=Bundle.getMessage("carTypeNames").split(","); 
+        String[] carTypes=Bundle.getMessage("carTypeNames").split(","); 
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
 
@@ -36,7 +36,7 @@ public class CarTypesTest {
     
     @Test
     public void testAddAndDeleteCarTypes() {
-        String carTypes[]=Bundle.getMessage("carTypeNames").split(","); 
+        String[] carTypes=Bundle.getMessage("carTypeNames").split(","); 
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
 

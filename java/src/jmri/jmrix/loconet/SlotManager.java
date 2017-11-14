@@ -156,7 +156,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * This is declared final because we never need to modify the array itself,
      * just its contents.
      */
-    final protected LocoNetSlot _slots[] = new LocoNetSlot[NUM_SLOTS];
+    final protected LocoNetSlot[] _slots = new LocoNetSlot[NUM_SLOTS];
 
     /**
      * Access the information in a specific slot. Note that this is a mutable

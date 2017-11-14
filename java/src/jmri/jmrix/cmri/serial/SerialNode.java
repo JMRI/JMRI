@@ -89,8 +89,8 @@ public class SerialNode extends AbstractNode {
     public static final int INITMSGLEN = 12;
     public static final int NUMCMRINETOPTS = 16;
     public static final int NUMCPNODEOPTS = 16;
-    protected int cmrinetOptions[] = new int[NUMCMRINETOPTS];  // CMRInet options stored as 16 binary digits 
-    protected int cpnodeOptions[] = new int[NUMCPNODEOPTS];  // cpNode options stored as 16 binary digits 
+    protected int[] cmrinetOptions = new int[NUMCMRINETOPTS];  // CMRInet options stored as 16 binary digits 
+    protected int[] cpnodeOptions = new int[NUMCPNODEOPTS];  // cpNode options stored as 16 binary digits 
     
     protected String cmriNodeDesc = ""; // CMRI node name for display    
     protected int pollListPosition = 0;

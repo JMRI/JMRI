@@ -19,6 +19,6 @@ public class RawStatus {
     /**
      * raw data
      */
-    public int raw[] = new int[8];
+    public int[] raw = new int[8];
 
     }

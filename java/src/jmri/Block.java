@@ -580,7 +580,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     private PropertyChangeListener _reporterListener = null;
     private boolean _reportingCurrent = false;
 
-    private Path pListOfPossibleEntrancePaths[] = null;
+    private Path[] pListOfPossibleEntrancePaths = null;
     private int cntOfPossibleEntrancePaths = 0;
 
     void resetCandidateEntrancePaths() {
@@ -686,11 +686,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         Path next = null;
         // get statuses of everything once
         int currPathCnt = paths.size();
-        Path pList[] = new Path[currPathCnt];
-        boolean isSet[] = new boolean[currPathCnt];
-        boolean isActive[] = new boolean[currPathCnt];
-        int pDir[] = new int[currPathCnt];
-        int pFromDir[] = new int[currPathCnt];
+        Path[] pList = new Path[currPathCnt];
+        boolean[] isSet = new boolean[currPathCnt];
+        boolean[] isActive = new boolean[currPathCnt];
+        int[] pDir = new int[currPathCnt];
+        int[] pFromDir = new int[currPathCnt];
         for (int i = 0; i < currPathCnt; i++) {
             pList[i] = paths.get(i);
             isSet[i] = pList[i].checkPathSet();
@@ -805,11 +805,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         Path next = null;
         // get statuses of everything once
         int currPathCnt = paths.size();
-        Path pList[] = new Path[currPathCnt];
-        boolean isSet[] = new boolean[currPathCnt];
-        boolean isActive[] = new boolean[currPathCnt];
-        int pDir[] = new int[currPathCnt];
-        int pFromDir[] = new int[currPathCnt];
+        Path[] pList = new Path[currPathCnt];
+        boolean[] isSet = new boolean[currPathCnt];
+        boolean[] isActive = new boolean[currPathCnt];
+        int[] pDir = new int[currPathCnt];
+        int[] pFromDir = new int[currPathCnt];
         for (int i = 0; i < currPathCnt; i++) {
             pList[i] = paths.get(i);
             isSet[i] = pList[i].checkPathSet();

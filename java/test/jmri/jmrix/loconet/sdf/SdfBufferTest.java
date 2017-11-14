@@ -65,7 +65,7 @@ public class SdfBufferTest extends TestCase {
         // recreate buffer; expect same length, different contents in the 1st byte
         b.loadByteArray();
 
-        byte barray[];
+        byte[] barray;
 
         barray = b.getByteArray();
         Assert.assertEquals("updated lengths", oarray.length, barray.length);

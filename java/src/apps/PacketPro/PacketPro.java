@@ -43,7 +43,7 @@ public class PacketPro extends Apps {
     }
 
     // Main entry point
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         // show splash screen early
         splash(true);

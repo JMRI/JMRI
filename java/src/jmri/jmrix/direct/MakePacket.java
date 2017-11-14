@@ -214,8 +214,8 @@ public class MakePacket {
     static int[] bitStreamToSerialBytes(int[] inputBitStream) {
         int currentBufferIndex;
         int treeIndex = -1;
-        int serialStream[] = new int[inputBitStream.length];
-        Node tree[] = new Node[150];
+        int[] serialStream = new int[inputBitStream.length];
+        Node[] tree = new Node[150];
 
         for (currentBufferIndex = 0; currentBufferIndex < tree.length;
                 currentBufferIndex++) {
@@ -340,7 +340,7 @@ public class MakePacket {
      * @return false if one doesn't exist otherwise returns true.
      */
     @SuppressWarnings("fallthrough")
-    static boolean readFirstChild(int bs[], int offset, int validBits,
+    static boolean readFirstChild(int[] bs, int offset, int validBits,
             Node thisNode) {
         boolean b0 = false;
         boolean b1 = false;

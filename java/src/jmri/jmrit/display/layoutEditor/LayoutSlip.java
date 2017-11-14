@@ -1313,7 +1313,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         JComboBox<String> getComboA() {
             if (turnoutABox == null) {
-                String state[] = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
+                String[] state = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
                     InstanceManager.turnoutManagerInstance().getThrownText()};
                 turnoutABox = new JComboBox<String>(state);
                 if (turnoutA == Turnout.THROWN) {
@@ -1325,7 +1325,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         JComboBox<String> getComboB() {
             if (turnoutBBox == null) {
-                String state[] = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
+                String[] state = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
                     InstanceManager.turnoutManagerInstance().getThrownText()};
                 turnoutBBox = new JComboBox<String>(state);
                 if (turnoutB == Turnout.THROWN) {

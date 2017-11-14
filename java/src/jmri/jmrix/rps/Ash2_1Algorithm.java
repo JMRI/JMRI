@@ -147,7 +147,7 @@ public class Ash2_1Algorithm extends AbstractCalculator {
     static public int NMAX = 50;			//  Max. no. of receivers used
 
     //  Compute RPS Position  using
-    RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   many
+    RetVal RPSpos(int nr, double[] Tr, double[] Xr, double[] Yr, double[] Zr,//   many
             double Vs, double Xt, double Yt, double Zt) {//         receivers
 
         int i, j, jmax, k, ns, nss, nxx, nox, tov, S, cmax;

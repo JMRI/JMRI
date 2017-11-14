@@ -114,7 +114,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         // Add some cars for the various tests in this suite
         CarManager cm = InstanceManager.getDefault(CarManager.class);
         // add caboose to the roster
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
         Car c = cm.newCar(roadNames[2], "687");
         c.setCaboose(true);
         c = cm.newCar(roadNames[4], "435");

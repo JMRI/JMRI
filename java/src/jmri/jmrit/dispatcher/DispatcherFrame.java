@@ -831,7 +831,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (restartingTrainsList.size() == 1) {
             at = restartingTrainsList.get(0);
         } else if (restartingTrainsList.size() > 1) {
-            Object choices[] = new Object[restartingTrainsList.size()];
+            Object[] choices = new Object[restartingTrainsList.size()];
             for (int i = 0; i < restartingTrainsList.size(); i++) {
                 if (_ShortActiveTrainNames) {
                     choices[i] = restartingTrainsList.get(i).getTrainName();
@@ -868,7 +868,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (activeTrainsList.size() == 1) {
             at = activeTrainsList.get(0);
         } else if (activeTrainsList.size() > 1) {
-            Object choices[] = new Object[activeTrainsList.size()];
+            Object[] choices = new Object[activeTrainsList.size()];
             for (int i = 0; i < activeTrainsList.size(); i++) {
                 if (_ShortActiveTrainNames) {
                     choices[i] = activeTrainsList.get(i).getTrainName();
@@ -1927,7 +1927,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     // manually make a choice of next section
     private Section dispatcherChoice(List<Section> sList, AllocationRequest ar) {
-        Object choices[] = new Object[sList.size()];
+        Object[] choices = new Object[sList.size()];
         for (int i = 0; i < sList.size(); i++) {
             Section s = sList.get(i);
             String txt = s.getSystemName();

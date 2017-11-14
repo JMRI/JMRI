@@ -128,7 +128,7 @@ public class SpeedoReply {
 
     // contents (private)
     private int _nDataChars;
-    private char _dataChars[] = new char[maxSize];
+    private char[] _dataChars = new char[maxSize];
     private boolean unsolicited;
     private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class);
 

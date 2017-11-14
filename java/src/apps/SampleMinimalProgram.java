@@ -30,7 +30,7 @@ public class SampleMinimalProgram {
     static String name = "Faceless App";
 
     // Main entry point
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         initLog4J();
         log.info(Log4JUtil.startupInfo(name));

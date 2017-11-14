@@ -121,7 +121,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
 
     SerialMessage createPacket(String s) {
         // gather bytes in result
-        byte b[] = StringUtil.bytesFromHexString(s);
+        byte[] b = StringUtil.bytesFromHexString(s);
         SerialMessage m = memo.getTrafficController().getSerialMessage(b.length);
         for (int i = 0; i < b.length; i++) {
             m.setElement(i, b[i]);

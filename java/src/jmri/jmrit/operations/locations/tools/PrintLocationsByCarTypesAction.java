@@ -64,7 +64,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
 
         // Loop through the car types showing which locations and tracks will
         // service that car type
-        String carTypes[] = InstanceManager.getDefault(CarTypes.class).getNames();
+        String[] carTypes = InstanceManager.getDefault(CarTypes.class).getNames();
 
         List<Location> locations = locManager.getLocationsByNameList();
 

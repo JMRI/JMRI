@@ -47,7 +47,7 @@ public class RawTurnoutOperator extends TurnoutOperator {
     }
 
     private void sendCommand() {
-        byte pkt[] = jmri.NmraPacket.accDecoderPkt(address, myTurnout.getCommandedState() == Turnout.CLOSED);
+        byte[] pkt = jmri.NmraPacket.accDecoderPkt(address, myTurnout.getCommandedState() == Turnout.CLOSED);
         c.sendPacket(pkt, 1);
     }
 

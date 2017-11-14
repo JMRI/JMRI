@@ -85,7 +85,7 @@ public class SprogReply extends AbstractMRReply {
      * Check and strip framing characters and DLE from a SPROG bootloader reply.
      */
     public boolean strip() {
-        char tmp[] = new char[_nDataChars];
+        char[] tmp = new char[_nDataChars];
         int j = 0;
         _isBoot = true; // definitely a boot message
         // Check framing characters

@@ -23,7 +23,7 @@ package jmri.jmrix.dccpp;
 
 public class DCCppRegisterManager {
 
-    final protected DCCppRegister registers[] = new DCCppRegister[DCCppConstants.MAX_MAIN_REGISTERS];
+    final protected DCCppRegister[] registers = new DCCppRegister[DCCppConstants.MAX_MAIN_REGISTERS];
 
     public DCCppRegisterManager() { 
  for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {

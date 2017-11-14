@@ -351,7 +351,7 @@ public class PositionablePopupUtil {
         String defaultFontFamilyName = _textComponent.getFont().getFamily();
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        String fontFamilyNames[] = ge.getAvailableFontFamilyNames();
+        String[] fontFamilyNames = ge.getAvailableFontFamilyNames();
 
         // create radiobutton menu items for font names
         ButtonGroup fontButtonGroup = new ButtonGroup(); // manages font names

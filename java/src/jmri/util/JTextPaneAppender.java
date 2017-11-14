@@ -73,7 +73,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     private void createAttributes() {
-        String prio[] = new String[6];
+        String[] prio = new String[6];
         prio[0] = Level.FATAL.toString();
         prio[1] = Level.ERROR.toString();
         prio[2] = Level.WARN.toString();

@@ -90,7 +90,7 @@ public class Dcc4PcReply extends AbstractMRReply {
         if (stripRun) {
             return;
         }
-        char tmp[] = new char[_nDataChars];
+        char[] tmp = new char[_nDataChars];
         int j = 0;
 
         // Check framing characters
@@ -140,7 +140,7 @@ public class Dcc4PcReply extends AbstractMRReply {
         int len = this.getNumDataElements();
         int cr = 0;
 
-        byte msg[] = new byte[len + cr];
+        byte[] msg = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) (0xFF & this.getElement(i));

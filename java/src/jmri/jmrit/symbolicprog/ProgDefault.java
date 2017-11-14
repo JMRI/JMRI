@@ -77,7 +77,7 @@ public class ProgDefault {
         // copy the programmer entries to the final array
         // note: this results in duplicate entries if the same name is also local.
         // But for now I can live with that.
-        String sbox[] = new String[np + nx];
+        String[] sbox = new String[np + nx];
         int n = 0;
         if (np > 0) {
             for (String s : sp) {

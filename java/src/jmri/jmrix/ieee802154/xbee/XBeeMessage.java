@@ -57,7 +57,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      */
     public XBeeMessage(XBeeAPIPacket request) {
         _nDataChars = request.getPacketData().length;
-        byte data[] = request.getPacketData();
+        byte[] data = request.getPacketData();
         _dataChars = new int[_nDataChars];
         for(int i=0;i<_nDataChars;i++) {
            _dataChars[i] = data[i];
@@ -85,7 +85,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @Override
     public String toString() {
         String s = "";
-        byte packet[] = xbm.getPacketData();
+        byte[] packet = xbm.getPacketData();
         for (int i = 0; i < packet.length; i++) {
             s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
         }
@@ -140,8 +140,8 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      */
     @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin, boolean on) {
-        byte onValue[] = {0x5};
-        byte offValue[] = {0x4};
+        byte[] onValue = {0x5};
+        byte[] offValue = {0x4};
         if (address instanceof XBee16BitAddress) {
             return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address,0,"D" + pin, on ? onValue : offValue));
         } else {

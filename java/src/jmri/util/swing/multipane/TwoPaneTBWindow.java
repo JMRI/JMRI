@@ -138,7 +138,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         add(toolBar, BorderLayout.NORTH);
     }
 
-    abstract public void remoteCalls(String args[]);
+    abstract public void remoteCalls(String[] args);
 
     protected void addMainStatusBar() {
         statusBar.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 0));

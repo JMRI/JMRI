@@ -2440,7 +2440,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
  
     /** Write DCC Packet to a specified Register on the Programming Track*/
-    public static DCCppMessage makeWriteDCCPacketProgMsg( int register, int num_bytes, byte bytes[]) {
+    public static DCCppMessage makeWriteDCCPacketProgMsg( int register, int num_bytes, byte[] bytes) {
         // Sanity Check Inputs
         if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
         if (num_bytes < 2 || num_bytes > 5) return(null);

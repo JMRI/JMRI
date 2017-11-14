@@ -70,7 +70,7 @@ public class XBeeIOStreamTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         tc = new XBeeInterfaceScaffold();
         tc.setAdapterMemo(new XBeeConnectionMemo());
-        byte uad[] = {(byte) 0x00, (byte) 0x02};
+        byte[] uad = {(byte) 0x00, (byte) 0x02};
         node = (XBeeNode) tc.getNodeFromAddress(uad);
         Assume.assumeNotNull(tc,node);
     }

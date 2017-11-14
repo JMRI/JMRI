@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-    private String headers[] = {"Label", "Name",
+    private String[] headers = {"Label", "Name",
         "Value",
         "Write", "State"};
 

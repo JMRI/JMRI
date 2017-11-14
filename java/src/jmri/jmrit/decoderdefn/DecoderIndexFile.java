@@ -353,7 +353,7 @@ public class DecoderIndexFile extends XmlFile {
             }
         }
         // copy the decoder entries to the final array
-        String sbox[] = al.toArray(new String[al.size()]);
+        String[] sbox = al.toArray(new String[al.size()]);
 
         //the resulting array is now sorted on file-name to make it easier
         // for humans to read
@@ -535,7 +535,7 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
+    public void writeFile(String name, DecoderIndexFile oldIndex, String[] files) throws java.io.IOException {
         if (log.isDebugEnabled()) {
             log.debug("writeFile " + name);
         }

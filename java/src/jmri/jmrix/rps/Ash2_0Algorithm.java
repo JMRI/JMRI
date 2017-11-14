@@ -251,7 +251,7 @@ public class Ash2_0Algorithm extends AbstractCalculator {
 
     //  Compute RPS Position using
     @SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
-    RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
+    RetVal RPSpos(int nr, double[] Tr, double[] Xr, double[] Yr, double[] Zr,// many
             double Vs, double Xt, double Yt, double Zt) {//         receivers
 
         int i, j, k, ns, cmax;

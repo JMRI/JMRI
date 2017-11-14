@@ -119,7 +119,7 @@ public class Ash1_0Algorithm implements Calculator {
     }
 
     // Sensor position objects
-    Point3d sensors[];
+    Point3d[] sensors;
 
     /**
      * The following is the original algorithm, as provided by Ash as a C
@@ -142,15 +142,15 @@ public class Ash1_0Algorithm implements Calculator {
 
     //  Compute RPS Position using
     @SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
-    RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
+    RetVal RPSpos(int nr, double[] Tr, double[] Xr, double[] Yr, double[] Zr,// many
             double Vs, double Xt, double Yt, double Zt) {//         receivers
 
         int i, j, k, ns;
         double Rq;
-        double Rs[] = new double[NMAX];
-        double Xs[] = new double[NMAX];
-        double Ys[] = new double[NMAX];
-        double Zs[] = new double[NMAX];
+        double[] Rs = new double[NMAX];
+        double[] Xs = new double[NMAX];
+        double[] Ys = new double[NMAX];
+        double[] Zs = new double[NMAX];
         double d, da, db, d11, d12, d21, d22;
         double x1a = 0, y1a = 0, z1a = 0, x1b = 0, y1b = 0, z1b = 0;
         double x2a = 0, y2a = 0, z2a = 0, x2b = 0, y2b = 0, z2b = 0;

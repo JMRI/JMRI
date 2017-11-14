@@ -56,7 +56,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     // Check and strip framing characters and DLE from a QSI bootloader reply
     public boolean strip() {
-        int tmp[] = new int[_nDataChars];
+        int[] tmp = new int[_nDataChars];
         int j = 0;
         _isBoot = true; // definitely a boot message
         // Check framing characters

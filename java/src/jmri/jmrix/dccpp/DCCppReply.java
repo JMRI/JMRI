@@ -71,7 +71,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         super();
         setBinary(false);
         valueList = new ArrayList<Integer>();
-        char charList[] = reply.toCharArray();
+        char[] charList = reply.toCharArray();
         //for(int i=0;i<charList.length;i++){
         //    valueList.add((int)charList[i]);
         //}

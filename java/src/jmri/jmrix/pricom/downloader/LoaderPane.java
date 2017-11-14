@@ -191,7 +191,7 @@ public class LoaderPane extends javax.swing.JPanel {
         }
 
         static final int maxMsg = 80;
-        byte inBuffer[];
+        byte[] inBuffer;
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
                                             justification="this is for skip-chars while loop: no matter how many, we're skipping")

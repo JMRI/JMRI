@@ -38,7 +38,7 @@ public class XBeeReplyTest {
     @Test
     public void testXBeeResponseCtor(){
         String s = new String("000A8300072B00010011001028");
-        byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
+        byte[] ba = jmri.util.StringUtil.bytesFromHexString(s);
         com.digi.xbee.api.packet.UnknownXBeePacket xbresponse = com.digi.xbee.api.packet.UnknownXBeePacket.createPacket(ba);
         XBeeReply m = new XBeeReply(xbresponse);
         Assert.assertNotNull("exists", m);
@@ -72,7 +72,7 @@ public class XBeeReplyTest {
     public void testSetXBeeResponse(){
         XBeeReply m = new XBeeReply();
         String s = new String("000A8300072B00010011001028");
-        byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
+        byte[] ba = jmri.util.StringUtil.bytesFromHexString(s);
         com.digi.xbee.api.packet.UnknownXBeePacket xbresponse = com.digi.xbee.api.packet.UnknownXBeePacket.createPacket(ba);
        
         m.setXBeeResponse(xbresponse);

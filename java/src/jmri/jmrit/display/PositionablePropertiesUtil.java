@@ -131,7 +131,7 @@ public class PositionablePropertiesUtil {
         Color defaultLabelBackground = backgroundColorPanel.getBackground();
         backgroundColorChooser = new JColorChooser(defaultLabelBackground);
         backgroundColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-        AbstractColorChooserPanel backgroundColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel[] backgroundColorPanels = { new ButtonSwatchColorChooserPanel()};
         backgroundColorChooser.setChooserPanels(backgroundColorPanels);
 
         backgroundColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
@@ -139,7 +139,7 @@ public class PositionablePropertiesUtil {
 
         fontColorChooser = new JColorChooser(defaultForeground);
         fontColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-        AbstractColorChooserPanel fontColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel[] fontColorPanels = { new ButtonSwatchColorChooserPanel()};
         fontColorChooser.setChooserPanels(fontColorPanels);
         fontColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
         fontColorPanel.add(fontColorChooser);
@@ -206,7 +206,7 @@ public class PositionablePropertiesUtil {
 
             JColorChooser txtColorChooser = new JColorChooser(defaultForeground);
             txtColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel txtColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel[] txtColorPanels = { new ButtonSwatchColorChooserPanel()};
             txtColorChooser.setChooserPanels(txtColorPanels);
             txtColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
             txtPanel.add(txtColorChooser);
@@ -223,7 +223,7 @@ public class PositionablePropertiesUtil {
             defaultBackground = _parent.getBackground();
             JColorChooser txtBackColorChooser = new JColorChooser(defaultBackground);
             txtBackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel txtBackColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel[] txtBackColorPanels = { new ButtonSwatchColorChooserPanel()};
             txtBackColorChooser.setChooserPanels(txtBackColorPanels);
             txtBackColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
             txtPanel.add(txtBackColorChooser);
@@ -304,7 +304,7 @@ public class PositionablePropertiesUtil {
         JPanel borderPanel = new JPanel();
 
         borderColorChooser = new JColorChooser(defaultBorderColor);
-        AbstractColorChooserPanel borderColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel[] borderColorPanels = { new ButtonSwatchColorChooserPanel()};
         borderColorChooser.setChooserPanels(borderColorPanels);
         borderColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
 
@@ -724,7 +724,7 @@ public class PositionablePropertiesUtil {
 
     protected JList<String> fontSizeChoice;
 
-    protected String fontSizes[] = {"6", "8", "10", "11", "12", "14", "16",
+    protected String[] fontSizes = {"6", "8", "10", "11", "12", "14", "16",
         "20", "24", "28", "32", "36"};
 
     javax.swing.JSpinner getSpinner(int value, String tooltip) {

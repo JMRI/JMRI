@@ -53,7 +53,7 @@ public class Z21Message extends AbstractMRMessage {
         super(m);
         setBinary(true);
         // gather bytes in result
-        byte b[] = jmri.util.StringUtil.bytesFromHexString(m);
+        byte[] b = jmri.util.StringUtil.bytesFromHexString(m);
         if (b.length == 0) {
             // no such thing as a zero-length message
             _nDataChars = 0;
@@ -103,7 +103,7 @@ public class Z21Message extends AbstractMRMessage {
      *         values in _dataChars.
      */
     byte[] getBuffer() {
-        byte byteData[] = new byte[_dataChars.length];
+        byte[] byteData = new byte[_dataChars.length];
         for (int i = 0; i < _dataChars.length; i++) {
             byteData[i] = (byte) (0x00ff & _dataChars[i]);
         }

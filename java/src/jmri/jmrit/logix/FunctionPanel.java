@@ -27,7 +27,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     private final RosterEntry _rosterEntry;
     private final LearnThrottleFrame _throttleFrame;
 
-    private FunctionButton functionButton[];
+    private FunctionButton[] functionButton;
     javax.swing.JToggleButton alt1Button = new javax.swing.JToggleButton();
     javax.swing.JToggleButton alt2Button = new javax.swing.JToggleButton();
 

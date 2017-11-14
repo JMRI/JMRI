@@ -123,8 +123,8 @@ public class ComboRadioButtons extends JPanel {
         }
     }
 
-    JRadioButton b1[];
-    transient ActionListener l1[];
+    JRadioButton[] b1;
+    transient ActionListener[] l1;
     transient ActionListener l2;
     transient PropertyChangeListener p1;
 

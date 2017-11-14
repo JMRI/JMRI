@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener, javax.swing.event.ChangeListener {
 
-    DuplexChannelInfo dci[] = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH + 1];
+    DuplexChannelInfo[] dci = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH + 1];
     private javax.swing.Timer tmr;
     private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupScan");
     DuplexGroupScanPanel safe;
@@ -593,7 +593,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             indexBeingScanned = channelNum - 11;
         }
 
-        final float dash1[] = {7.0f, 3.0f};
+        final float[] dash1 = {7.0f, 3.0f};
         final BasicStroke dashedStroke = new BasicStroke(1.0f,
                 BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER,
@@ -706,11 +706,11 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             if ((channelIndex >= 0) && (channelIndex < 16)) {
                 // draw a diamond in black using polyline mechanisms
                 g2.setColor(foregroundColor);
-                int x2Points[] = {(channelIndex * barSpace) + (barSpace / 2),
+                int[] x2Points = {(channelIndex * barSpace) + (barSpace / 2),
                     (channelIndex * barSpace) + barOffset,
                     channelIndex * barSpace + (barSpace / 2),
                     (channelIndex * barSpace) + (barSpace - barOffset)};
-                int y2Points[] = {baseline + 2, baseline + 5, baseline + 8, baseline + 5};
+                int[] y2Points = {baseline + 2, baseline + 5, baseline + 8, baseline + 5};
                 java.awt.geom.GeneralPath polygon
                         = new java.awt.geom.GeneralPath(java.awt.geom.GeneralPath.WIND_EVEN_ODD,
                                 x2Points.length);

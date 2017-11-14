@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractCalculator implements Calculator {
 
     // Sensor position objects, fully packed array indexed from zero
-    Point3d sensors[];
+    Point3d[] sensors;
 
     // Values for usual calculators
     // These are fully packed (start at index 0, no skipped entries)

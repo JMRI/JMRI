@@ -275,8 +275,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         @Override
         public void run() {
             sm.setUpdateBusy();
-            byte sw1[] = {0x78, 0x79, 0x7a, 0x7b, 0x78, 0x79, 0x7a, 0x7b};
-            byte sw2[] = {0x27, 0x27, 0x27, 0x27, 0x07, 0x07, 0x07, 0x07};
+            byte[] sw1 = {0x78, 0x79, 0x7a, 0x7b, 0x78, 0x79, 0x7a, 0x7b};
+            byte[] sw2 = {0x27, 0x27, 0x27, 0x27, 0x07, 0x07, 0x07, 0x07};
             // create and initialize loconet message
             LocoNetMessage m = new LocoNetMessage(4);
             m.setOpCode(LnConstants.OPC_SW_REQ);

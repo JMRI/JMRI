@@ -87,7 +87,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         }
     }
 
-    void configureHeads(String parts[], int start) {
+    void configureHeads(String[] parts, int start) {
         heads = new ArrayList<NamedBeanHandle<SignalHead>>();
         for (int i = start; i < parts.length; i++) {
             String name = parts[i];

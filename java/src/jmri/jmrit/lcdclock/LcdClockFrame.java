@@ -40,8 +40,8 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
 
     Timebase clock;
 
-    NamedIcon tubes[] = new NamedIcon[10];
-    NamedIcon baseTubes[] = new NamedIcon[10];
+    NamedIcon[] tubes = new NamedIcon[10];
+    NamedIcon[] baseTubes = new NamedIcon[10];
     NamedIcon colonIcon;
     NamedIcon baseColon;
     //"base" variables used to hold original gifs, other variables used with scaled images

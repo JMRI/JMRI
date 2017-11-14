@@ -174,7 +174,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
             start = 1;
         }
 
-        byte msg[] = new byte[len + cr];
+        byte[] msg = new byte[len + cr];
 
         byte crc = 0;
 

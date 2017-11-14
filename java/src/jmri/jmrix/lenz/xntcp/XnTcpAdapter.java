@@ -76,7 +76,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
     String[] getInterfaces() {
         Vector<String> v = getInterfaceNames();
-        String a[] = new String[v.size() + 1];
+        String[] a = new String[v.size() + 1];
         for (int i = 0; i < v.size(); i++) {
             a[i + 1] = v.elementAt(i);
         }

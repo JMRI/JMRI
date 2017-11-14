@@ -346,8 +346,8 @@ public class TrainBuilderTest {
     
     @Test
     public void testAutoEnginesGrade() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
         Setup.setMaxNumberEngines(6);
@@ -502,8 +502,8 @@ public class TrainBuilderTest {
     // tests consists and kernels
     @Test
     public void testSidingsYards() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car and engine types used
         ct.addName(carTypes[1]);
@@ -1115,7 +1115,7 @@ public class TrainBuilderTest {
     // test train staging to staging
     @Test
     public void testStagingtoStaging() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1438,7 +1438,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingC() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1494,7 +1494,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingD() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1553,7 +1553,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingE() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1613,7 +1613,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingF() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1668,7 +1668,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingG() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1738,7 +1738,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingH() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1796,7 +1796,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingI() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1867,7 +1867,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingJ() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1968,7 +1968,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingK() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -2032,7 +2032,7 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingL() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -2992,8 +2992,8 @@ public class TrainBuilderTest {
     // test train staging to staging
     @Test
     public void testStagingtoStaging2() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car colors used
         cc.addName("Silver");
@@ -3273,8 +3273,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingCustomLoads() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car colors used
         cc.addName("Silver");
@@ -3553,8 +3553,8 @@ public class TrainBuilderTest {
     // train with two locations will not service certain tracks.
     @Test
     public void testLocal() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         // Create locations used
         Location loc1;
@@ -4093,8 +4093,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testScheduleLoads() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         ct.addName(carTypes[4]);
         ct.addName(carTypes[3]);
@@ -4524,8 +4524,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testInterchange() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         Setup.setMaxTrainLength(500);
         ct.addName(carTypes[4]);
@@ -5184,8 +5184,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testCaboose() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car and engine types used
         ct.addName(carTypes[1]);
@@ -5851,8 +5851,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testTrainBuildOptions() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car and engine types used
         ct.addName(carTypes[1]);
@@ -6238,8 +6238,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testCarBlockingFromStaging() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         // create 5 locations with tracks
         Location harvard = lmanager.newLocation("Harvard");
@@ -6528,8 +6528,8 @@ public class TrainBuilderTest {
      */
     @Test
     public void testEngineChanges() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         et.addName("Diesel");
 
@@ -6697,8 +6697,8 @@ public class TrainBuilderTest {
      */
     @Test
     public void testCabooseChanges() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
         // test confirms the order cabooses are assigned to the train
         Setup.setBuildAggressive(true);
 
@@ -6874,8 +6874,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testAutoHP() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
 
         Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
 
@@ -7010,9 +7010,9 @@ public class TrainBuilderTest {
 
     @Test
     public void testAggressiveBuildOption() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
+        String[] engineTypes = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setBuildAggressive(true);
         Setup.setStagingTrackImmediatelyAvail(false);
 
@@ -7455,8 +7455,8 @@ public class TrainBuilderTest {
     // test private method getCarOrder
     @Test
     public void testCarOrderNORMAL() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
         TrainBuilder tb = new TrainBuilder();
         // start by creating a track
         Location A = lmanager.newLocation("A");
@@ -7529,8 +7529,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testCarOrderFIFO() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
         TrainBuilder tb = new TrainBuilder();
         // start by creating a track
         Location A = lmanager.newLocation("A");
@@ -7602,8 +7602,8 @@ public class TrainBuilderTest {
 
     @Test
     public void testCarOrderLIFO() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
+        String[] carTypes = Bundle.getMessage("carTypeNames").split(",");
         TrainBuilder tb = new TrainBuilder();
         // start by creating a track
         Location A = lmanager.newLocation("A");

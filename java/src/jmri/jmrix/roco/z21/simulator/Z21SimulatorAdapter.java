@@ -31,7 +31,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     private Z21XNetSimulatorAdapter xnetadapter = null;
 
     // simulation state variables
-    private int flags[]={0x00,0x00,0x00,0x00}; // holds the flags sent by the client.
+    private int[] flags={0x00,0x00,0x00,0x00}; // holds the flags sent by the client.
 
     public Z21SimulatorAdapter() {
         super();
@@ -146,7 +146,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     if(reply != null) {
                        // only attempt to send a reply if there was actually
                        // a reply generated, since some messages don't do that.
-                       byte ba[] = jmri.util.StringUtil.bytesFromHexString(reply.toString());
+                       byte[] ba = jmri.util.StringUtil.bytesFromHexString(reply.toString());
                        DatagramPacket sendPacket = new DatagramPacket(ba,ba.length,IPAddress,port);
                        // and send it back using our socket
                        s.send(sendPacket);

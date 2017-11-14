@@ -36,7 +36,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         String packetString = packetTextField.getSelectedItem().toString();
-        byte packetByteArray[] = jmri.util.StringUtil.bytesFromHexString(packetString);
+        byte[] packetByteArray = jmri.util.StringUtil.bytesFromHexString(packetString);
         XBeeAPIPacket packet = GenericXBeePacket.createPacket(packetByteArray);
         try {
             tc.getXBee().sendPacketAsync(packet);

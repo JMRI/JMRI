@@ -112,7 +112,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         // space for carriage return if required
         int cr = 0;
 
-        byte msg[] = new byte[len + cr];
+        byte[] msg = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) this.getElement(i);

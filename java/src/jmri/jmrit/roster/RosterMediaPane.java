@@ -175,7 +175,7 @@ public class RosterMediaPane extends JPanel {
     private class RosterAttributesTableModel extends AbstractTableModel {
 
         Vector<KeyValueModel> attributes;
-        String titles[];
+        String[] titles;
         boolean wasModified;
 
         private class KeyValueModel {

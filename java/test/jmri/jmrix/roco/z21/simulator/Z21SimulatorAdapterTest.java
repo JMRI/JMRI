@@ -48,7 +48,7 @@ public class Z21SimulatorAdapterTest {
         try(DatagramSocket socket = new DatagramSocket()){
             // create a datagram with the data from a valid message.
             // this is a request to get the serial number.
-            byte data[] = {0x04,0x00,0x10,0x00};
+            byte[] data = {0x04,0x00,0x10,0x00};
             DatagramPacket sendPacket = new DatagramPacket(data,4,host, port);
             // and send it.
 
@@ -59,7 +59,7 @@ public class Z21SimulatorAdapterTest {
             }
 
           /*  try {
-               byte buffer[] = new byte[100];
+               byte[] buffer = new byte[100];
                DatagramPacket p = new DatagramPacket(buffer,100,host,port);
                // set the timeout on the socket.
                try {

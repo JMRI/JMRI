@@ -3079,7 +3079,7 @@ public class TrainBuilder extends TrainCommon {
 
         } else if (_train.getLoadOption().equals(Train.INCLUDE_LOADS)) {
             for (String load : _train.getLoadNames()) {
-                String loadParts[] = load.split(CarLoad.SPLIT_CHAR); // split load name
+                String[] loadParts = load.split(CarLoad.SPLIT_CHAR); // split load name
                 if (loadParts.length > 1) {
                     if (!terminateStageTrack.acceptsLoad(loadParts[1], loadParts[0])) {
                         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),
@@ -3109,7 +3109,7 @@ public class TrainBuilder extends TrainCommon {
                 loads.remove(load);
             }
             for (String load : loads) {
-                String loadParts[] = load.split(CarLoad.SPLIT_CHAR); // split load name
+                String[] loadParts = load.split(CarLoad.SPLIT_CHAR); // split load name
                 if (loadParts.length > 1) {
                     if (!terminateStageTrack.acceptsLoad(loadParts[1], loadParts[0])) {
                         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),

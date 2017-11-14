@@ -65,7 +65,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             }
         }
 
-        byte address[] = new byte[length];
+        byte[] address = new byte[length];
         for (int i = 0; i < length; i++) {
             address[i] = (byte) (0xff & getElement(i + offset));
         }
@@ -124,7 +124,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             }
         }
 
-        byte address[] = new byte[length];
+        byte[] address = new byte[length];
         for (int i = 0; i < length; i++) {
             address[i] = (byte) (0xff & getElement(i + offset));
         }
@@ -185,7 +185,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
         // the address and ends
         // at the 2 byte checksum.
 
-        byte address[] = new byte[length];
+        byte[] address = new byte[length];
         for (int i = 0; i < length; i++) {
             address[i] = (byte) (0xff & getElement(i + offset));
         }

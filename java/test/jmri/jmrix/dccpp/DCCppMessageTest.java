@@ -329,7 +329,7 @@ public class DCCppMessageTest {
 
     @Test
     public void testgetWriteDCCPacketMainMsg() {
-        byte packet[]={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
+        byte[] packet={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
 	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketMainMsg(0, 5, packet);
 	    log.debug("DCC packet main message = {}", m.toString());
         Assert.assertEquals("length", 18, m.getNumDataElements());
@@ -355,14 +355,14 @@ public class DCCppMessageTest {
 
     @Test
     public void testMonitorStringWriteDccPacketMainMsg() {
-        byte packet[]={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
+        byte[] packet={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
 	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketMainMsg(0, 5, packet);
         Assert.assertEquals("Monitor string","Write DCC Packet Main Cmd: \n\tRegister: 0\n\tPacket: C4 D2 12 0C 08",m.toMonitorString());
     }
 
     @Test
     public void testgetWriteDCCPacketProgMsg() {
-        byte packet[]={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
+        byte[] packet={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
 	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketProgMsg(0, 5, packet);
 	    log.debug("DCC packet main message = {}", m.toString());
         Assert.assertEquals("length", 18, m.getNumDataElements());
@@ -388,7 +388,7 @@ public class DCCppMessageTest {
 
     @Test
     public void testMonitorStringWriteDccPacketProgMsg() {
-        byte packet[]={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
+        byte[] packet={(byte)0xC4,(byte)0xD2,(byte)0x12,(byte)0x0C,(byte)0x08};
 	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketProgMsg(0, 5, packet);
         Assert.assertEquals("Monitor string","Write DCC Packet Prog Cmd: \n\tRegister: 0\n\tPacket: C4 D2 12 0C 08",m.toMonitorString());
     }

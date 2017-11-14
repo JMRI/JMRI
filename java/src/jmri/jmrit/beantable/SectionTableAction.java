@@ -1321,7 +1321,7 @@ public class SectionTableAction extends AbstractTableAction {
         if ((panel == null) || (layoutEditorList.size() > 1)) {
             if (layoutEditorList.size() > 1) {
                 // initialize for choosing between layout editors
-                Object choices[] = new Object[layoutEditorList.size()];
+                Object[] choices = new Object[layoutEditorList.size()];
                 int index = 0;
                 for (int i = 0; i < layoutEditorList.size(); i++) {
                     String txt = layoutEditorList.get(i).getTitle();

@@ -51,7 +51,7 @@ public class ComboOnRadioButtonTest {
         CvValue cv = new CvValue("81", p);
         v.put("81", cv);
         EnumVariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        String testArray[] = new String[2];
+        String[] testArray = new String[2];
         testArray[0]="";
         testArray[1]="";
         ComboOnRadioButton t = new ComboOnRadioButton(new javax.swing.JComboBox<String>(testArray),variable);

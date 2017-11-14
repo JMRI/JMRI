@@ -84,7 +84,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
                                               };
 
     ArrayList<JCheckBox> packetChkBoxes = new ArrayList<JCheckBox>();
-    String packetChkBoxLabels[] = {
+    String[] packetChkBoxLabels = {
                                    "(I) Initialize    ",
                                    "(P) Poll          ",
                                    "(R) Read          ",

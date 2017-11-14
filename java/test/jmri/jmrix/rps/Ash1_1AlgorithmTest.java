@@ -39,7 +39,7 @@ public class Ash1_1AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 10.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 11.0f);
         Point3d s5 = new Point3d(0.0f, 13.0f, 9.0f);
-        Point3d s[] = new Point3d[]{s1, s2, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s2, s3, s4, s5};
 
         Reading r = new Reading("21", new double[]{time(s1), time(s2), time(s3),
             time(s4), time(s5)});
@@ -60,7 +60,7 @@ public class Ash1_1AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 10.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 11.0f);
         Point3d s5 = new Point3d(0.0f, 13.0f, 9.0f);
-        Point3d s[] = new Point3d[]{s2, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s2, s3, s4, s5};
 
         Reading r = new Reading("21", new double[]{time(s2), time(s3),
             time(s4), time(s5)});
@@ -81,7 +81,7 @@ public class Ash1_1AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 10.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 11.0f);
         Point3d s5 = new Point3d(0.0f, 13.0f, 9.0f);
-        Point3d s[] = new Point3d[]{s1, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s3, s4, s5};
 
         Reading r = new Reading("21", new double[]{time(s1), time(s3),
             time(s4), time(s5)});
@@ -102,7 +102,7 @@ public class Ash1_1AlgorithmTest {
         Point3d s2 = new Point3d(-3.0f, 4.0f, 9.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 11.0f);
         Point3d s5 = new Point3d(0.0f, 13.0f, 9.0f);
-        Point3d s[] = new Point3d[]{s1, s2, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s2, s4, s5};
 
         Reading r = new Reading("21", new double[]{time(s1), time(s2),
             time(s4), time(s5)});
