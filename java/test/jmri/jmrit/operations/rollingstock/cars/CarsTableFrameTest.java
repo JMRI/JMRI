@@ -244,7 +244,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
         c1.setRfid("RFID 3");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setWeight("1.4");
         c1.setWeightTons("Tons of Weight");
         c1.setCaboose(true);
@@ -308,6 +308,13 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
+        // add type names
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        ct.addName("Gondola");
+        ct.addName("Boxcar");
+        ct.addName(Bundle.getMessage("Caboose"));
+        ct.addName("Tank Food");
+        ct.addName("Coilcar");
     }
 
     @Override

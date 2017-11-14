@@ -32,7 +32,12 @@ public class DispatcherAction extends AbstractAction {
         // create a Dispatcher window or activate the existing one
         if (f == null) {
             f = InstanceManager.getDefault(DispatcherFrame.class);
-            f.loadAtStartup();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    f.loadAtStartup();
+                }
+            }).start();
         }
         f.setVisible(true);
     }

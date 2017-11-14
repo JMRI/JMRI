@@ -129,9 +129,15 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
     def notifyFailedThrottleRequest(self, locoAddress, reason):
         self.masterThrottle = None
         # Sleep a bit and try again
-        time.sleep(1)
+        try:
+            time.sleep(1)
+        except BaseException:
+            pass
         if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
             print "Couldn't request a throttle for "+locoAddress     
+           
+    def notifyStealThrottleRequired(self, locoAddress):
+         jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(locoAddress, self, True);
     
     #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address):

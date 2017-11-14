@@ -23,14 +23,14 @@ public class AutomationsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull("test creation", f);
 
         // confirm that the add automation frame isn't available
-        JmriJFrame addAutomationFrame = JmriJFrame.getFrame("Add Automation");
+        JmriJFrame addAutomationFrame = JmriJFrame.getFrame(Bundle.getMessage("TitleAutomationAdd"));
         Assert.assertNull(addAutomationFrame);
 
         // now create the add automation frame
         f.addButton.doClick();
         // the following fails on a 13" laptop
         //enterClickAndLeave(f.addButton);
-        addAutomationFrame = JmriJFrame.getFrame("Add Automation");
+        addAutomationFrame = JmriJFrame.getFrame(Bundle.getMessage("TitleAutomationAdd"));
         Assert.assertNotNull(addAutomationFrame);
 
         JUnitUtil.dispose(addAutomationFrame);
