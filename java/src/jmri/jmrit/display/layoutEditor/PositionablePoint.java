@@ -1695,13 +1695,13 @@ public class PositionablePoint extends LayoutTrack {
                         }
                     }
                 } else {    // (#3)
-                    log.info("•New block ('{}') trackNameSets", blk1);
+                    log.debug("*New block ('{}') trackNameSets", blk1);
                     TrackNameSets = new ArrayList<>();
                     blockNamesToTrackNameSetsMap.put(blk1, TrackNameSets);
                 }
                 if (TrackNameSet == null) {
                     TrackNameSet = new LinkedHashSet<>();
-                    log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
+                    log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
                     TrackNameSet.add(getName());
                     TrackNameSets.add(TrackNameSet);
                 }
@@ -1728,13 +1728,13 @@ public class PositionablePoint extends LayoutTrack {
                             }
                         }
                     } else {    // (#3)
-                        log.info("•New block ('{}') trackNameSets", blk2);
+                        log.debug("*New block ('{}') trackNameSets", blk2);
                         TrackNameSets = new ArrayList<>();
                         blockNamesToTrackNameSetsMap.put(blk2, TrackNameSets);
                     }
                     if (TrackNameSet == null) {
                         TrackNameSet = new LinkedHashSet<>();
-                        log.info("•    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
+                        log.debug("*    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
                         TrackNameSets.add(TrackNameSet);
                         TrackNameSet.add(getName());
                     }
@@ -1760,7 +1760,7 @@ public class PositionablePoint extends LayoutTrack {
                 if (blk1.equals(blockName)) {
                     // if we are added to the TrackNameSet
                     if (TrackNameSet.add(getName())) {
-                        log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                        log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                     }
                     // this should never be null... but just in case...
                     if (connect1 != null) {
@@ -1777,7 +1777,7 @@ public class PositionablePoint extends LayoutTrack {
                     if (blk2.equals(blockName)) {
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                            log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                         }
                         // this should never be null... but just in case...
                         if (connect2 != null) {

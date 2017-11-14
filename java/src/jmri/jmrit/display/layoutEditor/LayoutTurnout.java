@@ -3847,7 +3847,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.info("•New block ('{}') trackNameSets", theBlockName);
+                log.debug("*New block ('{}') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -3856,7 +3856,7 @@ public class LayoutTurnout extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -3898,7 +3898,7 @@ public class LayoutTurnout extends LayoutTrack {
             for (LayoutTrack connect : connects) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // it's time to play... flood your neighbour!
                 connect.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
