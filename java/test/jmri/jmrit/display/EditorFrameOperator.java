@@ -48,12 +48,17 @@ public class EditorFrameOperator extends JFrameOperator {
         // the dialog appears, it will get clicked, but it's not an error 
         // if it doesn't appear.
         Thread t = new Thread( () -> {
-           JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));
-           // Find the button that deletes the panel
-           JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonDeletePanel"));
+           try {
+              JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));
+              // Find the button that deletes the panel
+              JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonDeletePanel"));
 
-           // Click button to delete panel and close window
-           bo.push();
+              // Click button to delete panel and close window
+              bo.push();
+              } catch (Exception e) {
+                  // exceptions in this thread are not considered an error.
+                  return;
+              }
         });
 
         t.start();

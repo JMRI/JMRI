@@ -772,13 +772,38 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     }
 
     @Test
-    @Ignore("WIP")
     public void testToolBarPostionOptions(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        le.setHighlightSelectedBlock(false);
+        le.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(le);
-        //JMenuOperator jmo = JMenuBarOperator.findJMenuBar(le);
-        
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
+
+        // try each possible option for toolbar location
+
+        //Top
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideTop"), "/");
+         
+        //Left
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideLeft"), "/");
+
+        //Right
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideRight"), "/");
+
+        //Bottom
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideBottom"), "/");
+
+        //float
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideFloat"), "/");
     }
 
     // from here down is testing infrastructure
