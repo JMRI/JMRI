@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.can.CanInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *

@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;

@@ -13,8 +13,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JComponentOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the RpsIcon class.

@@ -7,7 +7,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;

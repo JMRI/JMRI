@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
