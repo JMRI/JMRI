@@ -14,7 +14,7 @@ import org.junit.Test;
  */
 public class PanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
         
-    private PanelEditor pe = new PanelEditor();
+    private PanelEditor pe = null;
 
     @Test
     public void testDefaultCTor() {

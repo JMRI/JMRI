@@ -15,7 +15,7 @@ import org.junit.Test;
  */
 public class ControlPanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
         
-    private ControlPanelEditor frame = new ControlPanelEditor();
+    private ControlPanelEditor frame = null;
 
     @Test
     public void testDefaultCtor() {
