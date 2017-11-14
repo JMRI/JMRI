@@ -1,5 +1,7 @@
 package jmri.configurexml;
 
+import java.util.Objects;
+
 /**
  * Test bean for DefaultJavaBeanConfigXMLTest
  *
@@ -29,7 +31,18 @@ public class TestBean1 {
 
     @Override
     public boolean equals(Object o1) {
-        TestBean1 o2 = (TestBean1) o1;
-        return a.equals(o2.a) && (b == o2.b);
+        if (o1 instanceof TestBean1) {
+            TestBean1 o2 = (TestBean1) o1;
+            return a.equals(o2.a) && (b == o2.b);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.a);
+        hash = 11 * hash + this.b;
+        return hash;
     }
 }
