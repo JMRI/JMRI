@@ -24,7 +24,6 @@ import javax.swing.JTextField;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.ColorUtil;
 import jmri.util.FileUtil;
 import jmri.util.swing.ButtonSwatchColorChooserPanel;
 import jmri.util.swing.FontComboUtil;

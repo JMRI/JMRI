@@ -17,7 +17,7 @@ import org.junit.Assert;
  */
 public class CarLoadsTest extends OperationsTestCase {
 
-    public void testCarLoads() {
+    public void testDefaultCarLoads() {
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
 
         // confirm proper defaults
@@ -35,11 +35,15 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertEquals("Two default names", 2, names.size());
         Assert.assertTrue("Default load", cl.containsName("bOxCaR", "L"));
         Assert.assertTrue("Default empty", cl.containsName("bOxCaR", "E"));
+    }
+
+    public void testAddCarLoads() {
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
 
         cl.addName("BoXcaR", "New Boxcar Load");
         cl.addName("bOxCaR", "A boxcar load");
         cl.addName("bOxCaR", "B boxcar load");
-        names = cl.getNames("BoXcaR");
+        List<String> names = cl.getNames("BoXcaR");
 
         Assert.assertEquals("number of names", 3, names.size());
         Assert.assertTrue("Default load", cl.containsName("BoXcaR", "L"));
@@ -54,9 +58,15 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "A boxcar load"));
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "B boxcar load"));
 
+    }
+
+    public void testReplaceCarLoads() {
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        cl.addName("bOxCaR", "A boxcar load");
+        cl.addName("bOxCaR", "B boxcar load");
         cl.replaceName("bOxCaR", "A boxcar load", "C boxcar load");
 
-        names = cl.getNames("bOxCaR");
+        List<String> names = cl.getNames("bOxCaR");
 
         Assert.assertEquals("number of names", 4, names.size());
         Assert.assertTrue("Default load", cl.containsName("bOxCaR", "L"));
@@ -65,9 +75,17 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "B boxcar load"));
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "C boxcar load"));
 
+    }
+
+    public void testDeleteCarLoads() {
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        cl.addName("BoXcaR", "New Boxcar Load");
+        cl.addName("bOxCaR", "A boxcar load");
+        cl.addName("bOxCaR", "B boxcar load");
+        cl.replaceName("bOxCaR", "A boxcar load", "C boxcar load");
         cl.deleteName("bOxCaR", "B boxcar load");
 
-        names = cl.getNames("bOxCaR");
+        List<String> names = cl.getNames("bOxCaR");
 
         Assert.assertEquals("number of names", 3, names.size());
         Assert.assertTrue("Default load", cl.containsName("bOxCaR", "L"));
@@ -75,9 +93,14 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertFalse("new load", cl.containsName("bOxCaR", "A boxcar load"));
         Assert.assertFalse("new load", cl.containsName("bOxCaR", "B boxcar load"));
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "C boxcar load"));
+    }
 
+    public void testGetAndSetDefaultEmptyCarLoads() {
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertEquals("default empty", "E", cl.getDefaultEmptyName());
         Assert.assertEquals("default load", "L", cl.getDefaultLoadName());
+
+        cl.addName("bOxCaR", "C boxcar load");
 
         cl.setDefaultEmptyName("E<mpty>");
         cl.setDefaultLoadName("L<oad>");
@@ -85,7 +108,7 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertEquals("default empty", "E<mpty>", cl.getDefaultEmptyName());
         Assert.assertEquals("default load", "L<oad>", cl.getDefaultLoadName());
 
-        names = cl.getNames("BOXCAR");
+        List <String> names = cl.getNames("BOXCAR");
 
         Assert.assertEquals("number of names", 2, names.size());
         Assert.assertFalse("Default load", cl.containsName("BOXCAR", "L"));

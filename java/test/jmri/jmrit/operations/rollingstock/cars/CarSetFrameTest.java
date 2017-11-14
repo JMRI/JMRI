@@ -36,6 +36,12 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
         // remove previous cars
         cManager.dispose();
+
+        // register the road names used
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
+        cr.addName("UP");
+        cr.addName("SP");
+        cr.addName("NH");
         // add 5 cars to table
         Car c1 = cManager.newCar("NH", "1");
         c1.setBuilt("2009");
@@ -48,7 +54,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         // try to add it to a car.
         InstanceManager.getDefault(IdTagManager.class).provideIdTag("RFID 3");
         c1.setRfid("RFID 3");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setWeight("1.4");
         c1.setWeightTons("Tons of Weight");
         c1.setCaboose(true);
