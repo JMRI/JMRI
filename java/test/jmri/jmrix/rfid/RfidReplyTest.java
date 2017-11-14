@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RfidReplyTest.java
+ * Tests for the jmri.jmrix.rfid.RfidReply class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidReply class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class RfidReplyTest {
 

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * OlcbSensorManagerXmlTest.java
+ * Tests for the OlcbSensorManagerXml class
  *
- * Description: tests for the OlcbSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class OlcbSensorManagerXmlTest {
 

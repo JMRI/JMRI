@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of slot manager contents.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author  Andrew Crosland (C) 2006 ported to SPROG
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland (C) 2006 ported to SPROG
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener {
 
@@ -261,43 +261,8 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             slotTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         slotTable.sizeColumnsToFit(-1);
-
-//        // install a button renderer & editor in the "DISP" column for freeing a slot
-//        setColumnToHoldButton(slotTable, SprogSlotMonDataModel.DISPCOLUMN);
-//
-//        // install a button renderer & editor in the "ESTOP" column for stopping a loco
-//        setColumnToHoldEStopButton(slotTable, SprogSlotMonDataModel.ESTOPCOLUMN);
     }
 
-//    void setColumnToHoldButton(JTable slotTable, int column) {
-//        TableColumnModel tcm = slotTable.getColumnModel();
-//        // install the button renderers & editors in this column
-//        ButtonRenderer buttonRenderer = new ButtonRenderer();
-//        tcm.getColumn(column).setCellRenderer(buttonRenderer);
-//        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
-//        tcm.getColumn(column).setCellEditor(buttonEditor);
-//        // ensure the table rows, columns have enough room for buttons
-//        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
-//        slotTable.getColumnModel().getColumn(column)
-//			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
-//    }
-//
-//    void setColumnToHoldEStopButton(JTable slotTable, int column) {
-//        TableColumnModel tcm = slotTable.getColumnModel();
-//        // install the button renderers & editors in this column
-//        ButtonRenderer buttonRenderer = new ButtonRenderer();
-//        tcm.getColumn(column).setCellRenderer(buttonRenderer);
-//        TableCellEditor buttonEditor = new ButtonEditor(new JButton()){
-//            public void mousePressed(MouseEvent e) {
-//                stopCellEditing();
-//            }
-//        };
-//        tcm.getColumn(column).setCellEditor(buttonEditor);
-//        // ensure the table rows, columns have enough room for buttons
-//        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
-//        slotTable.getColumnModel().getColumn(column)
-//			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
-//    }
     // methods to communicate with SprogSlotManager
     @Override
     public synchronized void notifyChangedSlot(SprogSlot s) {

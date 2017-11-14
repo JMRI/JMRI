@@ -11,7 +11,7 @@ import org.junit.Test;
  *
  * Description: Tests for the DecoderPro application.
  *
- * @author  Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DecoderProTest {
 

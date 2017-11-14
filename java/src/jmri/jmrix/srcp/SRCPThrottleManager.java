@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on early NCE code.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2005, 2008
  * @author Modified by Kelly Loyd
  */
 public class SRCPThrottleManager extends AbstractThrottleManager {

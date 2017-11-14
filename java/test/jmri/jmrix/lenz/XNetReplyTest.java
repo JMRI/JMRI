@@ -9,8 +9,8 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.lenz.XNetReply class
  *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2004-2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2004-2017
  */
 public class XNetReplyTest {
 
@@ -427,8 +427,8 @@ public class XNetReplyTest {
         r = new XNetReply("42 05 08 4F");
         Assert.assertEquals("Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(0));
 
-	    // ask for address 21
-	    Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(1));
+        // ask for address 21
+        Assert.assertEquals("Turnout Status", -1, r.getTurnoutStatus(1));
         // feedback message for turnout 22, with invalid state.
         r = new XNetReply("42 05 0C 45");
         Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(0));
@@ -439,10 +439,10 @@ public class XNetReplyTest {
         // feedback message for turnout 21, thrown
         r = new XNetReply("42 05 02 45");
         Assert.assertEquals("Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1));
-	    // ask for address 22.
-	    Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(0));
-	    // send invalid value for parameter (only 0 and 1 are valid).
-	    Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(3));
+        // ask for address 22.
+        Assert.assertEquals("Turnout Status", -1, r.getTurnoutStatus(0));
+        // send invalid value for parameter (only 0 and 1 are valid).
+        Assert.assertEquals("Turnout Status", -1, r.getTurnoutStatus(3));
         // feedback message for turnout 21, with invalid state.
         r = new XNetReply("42 05 03 47");
         Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(1));
@@ -464,8 +464,8 @@ public class XNetReplyTest {
         r = new XNetReply("42 05 08 4F");
         Assert.assertEquals("Broadcast Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1,0));
 
-	    // ask for address 21
-	    Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,1));
+        // ask for address 21
+        Assert.assertEquals("Broadcast Turnout Status", -1, r.getTurnoutStatus(1, 1));
         // feedback message for turnout 22, with invalid state.
         r = new XNetReply("42 05 0C 45");
         Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,0));
@@ -475,10 +475,10 @@ public class XNetReplyTest {
         // feedback message for turnout 21, thrown
         r = new XNetReply("42 05 02 45");
         Assert.assertEquals("Broadcast Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1,1));
-	    // ask for address 22.
-	    Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,0));
-	    // send invalid value for parameter (only 0 and 1 are valid).
-	    Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,3));
+        // ask for address 22.
+        Assert.assertEquals("Broadcast Turnout Status", -1, r.getTurnoutStatus(1, 0));
+        // send invalid value for parameter (only 0 and 1 are valid).
+        Assert.assertEquals("Broadcast Turnout Status", -1, r.getTurnoutStatus(1, 3));
         // feedback message for turnout 21, with invalid state.
         r = new XNetReply("42 05 03 47");
         Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,1));

@@ -10,11 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XNetOpsModeProgrammerTest.java
+ * Tests for the jmri.jmrix.lenz.XNetOpsModeProgrammer class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetOpsModeProgrammer class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetOpsModeProgrammerTest {
 

@@ -86,9 +86,9 @@ package jmri.jmrix.loconet;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2015
- * @author  Ron W. Auld
- * @author  John Kabat
- * @author  Alain Le Marchand
+ * @author Ron W. Auld
+ * @author John Kabat
+ * @author Alain Le Marchand
  *
  */
 public final class LnConstants {

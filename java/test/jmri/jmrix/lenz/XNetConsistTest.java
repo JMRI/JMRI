@@ -6,11 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XNetConsistTest.java
+ * Tests for the jmri.jmrix.lenz.XNetConsist class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetConsist class
- *
- * @author	Paul Bender Copyright (C) 2010,2016,2017
+ * @author Paul Bender Copyright (C) 2010,2016,2017
  */
 public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase {
 

@@ -6,12 +6,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * DCCppInitializationManagerTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppInitializationManager class.
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppInitializationManager class
- *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppInitializationManagerTest extends TestCase {
 

@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.ConnectionLabel class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  * @author Paul Bender Copyright (C) 2017
  */
 public class ConnectionLabelTest {

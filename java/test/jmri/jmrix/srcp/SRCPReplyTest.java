@@ -10,12 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SRCPReplyTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPReply class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPReply class
- *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SRCPReplyTest {
 

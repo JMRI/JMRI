@@ -14,14 +14,14 @@ import org.junit.Test;
 /**
  * Tests for the Operations CarSetFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class CarSetFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testCarSetFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars();		// load cars
+        loadCars(); // load cars
         CarSetFrame f = new CarSetFrame();
         f.setTitle("Test Car Set Frame");
         f.initComponents();

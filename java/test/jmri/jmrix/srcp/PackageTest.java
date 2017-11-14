@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.srcp package
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class PackageTest extends TestCase {
 

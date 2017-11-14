@@ -10,12 +10,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Z21SimulatorAdapterTest.java
- *
- * Description:	tests for the jmri.jmrix.roco.z21.simulator.z21SimulatorAdapter
+ * Tests for the jmri.jmrix.roco.z21.simulator.z21SimulatorAdapter
  * class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21SimulatorAdapterTest {
 

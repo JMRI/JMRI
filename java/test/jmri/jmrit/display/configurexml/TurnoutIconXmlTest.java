@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TurnoutIconXmlTest.java
+ * Tests for the TurnoutIconXml class
  *
- * Description: tests for the TurnoutIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class TurnoutIconXmlTest {
 

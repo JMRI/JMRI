@@ -7,7 +7,7 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2010
- * @author      Mark Underwood Copyright (C) 2015
+ * @author Mark Underwood Copyright (C) 2015
  * @since 4.2.2
  */
 public class DCCppComponentFactory extends jmri.jmrix.swing.ComponentFactory {

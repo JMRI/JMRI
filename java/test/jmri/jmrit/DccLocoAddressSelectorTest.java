@@ -14,7 +14,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of DccLocoAddressSelector
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
   */
 public class DccLocoAddressSelectorTest extends TestCase {
 

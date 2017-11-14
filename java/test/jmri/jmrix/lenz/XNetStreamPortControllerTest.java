@@ -13,11 +13,9 @@ import org.junit.Test;
 
 
 /**
- * XNetStreamPortControllerTest.java
+ * Tests for the jmri.jmrix.lenz.XNetStreamPortController class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetStreamPortController class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 

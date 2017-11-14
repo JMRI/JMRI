@@ -28,8 +28,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * May-17 Modified to a SprogListener to handle status replies.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author  Andrew Crosland (C) 2006 ported to SPROG 2008
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland (C) 2006 ported to SPROG 2008
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogListener {
 

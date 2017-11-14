@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the Path class
  *
- * @author	Bob Jacobsen Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariableTest extends TestCase {
 

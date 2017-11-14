@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,8 +53,8 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     static final int NOTPROGRAMMING = 0; // is notProgramming
     static final int INQUIRESENT = 2; // read/write command sent, waiting reply
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv;  // remember the cv being read/written
 
     // programming interface
     @Override

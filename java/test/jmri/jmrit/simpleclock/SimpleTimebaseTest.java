@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * Tests for the SimpleTimebase class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SimpleTimebaseTest extends TestCase {
 
@@ -67,7 +67,7 @@ public class SimpleTimebaseTest extends TestCase {
         Date now = new Date();
 
         p.setTime(now);
-        Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
+        Assert.assertEquals("Time Set", now.toString(), p.getTime().toString());
     }
 
     // set the time based on an instant.
@@ -76,20 +76,22 @@ public class SimpleTimebaseTest extends TestCase {
         Instant now = Instant.now();
 
         p.setTime(now);
-        Assert.assertEquals("Time Set",Date.from(now).toString(),p.getTime().toString());
+        Assert.assertEquals("Time Set", Date.from(now).toString(), p.getTime().toString());
     }
 
-    /* 	public void testShortDelay() { */
-    /* 		SimpleTimebase p = new SimpleTimebase(); */
-    /* 		Date now = new Date(); */
-    /* 		p.setTime(now); */
-    /* 		p.setRate(100.); */
-    /* 		wait(100); */
-    /* 		Date then = p.getTime(); */
-    /* 		long delta = then.getTime()-now.getTime(); */
-    /* 		Assert.assertTrue("delta ge 50 (nominal value)", delta>=50); */
-    /* 		Assert.assertTrue("delta lt 150 (nominal value)", delta<150); */
-    /* 	} */
+    /*
+    public void testShortDelay() {
+        SimpleTimebase p = new SimpleTimebase();
+        Date now = new Date();
+        p.setTime(now);
+        p.setRate(100.);
+        wait(100);
+        Date then = p.getTime();
+        long delta = then.getTime() - now.getTime();
+        Assert.assertTrue("delta ge 50 (nominal value)", delta >= 50);
+        Assert.assertTrue("delta lt 150 (nominal value)", delta < 150);
+    }
+     */
     // from here down is testing infrastructure
     public SimpleTimebaseTest(String s) {
         super(s);

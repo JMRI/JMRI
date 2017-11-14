@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of DccConsist
  *
- * @author	Paul Copyright (C) 2011, 2016
+ * @author Paul Copyright (C) 2011, 2016
  */
 public class DccConsistTest extends AbstractConsistTestBase {
 

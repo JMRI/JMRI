@@ -13,7 +13,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of Tams messages Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author	Jan Boen
+ * @author Jan Boen
  */
 public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 

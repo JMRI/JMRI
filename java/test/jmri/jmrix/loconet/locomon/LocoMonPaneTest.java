@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * Initially written to test filtering
  *
- * @author	Bob Jacobsen   Copyright 2015
+ * @author Bob Jacobsen   Copyright 2015
  */
 public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 

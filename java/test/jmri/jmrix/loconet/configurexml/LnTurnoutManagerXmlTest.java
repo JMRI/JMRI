@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LnTurnoutManagerXmlTest.java
+ * Tests for the LnTurnoutManagerXml class
  *
- * Description: tests for the LnTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class LnTurnoutManagerXmlTest {
 

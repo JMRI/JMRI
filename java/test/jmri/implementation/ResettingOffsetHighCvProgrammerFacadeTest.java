@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test the ResettingOffsetHighCvProgrammerFacade class.
  *
- * @author	Bob Jacobsen Copyright 2013, 2014
+ * @author Bob Jacobsen Copyright 2013, 2014
  *
  */
 public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {

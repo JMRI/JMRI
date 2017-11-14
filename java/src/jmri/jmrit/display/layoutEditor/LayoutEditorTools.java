@@ -275,7 +275,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedSignalHeads = new JButton(Bundle.getMessage("GetSaved")));
             getSavedSignalHeads.addActionListener((ActionEvent e) -> {
                 turnoutSignalsGetSaved(e);
@@ -389,7 +389,7 @@ public class LayoutEditorTools {
                 signalFrame.setVisible(true);
             });
             changeSignalIcon.setToolTipText(Bundle.getMessage("ChangeSignalIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalsDone.addActionListener((ActionEvent e) -> {
                 setSignalsDonePressed(e);
@@ -1510,11 +1510,11 @@ public class LayoutEditorTools {
         }
     }
 
-    /*
-	 * Initializes a BlockBossLogic for creation of a signal logic for the signal
-	 *	head named in "signalHeadName".
-	 * Should not be called until enough informmation has been gathered to allow
-	 *	configuration of the Simple Signal Logic.
+    /**
+     * Initializes a BlockBossLogic for creation of a signal logic for the
+     * signal head named in "signalHeadName". Should not be called until enough
+     * information has been gathered to allow configuration of the Simple Signal
+     * Logic.
      */
     public boolean initializeBlockBossLogic(@Nonnull String signalHeadName) {
         logic = BlockBossLogic.getStoppedObject(signalHeadName);
@@ -1526,8 +1526,8 @@ public class LayoutEditorTools {
         return true;
     }
 
-    /*
-	 * Finalizes a successfully created signal logic
+    /**
+     * Finalizes a successfully created signal logic
      */
     public void finalizeBlockBossLogic() {
         if (logic == null) {
@@ -1538,20 +1538,19 @@ public class LayoutEditorTools {
         logic = null;
     }
 
-    /*
-	 * Returns the signal head at the end of the block "track" is assigned to.
-	 *	"track" is the Track Segment leaving "object".
-	 *	"object" must be either an anchor point or one of the connecting
-	 *	 points of a turnout or level crossing.
-	 * Note: returns 'null' is signal is not present where it is expected, or
-	 *	if an End Bumper is reached. To test for end bumper, use the
-	 *		associated routine "reachedEndBumper()". Reaching a turntable ray
-	 *	track connection is considered reaching an end bumper.
-	 * Note: Normally this routine requires a signal at any turnout it finds.
-	 *	However, if 'skipIncludedTurnout' is true, this routine will skip
-	 *	over an absent signal at an included turnout, that is a turnout
-	 *	with its throat track segment and its continuing track segment in
-	 *	the same block. When this happens, the user is warned.
+    /**
+     * Returns the signal head at the end of the block "track" is assigned to.
+     * "track" is the Track Segment leaving "object". "object" must be either an
+     * anchor point or one of the connecting points of a turnout or level
+     * crossing. Note: returns 'null' is signal is not present where it is
+     * expected, or if an End Bumper is reached. To test for end bumper, use the
+     * associated routine "reachedEndBumper()". Reaching a turntable ray track
+     * connection is considered reaching an end bumper. Note: Normally this
+     * routine requires a signal at any turnout it finds. However, if
+     * 'skipIncludedTurnout' is true, this routine will skip over an absent
+     * signal at an included turnout, that is a turnout with its throat track
+     * segment and its continuing track segment in the same block. When this
+     * happens, the user is warned.
      */
     @CheckReturnValue
     public SignalHead getNextSignalFromObject(@Nonnull TrackSegment track,
@@ -1893,22 +1892,21 @@ public class LayoutEditorTools {
         return null;
     }
 
-    /*
-	 * Returns 'true' if an end bumper was reached during the last call to
-	 *	GetNextSignalFromObject. Also used in the odd case of reaching a
-	 *	turntable ray track connection, which is treated as an end
-	 *	bumper here.
+    /**
+     * Returns 'true' if an end bumper was reached during the last call to
+     * GetNextSignalFromObject. Also used in the odd case of reaching a
+     * turntable ray track connection, which is treated as an end bumper here.
      */
     public boolean reachedEndBumper() {
         return hitEndBumper;
     }
 
-    /*
-	 * Returns 'true' if "track" enters a block boundary at the west(north) end of
-	 *	"point". Returns "false" otherwise. If track is neither horizontal or
-	 *		vertical, assumes horizontal, as done when setting signals at block boundary.
-	 * "track" is a TrackSegment connected to "point".
-	 *	"point" is an anchor point serving as a block boundary.
+    /**
+     * Returns 'true' if "track" enters a block boundary at the west(north) end
+     * of "point". Returns "false" otherwise. If track is neither horizontal or
+     * vertical, assumes horizontal, as done when setting signals at block
+     * boundary. "track" is a TrackSegment connected to "point". "point" is an
+     * anchor point serving as a block boundary.
      */
     public static boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -1975,7 +1973,7 @@ public class LayoutEditorTools {
             }
         }
         // track is not primarily horizontal or vertical; assume horizontal
-        //	log.error ("Track is not vertical or horizontal at anchor");
+        // log.error ("Track is not vertical or horizontal at anchor");
         if (delX > 0.0) {
             return false;
         }
@@ -2098,7 +2096,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getAnchorSavedSignalHeads = new JButton(Bundle.getMessage("GetSaved")));
             getAnchorSavedSignalHeads.addActionListener((ActionEvent e) -> {
                 getSavedAnchorSignals(e);
@@ -2152,7 +2150,7 @@ public class LayoutEditorTools {
                 signalFrame.setVisible(true);
             });
             changeSignalAtBoundaryIcon.setToolTipText(Bundle.getMessage("ChangeSignalIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setSignalsAtBlockBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalsAtBlockBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSignalsAtBlockBoundaryDonePressed(e);
@@ -2402,11 +2400,11 @@ public class LayoutEditorTools {
             }
         } else {
             if (delY > 0.0) {
-                eastTrack = track1;	 // south
-                westTrack = track2;	 // north
+                eastTrack = track1; // south
+                westTrack = track2; // north
             } else {
-                eastTrack = track2;	 // south
-                westTrack = track1;	 // north
+                eastTrack = track2; // south
+                westTrack = track1; // north
             }
         }
         return true;
@@ -2630,7 +2628,7 @@ public class LayoutEditorTools {
     private SignalHead d1Head = null;
     private SignalHead d2Head = null;
 
-    private int xoverType = LayoutTurnout.DOUBLE_XOVER;	 // changes to RH_XOVER or LH_XOVER as required
+    private int xoverType = LayoutTurnout.DOUBLE_XOVER; // changes to RH_XOVER or LH_XOVER as required
     private String xoverTurnoutName = "";
     private final JLabel xoverTurnoutNameLabel = new JLabel("");
 
@@ -2703,7 +2701,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedXoverSignalHeads = new JButton(Bundle.getMessage("GetSaved")));
             getSavedXoverSignalHeads.addActionListener((ActionEvent e) -> {
                 xoverTurnoutSignalsGetSaved(e);
@@ -2889,7 +2887,7 @@ public class LayoutEditorTools {
                 signalFrame.setVisible(true);
             });
             changeXoverSignalIcon.setToolTipText(Bundle.getMessage("ChangeSignalIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setXoverSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXoverSignalsDone.addActionListener((ActionEvent e) -> {
                 setXoverSignalsDonePressed(e);
@@ -3741,7 +3739,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedXingSignalHeads = new JButton(Bundle.getMessage("GetSaved")));
             getSavedXingSignalHeads.addActionListener((ActionEvent e) -> {
                 xingSignalsGetSaved(e);
@@ -3850,7 +3848,7 @@ public class LayoutEditorTools {
                 signalFrame.setVisible(true);
             });
             changeXingSignalIcon.setToolTipText(Bundle.getMessage("ChangeSignalIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setXingSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSignalsDone.addActionListener((ActionEvent e) -> {
                 setXingSignalsDonePressed(e);
@@ -4591,7 +4589,7 @@ public class LayoutEditorTools {
             JPanel panel20 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel20.add(shTitle);
-            panel20.add(new JLabel("		"));
+            panel20.add(new JLabel("  "));
             panel20.add(getSavedTToTSignalHeads = new JButton(Bundle.getMessage("GetSaved")));
             getSavedTToTSignalHeads.addActionListener((ActionEvent e) -> {
                 setSignalsAtTToTTurnoutsGetSaved(e);
@@ -4650,7 +4648,7 @@ public class LayoutEditorTools {
             a1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel22 = new JPanel(new FlowLayout());
-            panel22.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "	  "));
+            panel22.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "  "));
             panel22.add(setA1TToTHead);
             setA1TToTHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel22.add(new JLabel("  "));
@@ -4667,7 +4665,7 @@ public class LayoutEditorTools {
             a2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel24 = new JPanel(new FlowLayout());
-            panel24.add(new JLabel("				"));
+            panel24.add(new JLabel("  "));
             panel24.add(setA2TToTHead);
             setA2TToTHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel24.add(new JLabel("  "));
@@ -4690,7 +4688,7 @@ public class LayoutEditorTools {
             b1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel32 = new JPanel(new FlowLayout());
-            panel32.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "	  "));
+            panel32.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "  "));
             panel32.add(setB1TToTHead);
             setB1TToTHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel32.add(new JLabel("  "));
@@ -4707,7 +4705,7 @@ public class LayoutEditorTools {
             b2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel34 = new JPanel(new FlowLayout());
-            panel34.add(new JLabel("				"));
+            panel34.add(new JLabel("  "));
             panel34.add(setB2TToTHead);
             setB2TToTHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel34.add(new JLabel("  "));
@@ -4732,7 +4730,7 @@ public class LayoutEditorTools {
             c1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel42 = new JPanel(new FlowLayout());
-            panel42.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "	  "));
+            panel42.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "  "));
             panel42.add(setC1TToTHead);
             setC1TToTHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel42.add(new JLabel("  "));
@@ -4749,7 +4747,7 @@ public class LayoutEditorTools {
             c2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel44 = new JPanel(new FlowLayout());
-            panel44.add(new JLabel("				"));
+            panel44.add(new JLabel("  "));
             panel44.add(setC2TToTHead);
             setC2TToTHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel44.add(new JLabel("  "));
@@ -4772,7 +4770,7 @@ public class LayoutEditorTools {
             d1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel52 = new JPanel(new FlowLayout());
-            panel52.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "	  "));
+            panel52.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "  "));
             panel52.add(setD1TToTHead);
             setD1TToTHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel52.add(new JLabel("  "));
@@ -4789,7 +4787,7 @@ public class LayoutEditorTools {
             d2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel54 = new JPanel(new FlowLayout());
-            panel54.add(new JLabel("				"));
+            panel54.add(new JLabel("  "));
             panel54.add(setD2TToTHead);
             setD2TToTHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel54.add(new JLabel("  "));
@@ -4804,7 +4802,7 @@ public class LayoutEditorTools {
                 signalFrame.setVisible(true);
             });
             changeTToTSignalIcon.setToolTipText(Bundle.getMessage("ChangeSignalIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setTToTSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setTToTSignalsDone.addActionListener((ActionEvent e) -> {
                 setTToTSignalsDonePressed(e);
@@ -5777,14 +5775,14 @@ public class LayoutEditorTools {
         }
     }   // setLogicTToT
 
-    /*
-	 * Sets up a Logix to set a sensor active if a turnout is set against
-	 *		a track.  This routine creates an internal sensor for the purpose.
-	 * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
-	 *	TTT is the system name of the turnout, X is either C or T depending
-	 *		on "continuing", and HHH is the system name of the signal head.
-	 * Note: If there is any problem, a string of "" is returned, and a warning
-	 *	message is issued.
+    /**
+     * Sets up a Logix to set a sensor active if a turnout is set against a
+     * track. This routine creates an internal sensor for the purpose. Note: The
+     * sensor and logix are named IS or IX followed by TTT_X_HHH where TTT is
+     * the system name of the turnout, X is either C or T depending on
+     * "continuing", and HHH is the system name of the signal head. Note: If
+     * there is any problem, a string of "" is returned, and a warning message
+     * is issued.
      */
     private String setupNearLogix(LayoutTurnout nearTurnout, boolean continuing,
             SignalHead head) {
@@ -5834,16 +5832,17 @@ public class LayoutEditorTools {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                     Conditional.ACTION_SET_SENSOR, sensorName,
                     Sensor.INACTIVE, ""));
-            c.setAction(actionList);		  // string data
+            c.setAction(actionList); // string data
             x.addConditional(cName, -1);
             x.activateLogix();
         }
         return sensorName;
     }   // setupNearLogix
 
-    /*
-	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
-	 *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+    /**
+     * Adds the sensor specified to the open BlockBossLogic, provided it is not
+     * already there and provided there is an open slot. If 'name' is null or
+     * empty, returns without doing anything.
      */
     private void addNearSensorToLogic(String name) {
         if ((name != null) && !name.isEmpty()) {
@@ -5973,12 +5972,12 @@ public class LayoutEditorTools {
     private Turnout turnoutA = null;
     private Turnout turnoutB = null;
     //private TrackSegment conTrack = null;
-    private SignalHead a13WayHead = null;	// saved in A1 of Turnout A - Throat - continuing
-    private SignalHead a23WayHead = null;	// saved in A2 of Turnout A - Throat - diverging A (optional)
-    private SignalHead a33WayHead = null;	// saved in A3 of Turnout A - Throat - diverging B (optional)
-    private SignalHead b3WayHead = null;	// saved in C1 of Turnout A - at diverging A
-    private SignalHead c3WayHead = null;	// saved in B1 of Turnout B - at continuing
-    private SignalHead d3WayHead = null;	// saved in C1 of Turnout B - at diverging B
+    private SignalHead a13WayHead = null; // saved in A1 of Turnout A - Throat - continuing
+    private SignalHead a23WayHead = null; // saved in A2 of Turnout A - Throat - diverging A (optional)
+    private SignalHead a33WayHead = null; // saved in A3 of Turnout A - Throat - diverging B (optional)
+    private SignalHead b3WayHead = null;  // saved in C1 of Turnout A - at diverging A
+    private SignalHead c3WayHead = null;  // saved in B1 of Turnout B - at continuing
+    private SignalHead d3WayHead = null;  // saved in C1 of Turnout B - at diverging B
 
     public void setSignalsAt3WayTurnoutFromMenu(
             @Nonnull String aName, @Nonnull String bName,
@@ -6031,7 +6030,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalHeads"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("		"));
+            panel2.add(new JLabel("  "));
             panel2.add(getSaved3WaySignalHeads = new JButton(Bundle.getMessage("GetSaved")));
             getSaved3WaySignalHeads.addActionListener((ActionEvent e) -> {
                 getSaved3WaySignals(e);
@@ -6190,7 +6189,7 @@ public class LayoutEditorTools {
                 signalFrame.setVisible(true);
             });
             change3WaySignalIcon.setToolTipText(Bundle.getMessage("ChangeSignalIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(set3WaySignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             set3WaySignalsDone.addActionListener((ActionEvent e) -> {
                 set3WaySignalsDonePressed(e);
@@ -6372,7 +6371,7 @@ public class LayoutEditorTools {
                 }
                 if ((type != LayoutTrack.TURNOUT_A) || (connect == null)) {
                     // Not two turnouts connected with the throat of B connected to the continuing of A
-                    //	  by a single Track Segment.  Inform user of error and terminat.e
+                    // by a single Track Segment.  Inform user of error and terminat.e
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
                             Bundle.getMessage("SignalsError19"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -7242,7 +7241,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("Sensors"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getAnchorSavedSensors = new JButton(Bundle.getMessage("GetSaved")));
             getAnchorSavedSensors.addActionListener((ActionEvent e) -> {
                 getSavedAnchorSensors(e);
@@ -7261,7 +7260,7 @@ public class LayoutEditorTools {
                 sensorFrame.setVisible(true);
             });
             changeSensorAtBoundaryIcon.setToolTipText(Bundle.getMessage("ChangeSensorIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setSensorsAtBlockBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSensorsAtBlockBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSensorsAtBlockBoundaryDonePressed(e);
@@ -7811,7 +7810,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalMasts"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getAnchorSavedSignalMasts = new JButton(Bundle.getMessage("GetSaved")));
             getAnchorSavedSignalMasts.addActionListener((ActionEvent e) -> {
                 getSavedAnchorSignalMasts(e);
@@ -8787,7 +8786,6 @@ public class LayoutEditorTools {
             oldHeight = tmpHeight;
         }
 
-//		  double ang = angle;
         double oppAng = 90 - angleDEG;
         double angleRAD = Math.toRadians(angleDEG);
         double oppAngRAD = Math.toRadians(oppAng);
@@ -8817,12 +8815,6 @@ public class LayoutEditorTools {
 
             log.debug(Double.toString((bpo - ta) - (l.maxHeight() - iconAdjOpp)));
             log.debug(Double.toString(bpo - (iconAdj + ta)));
-            /*if(angleDeg<45){
-			 y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
-			 } else {
-			 y_dist_to_Icon = bpo-(iconAdj+ta);
-			 }*/
-            //double y_dist_to_Icon = (l.maxHeight()-iconAdj)+(bpo-ta);
             xpos = (int) (p.getX() + x_dist_to_Icon);
             ypos = (int) (p.getY() + y_dist_to_Icon);
             log.debug("right x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
@@ -8937,7 +8929,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("SignalMasts"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedSignalMasts = new JButton(Bundle.getMessage("GetSaved")));
             getSavedSignalMasts.addActionListener((ActionEvent e) -> {
                 turnoutSignalMastsGetSaved(e);
@@ -8950,7 +8942,7 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JPanel panel6 = new JPanel(new FlowLayout());
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setSignalMastsDonePressed(e);
@@ -9576,7 +9568,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSignalMast"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedSlipSignalMasts = new JButton(Bundle.getMessage("GetSaved")));
             getSavedSlipSignalMasts.addActionListener((ActionEvent e) -> {
                 slipSignalMastsGetSaved(e);
@@ -9590,7 +9582,7 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
 
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setSlipSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setSlipSignalMastsDonePressed(e);
@@ -10102,7 +10094,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSignalMast"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedXingSignalMasts = new JButton(Bundle.getMessage("GetSaved")));
             getSavedXingSignalMasts.addActionListener((ActionEvent e) -> {
                 xingSignalMastsGetSaved(e);
@@ -10117,7 +10109,7 @@ public class LayoutEditorTools {
 
             JPanel panel6 = new JPanel(new FlowLayout());
 
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setXingSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setXingSignalMastsDonePressed(e);
@@ -10612,7 +10604,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("Sensors"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedSensors = new JButton(Bundle.getMessage("GetSaved")));
             getSavedSensors.addActionListener((ActionEvent e) -> {
                 turnoutSensorsGetSaved(e);
@@ -10631,7 +10623,7 @@ public class LayoutEditorTools {
                 turnoutSensorFrame.setVisible(true);
             });
             changeSensorIcon.setToolTipText(Bundle.getMessage("ChangeSensorIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSensorsDone.addActionListener((ActionEvent e) -> {
                 setSensorsDonePressed(e);
@@ -11125,7 +11117,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSensor"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedXingSensors = new JButton(Bundle.getMessage("GetSaved")));
             getSavedXingSensors.addActionListener((ActionEvent e) -> {
                 xingSensorsGetSaved(e);
@@ -11144,7 +11136,7 @@ public class LayoutEditorTools {
             });
             changeSensorXingIcon.setToolTipText(Bundle.getMessage("ChangeSensorIconHint"));
 
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setXingSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSensorsDone.addActionListener((ActionEvent e) -> {
                 setXingSensorsDonePressed(e);
@@ -11703,7 +11695,7 @@ public class LayoutEditorTools {
             JPanel panel2 = new JPanel(new FlowLayout());
             JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSensor"));
             panel2.add(shTitle);
-            panel2.add(new JLabel("	  "));
+            panel2.add(new JLabel("  "));
             panel2.add(getSavedSlipSensors = new JButton(Bundle.getMessage("GetSaved")));
             getSavedSlipSensors.addActionListener((ActionEvent e) -> {
                 slipSensorsGetSaved(e);
@@ -11722,7 +11714,7 @@ public class LayoutEditorTools {
             });
             changeSensorSlipIcon.setToolTipText(Bundle.getMessage("ChangeSensorIconHint"));
 
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setSlipSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSensorsDone.addActionListener((ActionEvent e) -> {
                 setSlipSensorsDonePressed(e);
@@ -12433,7 +12425,7 @@ public class LayoutEditorTools {
             a1SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel22 = new JPanel(new FlowLayout());
-            panel22.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "	  "));
+            panel22.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "  "));
             panel22.add(setA1SlipHead);
             setA1SlipHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel22.add(new JLabel("  "));
@@ -12450,7 +12442,7 @@ public class LayoutEditorTools {
             a2SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel24 = new JPanel(new FlowLayout());
-            panel24.add(new JLabel("				"));
+            panel24.add(new JLabel("  "));
             panel24.add(setA2SlipHead);
             setA2SlipHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel24.add(new JLabel("  "));
@@ -12473,7 +12465,7 @@ public class LayoutEditorTools {
             b1SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel32 = new JPanel(new FlowLayout());
-            panel32.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "	  "));
+            panel32.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "  "));
             panel32.add(setB1SlipHead);
             setB1SlipHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel32.add(new JLabel("  "));
@@ -12493,7 +12485,7 @@ public class LayoutEditorTools {
             b2SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel34 = new JPanel(new FlowLayout());
-            panel34.add(new JLabel("				"));
+            panel34.add(new JLabel("  "));
             panel34.add(setB2SlipHead);
             setB2SlipHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel34.add(new JLabel("  "));
@@ -12521,7 +12513,7 @@ public class LayoutEditorTools {
             c1SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel42 = new JPanel(new FlowLayout());
-            panel42.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "	  "));
+            panel42.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "  "));
             panel42.add(setC1SlipHead);
             setC1SlipHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel42.add(new JLabel("  "));
@@ -12540,7 +12532,7 @@ public class LayoutEditorTools {
             c2SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel44 = new JPanel(new FlowLayout());
-            panel44.add(new JLabel("				"));
+            panel44.add(new JLabel("  "));
             panel44.add(setC2SlipHead);
             setC2SlipHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel44.add(new JLabel("  "));
@@ -12564,7 +12556,7 @@ public class LayoutEditorTools {
             d1SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel52 = new JPanel(new FlowLayout());
-            panel52.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "	  "));
+            panel52.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "  "));
             panel52.add(setD1SlipHead);
             setD1SlipHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel52.add(new JLabel("  "));
@@ -12581,7 +12573,7 @@ public class LayoutEditorTools {
             d2SlipSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel54 = new JPanel(new FlowLayout());
-            panel54.add(new JLabel("				"));
+            panel54.add(new JLabel("  "));
             panel54.add(setD2SlipHead);
             setD2SlipHead.setToolTipText(Bundle.getMessage("PlaceHeadHint"));
             panel54.add(new JLabel("  "));
@@ -12596,7 +12588,7 @@ public class LayoutEditorTools {
                 signalFrame.setVisible(true);
             });
             changeTToTSignalIcon.setToolTipText(Bundle.getMessage("ChangeSignalIconHint"));
-            panel6.add(new JLabel("	 "));
+            panel6.add(new JLabel("  "));
             panel6.add(setSlipSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSignalsDone.addActionListener((ActionEvent e) -> {
                 setSlipSignalsDonePressed(e);
@@ -13528,7 +13520,7 @@ public class LayoutEditorTools {
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                 Conditional.ACTION_SET_SENSOR, sensorName,
                 Sensor.ACTIVE, ""));
-        c.setAction(actionList);		// string data
+        c.setAction(actionList); // string data
         if (newConditional) {
             x.addConditional(cName, -1);
         }
@@ -13536,9 +13528,10 @@ public class LayoutEditorTools {
         return sensorName;
     }   // setupNearLogixSlip
 
-    /*
-	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
-	 *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+    /**
+     * Adds the sensor specified to the open BlockBossLogic, provided it is not
+     * already there and provided there is an open slot. If 'name' is null or
+     * empty, returns without doing anything.
      */
     private void addNearSensorToSlipLogic(String name) {
         if ((name != null) && !name.isEmpty()) {

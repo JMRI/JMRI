@@ -10,7 +10,7 @@ import org.junit.Assert;
  * Overall tests of Logix operation, including operation of
  * conditionals.  To ease setup, reads from XML files.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class LogixSystemTest extends TestCase {
 

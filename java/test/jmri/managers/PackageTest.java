@@ -39,7 +39,7 @@ import org.junit.runners.Suite;
 /**
  * Invoke complete set of tests for the jmri.managers
  *
- * @author	Bob Jacobsen, Copyright (C) 2009
+ * @author Bob Jacobsen, Copyright (C) 2009
  */
 public class PackageTest {
 

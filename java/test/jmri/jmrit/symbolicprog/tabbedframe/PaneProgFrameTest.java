@@ -17,7 +17,7 @@ import org.junit.Assert;
 /**
  * Test PaneProgFrame
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class PaneProgFrameTest extends TestCase {
 

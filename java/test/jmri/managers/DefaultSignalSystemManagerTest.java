@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.managers.InternalTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class DefaultSignalSystemManagerTest extends TestCase {
 

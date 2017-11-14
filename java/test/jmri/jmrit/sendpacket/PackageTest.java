@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
 /**
  * Invokes complete set of tests in the jmri.jmrit.sendpacket tree
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class PackageTest {
 }

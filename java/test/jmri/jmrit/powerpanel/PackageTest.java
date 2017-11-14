@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.PowerPanel package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PackageTest extends TestCase {
 

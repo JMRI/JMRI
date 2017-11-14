@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * Refactored
  *
- * @author	Andrew Crosland Copyright (C) 2004
+ * @author Andrew Crosland Copyright (C) 2004
   */
 public class Sprogv4UpdateFrame
         extends SprogUpdateFrame

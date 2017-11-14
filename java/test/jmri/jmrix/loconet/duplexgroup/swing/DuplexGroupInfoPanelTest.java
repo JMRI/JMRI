@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of DuplexGroupInfoPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DuplexGroupInfoPanelTest extends jmri.util.swing.JmriPanelTest {
 

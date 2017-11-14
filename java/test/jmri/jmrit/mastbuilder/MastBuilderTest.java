@@ -13,7 +13,7 @@ import org.junit.Test;
  * class.
  * Note MastBuilder for now is only a demo.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class MastBuilderTest {
 

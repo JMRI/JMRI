@@ -13,11 +13,9 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * SerialTurnoutManagerTest.java
+ * Tests for the SerialLightManager class
  *
- * Description:	tests for the SerialLightManager class
- *
- * @author	Bob Jacobsen Copyright 2004, 2007, 2008
+ * @author Bob Jacobsen Copyright 2004, 2007, 2008
  */
 public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 

@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * bit number of the input or output bit (1-2048) examples: VT0B2 (node address
  * 0, bit 2), VS1B3 (node address 1, bit 3), VL11B234 (node address 11, bit234)
  *
- * @author	Dave Duchamp, Copyright (C) 2004
+ * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  */
 public class SerialAddress {

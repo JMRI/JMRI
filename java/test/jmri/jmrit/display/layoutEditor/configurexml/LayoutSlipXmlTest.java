@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutSlipXmlTest.java
+ * Tests for the LayoutSlipXml class
  *
- * Description: tests for the LayoutSlipXml class
- *
- * @author   George Warner  Copyright (C) 2017
+ * @author George Warner  Copyright (C) 2017
  */
 public class LayoutSlipXmlTest {
 

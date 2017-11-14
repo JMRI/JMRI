@@ -1,7 +1,6 @@
 //TrainTest.java
 package jmri.jmrit.operations.trains;
 
-import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -11,19 +10,15 @@ import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -1510,7 +1505,7 @@ public class TrainTest extends OperationsTestCase {
         c9.setMoves(19);
         cmanager.register(c9);
 
-//		Assert.assertEquals("Westford should not accept Flat Car", false, loc1.acceptsTypeName("Flat Car"));
+        // Assert.assertEquals("Westford should not accept Flat Car", false, loc1.acceptsTypeName("Flat Car"));
         // add Flat Car as a valid type so Westford will accept
         ct.addName("Flat Car");
         Assert.assertEquals("Westford should now accepts Flat Car", true, loc1.acceptsTypeName("Flat Car"));
@@ -1941,7 +1936,7 @@ public class TrainTest extends OperationsTestCase {
         Location loc1;
         loc1 = lmanager.newLocation("New Westford");
         loc1.setTrainDirections(DIRECTION_ALL);
-//		loc1.addTypeName("Flat Car");
+        // loc1.addTypeName("Flat Car");
 
         Location loc2;
         loc2 = lmanager.newLocation("New Chelmsford");
@@ -1955,7 +1950,7 @@ public class TrainTest extends OperationsTestCase {
         loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
         loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk1.setLength(900);
-//		loc1trk1.addTypeName("Flat Car");
+        // loc1trk1.addTypeName("Flat Car");
 
         Track loc1trk2;
         loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);
@@ -2278,7 +2273,7 @@ public class TrainTest extends OperationsTestCase {
         sch1Item2.setReceiveLoadName("Metal 2");
         sch1Item3.setReceiveLoadName("Metal 3");
 
-        InstanceManager.getDefault(CarLoads.class).addName("Gon", "Metal 3");		// Allows c13 which is part of a kernel to get a new load
+        InstanceManager.getDefault(CarLoads.class).addName("Gon", "Metal 3"); // Allows c13 which is part of a kernel to get a new load
 
         train1.setRoute(rte3);
         train1.setName("BCW");

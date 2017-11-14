@@ -8,7 +8,7 @@ import javax.swing.JPanel;
  * This uses the {@link DCCppEthernetAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2011
- * @author      Mark Underwood Copyright (C) 2015
+ * @author Mark Underwood Copyright (C) 2015
   *
  * Adapted from LIUSBEthernetAdapter
  *

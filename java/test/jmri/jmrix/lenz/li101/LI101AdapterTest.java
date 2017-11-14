@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LI101AdapterTest.java
+ * Tests for the jmri.jmrix.lenz.li101.LI101Adapter class
  *
- * Description:	tests for the jmri.jmrix.lenz.li101.LI101Adapter class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LI101AdapterTest {
 

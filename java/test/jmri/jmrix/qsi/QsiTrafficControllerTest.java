@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	JUnit tests for the QsiTrafficController class
+ * Tests for the QsiTrafficController class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class QsiTrafficControllerTest extends TestCase {
 
@@ -115,7 +115,7 @@ public class QsiTrafficControllerTest extends TestCase {
         m.setElement(1, '1');
         m.setElement(2, '2');
         c.sendQsiMessage(m, l);
-		// that's already tested, so don't do here.
+        // that's already tested, so don't do here.
 
         // now send reply
         tistream.write('S');

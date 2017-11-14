@@ -19,7 +19,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * <p>
  * Description:
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class LinkingLabelTest {
 

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test CompositeVariableValue class.
  *
- * @author	Bob Jacobsen Copyright 2006, 2015
+ * @author Bob Jacobsen Copyright 2006, 2015
  */
 public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -92,26 +92,26 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     public void testVariableValueRead() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     public void testVariableValueStates() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     public void testVariableValueStateColor() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     public void testVariableRepStateColor() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     public void testVariableValueRepStateColor() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     public void testVariableVarChangeColorRep() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     public void testVariableValueWrite() {

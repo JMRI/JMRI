@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.grapevine.SerialLight class, low address.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class SerialLightTest extends AbstractLightTestBase {
 

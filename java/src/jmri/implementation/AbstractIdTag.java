@@ -19,7 +19,7 @@ import jmri.Reporter;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author  Matthew Harris Copyright (C) 2011
+ * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
 public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {

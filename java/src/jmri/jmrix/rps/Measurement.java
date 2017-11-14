@@ -8,7 +8,7 @@ import javax.vecmath.Vector3d;
  * <P>
  * Immutable
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
   */
 public class Measurement {
 

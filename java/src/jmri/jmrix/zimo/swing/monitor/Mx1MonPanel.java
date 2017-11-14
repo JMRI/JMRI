@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MonFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
- * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author kcameron Copyright (C) 2011 copied from SerialMonPane.java
+ * @author Daniel Boudreau Copyright (C) 2012 added human readable format
  */
 public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listener, Mx1PanelInterface {
 

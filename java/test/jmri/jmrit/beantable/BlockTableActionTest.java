@@ -16,7 +16,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007, 2008
+ * @author Bob Jacobsen Copyright 2004, 2007, 2008
  */
 public class BlockTableActionTest extends AbstractTableActionBase {
 

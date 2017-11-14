@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 

@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of CMRInetManagerFrame
  *
- * @author	Chuck Catania Copyright (C) 2017
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class CMRInetManagerFrameTest {
 

@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests for the OPath class
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class OPathTest {
 

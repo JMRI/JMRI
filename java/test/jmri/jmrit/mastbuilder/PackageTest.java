@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
 /**
  * Invokes complete set of tests in the jmri.jmrit.mastbuilder tree
  *
- * @author	Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PackageTest {
 }

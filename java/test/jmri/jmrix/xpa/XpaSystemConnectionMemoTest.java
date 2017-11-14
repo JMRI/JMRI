@@ -7,9 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaSystemConnectionMemo class
- * <P>
- * @author	Paul Bender
+ * Tests for the jmri.jmrix.xpa.XpaSystemConnectionMemo class.
+ *
+ * @author Paul Bender
  */
 public class XpaSystemConnectionMemoTest extends TestCase {
 
@@ -18,24 +18,23 @@ public class XpaSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull(t);
     }
 
-    public void testGetandSetXpaTrafficController(){
+    public void testGetandSetXpaTrafficController() {
         XpaSystemConnectionMemo t = new XpaSystemConnectionMemo();
-       // first, check to see that an exception is
-       // thrown when null is passed.
-       boolean exceptionThrown = false;
-       try {
-         t.setXpaTrafficController(null);
-       } catch(java.lang.IllegalArgumentException iae){
-         exceptionThrown = true;
-       }
-       Assert.assertTrue(exceptionThrown);
+        // first, check to see that an exception is
+        // thrown when null is passed.
+        boolean exceptionThrown = false;
+        try {
+            t.setXpaTrafficController(null);
+        } catch (java.lang.IllegalArgumentException iae) {
+            exceptionThrown = true;
+        }
+        Assert.assertTrue(exceptionThrown);
 
-       t.setXpaTrafficController(new XpaTrafficController());
+        t.setXpaTrafficController(new XpaTrafficController());
 
-       Assert.assertNotNull("TrafficController set correctly",t.getXpaTrafficController());
+        Assert.assertNotNull("TrafficController set correctly", t.getXpaTrafficController());
 
     }
-
 
     // from here down is testing infrastructure
     public XpaSystemConnectionMemoTest(String s) {

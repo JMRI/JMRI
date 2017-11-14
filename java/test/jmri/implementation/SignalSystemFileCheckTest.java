@@ -11,7 +11,7 @@ import org.junit.runners.Parameterized.Parameters;
  * <p>
  * Checks all files in the distribution directory
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 @RunWith(Parameterized.class)
 public class SignalSystemFileCheckTest extends SchemaTestBase {

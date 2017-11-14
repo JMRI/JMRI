@@ -13,7 +13,7 @@ import org.junit.Assert;
 /**
  * Tests for the BlockBossLogic class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class BlockBossLogicTest extends TestCase {
 

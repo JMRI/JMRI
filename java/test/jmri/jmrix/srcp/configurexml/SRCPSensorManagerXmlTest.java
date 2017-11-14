@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SRCPSensorManagerXmlTest.java
+ * Tests for the SRCPSensorManagerXml class
  *
- * Description: tests for the SRCPSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SRCPSensorManagerXmlTest {
 

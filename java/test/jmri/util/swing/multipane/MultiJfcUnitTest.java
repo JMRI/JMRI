@@ -15,7 +15,7 @@ import org.junit.Assert;
 /**
  * Swing jfcUnit tests for the Multipane (IDE) GUI
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 

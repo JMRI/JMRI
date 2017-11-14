@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,12 +43,12 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting ack
-    static final int WAITRESULT = 4; 	// waiting reply with data
-    static final int WAITRESETSTATUS = 6; 	// waiting reply from reseting status
+    static final int COMMANDSENT = 2;   // read/write command sent, waiting ack
+    static final int WAITRESULT = 4;    // waiting reply with data
+    static final int WAITRESETSTATUS = 6; // waiting reply from reseting status
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv;  // remember the cv being read/written
 
     // programming interface
     @Override

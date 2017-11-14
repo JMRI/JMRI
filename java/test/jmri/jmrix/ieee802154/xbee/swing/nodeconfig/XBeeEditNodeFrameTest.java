@@ -18,7 +18,7 @@ import org.powermock.core.classloader.annotations.MockPolicy;
 /**
  * Test simple functioning of EditNodeFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeEditNodeFrameTest {
 

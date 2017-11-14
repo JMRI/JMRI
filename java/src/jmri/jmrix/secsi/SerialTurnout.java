@@ -7,16 +7,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SerialTurnout.java
- *
+ * <p>
  * This object doesn't listen to the SECSI serial communications. This is
  * because it should be the only object that is sending messages for this
  * turnout; more than one Turnout object pointing to a single device is not
  * allowed.
  *
- * Description:	extend jmri.AbstractTurnout for SECSI serial layouts
- *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
-  */
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
+ */
 public class SerialTurnout extends AbstractTurnout {
 
     /**
@@ -39,9 +37,9 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //      public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states

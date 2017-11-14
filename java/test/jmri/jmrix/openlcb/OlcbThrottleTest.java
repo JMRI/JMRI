@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottle class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 

@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Transform class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
   */
 public class TransformTest extends TestCase {
 

@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
- * @author      B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2017
+ * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2017
  */
 public class SimpleTurnoutStateEntry extends SimpleTurnout {
     private JPanel entryPanel = null;

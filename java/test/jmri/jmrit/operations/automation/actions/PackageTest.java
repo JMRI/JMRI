@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Invokes complete set of tests in the jmri.jmrit.operations.automations.actions tree
  *
- * @author	Bob Jacobsen Copyright 2001, 2003, 2012
+ * @author Bob Jacobsen Copyright 2001, 2003, 2012
  */
 public class PackageTest extends TestCase {
 

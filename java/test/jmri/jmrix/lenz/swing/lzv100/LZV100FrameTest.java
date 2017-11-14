@@ -12,11 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LZV100FrameTest.java
+ * Tests for the jmri.jmrix.lenz.swing.lzv100.LZV100Frame class
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.lzv100.LZV100Frame class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LZV100FrameTest {
 

@@ -10,7 +10,7 @@ import jmri.NamedBean;
  * with letters, does the numeric sort on the digits followed by a lexigraphic
  * sort on the remainder.
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  *
  */
 public class NamedBeanComparator extends SystemNameComparator {

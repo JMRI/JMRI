@@ -5,12 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DCCppInterfaceScaffold.java
+ * Test scaffold implementation of DCCppInterface.
  *
- * Description:	Test scaffold implementation of DCCppInterface
- *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Mark Underwood Copyright (C) 2015
   *
  * Use an object of this type as a DCCppTrafficController in tests
  */

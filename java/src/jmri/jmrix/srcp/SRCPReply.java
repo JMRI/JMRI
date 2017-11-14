@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Carries the reply to an SRCPMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
  */
 public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 

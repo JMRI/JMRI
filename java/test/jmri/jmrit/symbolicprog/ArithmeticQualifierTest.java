@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author	Bob Jacobsen, Copyright 2014
+ * @author Bob Jacobsen, Copyright 2014
  */
 public class ArithmeticQualifierTest {
 

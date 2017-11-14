@@ -13,7 +13,7 @@ import org.junit.Assert;
 /**
  * Test the ProxyTurnoutManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014
+ * @author Bob Jacobsen 2003, 2006, 2008, 2014
   */
 public class ProxyTurnoutManagerTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         return "JT" + i;
     }
 
-    protected TurnoutManager l = null;	// holds objects under test
+    protected TurnoutManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

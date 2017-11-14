@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractThrottle;
  * considered long addresses. This is not the NCE system standard, but is used
  * as an expedient here.
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2008
+ * @author Bob Jacobsen Copyright (C) 2001,2008
  */
 public class SRCPThrottle extends AbstractThrottle {
 

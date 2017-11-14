@@ -7,12 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JMRIClientSensorManagerTest.java
- * <p>
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientSensorManager
- * class
+ * Tests for the jmri.jmrix.jmriclient.JMRIClientSensorManager class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {

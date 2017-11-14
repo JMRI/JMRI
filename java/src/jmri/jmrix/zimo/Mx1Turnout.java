@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * New Zimo Binary implementation of the Turnout interface
  * <P>
  *
- * @author	Kevin Dickerson Copyright (C) 2014
+ * @author Kevin Dickerson Copyright (C) 2014
  */
 public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*/ {
 

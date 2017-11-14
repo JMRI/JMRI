@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TrainIconXmlTest.java
+ * Tests for the TrainIconXml class
  *
- * Description: tests for the TrainIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class TrainIconXmlTest {
 

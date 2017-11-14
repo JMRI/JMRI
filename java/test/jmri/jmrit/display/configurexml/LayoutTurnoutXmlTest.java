@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutTurnoutXmlTest.java
+ * Tests for the LayoutTurnoutXml class
  *
- * Description: tests for the LayoutTurnoutXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class LayoutTurnoutXmlTest {
 

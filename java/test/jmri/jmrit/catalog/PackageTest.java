@@ -1,9 +1,7 @@
 /**
- * PackageTest.java
+ * Tests for the jmri.jmrit.catalog package.
  *
- * Description:	tests for the jmri.jmrit.catalog package
- *
- * @author	Bob Jacobsen 2009
+ * @author Bob Jacobsen 2009
  */
 package jmri.jmrit.catalog;
 

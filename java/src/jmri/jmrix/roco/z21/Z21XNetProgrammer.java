@@ -148,7 +148,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
                 int sent_cv = (m.getElement(2) << 8) + m.getElement(3) + 1;
                 if (sent_cv != _cv) {
                     return; // not for us.
-                }			    // see why waiting
+                } // see why waiting
                 if (_progRead) {
                     // read was in progress - get return value
                     _val = m.getElement(4);

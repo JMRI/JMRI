@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.util.LocaleSelector class.
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class LocaleSelectorTest extends TestCase {
 

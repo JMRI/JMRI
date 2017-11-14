@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007
+ * @author Bob Jacobsen Copyright 2004, 2007
  */
 public class RouteTableActionTest extends AbstractTableActionBase {
 

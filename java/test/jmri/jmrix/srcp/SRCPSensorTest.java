@@ -8,11 +8,9 @@ import org.junit.Test;
 
 
 /**
- * SRCPSensorTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPSensor class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPSensor class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPSensorTest {
 

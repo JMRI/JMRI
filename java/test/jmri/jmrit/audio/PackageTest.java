@@ -27,8 +27,8 @@ import org.junit.runners.Suite;
 /**
  * Invokes complete set of tests in the jmri.jmrit.audio tree
  *
- * @author	Bob Jacobsen Copyright 2001, 2003, 2012
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright 2001, 2003, 2012
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PackageTest {
 }

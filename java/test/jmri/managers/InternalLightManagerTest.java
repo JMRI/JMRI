@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.managers.InternalLightManager class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 

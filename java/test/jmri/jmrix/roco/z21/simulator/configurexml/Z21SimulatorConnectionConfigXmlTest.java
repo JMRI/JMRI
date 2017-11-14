@@ -11,7 +11,7 @@ import org.junit.Test;
 
  Description: tests for the Z21SimulatorZ21SimulatorConnectionConfigXml class
  *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class Z21SimulatorConnectionConfigXmlTest {
 

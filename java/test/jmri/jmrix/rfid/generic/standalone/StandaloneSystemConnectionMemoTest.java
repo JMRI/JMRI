@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * StandaloneSystemConnectionMemoTest.java
+ * Tests for the StandaloneSystemConnectionMemo class
  *
- * Description:	tests for the StandaloneSystemConnectionMemo class
- *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class StandaloneSystemConnectionMemoTest {
 

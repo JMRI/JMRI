@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.ecos.swing.locodatabase package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PackageTest extends TestCase {
 

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  *
- * @author	Bob Jacobsen, Copyright 2002
+ * @author Bob Jacobsen, Copyright 2002
  */
 public abstract class AbstractVariableValueTestBase extends TestCase {
 

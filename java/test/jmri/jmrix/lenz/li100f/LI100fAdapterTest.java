@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.lenz.li100f.LI100fAdapter class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LI100fAdapterTest extends TestCase {
 

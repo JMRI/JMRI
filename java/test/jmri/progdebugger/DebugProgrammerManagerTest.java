@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * Test the DebugProgrammerManager class.
  *
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  */
 public class DebugProgrammerManagerTest extends TestCase {
 

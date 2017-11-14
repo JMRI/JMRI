@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the Jmri package
  *
- * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
+ * @author Bob Jacobsen, Copyright (C) 2001, 2002, 2007
  */
 public class PackageTest extends TestCase {
 
@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(UnboundBeanTest.class));
         suite.addTest(new TestSuite(ArbitraryPropertySupportTest.class));
         suite.addTest(new TestSuite(UnboundArbitraryBeanTest.class));
-	suite.addTest(new junit.framework.JUnit4TestAdapter(ConstrainedArbitraryBeanTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConstrainedArbitraryBeanTest.class));
         return suite;
     }
 

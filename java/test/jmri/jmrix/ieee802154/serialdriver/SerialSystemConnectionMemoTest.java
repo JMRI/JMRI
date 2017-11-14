@@ -7,12 +7,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * SerialSystemConnectionMemoTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.ieee802154.serialdriver.SerialSystemConnectionMemo class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SerialSystemConnectionMemoTest extends TestCase {
 

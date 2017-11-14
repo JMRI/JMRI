@@ -13,7 +13,7 @@ import org.junit.Assert;
  * <p>
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarRoadsTest extends OperationsTestCase {
 
@@ -28,7 +28,7 @@ public class CarRoadsTest extends OperationsTestCase {
 
     public void testAddAndDeleteCarRoads() {
         CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
-        cr1.getNames();	//load predefined roads
+        cr1.getNames(); //load predefined roads
         cr1.addName("Road New1");
         Assert.assertTrue("Car Roads Add New1", cr1.containsName("Road New1"));
         Assert.assertFalse("Car Roads Never Added New2", cr1.containsName("Road New2"));

@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of ThrottlesTableCellRenderer
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ThrottlesTableCellRendererTest extends TestCase {
 

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test CvValue class
  *
- * @author	Bob Jacobsen Copyright 2004, 2006, 2015
+ * @author Bob Jacobsen Copyright 2004, 2006, 2015
  */
 public class CvValueTest extends TestCase {
 

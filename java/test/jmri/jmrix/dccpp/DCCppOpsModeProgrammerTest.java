@@ -7,12 +7,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * DCCppOpsModeProgrammerTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppOpsModeProgrammer class.
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppOpsModeProgrammer class
- *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppOpsModeProgrammerTest extends TestCase {
 

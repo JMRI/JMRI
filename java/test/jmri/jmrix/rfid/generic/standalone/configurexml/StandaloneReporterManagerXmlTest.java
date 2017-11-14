@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * StandaloneReporterManagerXmlTest.java
+ * Tests for the StandaloneReporterManagerXml class
  *
- * Description: tests for the StandaloneReporterManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class StandaloneReporterManagerXmlTest {
 

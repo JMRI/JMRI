@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RpsSensorManagerXmlTest.java
+ * Tests for the RpsSensorManagerXml class
  *
- * Description: tests for the RpsSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RpsSensorManagerXmlTest {
 

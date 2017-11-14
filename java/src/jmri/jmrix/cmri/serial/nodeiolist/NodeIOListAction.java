@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a Node IO ListFrame object
  *
- * @author   Dave Duchamp  Copyright (C) 2006
- * @author   Chuck Catania Copyright (C) 2014
+ * @author Dave Duchamp  Copyright (C) 2006
+ * @author Chuck Catania Copyright (C) 2014
  */
 public class NodeIOListAction extends AbstractAction {
     CMRISystemConnectionMemo _memo = null;

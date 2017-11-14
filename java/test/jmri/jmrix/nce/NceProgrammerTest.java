@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Note most have names starting with x, which disables them; a note why that
  * was done would have been good!
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceProgrammerTest extends TestCase {
 

@@ -11,15 +11,15 @@ import org.slf4j.LoggerFactory;
  * Leeuwen {@literal <samsvl@nlr.nl>}, ported to Java by Norris Weimer
  * {@literal <norris.weimer@ualberta.ca>}, and ported to JMRI/RPS by Bob
  * Jacobsen.
- *
+ * <p>
  * The original Pascal code and documentation is on these web pages
  * <a href="http://callisto.worldonline.nl/~samsvl/stdalone.pas">http://callisto.worldonline.nl/~samsvl/stdalone.pas</a>
  * <a href="http://callisto.worldonline.nl/~samsvl/satpos.htm">http://callisto.worldonline.nl/~samsvl/satpos.htm</a>
  * <a href="http://callisto.worldonline.nl/~samsvl/stdalone.htm">http://callisto.worldonline.nl/~samsvl/stdalone.htm</a>
  * There is also a link there to a C port of Sam's programs
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2008
-  */
+ * @author Bob Jacobsen Copyright (C) 2008
+ */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound, int offset) {
@@ -163,18 +163,17 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     int offset = 0;
 
     /**
-     * *************************************************************************
      *
-     * @param	Xs	array with 3 columns and 32 rows, for the coordinates of the
+     * @param Xs array with 3 columns and 32 rows, for the coordinates of the
      *           sat's
-     * @param	SV	valid prn's
-     * @param	P	 pseudoranges
+     * @param SV valid prn's
+     * @param P  pseudoranges
      *
      * (note: arrays actually have 33 rows, but row 0 is unused, in order to
      * index by actual prn number)
      *
-     * @param	Xr	input of initial guess ( user position in ECEF)
-     * @return	[X, X, X, Cr]	output of final position and receiver clock error
+     * @param Xr input of initial guess ( user position in ECEF)
+     * @return [X, X, X, Cr] output of final position and receiver clock error
      *         return null if calculation failed //do: throw exception instead
      */
     public double[] solve(double[][] Xs, boolean[] SV, double[] P, double[] Xr) {
@@ -284,12 +283,11 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     }
 
     /**
-     * *************************************************************************
-     * finds the determinant of a minor of a 4 x 4 matrix
+     * Find the determinant of a minor of a 4 x 4 matrix.
      *
-     * @param A	input 4 x 4 array
-     * @param r	the row to be deleted
-     * @param c	the column to be deleted
+     * @param A input 4 x 4 array
+     * @param r the row to be deleted
+     * @param c the column to be deleted
      * @return subdet determinant of the resulting 3 x 3 matrix
      */
     public double sub(double[][] A, int r, int c) {
@@ -322,7 +320,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
 // ----------------------------------------------------
     /**
      * Internal class to handle return value.
-     *
+     * <p>
      * More of a struct, really
      */
     static class RetVal {
@@ -342,5 +340,3 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
 
     private final static Logger log = LoggerFactory.getLogger(Analytic_AAlgorithm.class);
 }
-
-

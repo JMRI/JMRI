@@ -8,11 +8,9 @@ import org.junit.Test;
 
 
 /**
- * XBeeReplyTest.java
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeReply class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeReply class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeReplyTest {
 

@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests for Pr1Importer class.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class Pr1ImporterTest {
 

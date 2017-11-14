@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.managers.DefaultIdTagManager class.
  *
- * @author	Matthew Harris Copyright (C) 2011
+ * @author Matthew Harris Copyright (C) 2011
  */
 public class DefaultIdTagManagerTest extends TestCase {
 

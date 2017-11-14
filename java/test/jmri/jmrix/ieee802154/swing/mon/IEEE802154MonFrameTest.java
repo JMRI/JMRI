@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of IEEE802154MonFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class IEEE802154MonFrameTest {
 

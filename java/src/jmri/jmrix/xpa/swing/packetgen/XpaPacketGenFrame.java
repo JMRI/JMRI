@@ -1,7 +1,7 @@
 /**
  * Frame for user input of Xpa+Modem (dialing) messages.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 package jmri.jmrix.xpa.swing.packetgen;
 

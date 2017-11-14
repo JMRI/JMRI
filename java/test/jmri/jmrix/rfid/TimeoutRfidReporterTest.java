@@ -6,11 +6,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * TimeoutRfidReporterTest.java
+ * Tests for the jmri.jmrix.rfid.TimeoutRfidReporter class
  *
- * Description:	tests for the jmri.jmrix.rfid.TimeoutRfidReporter class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class TimeoutRfidReporterTest extends TestCase {
 

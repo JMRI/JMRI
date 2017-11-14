@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * FileLocationPaneXmlTest.java
+ * Tests for the FileLocationPaneXml class
  *
- * Description: tests for the FileLocationPaneXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class FileLocationPaneXmlTest {
 

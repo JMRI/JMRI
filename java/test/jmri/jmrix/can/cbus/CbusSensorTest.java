@@ -12,7 +12,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusSensorTest extends TestCase {
 

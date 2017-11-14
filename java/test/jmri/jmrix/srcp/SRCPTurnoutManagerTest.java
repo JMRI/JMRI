@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SRCPTurnoutManagerTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPTurnoutManager class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTurnoutManager class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

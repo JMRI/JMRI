@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the MapleSystemConnectionMemo class
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MapleSystemConnectionMemoTest {
 

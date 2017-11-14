@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * LenzCommandStationTest.java
+ * Tests for the jmri.jmrix.lenz.LenzCommandStation class
  *
- * Description:	tests for the jmri.jmrix.lenz.LenzCommandStation class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LenzCommandStationTest extends TestCase {
 

@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * EcosReporterManagerTest.java
+ * Tests for the EcosReporterManager class
  *
- * Description:	tests for the EcosReporterManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 

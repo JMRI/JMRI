@@ -9,7 +9,7 @@ import jmri.util.swing.DedupingPropertyChangeListenerTest;
 /**
  * Invokes complete set of tests in the jmri.swing tree
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 @RunWith(Suite.class)
 @SuiteClasses({

@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * Tests for the TurnoutOperation class
  *
- * @author	Bob Jacobsen Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2016
  */
 public class TurnoutOperationTest extends TestCase {
 

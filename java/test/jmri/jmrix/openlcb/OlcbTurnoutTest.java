@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);

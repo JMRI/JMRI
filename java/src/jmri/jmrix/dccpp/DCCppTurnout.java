@@ -52,8 +52,8 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author      Paul Bender Copyright (C) 2003-2010
- * @author      Mark Underwood Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Based on lenz.XNetTurnout by Bob Jacobsen and Paul Bender
  */

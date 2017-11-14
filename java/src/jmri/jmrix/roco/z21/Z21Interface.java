@@ -3,7 +3,7 @@ package jmri.jmrix.roco.z21;
 /**
  * Interface to send/receive serial information.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
  */
 public interface Z21Interface {
 

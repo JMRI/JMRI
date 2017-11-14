@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the SingleTurnoutSignalHead implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class SingleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
 

@@ -20,7 +20,7 @@ import jmri.web.server.WebServer;
 /**
  * Cucumber step defintions for Web Server Acceptance tests.
  *
- * @author  Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WebServerAcceptanceSteps implements En {
 

@@ -5,7 +5,7 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 /**
  * Provide access to Swing components for the Mrc subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
+ * @author Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */

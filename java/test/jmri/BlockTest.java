@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the Block class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class BlockTest extends TestCase {
 

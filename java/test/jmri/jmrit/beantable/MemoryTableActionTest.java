@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for classes in the jmri.jmrit.beantable package
  *
- * @author	Bob Jacobsen Copyright 2004
+ * @author Bob Jacobsen Copyright 2004
  */
 public class MemoryTableActionTest extends AbstractTableActionBase {
 

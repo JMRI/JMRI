@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class AllTest extends TestCase {
 

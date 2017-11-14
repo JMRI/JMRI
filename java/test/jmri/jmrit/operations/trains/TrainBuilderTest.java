@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.trains;
 
-import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -3689,7 +3687,7 @@ public class TrainBuilderTest {
         c9.setMoves(19);
         cmanager.register(c9);
 
-        //		Assert.assertEquals("Westford should not accept Flat Car", false, loc1.acceptsTypeName(carTypes[2]));
+        // Assert.assertEquals("Westford should not accept Flat Car", false, loc1.acceptsTypeName(carTypes[2]));
         // add Flat Car as a valid type so Westford will accept
         ct.addName(carTypes[2]);
         Assert.assertEquals("Westford should now accepts Flat Car", true, loc1.acceptsTypeName(carTypes[2]));
@@ -4125,7 +4123,7 @@ public class TrainBuilderTest {
         Location loc1;
         loc1 = lmanager.newLocation("New Westford");
         loc1.setTrainDirections(DIRECTION_ALL);
-        //		loc1.addTypeName(carTypes[2]);
+        // loc1.addTypeName(carTypes[2]);
 
         Location loc2;
         loc2 = lmanager.newLocation("New Chelmsford");
@@ -4139,7 +4137,7 @@ public class TrainBuilderTest {
         loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
         loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk1.setLength(900);
-        //		loc1trk1.addTypeName(carTypes[2]);
+        // loc1trk1.addTypeName(carTypes[2]);
 
         Track loc1trk2;
         loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);

@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the CatalogTreeFS class
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class CatalogTreeFSTest extends TestCase {
 

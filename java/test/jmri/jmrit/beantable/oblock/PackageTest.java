@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for classes in the jmri.jmrit.beantable.oblock package
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 public class PackageTest extends TestCase {
 

@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invokes complete set of tests in the jmri.jmrit.logix tree
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class PackageTest extends TestCase {
 
@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.logix.PackageTest");   // no tests in this class itself
 
-//		Something wrong in the xsd files?  maybe using -2-9-6 version?
+        // Something wrong in the xsd files?  maybe using -2-9-6 version?
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(new JUnit4TestAdapter(OBlockTest.class));
         suite.addTest(new JUnit4TestAdapter(OBlockManagerTest.class));

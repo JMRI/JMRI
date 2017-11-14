@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the MakePacketTest class
  *
- * @author	Bob Jacobsen Copyright 2004
+ * @author Bob Jacobsen Copyright 2004
   */
 public class MakePacketTest extends TestCase {
 

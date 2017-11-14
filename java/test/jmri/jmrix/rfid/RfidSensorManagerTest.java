@@ -8,11 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RfidSensorManagerTest.java
+ * Tests for the jmri.jmrix.rfid.RfidSensorManager class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidSensorManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class RfidSensorManagerTest {
 

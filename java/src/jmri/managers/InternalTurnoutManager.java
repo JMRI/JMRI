@@ -6,7 +6,7 @@ import jmri.implementation.AbstractTurnout;
 /**
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  * @deprecated As of 4.3.5, use jmri.jmrix.internal classes
  */
 @Deprecated

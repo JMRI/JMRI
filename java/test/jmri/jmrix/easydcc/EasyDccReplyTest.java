@@ -1,9 +1,7 @@
 /**
- * EasyDccReplyTest.java
+ * Tests for the EasyDccReplyclass
  *
- * Description:	JUnit tests for the EasyDccReplyclass
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.easydcc;
 

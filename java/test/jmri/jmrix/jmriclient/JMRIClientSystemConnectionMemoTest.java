@@ -7,12 +7,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * JMRIClientSystemConnectionMemoTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class JMRIClientSystemConnectionMemoTest extends TestCase {
 

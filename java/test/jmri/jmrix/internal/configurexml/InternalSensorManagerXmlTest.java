@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * InternalSensorManagerXmlTest.java
+ * Tests for the InternalSensorManagerXml class
  *
- * Description: tests for the InternalSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class InternalSensorManagerXmlTest {
 

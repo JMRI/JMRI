@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TrackSegmentXmlTest.java
+ * Tests for the TrackSegmentXml class
  *
- * Description: tests for the TrackSegmentXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class TrackSegmentXmlTest {
 

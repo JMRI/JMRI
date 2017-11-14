@@ -6,9 +6,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaPowerManager class
- * <P>
- * @author	Paul Bender
+ * Tests for the jmri.jmrix.xpa.XpaPowerManager class.
+ *
+ * @author Paul Bender
  */
 public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 

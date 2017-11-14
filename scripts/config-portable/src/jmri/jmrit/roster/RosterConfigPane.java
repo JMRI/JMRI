@@ -11,8 +11,8 @@ import javax.swing.JTextField;
  * Provide GUI to configure Roster defaults.
  *
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
- * @author      Matthew Harris  Copyright (C) 2008, 2010
+ * @author Bob Jacobsen   Copyright (C) 2001, 2003, 2007
+ * @author Matthew Harris  Copyright (C) 2008, 2010
  */
 public class RosterConfigPane extends JPanel {
 

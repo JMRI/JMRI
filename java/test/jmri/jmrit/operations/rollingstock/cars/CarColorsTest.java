@@ -13,13 +13,13 @@ import org.junit.Assert;
  * <p>
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarColorsTest extends OperationsTestCase {
 
     public void testDefaultCarColors() {
         CarColors cc1 = InstanceManager.getDefault(CarColors.class);
-        cc1.getNames();	// load predefined colors
+        cc1.getNames(); // load predefined colors
 
         Assert.assertTrue("Car Color Predefined Red", cc1.containsName("Red"));
         Assert.assertTrue("Car Color Predefined Blue", cc1.containsName("Blue"));
@@ -27,7 +27,7 @@ public class CarColorsTest extends OperationsTestCase {
 
     public void testAddAndDeleteCarColors() {
         CarColors cc1 = InstanceManager.getDefault(CarColors.class);
-        cc1.getNames();	// load predefined colors
+        cc1.getNames(); // load predefined colors
         cc1.addName("BoxCar Red");
         Assert.assertTrue("Car Color Add", cc1.containsName("BoxCar Red"));
         Assert.assertFalse("Car Color Never Added Dirty Blue", cc1.containsName("Dirty Blue"));

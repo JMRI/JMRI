@@ -23,8 +23,8 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.jmrix.lenz.swing package
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest {
 

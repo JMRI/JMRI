@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the SE8cSignalHead implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
  */
 public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {

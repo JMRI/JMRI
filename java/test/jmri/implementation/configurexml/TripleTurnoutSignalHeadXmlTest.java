@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TripleTurnoutSignalHeadXmlTest.java
+ * Tests for the TripleTurnoutSignalHeadXml class
  *
- * Description: tests for the TripleTurnoutSignalHeadXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class TripleTurnoutSignalHeadXmlTest {
 

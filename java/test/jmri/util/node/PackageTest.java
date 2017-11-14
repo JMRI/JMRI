@@ -11,7 +11,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.util.node package
  *
- * @author      Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PackageTest {
 

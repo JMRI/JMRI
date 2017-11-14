@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.roco.z21.z21Adapter class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21AdapterTest extends TestCase {
 

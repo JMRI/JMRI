@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XBeeTrafficControllerTest.java
- *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTrafficController
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeTrafficController
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154TrafficControllerTest {
 

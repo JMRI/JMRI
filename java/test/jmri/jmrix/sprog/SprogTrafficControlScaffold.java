@@ -1,7 +1,7 @@
 /**
  * Stands in for the SprogTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.sprog;
 

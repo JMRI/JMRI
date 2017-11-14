@@ -8,7 +8,7 @@ import jmri.Sensor;
  *
  * System names are "PSnnn", where nnn is the sensor number without padding.
  *
- * @author   Paul Bender Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2015
  *
  */
 public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManager {

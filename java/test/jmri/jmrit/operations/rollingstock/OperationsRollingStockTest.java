@@ -20,7 +20,7 @@ import org.junit.Assert;
  * Note: RollingStock: XML read/write is tested in OperationsEnginesTest and
  * OperationsCarsTest
  *
- * @author	Bob Coleman Copyright (C) 2009
+ * @author Bob Coleman Copyright (C) 2009
  *
  */
 public class OperationsRollingStockTest extends OperationsTestCase {

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the ConnectionConfigXml class
  *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest {
 

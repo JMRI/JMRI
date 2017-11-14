@@ -14,7 +14,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusProgrammerTest extends TestCase {
 

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * InternalLightManagerXmlTest.java
+ * Tests for the InternalLightManagerXml class
  *
- * Description: tests for the InternalLightManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class InternalLightManagerXmlTest {
 

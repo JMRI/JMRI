@@ -134,7 +134,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
                 // add route control Sensors, if any
                 index = 0;
-                //rSensor = null;	// previous while forces rSensor to null
+                //rSensor = null; // previous while forces rSensor to null
                 while ((rSensor = r.getRouteSensorName(index)) != null) {
                     Element rsElem = new Element("routeSensor")
                             .setAttribute("systemName", rSensor);

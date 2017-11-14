@@ -9,7 +9,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.internal.InternalTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  *
- * @author	Paul Bender Copyright (c) 2003
+ * @author Paul Bender Copyright (c) 2003
  */
 public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 

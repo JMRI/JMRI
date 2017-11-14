@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.managers.InternalSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 

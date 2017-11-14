@@ -5,7 +5,7 @@ import javax.swing.JRadioButton;
 
 /* Represents a JComboBox as a JPanel containing just the "on" button
  *
- * @author   Bob Jacobsen   Copyright (C) 2001
+ * @author Bob Jacobsen   Copyright (C) 2001
  */
 public class ComboOnRadioButton extends ComboRadioButtons {
 

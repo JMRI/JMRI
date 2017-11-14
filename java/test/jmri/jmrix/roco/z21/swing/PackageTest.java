@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.jmrix.roco.z21.swing package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

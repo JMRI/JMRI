@@ -8,12 +8,10 @@ import org.junit.Test;
 
 
 /**
- * SerialNodeTest.java
- *
- * Description:	tests for the jmri.jmrix.ieee802154.serialdriver.SerialNode
+ * Tests for the jmri.jmrix.ieee802154.serialdriver.SerialNode
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SerialNodeTest {
 

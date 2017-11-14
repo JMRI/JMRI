@@ -6,11 +6,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * RfidSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidSystemConnectionMemoTest extends TestCase {
 

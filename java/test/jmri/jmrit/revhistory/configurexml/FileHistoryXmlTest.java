@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * FileHistoryXmlTest.java
+ * Tests for the FileHistoryXml class
  *
- * Description: tests for the FileHistoryXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class FileHistoryXmlTest {
 

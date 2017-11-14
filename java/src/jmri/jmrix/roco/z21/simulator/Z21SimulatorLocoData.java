@@ -4,7 +4,7 @@ package jmri.jmrix.roco.z21.simulator;
  *  This class stores some information for
  *  passing data between the Throttle and the Z21
  *
- *  @author      Paul Bender, Copyright (C) 2016
+ *  @author Paul Bender, Copyright (C) 2016
  */
 class Z21SimulatorLocoData {
 

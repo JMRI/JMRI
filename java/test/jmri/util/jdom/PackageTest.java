@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Invokes complete set of tests in the jmri.util.jdom tree
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class PackageTest extends TestCase {
 

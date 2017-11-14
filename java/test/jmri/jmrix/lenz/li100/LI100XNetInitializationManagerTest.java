@@ -10,12 +10,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * LI100XNetInitializationManagerTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.lenz.li100.LI100XNetInitializationManager class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LI100XNetInitializationManagerTest extends TestCase {
 

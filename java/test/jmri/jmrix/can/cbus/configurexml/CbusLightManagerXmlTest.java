@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * CbusLightManagerXmlTest.java
+ * Tests for the CbusLightManagerXml class
  *
- * Description: tests for the CbusLightManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class CbusLightManagerXmlTest {
 

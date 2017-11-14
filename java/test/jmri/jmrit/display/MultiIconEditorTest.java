@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test simple functioning of MultiIconEditor
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MultiIconEditorTest {
 

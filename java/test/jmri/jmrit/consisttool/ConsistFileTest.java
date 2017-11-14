@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of ConsistFile
  *
- * @author	Paul Bender Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2015
  */
 public class ConsistFileTest {
 

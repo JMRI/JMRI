@@ -9,11 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LV102InternalFrameTest.java
+ * Tests for the jmri.jmrix.lenz.swing.lv102.LV102InternalFrame class
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.lv102.LV102InternalFrame class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LV102InternalFrameTest {
 

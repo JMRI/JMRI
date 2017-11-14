@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PositionableRoundRectXmlTest.java
+ * Tests for the PositionableRoundRectXml class
  *
- * Description: tests for the PositionableRoundRectXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PositionableRoundRectXmlTest {
 

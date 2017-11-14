@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * AnalogClock2DisplayXmlTest.java
+ * Tests for the AnalogClock2DisplayXml class
  *
- * Description: tests for the AnalogClock2DisplayXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class AnalogClock2DisplayXmlTest {
 

@@ -1,9 +1,7 @@
 /**
- * EasyDccMessageTest.java
+ * Tests for the EasyDccMessage class
  *
- * Description:	JUnit tests for the EasyDccMessage class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.easydcc;
 

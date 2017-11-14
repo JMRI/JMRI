@@ -8,7 +8,7 @@ import org.junit.Assert;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class JmriAbstractActionTest extends TestCase {
 

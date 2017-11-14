@@ -5,12 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JMRIClientReporterManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReporterManager
+ * Tests for the jmri.jmrix.jmriclient.JMRIClientReporterManager
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 

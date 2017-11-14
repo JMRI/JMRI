@@ -3,7 +3,7 @@ package jmri.jmrix.tams;
 /**
  * Constants to represent values seen in Tams traffic
  *
- * @author  Jan Boen 151216
+ * @author Jan Boen 151216
  * @author Based on work from Kevin Dickerson
  */
 public final class TamsConstants {

@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XBeeConnectionMemoTest.java
- *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo
  * class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeConnectionMemoTest {
 

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * AcelaTurnoutManagerXmlTest.java
+ * Tests for the AcelaTurnoutManagerXml class
  *
- * Description: tests for the AcelaTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class AcelaTurnoutManagerXmlTest {
 

@@ -1,10 +1,8 @@
 /**
- * DCCppProgrammerTest.java
+ * Tests for the DCCppProgrammer class.
  *
- * Description:	JUnit tests for the DCCppProgrammer class
- *
- * @author	Bob Jacobsen
- * @author	Mark Underwood (C) 2015
+ * @author Bob Jacobsen
+ * @author Mark Underwood (C) 2015
  */
 package jmri.jmrix.dccpp;
 

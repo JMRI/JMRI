@@ -35,8 +35,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      */
     @Override
     public Element store(Object o) {
-//    	long numCond = 0;
-//    	long numStateVars = 0;
         Element conditionals = new Element("conditionals");  // NOI18N
         setStoreElementClass(conditionals);
         ConditionalManager tm = (ConditionalManager) o;
@@ -50,8 +48,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
 
             // store the conditionals
             while (iter.hasNext()) {
-//            	numCond++;
-//            	long condTime = System.currentTimeMillis();
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");  // NOI18N
@@ -124,10 +120,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 // save action information
                 ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
-                /*               	if (numCond>1190) {
-                 partTime = System.currentTimeMillis() - partTime;
-                 System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
-                 }*/
                 for (int k = 0; k < actionList.size(); k++) {
                     ConditionalAction action = actionList.get(k);
                     Element aElem = new Element("conditionalAction");  // NOI18N
@@ -147,13 +139,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     elem.addContent(aElem);
                 }
                 conditionals.addContent(elem);
-                /*				condTime = System.currentTimeMillis() - condTime;
-                 if (condTime>1) {
-                 System.out.println(numCond+"th Conditional \""+sname+"\" took "+condTime+"ms to store.");
-                 }*/
             }
         }
-//        System.out.println("Elapsed time to store "+numCond+" Conditional "+(System.currentTimeMillis()-time)+"ms.");
         return (conditionals);
     }
 

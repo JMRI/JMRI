@@ -26,8 +26,8 @@ package jmri.jmrix.roco.z21;
  * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI>
  * </UL>
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author      Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2016
  */
 public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation implements jmri.CommandStation {
 

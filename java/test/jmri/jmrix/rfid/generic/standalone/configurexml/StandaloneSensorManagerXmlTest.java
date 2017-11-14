@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * StandaloneSensorManagerXmlTest.java
+ * Tests for the StandaloneSensorManagerXml class
  *
- * Description: tests for the StandaloneSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class StandaloneSensorManagerXmlTest {
 

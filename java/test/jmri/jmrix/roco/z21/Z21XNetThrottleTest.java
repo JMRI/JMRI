@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.lenz.z21XNetThrottle class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 

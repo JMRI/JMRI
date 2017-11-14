@@ -8,11 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XNetTimeSlotListenerTest.java
+ * Tests for the jmri.jmrix.lenz.XNetTimeSlotListener class
  *
- * Description: tests for the jmri.jmrix.lenz.XNetTimeSlotListener class
- *
- * @author  Paul Bender Copyright (C) 2010,2016,2017
+ * @author Paul Bender Copyright (C) 2010,2016,2017
  */
 public class XNetTimeSlotListenerTest {
 

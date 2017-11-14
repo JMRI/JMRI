@@ -4,11 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * XNetConsistManagerTest.java
+ * Tests for the jmri.jmrix.lenz.XNetConsistManager class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetConsistManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2017
+ * @author Paul Bender Copyright (C) 2012,2017
  */
 public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 

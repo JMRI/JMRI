@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * XNetSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetSystemConnectionMemoTest extends TestCase {
 

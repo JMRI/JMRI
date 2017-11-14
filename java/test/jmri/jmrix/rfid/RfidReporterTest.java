@@ -6,11 +6,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * RfidReporterTest.java
+ * Tests for the jmri.jmrix.rfid.RfidReporter class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidReporter class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidReporterTest extends TestCase {
 

@@ -6,11 +6,9 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * SRCPSensorManagerTest.java
- * <p>
- * Description:	tests for the jmri.jmrix.srcp.SRCPSensorManager class
+ * Tests for the jmri.jmrix.srcp.SRCPSensorManager class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author Paul Bender Copyright (C) 2016
  */
 public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {

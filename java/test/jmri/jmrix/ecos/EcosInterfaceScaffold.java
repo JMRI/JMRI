@@ -5,11 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * EcosInterfaceScaffold.java
+ * Test scaffold implementation of EcosInterface
  *
- * Description:	Test scaffold implementation of EcosInterface
- *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
   *
  * Use an object of this type as a EcosTrafficController in tests
  */

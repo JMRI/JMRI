@@ -8,12 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DCCppThrottleTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppThrottle class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppThrottle class
- *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 

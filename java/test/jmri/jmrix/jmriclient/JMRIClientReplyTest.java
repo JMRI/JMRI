@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * JMRIClientReplyTest.java
+ * Tests for the jmri.jmrix.jmriclient.JMRIClientReply class
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReply class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class JMRIClientReplyTest extends TestCase {
 

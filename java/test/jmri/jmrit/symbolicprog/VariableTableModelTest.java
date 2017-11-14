@@ -15,7 +15,7 @@ import org.junit.Assert;
 /**
  * Test VariableTableModel table methods.
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class VariableTableModelTest extends TestCase {
 
@@ -90,7 +90,7 @@ public class VariableTableModelTest extends TestCase {
         //fmt.setNewlines(true);   // pretty printing
         //fmt.setIndent(true);
         //try {
-        //	 fmt.output(doc, o);
+        // fmt.output(doc, o);
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);
@@ -145,7 +145,7 @@ public class VariableTableModelTest extends TestCase {
         //fmt.setNewlines(true);   // pretty printing
         //fmt.setIndent(true);
         //try {
-        //	 fmt.output(doc, o);
+        // fmt.output(doc, o);
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);
@@ -289,7 +289,7 @@ public class VariableTableModelTest extends TestCase {
         //fmt.setNewlines(true);   // pretty printing
         //fmt.setIndent(true);
         //try {
-        //	 fmt.output(doc, o);
+        // fmt.output(doc, o);
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);

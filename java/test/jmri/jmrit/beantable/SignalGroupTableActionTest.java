@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrit.beantable.SignalGroupTableAction class
  *
- * @author	Egbert Broerse Copyright 2017
+ * @author Egbert Broerse Copyright 2017
  */
 public class SignalGroupTableActionTest extends AbstractTableActionBase {
 

@@ -273,7 +273,7 @@ public class StringUtil {
     /**
      * Join a collection of strings, separated by a delimiter
      *
-     * @param s	        collection of strings
+     * @param s         collection of strings
      * @param delimiter the delimiter
      * @return the results of
      *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
@@ -291,7 +291,7 @@ public class StringUtil {
     /**
      * Join an array of strings, separated by a delimiter
      *
-     * @param s	        collection of strings
+     * @param s         collection of strings
      * @param delimiter the delimiter
      * @return the results of
      *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
@@ -360,7 +360,7 @@ public class StringUtil {
     /**
      * Quotes unmatched closed parentheses; matched ( ) pairs are left
      * unchanged.
-     *
+     * <p>
      * If there's an unmatched ), quote it with \, and quote \ with \ too.
      *
      * @param in String potentially containing unmatched closing parenthesis

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.xpa.XpaTurnoutManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

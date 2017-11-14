@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ReporterIconXmlTest.java
+ * Tests for the ReporterIconXml class
  *
- * Description: tests for the ReporterIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class ReporterIconXmlTest {
 

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * VirtualSignalHeadXmlTest.java
+ * Tests for the VirtualSignalHeadXml class
  *
- * Description: tests for the VirtualSignalHeadXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class VirtualSignalHeadXmlTest {
 

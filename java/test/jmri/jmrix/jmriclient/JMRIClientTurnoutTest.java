@@ -6,12 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JMRIClientTurnoutTest.java
+ * Tests for the jmri.jmrix.jmriclient.JMRIClientTurnout class
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientTurnout class
- *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {
 

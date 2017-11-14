@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  *
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
  */
 public class LnSensorAddressTest extends TestCase {
 

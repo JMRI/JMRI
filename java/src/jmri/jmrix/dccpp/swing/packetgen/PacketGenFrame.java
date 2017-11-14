@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user input of XpressNet messages
  *
  * @author Bob Jacobsen Copyright (C) 2001,2002
- * @author      Mark Underwood Copyright (C) 2015
+ * @author Mark Underwood Copyright (C) 2015
   */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 

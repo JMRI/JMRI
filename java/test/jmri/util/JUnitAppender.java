@@ -15,7 +15,7 @@ import org.python.jline.internal.Log;
  *
  * @see apps.tests.Log4JFixture
  *
- * @author	Bob Jacobsen - Copyright 2007
+ * @author Bob Jacobsen - Copyright 2007
  */
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 

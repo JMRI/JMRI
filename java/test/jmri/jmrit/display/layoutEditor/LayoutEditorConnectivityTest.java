@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * Swing tests for the LayoutEditor
  *
- * @author	Dave Duchamp Copyright 2011
+ * @author Dave Duchamp Copyright 2011
  */
 public class LayoutEditorConnectivityTest {
 

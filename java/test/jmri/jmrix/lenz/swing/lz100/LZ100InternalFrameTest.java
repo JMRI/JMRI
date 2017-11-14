@@ -12,11 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LZ100InternalFrameTest.java
+ * Tests for the jmri.jmrix.lenz.swing.lz100.LZ100InternalFrame class
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.lz100.LZ100InternalFrame class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LZ100InternalFrameTest {
 

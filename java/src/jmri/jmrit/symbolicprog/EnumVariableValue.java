@@ -504,7 +504,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * value changes.  Those are handled automagically since we're sharing the same
      * model between this object and the real JComboBox value.
      *
-     * @author   Bob Jacobsen   Copyright (C) 2001
+     * @author Bob Jacobsen   Copyright (C) 2001
          */
     public static class VarComboBox extends JComboBox<String> {
 

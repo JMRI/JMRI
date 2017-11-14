@@ -8,11 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * EliteXNetThrottleTest.java
+ * Tests for the jmri.jmrix.lenz.EliteXNetThrottle class
  *
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottle class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 

@@ -12,9 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Z21XNetInitializationManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.roco.z21.z21XNetInitializationManager
+ * Tests for the jmri.jmrix.roco.z21.z21XNetInitializationManager
  * class
  *
  * @author Paul Bender Copyright (C) 2015

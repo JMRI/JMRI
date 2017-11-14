@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * SplitVariableValueTest.java
  *
  * @todo need a check of the MIXED state model for long address
- * @author	Bob Jacobsen Copyright 2001, 2002, 2015
+ * @author Bob Jacobsen Copyright 2001, 2002, 2015
  */
 public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -73,8 +73,8 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     public void testVariableValueRead() {
-    }	// due to multi-cv nature of SplitAddr
-    // public void testVariableReadOnly() {}	// due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of SplitAddr
+    // public void testVariableReadOnly() {} // due to multi-cv nature of SplitAddr
 
     @Override
     public void testVariableValueWrite() {

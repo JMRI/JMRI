@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.nce.NceTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

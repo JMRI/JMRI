@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Uses the store method from the abstract base class, but
  * provides a load method here.
  *
- * @author  Paul Bender Copyright (c) 2003
+ * @author Paul Bender Copyright (c) 2003
  */
 public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

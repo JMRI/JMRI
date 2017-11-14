@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DccTurnoutManagerXmlTest.java
+ * Tests for the DccTurnoutManagerXml class
  *
- * Description: tests for the DccTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class DccTurnoutManagerXmlTest {
 

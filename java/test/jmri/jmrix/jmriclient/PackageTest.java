@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.jmriclient package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PackageTest extends TestCase {
 

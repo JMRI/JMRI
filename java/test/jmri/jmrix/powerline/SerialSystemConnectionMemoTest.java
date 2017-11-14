@@ -10,7 +10,7 @@ import org.junit.Test;
  * JUnit tests for the SerialSystemConnectionMemo class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSystemConnectionMemoTest {
 

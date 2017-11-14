@@ -5,12 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * DCCppThrottleManagerTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppThrottleManager class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppThrottleManager class
- *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 

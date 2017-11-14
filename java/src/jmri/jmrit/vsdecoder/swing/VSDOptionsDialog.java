@@ -28,7 +28,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  *
  */
 public class VSDOptionsDialog extends JDialog {

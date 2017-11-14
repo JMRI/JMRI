@@ -9,11 +9,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * LocoNetConsistTest.java
+ * Tests for the jmri.jmrix.loconet.LocoNetConsist class
  *
- * Description:	tests for the jmri.jmrix.loconet.LocoNetConsist class
- *
- * @author	Paul Bender Copyright (C) 2016,2017
+ * @author Paul Bender Copyright (C) 2016,2017
  */
 
 public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestBase {

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LnSensorManagerXmlTest.java
+ * Tests for the LnSensorManagerXml class
  *
- * Description: tests for the LnSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class LnSensorManagerXmlTest {
 

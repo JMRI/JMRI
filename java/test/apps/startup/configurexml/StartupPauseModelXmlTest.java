@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * StartupPauseModelXmlTest.java
+ * Tests for the StartupPauseModelXml class
  *
- * Description: tests for the StartupPauseModelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class StartupPauseModelXmlTest {
 

@@ -11,8 +11,8 @@ import org.junit.Assert;
 
 /**
  *
- * @author	Bob Jacobsen, Copyright 2014
- * @author	Bob Jacobsen, Copyright 2017
+ * @author Bob Jacobsen, Copyright 2014
+ * @author Bob Jacobsen, Copyright 2017
  */
 public class ValueQualifierTest extends TestCase {
 

@@ -18,7 +18,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for classes in the jmri.jmrit.beantable.beanedit package
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 public class PackageTest {
 }

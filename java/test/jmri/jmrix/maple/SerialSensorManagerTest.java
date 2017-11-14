@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the Maple SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2008
+ * @author Bob Jacobsen Copyright 2003, 2008
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 

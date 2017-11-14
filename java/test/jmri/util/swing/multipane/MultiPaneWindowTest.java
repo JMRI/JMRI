@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Invokes complete set of tests in the jmri.util tree
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class MultiPaneWindowTest {
 

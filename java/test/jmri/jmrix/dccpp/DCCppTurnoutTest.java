@@ -10,12 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DCCppThrottleTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppTurnout class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppTurnout class
- *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 

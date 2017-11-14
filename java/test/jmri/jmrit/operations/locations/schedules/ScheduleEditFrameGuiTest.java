@@ -19,7 +19,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations Locations GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 

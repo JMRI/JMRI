@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LocoLabelXmlTest.java
+ * Tests for the LocoLabelXml class
  *
- * Description: tests for the LocoLabelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class LocoLabelXmlTest {
 

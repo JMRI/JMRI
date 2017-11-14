@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author  Jan Boen
+ * @author Jan Boen
  */
 public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager implements TamsListener {
 

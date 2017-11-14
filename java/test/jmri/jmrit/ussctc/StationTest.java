@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for Station classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
   */
 public class StationTest {
 

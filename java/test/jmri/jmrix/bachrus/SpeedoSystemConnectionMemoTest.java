@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SpeedoSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.bachrus.SpeedoSystemConnectionMemo class.
  *
- * Description:	tests for the jmri.jmrix.bachrus.SpeedoSystemConnectionMemo class
- *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SpeedoSystemConnectionMemoTest {
 

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the SignalHeadSignalMast implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
  */
 public class SignalHeadSignalMastTest {

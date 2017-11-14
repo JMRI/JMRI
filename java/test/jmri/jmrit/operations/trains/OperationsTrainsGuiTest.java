@@ -564,11 +564,11 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
 
         // TODO add test for combo box
-        //		enterClickAndLeave(f.switchListPageComboBox);
-        //		enterClickAndLeave(f.saveButton);
-        //		Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
-        //		Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
-        //		Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
+        // enterClickAndLeave(f.switchListPageComboBox);
+        // enterClickAndLeave(f.saveButton);
+        // Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        // Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
+        // Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
         ThreadingUtil.runOnGUI(() -> {
             JUnitUtil.dispose(f);
         });

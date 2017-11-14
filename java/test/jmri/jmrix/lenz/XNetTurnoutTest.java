@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 

@@ -8,11 +8,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * SRCPPowerManagerTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPPowerManager class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPPowerManager class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 

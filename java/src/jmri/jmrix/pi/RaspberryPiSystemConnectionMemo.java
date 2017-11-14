@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the
  * instance manager to activate their particular system.
  *
- * @author   Paul Bender Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2015
  *
  */
 

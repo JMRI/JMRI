@@ -3,7 +3,6 @@ package jmri.jmrix.sprog;
 import java.util.*;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +45,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     int progState = 0;
     static final int NOTPROGRAMMING = 0;    // is notProgramming
     static final int COMMANDSENT = 2;       // read/write command sent, waiting reply
-    int _val;	// remember the value being read/written for confirmative reply
+    int _val; // remember the value being read/written for confirmative reply
 
     // programming interface
     @Override

@@ -17,8 +17,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Swing tests for dispatcher options
  *
- * @author	Dave Duchamp
- * @author  Paul Bender Copyright(C) 2017
+ * @author Dave Duchamp
+ * @author Paul Bender Copyright(C) 2017
  */
 public class DispatcherFrameTest {
 

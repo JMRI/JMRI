@@ -20,7 +20,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the AcelaNode class
  *
- * @author	Bob Coleman Copyright 2008
+ * @author Bob Coleman Copyright 2008
  */
 public class AcelaNodeTest extends TestCase {
 

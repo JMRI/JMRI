@@ -8,7 +8,7 @@ import org.junit.Before;
  * JUnit tests for the LnPortController class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 

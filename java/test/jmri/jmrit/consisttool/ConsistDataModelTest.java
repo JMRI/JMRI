@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of ConsistDataModel
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class ConsistDataModelTest {
 

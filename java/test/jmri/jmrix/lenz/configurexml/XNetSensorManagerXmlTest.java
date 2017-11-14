@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XNetSensorManagerXmlTest.java
+ * Tests for the XNetSensorManagerXml class
  *
- * Description: tests for the XNetSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class XNetSensorManagerXmlTest {
 

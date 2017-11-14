@@ -27,7 +27,7 @@ import org.junit.rules.TemporaryFolder;
  * objects individually. Roster itself doesn't (yet) do go a good job of
  * separating, those, so this is somewhat arbitrary.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2012
  */
 public class RosterTest {
 

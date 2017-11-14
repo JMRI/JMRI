@@ -15,12 +15,10 @@ import org.slf4j.LoggerFactory;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**
- * XBeeInterfaceScaffold.java
+ * Test scaffold implementation of XBeeInterface
  *
- * Description:	Test scaffold implementation of XBeeInterface
- *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Paul Bender Copyright (C) 2016
  *
  * Use an object of this type as a XBeeTrafficController in tests
  */

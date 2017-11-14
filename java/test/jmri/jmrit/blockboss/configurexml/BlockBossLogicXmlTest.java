@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * BlockBossLogicXmlTest.java
+ * Tests for the BlockBossLogicXml class
  *
- * Description: tests for the BlockBossLogicXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class BlockBossLogicXmlTest {
 

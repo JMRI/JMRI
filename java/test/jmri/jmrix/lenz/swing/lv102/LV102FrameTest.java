@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.lenz.swing.lv102.LV102Frame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LV102FrameTest {
 

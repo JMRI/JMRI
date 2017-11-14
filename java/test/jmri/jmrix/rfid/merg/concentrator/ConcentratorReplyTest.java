@@ -8,11 +8,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * ConcentratorReplyTest.java
+ * Tests for the jmri.jmrix.rfid.merg.concentrator.ConcentratorReply class
  *
- * Description:	tests for the jmri.jmrix.rfid.merg.concentrator.ConcentratorReply class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorReplyTest {
 

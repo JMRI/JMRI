@@ -11,11 +11,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**
- * XBeeTurnoutTest.java
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 @RunWith(PowerMockRunner.class)
 public class XBeeTurnoutTest {

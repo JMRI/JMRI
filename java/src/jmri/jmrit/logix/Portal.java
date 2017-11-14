@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * The Portal also supplies speed information from any signals set at its
  * location that the Warrant passes on the Engineer.
  *
- * @author  Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class Portal extends jmri.implementation.AbstractNamedBean {
 

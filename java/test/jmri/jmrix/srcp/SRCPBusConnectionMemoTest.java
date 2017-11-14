@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * SRCPBusConnectionMemoTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPBusConnectionMemoTest extends TestCase {
 

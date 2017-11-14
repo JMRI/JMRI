@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the EasyDccProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccMonActionTest extends TestCase {
 

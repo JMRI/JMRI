@@ -885,7 +885,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * model between this object and others.  And this is listening to
      * a CV state, not a variable.
      *
-     * @author   Bob Jacobsen   Copyright (C) 2001
+     * @author Bob Jacobsen   Copyright (C) 2001
      */
     public class VarSlider extends JSlider {
 

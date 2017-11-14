@@ -18,7 +18,7 @@ import org.junit.Test;
 /**
  * tests for the Jmri package LnPr2PowerManager
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
 

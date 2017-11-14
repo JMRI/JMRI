@@ -8,11 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * EliteXNetSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.lenz.EliteXNetSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetSystemConnectionMemo class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetSystemConnectionMemoTest {
 

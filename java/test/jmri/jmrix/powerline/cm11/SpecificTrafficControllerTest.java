@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the SpecificTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2005, 2007, 2008 Converted to multiple
+ * @author Bob Jacobsen Copyright 2005, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
  */

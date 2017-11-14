@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JsonNetworkConnectionConfigXmlTest.java
+ * Tests for the JsonNetworkConnectionConfigXml class
  *
- * Description: tests for the JsonNetworkConnectionConfigXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class JsonNetworkConnectionConfigXmlTest {
 

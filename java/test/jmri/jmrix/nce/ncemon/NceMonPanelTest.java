@@ -18,7 +18,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the NceProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 

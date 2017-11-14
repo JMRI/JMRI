@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package.
  *
- * @author	Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.dispatcher package
  *
- * @author	Dave Duchamp
+ * @author Dave Duchamp
  */
 public class PackageTest extends TestCase {
 

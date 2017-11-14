@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RpsPositionIconXmlTest.java
+ * Tests for the RpsPositionIconXml class
  *
- * Description: tests for the RpsPositionIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RpsPositionIconXmlTest {
 

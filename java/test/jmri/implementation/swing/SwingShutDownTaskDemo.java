@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Careful - tests are loaded via a separate class loader!
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class SwingShutDownTaskDemo extends TestCase {
 

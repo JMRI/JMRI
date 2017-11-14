@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations Locations GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class StagingEditFrameTest extends OperationsSwingTestCase {
 
@@ -32,7 +32,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         }
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one staging tracks
@@ -83,7 +83,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         }
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         f.trackNameTextField.setText("4th staging track");
@@ -114,7 +114,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         }
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create four staging tracks

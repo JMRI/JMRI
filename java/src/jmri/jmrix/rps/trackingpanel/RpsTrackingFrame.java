@@ -13,7 +13,7 @@ import javax.swing.JSeparator;
 /**
  * Frame containing the entire display tool
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
 

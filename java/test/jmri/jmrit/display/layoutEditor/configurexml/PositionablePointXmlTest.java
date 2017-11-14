@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PositionablePointXmlTest.java
+ * Tests for the PositionablePointXml class
  *
- * Description: tests for the PositionablePointXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PositionablePointXmlTest {
 

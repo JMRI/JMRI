@@ -11,11 +11,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**
- * XBeeLightTest.java
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeLight class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeLight class
- *
- * @author	Paul Bender copyright (C) 2012,2016
+ * @author Paul Bender copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
 public class XBeeLightTest {

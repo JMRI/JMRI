@@ -17,8 +17,8 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.jmrix.jmriclient package
  *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PackageTest extends TestCase {
 

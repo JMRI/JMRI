@@ -19,7 +19,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations Engines GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {

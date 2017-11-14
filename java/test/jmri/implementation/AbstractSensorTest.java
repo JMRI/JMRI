@@ -14,7 +14,7 @@ import org.junit.Assert;
  * itself a test class, e.g. should not be added to a suite. Instead, this forms
  * the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
+ * @author Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
  */
 public /*abstract*/ class AbstractSensorTest extends TestCase {
 
@@ -37,7 +37,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
         };
     }
 
-    protected AbstractSensor t = null;	// holds objects under test
+    protected AbstractSensor t = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -78,7 +78,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     }
 
     public void testDispose() throws JmriException {
-        t.setState(Sensor.ACTIVE);  	// in case registration with TrafficController is deferred to after first use
+        t.setState(Sensor.ACTIVE); // in case registration with TrafficController is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }

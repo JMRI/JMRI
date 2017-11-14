@@ -10,7 +10,7 @@ import org.openlcb.NodeID;
 /**
  * Tests for the jmri.jmrix.openlcb.OpenLcbLocoAddress class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OpenLcbLocoAddressTest extends TestCase {
 

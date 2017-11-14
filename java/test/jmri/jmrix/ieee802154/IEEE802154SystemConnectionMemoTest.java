@@ -7,12 +7,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * IEEE802154SystemConnectionMemoTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154SystemConnectionMemoTest extends TestCase {
 

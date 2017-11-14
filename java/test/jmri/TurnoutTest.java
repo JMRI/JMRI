@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Tests for the Turnout class
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class TurnoutTest extends TestCase {
 

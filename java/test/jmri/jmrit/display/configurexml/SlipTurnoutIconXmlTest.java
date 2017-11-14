@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SlipTurnoutIconXmlTest.java
+ * Tests for the SlipTurnoutIconXml class
  *
- * Description: tests for the SlipTurnoutIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SlipTurnoutIconXmlTest {
 

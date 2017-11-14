@@ -14,7 +14,7 @@ import org.junit.Assert;
  * <p>
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarsTest extends OperationsTestCase {
 

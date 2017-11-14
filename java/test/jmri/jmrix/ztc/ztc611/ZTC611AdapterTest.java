@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * ZTC611AdapterTest.java
+ * Tests for the jmri.jmrix.lenz.ztc611.ZTC611Adapter class
  *
- * Description:	tests for the jmri.jmrix.lenz.ztc611.ZTC611Adapter class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class ZTC611AdapterTest extends TestCase {
 

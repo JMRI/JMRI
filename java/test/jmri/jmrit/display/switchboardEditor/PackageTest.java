@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmrit.display.switchboardEditor package
  *
- * @author	Egbert Broerse Copyright 2017
+ * @author Egbert Broerse Copyright 2017
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

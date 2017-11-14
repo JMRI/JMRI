@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Default implementation of a SignalMastLogicManager.
  * @see jmri.SignalMastLogicManager
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager, java.beans.VetoableChangeListener {
 

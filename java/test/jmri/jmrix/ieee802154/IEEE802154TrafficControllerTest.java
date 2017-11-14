@@ -10,12 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * IEEE802154TrafficControllerTest.java
- *
- * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154TrafficController
+ * Tests for the jmri.jmrix.ieee802154.IEEE802154TrafficController
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 

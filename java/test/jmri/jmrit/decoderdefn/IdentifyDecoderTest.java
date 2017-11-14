@@ -11,11 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * IdentifyDecoderTest.java
- * <p>
- * Description:	tests for the jmrit.roster.IdentifyDecoder class
+ * Tests for the jmrit.roster.IdentifyDecoder class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class IdentifyDecoderTest {
 

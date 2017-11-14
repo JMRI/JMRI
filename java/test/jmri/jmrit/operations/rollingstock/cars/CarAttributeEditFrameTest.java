@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations CarAttributeEditFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
 

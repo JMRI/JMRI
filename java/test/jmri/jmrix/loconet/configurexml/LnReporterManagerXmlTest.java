@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LnReporterManagerXmlTest.java
+ * Tests for the LnReporterManagerXml class
  *
- * Description: tests for the LnReporterManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class LnReporterManagerXmlTest {
 

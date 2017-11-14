@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XNetPowerManagerTest.java
- * <p>
- * Description:	tests for the jmri.jmrix.lenz.XNetPowerManager class
+ * Tests for the jmri.jmrix.lenz.XNetPowerManager class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 

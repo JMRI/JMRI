@@ -1,9 +1,7 @@
 /**
- * QsiMonFrameTest.java
+ * Tests for the QsiProgrammer class
  *
- * Description:	JUnit tests for the QsiProgrammer class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.qsi.qsimon;
 

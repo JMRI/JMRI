@@ -11,7 +11,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.dcc.DccTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class DccTurnoutTest extends AbstractTurnoutTestBase {
 

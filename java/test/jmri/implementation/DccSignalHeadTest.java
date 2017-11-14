@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the DccSignalHead implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  */
 public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 

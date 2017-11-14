@@ -6,7 +6,7 @@ import jmri.managers.AbstractReporterManager;
 /**
  * RPS implementation of a ReporterManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
   * @since 2.3.1
  */
 public class RpsReporterManager extends AbstractReporterManager {

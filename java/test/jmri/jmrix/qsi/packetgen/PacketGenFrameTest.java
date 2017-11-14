@@ -1,9 +1,7 @@
 /**
- * PacketGenFrameTest.java
+ * Tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
  *
- * Description:	tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.qsi.packetgen;
 

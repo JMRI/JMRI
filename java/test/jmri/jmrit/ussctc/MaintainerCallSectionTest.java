@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for MaintainerCallSection class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
   */
 public class MaintainerCallSectionTest {
 

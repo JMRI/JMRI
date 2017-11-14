@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * XpaTrafficControllerTest.java
+ * Tests for the jmri.jmrix.xpa.XpaTrafficController class
  *
- * Description:	tests for the jmri.jmrix.xpa.XpaTrafficController class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XpaTrafficControllerTest extends TestCase {
 

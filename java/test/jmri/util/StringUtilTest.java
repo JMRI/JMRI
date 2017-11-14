@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.util.StringUtil class.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class StringUtilTest extends TestCase {
 

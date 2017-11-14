@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
 /**
  * Invokes complete set of tests in the jmri.jmrit.conditional tree
  *
- * @author  Dave Sand Copyright (C) 2017
+ * @author Dave Sand Copyright (C) 2017
  */
 public class PackageTest {
 }

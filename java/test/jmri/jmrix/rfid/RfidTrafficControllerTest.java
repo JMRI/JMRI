@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * RfidTrafficControllerTest.java
+ * Tests for the jmri.jmrix.rfid.RfidTrafficController class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidTrafficController class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class RfidTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 

@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DCCppReplyTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppReply class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppReply class
- *
- * @author	Bob Jacobsen
- * @author	Mark Underwood (C) 2015
+ * @author Bob Jacobsen
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppReplyTest {
 

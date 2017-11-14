@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * IndicatorTrackIconXmlTest.java
+ * Tests for the IndicatorTrackIconXml class
  *
- * Description: tests for the IndicatorTrackIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class IndicatorTrackIconXmlTest {
 

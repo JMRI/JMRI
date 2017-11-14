@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.easydcc package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PackageTest extends TestCase {
 

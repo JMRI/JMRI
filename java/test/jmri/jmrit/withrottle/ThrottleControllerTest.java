@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of ThrottleController
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ThrottleControllerTest extends TestCase {
 

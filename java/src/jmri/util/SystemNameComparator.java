@@ -13,7 +13,7 @@ import java.util.Comparator;
  * Note this is intended to take names as provided:  It does not do normalization or
  * expansion.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  * @author Howard Penny
  * @author Pete Cressman
  */

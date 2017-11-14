@@ -9,11 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LIUSBConfigFrameTest.java
+ * Tests for the jmri.jmrix.lenz.swing.liusb.LIUSBConfigFrame class
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.liusb.LIUSBConfigFrame class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LIUSBConfigFrameTest {
 

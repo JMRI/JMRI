@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.ztc.ztc611.ZTC611XNetTurnout} class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
 

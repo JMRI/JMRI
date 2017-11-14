@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder.listener;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2012
+ * @author Mark Underwood Copyright (C) 2012
  *
  */
 import java.util.regex.Matcher;

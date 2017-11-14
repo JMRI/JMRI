@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * Internally, this is done by using a list of all non-Internal managers, plus a
  * separate reference to the internal manager.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
 abstract public class AbstractProxyManager<E extends NamedBean> implements Manager<E> {
 

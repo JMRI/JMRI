@@ -15,7 +15,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
   */
 public class RosterEntryTest extends TestCase {
 

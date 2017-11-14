@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21Reply class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class Z21ReplyTest {
 

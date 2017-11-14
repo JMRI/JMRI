@@ -2,7 +2,7 @@ package jmri.jmrix.roco.z21;
 /**
  * Constants to represent values seen in z21 traffic
  *
- * @author	Paul Bender Copyright (C) 2003-2009
+ * @author Paul Bender Copyright (C) 2003-2009
  *
  * Variable prefix abreviation keys (Some of these are from the z21 protocol
  * documentation): LAN_X_ is for constants specific to the XpressNet tunnel

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * It will not run unless you have your layout fully covered with sensors and
  * signals.
  *
- * @author  Karl Johan Lisby Copyright (C) 2016
+ * @author Karl Johan Lisby Copyright (C) 2016
  */
 public class SCWarrant extends Warrant {
 

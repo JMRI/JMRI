@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test the VerifyWriteProgrammerFacade class.
  *
- * @author	Bob Jacobsen Copyright 2013
+ * @author Bob Jacobsen Copyright 2013
  *
  */
 public class VerifyWriteProgrammerFacadeTest extends TestCase {

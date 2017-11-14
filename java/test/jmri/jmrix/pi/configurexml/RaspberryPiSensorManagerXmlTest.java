@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RaspberryPiSensorManagerXmlTest.java
+ * Tests for the RaspberryPiSensorManagerXml class
  *
- * Description: tests for the RaspberryPiSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RaspberryPiSensorManagerXmlTest {
 

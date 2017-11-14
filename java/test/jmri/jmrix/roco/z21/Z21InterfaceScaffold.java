@@ -5,11 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Z21InterfaceScaffold.java
+ * Test scaffold implementation of Z21Interface
  *
- * Description:	Test scaffold implementation of Z21Interface
- *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  *
  * Use an object of this type as a Z21TrafficController in tests
  */

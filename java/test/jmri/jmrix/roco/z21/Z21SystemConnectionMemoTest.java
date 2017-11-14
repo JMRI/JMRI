@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.roco.z21.z21SystemConnectionMemo class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21SystemConnectionMemoTest {
 

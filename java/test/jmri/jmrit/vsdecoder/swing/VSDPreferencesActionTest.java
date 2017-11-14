@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of VSDPreferencesAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class VSDPreferencesActionTest {
 

@@ -1,9 +1,7 @@
 /**
- * XNetProgrammerTest.java
+ * Tests for the XNetProgrammer class
  *
- * Description:	JUnit tests for the XNetProgrammer class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.lenz;
 

@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for running CMRI assignment list.
  *
- * @author	Dave Duchamp Copyright (C) 2006
- * @author	Chuck Catania Copyright (C) 2014, 2016, 2017
+ * @author Dave Duchamp Copyright (C) 2006
+ * @author Chuck Catania Copyright (C) 2014, 2016, 2017
  */
 public class NodeIOListFrame extends jmri.util.JmriJFrame {
 

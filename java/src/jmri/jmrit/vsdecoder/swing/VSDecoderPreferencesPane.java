@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  *
  */
 class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {

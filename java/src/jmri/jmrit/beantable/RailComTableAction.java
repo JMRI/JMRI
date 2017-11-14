@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a RailCommTable GUI.
  *
- * @author  Bob Jacobsen Copyright (C) 2003
- * @author  Matthew Harris Copyright (C) 2011
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
 public class RailComTableAction extends AbstractTableAction {

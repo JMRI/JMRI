@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
   */
 public class PackageTest extends TestCase {
 

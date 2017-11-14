@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * Tests for the z21XNetProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 

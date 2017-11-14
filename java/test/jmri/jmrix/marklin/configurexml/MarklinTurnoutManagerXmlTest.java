@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MarklinTurnoutManagerXmlTest.java
+ * Tests for the MarklinTurnoutManagerXml class
  *
- * Description: tests for the MarklinTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class MarklinTurnoutManagerXmlTest {
 

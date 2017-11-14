@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations Locations GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class SidingEditFrameTest extends OperationsSwingTestCase {
 
@@ -31,7 +31,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Location l = lManager.getLocationByName("Test Loc C");
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one siding tracks
@@ -69,7 +69,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         }
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         f.trackNameTextField.setText("3rd siding track");
@@ -101,7 +101,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         }
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         f.trackNameTextField.setText("3rd siding track");
@@ -127,7 +127,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         }
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create three siding tracks

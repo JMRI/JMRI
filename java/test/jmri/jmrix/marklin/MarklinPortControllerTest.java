@@ -8,7 +8,7 @@ import org.junit.Before;
  * JUnit tests for the MarklinPortController class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MarklinPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 

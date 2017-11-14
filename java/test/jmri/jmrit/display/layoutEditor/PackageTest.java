@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmrit.display.layoutEditor package
  *
- * @author	Bob Jacobsen Copyright 2008, 2009, 2010
+ * @author Bob Jacobsen Copyright 2008, 2009, 2010
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

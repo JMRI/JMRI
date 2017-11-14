@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2012
  */
 public class PackageTest extends TestCase {
 

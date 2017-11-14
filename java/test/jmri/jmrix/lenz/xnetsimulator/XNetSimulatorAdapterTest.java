@@ -9,12 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XNetSimulatorAdapterTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
+ * Tests for the jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetSimulatorAdapterTest {
 

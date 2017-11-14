@@ -14,11 +14,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**
- * XBeeSensorManagerTest.java
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
 public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {

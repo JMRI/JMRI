@@ -19,7 +19,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the RpsIcon class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class RpsPositionIconTest {
 

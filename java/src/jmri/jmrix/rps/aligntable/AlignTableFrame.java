@@ -12,7 +12,7 @@ import javax.swing.JDialog;
  *
  * @see AlignTableAction
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 

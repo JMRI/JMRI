@@ -14,8 +14,8 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2007
- * @author      B. Milhaupt  Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2002, 2007
+ * @author B. Milhaupt  Copyright (C) 2015
  */
 public class LlnmonTest extends TestCase {
 

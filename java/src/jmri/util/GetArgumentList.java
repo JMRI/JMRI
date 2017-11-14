@@ -9,7 +9,7 @@ package jmri.util;
  * Intended primarily for Windows; other systems use startup scripts so they
  * don't need to start the JVM twice.
  *
- * @author	Bob Jacobsen, Copyright (C) 2008
+ * @author Bob Jacobsen, Copyright (C) 2008
  */
 public class GetArgumentList {
 

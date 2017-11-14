@@ -1,17 +1,14 @@
 package jmri.jmrix.tams;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Encodes a message to a Tams MasterConttol command station.
  * <P>
  * The {@link TamsReply} class handles the response from the command station.
  * <P>
- *
+ * <p>
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author	Jan Boen
+ * @author Jan Boen
  */
 public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -23,7 +20,6 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     //Has been set to sensor value as we expect this to the most common binary type of reply
     //Is used in conjunction with isBinary() = true
     //When receiving an ASCII reply we scan for ] which indicates end of reply. Anything after this can be ignored
-
     // accessor to get one element of the TamsMessage
     @Override
     public int getElement(int n) {
@@ -31,7 +27,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     //Extend the class with extra Tams Specific variables
-	private char _replyType = 'X';//C(ommand Station), S(ensor), T(urnout), P(ower), L(oco), X(Undefined), M(anual) via PacketGen
+    private char _replyType = 'X';//C(ommand Station), S(ensor), T(urnout), P(ower), L(oco), X(Undefined), M(anual) via PacketGen
 
     public char getReplyType() {
         return _replyType;
@@ -51,14 +47,14 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         _replyOneByte = rob;
     }
 
-	private int _replyLastByte = TamsConstants.EOM00;//What will be the last byte of a multi byte reply?
+    private int _replyLastByte = TamsConstants.EOM00;//What will be the last byte of a multi byte reply?
 
     public int getReplyLastByte() {
         return _replyLastByte;
     }
 
     public void setReplyLastByte(int rlb) {
-    	_replyLastByte = rlb;
+        _replyLastByte = rlb;
     }
 
     public TamsMessage() {
@@ -78,7 +74,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     // from String
     public TamsMessage(String m) {
         super(m);
-    	setBinary(false);
+        setBinary(false);
     }
 
     // from binary
@@ -93,23 +89,22 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         }
         setBinary(true);//Is a binary reply
         setReplyOneByte(false);//By default we set false and then check if we must change
-        if ((this.getElement(1) == (TamsConstants.XSTATUS & TamsConstants.MASKFF)) || (this.getElement(1) == (TamsConstants.XEVENT & TamsConstants.MASKFF))){
+        if ((this.getElement(1) == (TamsConstants.XSTATUS & TamsConstants.MASKFF)) || (this.getElement(1) == (TamsConstants.XEVENT & TamsConstants.MASKFF))) {
             setReplyOneByte(true);
         }
         setReplyLastByte(TamsConstants.EOM00);//By default we set 0x00 and then check if we must change
-        if (this.getElement(1) == (TamsConstants.XEVTLOK & TamsConstants.MASKFF)){
+        if (this.getElement(1) == (TamsConstants.XEVTLOK & TamsConstants.MASKFF)) {
             setReplyLastByte(TamsConstants.EOM80);
         }
         //log.info(jmri.util.StringUtil.appendTwoHexFromInt(this.getElement(1),""));
         //setRetries(1);
-    	//log.info("Binary reply will be: one byte= " + getReplyOneByte() + ", last byte= " + getReplyLastByte());
+        //log.info("Binary reply will be: one byte= " + getReplyOneByte() + ", last byte= " + getReplyLastByte());
     }
 
     static public final int POLLTIMEOUT = 100;
 
     // static methods to return a formatted message
     //Binary messages
-
     //Set power OFF via XPwrOff (0xA6)
     static public TamsMessage setXPwrOff() {
         TamsMessage m = new TamsMessage(2);
@@ -279,5 +274,3 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 }
-
-

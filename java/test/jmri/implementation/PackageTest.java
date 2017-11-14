@@ -6,11 +6,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * PackageTest.java
+ * Tests for the jmri.implementation package.
  *
- * Description:	tests for the jmri.implementation package
- *
- * @author	Bob Jacobsen 2009, 2017
+ * @author Bob Jacobsen 2009, 2017
  */
 public class PackageTest extends TestCase {
 

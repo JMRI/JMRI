@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JmrixConfigPaneXmlTest.java
+ * Tests for the JmrixConfigPaneXml class
  *
- * Description: tests for the JmrixConfigPaneXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class JmrixConfigPaneXmlTest {
 

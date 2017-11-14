@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetListener {
 

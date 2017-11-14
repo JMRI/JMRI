@@ -26,7 +26,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmrit.display.controlPanelEditor.shape package
  *
- * @author	Bob Jacobsen Copyright 2008, 2009, 2010, 2015
+ * @author Bob Jacobsen Copyright 2008, 2009, 2010, 2015
  */
 public class PackageTest {
 }

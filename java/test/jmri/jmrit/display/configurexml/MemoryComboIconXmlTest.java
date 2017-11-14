@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MemoryComboIconXmlTest.java
+ * Tests for the MemoryComboIconXml class
  *
- * Description: tests for the MemoryComboIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class MemoryComboIconXmlTest {
 

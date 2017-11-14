@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * LI100AdapterTest.java
+ * Tests for the jmri.jmrix.lenz.li100.LI100Adapter class
  *
- * Description:	tests for the jmri.jmrix.lenz.li100.LI100Adapter class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LI100AdapterTest extends TestCase {
 

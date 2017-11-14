@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RevHistoryXmlTest.java
+ * Tests for the RevHistoryXml class
  *
- * Description: tests for the RevHistoryXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RevHistoryXmlTest {
 

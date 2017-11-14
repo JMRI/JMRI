@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SRCPMessageTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPMessage class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPMessage class
- *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SRCPMessageTest {
 

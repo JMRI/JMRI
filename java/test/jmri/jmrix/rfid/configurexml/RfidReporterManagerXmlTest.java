@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RfidReporterManagerXmlTest.java
+ * Tests for the RfidReporterManagerXml class
  *
- * Description: tests for the RfidReporterManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RfidReporterManagerXmlTest {
 

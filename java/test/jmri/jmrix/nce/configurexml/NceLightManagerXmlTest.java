@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * NceLightManagerXmlTest.java
+ * Tests for the NceLightManagerXml class
  *
- * Description: tests for the NceLightManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class NceLightManagerXmlTest {
 

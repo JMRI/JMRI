@@ -8,7 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class CvTableModelTest {
 

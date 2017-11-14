@@ -21,7 +21,7 @@ import org.junit.Test;
 /**
  * Tests for the Warrant creation
  *
- * @author  Pete Cressman 2015
+ * @author Pete Cressman 2015
  *
  * todo - test error conditions
  */

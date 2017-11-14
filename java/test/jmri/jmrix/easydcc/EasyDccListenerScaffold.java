@@ -3,7 +3,7 @@ package jmri.jmrix.easydcc;
 /**
  * Stands in for the EasyDccTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 class EasyDccListenerScaffold implements EasyDccListener {
 

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * NceTurnoutManagerXmlTest.java
+ * Tests for the NceTurnoutManagerXml class
  *
- * Description: tests for the NceTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class NceTurnoutManagerXmlTest {
 

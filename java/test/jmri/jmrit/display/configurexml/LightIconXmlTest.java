@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LightIconXmlTest.java
+ * Tests for the LightIconXml class
  *
- * Description: tests for the LightIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class LightIconXmlTest {
 

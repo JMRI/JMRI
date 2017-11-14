@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * BlockContentsIconXmlTest.java
+ * Tests for the BlockContentsIconXml class
  *
- * Description: tests for the BlockContentsIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class BlockContentsIconXmlTest {
 

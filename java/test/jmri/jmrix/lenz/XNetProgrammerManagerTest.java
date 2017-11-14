@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * XNetProgrammerManagerTest.java
+ * Tests for the jmri.jmrix.lenz.XNetProgrammerManager class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetProgrammerManager class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetProgrammerManagerTest extends TestCase {
 

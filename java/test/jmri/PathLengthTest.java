@@ -10,7 +10,7 @@ import org.junit.Assert;
  * Path lengths should be inherited from their parent block unless
  * explicitly set and must not exceed the length of their block.
  *
- * @author  Pete Cressman Copyright (C) 2015
+ * @author Pete Cressman Copyright (C) 2015
  */
 public class PathLengthTest extends TestCase {
 

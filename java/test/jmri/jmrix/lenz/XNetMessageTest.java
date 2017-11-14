@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.lenz.XNetMessage class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class XNetMessageTest{
 

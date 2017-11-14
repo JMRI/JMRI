@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.SignalGroup class
  *
- * @author	Egbert Broerse Copyright 2017
+ * @author Egbert Broerse Copyright 2017
  */
 public class SignalGroupTest {
 

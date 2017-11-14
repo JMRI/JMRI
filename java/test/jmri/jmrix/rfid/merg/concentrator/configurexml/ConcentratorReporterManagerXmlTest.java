@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ConcentratorReporterManagerXmlTest.java
+ * Tests for the ConcentratorReporterManagerXml class
  *
- * Description: tests for the ConcentratorReporterManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class ConcentratorReporterManagerXmlTest {
 

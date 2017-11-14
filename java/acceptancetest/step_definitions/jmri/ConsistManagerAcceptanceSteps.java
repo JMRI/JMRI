@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Cucumber step defintions for Consist Manager Acceptance tests.
  *
- * @author  Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ConsistManagerAcceptanceSteps implements En {
 

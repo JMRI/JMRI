@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PerformFileModelXmlTest.java
+ * Tests for the PerformFileModelXml class
  *
- * Description: tests for the PerformFileModelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PerformFileModelXmlTest {
 

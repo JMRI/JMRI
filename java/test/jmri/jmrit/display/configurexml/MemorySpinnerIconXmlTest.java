@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MemorySpinnerIconXmlTest.java
+ * Tests for the MemorySpinnerIconXml class
  *
- * Description: tests for the MemorySpinnerIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class MemorySpinnerIconXmlTest {
 

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DccSignalHeadXmlTest.java
+ * Tests for the DccSignalHeadXml class
  *
- * Description: tests for the DccSignalHeadXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class DccSignalHeadXmlTest {
 

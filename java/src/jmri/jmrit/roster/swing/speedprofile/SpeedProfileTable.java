@@ -26,7 +26,7 @@ import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 /**
  * Display Speed Profile
  *
- * @author  Pete Cressman Copyright (C) 2015
+ * @author Pete Cressman Copyright (C) 2015
  */
 public class SpeedProfileTable extends jmri.util.JmriJFrame {
 

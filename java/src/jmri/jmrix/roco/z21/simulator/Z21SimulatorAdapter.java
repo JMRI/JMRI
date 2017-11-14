@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * NOTE: Some material in this file was modified from other portions of the
  * support infrastructure.
  *
- * @author	Paul Bender, Copyright (C) 2015
+ * @author Paul Bender, Copyright (C) 2015
  */
 public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 

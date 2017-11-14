@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test the AccessoryOpsModeProgrammerFacade class.
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  *
  */
 // @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")

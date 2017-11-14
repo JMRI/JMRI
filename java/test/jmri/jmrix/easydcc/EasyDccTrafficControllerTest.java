@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the EasyDccTrafficController class
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
@@ -38,11 +38,13 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         c.sendEasyDccMessage(m, l);
 
         ostream.flush();
-        JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
+        JUnitUtil.waitFor(() -> {
+            return tostream.available() == 4;
+        }, "total length");
 
-		// test the result of sending
+        // test the result of sending
 
-		Assert.assertEquals("total length ", 4, tostream.available());
+        Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", '0', tostream.readByte());
         Assert.assertEquals("Char 1", '1', tostream.readByte());
         Assert.assertEquals("Char 2", '2', tostream.readByte());

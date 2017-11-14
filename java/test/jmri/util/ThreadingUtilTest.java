@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Tests for ThreadingUtil class
  *
- * @author	Bob Jacobsen Copyright 2015
+ * @author Bob Jacobsen Copyright 2015
  */
 public class ThreadingUtilTest extends TestCase {
 

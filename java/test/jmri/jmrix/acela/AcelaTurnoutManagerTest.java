@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
  *
- * @author	Bob Coleman Copyright 2008
+ * @author Bob Coleman Copyright 2008
  */
 public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.util.NamedBeanUtil class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class NamedBeanHandleTest extends TestCase {
 

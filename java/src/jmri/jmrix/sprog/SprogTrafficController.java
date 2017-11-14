@@ -21,7 +21,7 @@ import purejavacomm.SerialPortEventListener;
  * Updated January 2010 for gnu io (RXTX) - Andrew Berridge.
  * Removed Runnable implementation and methods for it.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener {
 

@@ -5,7 +5,7 @@ import java.lang.reflect.*;
 /**
  * Main method to launch a JUnit test class
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class TestClassMainMethod {
 

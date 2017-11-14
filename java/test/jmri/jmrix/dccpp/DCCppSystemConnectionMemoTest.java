@@ -7,12 +7,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * DCCppSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppSystemConnectionMemo class
- *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppSystemConnectionMemoTest extends TestCase {
 

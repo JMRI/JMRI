@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
- * @author	Andrew Crosland Copyright (C) 2006, 2012
+ * @author Andrew Crosland Copyright (C) 2006, 2012
  */
 public class SprogCSThrottle extends AbstractThrottle {
 

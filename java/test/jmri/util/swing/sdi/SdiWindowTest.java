@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * Invokes complete set of tests in the jmri.util.swing.sdi tree
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class SdiWindowTest {
 

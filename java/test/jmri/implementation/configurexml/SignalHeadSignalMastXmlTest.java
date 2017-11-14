@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SignalHeadSignalMastXmlTest.java
+ * Tests for the SignalHeadSignalMastXml class
  *
- * Description: tests for the SignalHeadSignalMastXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SignalHeadSignalMastXmlTest {
 

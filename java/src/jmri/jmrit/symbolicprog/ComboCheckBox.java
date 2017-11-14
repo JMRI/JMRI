@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /* Represents a JComboBox as a JCheckBox
  *
- * @author   Bob Jacobsen   Copyright (C) 2001
+ * @author Bob Jacobsen   Copyright (C) 2001
  */
 public class ComboCheckBox extends JCheckBox {
 

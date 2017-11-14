@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * EcosTrafficControllerTest.java
+ * Tests for the EcosTrafficController class
  *
- * Description:	tests for the EcosTrafficController class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class EcosTrafficControllerTest {
 

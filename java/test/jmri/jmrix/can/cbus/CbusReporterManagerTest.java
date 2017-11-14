@@ -8,11 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * CbusReporterManagerTest.java
+ * Tests for the CbusReporterManager class.
  *
- * Description:	tests for the CbusReporterManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 

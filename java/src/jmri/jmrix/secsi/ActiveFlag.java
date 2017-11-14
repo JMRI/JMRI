@@ -7,7 +7,7 @@ package jmri.jmrix.secsi;
  * This is a very light-weight class, carrying only the flag, so as to limit the
  * number of unneeded class loadings.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @deprecated since 4.5.1
  */
 @Deprecated

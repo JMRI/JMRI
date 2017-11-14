@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the DataSource class
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class DataSourceTest {
 

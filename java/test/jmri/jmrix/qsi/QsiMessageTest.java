@@ -1,9 +1,7 @@
 /**
- * QsiMessageTest.java
+ * Tests for the QsiMessage class
  *
- * Description:	JUnit tests for the QsiMessage class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.qsi;
 

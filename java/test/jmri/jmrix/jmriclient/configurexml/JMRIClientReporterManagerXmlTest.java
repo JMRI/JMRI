@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JMRIClientReporterManagerXmlTest.java
+ * Tests for the JMRIClientReporterManagerXml class
  *
- * Description: tests for the JMRIClientReporterManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class JMRIClientReporterManagerXmlTest {
 

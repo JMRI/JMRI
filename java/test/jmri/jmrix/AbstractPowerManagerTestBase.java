@@ -13,8 +13,8 @@ import org.junit.Test;
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
  * common tests
- * @author	Bob Jacobsen Copyright 2007
- * @author	Bob Jacobsen Copyright (C) 2017
+ * @author Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright (C) 2017
   */
 public abstract class AbstractPowerManagerTestBase {
 
@@ -27,9 +27,9 @@ public abstract class AbstractPowerManagerTestBase {
 
     protected abstract void hearOff();
 
-    protected abstract void sendOnReply();	  // get a reply to On command from layout
+    protected abstract void sendOnReply();  // get a reply to On command from layout
 
-    protected abstract void sendOffReply();   // get a reply to Off command from layout
+    protected abstract void sendOffReply(); // get a reply to Off command from layout
 
     protected abstract int numListeners();
 
@@ -39,7 +39,7 @@ public abstract class AbstractPowerManagerTestBase {
 
     protected abstract boolean outboundOffOK(int index);
 
-    protected PowerManager p = null;	// holds objects under test
+    protected PowerManager p = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

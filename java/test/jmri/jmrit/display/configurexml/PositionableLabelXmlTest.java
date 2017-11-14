@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PositionableLabelXmlTest.java
+ * Tests for the PositionableLabelXml class
  *
- * Description: tests for the PositionableLabelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PositionableLabelXmlTest {
 

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XpaTurnoutManagerXmlTest.java
+ * Tests for the XpaTurnoutManagerXml class
  *
- * Description: tests for the XpaTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class XpaTurnoutManagerXmlTest {
 

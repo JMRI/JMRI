@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XBeeLightManagerXmlTest.java
+ * Tests for the XBeeLightManagerXml class
  *
- * Description: tests for the XBeeLightManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class XBeeLightManagerXmlTest {
 

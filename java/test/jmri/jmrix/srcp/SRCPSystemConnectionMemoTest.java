@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * SRCPSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPSystemConnectionMemoTest extends TestCase {
 

@@ -5,12 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JsonClientTrafficControllerTest.java
- *
- * Description:	tests for the jmri.jmrix.jmriclient.json.JsonClientTrafficController
+ * Tests for the jmri.jmrix.jmriclient.json.JsonClientTrafficController
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class JsonClientTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 

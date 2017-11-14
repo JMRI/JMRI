@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Tests for the Light class
  *
- * @author	Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
 public class LightTest extends TestCase {
 

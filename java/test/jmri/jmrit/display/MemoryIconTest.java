@@ -29,7 +29,7 @@ import org.netbeans.jemmy.ComponentChooser;
  *
  * Description:
  *
- * @author	Bob Jacobsen Copyright 2007, 2015
+ * @author Bob Jacobsen Copyright 2007, 2015
  */
 public class MemoryIconTest {
 

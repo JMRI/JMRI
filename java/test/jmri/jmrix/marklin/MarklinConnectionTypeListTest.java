@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MarklinConnectionTypeListTest.java
+ * Tests for the jmri.jmrix.marklin.MarklinConnectionTypeList class
  *
- * Description:	tests for the jmri.jmrix.marklin.MarklinConnectionTypeList class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class MarklinConnectionTypeListTest {
 

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * deferring use of the 3rd (Z) dimension to a later implementation. It uses a
  * Java2D GeneralPath to handle the inside/outside calculations.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 @javax.annotation.concurrent.Immutable
 public class Region {

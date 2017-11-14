@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Provide access to Oak Tree via a serial comm port. Normally controlled by the
  * oaktree.serialdriver.SerialDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2006, 2007
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

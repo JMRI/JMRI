@@ -13,7 +13,7 @@ import org.junit.Assert;
 /**
  * Test the ProxySensorManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014
+ * @author Bob Jacobsen 2003, 2006, 2008, 2014
   */
 public class ProxySensorManagerTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class ProxySensorManagerTest extends TestCase {
         return "JS" + i;
     }
 
-    protected SensorManager l = null;	// holds objects under test
+    protected SensorManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

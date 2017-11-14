@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ManagerDefaultsConfigPaneXmlTest.java
+ * Tests for the ManagerDefaultsConfigPaneXml class
  *
- * Description: tests for the ManagerDefaultsConfigPaneXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class ManagerDefaultsConfigPaneXmlTest {
 

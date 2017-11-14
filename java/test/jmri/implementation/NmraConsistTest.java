@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of NmraConsist
  *
- * @author	Paul Copyright (C) 2016
+ * @author Paul Copyright (C) 2016
  */
 public class NmraConsistTest extends AbstractConsistTestBase {
 

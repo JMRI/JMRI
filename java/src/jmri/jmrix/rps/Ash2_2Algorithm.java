@@ -16,12 +16,12 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
- *
- *
- *
- *
+ * <p>
+ * <p>
+ * <p>
+ * <p>
  * <h2>RPSpos2.2 program description.</h2>
- *
+ * <p>
  * <p>
  * As in previous versions, the first thing it does is sort the receivers in
  * order of increasing time delay, discarding those that failed or are too far
@@ -148,11 +148,11 @@ import org.slf4j.LoggerFactory;
  * necessary to prevent the program from reporting a spurious position, are the
  * same as those for version 1.1. These are described in the e-mail with that
  * version sent on 12/9/06.
- *
-* <P>
- * @author	Robert Ashenfelter Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2008
-  */
+ * <p>
+ * <P>
+ * @author Robert Ashenfelter Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
+ */
 public class Ash2_2Algorithm extends AbstractCalculator {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
@@ -254,18 +254,18 @@ public class Ash2_2Algorithm extends AbstractCalculator {
         return convert(r);
     }
 
-    static int offset = 0;			//  Offset (usec), add to delay
+    static int offset = 0; //  Offset (usec), add to delay
 
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int TMAX = 35000;			//  Max. allowable delay (usec)
+    static public int TMAX = 35000; //  Max. allowable delay (usec)
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int TMIN = 150;			//  Min. allowable delay (usec)
+    static public int TMIN = 150; //  Min. allowable delay (usec)
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int SMAX = 30;			//  Max. OK std. dev. (usec)
+    static public int SMAX = 30; //  Max. OK std. dev. (usec)
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int NMAX = 50;			//  Max. no. of receivers used
+    static public int NMAX = 50; //  Max. no. of receivers used
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int NERR = 6;			//  No. of rcvrs w/error reject
+    static public int NERR = 6; //  No. of rcvrs w/error reject
 
     //  Compute RPS Position  using
     RetVal RPSpos(int nr, double[] Tr, double[] Xr, double[] Yr, double[] Zr,//   many
@@ -399,7 +399,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
                     w = 1.0 - Rs[j] / Rmax;
                     w = w * w;//    Weight by distance
                     if (k < 50) {
-                        w *= 0.02 * (k + 1);//		 with fade out
+                        w *= 0.02 * (k + 1); // with fade out
                     } else {
                         w *= 0.005 * (k + 150);
                     }
@@ -464,7 +464,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
                     Zs[ns] = q;
                 } else {
                     ++nox;//    No discard
-                }						//   Stage Progression
+                } //   Stage Progression
                 if (S == 1) {//   Stage 0,1:  Initial sol.
                     if (var < vmax) {//    Converged:
                         k = 250;
@@ -475,7 +475,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
                         if (ns <= 4) {
                             k = 300;
                             S = (var > 36 * vmax) ? 4 : 5;
-                        }//	  Skip to Stage 4 or 5
+                        } // Skip to Stage 4 or 5
                         else if (ns <= NERR) {
                             l = 0;
                             xo = x;
@@ -502,26 +502,26 @@ public class Ash2_2Algorithm extends AbstractCalculator {
                         k = 250;
                         S = 3;
                     } else if (i >= 2000) {//    Too much:
-                        ns = NERR;//	Truncate list
+                        ns = NERR; // Truncate list
                         l = 0;
                         xo = x;
                         yo = y;
-                        zo = z;//	  and try Stage 3
+                        zo = z; // and try Stage 3
                         k = 250;
                         S = 3;
                     }
                     k = 200;
                 }//   Do another outlier
-                else if (S == 3) {//   Stage 3:
-                    if (ns > 4) {//    Discard errored entry
-                        vex[l] = var;//	     for ns = NERR -> 5
-                        if (++l < ns) {//      by evaluating subsets
+                else if (S == 3) { //      Stage 3:
+                    if (ns > 4) { //       Discard errored entry
+                        vex[l] = var; //   for ns = NERR -> 5
+                        if (++l < ns) { // by evaluating subsets
                             k = 250;
                             x = xo;
                             y = yo;
                             z = zo;
-                        }//		     of  ns - 1
-                        else {//      for minimum variance
+                        } //               of  ns - 1
+                        else { //          for minimum variance
                             var = vex[j = 0];
                             for (l = 1; l < ns; l++) {//    Find the minimum
                                 if (vex[l] < var) {
@@ -544,11 +544,11 @@ public class Ash2_2Algorithm extends AbstractCalculator {
                             if (var < vmax) {//    Converged:
                                 k = 300;
                                 S = 5;
-                            }//      Skip to Stage 5
+                            } // Skip to Stage 5
                             else if (ns <= 4) {
                                 k = 300;
                                 S = (var > 36 * vmax) ? 4 : 5;
-                            }//	  Skip to Stage 4 or 5
+                            } // Skip to Stage 4 or 5
                             else {
                                 l = 0;
                                 xo = x;
@@ -566,7 +566,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
                 else if (S == 5) {//   Stage 5:
                     for (j = ns; j < nss; j++) {//    Put back entries
                         q = Math.sqrt((Xs[j] - x) * (Xs[j] - x) + (Ys[j] - y) * (Ys[j] - y) + (Zs[j] - z) * (Zs[j] - z));
-                        if ((Rs[j] - q) * (Rs[j] - q) < 4 * vmax) {//		 if not errored
+                        if ((Rs[j] - q) * (Rs[j] - q) < 4 * vmax) { // if not errored
                             q = Rs[j];
                             Rs[j] = Rs[ns];
                             Rs[ns] = q;//  Put back rejected entry
@@ -604,10 +604,10 @@ public class Ash2_2Algorithm extends AbstractCalculator {
         Zt = z;//   Computed position
         if ((var > vmax) || ((ns == 3) && (var > vmin))) {//    Failed:
             return new RetVal(-ns, Xt, Yt, Zt, Vs);
-        }//	       variance too big
+        } // variance too big
         if ((ns == 3) && (nxx > 1)) {//    Questionable:  uncertain
             return new RetVal(1, Xt, Yt, Zt, Vs);
-        }//	        gross rejection
+        } // gross rejection
         if (nss >= (3 * ns - 5)) {//    Questionable:
             return new RetVal(2, Xt, Yt, Zt, Vs);
         }//        too many rejections
@@ -617,7 +617,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
 // ----------------------------------------------------
     /**
      * Internal class to handle return value.
-     *
+     * <p>
      * More of a struct, really
      */
     static class RetVal {
@@ -636,5 +636,3 @@ public class Ash2_2Algorithm extends AbstractCalculator {
 
     private final static Logger log = LoggerFactory.getLogger(Ash2_2Algorithm.class);
 }
-
-

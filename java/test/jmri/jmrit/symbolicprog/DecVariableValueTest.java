@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * @author	Bob Jacobsen Copyright 2003, 2006
+ * @author Bob Jacobsen Copyright 2003, 2006
  */
 public class DecVariableValueTest extends AbstractVariableValueTestBase {
 

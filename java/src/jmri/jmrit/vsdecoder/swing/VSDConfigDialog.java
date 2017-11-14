@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 @SuppressWarnings("deprecation")
 public class VSDConfigDialog extends JDialog {

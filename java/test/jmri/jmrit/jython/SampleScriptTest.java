@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Invokes Python-language scripts in jython/tests
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  * @since JMRI 4.3.6
  */
 public class SampleScriptTest extends TestCase {

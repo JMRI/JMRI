@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SprogTurnoutManagerXmlTest.java
+ * Tests for the SprogTurnoutManagerXml class
  *
- * Description: tests for the SprogTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SprogTurnoutManagerXmlTest {
 

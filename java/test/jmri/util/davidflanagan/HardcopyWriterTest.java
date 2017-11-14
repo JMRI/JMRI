@@ -10,11 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * HardcopyWriterTest.java
+ * Tests for the HardcopyWriter class
  *
- * Description: tests for the HardcopyWriter class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class HardcopyWriterTest {
 

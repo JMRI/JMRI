@@ -9,7 +9,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.util.AlphanumComparator class.
  *
- * @author	Paul Bender Copyright 2016
+ * @author Paul Bender Copyright 2016
  */
 public class AlphanumComparatorTest extends TestCase {
 

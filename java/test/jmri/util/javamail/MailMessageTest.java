@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MailMessageTest.java
+ * Tests for the MailMessage class
  *
- * Description: tests for the MailMessage class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class MailMessageTest {
 

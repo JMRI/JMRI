@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.util.OrderedHashtable class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class OrderedHashtableTest extends TestCase {
 

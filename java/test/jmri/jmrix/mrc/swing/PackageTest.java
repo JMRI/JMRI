@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.jmrix.mrc.swing package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class PackageTest {
 }

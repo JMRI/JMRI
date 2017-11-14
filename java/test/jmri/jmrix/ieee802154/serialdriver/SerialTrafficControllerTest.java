@@ -8,12 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SerialTrafficControllerTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.ieee802154.serialdriver.SerialTrafficController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154TrafficControllerTest {
 

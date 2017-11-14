@@ -21,7 +21,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Swing tests for the TurnoutIcon
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public class TurnoutIconWindowTest {
 

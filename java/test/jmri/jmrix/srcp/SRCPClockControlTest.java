@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * SRCPClockControlTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPClockControl class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPClockControl class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPClockControlTest extends TestCase {
 
