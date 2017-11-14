@@ -336,6 +336,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     // JUnitUtil.dispose(elf);
     //
     // }
+
     @Test
     @Ignore("Not sure if we need this one....")
     public void testVerifyStatusPanel() {

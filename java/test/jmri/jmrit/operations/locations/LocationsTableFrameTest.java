@@ -69,9 +69,9 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
 
         // confirm location edit frame creation
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame("Edit Location") != null;
+            return JmriJFrame.getFrame(Bundle.getMessage("TitleLocationEdit")) != null;
         }, "lef not null");
-        JmriJFrame lef = JmriJFrame.getFrame("Edit Location");
+        JmriJFrame lef = JmriJFrame.getFrame(Bundle.getMessage("TitleLocationEdit"));
         Assert.assertNotNull(lef);
 
         // close windows
@@ -80,7 +80,7 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         JFrameOperator jfof = new JFrameOperator(f);
         jfof.close();
 
-        Assert.assertNull(JmriJFrame.getFrame("Edit Location"));
+        Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("TitleLocationEdit")));
 
     }
 
@@ -100,9 +100,9 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
 
         // confirm location add frame creation
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame("Add Location") != null;
+            return JmriJFrame.getFrame(Bundle.getMessage("AddLocation")) != null;
         }, "lef not null");
-        JmriJFrame lef = JmriJFrame.getFrame("Add Location");
+        JmriJFrame lef = JmriJFrame.getFrame(Bundle.getMessage("AddLocation"));
         Assert.assertNotNull(lef);
 
         // close windows
@@ -111,7 +111,7 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         JFrameOperator jfof = new JFrameOperator(f);
         jfof.close();
 
-        Assert.assertNull(JmriJFrame.getFrame("Add Location"));
+        Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("AddLocation")));
     }
 
     private void loadLocations() {
