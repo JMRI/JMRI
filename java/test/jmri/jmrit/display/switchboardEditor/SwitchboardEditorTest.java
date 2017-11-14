@@ -33,7 +33,9 @@ public class SwitchboardEditorTest extends jmri.jmrit.display.AbstractEditorTest
     @Test
     public void testSetSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        java.awt.Dimension d0 = swe.getSize();
         swe.setSize(100, 100);
+        JUnitUtil.waitFor( () -> { return d0 != swe.getSize(); } );
         java.awt.Dimension d = swe.getSize();
         // the java.awt.Dimension stores the values as floating point
         // numbers, but setSize expects integer parameters.
