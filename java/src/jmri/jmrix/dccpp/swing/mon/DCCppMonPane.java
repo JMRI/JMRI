@@ -78,7 +78,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
     @SuppressWarnings("fallthrough")
     @Override
     public synchronized void message(DCCppMessage l) {
-        // display the raw data if requested  
+        // display the raw data if requested
         // Since DCC++ is text-based traffic, this is good enough for now.
         // TODO: Provide "beautified" output later.
         StringBuilder raw = new StringBuilder("TX: ");

@@ -92,12 +92,12 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             }
         }
     }
-    
+
     volatile boolean threadStopRequest;
     volatile DatagramSocket socket;
-    
+
     static class LogoffException extends JmriException {}
-    
+
     /**
      * {@inheritDoc}
      */
@@ -122,7 +122,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     // and wait for the data to arrive.
                     s.receive(receivePacket);
                     if (threadStopRequest) return;
-                    
+
                     Z21Message msg = new Z21Message(receivePacket.getLength());
                     for(int i=0;i< receivePacket.getLength();i++)
                         msg.setElement(i,receivePacket.getData()[i]);
@@ -296,11 +296,11 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 6, LocoAddress lsb.
             reply.setElement(offset++,0x00);// bytes 7-10,32 bit reception counter.
             reply.setElement(offset++,0x00);
-            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x00);
             reply.setElement(offset++,0x01);
             reply.setElement(offset++,0x00);// bytes 11-14,32 bit error counter.
             reply.setElement(offset++,0x00);
-            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x00);
             reply.setElement(offset++,0x00);
             reply.setElement(offset++,xnetadapter.locoData[i].getSpeed());//currently reserved.Speed in firmware<=1.12
             reply.setElement(offset++,0x00);//currently reserved.Options in firmware<=1.12

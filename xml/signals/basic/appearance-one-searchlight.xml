@@ -9,17 +9,17 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
   </authorgroup>
-    
+
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
@@ -39,7 +39,7 @@
   <name>Single searchlight high signal</name>
   <reference>(similar to basic signals described in various magazine articles)</reference>
   <description>A simple signal for use as e.g. a block signal</description>
-  
+
   <appearances>
 
     <appearance>
@@ -59,7 +59,7 @@
       <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-292.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
@@ -68,7 +68,7 @@
 
 
   </appearances>
-  
+
     <specificappearances><!-- Start of Specific Appearances list -->
      <danger>
         <aspect>Stop</aspect>
@@ -81,14 +81,14 @@
       <aspect>Unlit</aspect>
     </dark>
   </specificappearances><!-- End of Specific Appearances list -->
-  
+
     <aspectMappings><!-- Start of Aspect Mapping -->
 
     <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
      <ourAspect>Approach</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Approach</advancedAspect>
      <ourAspect>Clear</ourAspect>
@@ -111,4 +111,4 @@
     </aspectMapping>
 
   </aspectMappings><!-- End of Aspect Mapping -->
-</appearancetable>  
+</appearancetable>

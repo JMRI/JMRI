@@ -6,7 +6,7 @@ import jmri.*;
 /**
  * Models a traffic relay.
  * <p>
- * A traffic relay has three states, representing a section of track is 
+ * A traffic relay has three states, representing a section of track is
  * allocated to traffic in one direction, the other, or neither.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
@@ -20,7 +20,7 @@ public class TrafficRelay {
 
     // logging to locks now, as related
     static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
-        
+
     /**
      * @param signal SignalHeadSection at far end of this route
      * @param direction Setting that, if present in the far SignalHeadSection, means to lock
@@ -45,7 +45,7 @@ public class TrafficRelay {
     SignalHeadSection farSignal;
     CodeGroupThreeBits direction;
     BeanSetting[] beans;
-    
+
     /**
      * Test for new condition
      * @return True if lock is clear and operation permitted
@@ -66,5 +66,5 @@ public class TrafficRelay {
         }
         return true;
     }
-    
+
 }

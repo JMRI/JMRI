@@ -46,7 +46,7 @@ public class ConsistControllerTest extends TestCase {
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

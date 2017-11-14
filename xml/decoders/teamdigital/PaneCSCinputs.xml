@@ -23,7 +23,7 @@
 		<column> <display item="Address 1" tooltip="Determines the input address" /> </column>
 		<column> <display item="Tog 1" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 		<column> <label label="         "/> </column>
-		<column> <label label="         "/> </column>		
+		<column> <label label="         "/> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
@@ -263,6 +263,6 @@
 			</row>
 		<display item="Transition 16" tooltip="Configures the input for specific use" />
 		<display item="Delay 16" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
-		<label label=" "/>		
+		<label label=" "/>
 	</column>
 </pane>

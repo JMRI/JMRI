@@ -157,7 +157,7 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
     public SignalHead getHeadToTest() {
         return new DccSignalHead("IH$1");
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {

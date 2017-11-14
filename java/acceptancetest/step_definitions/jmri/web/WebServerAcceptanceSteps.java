@@ -23,13 +23,13 @@ import jmri.web.server.WebServer;
  * @author  Paul Bender Copyright (C) 2017
  */
 public class WebServerAcceptanceSteps implements En {
-     
+
    private EventFiringWebDriver webDriver;
-   
+
    String[] firefoxtags = {"@webtest","@firefox"};
    String[] chrometags = {"@webtest","@chrome"};
    String[] tags = {"@webtest"};
-   
+
    public WebServerAcceptanceSteps(jmri.InstanceManager instance) {
 
       Given("^I am using firefox$", () -> {
@@ -63,7 +63,7 @@ public class WebServerAcceptanceSteps implements En {
       Then("^a page with title (.*) is returned$", (String pageTitle) -> {
         WebDriverWait wait = new WebDriverWait(webDriver,10);
         wait.until(new ExpectedCondition<Boolean>() {
-            // this ExpectedCondition code is derived from code posted by user 
+            // this ExpectedCondition code is derived from code posted by user
             // Jeff Vincent to
             // https://stackoverflow.com/questions/12858972/how-can-i-ask-the-selenium-webdriver-to-wait-for-few-seconds-in-java
             @Override

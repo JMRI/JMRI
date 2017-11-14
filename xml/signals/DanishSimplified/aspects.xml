@@ -12,11 +12,11 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>KJ</firstname><surname>Lisby</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -38,7 +38,7 @@
       <speed>Normal</speed>
       <speed2>Normal</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Kør</name>
       <indication>Proceed: be prepared to find the next signal displaying Stop aspect</indication>
@@ -47,7 +47,7 @@
       <speed>Medium</speed>
       <speed2>Medium</speed2>
     </aspect>
-    
+
 
     <aspect>
       <name>Stop</name>
@@ -57,7 +57,7 @@
       <speed>Stop</speed>
       <speed2>Stop</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Off</name>
       <indication>Proceed at Caution</indication>
@@ -80,4 +80,4 @@
     <appearancefile href="appearance-feather.xml"/>
   </appearancefiles>
 </aspecttable>
-  
+

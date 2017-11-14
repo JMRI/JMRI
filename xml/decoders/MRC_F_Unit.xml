@@ -24,7 +24,7 @@
       </model>
       <!-- Dummy model to workaround show="no" not working if only one model in the family -->
       <model show="no" model="Athearn Genesis F Unit Dummy" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
-      </model>                   
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

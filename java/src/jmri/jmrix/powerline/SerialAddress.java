@@ -50,7 +50,7 @@ public class SerialAddress {
         boolean hTest = hCodes.reset(systemName).matches();
         boolean iTest = iCodes.reset(systemName).matches();
         if ((!aTest) || (aCodes.group(2).charAt(0) != type)) { // TODO multichar prefix
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field system name: {}", systemName);
             return NameValidity.INVALID;
         }
@@ -75,9 +75,9 @@ public class SerialAddress {
             }
             return NameValidity.VALID;
         }
-        
+
         assert aTest;
-        
+
         // This is a PLaa.bb.cc address - validate the Insteon address fields
         if (!iTest) {
             // here if an invalid format
@@ -216,7 +216,7 @@ public class SerialAddress {
 
     /**
      * Extract devicecode from system name, as a string 1-16.
-     * 
+     *
      * @param systemName name
      * @return If the supplied system name does not have a valid format, an empty string
      * is returned. X10 type device code

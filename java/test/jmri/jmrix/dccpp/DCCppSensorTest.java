@@ -56,7 +56,7 @@ public class DCCppSensorTest extends TestCase {
 
         // Verify this was created in UNKNOWN state
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
-        
+
         // Set the inverted flag
         t.setInverted(true);
 

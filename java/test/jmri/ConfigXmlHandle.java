@@ -7,6 +7,6 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright 2017
  */
- 
+
 public class ConfigXmlHandle {}
- 
+

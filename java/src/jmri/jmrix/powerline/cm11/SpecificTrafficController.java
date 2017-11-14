@@ -144,7 +144,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             m.setElement(0, Constants.POLL_ACK);
             expectLength = true;  // next byte is length
             forwardToPort(m, null);
-            return false;  // reply message will get data appended            
+            return false;  // reply message will get data appended
         }
         // check for request time
         if (((msg.getElement(0) & 0xFF) == Constants.TIME_REQ_CP10) || ((msg.getElement(0) & 0xFF) == Constants.TIME_REQ_CP11)) {

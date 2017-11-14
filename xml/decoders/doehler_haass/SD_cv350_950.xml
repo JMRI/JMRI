@@ -38,7 +38,7 @@
       <revremark>Creation</revremark>
     </revision>
    </revhistory>
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->    
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
   <variable label="Max time to standstill sound" CV="350" tooltip="CV350 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="SUSI sound modules">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Délai max avant son marche arrêt</label>
@@ -49,6 +49,6 @@
 	<label xml:lang="fr">Délai max avant son marche arrêt</label>
 	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
    </variable>
-  
-  <!-- END SIMILAR CV --> 
+
+  <!-- END SIMILAR CV -->
 </variables>

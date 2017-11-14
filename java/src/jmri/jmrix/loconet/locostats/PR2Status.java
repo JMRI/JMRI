@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.locostats;
 
 /**
  * PR2 (or PR3) Status, when operating in PR2 mode
- * 
+ *
  * @author Bob Milhaupt Copyright (C) 2017
  */
 public class PR2Status {
@@ -13,7 +13,7 @@ public class PR2Status {
         this.hardware = hardware;
         this.software = software;
     }
-    
+
     public int serial, status, current, hardware, software;
-    
+
 }

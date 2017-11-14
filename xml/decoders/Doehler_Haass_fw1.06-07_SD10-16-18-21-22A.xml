@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version version="1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
-  <!-- 1 2016/07/10 Creation 
+  <!-- 1 2016/07/10 Creation
         Decoder template for the Doehler & Haass combo sound decoder
         with Firmware v1.06 and 1.07.
   -->

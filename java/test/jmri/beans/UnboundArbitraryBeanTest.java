@@ -163,7 +163,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
         }
 
         /*
-         * Throws IndexOutOfBoundsException if index > size. 
+         * Throws IndexOutOfBoundsException if index > size.
          */
         public void setIndexedProperty(int index, String string) {
             if (index < this.indexedProperty.size()) {

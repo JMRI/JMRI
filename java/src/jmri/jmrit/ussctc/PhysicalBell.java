@@ -12,14 +12,14 @@ public class PhysicalBell implements Bell {
     public PhysicalBell(String output) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
-        
+
         hOutput = hm.getNamedBeanHandle(output, tm.provideTurnout(output));
     }
 
     NamedBeanHandle<Turnout> hOutput;
 
     public static int STROKE_DELAY = 250;
-    
+
     public void ring() {
         hOutput.getBean().setCommandedState(Turnout.THROWN);
         jmri.util.ThreadingUtil.runOnLayoutDelayed(

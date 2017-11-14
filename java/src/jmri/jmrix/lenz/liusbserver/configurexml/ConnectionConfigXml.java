@@ -50,7 +50,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
         // register, so can be picked up
         register();
-     
+
         if(adapter.getDisabled()){
             unpackElement(shared,perNode);
             return result;
@@ -62,7 +62,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void getInstance() {
         if (adapter == null) {
             adapter = new LIUSBServerAdapter();
-            try { 
+            try {
                 adapter.connect();
                 adapter.configure();
             } catch(Exception e){

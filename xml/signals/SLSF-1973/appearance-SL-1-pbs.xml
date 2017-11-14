@@ -9,14 +9,14 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
     </author>
     <author>
         <personname><firstname>Paul</firstname><surname>Bender</surname></personname>
-    </author>   
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -25,13 +25,13 @@
         <date>2010-01-01</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2010-01-12</date>
         <authorinitials>PAB</authorinitials>
         <revremark>Adapted from NYCS-1937</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2013-07-08</date>
@@ -46,7 +46,7 @@
 July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
   </reference>
   <description>Appearances for a single-searchlight signal head with number plate</description>
-  
+
   <appearances>
 
     <appearance>
@@ -95,8 +95,8 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
               <aspect>Stop and Proceed</aspect>
            </held>
     </specificappearances><!-- End of Specific Appearances list -->
- 
- 
+
+
     <aspectMappings><!-- Start of Aspect Mapping -->
 
     <aspectMapping>
@@ -155,4 +155,4 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
     </aspectMapping>
   </aspectMappings><!-- End of Aspect Mapping -->
 
-</appearancetable>  
+</appearancetable>

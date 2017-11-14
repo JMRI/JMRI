@@ -104,7 +104,7 @@ public class JsonReporterHttpServiceTest  {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void testDoGetList() {
         try {
@@ -124,7 +124,7 @@ public class JsonReporterHttpServiceTest  {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void testDelete() {
         try {

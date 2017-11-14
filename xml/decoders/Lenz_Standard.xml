@@ -22,10 +22,10 @@
             <label xml:lang="cs">A - Bílá</label>
         </output>
         <output name="2" label="B - Yellow">
-            <label xml:lang="cs">B - Žlutá</label>            
+            <label xml:lang="cs">B - Žlutá</label>
         </output>
         <output name="3" label="C - Green">
-            <label xml:lang="cs">C - Zelená</label>            
+            <label xml:lang="cs">C - Zelená</label>
         </output>
       </model>
     </family>

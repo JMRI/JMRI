@@ -42,7 +42,7 @@ abstract public class Application {
                 }
             } catch (IllegalArgumentException ex) {
                 // if Desktop.Action does not include AboutHandlers, its not
-                // recognized to be (un)supported, so assume the Eawt is available 
+                // recognized to be (un)supported, so assume the Eawt is available
                 sharedApplication = new EawtApplication();
             }
         }

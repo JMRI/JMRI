@@ -17,7 +17,7 @@
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
-  
+
   <decoder>
     <family name="Servo5" mfg="MGP" type="stationary" comment="Servo5, a LocoNet decoder for railway switches">
       <model model="Servo5" lowVersionID="1">
@@ -27,13 +27,13 @@
         <mode>LOCONETSV2MODE</mode>
     </programming>
     <variables>
-	
+
 	<!-- * * * * * * * * * * * * * * * * * -->
 	<!--  v v v v v   STANDARD  v v v v v  -->
 	<variable CV="2" item="Decoder Version" readOnly="yes" >
         <decVal/>
         <label>Manufacturer Version No.</label>
-	  </variable>	  
+	  </variable>	
       <variable CV="3" item="Serial Number" readOnly="yes" >
 		<splitVal highCV="4" upperMask="XXXXVVVV"/>
         <label>Decoder serial number</label>
@@ -54,10 +54,10 @@
 	  <variable CV="21" item="Short Address" default="1">
 		<splitVal highCV="22" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
-	  </variable>	  
+	  </variable>	
 	<!--  ^ ^ ^ ^ ^ ^ STANDARD ^ ^ ^ ^ ^ ^ -->
 	<!-- * * * * * * * * * * * * * * * * * -->
-	
+
 	<!-- * * * * * * * * * * * * * * * * * -->
 	<!--  v v v v v   Servo v v v v v v v  -->
 	<!-- <SV type="int1" name="Servo 1, Min angle" svNumber="23" rw="1"/> -->
@@ -377,7 +377,7 @@
 	<!--  ^ ^ ^ ^ ^ ^ Sservo ^ ^ ^ ^ ^ ^ ^ -->
 	<!-- * * * * * * * * * * * * * * * * * -->
 
-	
+
 	<!-- * * * * * * * * * * * * * * * * * -->
 	<!--  v v v v v   Control v v v v v v  -->
 	<!--
@@ -428,12 +428,12 @@
 	<SV type="bits" start='4' length='1' name="Lock 5 in position" svNumber="48" rw="1" minVersion='3'>
 				<v name="Thrown" value='0'/>
 				<v name="Closed" value='1'/>
--->	
+-->
 	  <variable CV="45" item="Lock Address" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="46" upperMask="XXXXXVVV"/>
 		<label>Lock Address</label>
-	  </variable>	  
+	  </variable>	
 	<variable item="Lock switch 1" CV="47" mask="XXXXXXXV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
@@ -469,7 +469,7 @@
           <enumChoice choice="Yes" value="1"/>
         </enumVal>
 	</variable>
-	
+
 	<variable item="Lock 1 in position" CV="48" mask="XXXXXXXV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
@@ -519,10 +519,10 @@
 					<v name="Closed" value='1'/>
 					<v name="Thrown" value='0'/>
 	</array>
--->	
+-->
 	<!--  ^ ^ ^ ^ ^ ^ Routes ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
-	
+
 	<!-- * * * * * * * * * * * * * * * * * -->
 	<!-- v v v v v v  Special v v v v v v  -->
 	<!--
@@ -530,7 +530,7 @@
 	<SV type="int1" name="Input sensor, Value for occupied state" svNumber="178" rw="1" minVersion='5'>
 	<SV type="int1" name="Input unconnected state" svNumber="179" rw="1" minVersion='5' advanced="1">
 	<SV type="int1" name="Input use" svNumber="180" rw="1" minVersion='3'>
-	<SV type="int2" name="Status start address" svNumber="181" minValue='1' maxValue='4090' rw="1" minVersion='3'/>  
+	<SV type="int2" name="Status start address" svNumber="181" minValue='1' maxValue='4090' rw="1" minVersion='3'/>
 	<SV svNumber="400" type="int2" name="Sensor filter Pre (ms)" rw="1"/>
 	<SV svNumber="402" type="int2" name="Sensor filter Succ (ms)" rw="1"/>
 
@@ -571,13 +571,13 @@
 	<variable CV="181" item="Status start address" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="182" upperMask="XXXXVVVV"/>
-	</variable>	  
+	</variable>	
 	<variable CV="400" item="Sensor filter Pre (ms)" default="0">
 		<splitVal highCV="401" />
-	</variable>	  
+	</variable>	
 	<variable CV="402" item="Sensor filter Succ (ms)" default="0">
 		<splitVal highCV="403" />
-	</variable>	  
+	</variable>	
 	<!--  ^ ^ ^ ^ ^ ^ Special ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
 
@@ -615,7 +615,7 @@
 	<variable CV="184" item="Address X1" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="185" upperMask="XXXXVVVV"/>
-	</variable>	  
+	</variable>	
 
 	<variable item="Usage X2" CV="186">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
@@ -641,7 +641,7 @@
 	<variable CV="187" item="Address X2" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="188" upperMask="XXXXVVVV"/>
-	</variable>	  
+	</variable>	
 
 	<variable item="Usage X3" CV="189">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
@@ -678,7 +678,7 @@
 	<variable CV="190" item="Address X3" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="191" upperMask="XXXXVVVV"/>
-	</variable>	  
+	</variable>	
 
 	<variable item="Usage X4" CV="192">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
@@ -715,7 +715,7 @@
 	<variable CV="193" item="Address X4" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="194" upperMask="XXXXVVVV"/>
-	</variable>	  
+	</variable>	
 	<!-- ^ ^ ^ ^ ^ ^ Extra HW ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
 
@@ -730,7 +730,7 @@
 	<SV type="bits" start='7' length='1' name="Autoreturn, state, servo 1" svNumber="195" rw="1" minVersion='4'>
 				<v name="Closed" value='1'/>
 				<v name="Thrown" value='0'/>
--->	
+-->
 	<variable item="Autoreturn, time, servo 1" CV="195" mask="XVVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
@@ -898,7 +898,7 @@
     </variable>
 	<variable CV="202" item="Secondary trigger 1, Controlled Address" default="0">
 		<splitVal highCV="203" upperMask="XXXXXVVV"/>
-	</variable>	  
+	</variable>	
 
 	<variable item="Secondary trigger 2, Type" CV="204" mask="XXXXXVVV" default="0">
         <enumVal>
@@ -924,7 +924,7 @@
     </variable>
 	<variable CV="206" item="Secondary trigger 2, Controlled Address" default="0">
 		<splitVal highCV="207" upperMask="XXXXXVVV"/>
-	</variable>	  
+	</variable>	
 
 	<variable item="Secondary trigger 3, Type" CV="208" mask="XXXXXVVV" default="0">
         <enumVal>
@@ -950,7 +950,7 @@
     </variable>
 	<variable CV="210" item="Secondary trigger 3, Controlled Address" default="0">
 		<splitVal highCV="211" upperMask="XXXXXVVV"/>
-	</variable>	  
+	</variable>	
 
 	<variable item="Secondary trigger 4, Type" CV="212" mask="XXXXXVVV" default="0">
         <enumVal>
@@ -976,7 +976,7 @@
     </variable>
 	<variable CV="214" item="Secondary trigger 4, Controlled Address" default="0">
 		<splitVal highCV="215" upperMask="XXXXXVVV"/>
-	</variable>	  
+	</variable>	
 
 	<variable item="Secondary trigger 5, Type" CV="216" mask="XXXXXVVV" default="0">
         <enumVal>
@@ -1002,25 +1002,25 @@
     </variable>
 	<variable CV="218" item="Secondary trigger 5, Controlled Address" default="0">
 		<splitVal highCV="219" upperMask="XXXXXVVV"/>
-	</variable>	  
+	</variable>	
 
 	<!-- ^ ^ ^ ^ ^ ^ Secondary triggers  ^ ^ ^ ^ ^ ^ -->
 	<!-- * * * * * * * * * * * * * * * * * * * * * * -->
-	
-	<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+
+	<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	
 	<!-- * * * * * * * * * * * * * * * * -->
 	<!-- v v v v v v  xxx  v v v v v v  -->
 
 	<!--  ^ ^ ^ ^ ^ ^ xxx ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
 
-  
+
     </variables>
   </decoder>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	
   <pane>
     <name>General decoder info</name>
     <column>
@@ -1151,7 +1151,7 @@
       <display item="Lock 5 in position"/>
     </column>
   </pane>
-  
+
 	<pane>
 		<name>RoutesPane</name>
 	</pane>
@@ -1294,6 +1294,6 @@
  	<pane>
 		<name>RulesPane</name>
 	</pane>
- 
-	
+
+
 </decoder-config>

@@ -21,8 +21,8 @@ public class CarRoadsTest extends OperationsTestCase {
         CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
 
         // the previous version of this test looked for specific values,
-        // but those specific road names may not exist in a non-US 
-        // English context. 
+        // but those specific road names may not exist in a non-US
+        // English context.
         Assert.assertNotNull("Car Roads not empty", cr1.getNames());
     }
 

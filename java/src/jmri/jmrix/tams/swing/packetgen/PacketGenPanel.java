@@ -28,7 +28,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

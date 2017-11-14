@@ -87,7 +87,7 @@ public class LnPowerManager
                 thread = null;
             }
         }
-    
+
         if (tc != null) {
             tc.removeLocoNetListener(~0, this);
         }
@@ -118,7 +118,7 @@ public class LnPowerManager
                 int slotTrackStatus
                         = ((m.getElement(7) & LnConstants.GTRK_POWER) == LnConstants.GTRK_POWER) ? ON : OFF;
                 if (power != slotTrackStatus) {
-                    // fire a property change only if slot status is DIFFERENT 
+                    // fire a property change only if slot status is DIFFERENT
                     // from current local status
                     power = slotTrackStatus; // update local track status from slot info
                     firePropertyChange("Power", null, null); // NOI18N
@@ -140,7 +140,7 @@ public class LnPowerManager
     }
 
     volatile LnTrackStatusUpdateThread thread;
-    
+
     /**
      * Class providing a thread to delay then query slot 0. The LnPowerManager
      * can use the resulting OPC_SL_RD_DATA message to update its view of the

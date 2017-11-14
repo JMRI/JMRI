@@ -39,7 +39,7 @@ public class Control {
     public static final int panelHeight100 = 100;
 
     /*
-     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
+     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
      // Maximum panel height
      public static final int panelMaxHeight = screenSize.height;
      */
@@ -51,13 +51,13 @@ public class Control {
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
     public static boolean fullTrainOnly = false;
 
-    // Car and Engine attribute maximum string length 
+    // Car and Engine attribute maximum string length
     public static int max_len_string_attibute = 12;
 
-    // Car and Engine number maximum string length 
+    // Car and Engine number maximum string length
     public static int max_len_string_road_number = 10;
-    
-    // Car and Engine number maximum string length when printing  
+
+    // Car and Engine number maximum string length when printing
     public static int max_len_string_print_road_number = 6;
 
     // Location name maximum string length
@@ -83,17 +83,17 @@ public class Control {
 
     // Route name maximum string length
     public static int max_len_string_route_name = 25;
-    
+
     // Automation name maximum string length
     public static int max_len_string_automation_name = 25;
 
     // Backward compatibility for xml saves (pre 2013 releases)
     // backward compatibility to false in 2014
     public static boolean backwardCompatible = false;
-    
+
     public static int reportFontSize = 10;
     public static String reportFontName = ""; // use default
-    
+
     public static int excelWaitTime = 120; // in seconds
 
     // must synchronize changes with operation-config.dtd
@@ -137,7 +137,7 @@ public class Control {
         // actions
         e.addContent(values = new Element(Xml.ACTIONS));
         values.setAttribute(Xml.EXCEL_WAIT_TIME, Integer.toString(excelWaitTime));
-        
+
         return e;
     }
 
@@ -218,7 +218,7 @@ public class Control {
             if ((a = eReports.getAttribute(Xml.FONT_NAME)) != null) {
                 reportFontName = a.getValue();
             }
-        }   
+        }
         Element eActions = eControl.getChild(Xml.ACTIONS);
         if (eActions != null) {
             Attribute a;
@@ -231,6 +231,6 @@ public class Control {
             }
         }
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(Control.class);
 }

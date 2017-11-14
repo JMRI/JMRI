@@ -35,7 +35,7 @@
       <revremark>Added German, corrected French</revremark>
     </revision>
   </revhistory>
-  
+
   <!-- with label attribute, no item -->
   <variable CV="3" label="Accel">
     <decVal max="31"/>
@@ -43,7 +43,7 @@
     <label xml:lang="fr">Accélération</label>
     <label xml:lang="de">Beschleunigungszeit</label>
   </variable>
-  
+
   <!-- with label and item attribute same -->
   <variable CV="4" item="Decel" label="Deceleration">
     <decVal max="31"/>
@@ -51,7 +51,7 @@
     <label xml:lang="fr">Décélération</label>
     <label xml:lang="de">Bremszeit</label>
   </variable>
-  
+
   <!-- with item attribute, no label attribute or element -->
   <variable CV="7" readOnly="yes" item="Decoder Version">
     <decVal/>
@@ -59,7 +59,7 @@
     <label xml:lang="fr">Version décodeur: </label>
     <label xml:lang="de">Decoder Version: </label>
   </variable>
-  
+
   <!-- with label attribute and element -->
   <variable CV="8" readOnly="yes" label="Manufacturer">
     <decVal/>

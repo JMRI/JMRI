@@ -39,14 +39,14 @@
         <pathelement location="jars/junit.jar"/>
     </path>
 
-  <target name="jhelpdev" depends="init" 
+  <target name="jhelpdev" depends="init"
   			description="run batch jhelpdev">
         <java classname="net.sourceforge.jhelpdev.JHelDevCmdLine" fork="yes">
             <classpath refid="class.path"/>
         </java>
   </target>
-    
-  <target name="index" depends="init" 
+
+  <target name="index" depends="init"
   			description="create an fr/index page">
     <xslt  basedir="${basedir}"
     		destdir="${target}"
@@ -66,10 +66,10 @@
                 location="index_2_0.dtd"/>
         </xmlcatalog>
     </xslt>
-    <move file="JmriHelp_frIndex.html" tofile="webindex.shtml"/> 
+    <move file="JmriHelp_frIndex.html" tofile="webindex.shtml"/>
   </target>
 
-  <target name="TOC" depends="init" 
+  <target name="TOC" depends="init"
   			description="create an fr/TOC page">
     <xslt  basedir="${basedir}"
     		destdir="${target}"
@@ -89,12 +89,12 @@
                 location="index_2_0.dtd"/>
         </xmlcatalog>
 	</xslt>
-    <move file="JmriHelp_frTOC.html" tofile="webtoc.shtml"/> 
+    <move file="JmriHelp_frTOC.html" tofile="webtoc.shtml"/>
   </target>
 
-  <target name="all" depends="init, jhelpdev, index, TOC" 
+  <target name="all" depends="init, jhelpdev, index, TOC"
   			description="create all fr/help pages" />
- 
+
 </project>
 
 

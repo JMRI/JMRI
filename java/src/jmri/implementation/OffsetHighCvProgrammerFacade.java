@@ -124,7 +124,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
             temp.programmingOpReply(value, status);
             return;
         }
-        
+
         if (_usingProgrammer == null) {
             log.error("No listener to notify, reset and ignore");
             state = ProgState.NOTPROGRAMMING;

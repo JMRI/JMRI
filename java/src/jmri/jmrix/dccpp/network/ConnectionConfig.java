@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * @author      Mark Underwood Copyright (C) 2015
   *
  * Adapted from LIUSBEthernetAdapter
- * 
+ *
  * @see jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {

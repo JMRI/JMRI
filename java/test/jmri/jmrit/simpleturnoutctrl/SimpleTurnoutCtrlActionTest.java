@@ -25,7 +25,7 @@ public class SimpleTurnoutCtrlActionTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SimpleTurnoutCtrlAction action = new SimpleTurnoutCtrlAction(); 
+        SimpleTurnoutCtrlAction action = new SimpleTurnoutCtrlAction();
         Assert.assertNotNull("exists", action);
     }
 

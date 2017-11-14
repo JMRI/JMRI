@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.0" lastUpdated="20130520"/>
   <!-- Version 1 initial release 10/27/13-->
-  <!-- Version 1.1 added delay for inputs 9-16 release 10/27/13-->  
+  <!-- Version 1.1 added delay for inputs 9-16 release 10/27/13-->
   <decoder>
     <family name="CSC Family" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way">
       <model model="CSC" lowVersionID="10" comment="Original HW"/>
@@ -11420,7 +11420,7 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/teamdigital/ChoiceAspect.xml"/><label>Aspect</label></variable>
-      
+
        <!-- Begin Logic Cell 57-64 Delay variable definition -->
       <variable CV="657" mask="XVVVVVVV" item="LC Delay 1" default="0">
         <decVal min="0" max="127"/>
@@ -11453,8 +11453,8 @@
       <variable CV="664" mask="XVVVVVVV" item="LC Delay 8" default="0">
         <decVal min="0" max="127"/>
         <label>LC Delay 64</label>
-      </variable>     
-      
+      </variable>
+
     </variables>
   </decoder>
   <pane>

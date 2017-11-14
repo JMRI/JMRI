@@ -6,8 +6,8 @@
   <version author="ncliffe@btinternet.com" version="4d" lastUpdated="20120201"/>
   <!--  Version 4d (beta) by Nigel Cliffe    -->
   <!--  Uses decoder indexed variables for address range setting
-			      Bug fixes over version 4c, separating the address ranges from other features, 
-				  asking users to use two panels  (because the indexed variables break if 
+			      Bug fixes over version 4c, separating the address ranges from other features,
+				  asking users to use two panels  (because the indexed variables break if
 				  used on a single panel due to the index CV controlling too many other features!)
 			-->
   <version author="jacobsen@mac.com" version="5" lastUpdated="20150628"/>
@@ -328,7 +328,7 @@
   <!--
 <pane name="DCCACC5 Settings (old)">
 	<column>
-		<row> 
+		<row>
 			<column>
 				<label label="CV1 to CV34          "/>
 				<label label=" "/>
@@ -342,7 +342,7 @@
 				<label label=" "/>
 			</column>
 		</row>
-		
+
 		<row>
 			<column>
 				<label label=" "/>
@@ -372,7 +372,7 @@
 					</column>
 				</row>
 				<label label=" "/>
-				
+
 				<label label="Output operation, select / deselect as required" />
 				<separator/>
 				<label label=" "/>
@@ -470,7 +470,7 @@
 				<display item="Decoder Version" label="Decoder Version"/>
 				<display item="Manufacturer" label="Manufacturer"/>
 			</column>
-							
+
 		</row>
 	</column>
 </pane>

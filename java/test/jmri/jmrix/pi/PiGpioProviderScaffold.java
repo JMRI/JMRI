@@ -35,7 +35,7 @@ public class PiGpioProviderScaffold extends WiringPiGpioProviderBase {
      @Override
      public void setPullResistance(Pin pin, PinPullResistance resistance) {
      }
-            
+
      @Override
      protected void updateInterruptListener(Pin pin) {
      }

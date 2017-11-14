@@ -274,7 +274,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         } else {
             nxFrame.setState(java.awt.Frame.NORMAL);
             nxFrame.setVisible(true);
-            nxFrame.toFront();            
+            nxFrame.toFront();
         }
     }
 
@@ -435,11 +435,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             return msg;
         }
 /*        if (w.commandsHaveTrackSpeeds()) {
-            w.getSpeedUtil().getValidSpeedProfile(this);            
+            w.getSpeedUtil().getValidSpeedProfile(this);
         } else {
             setStatusText(Bundle.getMessage("NoTrackSpeeds", w.getDisplayName()), Color.red, true);
         }*/
-        
+
         msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
         if (msg != null) {
             setStatusText(msg, Color.red, false);

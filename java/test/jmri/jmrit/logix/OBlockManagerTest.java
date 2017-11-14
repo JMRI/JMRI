@@ -16,7 +16,7 @@ import org.junit.Test;
 public class OBlockManagerTest {
 
     OBlockManager l;
-    
+
     @Test
     public void testProvide() {
         // original create with systemname
@@ -43,9 +43,9 @@ public class OBlockManagerTest {
         } catch (IllegalArgumentException ex) {
             correct = true;
         }
-        Assert.assertTrue("Exception thrown properly", correct);     
+        Assert.assertTrue("Exception thrown properly", correct);
     }
-    
+
     @Test
     public void testCreateNewOBlock() {
         Assert.assertNull("createNewOBlock", l.createNewOBlock("", "user"));

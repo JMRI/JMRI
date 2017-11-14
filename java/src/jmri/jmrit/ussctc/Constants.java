@@ -19,7 +19,7 @@ public interface Constants {
 
     final static String commonNamePrefix = pkgPrefix + nameDivider;
     final static String commonNameSuffix = nameDivider + "1" + nameDivider;
-    // the "1" is a placeholder for later, in case more that one machine/code line 
+    // the "1" is a placeholder for later, in case more that one machine/code line
     // is needed
 
 }

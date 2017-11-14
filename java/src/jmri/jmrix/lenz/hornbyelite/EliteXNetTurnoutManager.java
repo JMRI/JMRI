@@ -42,22 +42,22 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
             int numDataBytes = l.getElement(0) & 0x0f;
             for (int i = 1; i < numDataBytes; i += 2) {
                 // parse message type
-                int addr = l.getTurnoutMsgAddr(i);    // Acc. Address 1 on 
-                // Hornby reads as 
+                int addr = l.getTurnoutMsgAddr(i);    // Acc. Address 1 on
+                // Hornby reads as
                 // XpressNet address 2
                 // in the message.
                 if (addr >= 0) {
                     log.debug("message has address: {}", addr);
-                    // reach here for switch command; make sure we know 
+                    // reach here for switch command; make sure we know
                     // about this one
                     String s = prefix + typeLetter() +(addr - 1);
                     forwardMessageToTurnout(s,l);
                     if ((addr & 0x01) == 1) {
-                        // If the address we got was odd, we need to check to 
+                        // If the address we got was odd, we need to check to
                         // see if the even address should be added as well.
                         int a2 = l.getElement(i + 1);
                         if ((a2 & 0x0c) != 0) {
-                            // reach here for switch command; make sure we know 
+                            // reach here for switch command; make sure we know
                             // about this one
                             s = prefix + typeLetter() + (addr);
                             forwardMessageToTurnout(s,l);

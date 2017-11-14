@@ -22,7 +22,7 @@ public class XNetSystemConnectionMemoTest extends TestCase {
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo(tc);
         Assert.assertNotNull(t);
         Assert.assertNotNull(t.getXNetTrafficController());
-        // While we are constructing the memo, we should also set the 
+        // While we are constructing the memo, we should also set the
         // SystemMemo parameter in the traffic controller.
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }
@@ -38,7 +38,7 @@ public class XNetSystemConnectionMemoTest extends TestCase {
         // so we need to do this ourselves.
         t.setXNetTrafficController(tc);
         Assert.assertNotNull(t.getXNetTrafficController());
-        // and while we're doing that, we should also set the SystemMemo 
+        // and while we're doing that, we should also set the SystemMemo
         // parameter in the traffic controller.
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }

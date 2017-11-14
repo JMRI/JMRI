@@ -23,9 +23,9 @@ public class AbstractProgrammerTest extends TestCase {
 
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
-                abstractprogrammer.getMode());        
+                abstractprogrammer.getMode());
     }
-    
+
     public void testDefaultViaBestMode() {
         // Programmer implementation that uses getBestMode for setting default
         abstractprogrammer = new AbstractProgrammer() {
@@ -33,7 +33,7 @@ public class AbstractProgrammerTest extends TestCase {
             @Override
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
-                
+
                 retval.add(ProgrammingMode.DIRECTMODE);
                 retval.add(ProgrammingMode.PAGEMODE);
                 retval.add(ProgrammingMode.REGISTERMODE);
@@ -43,7 +43,7 @@ public class AbstractProgrammerTest extends TestCase {
 
             @Override
             public ProgrammingMode getBestMode() { return ProgrammingMode.REGISTERMODE; }
-            
+
             @Override
             public void writeCV(int i, int j, ProgListener l) {}
             @Override
@@ -57,23 +57,23 @@ public class AbstractProgrammerTest extends TestCase {
         };
 
         Assert.assertEquals("Check Default", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
+                abstractprogrammer.getMode());
     }
-    
+
     public void testSetGetMode() {
         abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
+                abstractprogrammer.getMode());
     }
-    
+
     public void testSetModeNull() {
         try {
             abstractprogrammer.setMode(null);
         } catch (IllegalArgumentException e) { return;  /* OK */ }
-        
-        Assert.fail("should not have setMode(null)");        
+
+        Assert.fail("should not have setMode(null)");
     }
-    
+
     public void testRegisterFromCV() {
         int cv1 = -1;
 
@@ -137,7 +137,7 @@ public class AbstractProgrammerTest extends TestCase {
             @Override
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
-                
+
                 retval.add(ProgrammingMode.DIRECTMODE);
                 retval.add(ProgrammingMode.PAGEMODE);
                 retval.add(ProgrammingMode.REGISTERMODE);

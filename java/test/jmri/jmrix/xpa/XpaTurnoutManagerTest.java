@@ -28,7 +28,7 @@ public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
 
     // The minimal setup for log4J
     @Override
-    @Before 
+    @Before
     public void setUp() {
         JUnitUtil.setUp();
         memo = new XpaSystemConnectionMemo();
@@ -36,7 +36,7 @@ public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         l = new XpaTurnoutManager(memo);
     }
 
-    @After 
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
         memo = null;

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Test the VerifyWriteProgrammerFacade class.
  *
  * @author	Bob Jacobsen Copyright 2013
- * 
+ *
  */
 public class VerifyWriteProgrammerFacadeTest extends TestCase {
 
@@ -48,7 +48,7 @@ public class VerifyWriteProgrammerFacadeTest extends TestCase {
         waitReply();
         Assert.assertEquals("target written", 12, dp.getCvVal(4));
         Assert.assertEquals("reads", 0, readCount);
-        
+
         p.readCV("4", l);
         waitReply();
         Assert.assertEquals("read back", 12, readValue);

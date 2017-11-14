@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
  */
 
 public class NodeConfigManagerAction extends AbstractAction {
-    
+
     CMRISystemConnectionMemo _memo = null;
 
-    public NodeConfigManagerAction(String s, CMRISystemConnectionMemo memo) { 
+    public NodeConfigManagerAction(String s, CMRISystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
@@ -28,7 +28,7 @@ public class NodeConfigManagerAction extends AbstractAction {
     public NodeConfigManagerAction(CMRISystemConnectionMemo memo) {
         this(Bundle.getMessage("WindowTitle"), memo);
     }
-    
+
   @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigManagerFrame f = new NodeConfigManagerFrame(_memo);

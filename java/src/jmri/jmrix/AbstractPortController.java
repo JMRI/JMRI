@@ -357,7 +357,7 @@ abstract public class AbstractPortController implements PortAdapter {
             count = serialStream.available();
         }
     }
-    
+
     /**
      * Get the {@link jmri.jmrix.SystemConnectionMemo} associated with this
      * object.

@@ -165,7 +165,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
         configureLeadsAndFlowControl(activeSerialPort, flow);
-        
+
 
         if (log.isDebugEnabled()) {
             activeSerialPort.notifyOnFramingError(true);
@@ -266,7 +266,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     public void open(){
        log.debug("open called");
        iConnectionOpened = true;
-       // don't do anything here.  We handle the details of open through the 
+       // don't do anything here.  We handle the details of open through the
        // openPort call, which is called from the JMRI infrastructure.
     }
 

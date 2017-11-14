@@ -36,9 +36,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     @Override
     public Element store(Object o) {
         getInstance(o);
-        
+
         if (adapter == null) return null;
-        
+
         Element e = new Element("connection");
         storeCommon(e, adapter);
 

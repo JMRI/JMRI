@@ -66,7 +66,7 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output A4</label>
 	<label xml:lang="it">Luci (in avanti) - uscita A4</label>
-  </variable>  
+  </variable>
   <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7" minFn="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output A5</label>
@@ -106,7 +106,7 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output A4</label>
 	<label xml:lang="it">Luci (in retro) - uscita A4</label>
-  </variable>  
+  </variable>
   <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7" minFn="2">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output A5</label>
@@ -116,7 +116,7 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output A6</label>
 	<label xml:lang="it">Luci (in retro) - uscita A6</label>
-  </variable>  
+  </variable>
   <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="3">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output Headlight</label>
@@ -146,7 +146,7 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output A4</label>
 	<label xml:lang="it">F1 - uscita A4</label>
-  </variable>  
+  </variable>
   <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="3">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output A5</label>
@@ -186,7 +186,7 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F2 controls output A4</label>
 	<label xml:lang="it">F2 - uscita A4</label>
-  </variable>  
+  </variable>
   <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="4">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F2 controls output A5</label>
@@ -226,7 +226,7 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F3 controls output A4</label>
 	<label xml:lang="it">F3 - uscita A4</label>
-  </variable>  
+  </variable>
   <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="5">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F3 controls output A5</label>
@@ -596,5 +596,5 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F12 controls output Start/brake</label>
 	<label xml:lang="it">F12 - uscita Avvio/Freni</label>
-  </variable>  
+  </variable>
 </variables>

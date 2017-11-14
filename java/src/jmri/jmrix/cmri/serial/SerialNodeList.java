@@ -10,5 +10,5 @@ import java.util.ArrayList;
 public class SerialNodeList extends ArrayList<SerialNode> {
 
     public SerialNodeList() { super(); }
-  
+
 }

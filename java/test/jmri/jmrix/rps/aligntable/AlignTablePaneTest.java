@@ -18,7 +18,7 @@ public class AlignTablePaneTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AlignTablePane action = new AlignTablePane(new jmri.ModifiedFlag(){
            @Override
            public void setModifiedFlag(boolean flag) {}

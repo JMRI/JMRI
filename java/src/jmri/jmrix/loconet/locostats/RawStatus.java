@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.locostats;
 
 /**
  * Raw status.  Used when LocoNet interface returns undeciphered data.
- * 
+ *
  * @author Bob Milhaupt Copyright (C) 2017
  */
 public class RawStatus {

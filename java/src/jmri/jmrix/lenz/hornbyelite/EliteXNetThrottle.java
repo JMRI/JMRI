@@ -111,12 +111,12 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                 log.debug("Throttle - message is LOCO_INFO_RESPONSE ");
                 if (l.getElement(1) == 0xF8) {
                     /* This is a Hornby Elite specific response
-                     * which occurs when the Elite throttle changes 
+                     * which occurs when the Elite throttle changes
                      * speed.  If this is for this throttle,
                      * we need to handle it.
                      * The address is in bytes 3 and 4*/
                     if (getDccAddressHigh() == l.getElement(2) && getDccAddressLow() == l.getElement(3)) {
-                        //Set the Is available flag to "False"                    
+                        //Set the Is available flag to "False"
                         log.info("Loco {} in use by another device", getDccAddress());
                         setIsAvailable(false);
                         // Set the speed step mode and availabliity
@@ -128,7 +128,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                     }
                 } else if (l.getElement(1) == 0xF9) {
                     /* This is a Hornby Elite specific response
-                     * which occurs when the Elite throttle changes 
+                     * which occurs when the Elite throttle changes
                      * functions.  If this is for this throttle,
                      * we need to handle it.
                      * The address is in bytes 3 and 4*/
@@ -150,7 +150,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
 
     /*
      * Since the Elite sends status messages when the throttle changes,
-     * override the startStatusTimer/stopStatustimer method to do nothing. 
+     * override the startStatusTimer/stopStatustimer method to do nothing.
      */
     @Override
     protected void startStatusTimer() {

@@ -60,8 +60,8 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
                 || u.getFile().endsWith("xml")
                 || u.getFile().endsWith("gif"))) {
 
-            // following was 
-            // ("file:"+System.getProperty("user.dir")+"/"+u.getFile()) 
+            // following was
+            // ("file:"+System.getProperty("user.dir")+"/"+u.getFile())
             // but that duplicated the path information; JavaHelp seems to provide
             // full pathnames here.
             URI uri = new URI(u.toString());

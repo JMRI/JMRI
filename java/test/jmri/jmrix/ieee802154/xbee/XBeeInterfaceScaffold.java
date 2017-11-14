@@ -77,7 +77,7 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
      * record XBee messages sent, provide access for making sure they are OK
      */
     public Vector<XBeeMessage> outbound = new Vector<XBeeMessage>();  // public OK here, so long as this is a test class
- 
+
     @Override
     public void sendXBeeMessage(XBeeMessage m, XBeeListener replyTo) {
         if (log.isDebugEnabled()) {

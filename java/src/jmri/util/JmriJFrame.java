@@ -357,7 +357,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     /**
      * Add a standard help menu, including window specific help item.
-     * 
+     *
      * Final because it defines the content of a standard help menu, not to be messed with individually
      *
      * @param ref    JHelp reference for the desired window-specific help page

@@ -51,7 +51,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTrackFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTrackActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackDestinationEditActionTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackLoadEditActionTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackLoadEditActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackRoadEditActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackEditCommentsActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackEditCommentsFrameTest.class));

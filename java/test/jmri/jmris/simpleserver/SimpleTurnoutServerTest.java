@@ -77,7 +77,7 @@ public class SimpleTurnoutServerTest{
         } catch (java.lang.reflect.InvocationTargetException ite){
           Throwable cause = ite.getCause();
           Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-       } 
+       }
     }
 
     @Test
@@ -112,7 +112,7 @@ public class SimpleTurnoutServerTest{
         } catch (java.lang.reflect.InvocationTargetException ite){
           Throwable cause = ite.getCause();
           Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-       } 
+       }
     }
 
 

@@ -205,7 +205,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
             nextState = TRANSITIONING;  // not expected
         }
         notifyStateChange(mState, nextState);
-        // make sure clocks running to handle it   
+        // make sure clocks running to handle it
         initClocks();
     }
 

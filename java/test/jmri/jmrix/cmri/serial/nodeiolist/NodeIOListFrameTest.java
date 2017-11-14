@@ -20,7 +20,7 @@ public class NodeIOListFrameTest {
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeIOListFrame action = new NodeIOListFrame(new CMRISystemConnectionMemo()); 
+        NodeIOListFrame action = new NodeIOListFrame(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

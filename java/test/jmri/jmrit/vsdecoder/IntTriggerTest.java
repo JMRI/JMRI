@@ -112,7 +112,7 @@ public class IntTriggerTest {
 
         uut.setCompareType(Trigger.CompareType.LT);
         e = new PropertyChangeEvent(this, "test event", 3, 1);
-        //new Integer(3), 
+        //new Integer(3),
         //new Integer(1));
         uut.propertyChange(e);
 

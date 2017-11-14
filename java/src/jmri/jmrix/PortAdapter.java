@@ -10,11 +10,11 @@ import java.io.DataOutputStream;
  * connection types (network, serial, etc).
  * <p>
  * For historical reasons, this provides both four specific options (option1 to option4)
- * plus a more flexible interface based on a String array.  The more flexible 
- * interface is the preferred one for new work, but the 1-4 form hasn't been 
+ * plus a more flexible interface based on a String array.  The more flexible
+ * interface is the preferred one for new work, but the 1-4 form hasn't been
  * deprecated yet.
  * <p>
- * General design documentation is available on the 
+ * General design documentation is available on the
  * <a href="http://jmri.org/help/en/html/doc/Technical/SystemStructure.shtml">Structure of External System Connections page</a>.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010

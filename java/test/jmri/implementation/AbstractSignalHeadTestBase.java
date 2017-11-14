@@ -13,13 +13,13 @@ import org.junit.Test;
 public abstract class AbstractSignalHeadTestBase {
 
     abstract SignalHead getHeadToTest();
-    
+
     @Test
     final public void testLit() {
         SignalHead s = getHeadToTest();
 
         Assert.assertTrue("initial", s.getLit());
-        
+
         s.setLit(false);
         Assert.assertTrue("set", !s.getLit());
 
@@ -30,13 +30,13 @@ public abstract class AbstractSignalHeadTestBase {
     private boolean validAppearance(int appearance, SignalHead s) {
         return Arrays.asList(s.getValidStates()).contains(SignalHead.RED);
     }
-    
+
     @Test
     final public void testHeld() {
         SignalHead s = getHeadToTest();
 
         Assert.assertTrue("initial", ! s.getHeld());
-        
+
         s.setHeld(true);
         Assert.assertTrue("set", s.getHeld());
 
@@ -50,7 +50,7 @@ public abstract class AbstractSignalHeadTestBase {
 
         int appearance = s.getValidStates()[0];
         if (appearance == SignalHead.DARK) appearance = s.getValidStates()[1];
-        
+
         s.setAppearance(appearance);
         s.setLit(false);
         Assert.assertTrue("not Lit", ! s.getLit());
@@ -58,7 +58,7 @@ public abstract class AbstractSignalHeadTestBase {
 
         appearance = s.getValidStates()[1];
         if (validAppearance(SignalHead.DARK, s)) appearance = SignalHead.DARK;
-        
+
         s.setLit(true);
         s.setAppearance(appearance);
         Assert.assertTrue("Lit", s.getLit());
@@ -110,7 +110,7 @@ public abstract class AbstractSignalHeadTestBase {
         Assert.assertTrue( !s.isAtStop() );
         Assert.assertTrue(  s.isShowingRestricting() );
     }
-    
+
 
     @Test
     final public void testClearStopRestrictingOverlaps() {
@@ -119,11 +119,11 @@ public abstract class AbstractSignalHeadTestBase {
             checkOverlaps(appearance);
         }
     }
-    
+
     final void checkOverlaps(int appearance) {
         SignalHead s = getHeadToTest();
         s.setAppearance(appearance);
-        
+
         Assert.assertTrue(! (s.isCleared() && s.isAtStop()));
         Assert.assertTrue(! (s.isAtStop() && s.isShowingRestricting()));
         Assert.assertTrue(! (s.isShowingRestricting() && s.isCleared()));

@@ -13,7 +13,7 @@ import jmri.Sensor;
  * on the SensorDebounceEditAction class.
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @author Kevin Dickerson Copyright (C) 2017 
+ * @author Kevin Dickerson Copyright (C) 2017
  */
 public class SensorPullUpEditAction extends BeanEditAction {
 

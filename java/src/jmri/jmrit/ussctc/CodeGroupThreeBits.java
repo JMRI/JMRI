@@ -7,8 +7,8 @@ package jmri.jmrit.ussctc;
  */
 
 enum CodeGroupThreeBits {
-    Triple000, 
-    Triple001, 
-    Triple010, 
+    Triple000,
+    Triple001,
+    Triple010,
     Triple100
 }

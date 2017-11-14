@@ -58,7 +58,7 @@ public class Mx1PowerManager implements PowerManager, Mx1Listener {
                 tc.sendMx1Message(Mx1Message.setPowerOff(), this);
             }
             if (memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF) {
-                //MXULF doesn't return the correct status of the track power, so we have to assume it has been set                
+                //MXULF doesn't return the correct status of the track power, so we have to assume it has been set
                 power = v;
             } else {
                 tc.sendMx1Message(Mx1Message.getTrackStatus(), this);

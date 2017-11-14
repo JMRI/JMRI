@@ -79,7 +79,7 @@ public class SerialAdapterTest {
 // 	    Assert.assertTrue("val 3", 0.001 > Math.abs(r.getValue(3)-300.));
 // 	    Assert.assertTrue("val 4", 0.001 > Math.abs(r.getValue(4)-400.));
 // 	}
-// 
+//
 //      @Test
 // 	public void testStringParsingV2B() throws java.io.IOException {
 //         // String input = "DATA,TIME,1,2,3,4,5,6,7,8,9,10,11,12";

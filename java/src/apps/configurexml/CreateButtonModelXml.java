@@ -77,7 +77,7 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
-    
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(CreateButtonModelXml.class);
 

@@ -37,7 +37,7 @@ public class HexFileFrame extends JmriJFrame {
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

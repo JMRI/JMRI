@@ -23,7 +23,7 @@ public class SprogIIUpdateFrame
         super(memo);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -39,7 +39,7 @@ public class SprogIIUpdateFrame
 
     int bootVer = 0;
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")

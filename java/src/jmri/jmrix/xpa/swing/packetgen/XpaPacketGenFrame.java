@@ -23,7 +23,7 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         memo = m;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

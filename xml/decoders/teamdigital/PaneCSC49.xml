@@ -16,9 +16,9 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 <name>Logic Cells 49-56</name>
    <column>
-   
+
 	<row>
-	<column>   
+	<column>
 		<row>
 		<column>
 		<label label=" "/>
@@ -63,44 +63,44 @@
 	<column>
 			<display item="Cell 49 Address" label="------ Logic Cell 49 ------"/>
 		<row>
-			<column> <display item="Address 49A" /> </column>	
+			<column> <display item="Address 49A" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 49A" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 49A" format="checkbox"/> </column>
 			<column> <display item="Message 49A" /> </column>
 			<column>
 				<display item="State 49A"/>
 				<display item="Aspect 49A"/>
 			</column>
 		</row>
-		<row>	
-			<column> <display item="Logic 49B" /> </column>	
+		<row>
+			<column> <display item="Logic 49B" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 49B" /> </column>		
+			<column> <display item="Address 49B" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 49B" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 49B" format="checkbox"/> </column>
 			<column> <display item="Message 49B" /> </column>
 			<column>
 				<display item="State 49B"/>
 				<display item="Aspect 49B"/>
 			</column>
-		</row>		
-		<row>			
+		</row>
+		<row>
 			<column> <display item="Logic 49C" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 49C" /> </column>		
+			<column> <display item="Address 49C" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 49C" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 49C" format="checkbox"/> </column>
 			<column> <display item="Message 49C" /> </column>
 			<column>
 				<display item="State 49C"/>
 				<display item="Aspect 49C"/>
 			</column>
-		</row>	
-	
+		</row>
+
 	</column>
 	 <separator/>
 	<column>
@@ -120,44 +120,44 @@
 	<column>
 			<display item="Cell 50 Address" label="------ Logic Cell 50 ------"/>
 		<row>
-			<column> <display item="Address 50A" /> </column>	
+			<column> <display item="Address 50A" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 50A" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 50A" format="checkbox"/> </column>
 			<column> <display item="Message 50A" /> </column>
 			<column>
 				<display item="State 50A"/>
 				<display item="Aspect 50A"/>
 			</column>
 		</row>
-		<row>	
-			<column> <display item="Logic 50B" /> </column>	
+		<row>
+			<column> <display item="Logic 50B" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 50B" /> </column>		
+			<column> <display item="Address 50B" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 50B" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 50B" format="checkbox"/> </column>
 			<column> <display item="Message 50B" /> </column>
 			<column>
 				<display item="State 50B"/>
 				<display item="Aspect 50B"/>
 			</column>
-		</row>		
-		<row>			
+		</row>
+		<row>
 			<column> <display item="Logic 50C" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 50C" /> </column>		
+			<column> <display item="Address 50C" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 50C" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 50C" format="checkbox"/> </column>
 			<column> <display item="Message 50C" /> </column>
 			<column>
 				<display item="State 50C"/>
 				<display item="Aspect 50C"/>
 			</column>
-		</row>	
-	
+		</row>
+
 	</column>
 	 <separator/>
 	<column>
@@ -177,44 +177,44 @@
 	<column>
 			<display item="Cell 51 Address" label="------ Logic Cell 51 ------"/>
 		<row>
-			<column> <display item="Address 51A" /> </column>	
+			<column> <display item="Address 51A" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 51A" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 51A" format="checkbox"/> </column>
 			<column> <display item="Message 51A" /> </column>
 			<column>
 				<display item="State 51A"/>
 				<display item="Aspect 51A"/>
 			</column>
 		</row>
-		<row>	
-			<column> <display item="Logic 51B" /> </column>	
+		<row>
+			<column> <display item="Logic 51B" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 51B" /> </column>		
+			<column> <display item="Address 51B" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 51B" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 51B" format="checkbox"/> </column>
 			<column> <display item="Message 51B" /> </column>
 			<column>
 				<display item="State 51B"/>
 				<display item="Aspect 51B"/>
 			</column>
-		</row>		
-		<row>			
+		</row>
+		<row>
 			<column> <display item="Logic 51C" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 51C" /> </column>		
+			<column> <display item="Address 51C" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 51C" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 51C" format="checkbox"/> </column>
 			<column> <display item="Message 51C" /> </column>
 			<column>
 				<display item="State 51C"/>
 				<display item="Aspect 51C"/>
 			</column>
-		</row>	
-	
+		</row>
+
 	</column>
 	 <separator/>
 	<column>
@@ -234,44 +234,44 @@
 	<column>
 			<display item="Cell 52 Address" label="------ Logic Cell 52 ------"/>
 		<row>
-			<column> <display item="Address 52A" /> </column>	
+			<column> <display item="Address 52A" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 52A" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 52A" format="checkbox"/> </column>
 			<column> <display item="Message 52A" /> </column>
 			<column>
 				<display item="State 52A"/>
 				<display item="Aspect 52A"/>
 			</column>
 		</row>
-		<row>	
-			<column> <display item="Logic 52B" /> </column>	
+		<row>
+			<column> <display item="Logic 52B" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 52B" /> </column>		
+			<column> <display item="Address 52B" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 52B" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 52B" format="checkbox"/> </column>
 			<column> <display item="Message 52B" /> </column>
 			<column>
 				<display item="State 52B"/>
 				<display item="Aspect 52B"/>
 			</column>
-		</row>		
-		<row>			
+		</row>
+		<row>
 			<column> <display item="Logic 52C" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 52C" /> </column>		
+			<column> <display item="Address 52C" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 52C" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 52C" format="checkbox"/> </column>
 			<column> <display item="Message 52C" /> </column>
 			<column>
 				<display item="State 52C"/>
 				<display item="Aspect 52C"/>
 			</column>
-		</row>	
-	
+		</row>
+
 	</column>
 	 <separator/>
 	<column>
@@ -283,51 +283,51 @@
 			<display item="Message 52D" />
 			<display item="State 52D" />
 	</column>
-	</row>	
-	
+	</row>
+
 	<separator/>
 	<separator/>
 	<row>
-	<column>	
+	<column>
 		<display item="Cell 53 Address" label="------ Logic Cell 53 ------"/>
 		<row>
 			<column> <display item="Address 53A" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 53A" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 53A" format="checkbox"/> </column>
 			<column> <display item="Message 53A" /> </column>
 			<column>
 				<display item="State 53A"/>
 				<display item="Aspect 53A"/>
 			</column>
 		</row>
-		<row>			
+		<row>
 			<column> <display item="Logic 53B" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
 			<column> <display item="Address 53B" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 53B" format="checkbox"/> </column>		
+			<column> <display item="DCC Message 53B" format="checkbox"/> </column>
 			<column> <display item="Message 53B" /> </column>
 			<column>
 				<display item="State 53B"/>
 				<display item="Aspect 53B"/>
 			</column>
-		</row>	
-		<row>			
+		</row>
+		<row>
 			<column> <display item="Logic 53C" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
 			<column> <display item="Address 53C" /> </column>
-			<label label=" Type " />		
+			<label label=" Type " />
 			<column> <display item="DCC Message 53C" format="checkbox"/> </column>
 			<column> <display item="Message 53C" /> </column>
 			<column>
 				<display item="State 53C"/>
 				<display item="Aspect 53C"/>
 			</column>
-		</row>	
+		</row>
 	</column>
 	<separator/>
 	<column>
@@ -347,44 +347,44 @@
 	<column>
 			<display item="Cell 54 Address" label="------ Logic Cell 54 ------"/>
 		<row>
-			<column> <display item="Address 54A" /> </column>	
+			<column> <display item="Address 54A" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 54A" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 54A" format="checkbox"/> </column>
 			<column> <display item="Message 54A" /> </column>
 			<column>
 				<display item="State 54A"/>
 				<display item="Aspect 54A"/>
 			</column>
 		</row>
-		<row>	
-			<column> <display item="Logic 54B" /> </column>	
+		<row>
+			<column> <display item="Logic 54B" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 54B" /> </column>		
+			<column> <display item="Address 54B" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 54B" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 54B" format="checkbox"/> </column>
 			<column> <display item="Message 54B" /> </column>
 			<column>
 				<display item="State 54B"/>
 				<display item="Aspect 54B"/>
 			</column>
-		</row>		
-		<row>			
+		</row>
+		<row>
 			<column> <display item="Logic 54C" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 54C" /> </column>		
+			<column> <display item="Address 54C" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 54C" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 54C" format="checkbox"/> </column>
 			<column> <display item="Message 54C" /> </column>
 			<column>
 				<display item="State 54C"/>
 				<display item="Aspect 54C"/>
 			</column>
-		</row>	
-	
+		</row>
+
 	</column>
 	 <separator/>
 	<column>
@@ -397,7 +397,7 @@
 			<display item="State 54D" />
 	</column>
 	</row>
-	
+
     <separator/>
     <separator/>
 	<row>
@@ -406,43 +406,43 @@
 		<row>
 			<column> <display item="Address 55A" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 55A" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 55A" format="checkbox"/> </column>
 			<column> <display item="Message 55A" /> </column>
 			<column>
 				<display item="State 55A"/>
 				<display item="Aspect 55A"/>
 			</column>
 		</row>
-		<row>			
+		<row>
 			<column> <display item="Logic 55B" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
 			<column> <display item="Address 55B" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 55B" format="checkbox"/> </column>		
+			<column> <display item="DCC Message 55B" format="checkbox"/> </column>
 			<column> <display item="Message 55B" /> </column>
 			<column>
 				<display item="State 55B"/>
 				<display item="Aspect 55B"/>
 			</column>
-		</row>	
-		<row>			
+		</row>
+		<row>
 			<column> <display item="Logic 55C" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
 			<column> <display item="Address 55C" /> </column>
-			<label label=" Type " />		
+			<label label=" Type " />
 			<column> <display item="DCC Message 55C" format="checkbox"/> </column>
 			<column> <display item="Message 55C" /> </column>
 			<column>
 				<display item="State 55C"/>
 				<display item="Aspect 55C"/>
 			</column>
-		</row>	
+		</row>
 	</column>
-	
+
 	 <separator/>
 	<column>
 		<label label="Action when logic cell goes True"/>
@@ -461,44 +461,44 @@
 	<column>
 			<display item="Cell 56 Address" label="------ Logic Cell 56 ------"/>
 		<row>
-			<column> <display item="Address 56A" /> </column>	
+			<column> <display item="Address 56A" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 56A" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 56A" format="checkbox"/> </column>
 			<column> <display item="Message 56A" /> </column>
 			<column>
 				<display item="State 56A"/>
 				<display item="Aspect 56A"/>
 			</column>
 		</row>
-		<row>	
-			<column> <display item="Logic 56B" /> </column>	
+		<row>
+			<column> <display item="Logic 56B" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 56B" /> </column>		
+			<column> <display item="Address 56B" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 56B" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 56B" format="checkbox"/> </column>
 			<column> <display item="Message 56B" /> </column>
 			<column>
 				<display item="State 56B"/>
 				<display item="Aspect 56B"/>
 			</column>
-		</row>		
-		<row>			
+		</row>
+		<row>
 			<column> <display item="Logic 56C" /> </column>
 		</row>
 		<row>
 			<column> <label label=""/> </column>
-			<column> <display item="Address 56C" /> </column>		
+			<column> <display item="Address 56C" /> </column>
 			<label label=" Type " />
-			<column> <display item="DCC Message 56C" format="checkbox"/> </column>	
+			<column> <display item="DCC Message 56C" format="checkbox"/> </column>
 			<column> <display item="Message 56C" /> </column>
 			<column>
 				<display item="State 56C"/>
 				<display item="Aspect 56C"/>
 			</column>
-		</row>	
-	
+		</row>
+
 	</column>
 	 <separator/>
 	<column>

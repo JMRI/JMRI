@@ -37,7 +37,7 @@
       <date>2016-10-30</date>
       <authorinitials>JC</authorinitials>
       <revremark>Catalan translation</revremark>
-    </revision>    
+    </revision>
     <revision>
       <revnumber>7</revnumber>
       <date>2016-10-09</date>
@@ -78,5 +78,5 @@
     <tooltip xml:lang="cs">Nastavení jasu světel (vyšší číslo = vyšší jas)</tooltip>
     <label xml:lang="ca">Atenuació d'intensitat, Sortides B i D (0-255)</label>
   </variable>
-  
+
 </variables>

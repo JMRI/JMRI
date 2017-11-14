@@ -62,7 +62,7 @@ public class TrainBuilderTest {
     private CarTypes ct;
     private EngineTypes et;
     private EngineModels em;
-        
+
     private Location A;
     private Location B;
     private Location C;
@@ -343,7 +343,7 @@ public class TrainBuilderTest {
         Assert.assertEquals("e1 should be assigned to train", train, e1.getTrain());
         Assert.assertEquals("e2 should be assigned to train", train, e2.getTrain());
     }
-    
+
     @Test
     public void testAutoEnginesGrade() {
         String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
@@ -1305,7 +1305,7 @@ public class TrainBuilderTest {
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l1, l1s1));
         Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(l1, l1s2));
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(l1, l1s2));
-        
+
         train1.reset();
         train2.reset();
 
@@ -2471,7 +2471,7 @@ public class TrainBuilderTest {
         train2.reset();
         new TrainBuilder().build(train2);
         Assert.assertEquals("Train 2 After Build require 2 engine", true, train2.isBuilt());
-    } 
+    }
 
     @Test
     public void testStagingtoStagingP() {
@@ -2638,7 +2638,7 @@ public class TrainBuilderTest {
         new TrainBuilder().build(train2);
         Assert.assertEquals("Train 2 After Build 2 requires FRED", true, train2.isBuilt());
     }
- 
+
     @Test
     public void testStagingtoStagingS() {
         Setup.setSwitchTime(11);
@@ -2692,7 +2692,7 @@ public class TrainBuilderTest {
         train2.reset();
         new TrainBuilder().build(train2);
         Assert.assertEquals("Train 2 After Build 2 requires model SD45", true, train2.isBuilt());
- 
+
         // Are the engines and cars assigned to train 2?
         Assert.assertEquals("Engine e3 After Build should be assigned to Train 2", train2, e3.getTrain());
         Assert.assertEquals("Engine e4 After Build should be assigned to Train 2", train2, e4.getTrain());

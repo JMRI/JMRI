@@ -732,7 +732,7 @@ public class EcosLocoToRoster implements EcosListener {
             }
         });
 
-//      Mouselistener for doubleclick activation of proprammer   
+//      Mouselistener for doubleclick activation of proprammer
         dTree.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -740,7 +740,7 @@ public class EcosLocoToRoster implements EcosListener {
                 //if (_statusLabel != null) _statusLabel.setText("StateIdle");
                 dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
-                /* check for both double click and that it's a decoder 
+                /* check for both double click and that it's a decoder
                  that is being clicked on.  If it's just a Family, the programmer
                  button is enabled by the TreeSelectionListener, but we don't
                  want to automatically open a programmer so a user has the opportunity

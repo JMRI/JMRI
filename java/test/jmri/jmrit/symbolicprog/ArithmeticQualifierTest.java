@@ -138,7 +138,7 @@ public class ArithmeticQualifierTest {
     }
 
     // The minimal setup for log4J
-    @Before 
+    @Before
     public void setUp() {
         JUnitUtil.setUp();
     }

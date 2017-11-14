@@ -90,7 +90,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         routePane = new JScrollPane(routeTable);
         routePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         routePane.setBorder(BorderFactory.createTitledBorder(""));
-        
+
         routeModel.initTable(this, routeTable, _route);
 
         if (_route != null) {
@@ -183,17 +183,17 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         addButtonAction(addRouteButton);
         addButtonAction(saveRouteButton);
 
-        // setup radio buttons       
+        // setup radio buttons
         ButtonGroup group = new ButtonGroup();
         group.add(addLocAtTop);
         group.add(addLocAtMiddle);
         group.add(addLocAtBottom);
         addLocAtBottom.setSelected(true);
-        
+
         addRadioButtonAction(addLocAtTop); // to clear table row sorting
         addRadioButtonAction(addLocAtMiddle);
         addRadioButtonAction(addLocAtBottom); // to clear table row sorting
-        
+
         ButtonGroup groupTime = new ButtonGroup();
         groupTime.add(showWait);
         groupTime.add(showDepartTime);

@@ -19,7 +19,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -34,7 +34,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         query.requestVersion(this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

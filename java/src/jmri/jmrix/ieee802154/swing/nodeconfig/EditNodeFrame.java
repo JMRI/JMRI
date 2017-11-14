@@ -111,7 +111,7 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
      * Method to handle cancel button
      */
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         curNode = null;
         // Switch buttons
         editButton.setVisible(true);

@@ -63,7 +63,7 @@ public class NceLightManager extends AbstractLightManager {
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "L"))) {
-            // here if an illegal nce light system name 
+            // here if an illegal nce light system name
             log.error("illegal character in header field of nce light system name: " + systemName);
             return (0);
         }

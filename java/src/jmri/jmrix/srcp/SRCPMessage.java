@@ -32,7 +32,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     // diagnose format
     /**
      *  Detrmine if the message turns off track power
-     *  @return true if the messages is a track power off message,false otherwise 
+     *  @return true if the messages is a track power off message,false otherwise
      */
     public boolean isKillMain() {
         String s = toString();
@@ -41,7 +41,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      *  Detrmine if the message turns on track power
-     *  @return true if the messages is a track power on message,false otherwise 
+     *  @return true if the messages is a track power on message,false otherwise
      */
     public boolean isEnableMain() {
         String s = toString();

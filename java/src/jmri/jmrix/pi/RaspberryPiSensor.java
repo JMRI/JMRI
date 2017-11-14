@@ -86,7 +86,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
      */
     @Override
     public void requestUpdateFromLayout() {
-       if(pin.isHigh()) 
+       if(pin.isHigh())
           setOwnState(Sensor.ACTIVE);
        else setOwnState(Sensor.INACTIVE);
     }
@@ -101,7 +101,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        // log pin state change
        log.debug("GPIO PIN STATE CHANGE: {} = {}",event.getPin(),event.getState());
        if(event.getPin()==pin){
-          if(event.getState().isHigh()) { 
+          if(event.getState().isHigh()) {
              setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
           } else {
              setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
@@ -142,7 +142,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        } else {
           setPullState(PinPullResistance.OFF);
        }
-       
+
     }
 
     /**

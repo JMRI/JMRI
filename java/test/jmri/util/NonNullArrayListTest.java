@@ -10,7 +10,7 @@ import org.junit.Test;
  * The {@link NonNullArrayList} class and this test class should always
  * show completely clean in FindBugs.
  *
- * @author Bob Jacobsen Copyright (C) 2017	
+ * @author Bob Jacobsen Copyright (C) 2017
  */
 public class NonNullArrayListTest {
 
@@ -25,7 +25,7 @@ public class NonNullArrayListTest {
         NonNullArrayList<Integer> t = new NonNullArrayList<>();
         t.add(100);
         Assert.assertNotNull("[0]", t.get(0));
-        Assert.assertNotNull("FindBugs should complain about dereference", t.get(0).toString());        
+        Assert.assertNotNull("FindBugs should complain about dereference", t.get(0).toString());
         t.get(0);
         t.get(0).toString();
     }
@@ -75,10 +75,10 @@ public class NonNullArrayListTest {
         t.add(100);
         for (Integer s : t) {
             Assert.assertNotNull("s", t.get(0));
-            Assert.assertNotNull("FindBugs should complain about dereference", s.toString());   
+            Assert.assertNotNull("FindBugs should complain about dereference", s.toString());
             t.get(0);
             t.get(0).toString();
-        }     
+        }
     }
 
     // The minimal setup for log4J

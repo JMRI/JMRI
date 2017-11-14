@@ -44,7 +44,7 @@ public abstract class AbstractProgrammerFacade implements Programmer {
      * @throws jmri.ProgrammerException if unable to communicate
      * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int,
      * jmri.ProgListener)
-     * @see jmri.Programmer#writeCV(int, int, jmri.ProgListener) 
+     * @see jmri.Programmer#writeCV(int, int, jmri.ProgListener)
      */
     @Deprecated
     @Override

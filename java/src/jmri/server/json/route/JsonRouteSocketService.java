@@ -109,7 +109,7 @@ public class JsonRouteSocketService extends JsonSocketService {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in RouteListener for '{}' '{}' ('{}'=>'{}')", this.route.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());            
+            log.debug("in RouteListener for '{}' '{}' ('{}'=>'{}')", this.route.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             try {
                 try {
                     getConnection().sendMessage(service.doGet(ROUTE, this.route.getSystemName(), locale));
@@ -135,9 +135,9 @@ public class JsonRouteSocketService extends JsonSocketService {
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(ROUTES, locale)); 
+                    connection.sendMessage(service.doGetList(ROUTES, locale));
                     //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();
                     }
                 } catch (JsonException ex) {

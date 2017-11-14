@@ -18,7 +18,7 @@ public class GrapevineMenuTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         GrapevineMenu action = new GrapevineMenu();
         Assert.assertNotNull("exists", action);
     }

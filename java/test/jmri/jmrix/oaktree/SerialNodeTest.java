@@ -64,7 +64,7 @@ public class SerialNodeTest extends TestCase {
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 5, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
-        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'        
+        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'
     }
 
     public void testMarkChanges() {

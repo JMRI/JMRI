@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Turnout interface to RaspberryPi GPIO pins.
  * <P>
- * 
- * @author Paul Bender Copyright (C) 2015 
+ *
+ * @author Paul Bender Copyright (C) 2015
  */
 public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java.io.Serializable {
 
     // in theory gpio can be static, because there will only ever
-    // be one, but the library handles the details that make it a 
+    // be one, but the library handles the details that make it a
     // singleton.
    private GpioController gpio = null;
    private GpioPinDigitalOutput pin = null;
@@ -55,18 +55,18 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName());
         pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);
    }
-    
+
    //support inversion for RPi turnouts
    @Override
    public boolean canInvert() {
        return true;
    }
-   
+
    /**
     * Handle a request to change state, typically by sending a message to the
     * layout in some child class. Public version (used by TurnoutOperator)
     * sends the current commanded state without changing it.
-    * 
+    *
     * @param s new state value
     */
    @Override

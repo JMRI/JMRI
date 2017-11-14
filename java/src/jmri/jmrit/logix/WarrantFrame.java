@@ -161,7 +161,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setRunBlind(warrant.getRunBlind());
         setTrainName(warrant.getTrainName());
         _warrant.setTrainName(warrant.getTrainName());
-        
+
         SpeedUtil spU = warrant.getSpeedUtil();
         String trainId = spU.getRosterId();
         setTrainInfo(trainId);
@@ -316,7 +316,7 @@ public class WarrantFrame extends WarrantRoute {
         edge.add(typePanel);
         panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        
+
         JPanel scParamPanel = makeSCParamPanel();
         edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
@@ -326,7 +326,7 @@ public class WarrantFrame extends WarrantRoute {
         edge.add(scParamPanel);
         panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        
+
         JPanel learnPanel = makeRecordPanel();
         edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
@@ -336,7 +336,7 @@ public class WarrantFrame extends WarrantRoute {
         edge.add(learnPanel);
         panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        
+
         JPanel paramsPanel = makeRunParmsPanel();
         edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
@@ -346,7 +346,7 @@ public class WarrantFrame extends WarrantRoute {
         edge.add(paramsPanel);
         panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        
+
         JPanel runPanel = makePlaybackPanel();
         edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
@@ -357,7 +357,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         tab2.add(panel);
-        
+
         _isSCWarrant.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -471,10 +471,10 @@ public class WarrantFrame extends WarrantRoute {
 
         return typePanel;
     }
-    
+
     private void addSpeeds() {
         setAddress();
-        RosterSpeedProfile speedProfile =  _speedUtil.getMergeProfile();         
+        RosterSpeedProfile speedProfile =  _speedUtil.getMergeProfile();
         boolean isForward = true;
         for (ThrottleSetting ts :_throttleCommands) {
             if ("FORWARD".equalsIgnoreCase(ts.getCommand())) {
@@ -482,7 +482,7 @@ public class WarrantFrame extends WarrantRoute {
             }
             if ("SPEED".equalsIgnoreCase(ts.getCommand())) {
                 try {
-                    ts.setSpeed(speedProfile.getSpeed(Float.parseFloat(ts.getValue()), isForward) / 1000);                    
+                    ts.setSpeed(speedProfile.getSpeed(Float.parseFloat(ts.getValue()), isForward) / 1000);
                 } catch (NumberFormatException nfe) {
                     log.error("Command failed! {} {}", ts.toString(), nfe.toString());
                 }
@@ -968,7 +968,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainName(getTrainName());
         _startTime = System.currentTimeMillis();
         _speed = 0.0f;
-        
+
 //        _warrant.getSpeedUtil().getValidSpeedProfile(this);
         _warrant.addPropertyChangeListener(this);
 
@@ -1006,15 +1006,15 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
 /*        if (_warrant.commandsHaveTrackSpeeds()) {
-            _warrant.getSpeedUtil().getValidSpeedProfile(this);            
+            _warrant.getSpeedUtil().getValidSpeedProfile(this);
         } else {
             setStatusText(Bundle.getMessage("NoTrackSpeeds", _warrant.getDisplayName()), Color.red);
         }*/
         _warrant.addPropertyChangeListener(this);
         if (_saveWarrant!=null) {
-            _saveWarrant.addPropertyChangeListener(WarrantTableFrame.getDefault().getModel());            
+            _saveWarrant.addPropertyChangeListener(WarrantTableFrame.getDefault().getModel());
         }
-        
+
         msg = _warrant.setRunMode(Warrant.MODE_RUN, _speedUtil.getDccAddress(), null,
                 _throttleCommands, _runETOnlyBox.isSelected());
         if (msg != null) {
@@ -1260,10 +1260,10 @@ public class WarrantFrame extends WarrantRoute {
         }
         setThrottleCommand(cmd, value, bName);
     }
-    
+
     protected void setSpeedCommand(float speed, boolean isForward) {
         if (_warrant.getSpeedUtil().profileHasSpeedInfo()) {
-            _speed = _warrant.getSpeedUtil().getTrackSpeed(speed, isForward);  // mm/ms            
+            _speed = _warrant.getSpeedUtil().getTrackSpeed(speed, isForward);  // mm/ms
         } else {
             _speed = 0.0f;
         }
@@ -1399,7 +1399,7 @@ public class WarrantFrame extends WarrantRoute {
         public static final int SPEED_COLUMN = 5;
         public static final int NUMCOLS = 6;
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
-        NumberFormat formatter = NumberFormat.getNumberInstance(); 
+        NumberFormat formatter = NumberFormat.getNumberInstance();
 
         public ThrottleTableModel() {
             super();
@@ -1500,8 +1500,8 @@ public class WarrantFrame extends WarrantRoute {
                             String cmd = ts.getCommand().toUpperCase();
                             if ("SPEED".equals(cmd)) {
                                 try {
-                                    float speed = Float.parseFloat(ts.getValue());                                
-                                    return formatter.format(speed);                               
+                                    float speed = Float.parseFloat(ts.getValue());
+                                    return formatter.format(speed);
                                 } catch (NumberFormatException npe) {
                                     log.error("Null value in ThrottleSetting: "+ ts.toString());
                                 }

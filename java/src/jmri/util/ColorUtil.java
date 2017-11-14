@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ColorUtil {
 
-    /* 
-     * Color lists for screne colors.  
+    /*
+     * Color lists for screne colors.
      */
     public final static String ColorTrack = "track";
     public final static String ColorBlack = "black";
@@ -72,8 +72,8 @@ public class ColorUtil {
     }
 
     /**
-     * @param string Either a hexidecimal representation of the rgb value of a 
-     * color or a color name defined as a constant. 
+     * @param string Either a hexidecimal representation of the rgb value of a
+     * color or a color name defined as a constant.
      */
     public static Color stringToColor(String string) {
         try {
@@ -243,7 +243,7 @@ public class ColorUtil {
      */
     @CheckReturnValue
     public static Color setAlpha(@Nonnull Color color, double alpha) {
-        return new Color(color.getRed(), color.getGreen(), color.getBlue(), 
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(),
                 (int) (255.0 * alpha));
     }
 

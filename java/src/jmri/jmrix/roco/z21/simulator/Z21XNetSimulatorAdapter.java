@@ -35,7 +35,7 @@ public class Z21XNetSimulatorAdapter {
        locoData = new Z21SimulatorLocoData[20];
     }
 
-    // generateReply is the heart of the simulation.  It translates an 
+    // generateReply is the heart of the simulation.  It translates an
     // incoming XNetMessage into an outgoing XNetReply.
     @SuppressWarnings("fallthrough") // document specific case same as default
     XNetReply generateReply(XNetMessage m) {
@@ -256,7 +256,7 @@ public class Z21XNetSimulatorAdapter {
                         reply=new XNetReply();
                         reply.setOpCode(XNetConstants.LOCO_INFO_NORMAL_UNIT);
                         reply.setElement(1, 0x04);  // set to 128 speed step mode
-                        reply.setElement(2, 0x00);  // set the speed to 0 
+                        reply.setElement(2, 0x00);  // set the speed to 0
                         // direction reverse
                         reply.setElement(3, 0x00);  // set function group a off
                         reply.setElement(4, 0x00);  // set function group b off
@@ -330,8 +330,8 @@ public class Z21XNetSimulatorAdapter {
                 break;
             case XNetConstants.LI101_REQUEST:
             case XNetConstants.CS_SET_POWERMODE:
-            //case XNetConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST 
-            //and CS_SET_POWERMODE 
+            //case XNetConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST
+            //and CS_SET_POWERMODE
             //have the same value
             case XNetConstants.PROG_WRITE_REQUEST:
             case XNetConstants.OPS_MODE_PROG_REQ:

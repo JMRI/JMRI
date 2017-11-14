@@ -55,7 +55,7 @@ public class XNetSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialPo
             @Override
             public void setOutputBufferEmpty(boolean s){
             }
-            
+
             @Override
             public boolean okToSend(){
                   return true;

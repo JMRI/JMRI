@@ -14,7 +14,7 @@ public class Scale {
 
     // Scale definitions
     public static final int Z = 0x01; //  1:220
-    public static final int N = 0x02; //  1:160 
+    public static final int N = 0x02; //  1:160
     public static final int TT = 0x03; //  1:120
     public static final int HO = 0x04;  //  1:87
     public static final int S = 0x05;   //  1:64

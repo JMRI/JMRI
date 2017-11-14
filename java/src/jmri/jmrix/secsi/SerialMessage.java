@@ -72,8 +72,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
     static public SerialMessage getPoll(int addr) {
-        // eventually this will have to include logic for reading 
-        // various bytes on the card, but our supported 
+        // eventually this will have to include logic for reading
+        // various bytes on the card, but our supported
         // cards don't require that yet
         SerialMessage m = new SerialMessage(1);
         m.setResponseLength(2);

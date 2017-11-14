@@ -27,7 +27,7 @@
               <functionlabel num="3" lockable="false">Short Horn</functionlabel>
               <functionlabel num="5" lockable="false">Airbrake</functionlabel>
               <functionlabel num="8" lockable="true">Turbocharger</functionlabel>
-          </functionlabels>			
+          </functionlabels>
       </model>
       <model model="Steam" numOuts="2" numFns="11" productID="Steam" maxMotorCurrent="1.5A" formFactor="HO" connector="NMRAmedium" comment="with 27mm diameter, 8 ohm speaker">
         <size length="50" width="28" height="12" units="mm"/>
@@ -37,7 +37,7 @@
               <functionlabel num="5" lockable="true">Safety valve</functionlabel>
               <functionlabel num="8" lockable="true">Westinghouse brake pump</functionlabel>
           </functionlabels>
-      </model>			
+      </model>
       <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Mute</functionlabel>
@@ -187,7 +187,7 @@
           <label xml:lang="fr">Adresse UM active pour FL en arr</label>
           <label xml:lang="de">Verbundadresse aktiv für FL rückwärts</label>
           <label>Consist Address Active For FL in Reverse</label>
-      </variable>      
+      </variable>
       <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="1">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
           <label xml:lang="it">Indirizzo Consist Attivo per F9</label>
@@ -293,17 +293,17 @@
           <decVal max="127"/>
           <label>Lighting voltage</label>
           <tooltip>Proportional up to about 12.7 volts for lighting eg. 32 = 3.2 volts</tooltip>
-      </variable>					
+      </variable>
       <variable CV="58" item="Sound Setting 6" default="120" include="Diesel">
           <decVal max="255"/>
           <label>Turbocharger tone</label>
           <tooltip>Turbocharger pitch</tooltip>
-      </variable>				
+      </variable>
       <variable CV="59" item="Sound Setting 5" default="32" include="Diesel">
           <decVal max="48"/>
           <label>Turbocharger volume</label>
           <tooltip>Turbocharger volume</tooltip>
-      </variable>	
+      </variable>
       <!-- end of Sound variables for Diesel-->
       <!-- Sound variables for Steam -->
       <variable CV="48" item="Sound Setting 1" default="32" include="Steam">
@@ -362,18 +362,18 @@
           <label>Loco type</label>
           <tooltip>&lt;html&gt;2 &amp; 4 cylinder locos chuff 4 times in each revolution of the driving wheels &lt;br&gt;3 cylinder locos chuff 6 times per revolution&lt;/html&gt;</tooltip>
       </variable>
-      <!-- CV57: common to both models, see above -->					
+      <!-- CV57: common to both models, see above -->
       <variable CV="63" item="Sound Setting 4" default="8" include="Steam">
           <decVal max="127"/>
           <label>Chuff delay</label>
           <tooltip>The speed step at which the chuff will start when the loco starts from rest</tooltip>
-      </variable>			
+      </variable>
       <variable CV="64" item="EMF Static Config" default="32" include="Steam">
           <decVal max="127"/>
           <label>Back EMF strength</label>
           <tooltip>Higher values may produce smoother running</tooltip>
-      </variable>	
-      <!-- end of Sound variables for Steam -->			
+      </variable>
+      <!-- end of Sound variables for Steam -->
       <!-- highest used so far: -->
       <!-- "Sound Setting 1-7, 11-16" -->
       <!-- "Sound Option 3"  -->

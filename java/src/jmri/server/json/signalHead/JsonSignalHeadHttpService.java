@@ -61,7 +61,7 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
             if (data.path(STATE).isIntegralNumber()) {
                 int state = data.path(STATE).asInt();
                 if (state == SignalHead.HELD) {
-                    signalHead.setHeld(true);                    
+                    signalHead.setHeld(true);
                 } else {
                     boolean isValid = false;
                     for (int validState : signalHead.getValidStates()) {

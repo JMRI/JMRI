@@ -65,7 +65,7 @@ public class SimulatorAdapter extends MrcPortController implements
         tc.connectPort(this);
         this.getSystemConnectionMemo().setMrcTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-        //tc.connectPort(this);     
+        //tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
         tc.setCabNumber(2);
@@ -211,7 +211,7 @@ public class SimulatorAdapter extends MrcPortController implements
         return msg;
     }
 
-    // generateReply is the heart of the simulation.  It translates an 
+    // generateReply is the heart of the simulation.  It translates an
     // incoming MrcMessage into an outgoing MrcReply.
     private MrcMessage generateReply(MrcMessage m) {
         MrcMessage reply = new MrcMessage(4);
@@ -297,7 +297,7 @@ public class SimulatorAdapter extends MrcPortController implements
 //  * memory is 256 bytes and starts at memory address 0xEC00. The macro memory
 //  * is 256*20 or 5120 bytes and starts at memory address 0xC800. The consist
 //  * memory is 256*6 or 1536 bytes and starts at memory address 0xF500.
-//  * 
+//  *
 //  */
 // private MrcReply readMemory (MrcMessage m, MrcReply reply, int num){
 //  if (num>16){
@@ -368,7 +368,7 @@ public class SimulatorAdapter extends MrcPortController implements
 //  addr = addr + m.getElement(2);
 //  return addr;
 // }
-// 
+//
 // private MrcReply accessoryCommand(MrcMessage m, MrcReply reply){
 //  if (m.getElement(3) == 0x03 || m.getElement(3) == 0x04){  // 0x03 = close, 0x04 = throw
 //   String operation = "close";
@@ -394,7 +394,7 @@ public class SimulatorAdapter extends MrcPortController implements
 //   if (operation.equals("close"))
 //    write = (byte)(write + setMask); // set bit if closed
 //   turnoutMemory[offset] = write;
-//   //log.debug("wrote:"+Integer.toHexString(write)); 
+//   //log.debug("wrote:"+Integer.toHexString(write));
 //  }
 //  reply.setElement(0, MRC_OKAY);   // Mrc okay reply!
 //  return reply;

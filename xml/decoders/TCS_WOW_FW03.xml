@@ -110,7 +110,7 @@
 			<xi:include href="http://jmri.org/xml/decoders/tcs/CV249_CV252_FW86.xml" />
 			<!-- Sound function mapping -->
 			<variable item="Function 0 Sound" CV="T2CV.1.0" default="169" mask="VVVVVVVVVVVVVVVV">
-				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>  
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
 			</variable>
 			<variable item="Function 1 Sound" CV="T2CV.1.1" default="0" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
@@ -208,7 +208,7 @@
 			<variable item="Random 4 Sound" CV="T2CV.1.32" default="179" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
 			</variable>
-			
+
 			<!-- Individual volume -->
 			<variable item="Volume 0-0" CV="T3CV.2.0.0" default="40">
 				<decVal max="100"/>

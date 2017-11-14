@@ -1313,7 +1313,7 @@
         </enumVal>
         <label>Chuff Control</label>
         <label xml:lang="de">Auspuffschlag Dampflok</label>
-      </variable>      
+      </variable>
     </variables>
   </decoder>
   <pane>

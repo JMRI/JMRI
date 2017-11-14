@@ -456,5 +456,5 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F12 controls output Start/brake</label>
 	<label xml:lang="it">F12 - uscita Avvio/Freni</label>
-  </variable> 
+  </variable>
 </variables>

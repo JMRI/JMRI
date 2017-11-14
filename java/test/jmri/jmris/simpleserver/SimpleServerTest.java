@@ -9,7 +9,7 @@ import org.junit.Test;
 
 
 /**
- * Tests for the jmri.jmris.simpleserver.SimpleServer class 
+ * Tests for the jmri.jmris.simpleserver.SimpleServer class
  *
  * @author Paul Bender Copyright (C) 2012,2016
  */

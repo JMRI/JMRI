@@ -10,7 +10,7 @@ import jmri.util.FileUtil;
 
 /**
  * Base implementation for the load and store actions.
- * 
+ *
  * Primarily provides file checking services to the specific subclasses that
  * load/store particular types of data.
  * <P>

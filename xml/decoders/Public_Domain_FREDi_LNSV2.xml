@@ -14,7 +14,7 @@
 <!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" 
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
     <version author="Knut Schwichtenberg" version="1" lastUpdated="20151122" />
@@ -31,8 +31,8 @@
 
         <variables>
 
-            <variable CV="9998" item="Long Address" 
-                      comment="Board SV address" 
+            <variable CV="9998" item="Long Address"
+                      comment="Board SV address"
                       infoOnly="yes" mask="VVVVVVVV" default="1024"
                       tooltip="Device address MUST be unique across all SV2 devices on the LocoNet connection">
                 <splitVal highCV="9999" upperMask="XVVVVVVV" min="1024" max="32383" />
@@ -41,7 +41,7 @@
             </variable>
 
             <variable CV="1" item="Advanced Group 1 Option 1"
-                      readOnly="yes" 
+                      readOnly="yes"
                       comment="Size of memory in bytes">
                 <enumVal>
                     <enumChoice value="0">
@@ -63,7 +63,7 @@
                 <label>EEPROM Size</label>
                 <label xml:lang="de">EEPROM Größe</label>
                 <tooltip>&lt;html&gt;
-                         This is &lt;strong&gt;SV1&lt;/strong&gt; as defined 
+                         This is &lt;strong&gt;SV1&lt;/strong&gt; as defined
                          by the LocoNet SV programming protocol.&lt;br/&gt;
                          It reflects the size of the EEPROM memory.&lt;br/&gt;
                          (Defined to be read only)
@@ -77,9 +77,9 @@
                 <label>Software Version</label>
                 <label xml:lang="de">Softwareversion</label>
                 <tooltip>&lt;html&gt;
-                         This is &lt;strong&gt;SV2&lt;/strong&gt; as defined 
+                         This is &lt;strong&gt;SV2&lt;/strong&gt; as defined
                          by the LocoNet SV programming protocol.&lt;br/&gt;
-                         It's the software version as defined by SV programming 
+                         It's the software version as defined by SV programming
                          or IPL protocol.&lt;br/&gt;
                          (Defined to be read only)
                          &lt;/html&gt;

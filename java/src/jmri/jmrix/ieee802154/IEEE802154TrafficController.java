@@ -260,7 +260,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      */
     synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(byte[] ba) {
         if(logDebug) {
-           log.debug("byte array getNodeFromAddress called with " + 
+           log.debug("byte array getNodeFromAddress called with " +
                     jmri.util.StringUtil.hexStringFromBytes(ba));
         }
         for (int i = 0; i < numNodes; i++) {

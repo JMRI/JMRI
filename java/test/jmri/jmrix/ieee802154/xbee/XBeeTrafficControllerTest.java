@@ -18,7 +18,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
 
     @Test
     public void testCreateNode() {
-        // test the code to get an new XBee 
+        // test the code to get an new XBee
         XBeeNode node = (XBeeNode) ((XBeeTrafficController)tc).newNode();
         Assert.assertNotNull("node create failed", node);
     }

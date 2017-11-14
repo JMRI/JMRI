@@ -203,7 +203,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
             index = keys.indexOf(key);
             fireTableRowsInserted(index, index);
         } else {
-            // index has been set, update  
+            // index has been set, update
             keys.setElementAt(key, index);
             addresses.setElementAt(address, index);
             types.setElementAt(type, index);

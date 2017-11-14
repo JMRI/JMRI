@@ -12,7 +12,7 @@ import org.junit.Test;
  * Description:	tests for the jmri.jmrix.openlcb.OlcbSystemConnectionMemo class
  *
  * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class OlcbSystemConnectionMemoTest {
 

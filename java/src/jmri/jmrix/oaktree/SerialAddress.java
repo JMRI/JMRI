@@ -40,7 +40,7 @@ public class SerialAddress {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || ((systemName.charAt(prefix.length()) != 'L')
                 && (systemName.charAt(prefix.length()) != 'S') && (systemName.charAt(prefix.length()) != 'T'))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal character in header field of system name: {}", systemName);
             return (null);
         }
@@ -143,7 +143,7 @@ public class SerialAddress {
     public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field system name: {}", systemName);
             return NameValidity.INVALID;
         }
@@ -330,7 +330,7 @@ public class SerialAddress {
             int bitNum = num - (nAddress * 1000);
             nName = prefix + type + Integer.toString((nAddress * 1000) + bitNum);
         } else {
-            // This is a OLnnnBxxxx address 
+            // This is a OLnnnBxxxx address
             int nAddress = Integer.valueOf(s).intValue();
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             nName = prefix + type + Integer.toString(nAddress) + "B"

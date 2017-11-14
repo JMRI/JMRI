@@ -92,17 +92,17 @@ public class RouteTest extends TestCase {
     public void testTurnoutsAlignedSensor() {
         DefaultRoute r = new DefaultRoute("test");
         r.setTurnoutsAlignedSensor("IS123");
-        Assert.assertEquals("Sensor name stored", "IS123", r.getTurnoutsAlignedSensor());     
+        Assert.assertEquals("Sensor name stored", "IS123", r.getTurnoutsAlignedSensor());
         r.activateRoute();
-        
+
     }
 
     public void testLockControlTurnout() {
         DefaultRoute r = new DefaultRoute("test");
         r.setLockControlTurnout("IT123");
-        Assert.assertEquals("Turnout name stored", "IT123", r.getLockControlTurnout());     
+        Assert.assertEquals("Turnout name stored", "IT123", r.getLockControlTurnout());
         r.activateRoute();
-        
+
     }
 
     // There's a comment in DefaultRoute that says the following
@@ -133,7 +133,7 @@ public class RouteTest extends TestCase {
         TestSuite suite = new TestSuite(RouteTest.class);
         return suite;
     }
-    
+
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
@@ -147,5 +147,5 @@ public class RouteTest extends TestCase {
     protected void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-   
+
 }

@@ -11,19 +11,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NodeIOListActionTest {
 
     @Test
     public void testCTor() {
-        NodeIOListAction t = new NodeIOListAction("test action",new CMRISystemConnectionMemo()); 
+        NodeIOListAction t = new NodeIOListAction("test action",new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testMemoCTor() {
-        NodeIOListAction t = new NodeIOListAction(new CMRISystemConnectionMemo()); 
+        NodeIOListAction t = new NodeIOListAction(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 

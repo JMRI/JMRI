@@ -179,7 +179,7 @@
                 <text> </text>
               </label>
               <display item="Livestock Probability" layout="above" format="hslider"/>
-            </row>            
+            </row>
             <label>
               <text> </text>
             </label>

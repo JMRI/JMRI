@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of location
  *
  * @author Dan Boudreau Copyright (C) 2015
- * 
+ *
  */
 public class LocationTrackBlockingOrderFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -36,7 +36,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     Location _location = null;
-    
+
     JLabel locationName = new JLabel();
 
     // major buttons
@@ -50,7 +50,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
 
     public void initComponents(Location location) {
         _location = location;
-        
+
         trackPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         trackPane.setBorder(BorderFactory.createTitledBorder(""));
 
@@ -64,20 +64,20 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        // Layout the panel by rows       
+        // Layout the panel by rows
         JPanel pName = new JPanel();
         pName.setLayout(new GridBagLayout());
         pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
 
         addItem(pName, locationName, 0, 0);
-        
+
         // row buttons
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
         addItem(pB, resetButton, 0, 0);
         addItem(pB, reorderButton, 1, 0);
         addItem(pB, saveButton, 2, 0);
-        
+
         // Notes
         JLabel note1 = new JLabel(Bundle.getMessage("ServiceOrderMessage"));
         JLabel note2 = new JLabel(Bundle.getMessage("ServiceOrderEastSouth"));

@@ -34,7 +34,7 @@
     </revision>
   <!-- Uhlenbrock Decoder Configuration CV 107/108 - independent control of A1/A2 outputs -->
   <!--            valid for 73100, 73140, 75330, 76425, 76560
-                           (to be declared explicitly with include)                       -->  
+                           (to be declared explicitly with include)                       -->
   </revhistory>
  <variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560">
 	<enumVal>

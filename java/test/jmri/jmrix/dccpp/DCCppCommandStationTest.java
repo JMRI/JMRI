@@ -40,7 +40,7 @@ public class DCCppCommandStationTest extends TestCase {
         //Assert.assertTrue(c.getBaseStationType().equals("MEGA / ARDUINO MOTOR SHIELD"));
 	log.debug("Base Station: {}", c.getBaseStationType());
 	log.debug("Code Date: {}", c.getCodeBuildDate());
-	Assert.assertTrue(c.getBaseStationType().equals("DCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD")); 
+	Assert.assertTrue(c.getBaseStationType().equals("DCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD"));
 	Assert.assertTrue(c.getCodeBuildDate().equals("23 Feb 2015 09:23:57"));
     }
 

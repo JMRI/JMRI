@@ -169,7 +169,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                     t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
                 }
                 t.setLevel(Editor.TURNOUTS);
-                return t;                
+                return t;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" icons");

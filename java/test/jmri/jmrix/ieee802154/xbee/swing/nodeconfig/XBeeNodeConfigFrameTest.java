@@ -23,7 +23,7 @@ public class XBeeNodeConfigFrameTest {
     private XBeeTrafficController tc = null;
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeNodeConfigFrame action = new XBeeNodeConfigFrame(tc);
         Assert.assertNotNull("exists", action);
         action.dispose();
@@ -31,7 +31,7 @@ public class XBeeNodeConfigFrameTest {
 
     @Test
     public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeNodeConfigFrame t = new XBeeNodeConfigFrame(tc);
         // for now, just makes ure there isn't an exception.
         t.initComponents();
@@ -40,7 +40,7 @@ public class XBeeNodeConfigFrameTest {
 
     @Test
     public void testGetTitle(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeNodeConfigFrame t = new XBeeNodeConfigFrame(tc);
         t.initComponents();
         Assert.assertEquals("title","Configure XBee Nodes",t.getTitle());

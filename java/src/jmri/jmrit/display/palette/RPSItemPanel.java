@@ -1,6 +1,6 @@
 package jmri.jmrit.display.palette;
 
-//import java.awt.datatransfer.Transferable; 
+//import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class RPSItemPanel extends FamilyItemPanel {
                 r.setErrorIcon(new NamedIcon(iconMap.get("error")));
                 r.setSize(r.getPreferredSize().width, r.getPreferredSize().height);
                 r.setLevel(Editor.SENSORS);
-                return r;                
+                return r;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" icons");

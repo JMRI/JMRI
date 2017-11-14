@@ -86,7 +86,7 @@ public class SerialMonFrameTest {
         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length());
     }
      */
-    
+
     @Test
     public void testWrite() {
 

@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * types are Spurs, Yards, Interchanges and Staging.
  *
  * @author Daniel Boudreau Copyright (C) 2011
- * 
+ *
  */
 class ChangeTracksFrame extends OperationsFrame {
 
@@ -64,7 +64,7 @@ class ChangeTracksFrame extends OperationsFrame {
         addItem(p1, yardRadioButton, 1, 0);
         addItem(p1, interchangeRadioButton, 2, 0);
         addItem(p1, stagingRadioButton, 3, 0);
-        
+
         JPanel p2 = new JPanel();
         p2.add(saveButton);
 
@@ -74,7 +74,7 @@ class ChangeTracksFrame extends OperationsFrame {
         group.add(yardRadioButton);
         group.add(interchangeRadioButton);
         group.add(stagingRadioButton);
-        
+
         stagingRadioButton.setSelected(_location.isStaging());
 
         // button action
@@ -82,10 +82,10 @@ class ChangeTracksFrame extends OperationsFrame {
 
         getContentPane().add(p1);
         getContentPane().add(p2);
-        
+
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_ChangeTrackTypeLocation", true); // NOI18N
-        
+
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
     }
 

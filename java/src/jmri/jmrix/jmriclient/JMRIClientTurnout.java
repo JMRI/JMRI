@@ -36,7 +36,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         prefix = memo.getSystemPrefix();
         transmitName = memo.getTransmitPrefix() + "T" + number;
         /* allow monitoring mode feedback, which is the same
-         as direct for this connection (this aids the 
+         as direct for this connection (this aids the
          transition from directly connected hardware to remotly
          connected hardware.)*/
         _validFeedbackTypes |= MONITORING;

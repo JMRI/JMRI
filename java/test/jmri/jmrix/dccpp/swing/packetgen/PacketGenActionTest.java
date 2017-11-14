@@ -15,7 +15,7 @@ import org.junit.Test;
  */
 public class PacketGenActionTest {
 
-    
+
     private jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
 
     @Test

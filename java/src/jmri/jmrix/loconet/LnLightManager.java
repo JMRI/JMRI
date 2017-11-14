@@ -58,7 +58,7 @@ public class LnLightManager extends AbstractLightManager {
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "L"))) {
-            // here if an illegal loconet light system name 
+            // here if an illegal loconet light system name
             log.error("invalid character in header field of loconet light system name: " + systemName);
             return (0);
         }

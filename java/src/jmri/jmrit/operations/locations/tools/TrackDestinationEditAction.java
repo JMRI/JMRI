@@ -9,7 +9,7 @@ import jmri.jmrit.operations.locations.TrackEditFrame;
  * Action to create the TrackDestinationEditFrame.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class TrackDestinationEditAction extends AbstractAction {
 

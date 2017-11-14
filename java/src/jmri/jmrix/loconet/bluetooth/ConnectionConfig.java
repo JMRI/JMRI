@@ -27,19 +27,19 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     public ConnectionConfig() {
         super();
     }
-    
+
     @Override
     public String name() {
         return "BT Locobridge";
     }
-    
+
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LocoNetBluetoothAdapter();
         }
     }
-    
+
     /**
      * Overrides super method to remove unnecessary ui components (baud rate)
      * and change the label "Serial Port: " to "Bluetooth adapter: ".
@@ -64,7 +64,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         portBoxLabel.setText("Bluetooth adapter: ");
         return out;
     }
-    
+
     @Override
     protected Vector<String> getPortNames() {
         Vector<String> portNameVector = new Vector<String>();
@@ -80,7 +80,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         }
         return portNameVector;
     }
-    
+
     @Override
     protected String[] getPortFriendlyNames() {
         return new String[]{};

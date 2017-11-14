@@ -63,14 +63,14 @@
         </label>
         <label>
           <text>The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</text>
-          <text xml:lang="it">I valori in questa pagina sono unici e ogni CV rappresenta l'effetto luci per due uscite</text>          
+          <text xml:lang="it">I valori in questa pagina sono unici e ogni CV rappresenta l'effetto luci per due uscite</text>
           <text xml:lang="de">Die Werte in den CV stellen die Lichteffekte für jeweils zwei Ausgänge ein.</text>
           <text xml:lang="cs">CV hodnoty na této stránce jsou jedinečné v tom, že každé CV představuje výběr osvětlení pro dva různé výstupy.</text>
           <text xml:lang="ca">El valor de CV d'aquesta pàgina només representen CV de dos efectes de llum.</text>
         </label>
         <label>
           <text>The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</text>
-          <text xml:lang="it">Le decine corrispondono ad una uscita e le unità all'altra uscita</text>  
+          <text xml:lang="it">Le decine corrispondono ad una uscita e le unità all'altra uscita</text>
           <text xml:lang="de">Der Zehnerwert bestimmt den Wert für den einen Ausgang der Einerwert für den anderen.</text>
           <text xml:lang="cs">Hodnota desítek odpovídá jednomu výstupu a jednotky odpovídají druhému výstupu.</text>
           <text xml:lang="ca">El deu dígits d'un valor representen una sortida i la unitat una altra sortida.</text>

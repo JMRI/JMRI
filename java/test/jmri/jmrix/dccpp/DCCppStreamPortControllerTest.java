@@ -43,7 +43,7 @@ public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPort
     }
 
     @Override
-    @After 
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }

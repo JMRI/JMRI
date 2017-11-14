@@ -18,7 +18,7 @@ public class SerialPacketGenFrameTest {
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenFrame action = new SerialPacketGenFrame(); 
+        SerialPacketGenFrame action = new SerialPacketGenFrame();
         Assert.assertNotNull("exists", action);
     }
 

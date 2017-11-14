@@ -189,7 +189,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             }
             if (msg==null && tempRow[NAME_COLUMN] != null) {
                 if (fromBlock == null || toBlock==null ) {
-                    msg = Bundle.getMessage("PortalNeedsBlock", tempRow[NAME_COLUMN]);                   
+                    msg = Bundle.getMessage("PortalNeedsBlock", tempRow[NAME_COLUMN]);
                 } else if (fromBlock.equals(toBlock)){
                     msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
                 }

@@ -87,7 +87,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // we have to make a new panel if we don't have one yet
         // we don't make a new panel if the window interface is
-        //      single instance (not multiple instance), 
+        //      single instance (not multiple instance),
         // of if the existing panel is single instance (not multiple instance)
         if (cache == null
                 || (wi.multipleInstances() && cache.isMultipleInstances())) {

@@ -15,7 +15,7 @@ import org.junit.Test;
  */
 public class DCCppMonActionTest {
 
-    
+
 
     @Test
     public void testMemoCtor() {

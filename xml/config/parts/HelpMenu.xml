@@ -74,8 +74,8 @@
         <name xml:lang="nl">Systeemconsole</name>
         <adapter>apps.SystemConsoleAction</adapter>
     </node>
-    
-</node>    
+
+</node>
 
 </nodes>
-  
+

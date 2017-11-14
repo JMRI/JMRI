@@ -51,7 +51,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
 
 
     public static final ProgrammingMode OPENLCBMODE = new ProgrammingMode("OPENLCBMODE", Bundle.getMessage("OPENLCBMODE"));
-    
+
     /**
      * Gain access to a Addressed Mode Programmer without reservation.
      *

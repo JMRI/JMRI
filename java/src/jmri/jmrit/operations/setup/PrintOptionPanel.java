@@ -383,9 +383,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         updateLogoButtons();
         dropColorChooser.setColor(Setup.getDropColor());
         pickupColorChooser.setColor(Setup.getPickupColor());
-        localColorChooser.setColor(Setup.getLocalColor());       
+        localColorChooser.setColor(Setup.getLocalColor());
 
- 
+
         enableColorSelection(); // disable color selection if not standard format
 
         commentTextArea.setText(Setup.getMiaComment());
@@ -539,7 +539,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             enableColorSelection();
         }
     }
-    
+
     private void enableColorSelection() {
         pickupColorChooser.setEnabled(manifestFormatComboBox.getSelectedItem().equals(Setup.STANDARD_FORMAT));
         dropColorChooser.setEnabled(manifestFormatComboBox.getSelectedItem().equals(Setup.STANDARD_FORMAT));

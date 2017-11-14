@@ -9,7 +9,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>James</firstname><surname>Koretsky</surname></personname>
@@ -18,20 +18,20 @@
         <personname><firstname>Ken</firstname><surname>Cameron</surname></personname>
     </author>
   </authorgroup>
-  
+
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
         <date>2012-08-31</date>
         <authorinitials>JK</authorinitials>
         <revremark>Initial version</revremark>
-	</revision>      
+	</revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2012-11-06</date>
         <authorinitials>KSC</authorinitials>
         <revremark>Added basic aspect mappings</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspecttable>BN</aspecttable>
@@ -84,7 +84,7 @@ October 1989 Burlington Northern Railroad Southern Region, Nebraska Division Tim
       <reference>Rule 241</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-1-high/rule-241-c.gif</imagelink>
 	</appearance>
-		
+
 	<appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
@@ -92,7 +92,7 @@ October 1989 Burlington Northern Railroad Southern Region, Nebraska Division Tim
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-1-high/rule-242.gif</imagelink>
 	</appearance>
   </appearances>
-  
+
 	<specificappearances><!-- Start of Specific Appearances list -->
 	   <danger>
 	      <aspect>Stop</aspect>
@@ -101,19 +101,19 @@ October 1989 Burlington Northern Railroad Southern Region, Nebraska Division Tim
 	      <aspect>Stop</aspect>
 	   </held>
     </specificappearances><!-- End of Specific Appearances list -->
-  
+
     <aspectMappings><!-- Start of Aspect Mapping -->
 
     <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Restricted Proceed</advancedAspect>
      <ourAspect>Approach</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Diverging Approach</advancedAspect>
      <ourAspect>Approach</ourAspect>

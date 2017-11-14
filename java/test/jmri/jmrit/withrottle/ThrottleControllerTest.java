@@ -40,7 +40,7 @@ public class ThrottleControllerTest extends TestCase {
         super.setUp();
         JUnitUtil.setUp();
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

@@ -6,21 +6,21 @@ import jmri.jmrix.ConnectionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/* 
- * Checks to see if AIU broadcasts are enabled and warns user to 
+/*
+ * Checks to see if AIU broadcasts are enabled and warns user to
  * disable AIU broadcast for proper operation.  NCE command station
  * battery-backed memory location 0xDC15 contains the control for
  * AIU broadcasts, 0 = disabled, 1 = enabled.
- *  
+ *
  * @author Daniel Boudreau (C) 2007
- * 
- * 
+ *
+ *
  */
 public class NceAIUChecker implements NceListener {
 
-    private static final int MEM_AIU = 0xDC15;  // NCE CS AIU memory address 
+    private static final int MEM_AIU = 0xDC15;  // NCE CS AIU memory address
     private static final int REPLY_LEN = 1;  // number of bytes read
-    private boolean EXPECT_REPLY = false;   // flag 
+    private boolean EXPECT_REPLY = false;   // flag
 
     private NceTrafficController tc = null;
 

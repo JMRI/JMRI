@@ -20,10 +20,10 @@ public class JMRIClientComponentFactoryTest {
 
     private JMRIClientTrafficController tc = null;
     private JMRIClientSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMRIClientComponentFactory action = new JMRIClientComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JsonProgrammerServerTest {
 

@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a train's road options
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

@@ -90,7 +90,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     /**
      * This is normal, don't log at ERROR level
      */
-    @Override 
+    @Override
     protected void reportReceiveLoopException(Exception e) {
         log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);

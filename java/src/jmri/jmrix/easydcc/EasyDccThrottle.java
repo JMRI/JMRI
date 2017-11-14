@@ -57,7 +57,7 @@ public class EasyDccThrottle extends AbstractThrottle {
                 address.isLongAddress(),
                 getF0(), getF1(), getF2(), getF3(), getF4());
 
-        /* Format of EasyDcc 'send' command 
+        /* Format of EasyDcc 'send' command
          * S nn xx yy
          * nn = number of times to send - usually 01 is sufficient.
          * xx = Cx for 4 digit or 00 for 2 digit addresses

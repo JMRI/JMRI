@@ -19,12 +19,12 @@ public class TurnoutLock implements Lock {
     public TurnoutLock(String name, int okValue) {
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(name);
         turnout = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name,t);
-        this.value = okValue;      
+        this.value = okValue;
     }
 
-    NamedBeanHandle<Turnout> turnout; 
+    NamedBeanHandle<Turnout> turnout;
     int value;
-    
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
@@ -38,5 +38,5 @@ public class TurnoutLock implements Lock {
         }
         return true;
     }
-    
+
 }

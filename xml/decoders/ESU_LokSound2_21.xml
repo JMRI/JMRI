@@ -18,10 +18,10 @@
   <!-- version 2 - add consist direction - jake -->
   <!-- version 3 - Change LowVersionID to "22" to match my decoder - Ian -->
   <!-- version 4 - fix mfg name - jake -->
-  <!-- version 5 - Changed max values of CV2 thru 6 to 63, this matches the 
+  <!-- version 5 - Changed max values of CV2 thru 6 to 63, this matches the
 	            Factory specs for max,also ESU pane with Factory Reset - walt -->
   <!-- version 6 - Massive changes to allow use of Comprehensive rather than
-               customer specific programmer, added CV49 bit 1 "Marklin brake track activated" 
+               customer specific programmer, added CV49 bit 1 "Marklin brake track activated"
              Deleted  factory reset,not provided wsthompson@earthlink.net-->
   <decoder>
     <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" highVersionID="22">

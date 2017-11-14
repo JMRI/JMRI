@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Nigel Cliffe" version="1.9" lastUpdated="2017/6/16"/> 
+  <version author="Nigel Cliffe" version="1.9" lastUpdated="2017/6/16"/>
 
   <!-- <version author="ronald@wirkuhns.de" version="1.8" lastUpdated="2016/5/12"/> -->
   <!-- <version author="ncliffe@btinternet.com" version="1.7" lastUpdated="2009/9/01"/> -->
@@ -1203,8 +1203,8 @@
         <tooltip>Functions 1 to 12 possible</tooltip>
         <tooltip xml:lang="de">Auswahl der Taste für die Abkuppel-Automatik</tooltip>
       </variable>
-      <!--  NC comment, version 56 and version 66 decoders seem different.  
-      In Version 56 and documentation, the increments in values appear to be 2, 4, etc.. 
+      <!--  NC comment, version 56 and version 66 decoders seem different.
+      In Version 56 and documentation, the increments in values appear to be 2, 4, etc..
       In Version 66, the increments appear to be 1, 2 (and presumably 3, 4)  -->
       <variable CV="152" default="8" item="Engine FWD, Uncoupling BWD">
         <decVal/>
@@ -1628,7 +1628,7 @@
         <text>Forward/Reverse speed ratio</text>
       </label>
 	  <display item="Switching 3"/>
-     
+
       <label>
         <text>  </text>
       </label>

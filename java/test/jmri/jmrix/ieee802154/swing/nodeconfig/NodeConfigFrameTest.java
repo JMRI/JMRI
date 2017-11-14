@@ -20,14 +20,14 @@ public class NodeConfigFrameTest {
     private IEEE802154TrafficController tc = null;
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame action = new NodeConfigFrame(tc);
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame t = new NodeConfigFrame(tc);
         // for now, just makes ure there isn't an exception.
         t.initComponents();
@@ -36,7 +36,7 @@ public class NodeConfigFrameTest {
 
     @Test
     public void testGetTitle(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame t = new NodeConfigFrame(tc);
         t.initComponents();
         Assert.assertEquals("title","Configure IEEE802154 Nodes",t.getTitle());

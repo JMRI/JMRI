@@ -64,7 +64,7 @@ public class SerialNodeTest extends TestCase {
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 4, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
-        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'        
+        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'
     }
 
     public void testMarkChangesRealData1() {
@@ -130,7 +130,7 @@ public class SerialNodeTest extends TestCase {
     }
 
     public void testMarkChangesSerialSlave1() {
-        // advanced serial format, 1st slave card, 
+        // advanced serial format, 1st slave card,
         // sensors 1109 to 1116 adn 1209 to 1216
 
         SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);

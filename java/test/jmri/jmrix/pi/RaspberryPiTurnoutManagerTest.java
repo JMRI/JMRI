@@ -33,7 +33,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
        Assert.assertEquals("Prefix","PI",l.getSystemPrefix());
    }
 
-    @Override    
+    @Override
     @Test
     public void testTurnoutPutGet() {
         // create
@@ -85,7 +85,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     protected int getNumToTest1() {
         return 19;
     }
- 
+
     @Override
     protected int getNumToTest2() {
         return 5;

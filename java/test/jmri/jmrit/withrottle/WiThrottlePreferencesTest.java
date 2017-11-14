@@ -40,7 +40,7 @@ public class WiThrottlePreferencesTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

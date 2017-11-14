@@ -575,7 +575,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 xmtHandler.notify();
                             }
                         } else {
-                            //Using a linked list, so if the first packet we come too isn't 
+                            //Using a linked list, so if the first packet we come too isn't
                             break;
                         }
                     }

@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RollingStockGroupTest {
 
@@ -19,7 +19,7 @@ public class RollingStockGroupTest {
         RollingStockGroup <Car> t = new RollingStockGroup<Car>("Test");
         Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
     public void testCTor2() {
         RollingStockGroup <Engine> t = new RollingStockGroup<Engine>("Test");

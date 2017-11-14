@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Test the MultiIndexProgrammerFacade class.
  *
  * @author	Bob Jacobsen Copyright 2013
- * 
+ *
  */
 public class MultiIndexProgrammerFacadeTest extends TestCase {
 
@@ -340,8 +340,8 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         Assert.assertTrue("index 2 not written", !dp.hasBeenWritten(82));
 
         // add timeout
-        p.lastOpTime = p.lastOpTime - 2*p.maxDelay; 
-        
+        p.lastOpTime = p.lastOpTime - 2*p.maxDelay;
+
         dp.clearHasBeenWritten(81);
         dp.clearHasBeenWritten(82);
 
@@ -373,9 +373,9 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
 
         dp.clearHasBeenWritten(81);
         dp.clearHasBeenWritten(82);
-        
+
         // pretend too long has elapsed, so should still program
-        p.lastOpTime = p.lastOpTime - 2*p.maxDelay; 
+        p.lastOpTime = p.lastOpTime - 2*p.maxDelay;
 
         p.readCV("45.46.123", l);
         waitReply();

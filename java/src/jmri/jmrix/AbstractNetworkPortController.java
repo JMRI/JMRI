@@ -357,7 +357,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                     log.error("restart failed", ex);
                     return;
                 }
-                
+
                 reply = !opened;
                 if (count >= retryAttempts) {
                     log.error("Unable to reconnect after {} Attempts, increasing duration of retries", count);

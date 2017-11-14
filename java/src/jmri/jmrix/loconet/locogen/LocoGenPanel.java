@@ -47,7 +47,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTextField[] mDelayField = new JTextField[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton("Go");
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -55,7 +55,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; // NOI18N
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -63,7 +63,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         return getTitle(Bundle.getMessage("MenuItemSendPacket"));
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -131,7 +131,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         });
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -192,7 +192,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         sendNextItem();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

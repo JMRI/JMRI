@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2015</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
      <author>
         <personname><firstname>Chuck</firstname><surname>Catania</surname></personname>
         <email>info@modelrailroadcontrolsystems.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,14 +23,14 @@
         <date>2017-10-11</date>
         <authorinitials>CFC</authorinitials>
         <revremark>USS H2 Style for CTC Model Boards</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspecttable>CTC-H2-Dwarf</aspecttable>
   <name>1 Head Dwarf</name>
   <reference>Non-Prototype USS H-2 Signal Masts".</reference>
   <description>Appearances for one-searchlight dwarf signal</description>
-  
+
   <appearances>
 
     <appearance>
@@ -61,4 +61,4 @@
     </appearance>
 
   </appearances>
-</appearancetable>  
+</appearancetable>

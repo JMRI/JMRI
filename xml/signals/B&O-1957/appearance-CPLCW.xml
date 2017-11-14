@@ -8,16 +8,16 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
         <email>dick@rr-cirkits.com</email>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -26,20 +26,20 @@
         <date>2010-01-01</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.01</revnumber>
         <date>2010-01-17</date>
         <authorinitials>DB</authorinitials>
         <revremark>Typo Corrections</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspecttable>B&amp;O 1957</aspecttable>
   <name>Color Position Light Signal CW</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
   <description>Appearances for a Color Position Light signal</description>
-  
+
   <appearances>
 
    <appearance>
@@ -182,4 +182,4 @@
     </appearance>
 
   </appearances>
-</appearancetable>  
+</appearancetable>

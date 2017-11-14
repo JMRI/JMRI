@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class LayoutEditorToolsTest {
-        
+
     private LayoutEditor le = null;
     private LayoutEditorTools let = null;
 

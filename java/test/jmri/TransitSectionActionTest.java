@@ -21,13 +21,13 @@ public class TransitSectionActionTest {
       Assert.assertNotNull("Constructor", t = new TransitSectionAction(2,3));
       Assert.assertEquals(t.getWhenCode(), 2);
       Assert.assertEquals(t.getWhatCode(), 3);
-      
+
       // check defaults
       Assert.assertEquals(t.getDataWhen(), -1);
       Assert.assertEquals(t.getDataWhat1(), -1);
       Assert.assertEquals(t.getDataWhat2(), -1);
       Assert.assertEquals(t.getStringWhen(), "");
-      Assert.assertEquals(t.getStringWhat(), "");     
+      Assert.assertEquals(t.getStringWhat(), "");
    }
 
    @Test
@@ -50,14 +50,14 @@ public class TransitSectionActionTest {
 
       Assert.assertEquals(t.getWhenCode(), 11);
       Assert.assertEquals(t.getDataWhen(), 13);
-      
+
       t.setWhenCode(21);
-      
+
       Assert.assertEquals(t.getWhenCode(), 21);
       Assert.assertEquals(t.getDataWhen(), 13);
 
       t.setDataWhen(32);
-      
+
       Assert.assertEquals(t.getWhenCode(), 21);
       Assert.assertEquals(t.getDataWhen(), 32);
     }

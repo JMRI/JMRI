@@ -17,12 +17,12 @@ public interface Lock {
         MACHINE_TURNOUT,
         MACHINE_SIGNAL
     }
-    
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
-    public boolean isLockClear();  
-    
+    public boolean isLockClear();
+
     static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
 }

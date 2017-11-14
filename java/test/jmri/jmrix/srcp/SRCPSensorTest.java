@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  */
 public class SRCPSensorTest {
-        
+
     private SRCPSensor s = null;
 
     @Test

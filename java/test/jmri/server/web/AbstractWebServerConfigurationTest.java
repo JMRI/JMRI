@@ -12,22 +12,22 @@ import org.junit.Test;
  * @author Randall Wood (C) 2016
  */
 public class AbstractWebServerConfigurationTest {
-    
+
     public AbstractWebServerConfigurationTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -65,5 +65,5 @@ public class AbstractWebServerConfigurationTest {
 
     public class AbstractWebServerConfigurationImpl extends AbstractWebServerConfiguration {
     }
-    
+
 }

@@ -205,7 +205,7 @@
         </enumVal>
         <label>One LED output</label>
       </variable>
-      
+
       <!-- Route send delay variable definition -->
       <variable item="Route send delay" CV="11" mask="XVVVVVVV">
         <decVal min="0" max="127"/>
@@ -330,7 +330,7 @@
         <splitVal highCV="15" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
-      
+
      <!-- Begin inputs 1-8 variable definition -->
       <variable CV="16" mask="VVVVVVVV" item="PA1" default="1">
         <splitVal highCV="17" max="7" upperMask="XXXXVVVV"/>
@@ -854,7 +854,7 @@
         <splitVal highCV="71" upperMask="XXXXVVVV"/>
         <label>Servo 8 Address</label>
       </variable>
-      
+
       <variable item="Servo 1 Position 1" CV="72" mask="VVVVVVVV" default="146">
         <decVal min="1" max="200"/>
         <label>Servo 1 Position 1</label>
@@ -862,7 +862,7 @@
       <variable item="Servo 1 Position 2" CV="73" mask="VVVVVVVV" default="106">
         <decVal min="1" max="200"/>
         <label>Servo 1 Position 2</label>
-      </variable>      
+      </variable>
       <variable item="Servo 2 Position 1" CV="74" mask="VVVVVVVV" default="146">
         <decVal min="1" max="200"/>
         <label>Servo 2 Position 1</label>
@@ -886,7 +886,7 @@
       <variable item="Servo 4 Position 2" CV="79" mask="VVVVVVVV" default="106">
         <decVal min="1" max="200"/>
         <label>Servo 4 Position 2</label>
-      </variable>      
+      </variable>
       <variable item="Servo 5 Position 1" CV="80" mask="VVVVVVVV" default="146">
         <decVal min="1" max="200"/>
         <label>Servo 5 Position 1</label>
@@ -894,7 +894,7 @@
       <variable item="Servo 5 Position 2" CV="81" mask="VVVVVVVV" default="106">
         <decVal min="1" max="200"/>
         <label>Servo 5 Position 2</label>
-      </variable>      
+      </variable>
       <variable item="Servo 6 Position 1" CV="82" mask="VVVVVVVV" default="146">
         <decVal min="1" max="200"/>
         <label>Servo 6 Position 1</label>
@@ -902,7 +902,7 @@
       <variable item="Servo 6 Position 2" CV="83" mask="VVVVVVVV" default="106">
         <decVal min="1" max="200"/>
         <label>Servo 6 Position 2</label>
-      </variable>      
+      </variable>
       <variable item="Servo 7 Position 1" CV="84" mask="VVVVVVVV" default="146">
         <decVal min="1" max="200"/>
         <label>Servo 7 Position 1</label>
@@ -910,7 +910,7 @@
       <variable item="Servo 7 Position 2" CV="85" mask="VVVVVVVV" default="106">
         <decVal min="1" max="200"/>
         <label>Servo 7 Position 2</label>
-      </variable>      
+      </variable>
       <variable item="Servo 8 Position 1" CV="86" mask="VVVVVVVV" default="146">
         <decVal min="1" max="200"/>
         <label>Servo 8 Position 1</label>
@@ -918,8 +918,8 @@
       <variable item="Servo 8 Position 2" CV="87" mask="VVVVVVVV" default="106">
         <decVal min="1" max="200"/>
         <label>Servo 8 Position 2</label>
-      </variable>        
-      
+      </variable>
+
       <!-- Begin servo speed variable definition -->
       <variable item="Servo 1 Move Speed D1" CV="88" mask="XVVVVVVV" default="18">
         <decVal min="1" max="127"/>
@@ -1141,7 +1141,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      
+
       <!-- Begin route variable definition -->
       <variable CV="112" mask="VVVVVVVV" item="Rt Top1">
         <splitVal highCV="113" upperMask="XXXXVVVV"/>
@@ -3289,7 +3289,7 @@
       </row>
     </column>
     <name>LED Outputs</name>
-  </pane> 
+  </pane>
   <pane>
     <column>
       <label>

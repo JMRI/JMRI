@@ -86,7 +86,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -326,7 +326,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         private int curRow = -1;
         private String curRowSysName = "";
 
-        /** 
+        /**
          * {@inheritDoc}
          */
         @Override
@@ -334,7 +334,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             return assignmentTableColumnNames[c];
         }
 
-        /** 
+        /**
          * {@inheritDoc}
          */
         @Override
@@ -342,7 +342,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             return String.class;
         }
 
-        /** 
+        /**
          * {@inheritDoc}
          */
         @Override
@@ -350,7 +350,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             return false;
         }
 
-        /** 
+        /**
          * {@inheritDoc}
          */
         @Override
@@ -358,7 +358,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             return 4;
         }
 
-        /** 
+        /**
          * {@inheritDoc}
          */
         @Override
@@ -366,7 +366,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             return numBits;
         }
 
-        /** 
+        /**
          * {@inheritDoc}
          */
         @Override

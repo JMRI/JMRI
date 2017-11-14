@@ -6,7 +6,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of manifest text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class EditManifestTextFrame extends OperationsFrame {
 

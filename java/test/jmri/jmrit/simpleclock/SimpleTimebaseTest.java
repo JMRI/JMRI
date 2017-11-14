@@ -74,7 +74,7 @@ public class SimpleTimebaseTest extends TestCase {
     public void testSetTimeInstant() {
         SimpleTimebase p = new SimpleTimebase();
         Instant now = Instant.now();
-        
+
         p.setTime(now);
         Assert.assertEquals("Time Set",Date.from(now).toString(),p.getTime().toString());
     }

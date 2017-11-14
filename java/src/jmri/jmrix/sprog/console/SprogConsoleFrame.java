@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * Updated Jan 2010 by Andrew Berridge - fixed errors caused by trying to send
  * some commands while slot manager is active
- * 
+ *
  * Updated April 2016 by Andrew Crosland remove the checks on slot manager
  * status, implement a timeout and look for the correct replies which may be
  * delayed by replies for slot manager.

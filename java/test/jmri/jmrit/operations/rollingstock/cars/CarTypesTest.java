@@ -26,17 +26,17 @@ public class CarTypesTest {
 
     @Test
     public void testDefaultCarTypes() {
-        String[] carTypes=Bundle.getMessage("carTypeNames").split(","); 
+        String[] carTypes=Bundle.getMessage("carTypeNames").split(",");
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
 
         Assert.assertTrue("Predefined Car Type 1", ct1.containsName(carTypes[1]));
         Assert.assertTrue("Predefined Car Type 2", ct1.containsName(carTypes[2]));
     }
-    
+
     @Test
     public void testAddAndDeleteCarTypes() {
-        String[] carTypes=Bundle.getMessage("carTypeNames").split(","); 
+        String[] carTypes=Bundle.getMessage("carTypeNames").split(",");
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
 
@@ -64,7 +64,7 @@ public class CarTypesTest {
     @Test
     @Ignore("locale set is not having the desired effect")
     public void defaultNameChangetest(){
-        Locale.setDefault(Locale.US); // set the locale to US English 
+        Locale.setDefault(Locale.US); // set the locale to US English
                                            // for this test.
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
@@ -77,7 +77,7 @@ public class CarTypesTest {
     @Test
     @Ignore("locale set is not having the desired effect")
     public void defaultNameChangetestGB(){
-        Locale.setDefault(Locale.UK); // set the locale to UK english 
+        Locale.setDefault(Locale.UK); // set the locale to UK english
                                            // for this test.
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types

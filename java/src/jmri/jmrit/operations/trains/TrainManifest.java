@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * to their liking.
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013, 2015
- * 
+ *
  */
 public class TrainManifest extends TrainCommon {
 

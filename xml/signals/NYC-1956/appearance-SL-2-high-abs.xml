@@ -9,11 +9,11 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>John</firstname><surname>Lang</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,35 +23,35 @@
         <authorinitials>JDL</authorinitials>
         <revremark>Initial version</revremark>
     </revision>
-    
+
     <revision>
         <revnumber>2</revnumber>
         <date>2013-07-10</date>
         <authorinitials>JDL</authorinitials>
         <revremark>aspect mapping revisions</revremark>
     </revision>
-    
+
     <revision>
         <revnumber>2.1</revnumber>
         <date>2013-12-30</date>
         <authorinitials>JDL</authorinitials>
         <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
     </revision>
-    
+
     <revision>
         <revnumber>2.2</revnumber>
         <date>2015-06-12</date>
         <authorinitials>JDL</authorinitials>
         <revremark>added aspect mapping to Held Aspect</revremark>
     </revision>
-    
+
   </revhistory>
 
   <aspecttable>NYC-1956</aspecttable>
   <name>Double searchlight high absolute signal</name>
   <reference>As described in the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."</reference>
   <description>Appearances for a two-searchlight signal head without other badging</description>
-  
+
   <appearances>
 
     <appearance>
@@ -77,7 +77,7 @@
       <reference>Rule 281B</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 281B.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Limited Clear</aspectname>
       <show>red</show>
@@ -93,7 +93,7 @@
       <reference>Rule 281D</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 281D.gif</imagelink>
     </appearance>
-  
+
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
@@ -101,7 +101,7 @@
       <reference>Rule 282</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 282.gif</imagelink>
     </appearance>
-     
+
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
@@ -109,7 +109,7 @@
       <reference>Rule 282A</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 282A.gif</imagelink>
     </appearance>
- 
+
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
@@ -117,7 +117,7 @@
       <reference>Rule 285</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 285.gif</imagelink>
     </appearance>
- 
+
     <appearance>
       <aspectname>Slow-Clear</aspectname>
       <show>red</show>
@@ -125,7 +125,7 @@
       <reference>Rule 287</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 287.gif</imagelink>
     </appearance>
-     
+
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
@@ -133,7 +133,7 @@
       <reference>Rule 290</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 290.gif</imagelink>
     </appearance>
-     
+
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
@@ -141,7 +141,7 @@
       <reference>Rule 292</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 292.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Held</aspectname>
       <show>red</show>
@@ -149,7 +149,7 @@
       <reference>CTC Rules</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Held.gif</imagelink>
     </appearance>
-  
+
     </appearances>
   <specificappearances>
   	<danger>
@@ -159,7 +159,7 @@
   		<aspect>Held</aspect>
   	</held>
   </specificappearances>
-  
+
   <aspectMappings>
  <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
@@ -167,7 +167,7 @@
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Slow-Clear</ourAspect>
     </aspectMapping>
- 
+
     <aspectMapping>
       <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -175,7 +175,7 @@
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow-Clear</ourAspect>
     </aspectMapping>
-        
+
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -244,7 +244,7 @@
       <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Slow-Clear</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
       <advancedAspect>Slow-Clear</advancedAspect>
       <ourAspect>Restricting</ourAspect>
@@ -292,8 +292,8 @@
     </aspectMapping>
 
   </aspectMappings>
-  
-</appearancetable>  
-  
 
-  
+</appearancetable>
+
+
+

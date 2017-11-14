@@ -43,7 +43,7 @@ public class ConsistFunctionControllerTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

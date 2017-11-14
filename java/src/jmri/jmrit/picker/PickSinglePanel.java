@@ -45,7 +45,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
                 _model.getTable().setColumnSelectionInterval(0,0);
             }
         });
-        
+
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout(5, 5));
         p.add(new JLabel(_model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
@@ -61,20 +61,20 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
         int row = getTable().getSelectedRow();
         int col = getTable().getSelectedColumn(); // might be -1 if just inserted
         System.out.println(" r c "+row+" "+col);
-        
+
         // are we sure this is always col 0 for sysname and col 1 for user name?
         String sysname = _model.getTable().getValueAt(row, 0).toString();
         String username = (String) _model.getTable().getValueAt(row, 1);
-        
+
         String beanName = sysname;
         if (col == 1 && username != null) beanName = username;
         jmri.NamedBean bean = _model.addBean(sysname, username);
         return InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(beanName, (T)bean);
     }
-    
+
     public JTable getTable() { return _table; }
-    
+
     private JPanel makeAddToTablePanel() {
         _sysNametext = new JTextField();
         _userNametext = new JTextField();
@@ -110,7 +110,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
 
     void addToTable() {
         String sysname = _model.getManager().normalizeSystemName(_sysNametext.getText());
-        
+
         if (sysname != null && sysname.length() > 1) {
             String uname = NamedBean.normalizeUserName(_userNametext.getText());
             if (uname != null && uname.trim().length() == 0) {

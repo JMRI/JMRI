@@ -1142,7 +1142,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
 
         activatedRoute = false;
-        // remove control turnout if there's one 
+        // remove control turnout if there's one
         for (int k = 0; k < _controlSensorList.size(); k++) {
             _controlSensorList.get(k).removeListener();
         }
@@ -1153,7 +1153,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
             mTurnoutListener = null;
         }
-        // remove lock control turnout if there's one 
+        // remove lock control turnout if there's one
         if (mLockTurnoutListener != null) {
             Turnout lockCtl = getCtlTurnout();
             if (lockCtl != null) {
@@ -1210,7 +1210,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      *         {@link jmri.Sensor#ACTIVE} state, false otherwise.
      * @deprecated Since 4.3.6; will become protected in the future.
      */
-    // Mark protected instead of public when removing 
+    // Mark protected instead of public when removing
     public boolean isRouteBusy() {
         return busy;
     }
@@ -1355,7 +1355,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 }
             }
 
-            // set sensors 
+            // set sensors
             for (int k = 0; k < r.getNumOutputSensors(); k++) {
                 Sensor t = r.getOutputSensor(k);
                 int state = r.getOutputSensorState(k);
@@ -1401,7 +1401,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 final Turnout setTurnout = t;
                 ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
                     setTurnout.setCommandedState(toState);
-                });         
+                });
                 try {
                     Thread.sleep(250 + delay);
                 } catch (InterruptedException e) {

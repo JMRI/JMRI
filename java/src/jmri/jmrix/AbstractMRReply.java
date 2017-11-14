@@ -85,8 +85,8 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
 
     /*
-     * Return true if the message is an error and we can automatically 
-     * recover by retransmitting the message.  Override in system specific 
+     * Return true if the message is an error and we can automatically
+     * recover by retransmitting the message.  Override in system specific
      * classes if required.
      */
     public boolean isRetransmittableErrorMsg() {

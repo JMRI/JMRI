@@ -18,7 +18,7 @@ public class PricomMenuTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PricomMenu action = new PricomMenu();
         Assert.assertNotNull("exists", action);
     }

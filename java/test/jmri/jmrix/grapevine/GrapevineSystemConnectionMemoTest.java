@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author      Paul Bender Copyright (C) 2016
  */
 public class GrapevineSystemConnectionMemoTest {
-     
+
     GrapevineSystemConnectionMemo memo = null;
 
     @Test

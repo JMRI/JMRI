@@ -14,7 +14,7 @@ import org.jdom2.Element;
  * to set and get Attributes is allowed so that attributes like running duration
  * can be recorded, with the store option also avaiable.
  * <p>
- * This interface should probably be called RosterEntry, but this would result in another class 
+ * This interface should probably be called RosterEntry, but this would result in another class
  * with the same name; refactoring of that class would be a big job and would potentially cause issue
  * with users scripts etc.
  * <p>

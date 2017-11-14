@@ -22,8 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
- * Allows user to decide if (and which) SpeedProfiles to write to the Roster at 
+ *
+ * Allows user to decide if (and which) SpeedProfiles to write to the Roster at
  * the end of a session.  Locos running warrants have had their speeds measured
  * and this new data may or may not be merged into any existing SpeedProfiles
  * in the Roster.
@@ -38,7 +38,7 @@ public class SpeedProfilePanel extends JPanel {
     HashMap<String, HashMap<Integer, Boolean>> _anomalies;
     JTable _table;
     static java.awt.Color myRed = new java.awt.Color(255, 120, 120);
-    
+
     /**
      * @param speedProfile a RosterSpeedProfile
      * @param anomalies Map of keys where profile is not monotonic increasing.
@@ -56,7 +56,7 @@ public class SpeedProfilePanel extends JPanel {
         if (anomalies != null) {
             _table.addKeyListener(new KeyListener() {
                 public void keyTyped(KeyEvent ke) {
-                    char ch = ke.getKeyChar(); 
+                    char ch = ke.getKeyChar();
                     if (ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_X) {
                         deleteRow();
                     }
@@ -114,11 +114,11 @@ public class SpeedProfilePanel extends JPanel {
 
             SpeedTableModel model = (SpeedTableModel) table.getModel();
             HashMap<Integer, Boolean> anomalies = model.getAnomalies();
-  
+
             if (anomalies == null || anomalies.size() == 0) {
-                c.setBackground(table.getBackground());                                
+                c.setBackground(table.getBackground());
                 return c;
-            }           
+            }
             Map.Entry<Integer, SpeedStep> entry = model.getEntry(row);
             Boolean direction = anomalies.get(entry.getKey());
             if (direction == null) {
@@ -127,7 +127,7 @@ public class SpeedProfilePanel extends JPanel {
             }
             boolean dir =  direction.booleanValue();
             if ( dir && col == SpeedTableModel.FORWARD_SPEED_COL) {
-                c.setBackground(myRed);                
+                c.setBackground(myRed);
             } else if (!dir && col == SpeedTableModel.REVERSE_SPEED_COL){
                 c.setBackground(myRed);
             }
@@ -142,13 +142,13 @@ public class SpeedProfilePanel extends JPanel {
         static final int FORWARD_SPEED_COL = 2;
         static final int REVERSE_SPEED_COL = 3;
         static final int NUMCOLS = 4;
-        
+
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
         ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<Map.Entry<Integer, SpeedStep>>();
         RosterSpeedProfile profile;
         Boolean _editable;
         HashMap<Integer, Boolean> _anomaly;
-        
+
         SpeedTableModel(RosterSpeedProfile sp, HashMap<Integer, Boolean> anomaly) {
             profile = sp;
             _editable = (anomaly != null && anomaly.size() > 0);
@@ -166,9 +166,9 @@ public class SpeedProfilePanel extends JPanel {
         }
 
         Map.Entry<Integer, SpeedStep> getEntry(int row) {
-            return speedArray.get(row); 
+            return speedArray.get(row);
         }
-        
+
         int getRow(Map.Entry<Integer, SpeedStep> entry) {
             return speedArray.indexOf(entry);
         }
@@ -220,7 +220,7 @@ public class SpeedProfilePanel extends JPanel {
             }
             return new JTextField(8).getPreferredSize().width;
         }
-        
+
         @Override
         public boolean isCellEditable(int row, int col) {
             if (_editable && (col == FORWARD_SPEED_COL || col == REVERSE_SPEED_COL)) {

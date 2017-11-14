@@ -4,7 +4,7 @@ package jmri.jmrit.logix;
 //import jmri.Path;
 //import jmri.SignalHead;
 /**
- * A BlockOrder is a row in the route of the warrant. It contains 
+ * A BlockOrder is a row in the route of the warrant. It contains
  * where the warranted train enters a block, the path it takes and
  * where it exits the block.
  * The Engineer is notified when the train enters the block.
@@ -39,7 +39,7 @@ public class BlockOrder {
         //if (log.isDebugEnabled()) log.debug("ctor1: "+this.toString());
     }
 
-    // for use by WarrantTableFrame 
+    // for use by WarrantTableFrame
     protected BlockOrder(BlockOrder bo) {
         _block = bo._block;      // shallow copy OK. WarrantTableFrame doesn't write to b;ock
         _pathName = bo._pathName;
@@ -175,12 +175,12 @@ public class BlockOrder {
      */
     protected jmri.NamedBean getSignal() {
         Portal portal = getEntryPortal();
-        if (portal != null) {            
+        if (portal != null) {
             return portal.getSignalProtectingBlock(_block);
         }
         return null;
     }
-    
+
 /* Why is this here?
     protected String hash() {
         return _block.getDisplayName() + _pathName + _entryName + _exitName;

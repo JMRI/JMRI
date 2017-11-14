@@ -29,8 +29,8 @@ abstract public class AbstractThrottle implements DccThrottle {
     public final static float SPEED_STEP_14_INCREMENT = 1.0f / 14.0f;
     public final static float SPEED_STEP_27_INCREMENT = 1.0f / 27.0f;
     public final static float SPEED_STEP_28_INCREMENT = 1.0f / 28.0f;
-    public final static float SPEED_STEP_128_INCREMENT = 1.0f / 126.0f; // remember there are only 126 
-                                                                        // non-stop values in 128 speed 
+    public final static float SPEED_STEP_128_INCREMENT = 1.0f / 126.0f; // remember there are only 126
+                                                                        // non-stop values in 128 speed
 
     protected float speedSetting;
     protected float speedIncrement;
@@ -258,7 +258,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         return f28;
     }
 
-    // function momentary status  - note that we use the naming for DCC, 
+    // function momentary status  - note that we use the naming for DCC,
     // though that's not the implication;
     // see also DccThrottle interface
     @Override
@@ -424,7 +424,7 @@ abstract public class AbstractThrottle implements DccThrottle {
                 @Override
                 public void notifyThrottleFound(DccThrottle t) {
                 }
-    
+
                 @Override
                 public void notifyStealThrottleRequired(DccLocoAddress address){
                     // this is an automatically stealing impelementation.
@@ -937,7 +937,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
-    // function momentary status  - note that we use the naming for DCC, 
+    // function momentary status  - note that we use the naming for DCC,
     // though that's not the implication;
     // see also DccThrottle interface
     @Override

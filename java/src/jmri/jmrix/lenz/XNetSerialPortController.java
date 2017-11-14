@@ -31,7 +31,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     }
 
     // base class. Implementations will provide InputStream and OutputStream
-    // objects to XNetTrafficController classes, who in turn will deal in messages.    
+    // objects to XNetTrafficController classes, who in turn will deal in messages.
     // returns the InputStream from the port
     @Override
     public abstract DataInputStream getInputStream();
@@ -84,7 +84,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     public boolean hasTimeSlot(){
         return timeSlot;
     }
-    
+
     /**
      * Set a variable indicating whether or not the command station is
      * providing a timeslot.
@@ -102,7 +102,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     @Override
     public void setTimeSlot(boolean timeslot){
        timeSlot = timeslot;
-    }    
+    }
 
 
     /**

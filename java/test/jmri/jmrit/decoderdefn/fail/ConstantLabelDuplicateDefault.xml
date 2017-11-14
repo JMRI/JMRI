@@ -25,7 +25,7 @@
         </programming>
 
         <variables>
-            <constant label="Minor Version Number" item="Minor Version Number"> 
+            <constant label="Minor Version Number" item="Minor Version Number">
                 <label>Text in label</label>
                 <label>Other text in label</label>
                 <label xml:lang="kl">Text in label</label>

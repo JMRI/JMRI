@@ -23,7 +23,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     //Has been set to sensor value as we expect this to the most common binary type of reply
     //Is used in conjunction with isBinary() = true
     //When receiving an ASCII reply we scan for ] which indicates end of reply. Anything after this can be ignored
-    
+
     // accessor to get one element of the TamsMessage
     @Override
     public int getElement(int n) {
@@ -40,7 +40,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     public void setReplyType(char rt) {
         _replyType = rt;
     }
-    
+
     private boolean _replyOneByte = true;//Will it be a single byte reply?
 
     public boolean getReplyOneByte() {
@@ -50,7 +50,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     public void setReplyOneByte(boolean rob) {
         _replyOneByte = rob;
     }
-    
+
 	private int _replyLastByte = TamsConstants.EOM00;//What will be the last byte of a multi byte reply?
 
     public int getReplyLastByte() {
@@ -60,7 +60,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     public void setReplyLastByte(int rlb) {
     	_replyLastByte = rlb;
     }
-    
+
     public TamsMessage() {
         super();
     }
@@ -121,7 +121,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         //log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
         return m;
     }
-    
+
     //Set power ON via XPwrOn (0xA7)
     static public TamsMessage setXPwrOn() {
         TamsMessage m = new TamsMessage(2);
@@ -133,7 +133,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         //log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
         return m;
     }
-    
+
     //Get power status via XStatus (0xA2)
     static public TamsMessage getXStatus() {
         TamsMessage m = new TamsMessage(2);
@@ -146,7 +146,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         //log.info("isBinary= " + m.isBinary() + ", one byte reply " + m.getReplyOneByte() +  ", reply type " + m.getReplyType());
         return m;
     }
-    
+
     //Get sensor status via XEvtSen (0xCB)
     //Only reports changes since last poll
     static public TamsMessage getXEvtSen() {
@@ -160,7 +160,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         //log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
         return m;
     }
-    
+
     //Get loco changes via XEvtLok (0xC9)
     //Only reports changes which have not been initiated from PC
     static public TamsMessage getXEvtLok() {
@@ -174,7 +174,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         //log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
         return m;
     }
-    
+
     //Get turnout changes via XEvtTrn (0xCA)
     //Only reports changes which have not been initiated from PC
     static public TamsMessage getXEvtTrn() {
@@ -187,7 +187,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         //log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
         return m;
     }
-    
+
     //Command Station messages
     static public TamsMessage getReadPagedCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRP " + cv);

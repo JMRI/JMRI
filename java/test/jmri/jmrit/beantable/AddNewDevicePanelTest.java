@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AddNewDevicePanelTest {
 
@@ -31,7 +31,7 @@ public class AddNewDevicePanelTest {
             @Override
             public void actionPerformed(ActionEvent e) { }
         };
-        AddNewDevicePanel t = new AddNewDevicePanel(new JTextField(), new JTextField(), "ButtonOK", oklistener, cancellistener);    
+        AddNewDevicePanel t = new AddNewDevicePanel(new JTextField(), new JTextField(), "ButtonOK", oklistener, cancellistener);
         Assert.assertNotNull("exists",t);
     }
 

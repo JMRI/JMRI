@@ -24,9 +24,9 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
     private java.util.TimerTask keepAliveTimer; // Timer used to periodically
     // send a message to both
-    // ports to keep the ports 
+    // ports to keep the ports
     // open
-    private static final int keepAliveTimeoutValue = 30000; // Interval 
+    private static final int keepAliveTimeoutValue = 30000; // Interval
     // to send a message
     // Must be < 60s.
 
@@ -86,7 +86,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
             keepAliveTimer = new java.util.TimerTask() {
                 @Override
                 public void run() {
-                    // If the timer times out, and we are not currently 
+                    // If the timer times out, and we are not currently
                     // programming, send a request for status
                     jmri.jmrix.lenz.XNetSystemConnectionMemo m = LIUSBEthernetAdapter.this
                             .getSystemConnectionMemo();

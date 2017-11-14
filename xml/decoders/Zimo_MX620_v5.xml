@@ -17,10 +17,10 @@
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.02" lastUpdated="20090222"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20080328"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20080119"/>
-  <!-- 
+  <!--
      This decoder configuration file is based my Zimo_MX63_MX64H_v22-30.xml
      V 1 file, dated 20071110. With some changes to Output naming to be consistent
-     with Jeff Schmaltz' MX69/MX690 file. 
+     with Jeff Schmaltz' MX69/MX690 file.
 
      Based on the "SW-Version 4 2007 08 01" English version of the ZIMO MX620
      decoder manual (with thanks to Art Luescher of ZIMO Agency of North America

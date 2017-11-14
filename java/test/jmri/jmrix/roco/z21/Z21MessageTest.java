@@ -160,7 +160,7 @@ public class Z21MessageTest {
         JUnitUtil.setUp();
     }
 
-    @After 
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }

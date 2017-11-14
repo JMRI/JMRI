@@ -89,7 +89,7 @@
     <sensor systemName="CS60" userName="Conewago Interlocking bo(33)" />
     <sensor systemName="CS61" userName="Conewago Pocket bo(34)" />
   </sensors>
-  
+
   <!-- C/MRI turnouts actually drive signal LEDs on the layout -->
   <turnouts class="jmri.jmrix.cmri.serial.configurexml.SerialTurnoutManagerXml">
     <turnout systemName="CT1" userName="1a green" />
@@ -199,7 +199,7 @@
     <turnout systemName="CT79" userName="14a green" />
     <turnout systemName="CT80" userName="14a yellow" />
     <turnout systemName="CT81" userName="14a red" />
- 
+
     <turnout systemName="CT82" userName="14b green" />
     <turnout systemName="CT83" userName="14b yellow" />
     <turnout systemName="CT84" userName="14b red" />
@@ -223,7 +223,7 @@
     <turnout systemName="CT97" userName="17a green" />
     <turnout systemName="CT98" userName="17a yellow" />
     <turnout systemName="CT99" userName="17a red" />
- 
+
     <turnout systemName="CT100" userName="17b green" />
     <turnout systemName="CT101" userName="17b yellow" />
     <turnout systemName="CT102" userName="17b red" />

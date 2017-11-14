@@ -166,7 +166,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
             state = ProgState.NOTPROGRAMMING;
             return;
         }
-        
+
         // Complete processing later so that WOWDecoder will go through a complete power on reset and not brown out between CV read/writes
         int interval = 150;
         ActionListener taskPerformer = new ActionListener() {
@@ -181,7 +181,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         t.setRepeats(false);
         t.start();
     }
-    
+
     // After a Swing delay, this processes the reply
     protected void processProgrammingOpReply(int value, int status) {
         if (status != OK ) {

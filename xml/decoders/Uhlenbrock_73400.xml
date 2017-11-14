@@ -17,7 +17,7 @@
   <version author="Alain Le Marchand" version="2" lastUpdated="2014/03/02"/>
   <version author="Xavier Chazelle" version="1.1" lastUpdated="2009/01/06"/>
   <!-- Version 2 - Increased Hi version value to 4, change family name to Mini instead of Micro, No Speed Table, Fix enum for CV54 (Alain Le Marchand) -->
-  <!-- Version 3 - Refactoring with fragment files, change family name to Mini Multi-Protocol  
+  <!-- Version 3 - Refactoring with fragment files, change family name to Mini Multi-Protocol
 				   Used generic items on standard panes (motor, lights, analog) as much as possible
 	               Using English/German terms as defined in official Uhlenbrock documentation  (Alain Le Marchand)    -->
   <decoder>
@@ -93,7 +93,7 @@
       <variable item="Function F0F options" CV="50" tooltip="min=0, max=32" default="16">
         <decVal max="32" min="0"/>
         <label>Lights/Function outputs dimming</label>
-        <label xml:lang="de">Dimmung Licht/Funktionsausgänge</label>		
+        <label xml:lang="de">Dimmung Licht/Funktionsausgänge</label>
       </variable>
       <variable item="EMF Option 1" CV="53" default="40">
         <decVal/>
@@ -120,7 +120,7 @@
         <decVal max="18"/>
         <label>Lights Short circuit supervision</label>
 	<label xml:lang="de">Kurzschlussüberwachung Licht</label>
-        <tooltip>Do not change! 0=deactivated - 18=activated</tooltip>        
+        <tooltip>Do not change! 0=deactivated - 18=activated</tooltip>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
       <!-- No Speed Table for this decoder -->

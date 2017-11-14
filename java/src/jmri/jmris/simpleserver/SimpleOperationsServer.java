@@ -212,7 +212,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      *         message
      * @deprecated since 4.7.1
      */
-    // This should never have been a public method, Deprecating so we can 
+    // This should never have been a public method, Deprecating so we can
     // make it private or eliminate it later.
     @Deprecated
     public static ArrayList<Attribute> parseOperationsMessage(String message) {

@@ -70,18 +70,18 @@ public class AcelaNodeTest extends TestCase {
         AbstractMRMessage m1 = a1.createOutPacket();
         Assert.assertEquals("m1 packet size", 4, m1.getNumDataElements());
         Assert.assertEquals("m1 command", 7, m1.getElement(0) & 0xff);
-        Assert.assertEquals("m1 address high", 0, m1.getElement(1) & 0xff);  // 'T'        
+        Assert.assertEquals("m1 address high", 0, m1.getElement(1) & 0xff);  // 'T'
         Assert.assertEquals("m1 address low", 0, (m1.getElement(2) & 0xff));
         Assert.assertEquals("m1 value", 6, (m1.getElement(3) & 0xff));
 
         AbstractMRMessage m2 = a2.createOutPacket();
         Assert.assertEquals("m2 packet size", 4, m2.getNumDataElements());
         Assert.assertEquals("m2 command", 8, m2.getElement(0) & 0xff);
-        Assert.assertEquals("m2 address high", 0, m2.getElement(1) & 0xff);  // 'T'        
+        Assert.assertEquals("m2 address high", 0, m2.getElement(1) & 0xff);  // 'T'
         Assert.assertEquals("m2 address low", 4, (m2.getElement(2) & 0xff));
         Assert.assertEquals("m2 value", 153, (m2.getElement(3) & 0xff));
     }
-    /*	
+    /*
      public void testMarkChangesInitial() {
      SerialSensor s1 = new SerialSensor("CS1","a");
      Assert.assertEquals("check bit number",1,SerialAddress.getBitFromSystemName("CS1"));
@@ -112,7 +112,7 @@ public class AcelaNodeTest extends TestCase {
      // from UNKNOWN, 1st poll goes to new state
      SerialReply r;
      r = new SerialReply();
-     r.setElement(2, '5');  
+     r.setElement(2, '5');
      b.markChanges(r);
      Assert.assertEquals("poll0 s1", Sensor.ACTIVE, s1.getKnownState());
      Assert.assertEquals("poll0 s2", Sensor.INACTIVE, s2.getKnownState());
@@ -128,7 +128,7 @@ public class AcelaNodeTest extends TestCase {
      Assert.assertEquals("poll1 s4", Sensor.INACTIVE, s4.getKnownState());
      // single poll shouldn't change
      r = new SerialReply();
-     r.setElement(2, '0'+10);  
+     r.setElement(2, '0'+10);
      b.markChanges(r);
      Assert.assertEquals("poll2 s1", Sensor.ACTIVE, s1.getKnownState());
      Assert.assertEquals("poll2 s2", Sensor.INACTIVE, s2.getKnownState());
@@ -136,7 +136,7 @@ public class AcelaNodeTest extends TestCase {
      Assert.assertEquals("poll2 s4", Sensor.INACTIVE, s4.getKnownState());
      // 2nd poll should, but only if same
      r = new SerialReply();
-     r.setElement(2, '6');  
+     r.setElement(2, '6');
      b.markChanges(r);
      Assert.assertEquals("poll3 s1", Sensor.INACTIVE, s1.getKnownState());
      Assert.assertEquals("poll3 s2", Sensor.ACTIVE, s2.getKnownState());
@@ -144,7 +144,7 @@ public class AcelaNodeTest extends TestCase {
      Assert.assertEquals("poll3 s4", Sensor.INACTIVE, s4.getKnownState());
      // 3rd poll changes last two
      r = new SerialReply();
-     r.setElement(2, '5');  
+     r.setElement(2, '5');
      b.markChanges(r);
      Assert.assertEquals("poll4 s1", Sensor.INACTIVE, s1.getKnownState());
      Assert.assertEquals("poll4 s2", Sensor.ACTIVE, s2.getKnownState());

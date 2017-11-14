@@ -34,7 +34,7 @@ public class XmlFileCheckAction extends JmriAbstractAction {
     JFileChooser fci;
 
     Component _who;
-    
+
     XmlFile xmlfile = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
 
     @Override

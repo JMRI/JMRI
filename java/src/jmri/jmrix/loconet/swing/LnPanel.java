@@ -37,7 +37,7 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
     }
 
     public String getTitle(String menuTitle) { return getTitleHelper(memo, menuTitle); }
-    
+
     /**
      * Create menu title from connection name.
      * <p>

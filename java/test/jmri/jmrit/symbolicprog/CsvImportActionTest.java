@@ -13,7 +13,7 @@ import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CsvImportActionTest {
 
@@ -24,7 +24,7 @@ public class CsvImportActionTest {
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("test Csv Import");
         CsvImportAction t = new CsvImportAction("Test Action",tm,jf,new JLabel());
         jf.dispose();
-    } 
+    }
 
     // The minimal setup for log4J
     @Before

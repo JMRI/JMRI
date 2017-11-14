@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="nigel cliffe" version="3.5" lastUpdated="2017/06/15"/>
-  <!--  Re-instating meaningful labels to CV116 which were mysteriously changed somewhere without any documentation as to how that change happened  --> 
+  <!--  Re-instating meaningful labels to CV116 which were mysteriously changed somewhere without any documentation as to how that change happened  -->
   <!-- <version author="jclutterbuck2001@yahoo.co.uk" version="3.4" lastUpdated="2011/04/06"/>  -->
   <!--  v3.4: -->
   <!--  Split from old file - this one now applies to just SL75 & SL51 v100 onwards -->
@@ -1537,19 +1537,19 @@
         <label>F12 controls output G3</label>
       </variable>
       <!--  commented out options, instead drop downs below
-		<variable label="Decoder Properties/Synchropulses" CV="49" mask="XXXXXXXV" 
+		<variable label="Decoder Properties/Synchropulses" CV="49" mask="XXXXXXXV"
 			include="SL51,SL74"	default="0" >
 			<enumVal><enumChoice choice="Off"/><enumChoice choice="On"/></enumVal>
 		</variable>
-		<variable label="Diesel and E Locosound" CV="49" mask="XXXXXXVX" 
+		<variable label="Diesel and E Locosound" CV="49" mask="XXXXXXVX"
 			include="SL51,SL74"	default="0" >
 			<enumVal><enumChoice choice="Off"/><enumChoice choice="On"/></enumVal>
 		</variable>
-		<variable label="2 Cylinder Steam" CV="49" mask="XXXXXVXX" 
+		<variable label="2 Cylinder Steam" CV="49" mask="XXXXXVXX"
 			include="SL51,SL74"	default="0" >
 			<enumVal><enumChoice choice="Off"/><enumChoice choice="On"/></enumVal>
 		</variable>
-		<variable label="3 Cylinder Steam" CV="49" mask="XXXXVXXX" 
+		<variable label="3 Cylinder Steam" CV="49" mask="XXXXVXXX"
 			include="SL51,SL74"	default="0" >
 			<enumVal><enumChoice choice="Off"/><enumChoice choice="On"/></enumVal>
 		</variable>
@@ -2158,10 +2158,10 @@
         </enumVal>
         <label>Reverse 65% of forwards speed, (ignores "Yard" key)</label>
       </variable>
-      <!-- CV116 = 8 brakes with diode 4-1 is active 
-CV116 = 16 brakes with Diode NOT richtungsabhangig 
-CV116 = 0 is not used, must always be 0 (when using the brake module also allows for low speed) 
-CV116 = 64 means that the Rangierfunktion acts as a command button that is, that the ATC has (or braking diode and HLU) NOT! (equivalent to the MAN key = manual) 
+      <!-- CV116 = 8 brakes with diode 4-1 is active
+CV116 = 16 brakes with Diode NOT richtungsabhangig
+CV116 = 0 is not used, must always be 0 (when using the brake module also allows for low speed)
+CV116 = 64 means that the Rangierfunktion acts as a command button that is, that the ATC has (or braking diode and HLU) NOT! (equivalent to the MAN key = manual)
 CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself. Sound speed back to normal
 -->
       <variable item="Diode Braking" CV="116" mask="XXXXVXXX" default="0" tooltip="diode brake (ABC)">
@@ -3206,7 +3206,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 8</label>
       </variable>
-      <!--  
+      <!--
 CV146 = 1 bedeutet: Z3 (Schaltfunktion) wird mit F7 geschaltet, 0 bedeutet Z3 inaktiv (gilt bis Version 39)
 CV146 = 2 bedeutet: Z4 (Schaltfunktion) wird mit F8 geschaltet, 0 bedeutet Z4 inaktiv (gilt bis Version 39)
 CV146 = 4 bedeutet: Gerausch3 wird mit F7 geschaltet, 0 bedeutet Gerausch3 inaktiv (gilt bis Version 39)
@@ -3215,7 +3215,7 @@ CV146 = 16 bedeutet: Z5 (Schaltfunktion) wird mit F9 geschaltet, 0 bedeutet Z5 i
 CV146 = 32 bedeutet: Z6 (Schaltfunktion) wird mit F10 geschaltet, 0 bedeutet Z6 inaktiv (gilt bis Version 39)
 CV146 = 64 bedeutet: Gerausch5 wird mit F9 geschaltet, 0 bedeutet Gerausch5 inaktiv (gilt bis Version 39)
 CV146 = 128 bedeutet: Gerausch6 wird mit F10 geschaltet, 0 bedeutet Gerausch6 inaktiv (gilt bis Version 39)
-Default = 12   
+Default = 12
 Unclear how to use this in practise, as Function Map appears to duplicate the same.
 Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapping ??
 		<variable label="Sound/Function Assignment" CV="146" default="12"
@@ -4884,8 +4884,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </label>
         </column>
         <column>
-          <!-- 
-				<display item="Decoder Properties/Synchropulses" label="Wheel Synch Pulse input" 
+          <!--
+				<display item="Decoder Properties/Synchropulses" label="Wheel Synch Pulse input"
 							tooltip=": pulses OFF/ON, set pulses per rev in CV133"  format="checkbox" />
 				<display item="Diesel and E Locosound" tooltip=":OFF/ON"  format="checkbox" />
 				<display item="2 Cylinder Steam" tooltip=":OFF/ON"  format="checkbox" />

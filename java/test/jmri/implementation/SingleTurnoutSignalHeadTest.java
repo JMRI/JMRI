@@ -120,7 +120,7 @@ public class SingleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
                         new jmri.NamedBeanHandle<Turnout>("IT1", t),
                         SignalHead.GREEN, SignalHead.DARK);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

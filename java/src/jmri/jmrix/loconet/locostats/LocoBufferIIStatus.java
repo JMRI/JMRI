@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.locostats;
 
 /**
  * LocoBufferII status
- * 
+ *
  * @author Bob Milhaupt Copyright (C) 2017
  */
 public class LocoBufferIIStatus {
@@ -11,6 +11,6 @@ public class LocoBufferIIStatus {
         this.breaks = breaks;
         this.errors = errors;
     }
-    
+
     public int version, breaks, errors;
 }

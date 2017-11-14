@@ -23,7 +23,7 @@ public class DCCppSystemConnectionMemoTest extends TestCase {
         DCCppSystemConnectionMemo t = new DCCppSystemConnectionMemo(tc);
         Assert.assertNotNull(t);
         Assert.assertNotNull(t.getDCCppTrafficController());
-        // While we are constructing the memo, we should also set the 
+        // While we are constructing the memo, we should also set the
         // SystemMemo parameter in the traffic controller.
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }
@@ -39,7 +39,7 @@ public class DCCppSystemConnectionMemoTest extends TestCase {
         // so we need to do this ourselves.
         t.setDCCppTrafficController(tc);
         Assert.assertNotNull(t.getDCCppTrafficController());
-        // and while we're doing that, we should also set the SystemMemo 
+        // and while we're doing that, we should also set the SystemMemo
         // parameter in the traffic controller.
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }

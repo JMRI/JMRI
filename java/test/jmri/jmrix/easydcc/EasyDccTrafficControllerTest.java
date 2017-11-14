@@ -39,7 +39,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
 
         ostream.flush();
         JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
-        
+
 		// test the result of sending
 
 		Assert.assertEquals("total length ", 4, tostream.available());
@@ -140,7 +140,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     DataInputStream istream;   // so the traffic controller can read from this
 
     EasyDccTrafficController c;
-    
+
     // The minimal setup for log4J
     @Override
     @Before

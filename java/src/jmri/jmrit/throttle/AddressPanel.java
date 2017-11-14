@@ -236,8 +236,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     @Override
     public void notifyStealThrottleRequired(DccLocoAddress address){
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, 
-                InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() || 
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this,
+                InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() ||
                 ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)));
     }
 
@@ -621,7 +621,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             if (elementList.size() > 1) {
                 DccLocoAddress tmpAdd = ((DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
                         .getAddress(elementList.get(1)));
-                if (tmpAdd !=null && ! currentAddress.equals(tmpAdd)) {                    
+                if (tmpAdd !=null && ! currentAddress.equals(tmpAdd)) {
                     log.debug("and consist with "+tmpAdd);
                     consistAddress = tmpAdd;
                 }

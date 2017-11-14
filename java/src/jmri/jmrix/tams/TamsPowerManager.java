@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
  * @author Jan Boen
- * 
+ *
  */
 public class TamsPowerManager implements PowerManager, TamsListener {
 
@@ -30,7 +30,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
     //A local TamsMessage is held at all time
     //When no TamsMessage is being generated via the UI this dummy is used which means the TamsReply is a result of polling
     TamsMessage tm = myDummy();
-    
+
     public TamsPowerManager(TamsTrafficController ttc) {
         log.debug("*** TamsPowerManager ***");
         // connect to the TrafficManager

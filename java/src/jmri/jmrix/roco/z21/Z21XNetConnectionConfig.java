@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle configuring the XpressNet tunnel for the z21 Connection.
  * <P>
- * This uses the {@link Z21XNetStreamPortController} class to do the actual 
+ * This uses the {@link Z21XNetStreamPortController} class to do the actual
  * connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003

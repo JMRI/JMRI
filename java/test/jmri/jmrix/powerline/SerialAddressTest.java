@@ -144,7 +144,7 @@ public class SerialAddressTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        JUnitUtil.setUp();        
+        JUnitUtil.setUp();
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         // prepare an interface, register
         tc = new SerialTrafficControlScaffold();

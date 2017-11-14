@@ -57,7 +57,7 @@ public class SoundUtil {
             return;
         }
         line.start();
-        // write(byte[] b, int off, int len) 
+        // write(byte[] b, int off, int len)
         line.write(wavData, 0, wavData.length);
 
     }
@@ -70,10 +70,10 @@ public class SoundUtil {
 
         File sourceFile = new File(filename);
 
-        // Get the type of the source file. We need this information 
-        // later to write the audio data to a file of the same type. 
+        // Get the type of the source file. We need this information
+        // later to write the audio data to a file of the same type.
         AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(sourceFile);
-        //AudioFileFormat.Type targetFileType = fileFormat.getType(); 
+        //AudioFileFormat.Type targetFileType = fileFormat.getType();
         AudioFormat audioFormat = fileFormat.getFormat();
 
         // get desired output format
@@ -84,7 +84,7 @@ public class SoundUtil {
         AudioInputStream stream = AudioSystem.getAudioInputStream(sourceFile);
         AudioInputStream inputAIS = AudioSystem.getAudioInputStream(format, stream);
 
-        // Read the audio data into a memory buffer. 
+        // Read the audio data into a memory buffer.
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int nBufferSize = BUFFER_LENGTH * audioFormat.getFrameSize();
         byte[] abBuffer = new byte[nBufferSize];

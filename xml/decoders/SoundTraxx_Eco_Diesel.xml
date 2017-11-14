@@ -131,7 +131,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -162,7 +162,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -193,7 +193,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -224,7 +224,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -255,7 +255,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>

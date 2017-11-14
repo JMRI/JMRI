@@ -22,7 +22,7 @@ public class XBeeIOStreamTest {
 
    private static XBeeInterfaceScaffold tc = null; // set in setUp.
    private static XBeeNode node = null; // set in setUp.
-   private XBeeIOStream a = null; // set in initTest 
+   private XBeeIOStream a = null; // set in initTest
 
    @Test
    public void ConstructorTest(){
@@ -57,7 +57,7 @@ public class XBeeIOStreamTest {
    @Before
    public void testInit(){
        a = new XBeeIOStream(node,tc);
-   } 
+   }
 
    @After
    public void testCleanup(){

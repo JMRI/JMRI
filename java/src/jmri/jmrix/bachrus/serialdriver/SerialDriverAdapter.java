@@ -65,9 +65,9 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
 
             // set RTS high, DTR high
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            //AJB: Removed Jan 2010 - 
+            //AJB: Removed Jan 2010 -
             //Setting flow control mode to zero kills comms - SPROG doesn't send data
-            //Concern is that will disabling this affect other SPROGs? Serial ones? 
+            //Concern is that will disabling this affect other SPROGs? Serial ones?
             configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // set timeout

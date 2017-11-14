@@ -160,10 +160,10 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         // buttonActionPerformed.
         addButtonAction(addButton);
         addButtonAction(saveButton);
-        
+
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_Pools", true); // NOI18N
-        
+
         initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
     }
 

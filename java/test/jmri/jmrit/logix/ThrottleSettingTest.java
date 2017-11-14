@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ThrottleSettingTest {
 
@@ -17,11 +17,11 @@ public class ThrottleSettingTest {
         ThrottleSetting t = new ThrottleSetting();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testCtor2() {
         ThrottleSetting ts = new ThrottleSetting(1000, "NoOp", "Enter Block", "OB1");
-        Assert.assertNotNull("exists",ts);        
+        Assert.assertNotNull("exists",ts);
     }
 
     // The minimal setup for log4J

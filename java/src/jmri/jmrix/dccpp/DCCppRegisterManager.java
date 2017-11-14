@@ -1,4 +1,4 @@
-/* 
+/*
  * DCCppRegisterManager.java
  */
 
@@ -25,12 +25,12 @@ public class DCCppRegisterManager {
 
     final protected DCCppRegister[] registers = new DCCppRegister[DCCppConstants.MAX_MAIN_REGISTERS];
 
-    public DCCppRegisterManager() { 
+    public DCCppRegisterManager() {
  for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
      registers[i] = new DCCppRegister();
  }
     }
-    
+
     public int requestRegister(int addr) {
  for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
      if (registers[i].getAddress() == addr) {
@@ -89,8 +89,8 @@ class DCCppRegister {
     public void setUserCount(int i) { user_count = i; } // Don't use this...
     public void incUserCount() { user_count++;}
 
-    public void decUserCount() { 
- if (user_count > 0) { 
+    public void decUserCount() {
+ if (user_count > 0) {
      user_count--;
  }
  if (user_count == 0) {

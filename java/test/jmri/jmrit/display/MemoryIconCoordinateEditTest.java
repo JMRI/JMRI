@@ -34,7 +34,7 @@ public class MemoryIconCoordinateEditTest {
            frame.init("foo",i,false);
         } catch( Exception e) {
             Assert.fail("Exception " + e + " Thrown during init call ");
-        } 
+        }
     }
 
     @Before

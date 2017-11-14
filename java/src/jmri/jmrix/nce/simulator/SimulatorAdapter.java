@@ -42,29 +42,29 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  {@literal
-  Command Description #bytes rtn Responses 
-  0x80 NOP, dummy instruction (1) !    
-  0x81 xx xx yy assign loco xxxx to cab cc (1) !, 1,2  
-  0x82 read clock (2) <hours><minutes> 
-  0x83 Clock stop (1) !   
-  0x84 Clock start (1) !  
-  0x85 xx xx Set clock hr./min (1) !,3   
-  0x86 xx Set clock 12/24 (1) !,3  
-  0x87 xx Set clock ratio (1) !,3 
-  0x88 xxxx Dequeue packet by loco addr (1) !, 1,2 
-  0x89 Enable main trk, kill prog (1) !   
+  Command Description #bytes rtn Responses
+  0x80 NOP, dummy instruction (1) !
+  0x81 xx xx yy assign loco xxxx to cab cc (1) !, 1,2
+  0x82 read clock (2) <hours><minutes>
+  0x83 Clock stop (1) !
+  0x84 Clock start (1) !
+  0x85 xx xx Set clock hr./min (1) !,3
+  0x86 xx Set clock 12/24 (1) !,3
+  0x87 xx Set clock ratio (1) !,3
+  0x88 xxxx Dequeue packet by loco addr (1) !, 1,2
+  0x89 Enable main trk, kill prog (1) !
   0x8A yy Return status of AIU yy (4) <current hi byte> <current lo byte> <change hi byte> <change lo byte>
   0x8B Kill main trk, enable prog (1) !
   0x8C dummy inst. returns "!" followed CR/LF(3) !0x0D, 0x0A <br>
   0x8D xxxx mm Set speed mode of loco xxxx to mode mm, 1=14, 2=28, 3=128 (1) !, 1,3<speed mode, 0 to 3>
-  0x8E aaaa nn<16 data bytes> Write nn bytes, start at aaaa Must have 16 data bytes, pad them out to 16 if necessary (1) !,4  
+  0x8E aaaa nn<16 data bytes> Write nn bytes, start at aaaa Must have 16 data bytes, pad them out to 16 if necessary (1) !,4
   0x8F aaaa Read 16 bytes, start at aaaa(16) 16 bytes
-  0x90 cc xx... Send 16 char message to Cab ccLCD line 3. xx = 16 ASCII char (1) ! ,2  
+  0x90 cc xx... Send 16 char message to Cab ccLCD line 3. xx = 16 ASCII char (1) ! ,2
   0x91 cc xx Send 16 char message to cab cc LCD line 4. xx=16 ASCII (1) !,2
   0x92 cc xx Send 8 char message to cab cc LCD line 2 right xx=8 char (1) !,2
   0x93 ss<3 byte packet> Queue 3 byte packet to temp _Q send ss times (1) !
   0x94 ss<4 byte packet> Queue 4 byte packet to temp _Q send ss times (1) !
-  0x95 ss<5 byte packet> Queue 5 byte packet to temp_Q send ss times (1) !  
+  0x95 ss<5 byte packet> Queue 5 byte packet to temp_Q send ss times (1) !
   0x96 ss<6 byte packet> Queue 6 byte packet to temp _Q send ss times (1) !
   0x97 aaaa xx Write 1 byte to aaaa (1) !
   0x98 aaaa xx xxWrite 2 bytes to aaaa (1) !
@@ -82,14 +82,14 @@ import org.slf4j.LoggerFactory;
   0xA4<4 byte packet> Queue 4 byte packet to TRK _Q (1) !,1
   0xA5<5 byte packet> Queue 5 byte packet to TRK _Q (1) !,1
   0xA6 rr dd Program register rr with dd (1) !=success 0=no program track
-  0xA7 rr Read register rr. Note: cv data followed by ! for OK. 0xFF followed by 3 for can't read CV (2) !,3 0=no program track 
+  0xA7 rr Read register rr. Note: cv data followed by ! for OK. 0xFF followed by 3 for can't read CV (2) !,3 0=no program track
   0xA8 aaaa dd Program CV aaaa with dd in direct mode. (1) !=success 0=no program track
   0xA9 aaaa Read CV aaaa in direct mode. Note: cv data followed by ! for OK.
-  0xFF followed by 3 for can't read CV (2) !,3 
+  0xFF followed by 3 for can't read CV (2) !,3
   0xAA Return software revision number. Format: VV.MM.mm (3) 3 data bytes
   0xAB Perform soft reset of command station (like cycling power) (0) Returns nothing
   0xAC Perform hard reset of command station. Reset to factory defaults (Note: will change baud rate to 9600)(0) Returns nothing
-  0xAD <4 data bytes>Accy/signal and macro commands (1) !,1 
+  0xAD <4 data bytes>Accy/signal and macro commands (1) !,1
 }
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001, 2002
@@ -382,7 +382,7 @@ public class SimulatorAdapter extends NcePortController implements
      * memory is 256 bytes and starts at memory address 0xEC00. The macro memory
      * is 256*20 or 5120 bytes and starts at memory address 0xC800. The consist
      * memory is 256*6 or 1536 bytes and starts at memory address 0xF500.
-     * 
+     *
      */
     private NceReply readMemory(NceMessage m, NceReply reply, int num) {
         if (num > 16) {
@@ -497,7 +497,7 @@ public class SimulatorAdapter extends NcePortController implements
                 write = (byte) (write + setMask); // set bit if closed
             }
             turnoutMemory[offset] = write;
-            //log.debug("wrote:"+Integer.toHexString(write)); 
+            //log.debug("wrote:"+Integer.toHexString(write));
         }
         reply.setElement(0, NCE_OKAY);   // Nce okay reply!
         return reply;

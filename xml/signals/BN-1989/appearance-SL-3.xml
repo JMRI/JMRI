@@ -9,7 +9,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>James</firstname><surname>Koretsky</surname></personname>
@@ -25,13 +25,13 @@
         <date>2010-02-08</date>
         <authorinitials>JK</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2012-11-06</date>
         <authorinitials>KSC</authorinitials>
         <revremark>Added basic aspect mappings</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspecttable>BN</aspecttable>
@@ -40,7 +40,7 @@
 October 1989 Burlington Northern Railroad Southern Region, Debraska Division Timetable #2. In effect at 0001 Continental Mountain Time, Sunday October 29, 1989.
   </reference>
   <description>Appearances for a three-searchlight signal head or semaphore which are used in Automatic Block, CTC and Interlocking Systems</description>
-  
+
   <appearances>
 
     <appearance>
@@ -87,7 +87,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <reference>Rule 234</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-234-a.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>flashyellow</show>
@@ -96,7 +96,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <reference>Rule 234</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-234-b.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Approach Restricting</aspectname>
       <show>yellow</show>
@@ -242,7 +242,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
     </appearance>
 
   </appearances>
-  
+
     <specificappearances><!-- Start of Specific Appearances list -->
        <danger>
           <aspect>Stop</aspect>
@@ -251,39 +251,39 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
           <aspect>Stop</aspect>
        </held>
     </specificappearances><!-- End of Specific Appearances list -->
-  
+
     <aspectMappings><!-- Start of Aspect Mapping -->
 
     <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
      <ourAspect>Approach</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Restricted Proceed</advancedAspect>
      <ourAspect>Approach</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Diverging Approach</advancedAspect>
      <ourAspect>Approach</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Diverging Approach Medium</advancedAspect>
      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Diverging Clear</advancedAspect>
      <ourAspect>Clear</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Approach</advancedAspect>
      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Approach Restricting</advancedAspect>
      <ourAspect>Approach</ourAspect>
@@ -310,4 +310,4 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
     </aspectMapping>
 
   </aspectMappings><!-- End of Aspect Mapping -->
-</appearancetable>  
+</appearancetable>

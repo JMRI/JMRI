@@ -63,7 +63,7 @@ abstract public class AbstractReporterServer {
 
     /*
      * Set the report state of a reporter
-     * 
+     *
      * @parm reporterName - the name of a reporter
      * @parm r - the object containing the report (currently a string).
      */

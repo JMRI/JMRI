@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Yardmaster Frame. Shows work at one location.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class YardmasterPanel extends CommonConductorYardmasterPanel {
 

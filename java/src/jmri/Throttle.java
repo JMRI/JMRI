@@ -232,7 +232,7 @@ public interface Throttle {
 
     public void setF28(boolean f28);
 
-    // functions momentary status - note that we use the naming for DCC, 
+    // functions momentary status - note that we use the naming for DCC,
     // though that's not the implication;
     // see also DccThrottle interface
     public boolean getF0Momentary();

@@ -28,7 +28,7 @@ public class NmraConsistTest extends AbstractConsistTestBase {
         JUnitUtil.setUp();        jmri.util.JUnitUtil.initDebugCommandStation();
         c = new NmraConsist(new DccLocoAddress(12, true));
     }
-   
+
     @After
     @Override
     public void tearDown() {

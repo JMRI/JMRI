@@ -225,7 +225,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Make connection to existing PortController object.
-     * 
+     *
      * @param p The port controller
      */
     public void connectPort(AbstractPortController p) {
@@ -239,7 +239,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Get the port controller, as a SerialDriverAdapter.
-     * 
+     *
      * @return the port controller
      */
     protected SerialDriverAdapter getController(){

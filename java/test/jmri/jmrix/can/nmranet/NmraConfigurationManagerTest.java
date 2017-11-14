@@ -12,8 +12,8 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class NmraConfigurationManagerTest {
-        
- 
+
+
     jmri.jmrix.can.TrafficControllerScaffold tcs = null;
     jmri.jmrix.can.CanSystemConnectionMemo memo = null;
 

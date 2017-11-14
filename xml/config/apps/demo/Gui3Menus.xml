@@ -31,7 +31,7 @@
         <adapter>apps.gui3.paned.PanelProAction</adapter>
     </node>
   </node>
-  
+
 
   <node>
      <name>Help</name>
@@ -45,4 +45,4 @@
   </node>
 
 </nodes>
-  
+

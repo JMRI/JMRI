@@ -15,7 +15,7 @@ public class UserMessagePreferencesPaneTest {
 
     @Test
     public void testCtor() {
-        UserMessagePreferencesPane p = new UserMessagePreferencesPane(); 
+        UserMessagePreferencesPane p = new UserMessagePreferencesPane();
         Assert.assertNotNull("exists", p);
     }
 

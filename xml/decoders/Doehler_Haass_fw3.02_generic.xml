@@ -24,10 +24,10 @@
 		To add new decoders, use the individual file templates as used from firmware 3.03.
 		-->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20130731"/>
-  <!-- 1 2013/07/31 Creation 
+  <!-- 1 2013/07/31 Creation
 		First decoder template for the Doehler & Haass decoder range.
-		This is a GENERIC profile. It contains ALL known functions 
-		known as of 2013-07-31 with firmware v3.02.053, in case one of 
+		This is a GENERIC profile. It contains ALL known functions
+		known as of 2013-07-31 with firmware v3.02.053, in case one of
 		the specific profiles ended up being out of date.
 		Source: http://doehler-haass.de/cms/pages/haeufige-fragen/decoder-cv-tabelle.php?wb_2027_session_id=s1ss0tavpgi78b2mfct58u4ij0
 		It requires variables and panes as defined in the doehler_hass/ folder.

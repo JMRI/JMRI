@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
  * @author  Jan Boen - version 151220 - 1211
- * 
- * 
+ *
+ *
  */
 public class TamsReply extends jmri.jmrix.AbstractMRReply {
 
@@ -19,14 +19,14 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
 	public TamsReply() {
 		super();
 	}
-	
+
 	//Do we need Tams source message?
 	private TamsMessage source;
-	
+
 	public TamsMessage getSource() {
         return source;
     }
-	
+
 	public void setSource(TamsMessage source) {
         this.source = source;
     }
@@ -34,7 +34,7 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
 	public TamsReply(String s) {
 		super(s);
 	}
-	
+
 
 	// Maximum size of a reply packet is 157 bytes.
 	// At least for 52 S88 modules each generating 3 bytes + a last byte 00

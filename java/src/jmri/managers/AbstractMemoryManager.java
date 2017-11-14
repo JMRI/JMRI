@@ -100,8 +100,8 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         // save in the maps
         register(s);
 
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
+        /*The following keeps trace of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IM:AUTO:")) {
             try {

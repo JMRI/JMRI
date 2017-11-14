@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LogOutputWindowActionTest {
 
@@ -30,7 +30,7 @@ public class LogOutputWindowActionTest {
 
     @After
     public void tearDown() {
-        // remove any JTextPaneAppender objects that 
+        // remove any JTextPaneAppender objects that
         // have been added to logging
         Enumeration<Object> en = LogManager.getCurrentLoggers();
 
@@ -44,7 +44,7 @@ public class LogOutputWindowActionTest {
                     Appender a = appenders.nextElement();
                     if (a instanceof JTextPaneAppender) {
                         logger.removeAppender(a);
-                    }                        
+                    }
                 }
             } // if o instanceof Logger
 
@@ -55,9 +55,9 @@ public class LogOutputWindowActionTest {
             Appender a = appenders.nextElement();
             if (a instanceof JTextPaneAppender) {
                 LogManager.getRootLogger().removeAppender(a);
-            }                        
+            }
         }
-        
+
         jmri.util.JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }

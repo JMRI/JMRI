@@ -40,14 +40,14 @@
             <choice xml:lang="it">Solo Digitale</choice>
             <choice xml:lang="fr">Digital seulement</choice>
             <choice xml:lang="ca">Digital only (ca)</choice>
-            <choice xml:lang="de">Nur Digitalbetrieb</choice>		
+            <choice xml:lang="de">Nur Digitalbetrieb</choice>
 	  </enumChoice>
 	  <enumChoice choice="Auto. Digital/Analog detection">
             <choice>Auto. Digital/Analog detection</choice>
             <choice xml:lang="it">Convers. Analogica/Digitale auto.</choice>
             <choice xml:lang="fr">Detect. Analogique/Digital auto.</choice>
             <choice xml:lang="ca">Auto. Digital/Analog detection(ca)</choice>
-            <choice xml:lang="de">Auto. Analog-/Digitalumschaltung</choice>			
+            <choice xml:lang="de">Auto. Analog-/Digitalumschaltung</choice>
 	  </enumChoice>
 	</enumVal>
     <label xml:lang="it">Conversione Sorgente Alimentazione</label>

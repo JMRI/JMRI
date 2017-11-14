@@ -40,7 +40,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         this.isForward = true;
 
         //@TODO - this needs a little work. Current implementation looks like it
-        //should support other modes, but doesn't in practice.  
+        //should support other modes, but doesn't in practice.
         //@see AbstractThrottleManager.supportedSpeedModes()
         // Find our command station
         if ((memo != null) && (memo.get(jmri.CommandStation.class) != null)) {
@@ -113,7 +113,7 @@ public class SprogCSThrottle extends AbstractThrottle {
     public void setSpeedSetting(float speed) {
         int mode = getSpeedStepMode();
         if ((mode & DccThrottle.SpeedStepMode28) != 0) {
-            // 28 step mode speed commands are 
+            // 28 step mode speed commands are
             // stop, estop, stop, estop, 4, 5, ..., 31
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;

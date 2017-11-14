@@ -38,7 +38,7 @@
       <revremark>Creation</revremark>
     </revision>
    </revhistory>
-  <!-- BEGIN CVs for sound modules only (irrelevant for combo sound decoders) --> 
+  <!-- BEGIN CVs for sound modules only (irrelevant for combo sound decoders) -->
   <variable CV="951" tooltip="CV951 (0-255 in seconds)" default="3" item="Sound Option 1" exclude="Combo sound decoders">
     <decVal min="0" max="255"/>
     <label>Acceleration time</label>
@@ -51,8 +51,8 @@
     <label xml:lang="fr">Temps de freinage</label>
     <label xml:lang="de">Bremszeit</label>
   </variable>
-  <!-- END CVs for sound modules only --> 
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
+  <!-- END CVs for sound modules only -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
    <variable label="Smoke puffs at speed 1" CV="353" tooltip="CV353 (0-255)" default="120" item="Sound Option 3" exclude="SUSI sound modules">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse 1</label>
@@ -63,8 +63,8 @@
 	<label xml:lang="fr">Poussée de fumée en vitesse 1</label>
 	<label xml:lang="de">Dampfstöße bei Fahrstufe 1</label>
    </variable>
-   <!-- END SIMILAR CV --> 
-   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
+   <!-- END SIMILAR CV -->
+   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
   <variable label="Smoke puffs at higher speed step" CV="354" tooltip="CV354 (0-255)" default="20" item="Sound Option 4" exclude="SUSI sound modules">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse supérieure</label>
@@ -75,8 +75,8 @@
 	<label xml:lang="fr">Poussée de fumée en vitesse supérieure</label>
 	<label xml:lang="de">Dampfstöße bei höherer Fahrstufe</label>
    </variable>
-  <!-- END SIMILAR CV --> 
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
    <variable label="Breaking noise at minimal speed step" CV="355" tooltip="CV355 (0-127)" default="20" item="Sound Option 11" exclude="SUSI sound modules">
     <decVal min="0" max="127"/>
     <label xml:lang="fr">Bruit freinage vitesse minimale</label>
@@ -87,8 +87,8 @@
     <label xml:lang="fr">Bruit freinage vitesse minimale</label>
     <label xml:lang="de">Bremsenquietschen minimale Fahrstufe</label>
   </variable>
-   <!-- END SIMILAR CV --> 
-   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
+   <!-- END SIMILAR CV -->
+   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
   <variable label="Breaking noise at start up speed step" CV="356" tooltip="CV356 (0-127)" default="13" item="Sound Option 12" exclude="SUSI sound modules">
     <decVal min="0" max="127"/>
     <label xml:lang="fr">Bruit freinage vitesse initiale</label>
@@ -99,8 +99,8 @@
     <label xml:lang="fr">Bruit freinage vitesse initiale</label>
     <label xml:lang="de">Bremsenquietschen Anfangsfahrstufe</label>
   </variable>
-  <!-- END SIMILAR CV --> 
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
   <variable label="Modulation at speed step 1" CV="357" tooltip="CV357" readOnly="yes" item="Sound Option 5" exclude="SUSI sound modules">
     <decVal/>
     <label xml:lang="fr">Modulation cran de vitesse 1</label>
@@ -111,8 +111,8 @@
     <label xml:lang="fr">Modulation cran de vitesse 1</label>
     <label xml:lang="de">Modulation bei Fahrstufe 1</label>
   </variable>
-  <!-- END SIMILAR CV --> 
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
   <variable label="Modulation at speed step 127" CV="358" tooltip="CV358 (0-255)" default="11" item="Sound Option 6" exclude="SUSI sound modules">
      <decVal min="0" max="255"/>
     <label xml:lang="fr">Modulation cran de vitesse 127</label>
@@ -123,8 +123,8 @@
     <label xml:lang="fr">Modulation cran de vitesse 127</label>
     <label xml:lang="de">Modulation bei Fahrstufe 127</label>
   </variable>
-  <!-- END SIMILAR CV --> 
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
   <variable label="Fade-out time in seconds" CV="359" tooltip="CV359 (0-255 in seconds)" default="8" item="Sound Option 7" exclude="SUSI sound modules">
      <decVal min="0" max="255"/>
     <label xml:lang="fr">Délai pour mode silencieux</label>
@@ -135,5 +135,5 @@
     <label xml:lang="fr">Délai pour mode silencieux</label>
     <label xml:lang="de">Timer für Ausblendeffekt</label>
   </variable>
-  <!-- END SIMILAR CV --> 
+  <!-- END SIMILAR CV -->
 </variables>

@@ -132,7 +132,7 @@ public class CbusMessage {
         return false;
     }
 
-    /* 
+    /*
      * Methods that take a CanReply as argument
      */
     public static int getId(CanReply r) {

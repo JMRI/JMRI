@@ -198,7 +198,7 @@
 			<variable item="Random 4 Sound" CV="T2CV.1.32" default="129" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV1.xml"/>
 			</variable>
-			
+
 			<!-- Individual volume -->
 			<variable item="Volume 0-0" CV="T3CV.2.0.0" default="5">
 				<decVal max="5"/>
@@ -1172,7 +1172,7 @@
 				<decVal max="5"/>
 				<label>Waterfill 1</label>
 			</variable>
-			
+
 			<!-- sound CVs -->
 			<variable item="Sound Setting 31" CV="T2CV.4.0" default="256" tooltip="very early decoders only" mask="VVVVVVVVVVVVVVVV">
 				<decVal max="65535"/>

@@ -14,19 +14,19 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20140706"/>
-  <version author="Marc Fournier" version="2" lastUpdated="20171014"/>  
+  <version author="Marc Fournier" version="2" lastUpdated="20171014"/>
   <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
   <!-- version 1	Created from "Soundtraxx_Tsu_Diesel.xml" version 14.					-->
   <!--				Based on Soundtraxx SoundCar Manuals version 0, software 1.01			-->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
-                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Airhorn=output 5, etc. 
+                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Airhorn=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs used for "Rule 17 mode"         -->
   <!-- 			For SoundCar decoders outputs "7" and "10" are reserved (not used).  Associated bits are skipped -->
   <!-- 	version 2	Added Livestock related CV's 144,203,266 to definition -->
   <!-- Decoder Model information follows -->
 <decoder>
-    <family name="Tsunami SoundCar" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami SoundCar decoders">  
+    <family name="Tsunami SoundCar" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami SoundCar decoders">
       <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar" comment="Tsunami SoundCar Digital Sound Decoder">
         <versionCV lowVersionID="69" highVersionID="69"/>
         <output name="Airhorn" label="Whistle">
@@ -571,7 +571,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Generator</label>
         <label xml:lang="it">F4 controlla Uscita Generatore</label>
-      </variable>	  
+      </variable>	
 	  <!-- Not used in this decoder
       <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -589,7 +589,7 @@
           <variableref>Function Group 2 and 3 Exchange</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier>      
+        </qualifier>
           <!-- begin normal function group 2 -->
             <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -648,7 +648,7 @@
                 <label>F6 controls output FX6</label>
                 <label xml:lang="it">F6 controlla Uscita FX6</label>
             </variable>
-			<!-- Not used in this decoder	
+			<!-- Not used in this decoder
             <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 7</label>
@@ -663,7 +663,7 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>F6 controls output Generator</label>
 				<label xml:lang="it">F6 controlla Uscita Generatore</label>
-			</variable>			
+			</variable>
 			<!-- Not used in this decoder
             <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -690,7 +690,7 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>F7 controls output Generator</label>
 				<label xml:lang="it">F7 controlla Uscita Generatore</label>
-			</variable>			
+			</variable>
 			<!-- Not used in this decoder
             <variable item="F7 controls output 10" CV="41" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -732,7 +732,7 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>F8 controls output Generator</label>
 				<label xml:lang="it">F8 controlla Uscita Generatore</label>
-			</variable>			
+			</variable>
 			<!-- Not used in this decoder
             <variable item="F8 controls output 10" CV="42" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -760,8 +760,8 @@
                 <label xml:lang="it">F8 controlla uscita Freni</label>
             </variable>
             <!-- end normal function group 2 -->
-            <!-- begin normal function group 3 --> 
-			<!-- Not used in this decoder		
+            <!-- begin normal function group 3 -->
+			<!-- Not used in this decoder
             <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output 7</label>
@@ -776,7 +776,7 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>F9 controls output Generator</label>
 				<label xml:lang="it">F9 controlla uscita Generatore</label>
-			</variable>			
+			</variable>
 			<!-- Not used in this decoder
             <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" default="1" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -812,7 +812,7 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>F10 controls output Generator</label>
 				<label xml:lang="it">F10 controlla Uscita Generatore</label>
-			</variable>			
+			</variable>
 			<!-- Not used in this decoder
             <variable item="F10 controls output 10" CV="44" mask="XXXXXVXX" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1273,7 +1273,7 @@
           <!-- end exchanged function group 3 -->
       </variables>
       <!-- end exchangeable function groups -->
-  	  <!-- Not used in this decoder	
+  	  <!-- Not used in this decoder
       <variable CV="47" mask="XVVVVVVV" item="Sound Option 11" default="0" tooltip="Value of 0 = Disabled.  See command station instructions for value to enable this feature.">
         <decVal/>
         <label>Analog Horn Control (0-255)</label>
@@ -1466,7 +1466,7 @@
         <comment>Only for FX5/FX6 decoders</comment>
         <comment xml:lang="it">Solo per decoder con FX5-FX6</comment>
       </variable>
-  	  <!-- Not used in this decoder	  
+  	  <!-- Not used in this decoder	
       <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="4" tooltip="Check to enable FX5B function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5B Forward Directional Control</label>
@@ -1492,7 +1492,7 @@
         <comment>Only for FX5/FX6 decoders</comment>
         <comment xml:lang="it">Solo per decoder con FX5-FX6</comment>
       </variable>
-  	  <!-- Not used in this decoder		  	  
+  	  <!-- Not used in this decoder		  	
       <variable item="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="4" tooltip="Check to enable FX6B function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6B Forward Directional Control</label>
@@ -1576,7 +1576,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
 	  <!-- Sound Configuration starts here -->
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" tooltip="Generator Control">
-        <enumVal>	  
+        <enumVal>	
           <enumChoice choice="Generator sound effect controlled by F9">
             <choice>Generator sound effect controlled by F9</choice>
             <choice xml:lang="it">Effetto suono Generatore controllato da F9</choice>
@@ -1590,7 +1590,7 @@
         <label xml:lang="it">Controllo Generatore</label>
       </variable>
       <variable CV="112" mask="XXXXXXVX" item="Sound Option 2" default="0" tooltip="Sets the number of axles per truck used to determine the clickety-clack rate">
-        <enumVal>          
+        <enumVal>
 		  <enumChoice choice="Two axles per truck">
             <choice>Two axles per truck</choice>
             <choice xml:lang="it">Carrello  a 2 assi</choice>
@@ -1646,7 +1646,7 @@
         <label>Airhorn Select</label>
         <label xml:lang="it">Selezione Tromba aria compressa</label>
       </variable>
-  	  <!-- Not used in this decoder	  
+  	  <!-- Not used in this decoder	
       <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" tooltip="Choose an alternate airhorn to the primary airhorn">
         <enumVal>
           <enumChoice choice="Dual Horn Mode Disabled">
@@ -1767,7 +1767,7 @@
         <decVal/>
         <label>Brake Set Volume</label>
         <label xml:lang="it">Volume attivazione freni</label>
-      </variable>	  
+      </variable>	
       <variable CV="139" mask="VVVVVVVV" item="Sound Setting 25" default="64" tooltip="Sets the volume of the brakes squealing">
         <decVal/>
         <label>Brake Squeal Volume</label>
@@ -1811,7 +1811,7 @@
       </variable>
 	  -->
       <!-- Individual Cut/Boost Controls follow -->
-	  <!-- Not Used in this decoder	  
+	  <!-- Not Used in this decoder	
       <variable item="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
@@ -1849,7 +1849,7 @@
       </variable>
 	  -->
       <!-- Individual Reverb Output Level Controls follow -->
-	  <!-- Not Used in this decoder	  
+	  <!-- Not Used in this decoder	
       <variable item="Reverb Output Level" CV="162" mask="VVVVVVVV" default="128" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
         <decVal/>
         <label>Reverb Output Level</label>
@@ -1916,7 +1916,7 @@
         <label>Automatic Bell Enable (Analog Mode)</label>
         <label xml:lang="it">Abilitazione Automatica Campana (in Analogico)</label>
       </variable>
-	  <!-- Not Used in this decoder	  
+	  <!-- Not Used in this decoder	
       <variable CV="197" mask="XXXXVXXX" item="Automatic Brake Squeal Enable (Analog Mode)" default="0" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable (Analog Mode)</label>
@@ -1937,7 +1937,7 @@
         <label>Automatic Bell Enable</label>
         <label xml:lang="it">Abilitazione Automatica Campana</label>
       </variable>
-	  <!-- Not Used in this decoder	  
+	  <!-- Not Used in this decoder	
       <variable CV="198" mask="XXXXVXXX" item="Automatic Brake Squeal Enable" default="0" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable</label>
@@ -1954,13 +1954,13 @@
         <label>Generator Probability</label>
         <label xml:lang="it">Probabilità suono Generatore</label>
       </variable>
-	  
+	
 	  <variable CV="203" mask="VVVVVVVV" item="Livestock Probability" default="50" tooltip="&lt;html&gt;Sets the frequency of occurrence for the livestock sound effect.&lt;br&gt; - 0 = Lowest level of anxiety.&lt;br&gt; - 255 = Highest level of anxiety.&lt;/html&gt;">
         <decVal max="255"/>
         <label>Livestock Probability</label>
         <label xml:lang="it">Probabilità suono Livestock</label>
       </variable>
-	  
+	
       <!-- End of variables for file-specific panes -->
       <!-- Advanced Motor Control Features follow -->
 	  <!-- Not Used in this decoder - Sound only
@@ -2000,7 +2000,7 @@
         </enumVal>
         <label>Livestock Select</label>
       </variable>
-	  
+	
       <!-- Bell Selection follows -->
       <variable CV="227" mask="XXXXXXVV" item="Sound Option 19" default="0" tooltip="Selects which bell to use">
         <enumVal>
@@ -2039,7 +2039,7 @@
           </enumChoice>
           <enumChoice choice="F6">
             <choice>F6</choice>
-          </enumChoice>		
+          </enumChoice>
 		  <enumChoice choice="F7">
             <choice>F7</choice>
           </enumChoice>
@@ -2057,7 +2057,7 @@
           </enumChoice>
           <enumChoice choice="F12">
             <choice>F12</choice>
-          </enumChoice>			  
+          </enumChoice>			
         </enumVal>
         <label>Intelligent Consist Fct. Output Loc.</label>
         <label xml:lang="it">Funzione Consist Intelligente</label>
@@ -2079,9 +2079,9 @@
   </decoder>
   <!-- References to external Pane format definitions below -->
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
-  <!-- Not Used in this decoder  
+  <!-- Not Used in this decoder
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
-  -->  
+  -->
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsoundcar.xml"/>
 </decoder-config>

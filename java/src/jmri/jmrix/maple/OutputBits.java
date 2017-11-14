@@ -105,11 +105,11 @@ public class OutputBits {
             log.error("Number of bits for this packet greater than 99 - " + nBits);
             return null;
         }
-        int sAdd = 1000 + startBitNum;  // write starting at 1001 for output 1 in HMI's  
+        int sAdd = 1000 + startBitNum;  // write starting at 1001 for output 1 in HMI's
         // create message
         SerialMessage m = new SerialMessage(14 + nBits);
         m.setElement(0, 02);
-        m.setElement(1, '0');  // send in broadcast mode so all devices update      
+        m.setElement(1, '0');  // send in broadcast mode so all devices update
         m.setElement(2, '0');
         m.setElement(3, 'W');
         m.setElement(4, 'C');

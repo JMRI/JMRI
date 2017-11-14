@@ -205,7 +205,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
                 if (_progConfirm) {
                     _val = _confirmVal;
                 }
-                // If this was a read or verify, we retreived the value above. 
+                // If this was a read or verify, we retreived the value above.
                 // If its a write, we're to return the original write value.
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             }

@@ -57,16 +57,16 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     protected String _id = NONE;
     protected int _sequenceId = 0; // used to determine order in automation
-    
+
     protected boolean _actionRunning = false; // when true action is running, for example waiting for a train
     protected boolean _actionSuccessful = false;
     protected boolean _actionRan = false;
     protected boolean _haltFail = true;
-    
+
     protected Action _action = null;
     protected String _message = NONE;
     protected String _messageFail = NONE;
-    
+
     // the following are associated with actions
     protected Train _train = null;
     protected RouteLocation _routeLocation = null;
@@ -131,7 +131,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
         return ActionCodes.NO_ACTION;
     }
-    
+
     public Action getActionByCode(int code) {
         for (Action action : getActionList()) {
             if (action.getCode() == code)
@@ -207,7 +207,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * The automation for actions, not the automation associated with this item.
-     * 
+     *
      * @return Automation for this action
      */
     public Automation getAutomationToRun() {
@@ -238,7 +238,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * The automationItem for actions not this item.
-     * 
+     *
      * @return AutomationItem for GOTO
      */
     public AutomationItem getGotoAutomationItem() {
@@ -262,14 +262,14 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             setDirtyAndFirePropertyChange("AutomationItemTrainScheduleChange", old, _trainScheduleId); // NOI18N
         }
     }
-    
+
     public TrainSchedule getTrainSchedule() {
         if (getAction() != null && getAction().isOtherMenuEnabled()) {
             return InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(_trainScheduleId);
         }
         return null;
     }
-    
+
     public String getTrainScheduleId() {
         return _trainScheduleId;
     }
@@ -377,7 +377,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * Gets a list of all known automation actions
-     * 
+     *
      * @return list of automation actions
      */
     public List<Action> getActionList() {

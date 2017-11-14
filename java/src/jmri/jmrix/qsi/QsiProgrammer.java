@@ -147,7 +147,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
                 if (log.isDebugEnabled()) {
                     log.debug("handle non-zero status in reply " + m);
                 }
-                // perhaps no loco present? 
+                // perhaps no loco present?
                 // reset status
                 progState = WAITRESETSTATUS;
                 startShortTimer();

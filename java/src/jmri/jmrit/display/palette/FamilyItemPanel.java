@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for items having sets of icons (families)
- * 
+ *
 * @author Pete Cressman Copyright (c) 2010, 2011
  */
 public abstract class FamilyItemPanel extends ItemPanel {
@@ -41,7 +41,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected boolean _supressDragging;
     protected int _buttonPosition = 0;
     JPanel _bottom1Panel;  // Typically _showIconsButton and _editIconsButton
-    JPanel _bottom2Panel;  // createIconFamilyButton - when all families have been deleted 
+    JPanel _bottom2Panel;  // createIconFamilyButton - when all families have been deleted
     JButton _showIconsButton;
     JButton _editIconsButton;
     JButton _updateButton;
@@ -214,8 +214,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             return;
         } else { // no match with Palette families
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
-//                JOptionPane.showMessageDialog(_paletteFrame, 
-//                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType), 
+//                JOptionPane.showMessageDialog(_paletteFrame,
+//                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
 //                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 // make sure name does not duplicate a known name
                 _family = null;
@@ -428,7 +428,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     protected void makeDragIconPanel(int position) {
         if (_dragIconPanel != null) {
-            _iconFamilyPanel.remove(_dragIconPanel);            
+            _iconFamilyPanel.remove(_dragIconPanel);
         }
         _dragIconPanel = new JPanel();
         _dragIconPanel.setBackground(_editor.getTargetPanel().getBackground());

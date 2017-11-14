@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MarklinNamedPaneActionTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.jmrix.marklin.MarklinSystemConnectionMemo memo = new jmri.jmrix.marklin.MarklinSystemConnectionMemo();
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Marklin Named Pane Test");
         MarklinNamedPaneAction t = new MarklinNamedPaneAction("Test Action",jf,"test",memo);

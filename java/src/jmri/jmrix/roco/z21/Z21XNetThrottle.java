@@ -38,7 +38,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     synchronized protected void sendStatusInformationRequest() {
         /* Send the request for status */
         XNetMessage msg = Z21XNetMessage.getZ21LocomotiveInfoRequestMsg(this.address);
-        msg.setRetries(1); // Since we repeat this ourselves, don't ask the 
+        msg.setRetries(1); // Since we repeat this ourselves, don't ask the
         // traffic controller to do this for us.
         // now, we queue the message for sending to the command station
         queueMessage(msg, THROTTLESTATSENT);
@@ -181,7 +181,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     // The Z21 doesn't support setting the momentary/continuous status of
-    // functions, so override the sending of all momentary/continuous 
+    // functions, so override the sending of all momentary/continuous
     // from the parent class.
     @Override
     protected void sendMomentaryFunctionGroup1() {
@@ -219,7 +219,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     // Handle incoming messages for this throttle.
     @Override
     public void message(XNetReply l) {
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("Throttle " + getDccAddress() + " - received message " + l.toString());
         if((l.getElement(0)&0xE0)==0xE0 && ((l.getElement(0)&0x0f) >= 7 && (l.getElement(0)&0x0f) <=15 )){
             //This is a Roco specific throttle information message.
@@ -227,13 +227,13 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
             int messageaddress=((l.getElement(1)&0x3F) << 8)+l.getElement(2);
             if(messageaddress==getDccAddress()){
                //The message is for this throttle.
-               int b2= l.getElement(3)&0xff; 
-               int b3= l.getElement(4)&0xff; 
-               int b4= l.getElement(5)&0xff; 
-               int b5= l.getElement(6)&0xff; 
-               int b6= l.getElement(7)&0xff; 
-               int b7= l.getElement(8)&0xff; 
-               // byte 2 contains the speed step mode and availability 
+               int b2= l.getElement(3)&0xff;
+               int b3= l.getElement(4)&0xff;
+               int b4= l.getElement(5)&0xff;
+               int b5= l.getElement(6)&0xff;
+               int b6= l.getElement(7)&0xff;
+               int b7= l.getElement(8)&0xff;
+               // byte 2 contains the speed step mode and availability
                // information.
                parseSpeedAndAvailability(b2);
                // byte 3 contains the direction and the speed information
@@ -246,14 +246,14 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                parseFunctionInformation(b4,b5);
                // byte 6 and 7 contain function information for F13-F28
                parseFunctionHighInformation(b6,b7);
-               
+
                 // Always end by setting the state to idle
                 // (z21 always responds with the same messge, regardless of
                 // request).
                 requestState = THROTTLEIDLE;
                 // and send any queued messages.
                 sendQueuedMessage();
-           } 
+           }
         } else {
             // let the standard XpressNet Throttle have a chance to look
             // at the message.

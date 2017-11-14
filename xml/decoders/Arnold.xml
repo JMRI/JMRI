@@ -107,7 +107,7 @@
                 <enumChoice choice="Forward"></enumChoice>
                 <enumChoice choice="Reverse"></enumChoice>
               </enumVal>
-      </variable> 
+      </variable>
     <!-- CV 19 -->
       <variable item="Lenz BM1 Management" CV="27" comment="0 not managed, 1 FW, 2 Reverse, 3 both" default="0">
         <decVal max="3"/>

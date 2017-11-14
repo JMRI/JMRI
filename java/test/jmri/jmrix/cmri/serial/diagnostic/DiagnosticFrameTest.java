@@ -19,7 +19,7 @@ public class DiagnosticFrameTest {
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DiagnosticFrame action = new DiagnosticFrame(new CMRISystemConnectionMemo()); 
+        DiagnosticFrame action = new DiagnosticFrame(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

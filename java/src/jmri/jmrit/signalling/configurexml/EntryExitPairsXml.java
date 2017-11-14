@@ -299,7 +299,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * @param string String describing a color
      * @return integer representing a screen color
      * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#stringToColor(String)} instead
-     * 
+     *
      */
     @Deprecated
     public static Color stringToColor(String string) {

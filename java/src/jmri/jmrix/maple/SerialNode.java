@@ -48,7 +48,7 @@ public class SerialNode extends AbstractNode {
      * @param type 0 (ignored)
      */
     public SerialNode(int address, int type) {
-        // set address 
+        // set address
         setNodeAddress(address);
         _address = address;
         // register this node

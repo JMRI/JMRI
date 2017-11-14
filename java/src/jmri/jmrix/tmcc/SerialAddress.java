@@ -351,19 +351,19 @@ public class SerialAddress {
         String nName = "";
         // check the type character
         if ((!type.equals("S")) && (!type.equals("L")) && (!type.equals("T"))) {
-            // here if an illegal type character 
+            // here if an illegal type character
             log.error("illegal type character proposed for system name");
             return (nName);
         }
         // check the node address
         if ((nAddress < 0) || (nAddress > 127)) {
-            // here if an illegal node address 
+            // here if an illegal node address
             log.error("illegal node adddress proposed for system name");
             return (nName);
         }
         // check the bit number
         if ((bitNum < 1) || (bitNum > 2048)) {
-            // here if an illegal bit number 
+            // here if an illegal bit number
             log.error("illegal bit number proposed for system name");
             return (nName);
         }

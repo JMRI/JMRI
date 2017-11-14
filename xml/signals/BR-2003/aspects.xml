@@ -12,11 +12,11 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -31,7 +31,7 @@
         <date>2010-02-02</date>
         <authorinitials>KD</authorinitials>
         <revremark>Change position light signal names to "on" and "off", Remove Call-On and change to On</revremark>
-    </revision> 
+    </revision>
   </revhistory>
 
   <aspects>
@@ -44,7 +44,7 @@
       <speed>Approach</speed>
       <speed2>Approach</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Preliminary Caution</name>
       <indication>Proceed: be prepared to find the next signal displaying one yellow aspect</indication>
@@ -53,7 +53,7 @@
       <speed>Approach</speed>
       <speed2>Approach</speed2>
     </aspect>
-    
+
      <aspect>
       <name>Flash Preliminary Caution</name>
       <indication>Proceed: be prepared to find the next signal displaying one flashing yellow aspect</indication>
@@ -63,7 +63,7 @@
       <speed>Approach</speed>
       <speed2>Approach</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Caution</name>
       <indication>Proceed: be prepared to stop at the next signal</indication>
@@ -73,7 +73,7 @@
       <speed>Approach</speed>
       <speed2>Approach</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Flash Caution</name>
       <indication>Proceed: the next signal will be at caution with a junction indicator showing</indication>
@@ -83,7 +83,7 @@
       <speed>Approach</speed>
       <speed2>Approach</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Danger</name>
       <indication>Stop</indication>
@@ -93,7 +93,7 @@
       <speed>0</speed>
       <speed2>0</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Off</name>
       <indication>Proceed at Caution</indication>
@@ -103,7 +103,7 @@
       <speed>0</speed>
       <speed2>0</speed2>
     </aspect>
-    
+
     <aspect>
       <name>On</name>
       <indication>Stop</indication>
@@ -142,4 +142,4 @@
     <appearancefile href="appearance-feather.xml"/>
   </appearancefiles>
 </aspecttable>
-  
+

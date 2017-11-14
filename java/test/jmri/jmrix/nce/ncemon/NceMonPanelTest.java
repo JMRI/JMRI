@@ -26,7 +26,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     @Ignore("see comments below for corrections required.")
-    public void testMsg() { 
+    public void testMsg() {
              // Prior to JUnit4 conversion, this test method was commented out with a note reading
              // Following are timing-specific, occasionally fail, so commented out
              NceMessage m = new NceMessage(3);
@@ -34,33 +34,33 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
              m.setOpCode('L');
              m.setElement(1, '0');
              m.setElement(2, 'A');
-              
-             ((NceMonPanel)pane).message(m); 
-             
+
+             ((NceMonPanel)pane).message(m);
+
              // The following assertions need to be re-written.  There is no
              // current method for retrieving the text panel from the NceMonPanel.
-             //Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), ((NceMonPanel)pane).getPanelText().length()); 
-             //Assert.assertEquals("display", "cmd: \"L0A\"\n", ((NceMonPanel)pane).getPanelText()); 
-         } 
+             //Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), ((NceMonPanel)pane).getPanelText().length());
+             //Assert.assertEquals("display", "cmd: \"L0A\"\n", ((NceMonPanel)pane).getPanelText());
+         }
 
     @Test
     @Ignore("see comments below for corrections required.")
-         public void testReply() { 
+         public void testReply() {
              // Prior to JUnit4 conversion, this test method was commented out with a note reading
              // Following are timing-specific, occasionally fail, so commented out
              NceReply m = new NceReply(memo.getNceTrafficController());
-             m.setBinary(false); 
-             m.setOpCode('C'); 
-             m.setElement(1, 'o'); 
-             m.setElement(2, ':'); 
-              
+             m.setBinary(false);
+             m.setOpCode('C');
+             m.setElement(1, 'o');
+             m.setElement(2, ':');
+
              ((NceMonPanel)pane).reply(m);
-              
+
              // The following assertions need to be re-written.  There is no
              // current method for retrieving the text panel from the NceMonPanel.
-             //Assert.assertEquals("display", "rep: \"Co:\"\n", ((NceMonPanel)pane).getPanelText()); 
+             //Assert.assertEquals("display", "rep: \"Co:\"\n", ((NceMonPanel)pane).getPanelText());
              //Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), ((NceMonPanel)pane).getPanelText().length());
-         } 
+         }
 
     // Test checking the AutoScroll checkbox.
     // for some reason the NceMonPane has the checkbox value reversed on

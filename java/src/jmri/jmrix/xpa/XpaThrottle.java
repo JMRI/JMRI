@@ -100,7 +100,7 @@ public class XpaThrottle extends AbstractThrottle {
         tc.sendXpaMessage(m, null);
     }
 
-    // functions 
+    // functions
     @Override
     public void setF0(boolean f0) {
         if (this.f0 != f0) {

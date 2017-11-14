@@ -73,11 +73,11 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
         getContentPane().add(pFactor);
         getContentPane().add(pAlternate);
         getContentPane().add(pControls);
-        
+
         _track.getLocation().addPropertyChangeListener(this);
 
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
-        
+
     }
 
     @Override

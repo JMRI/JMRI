@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     CatalogTreeFSTest.class,
     CatalogTreeIndexTest.class,
-    ImageIndexEditorTest.class,     
+    ImageIndexEditorTest.class,
     BundleTest.class,
     jmri.jmrit.catalog.configurexml.PackageTest.class,
     CatalogPaneTest.class,

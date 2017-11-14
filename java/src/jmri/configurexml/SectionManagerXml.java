@@ -58,7 +58,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                         elem.setAttribute("systemName", sname);
                         String uname = x.getUserName();
                         if (uname !=null && !uname.equals("")) elem.setAttribute("userName", uname);
-                            
+
                         // store common part
                         storeCommon(x, elem);
                         String txt = "userdefined";

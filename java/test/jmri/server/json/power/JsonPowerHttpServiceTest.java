@@ -106,7 +106,7 @@ public class JsonPowerHttpServiceTest {
         }
         Assert.fail("Did not throw expected error.");
     }
-    
+
     @Test
     public void testDoGetList() {
         try {
@@ -118,7 +118,7 @@ public class JsonPowerHttpServiceTest {
             Assert.fail("Unexpected Exception");
         }
     }
-    
+
     @Test
     public void testDelete() {
         try {
@@ -129,7 +129,7 @@ public class JsonPowerHttpServiceTest {
         }
         Assert.fail("Did not throw expected error.");
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

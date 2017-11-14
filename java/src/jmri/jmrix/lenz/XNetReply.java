@@ -100,7 +100,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * skipPrefix is not used at this point in time, but is 
+     * skipPrefix is not used at this point in time, but is
      * defined as abstract in AbstractMRReply
      */
     @Override
@@ -110,10 +110,10 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     // decode messages of a particular form
 
-    /* 
-     * The next group of routines are used by Feedback and/or turnout 
-     * control code.  These are used in multiple places within the code, 
-     * so they appear here. 
+    /*
+     * The next group of routines are used by Feedback and/or turnout
+     * control code.  These are used in multiple places within the code,
+     * so they appear here.
      */
 
     /**
@@ -145,11 +145,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     // return the odd address associated with this turnout
                     return (address + 3);
                 } else if ((a2 & 0x1f) == 0x10) {
-                    // This is an address in the upper nibble, but neither 
+                    // This is an address in the upper nibble, but neither
                     // address has been operated.
                     return (address + 3);
                 } else {
-                    // This is an address in the lower nibble, but neither 
+                    // This is an address in the lower nibble, but neither
                     // address has been operated
                     return (address + 1);
                 }
@@ -192,11 +192,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     // return the odd address associated with this turnout
                     return (address + 3);
                 } else if ((a2 & 0x1f) == 0x10) {
-                    // This is an address in the upper nibble, but neither 
+                    // This is an address in the upper nibble, but neither
                     // address has been operated.
                     return (address + 3);
                 } else {
-                    // This is an address in the lower nibble, but neither 
+                    // This is an address in the lower nibble, but neither
                     // address has been operated
                     return (address + 1);
                 }
@@ -420,7 +420,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    /* 
+    /*
      * Next we have a few throttle related messages
      */
 
@@ -484,8 +484,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return false;
     }
 
-    /* 
-     * Finally, we have some commonly used routines that are used for 
+    /*
+     * Finally, we have some commonly used routines that are used for
      * checking specific, generic, response messages.
      */
 
@@ -553,7 +553,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR
                 || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR
                 || this.getElement(1) == XNetConstants.LIUSB_RETRANSMIT_REQUEST
-                || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW)) 
+                || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW))
                 || this.isTimeSlotErrorMessage());
     }
 
@@ -567,7 +567,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
     public boolean isTimeSlotErrorMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
-                && ((this.getElement(1) == XNetConstants.LIUSB_REQUEST_SENT_WHILE_NO_TIMESLOT 
+                && ((this.getElement(1) == XNetConstants.LIUSB_REQUEST_SENT_WHILE_NO_TIMESLOT
                 || this.getElement(1) == XNetConstants.LIUSB_TIMESLOT_RESTORED
                 || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)));
     }
@@ -621,7 +621,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * @return the value returned by the DCC system associated with a 
+     * @return the value returned by the DCC system associated with a
      * service mode reply.
      * return -1 if not a service mode message.
      */
@@ -650,7 +650,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     @Override
     public boolean isUnsolicited() {
         // The message may be set as an unsolicited message else where
-        // or it may be classified as unsolicited based on the type of 
+        // or it may be classified as unsolicited based on the type of
         // message received.
         // NOTE: The feedback messages may be received in either solicited
         // or unsolicited form.  requesting code can mark the reply as solicited
@@ -672,7 +672,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         String text;
         // First, Decode anything that is sent by the LI10x, and
         // not the command station
-        
+
         if(getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER){
             switch(this.getElement(1)) {
               case XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR:
@@ -750,7 +750,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         } else if (getElement(0) == XNetConstants.CS_INFO) {
             switch (getElement(1)) {
                 case XNetConstants.BC_NORMAL_OPERATIONS:
-                    text = Bundle.getMessage("XNetReplyBCNormalOpsResumed");  
+                    text = Bundle.getMessage("XNetReplyBCNormalOpsResumed");
                     break;
                 case XNetConstants.BC_EVERYTHING_OFF:
                     text = Bundle.getMessage("XNetReplyBCEverythingOff");
@@ -809,7 +809,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                         getServiceModeCVNumber(),
                         getServiceModeCVValue());
             } else if (getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
-                String typeString; 
+                String typeString;
                 switch (getElement(3)) {
                     case 0x00:
                         typeString = Bundle.getMessage("CSTypeLZ100");
@@ -1118,7 +1118,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @param element1 contains the speed step mode designation and
      * availability information
      * @param element2 contains the data byte including the step mode and
-     * availability information 
+     * availability information
      */
     private String parseSpeedAndDirection(int element1, int element2) {
         String text = "";
@@ -1145,7 +1145,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             // We have to re-arange the bits, since bit 4 is the LSB,
             // but other bits are in order from 0-3
             speedVal = ((element2 & 0x0F) << 1) + ((element2 & 0x10) >> 4);
-            // The first speed step used is actually at 4 for 28  
+            // The first speed step used is actually at 4 for 28
             // speed step mode.
             if (speedVal >= 3) {
                 speedVal -= 3;

@@ -55,7 +55,7 @@
             <reference>Page 146</reference>
             <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W292.gif</imagelink>
         </appearance>
-		
+
 		<appearance>
             <aspectname>Stop-Throw Switch</aspectname>
             <show>red</show>
@@ -126,7 +126,7 @@
             <advancedAspect>Stop</advancedAspect>
             <ourAspect>Approach</ourAspect>
         </aspectMapping>
-		
+
 		<aspectMapping>
             <advancedAspect>Stop-Throw Switch</advancedAspect>
             <ourAspect>Approach</ourAspect>

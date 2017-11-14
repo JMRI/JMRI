@@ -61,7 +61,7 @@
       <authorinitials>BJ</authorinitials>
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
-    
+
   </revhistory>
   <!-- Add Your the "includes" here -->
   <variable CV="126" item="SUSI Indicator" default="102" comment="Range 0-255">
@@ -90,5 +90,5 @@
 	<label xml:lang="ca">Dispositiu de transferència SUSI</label>
 	<comment xml:lang="ca">Rang 0-255</comment>
   </variable>
-  
+
 </variables>

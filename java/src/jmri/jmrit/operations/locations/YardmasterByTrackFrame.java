@@ -8,7 +8,7 @@ import jmri.jmrit.operations.setup.Control;
  * Yardmaster by track frame. Shows work at one location listed by track.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * 
+ *
  */
 public class YardmasterByTrackFrame extends OperationsFrame {
 

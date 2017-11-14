@@ -79,7 +79,7 @@
 	  <comment>Atypical aspect used on mast signal 4R for WB movements on track 2 to the Hanover Sub.</comment>
 	  <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-GYR_Absolute/Rule-W288.gif</imagelink>
 	</appearance>
-	
+
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
@@ -95,7 +95,7 @@
       <reference>Page 146</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-GYR_Absolute/Rule-W292.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Stop-Throw Switch</aspectname>
       <show>red</show>
@@ -185,7 +185,7 @@
 	  <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Stop-Throw Switch</advancedAspect>
       <ourAspect>Approach</ourAspect>

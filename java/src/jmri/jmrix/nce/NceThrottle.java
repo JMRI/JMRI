@@ -19,7 +19,7 @@ public class NceThrottle extends AbstractThrottle {
     /* Note the NCE USB doesn't support the NMRA packet format.
      * Before April 2010, this code would send NMRA packets if connected
      * to the NCE command station.  Now it always sends the A2 loco
-     * commands if the command station eprom was built after 2004. 
+     * commands if the command station eprom was built after 2004.
      */
     public boolean sendA2command = true;
 
@@ -297,7 +297,7 @@ public class NceThrottle extends AbstractThrottle {
             }
             value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
             if (value > 126) {
-                value = 126;    // max possible speed, 127 can crash PowerCab! 
+                value = 126;    // max possible speed, 127 can crash PowerCab!
             }   // emergency stop?
             if (value < 0) {
 

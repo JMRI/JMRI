@@ -26,7 +26,7 @@ public class IEEE802154MonFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.setDefault(IEEE802154SystemConnectionMemo.class, new IEEE802154SystemConnectionMemo());
         IEEE802154MonFrame action = new IEEE802154MonFrame();
         Assert.assertNotNull("exists", action);

@@ -3,19 +3,19 @@ package jmri.jmrix.dccpp.swing;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
  * @author   Mark Underwood Copyright (C) 2011
- * 
+ *
  */
 
 import java.awt.Frame;
@@ -34,7 +34,7 @@ public class ConfigBaseStationAction extends AbstractAction {
      *
      */
     private ConfigBaseStationFrame f = null;
-    
+
     public ConfigBaseStationAction(String s, String a) {
         super(s);
     }
@@ -42,14 +42,14 @@ public class ConfigBaseStationAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
-            
+
             // Get info on Sensors
             DCCppSystemConnectionMemo systemMemo = jmri.InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
             DCCppSensorManager smgr = (DCCppSensorManager)systemMemo.getSensorManager();
             DCCppTurnoutManager tmgr = (DCCppTurnoutManager)systemMemo.getTurnoutManager();
             // Send query for sensor values
             DCCppTrafficController tc = systemMemo.getDCCppTrafficController();
-    
+
             f = new ConfigBaseStationFrame(smgr, tmgr, tc);
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
             tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), f); // TODO: Put this in Constants?

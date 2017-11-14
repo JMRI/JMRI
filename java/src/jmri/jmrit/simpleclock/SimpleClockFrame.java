@@ -654,7 +654,7 @@ public class SimpleClockFrame extends JmriJFrame
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         if (changed) {
-            // remind to save  
+            // remind to save
             javax.swing.JOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuClocks")),
                     Bundle.getMessage("ReminderTitle"),

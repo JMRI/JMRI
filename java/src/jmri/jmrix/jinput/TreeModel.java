@@ -44,7 +44,7 @@ public final class TreeModel extends DefaultTreeModel {
         // load initial USB objects
         boolean pass = loadSystem();
         if (!pass) log.error("loadSystem failed");
-        
+
         // If you don't call loadSystem, the following line was
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
@@ -54,7 +54,7 @@ public final class TreeModel extends DefaultTreeModel {
         runner.start();
     }
     Runner runner;
-    
+
     /**
      * Add a node to the tree if it doesn't already exist
      *
@@ -98,7 +98,7 @@ public final class TreeModel extends DefaultTreeModel {
         runner.interrupt();
         runner.join();
     }
-    
+
     static private TreeModel instanceValue = null;
 
     class Runner extends Thread {

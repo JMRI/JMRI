@@ -18,7 +18,7 @@ public class RosterTreeNodeTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        RosterTreeNode p = new RosterTreeNode(); 
+        RosterTreeNode p = new RosterTreeNode();
         Assert.assertNotNull("exists", p);
     }
 

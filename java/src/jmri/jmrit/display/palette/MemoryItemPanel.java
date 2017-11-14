@@ -113,7 +113,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _writeMem = new MemoryInputIcon(5, _editor);
 //        JPanel p0 = makeDragIcon(_writeMem, Type.READWRITE);
         panel.add(makeDragIcon(_writeMem, Type.READWRITE), c);
-        
+
         _spinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
         JTextField field = ((JSpinner.DefaultEditor) _spinner.getEditor()).getTextField();
         field.setColumns(2);
@@ -122,13 +122,13 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _spinner.addChangeListener(this);
         c.gridy = 2;
         panel.add(_spinner, c);
-        
+
         c.gridy = 3;
         c.anchor = java.awt.GridBagConstraints.NORTH;
         label = new JLabel(Bundle.getMessage("NumColsLabel"));
         label.setBackground(_editor.getTargetPanel().getBackground());
         panel.add(label, c);
-        
+
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.CENTER;
@@ -248,7 +248,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             super(flavor, comp);
             _memType = type;
         }
-        
+
         @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();

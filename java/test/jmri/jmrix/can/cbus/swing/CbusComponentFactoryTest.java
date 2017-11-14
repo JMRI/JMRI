@@ -21,10 +21,10 @@ public class CbusComponentFactoryTest {
 
     private TrafficController tc = null;
     private CanSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusComponentFactory action = new CbusComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

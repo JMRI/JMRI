@@ -41,6 +41,6 @@ public class LocoDataPaneTest extends jmri.util.swing.JmriPanelTest {
     @After
     public void tearDown() {
         memo = null;
-        JUnitUtil.tearDown();    
+        JUnitUtil.tearDown();
     }
 }

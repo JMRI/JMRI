@@ -63,7 +63,7 @@ public class SimpleReporterServer extends AbstractReporterServer {
         // the report, which may contain spaces.
         if (index2 > 0 && ( newlinepos - (index2 + 1) > 0)) {
             setReporterReport(reporterName, statusString.substring(index2 + 1,newlinepos));
-            // setReporterReport ALSO triggers sending the status report, so 
+            // setReporterReport ALSO triggers sending the status report, so
             // no further action is required to echo the status to the client.
         } else {
             // send the current status if the report

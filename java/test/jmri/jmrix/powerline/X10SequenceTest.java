@@ -23,7 +23,7 @@ public class X10SequenceTest extends TestCase {
         s.addAddress(1, 2);
         s.addFunction(1, 3, 0);
 
-        // 
+        //
         s.reset();
         X10Sequence.Command a1 = s.getCommand();
         Assert.assertTrue("1 is address", a1.isAddress());

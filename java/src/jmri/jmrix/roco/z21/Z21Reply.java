@@ -117,7 +117,7 @@ public class Z21Reply extends AbstractMRReply {
                 xnr.setElement(i - 4, getElement(i));
             }
             if(( xnr.getElement(0) & 0x0F ) > ( xnr.getNumDataElements()+2) ){
-               // there is at least one message from the Z21 that can be sent 
+               // there is at least one message from the Z21 that can be sent
                // with fewer bytes than the XpressNet payload indicates it
                // should have.  Pad those messages with 0x00 bytes.
                for(i=i-4;i<((xnr.getElement(0)&0x0F)+2);i++){
@@ -127,7 +127,7 @@ public class Z21Reply extends AbstractMRReply {
         }
         return xnr;
     }
-   
+
     // handle RailCom data replies
     boolean isRailComDataChangedMessage(){
         return (getOpCode() == 0x0088);
@@ -142,10 +142,10 @@ public class Z21Reply extends AbstractMRReply {
            return 0; // this isn't a RailCom message, so there are no entries.
         }
         // if this is a RailCom message, the length field is
-        // then the entries are n=(len-4)/13, per the Z21 protocol 
+        // then the entries are n=(len-4)/13, per the Z21 protocol
         // manual, section 8.1.  Also, 0<=n<=19
         return (((getLength() - 4)/13));
-    } 
+    }
 
     /**
      * Get a locomotive address from an entry in a railcom message.
@@ -168,8 +168,8 @@ public class Z21Reply extends AbstractMRReply {
     int getRailComRcvCount(int n){
          int offset = 6+(n*13); // +2 to get past the address.
          int rcvcount = ((0xff&getElement(offset))<<24) +
-                       ((0xff&(getElement(offset+1))<<16) + 
-                       ((0xff&getElement(offset+2))<<8) + 
+                       ((0xff&(getElement(offset+1))<<16) +
+                       ((0xff&getElement(offset+2))<<8) +
                        (0xff&(getElement(offset+3))));
          return rcvcount;
     }
@@ -183,8 +183,8 @@ public class Z21Reply extends AbstractMRReply {
     int getRailComErrCount(int n){
          int offset = 10+(n*13); // +6 to get past the address and rcv count.
          int errorcount = ((0xff&getElement(offset))<<24) +
-                       ((0xff&(getElement(offset+1))<<16) + 
-                       ((0xff&getElement(offset+2))<<8) + 
+                       ((0xff&(getElement(offset+1))<<16) +
+                       ((0xff&getElement(offset+2))<<8) +
                        (0xff&(getElement(offset+3))));
          return errorcount;
     }

@@ -84,7 +84,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
                 && ((mAppearance == FLASHGREEN)
                 || (mAppearance == FLASHYELLOW)
                 || (mAppearance == FLASHRED))) {
-            // flash says to make output dark; 
+            // flash says to make output dark;
             // flashing-but-lit is handled below
             address = mNumber + 1;
             closed = true;

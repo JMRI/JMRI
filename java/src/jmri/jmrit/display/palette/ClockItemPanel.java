@@ -101,7 +101,7 @@ public class ClockItemPanel extends IconItemPanel {
                 c.setOpaque(false);
                 c.update();
                 c.setLevel(Editor.CLOCK);
-                return c;                
+                return c;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" icon \"");

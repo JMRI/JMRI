@@ -1146,7 +1146,7 @@
       </variable>
 
       <variable label="PB1 Output-Input" CV="195" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1274,7 +1274,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB2 Output-Input" CV="203" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1399,7 +1399,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB3 Output-Input" CV="211" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1524,7 +1524,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB4 Output-Input" CV="219" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1651,7 +1651,7 @@
       </variable>
 
       <variable label="PB5 Output-Input" CV="227" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1779,7 +1779,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB6 Output-Input" CV="235" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1904,7 +1904,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB7 Output-Input" CV="243" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -2029,7 +2029,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB8 Output-Input" CV="251" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -7942,9 +7942,9 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/><label>LT32 Var2 Aspect</label></variable>
- 
+
       <!-- End of Logic Table Variables -->
- 
+
 
       <!-- Presets for Composite Variables -->
       <variable label="IP1 Type">
@@ -7997,7 +7997,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8011,7 +8011,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8081,7 +8081,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8095,7 +8095,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8165,7 +8165,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8179,7 +8179,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8249,7 +8249,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8263,7 +8263,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8333,7 +8333,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8347,7 +8347,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8417,7 +8417,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8431,7 +8431,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8501,7 +8501,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -8515,7 +8515,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -8585,7 +8585,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -8599,7 +8599,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -9107,7 +9107,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
             <compositeSetting label="PA3 Output-Input" value="0"/>
             <compositeSetting label="PA4 Output-Input" value="0"/>
             <compositeSetting label="PA3 Paired" value="2"/>
@@ -9119,7 +9119,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
             <compositeSetting label="PA5 Output-Input" value="0"/>
             <compositeSetting label="PA6 Output-Input" value="0"/>
             <compositeSetting label="PA5 Paired" value="2"/>
@@ -9131,7 +9131,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
             <compositeSetting label="PA7 Output-Input" value="0"/>
             <compositeSetting label="PA8 Output-Input" value="0"/>
             <compositeSetting label="PA7 Paired" value="2"/>
@@ -9143,7 +9143,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -9157,7 +9157,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
             <compositeSetting label="PA3 Output-Input" value="0"/>
             <compositeSetting label="PA4 Output-Input" value="0"/>
             <compositeSetting label="PA3 Paired" value="2"/>
@@ -9169,7 +9169,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
             <compositeSetting label="PA5 Output-Input" value="0"/>
             <compositeSetting label="PA6 Output-Input" value="0"/>
             <compositeSetting label="PA5 Paired" value="2"/>
@@ -9181,7 +9181,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
             <compositeSetting label="PA7 Output-Input" value="0"/>
             <compositeSetting label="PA8 Output-Input" value="0"/>
             <compositeSetting label="PA7 Paired" value="2"/>
@@ -9193,7 +9193,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -9248,7 +9248,7 @@
           <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
         </compositeVal>
       </variable>
- 
+
       <variable label="IOP2 Port Type">
         <compositeVal>
 

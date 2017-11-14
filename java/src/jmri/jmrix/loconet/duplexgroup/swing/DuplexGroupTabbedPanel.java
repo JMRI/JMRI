@@ -29,7 +29,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
 
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -47,7 +47,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         // uses swing operations
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -59,7 +59,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
     }
     javax.swing.Timer tmr = null;
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -81,7 +81,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
     }
     private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbed");
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -89,7 +89,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"; // NOI18N
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -97,7 +97,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         return rb.getString("Title");
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  * @author Bob Jacobsen Copyright (C) 2001
- * 
+ *
  */
 public class Dcc4PcReply extends AbstractMRReply {
 
@@ -84,7 +84,7 @@ public class Dcc4PcReply extends AbstractMRReply {
 
     boolean stripRun = false;
 
-    // Check and strip 
+    // Check and strip
     public void strip() {
         //we only want to run the strip once
         if (stripRun) {
@@ -152,25 +152,25 @@ public class Dcc4PcReply extends AbstractMRReply {
     public int maxSize() {
         return maxSize;
     }
-    
+
     Dcc4PcMessage origMsg;
-    
+
     public Dcc4PcMessage getOriginalRequest(){
         return origMsg;
     }
-    
+
     protected void setOriginalRequest(Dcc4PcMessage msg){
         origMsg = msg;
     }
-    
-    
-    public int getBoard() { 
+
+
+    public int getBoard() {
         if(origMsg!=null){
             return origMsg.getBoard();
         }
-        return -1; 
+        return -1;
     }
-    
+
     public int getMessageType(){
         if(origMsg!=null){
             return origMsg.getMessageType();

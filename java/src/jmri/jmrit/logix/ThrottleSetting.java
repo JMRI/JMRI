@@ -95,24 +95,24 @@ public class ThrottleSetting {
         try {
             if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
                 Sensor s = InstanceManager.sensorManagerInstance().provideSensor(name);
-                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, s);            
+                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, s);
             } else if ("RUN WARRANT".equals(cmd)) {
                 Warrant w = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).provideWarrant(name);
-                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, w);                        
+                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, w);
             } else {
                 OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).provideOBlock(name);
-                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, b);            
-            }            
+                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, b);
+            }
         } catch (IllegalArgumentException iae) {
             log.error(iae.toString());
         }
     }
-  
+
     // _namedHandle may be of 3 different types
     public <T extends NamedBean> void setNamedBeanHandle(NamedBeanHandle <T> bh) {
         _namedHandle = bh;
     }
-    
+
     // _namedHandle may be of 3 different types
     public NamedBeanHandle <? extends NamedBean> getNamedBeanHandle() {
         return _namedHandle;
@@ -131,7 +131,7 @@ public class ThrottleSetting {
         }
         return _namedHandle.getBean().getSystemName();
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ThrottleSetting: wait ");
@@ -147,6 +147,6 @@ public class ThrottleSetting {
         sb.append("\"");
         return sb.toString();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(ThrottleSetting.class);
 }

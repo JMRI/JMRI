@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
- * This class provides a concrete implementation of the Abstract Editor 
+ * This class provides a concrete implementation of the Abstract Editor
  * class to be used in testing.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2003, 2007

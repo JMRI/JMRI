@@ -124,7 +124,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         if (curSerialNodeIndex >= getNumNodes()) {
             curSerialNodeIndex = 0;
         }
-        // ensure that each node is initialized        
+        // ensure that each node is initialized
         if (getMustInit(curSerialNodeIndex)) {
             setMustInit(curSerialNodeIndex, false);
             SerialMessage m = (SerialMessage) (getNode(curSerialNodeIndex).createInitPacket());
@@ -159,7 +159,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     protected synchronized void handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
-        // inform node, and if it resets then reinitialize 
+        // inform node, and if it resets then reinitialize
         if (getNode(curSerialNodeIndex) != null) {
             if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
                 setMustInit(curSerialNodeIndex, true);

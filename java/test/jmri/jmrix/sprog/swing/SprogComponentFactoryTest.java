@@ -17,10 +17,10 @@ public class SprogComponentFactoryTest {
 
 
     private jmri.jmrix.sprog.SprogSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SprogComponentFactory action = new SprogComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

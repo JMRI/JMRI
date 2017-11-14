@@ -695,7 +695,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     /**
      *
      * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
+     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead.
      */
     @Deprecated
     public JComboBox<String> getRowColorComboBox() {

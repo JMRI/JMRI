@@ -36,7 +36,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetColumnNameAddress() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertEquals("address column name",Bundle.getMessage("AddressColumnLabel"), model.getColumnName(0));
     }
@@ -44,7 +44,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetColumnNameRoster() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertEquals("roster column name",Bundle.getMessage("RosterColumnLabel"), model.getColumnName(1));
     }
@@ -52,7 +52,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetColumnNameDirection() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertEquals("Direction column name",Bundle.getMessage("DirectionColumnLabel"), model.getColumnName(2));
     }
@@ -60,7 +60,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetColumnNameOther() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertEquals("other column name","", model.getColumnName(3));
     }
@@ -69,7 +69,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetColumnClassAddress() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertEquals("address column class",java.lang.String.class, model.getColumnClass(0));
     }
@@ -77,7 +77,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetColumnClassRoster() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertEquals("roster column class",String.class, model.getColumnClass(1));
     }
@@ -85,7 +85,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetColumnClassDirection() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertEquals("direction column class",Boolean.class, model.getColumnClass(2));
     }
@@ -93,7 +93,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetColumnClassDelete() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertEquals("delete column class",javax.swing.JButton.class, model.getColumnClass(3));
     }
@@ -101,7 +101,7 @@ public class ConsistDataModelTest {
     @Test
     public void testIsCellEditableDeleteColumn() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertTrue("delete column Editable",model.isCellEditable(0,3));
         Assert.assertTrue("delete column Editable",model.isCellEditable(2,3));
@@ -110,7 +110,7 @@ public class ConsistDataModelTest {
     @Test
     public void testIsCellEditableDirectionColumn() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertFalse("Direction column (row 0) Editable",model.isCellEditable(0,2));
         Assert.assertTrue("Direciton column (not row 0) Editable",model.isCellEditable(2,2));
@@ -119,7 +119,7 @@ public class ConsistDataModelTest {
     @Test
     public void testIsCellEditableRosterColumn() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertFalse("Roster column Editable",model.isCellEditable(0,1));
         Assert.assertFalse("Roster column Editable",model.isCellEditable(2,1));
@@ -128,7 +128,7 @@ public class ConsistDataModelTest {
     @Test
     public void testIsCellEditableAddressColumn() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertFalse("Address column Editable",model.isCellEditable(0,0));
         Assert.assertFalse("Address column Editable",model.isCellEditable(2,0));
@@ -137,7 +137,7 @@ public class ConsistDataModelTest {
     @Test
     public void testGetValueAtNullConsist() {
         ConsistDataModel model = new ConsistDataModel(1,4);
-        // this uses an internal detail (The private column number).  If the 
+        // this uses an internal detail (The private column number).  If the
         // column numbering changes, the test may need to change.
         Assert.assertNull("Address",model.getValueAt(0,0));
         Assert.assertNull("Address",model.getValueAt(2,0));

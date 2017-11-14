@@ -99,7 +99,7 @@ public class DccSpeedProfile {
             formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
             today = new Date();
             result = formatter.format(today);
-            // title 
+            // title
             String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
                     + address + " " + Bundle.getMessage("CreatedOn")
                     + " " + result;
@@ -233,7 +233,7 @@ public class DccSpeedProfile {
             try {
                 String value = dccProfileData.get(i).split("\\s*,\\s*")[1];
                 float speed = Float.valueOf(value);
-                // speed values from the speedometer are calc'd and stored in 
+                // speed values from the speedometer are calc'd and stored in
                 // the DccSpeedProfile object as KPH so need to convert
                 // if the file was in MPH
                 if (secondLine.contains("MPH")) {

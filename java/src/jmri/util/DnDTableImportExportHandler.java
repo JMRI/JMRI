@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright 2016
  */
 public class DnDTableImportExportHandler extends DnDTableExportHandler {
-    
+
     int[] _skipColumns = new int[]{};
 
     public DnDTableImportExportHandler() {
@@ -55,7 +55,7 @@ public class DnDTableImportExportHandler extends DnDTableExportHandler {
             log.debug("importData: isDrop= {} location= {} row= {} col= {}", support.isDrop(), loc.getDropPoint(), loc.getRow(),loc.getColumn());
         }
         if (!support.isDrop()) {
-            return false;            
+            return false;
         }
         TransferHandler.DropLocation loc = support.getDropLocation();
         if (!(loc instanceof JTable.DropLocation)) {
@@ -63,8 +63,8 @@ public class DnDTableImportExportHandler extends DnDTableExportHandler {
         }
         Component comp = support.getComponent();
         if (!(comp instanceof JTable)) {
-            return false;            
-        }       
+            return false;
+        }
         JTable.DropLocation location = (JTable.DropLocation)loc;
         JTable table = (JTable)comp;
         int row = location.getRow();

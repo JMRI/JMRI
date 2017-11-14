@@ -15,7 +15,7 @@ import jmri.jmrit.operations.trains.TrainManifestHeaderText;
  * Frame for user edit of manifest header text strings
  *
  * @author Dan Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 

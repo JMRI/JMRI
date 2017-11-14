@@ -270,7 +270,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
             return;
         }
         int newRate = (int) rate;
-        
+
         // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (newRate != getRate()) {
             setRate(rate);

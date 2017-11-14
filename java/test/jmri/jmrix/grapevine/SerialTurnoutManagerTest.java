@@ -66,7 +66,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     /**
      * Number of turnout to test. Use 9th output on node 1.
-     */ 
+     */
     @Override
     protected int getNumToTest1() {
         return 1109;

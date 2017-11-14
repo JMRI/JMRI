@@ -300,7 +300,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             // unsolicited time change from the Loconet
             clock.setTime(new Date(nNumMSec));
         }
-        // Once we have done everything else set the flag to say we are in sync 
+        // Once we have done everything else set the flag to say we are in sync
         inSyncWithInternalFastClock = true;
     }
 

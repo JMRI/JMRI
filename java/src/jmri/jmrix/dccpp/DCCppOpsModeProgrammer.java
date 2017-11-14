@@ -54,8 +54,8 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, this);
-        /* we need to save the programer and value so we can send messages 
-         back to the screen when the programing screen when we recieve 
+        /* we need to save the programer and value so we can send messages
+         back to the screen when the programing screen when we recieve
          something from the command station */
         progListener = p;
         value = val;
@@ -67,8 +67,8 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
          * Risk... the state change introduces a 250ms delay to keep the UI from sending
          * write commands too frequently... so we'd have to do that here too.
         */
-        // Before we set the programmer state to not programming, 
-        // delay for a short time to give the decoder a chance to 
+        // Before we set the programmer state to not programming,
+        // delay for a short time to give the decoder a chance to
         // process the request.
         try {
             this.wait(250);
@@ -111,31 +111,31 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
 
     /*
      * Can this ops-mode programmer read back values?
-     * Indirectly we can, though this requires an external display 
+     * Indirectly we can, though this requires an external display
      * (a Lenz LRC120) and enabling railcom.
      * @return true to allow us to trigger an ops mode read
      */
-    // An operations mode read can be triggered on command 
+    // An operations mode read can be triggered on command
     // stations which support Operations Mode Writes (LZ100,
     // LZV100,MultiMouse).  Whether or not the operation produces
-    // a result depends on additional external hardware (a booster 
-    // with an enabled  RailCom cutout (LV102 or similar) and a 
+    // a result depends on additional external hardware (a booster
+    // with an enabled  RailCom cutout (LV102 or similar) and a
     // RailCom receiver circuit (LRC120 or similar)).
-    // We have no way of determining if the required external 
-    // hardware is present, so we return true for all command 
+    // We have no way of determining if the required external
+    // hardware is present, so we return true for all command
     // stations on which the Operations Mode Programmer is enabled.
     @Override
     synchronized public void message(DCCppReply l) {
- progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);     
+ progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
         if (progState == DCCppProgrammer.NOTPROGRAMMING) {
-            // We really don't care about any messages unless we send a 
+            // We really don't care about any messages unless we send a
             // request, so just ignore anything that comes in
             return;
         } else if (progState == DCCppProgrammer.REQUESTSENT) {
-     
+
             if (l.isProgramReply()) {
-                // Before we set the programmer state to not programming, 
-                // delay for a short time to give the decoder a chance to 
+                // Before we set the programmer state to not programming,
+                // delay for a short time to give the decoder a chance to
                 // process the request.
                 try {
                     this.wait(250);

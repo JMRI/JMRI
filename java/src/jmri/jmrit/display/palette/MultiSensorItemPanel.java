@@ -406,7 +406,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 }
                 return  sb.toString();
             }
-                
+
             return null;
         }
     }

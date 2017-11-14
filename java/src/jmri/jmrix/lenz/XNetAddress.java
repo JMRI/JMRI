@@ -60,7 +60,7 @@ public class XNetAddress {
     public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }

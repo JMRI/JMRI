@@ -119,7 +119,7 @@ public class GridLayout2 extends GridLayout {
             }
             int hgap = getHgap();
             int vgap = getVgap();
-            // scaling factors      
+            // scaling factors
             Dimension pd = preferredLayoutSize(parent);
             double sw = (1.0 * parent.getWidth()) / pd.width;
             double sh = (1.0 * parent.getHeight()) / pd.height;

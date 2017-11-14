@@ -54,7 +54,7 @@ public class Engine implements ReadingListener {
     public double getVSound() {
         return vsound;
     }
-    private double vsound = 0.013544;  // 0.013544 inches/usec, .000345 m/usec, 
+    private double vsound = 0.013544;  // 0.013544 inches/usec, .000345 m/usec,
     private int offset = 0;
 
     public void setOffset(int offset) {
@@ -153,7 +153,7 @@ public class Engine implements ReadingListener {
         log.debug("po false " + r.getId());
         pollOutstanding = false;
 
-        // make a list of receiver positions to provide 
+        // make a list of receiver positions to provide
         // to the new Calculator.  Missing/unconfigured receivers
         // are null.
         Point3d[] list = new Point3d[receivers.length];
@@ -193,7 +193,7 @@ public class Engine implements ReadingListener {
         Distributor.instance().submitMeasurement(m);
     }
 
-    // Store the lastMeasurement 
+    // Store the lastMeasurement
     void saveLastMeasurement(String id, Measurement m) {
         for (int i = 0; i < getNumTransmitters(); i++) {
             if (getTransmitter(i).getId().equals(id) && getTransmitter(i).isPolled()) {
@@ -351,7 +351,7 @@ public class Engine implements ReadingListener {
         if (file.exists()) {
             PollingFile pf = new PollingFile();
             pf.loadFile(file);
-            // first make sure transmitters defined      
+            // first make sure transmitters defined
             pf.getTransmitters(this);
             // and possibly start polling
             pf.getPollValues();

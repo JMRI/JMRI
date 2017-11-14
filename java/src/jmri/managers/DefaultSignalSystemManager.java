@@ -190,7 +190,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         // set user name from system name element
         s.setUserName(root.getChild("name").getText());
 
-        // find all aspects, include them by name, 
+        // find all aspects, include them by name,
         // add all other sub-elements as key/value pairs
         for (int i = 0; i < l.size(); i++) {
             String name = l.get(i).getChild("name").getText();
@@ -219,10 +219,10 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                 try {
                     Class<?> cl;
                     Constructor<?> ctor;
-                    
+
                     // create key string
                     String key = e.getChild("key").getText();
-                    
+
                     // check for non-String key.  Warn&proceed if found.
                     // Pre-JMRI 4.3, keys in NamedBean parameters could be Objects
                     // constructed from Strings, similar to the value code below.
@@ -231,11 +231,11 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                         || e.getChild("key").getAttributeValue("class").equals("")
                         || e.getChild("key").getAttributeValue("class").equals("java.lang.String")
                         )) {
-                        
-                        log.warn("SignalSystem {} property key of invalid non-String type {} not supported", 
+
+                        log.warn("SignalSystem {} property key of invalid non-String type {} not supported",
                             s.getSystemName(), e.getChild("key").getAttributeValue("class"));
                     }
-                    
+
                     // create value object
                     Object value = null;
                     if (e.getChild("value") != null) {
@@ -246,7 +246,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
 
                     // store
                     s.setProperty(key, value);
-                } catch (ClassNotFoundException 
+                } catch (ClassNotFoundException
                             | NoSuchMethodException | InstantiationException
                             | IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
                     log.error("Error loading properties", ex);

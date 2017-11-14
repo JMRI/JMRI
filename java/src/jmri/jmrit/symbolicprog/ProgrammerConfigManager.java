@@ -41,19 +41,19 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
                 this.setDefaultFile(preferences.get(DEFAULT_FILE, this.getDefaultFile()));
                 ProgDefault.setDefaultProgFile(this.getDefaultFile());
             }
-            
+
             this.setShowEmptyPanes(preferences.getBoolean(SHOW_EMPTY_PANES, this.isShowEmptyPanes()));
             PaneProgFrame.setShowEmptyPanes(this.isShowEmptyPanes());
-            
+
             this.setShowCvNumbers(preferences.getBoolean(SHOW_CV_NUMBERS, this.isShowCvNumbers()));
             PaneProgFrame.setShowCvNumbers(this.isShowCvNumbers());
-            
+
             this.setCanCacheDefault(preferences.getBoolean(CAN_CACHE_DEFAULT, this.isCanCacheDefault()));
             PaneProgFrame.setCanCacheDefault(this.isCanCacheDefault());
-            
+
             this.setDoConfirmRead(preferences.getBoolean(DO_CONFIRM_READ, this.isDoConfirmRead()));
             PaneProgFrame.setDoConfirmRead(this.isDoConfirmRead());
-            
+
             this.setInitialized(profile, true);
         }
     }

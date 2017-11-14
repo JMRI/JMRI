@@ -41,7 +41,7 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
 
         ostream.flush();
         JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
-        
+
 		// test the result of sending
 
 		Assert.assertEquals("total length ", 4, tostream.available());

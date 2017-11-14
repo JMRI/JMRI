@@ -19,14 +19,14 @@ public class SerialPacketGenActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction("CMRI test Action",new CMRISystemConnectionMemo()); 
+        SerialPacketGenAction action = new SerialPacketGenAction("CMRI test Action",new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction(new CMRISystemConnectionMemo()); 
+        SerialPacketGenAction action = new SerialPacketGenAction(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

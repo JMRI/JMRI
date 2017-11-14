@@ -36,7 +36,7 @@ public class CMRISystemConnectionMemoTest {
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B1",'S'));
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B001",'S'));
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B1024",'S'));
-          
+
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B1",'S'));
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B001",'S'));
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B1024",'S'));
@@ -71,7 +71,7 @@ public class CMRISystemConnectionMemoTest {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
-   
+
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();

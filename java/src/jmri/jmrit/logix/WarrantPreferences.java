@@ -666,7 +666,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public float getThrottleIncrement() {
         return _throttleIncr;
     }
-    
+
     /**
      * Set the throttle increment.
      *

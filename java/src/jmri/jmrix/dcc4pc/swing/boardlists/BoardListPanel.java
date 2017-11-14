@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Frame for Signal Mast Add / Edit Panel
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * 
+ *
  */
 public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {
 
@@ -67,7 +67,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>(_BoardModel);
         sorter.setComparator(ReaderBoardModel.ADDRESS_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, ReaderBoardModel.ADDRESS_COLUMN, SortOrder.ASCENDING);
-        
+
         boardTable.setRowSelectionAllowed(false);
         boardTable.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 120));
         _BoardModel.configureTable(boardTable);
@@ -215,7 +215,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         protected void configEditColumn(JTable table) {
             // have the delete column hold a button
             /*AbstractTableAction.rb.getString("EditDelete")*/
-            /*setColumnToHoldButton(table, DESCRIPTION_COLUMN, 
+            /*setColumnToHoldButton(table, DESCRIPTION_COLUMN,
              new JButton(rb.getString("ButtonEdit")));*/
             setColumnToHoldButton(table, EDIT_COLUMN,
                     new JButton(rb.getString("ButtonEdit")));
@@ -328,7 +328,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
              senMan.setEnabled(_boardListCount.get(r));
              else
              senMan.setDisabled(_boardListCount.get(r));
-                
+
              }*/
         }
     }

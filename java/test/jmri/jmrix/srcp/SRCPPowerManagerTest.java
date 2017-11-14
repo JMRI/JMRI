@@ -17,7 +17,7 @@ import org.junit.Test;
 public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
     private SRCPTrafficControlScaffold stc = null;
-  
+
     // service routines to simulate recieving on, off from interface
     @Override
     protected void hearOn() {
@@ -71,7 +71,7 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     public void testStateOff(){
     }
 
-    @Test 
+    @Test
     public void testDefaultCtor() {
         Assert.assertNotNull(new SRCPPowerManager());
     }

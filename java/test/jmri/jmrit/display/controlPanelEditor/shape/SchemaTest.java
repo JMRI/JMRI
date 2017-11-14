@@ -26,7 +26,7 @@ public class SchemaTest extends SchemaTestBase {
         super(file, pass);
     }
     public void foo() {
-        
+
     }
 }
 /*

@@ -183,7 +183,7 @@ public class SprogVersionQuery implements SprogListener {
                                 }
                                 v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
                                 break;
-                        }                
+                        }
                     } else if (splits[0].contains("SPROG")) {
                         log.debug("Found a SPROG " + splits[index]);
                         switch (splits[index]) {
@@ -300,7 +300,7 @@ public class SprogVersionQuery implements SprogListener {
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts.
-     * 
+     *
      * @param delay timer delay
      */
     protected void restartTimer(int delay) {

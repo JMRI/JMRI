@@ -123,7 +123,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         // wait for done
         final String name =  w.getDisplayName();
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));}, "warrant not done");
-         
+
 //        JUnitUtil.waitFor(() -> {
 //            return (warrant.getThrottle() == null);
  //       }, "Wait for run to end");

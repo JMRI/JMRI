@@ -26,7 +26,7 @@ public class SpeedoTrafficControllerTest {
     public void setUp() {
         JUnitUtil.setUp();
     }
-   
+
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

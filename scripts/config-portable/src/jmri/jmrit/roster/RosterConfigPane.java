@@ -18,9 +18,9 @@ public class RosterConfigPane extends JPanel {
 
     JLabel filename;
     JTextField owner = new JTextField(20);
-    
+
     public RosterConfigPane() {
-        
+
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

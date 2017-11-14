@@ -40,7 +40,7 @@ public class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
 
     // required for access outside of package.
     public XNetReply getRcvdRply() {
-       return rcvdRply; 
+       return rcvdRply;
     }
 
     public void setRcvdRply(XNetReply r){

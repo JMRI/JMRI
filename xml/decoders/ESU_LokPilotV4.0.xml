@@ -28,13 +28,13 @@
     <version author="Dave Heap" version="2" lastUpdated="20130105"/>
     <!-- ver3 fixed range and default values CVs 5 and 6 -->
     <version author="Dave Heap" version="3" lastUpdated="20130127"/>
-    <!-- ver4 created new xi:include /xml/decoders/esu/v4standardCVs.xml 
-    moved all non-indexed CVs to v4standardCVs.xml 
-    created new xi:include /xml/decoders/esu/v4cv21.22.xml 
-    created new pane xi:include /xml/decoders/esu/v4extraPane.xml 
-    added new items to /xml/programmers/parts/AnalogControlsPane.xml 
-    corrected minor problem in /xml/programmers/parts/ConsistPane.xml 
-    moved many items to more appropriate panes 
+    <!-- ver4 created new xi:include /xml/decoders/esu/v4standardCVs.xml
+    moved all non-indexed CVs to v4standardCVs.xml
+    created new xi:include /xml/decoders/esu/v4cv21.22.xml
+    created new pane xi:include /xml/decoders/esu/v4extraPane.xml
+    added new items to /xml/programmers/parts/AnalogControlsPane.xml
+    corrected minor problem in /xml/programmers/parts/ConsistPane.xml
+    moved many items to more appropriate panes
     updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
     <version author="Dave Heap" version="4" lastUpdated="20130429"/>
     <!-- ver5 indexed CV fixes -->

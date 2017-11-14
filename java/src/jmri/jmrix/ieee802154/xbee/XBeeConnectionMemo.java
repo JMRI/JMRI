@@ -98,7 +98,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         jmri.InstanceManager.setLightManager(getLightManager());
         setTurnoutManager(new XBeeTurnoutManager(cont, getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-        
+
     }
 
     /*

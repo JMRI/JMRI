@@ -17,10 +17,10 @@ public class MarklinComponentFactoryTest {
 
 
     private jmri.jmrix.marklin.MarklinSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MarklinComponentFactory action = new MarklinComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

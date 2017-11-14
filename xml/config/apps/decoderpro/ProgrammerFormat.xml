@@ -13,15 +13,15 @@
 <!-- for more details.                                                      -->
 <programmer-config
     xmlns:xi="http://www.w3.org/2001/XInclude" >
-    
+
     <version version="1" author="Bob Jacobsen" lastUpdated="20101001"/>
 
 <!-- Version 1 - made from version 20 of comprehensive.xml  -->
 
-    <programmer 
+    <programmer
             decoderFilePanes="yes" showEmptyPanes="default"
             showFnLanelPane="no" showRosterMediaPane="no">
-    
+
     <!-- all panes -->
     <xi:include href="http://jmri.org/xml/programmers/parts/BasicPane.xml"/>
     <xi:include href="http://jmri.org/xml/programmers/parts/MotorPane.xml"/>
@@ -43,6 +43,6 @@
 
 
 
- 	  	 
+ 	  	
 
- 	  	 
+ 	  	

@@ -46,7 +46,7 @@ import jmri.ProgrammingMode;
  * @since 4.1.1
  */
 public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmri.AddressedProgrammer  {
-    
+
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
@@ -56,7 +56,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
 
     @Override
     protected void timeout() {}
-    
+
     @Override
     @Deprecated
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
@@ -78,7 +78,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
     }
-    
+
     @Override
     public boolean getLongAddress() { return false;}
 

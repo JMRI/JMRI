@@ -51,7 +51,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
-        /* we need to save the programer and value so we can send messages 
+        /* we need to save the programer and value so we can send messages
          back to the screen when the programing screen when we receive
          something from the command station */
         progListener = p;
@@ -91,21 +91,21 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     /**
      * Can this ops-mode programmer read back values?
-     * Indirectly we can, though this requires an external display 
+     * Indirectly we can, though this requires an external display
      * (a Lenz LRC120) and enabling railcom.
      *
      * @return true to allow us to trigger an ops mode read
      */
     @Override
     public boolean getCanRead() {
-        // An operations mode read can be triggered on command 
+        // An operations mode read can be triggered on command
         // stations which support Operations Mode Writes (LZ100,
         // LZV100,MultiMouse).  Whether or not the operation produces
-        // a result depends on additional external hardware (a booster 
-        // with an enabled  RailCom cutout (LV102 or similar) and a 
+        // a result depends on additional external hardware (a booster
+        // with an enabled  RailCom cutout (LV102 or similar) and a
         // RailCom receiver circuit (LRC120 or similar)).
-        // We have no way of determining if the required external 
-        // hardware is present, so we return true for all command 
+        // We have no way of determining if the required external
+        // hardware is present, so we return true for all command
         // stations on which the Operations Mode Programmer is enabled.
 
         // yes, we just call the superclass method.  Leave this in place
@@ -117,13 +117,13 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     @Override
     synchronized public void message(XNetReply l) {
         if (progState == XNetProgrammer.NOTPROGRAMMING) {
-            // We really don't care about any messages unless we send a 
+            // We really don't care about any messages unless we send a
             // request, so just ignore anything that comes in
             return;
         } else if (progState == XNetProgrammer.REQUESTSENT) {
             if (l.isOkMessage()) {
-                // Before we set the programmer state to not programming, 
-                // delay for a short time to give the decoder a chance to 
+                // Before we set the programmer state to not programming,
+                // delay for a short time to give the decoder a chance to
                 // process the request.
                 new jmri.util.WaitHandler(this,250);
                 progState = XNetProgrammer.NOTPROGRAMMING;
@@ -132,7 +132,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
             } else {
                 /* this is an error */
                 if (l.isRetransmittableErrorMsg()) {
-                    return;  // just ignore this, since we are retransmitting 
+                    return;  // just ignore this, since we are retransmitting
                     // the message.
                 } else if (l.getElement(0) == XNetConstants.CS_INFO
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {

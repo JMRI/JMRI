@@ -182,7 +182,7 @@ public class WebServerPreferencesPanel extends JPanel implements PreferencesPane
     public int getSortOrder() {
         return 1100;
     }
-    
+
     private boolean isStartupAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
                 .anyMatch((model) -> (WebServerAction.class.getName().equals(model.getClassName())));

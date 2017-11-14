@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
  * Lightweight class to denote that a system is active
  * and provide general information
  * <p>
- * Objects of specific subtypes are registered in the 
+ * Objects of specific subtypes are registered in the
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2015
- * 
+ *
  */
 
 public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -79,7 +79,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
        setTurnoutManager(new RaspberryPiTurnoutManager(getSystemPrefix()));
        setSensorManager(new RaspberryPiSensorManager(getSystemPrefix()));
     }
-    
+
    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled())

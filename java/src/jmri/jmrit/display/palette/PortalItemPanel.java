@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  * ItemPanel for for PortalIcons. Since this class has been introduced after
  * users may have customized the defaultPanelIcons, the default family,
  * "Standard" is added by overriding the initIconFamiliesPanel method.
- * 
+ *
 * @author Pete Cressman Copyright (c) 2013
  */
 public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {

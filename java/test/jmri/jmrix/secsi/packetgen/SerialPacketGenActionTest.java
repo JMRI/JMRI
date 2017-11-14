@@ -25,7 +25,7 @@ public class SerialPacketGenActionTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction(); 
+        SerialPacketGenAction action = new SerialPacketGenAction();
         Assert.assertNotNull("exists", action);
     }
 

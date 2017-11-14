@@ -42,22 +42,22 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
         super();
         init(flavor);
     }
-    
+
     public DragJLabel(DataFlavor flavor, NamedIcon icon) {
         super(icon);
         init(flavor);
     }
-    
+
     public DragJLabel(DataFlavor flavor, String text) {
         super(text);
         init(flavor);
     }
-    
+
     private void init(DataFlavor flavor) {
         DragSource dragSource = DragSource.getDefaultDragSource();
         dragSource.createDefaultDragGestureRecognizer(this,
                 DnDConstants.ACTION_COPY, this);
-        _dataFlavor = flavor;        
+        _dataFlavor = flavor;
     }
 
     /**
@@ -78,7 +78,7 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
             log.debug("DragJLabel.dragGestureRecognized ");
         }
         if (okToDrag()) {
-            e.startDrag(DragSource.DefaultCopyDrop, this, this);            
+            e.startDrag(DragSource.DefaultCopyDrop, this, this);
         }
     }
 

@@ -240,7 +240,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         }
 
         // don't do the match if this step isn't checked,
-        // which is necessary to keep from an infinite 
+        // which is necessary to keep from an infinite
         // recursion
         if (!stepCheckBoxes.get(modifiedStepIndex).isSelected()) {
             return;
@@ -343,7 +343,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         return buf.toString();
     }
 
-    /** 
+    /**
      * Set value from a String value.
      * <p>
      * Requires the format written by getValueString, not implemented yet

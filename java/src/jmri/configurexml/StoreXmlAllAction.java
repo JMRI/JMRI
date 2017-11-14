@@ -35,7 +35,7 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
         if (file == null) {
             return;
         }
-        
+
         // and finally store
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm == null) {

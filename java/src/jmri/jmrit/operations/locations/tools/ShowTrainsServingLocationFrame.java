@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Frame to show which trains can service this location
  *
  * @author Dan Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class ShowTrainsServingLocationFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -114,7 +114,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         } else {
             setTitle(MessageFormat.format(Bundle.getMessage("TitleShowTrains"), new Object[]{_location.getName()}));
         }
-        
+
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowTrainsServicingThisLocation", true); // NOI18N
 

@@ -24,7 +24,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

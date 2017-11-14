@@ -100,7 +100,7 @@
       <speed>Stop</speed>
       <speed2>Stop</speed2>
     </aspect>
-    
+
   </aspects>
   <appearancefiles>
     <appearancefile href="appearance-one-searchlight.xml" />

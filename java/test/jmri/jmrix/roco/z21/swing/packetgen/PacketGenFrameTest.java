@@ -18,10 +18,10 @@ import org.junit.Test;
  **/
 
 public class PacketGenFrameTest {
-        
-   // not needed now, but once we test connect, it will be. 
+
+   // not needed now, but once we test connect, it will be.
    private Z21SystemConnectionMemo memo = null;
-   private Z21InterfaceScaffold tc = null; 
+   private Z21InterfaceScaffold tc = null;
 
    @Test
    public void MemoConstructorTest(){

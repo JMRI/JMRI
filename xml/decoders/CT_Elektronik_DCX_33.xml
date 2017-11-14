@@ -25,14 +25,14 @@
         <output name="2" label="Yellow" maxcurrent="0.8A"/>
         <output name="3" label="Green" maxcurrent="0.8A"/>
         <output name="4" label="Violet" maxcurrent="0.8A"/>
-        <size length="13" width="9" height="2" units="mm"/>		
-      </model>	
+        <size length="13" width="9" height="2" units="mm"/>
+      </model>
       <model model="DCX33D" numOuts="4" numFns="10" lowVersionID="40" maxMotorCurrent="0.8A" maxTotalCurrent="1.6A" productID="DCX33">
         <output name="1" label="White" maxcurrent="0.8A"/>
         <output name="2" label="Yellow" maxcurrent="0.8A"/>
         <output name="3" label="Green" maxcurrent="0.8A"/>
         <output name="4" label="Violet" maxcurrent="0.8A"/>
-        <size length="10.4" width="6.7" height="1.4" units="mm"/>		
+        <size length="10.4" width="6.7" height="1.4" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="no" register="no" ops="yes"/>
@@ -53,7 +53,7 @@
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>	  
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>	
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="30" mask="XXXXXXVX" item="Function Output short circuit" readOnly="yes" default="0">
@@ -111,7 +111,7 @@
 		    <label xml:lang="it">Intensità impulso di ACK</label>
 		    <tooltip>might be modified if the loco draws too less or too much current on the programming track.</tooltip>
 		    <tooltip xml:lang="it">Potrebbe essere necessario modificarlo se la loco assorbe troppa corrente sul Binario di programmazione</tooltip>
-		    <tooltip xml:lang="de">verbessert die Programmierbarkeit, 128 = ca. 50% des max. Quittierungsstromes (Motor abhängig), 150 = allg. gut verträglich</tooltip>		
+		    <tooltip xml:lang="de">verbessert die Programmierbarkeit, 128 = ca. 50% des max. Quittierungsstromes (Motor abhängig), 150 = allg. gut verträglich</tooltip>
       </variable>
       <variable CV="114" item="PWM Light Effects Outputs" default="0" exclude="DCX32">
         <decVal min="0" max="100"/>
@@ -139,7 +139,7 @@
 		    <label xml:lang="de">Dimmwert für Abblendfunktion</label>
         <tooltip>PWM Dimming 0 - 100%</tooltip>
         <tooltip xml:lang="it">Valori tra 0 - 100%</tooltip>
-        <tooltip xml:lang="de">Dimmwert für Abblenden, 50=50% der vollen Helligkeit, 100=kein Abblenden</tooltip>			
+        <tooltip xml:lang="de">Dimmwert für Abblenden, 50=50% der vollen Helligkeit, 100=kein Abblenden</tooltip>
       </variable>
       <variable CV="120" item="Time Effect ON" default="0" exclude="DCX32">
         <decVal/>
@@ -149,12 +149,12 @@
         <tooltip>defines how long the effect must last</tooltip>
         <tooltip xml:lang="de">definiert wie lange ein Effekt dauern soll</tooltip>
         <tooltip xml:lang="it">Durata dell'effetto</tooltip>
-      </variable>	  
+      </variable>	
       <variable CV="139" item="Direct Cut Off Function Outputs" default="35">
         <decVal/>
         <label>Direct Cut Off Function Outputs</label>
         <label xml:lang="it">Spegnimento uscita per sovraccarico</label>
-		    <label xml:lang="de">sofortige Abschaltung Funktionen</label>			
+		    <label xml:lang="de">sofortige Abschaltung Funktionen</label>
 		    <tooltip>Immediate shutdown in case of overload of the function outputs</tooltip>
         <tooltip xml:lang="de">sofortige Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>
         <tooltip xml:lang="it">Spegnimento immediato in caso di sovraccarico sull'uscita</tooltip>
@@ -163,10 +163,10 @@
         <decVal/>
         <label>Fast Cut Off Function Outputs</label>
         <label xml:lang="it">Spegnimento uscita per sovraccarico</label>
-		    <label xml:lang="de">rasche Abschaltung Funktionen</label>		
+		    <label xml:lang="de">rasche Abschaltung Funktionen</label>
 		    <tooltip>Rapid shutdown in case of overload of the function outputs</tooltip>
 		    <tooltip xml:lang="it">Spegnimento immediato in caso di sovraccarico sull'uscita</tooltip>
-        <tooltip xml:lang="de">rasche Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>			
+        <tooltip xml:lang="de">rasche Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>
         <comment>Fast Cut off Functions</comment>
         <comment xml:lang="it">Spegnimento Veloce Uscite</comment>
       </variable>
@@ -174,7 +174,7 @@
         <decVal/>
         <label>Slow Cut Off Function Outputs</label>
         <label xml:lang="it">Spegnimento Lento Uscite</label>
-		    <label xml:lang="de">langsame Abschaltung Funktionen</label>		
+		    <label xml:lang="de">langsame Abschaltung Funktionen</label>
 		    <tooltip>Slow shutdown in case of overload of the function outputs</tooltip>
         <tooltip xml:lang="de">langsame Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>
         <tooltip xml:lang="it">Spegnimento lento in caso di sovraccarico sull'uscita</tooltip>
@@ -187,7 +187,7 @@
         <decVal/>
         <label>Direct Cut Off Motor</label>
         <label xml:lang="it">Spegnimento Motore</label>
-		    <label xml:lang="de">sofortige Abschaltung Motor</label>		
+		    <label xml:lang="de">sofortige Abschaltung Motor</label>
 		    <tooltip>Immediate shutdown in case of overload of the motor</tooltip>
 		    <tooltip xml:lang="it">Spegnimento immediato in caso di sovraccarico sull'uscita motore</tooltip>
         <tooltip xml:lang="de">sofortige Abschaltung bei Überlastung (Motor)</tooltip>
@@ -209,7 +209,7 @@
         <decVal/>
         <label>Slow Cut Off Motor</label>
         <label xml:lang="it">Spegnimento Lento Motore</label>
-		    <label xml:lang="de">langsame Abschaltung Motor</label>		
+		    <label xml:lang="de">langsame Abschaltung Motor</label>
 		    <tooltip>Slow shutdown in case of overload of the motor</tooltip>
         <tooltip xml:lang="de">langsame Abschaltung bei Überlastung (Motor)</tooltip>
         <tooltip xml:lang="it">Spegnimento Lento in caso di sovraccarico sull'uscita motore</tooltip>
@@ -242,7 +242,7 @@
           </enumChoice>
           <enumChoice choice="F7" value="128">
             <choice>F7</choice>
-          </enumChoice>	  
+          </enumChoice>	
         </enumVal>
         <label>Loco travel FWD, rear coupler</label>
         <label xml:lang="it">Loco in avanti, gancio posteriore</label>
@@ -250,7 +250,7 @@
 		    <tooltip>select function for uncoupler action</tooltip>
         <tooltip xml:lang="de">Abkuppeln vorwärts: Auswahl der zu verwendenden Funktion</tooltip>
         <tooltip xml:lang="it">Selezione funzione per sgancio</tooltip>
-      </variable> 
+      </variable>
       <variable CV="153" item="Loco travel BWD, front coupler" default="8" exclude="DCX32">
         <enumVal>
           <enumChoice choice="None">
@@ -275,7 +275,7 @@
           </enumChoice>
           <enumChoice choice="F7" value="128">
             <choice>F7</choice>
-          </enumChoice>		  
+          </enumChoice>		
         </enumVal>
         <label>Loco travel BWD, front coupler</label>
         <label xml:lang="it">Loco in retro, gancio anteriore</label>
@@ -592,14 +592,14 @@
     </column>
     <name>Output Dimming and Light Effects</name>
     <name xml:lang="it">Smorzamento ed Effetti Luci</name>
-    <name xml:lang="de">Dimmung und Effekte für Lichte</name>	
+    <name xml:lang="de">Dimmung und Effekte für Lichte</name>
   </pane>
   <pane>
     <column>
       <label>
         <text>Short Circuit Protection Thresholds</text>
         <text xml:lang="it">Soglia protezione da Corto circuito</text>
-        <text xml:lang="de">Kurzschluss-Schwellen</text>		
+        <text xml:lang="de">Kurzschluss-Schwellen</text>
       </label>
       <separator/>
       <label>
@@ -622,10 +622,10 @@
         <text xml:lang="it">Protezione da Corto circuito</text>
         <text xml:lang="de">Kurzschlussanalyse :</text>
       </label>
-      <separator/>	  
+      <separator/>	
       <display item="Motor short circuit" format="checkbox"/>
       <display item="Function Output short circuit" format="checkbox"/>
-    </column>	
+    </column>
     <name>Short-Circuit</name>
     <name xml:lang="it">Corto circuito</name>
     <name xml:lang="de">Kurzschluss</name>

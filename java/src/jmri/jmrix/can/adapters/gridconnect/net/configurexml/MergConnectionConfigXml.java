@@ -15,7 +15,7 @@ import jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * 
+ *
  */
 public class MergConnectionConfigXml extends ConnectionConfigXml {
 

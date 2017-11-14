@@ -207,7 +207,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
 
     public void refreshItems() {
         /*ask to be notified about newly created sensors on the layout.
-         Doing the request to view the list, will also kick off a request to 
+         Doing the request to view the list, will also kick off a request to
          view each individual sensor*/
         EcosMessage m = new EcosMessage("queryObjects(26, ports)");
         tc.sendEcosMessage(m, this);

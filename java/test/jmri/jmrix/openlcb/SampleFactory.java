@@ -7,7 +7,7 @@ import org.jdom2.Element;
  * Static methods for creating sample XML trees.
  *
  * @author Bob Jacobsen Copyright 2011
- * 
+ *
  */
 public class SampleFactory {
 

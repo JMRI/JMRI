@@ -77,7 +77,7 @@
         </enumVal>
         <label>Decoder Lock Type</label>
         <label xml:lang="it">Tipo Blocco decoder</label>
-      </variable>	  
+      </variable>	
       <variable CV="49" mask="XXXXXVVV" item="Effect Generated">
         <enumVal>
           <enumChoice choice="Normal on/off">

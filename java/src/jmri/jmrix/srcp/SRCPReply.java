@@ -101,7 +101,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
     public boolean isUnsolicited() {
         String s = toString();
         try {
-            // Split in 7 is enough for initial handshake 
+            // Split in 7 is enough for initial handshake
             String[] part = s.split("\\s", 7);
             // Test for initial handshake message with key "SRCP".
             if (part[2].equals("SRCP")) {

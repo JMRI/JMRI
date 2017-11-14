@@ -38,7 +38,7 @@ public class AutomationsTableFrame extends OperationsFrame {
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("AddAutomation"));
-    
+
     public AutomationsTableFrame() {
         super(Bundle.getMessage("TitleAutomationsTableFrame"));
         // general GUI config
@@ -114,7 +114,7 @@ public class AutomationsTableFrame extends OperationsFrame {
             new AutomationTableFrame(null);
         }
     }
-    
+
     @Override
     public void dispose() {
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {

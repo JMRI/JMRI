@@ -390,7 +390,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.setUp();
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(tc);
-        memo.setThrottleManager(new Z21XNetThrottleManager(memo)); 
+        memo.setThrottleManager(new Z21XNetThrottleManager(memo));
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
         instance = new Z21XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
     }

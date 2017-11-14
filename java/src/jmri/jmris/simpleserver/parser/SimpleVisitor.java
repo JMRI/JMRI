@@ -5,7 +5,7 @@ import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/* This class provides an interface between the JavaTree/JavaCC 
+/* This class provides an interface between the JavaTree/JavaCC
  * parser for the SimpleServer protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2016
  */
@@ -50,7 +50,7 @@ public class SimpleVisitor implements JmriServerParserVisitor {
             if (((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("OFF"))
                ((jmri.jmris.simpleserver.SimplePowerServer)data).setOffStatus();
         }
-            
+
         return data;
     }
     @Override

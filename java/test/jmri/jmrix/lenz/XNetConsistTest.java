@@ -28,7 +28,7 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     @Override
     @Test(expected=java.lang.NullPointerException.class)
     public void checkDisposeMethod(){
-        // verify that c has been added to the traffic controller's 
+        // verify that c has been added to the traffic controller's
         // list of listeners.
         int listeners = tc.numListeners();
 
@@ -43,7 +43,7 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
         Assert.assertTrue("Advanced Consist Contains",c.contains(B));
 
         c.dispose();
-        Assert.assertEquals("dispose check",listeners -1, tc.numListeners()); 
+        Assert.assertEquals("dispose check",listeners -1, tc.numListeners());
 
         // after dispose, this should fail
         Assert.assertTrue("Advanced Consist Contains",c.contains(A));
@@ -59,25 +59,25 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
 
     @Test public void checkSizeLimitCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertEquals("CS Consist Limit",2,c.sizeLimit());   
-    } 
+        Assert.assertEquals("CS Consist Limit",2,c.sizeLimit());
+    }
 
     @Test public void checkContainsCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
         // nothing added, should be false for all.
-        Assert.assertFalse("CS Consist Contains",c.contains(A));   
-        Assert.assertFalse("CS Consist Contains",c.contains(B));   
+        Assert.assertFalse("CS Consist Contains",c.contains(A));
+        Assert.assertFalse("CS Consist Contains",c.contains(B));
         // add just A
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
-        Assert.assertTrue("CS Consist Contains",c.contains(A));   
-        Assert.assertFalse("CS Consist Contains",c.contains(B));   
+        Assert.assertTrue("CS Consist Contains",c.contains(A));
+        Assert.assertFalse("CS Consist Contains",c.contains(B));
         // then add B
         c.restore(B,false);
-        Assert.assertTrue("CS Consist Contains",c.contains(A));   
-        Assert.assertTrue("CS Consist Contains",c.contains(B));   
+        Assert.assertTrue("CS Consist Contains",c.contains(A));
+        Assert.assertTrue("CS Consist Contains",c.contains(B));
     }
 
     @Test public void checkGetLocoDirectionCS(){
@@ -87,8 +87,8 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // revese direction.
-        Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));   
-        Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));   
+        Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));
+        Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));
     }
 
     // The minimal setup for log4J
@@ -100,7 +100,7 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
         memo = new XNetSystemConnectionMemo(tc);
         c = new XNetConsist(5, tc, memo);
     }
-   
+
     @After
     @Override
     public void tearDown() {

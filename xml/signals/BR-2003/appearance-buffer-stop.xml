@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
 
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,15 +23,15 @@
         <date>2010-01-18</date>
         <authorinitials>KD</authorinitials>
         <revremark>Initial Version</revremark>
-    </revision>    
+    </revision>
   </revhistory>
-  
+
   <aspecttable>BR</aspecttable>
 
   <name>Buffer Stop</name>
-  
+
   <description>This signalmast is used for assigning to ends of sidings and where areas of track go out of control of the Signalling System.</description>
-  
+
   <appearances>
     <appearance>
       <aspectname>Danger</aspectname>
@@ -55,4 +55,4 @@
       <aspect>Danger</aspect>
     </dark>
   </specificappearances>
-</appearancetable>  
+</appearancetable>

@@ -76,7 +76,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     }
 
     /*
-     * Initialize an SRCP server turnout. Constructs the system name 
+     * Initialize an SRCP server turnout. Constructs the system name
      * string from the provided parameters.
      */
     public void initTurnout(int bus, int address, String protocol) throws jmri.JmriException, java.io.IOException {

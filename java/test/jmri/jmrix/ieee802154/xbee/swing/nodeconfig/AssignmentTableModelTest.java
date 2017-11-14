@@ -18,7 +18,7 @@ public class AssignmentTableModelTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AssignmentTableModel action = new AssignmentTableModel();
         Assert.assertNotNull("exists", action);
     }

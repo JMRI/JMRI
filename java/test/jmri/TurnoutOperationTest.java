@@ -39,17 +39,17 @@ public class TurnoutOperationTest extends TestCase {
             @Override
             public TurnoutOperator getOperator(AbstractTurnout t) { return null; }
         };
-        
+
         Assert.assertTrue("Identity", to1.equals(to1));
-        
+
         Assert.assertTrue("Equal name", to2.equals(to2a));
         Assert.assertFalse("Unequal name", to1.equals(to2));
-        
+
         Assert.assertFalse("Wrong type", to1.equals("foo"));
         Assert.assertFalse("on null", to1.equals(null));
-        
+
     }
-    
+
     // from here down is testing infrastructure
     public TurnoutOperationTest(String s) {
         super(s);
@@ -70,17 +70,17 @@ public class TurnoutOperationTest extends TestCase {
     // The minimal setup for log4J
 
     @Override
-    protected void setUp() throws Exception { 
-        apps.tests.Log4JFixture.setUp(); 
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
     @Override
-    protected void tearDown() throws Exception { 
+    protected void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
+        apps.tests.Log4JFixture.tearDown();
         JUnitUtil.resetTurnoutOperationManager();
         JUnitUtil.resetInstanceManager();
     }

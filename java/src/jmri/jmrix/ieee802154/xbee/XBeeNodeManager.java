@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 
 /*
- * The Node Manager checks incoming messages for node discovery 
+ * The Node Manager checks incoming messages for node discovery
  * response packets.  If a node is discovered, it is added to the traffic
  * controller's node list.
  *
@@ -39,7 +39,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
           // set the discovery timeout
           // setting the timeout hangs the network on XBee Series 1
           xbeeNetwork.setDiscoveryTimeout(2000);
-          
+
           log.debug("setting discovery options");
           // set options
           // Append the device type identifier and the local device to the
@@ -64,7 +64,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
      * @return true if the network discovery process is running
      */
     public boolean isDiscoveryRunning(){
-       if(xbeeNetwork==null) { 
+       if(xbeeNetwork==null) {
           return false;
        }
        return xbeeNetwork.isDiscoveryRunning();
@@ -80,7 +80,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
     }
 
     // IDiscoveryListener interface methods
-    
+
     /*
      * Device discovered callback.
      */
@@ -130,7 +130,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
 
          // and remove this class from the list of discovery listeners.
 
-         // removing the listener here is causing a 
+         // removing the listener here is causing a
          // ConcurrentModificaitonException on an ArrayList in the library.
          // xbeeNetwork.removeDiscoveryListener(this);
        }

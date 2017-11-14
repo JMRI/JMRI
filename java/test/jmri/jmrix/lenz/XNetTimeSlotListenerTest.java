@@ -80,7 +80,7 @@ public class XNetTimeSlotListenerTest {
        tsl = new XNetTimeSlotListener(p);
 
     }
-  
+
     @After
     public void tearDown(){
        p=null;

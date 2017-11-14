@@ -214,7 +214,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         _defaultColor = _value.getBackground();
         super.setState(READ);
 
-        // note that we don't set this to COLOR_UNKNOWN!  Rather, 
+        // note that we don't set this to COLOR_UNKNOWN!  Rather,
         // we check the current value
         findValue();
 

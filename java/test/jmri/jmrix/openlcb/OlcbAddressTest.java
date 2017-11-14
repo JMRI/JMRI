@@ -28,7 +28,7 @@ public class OlcbAddressTest extends TestCase {
         assertTrue(!new OlcbAddress("- 001").check());
         assertTrue(!new OlcbAddress("ABC").check());
 
-        assertTrue(!new OlcbAddress("xABC").check());    // odd number of digits     
+        assertTrue(!new OlcbAddress("xABC").check());    // odd number of digits
         assertTrue(!new OlcbAddress("xprs0").check());
 
         assertTrue(!new OlcbAddress("+n1e").check());

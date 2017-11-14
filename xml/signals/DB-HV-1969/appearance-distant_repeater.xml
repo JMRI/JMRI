@@ -9,7 +9,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Joan</firstname><surname>Carrancà</surname></personname>
@@ -18,13 +18,13 @@
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Oscar</firstname><surname>Moutinho</surname></personname>
         <email>oscar.moutinho@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
-    
+
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
@@ -60,7 +60,7 @@
   The repeater signal is necessary if the block signal cannot be seen from a distance of 400 m.
   It has a white light (kennlicht) on the left side of the "usual" distant signal head.
   It differentiates from the normal and short breaking type because it doesn't have a Ne2 plate (see <a href="http://www.sh1.org/eisenbahn/snne.htm">sh1's supplemental signals page</a>).</description>
-  
+
   <appearances>
 
     <appearance>
@@ -98,4 +98,4 @@
     </held>
   </specificappearances><!-- End of Specific Appearances list -->
 
-</appearancetable>  
+</appearancetable>

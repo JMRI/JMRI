@@ -34,7 +34,7 @@ public class XBeeLightTest {
         XBeeLight s = new XBeeLight("ABCL123:4", "XBee Light Test", tc);
         Assert.assertNotNull("exists", s);
     }
- 
+
     @Test
     public void testCtorHexNodeAddress() {
         XBeeLight s = new XBeeLight("ABCLABCD:4", "XBee Light Test", tc);

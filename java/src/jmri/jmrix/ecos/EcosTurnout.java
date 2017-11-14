@@ -36,8 +36,8 @@ public class EcosTurnout extends AbstractTurnout
         super(prefix + "T" + number);
         _number = number;
         /*if (_number < NmraPacket.accIdLowLimit || _number > NmraPacket.accIdHighLimit) {
-            throw new IllegalArgumentException("Turnout value: " + _number 
-                    + " not in the range " + NmraPacket.accIdLowLimit + " to " 
+            throw new IllegalArgumentException("Turnout value: " + _number
+                    + " not in the range " + NmraPacket.accIdLowLimit + " to "
                     + NmraPacket.accIdHighLimit);
         }*/
         this.prefix = prefix;
@@ -46,7 +46,7 @@ public class EcosTurnout extends AbstractTurnout
         /* All messages from the ECoS regarding turnout status updates
          are initally handled by the TurnoutManager, this then forwards the message
          on to the correct Turnout */
-        
+
         // update feedback modes
         _validFeedbackTypes |= MONITORING | EXACT | INDIRECT;
         _activeFeedbackType = MONITORING;
@@ -84,8 +84,8 @@ public class EcosTurnout extends AbstractTurnout
     }
 
     static String[] modeNames = null;
-    static int[] modeValues = null;    
-    
+    static int[] modeValues = null;
+
     EcosTrafficController tc;
     EcosTurnoutManager tm;
     /*Extended is used to indicate that this Ecos accessory has a secondary address assigned to it.

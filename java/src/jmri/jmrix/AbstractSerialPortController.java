@@ -98,7 +98,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Set the control leads and flow control.
      * This handles any necessary ordering.
      * @param serialPort Port to be updated
-     * @param flow flow control mode from (@link purejavacomm.SerialPort} 
+     * @param flow flow control mode from (@link purejavacomm.SerialPort}
      * @param rts Set RTS active if true
      * @param dtr set DTR active if true
      */
@@ -111,18 +111,18 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             log.warn("Could not set flow control, ignoring");
         }
         if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts);  // not connected in some serial ports and adapters
-        serialPort.setDTR(dtr); 
+        serialPort.setDTR(dtr);
     }
 
-    /** 
+    /**
      * Sets the flow control, while also setting RTS and DTR to active.
      * @param serialPort Port to be updated
-     * @param flow flow control mode from (@link purejavacomm.SerialPort} 
+     * @param flow flow control mode from (@link purejavacomm.SerialPort}
      */
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow) {
         configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -209,7 +209,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -374,7 +374,7 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new TamsThrottleManager(memo));
         instance = new TamsThrottle(memo,new jmri.DccLocoAddress(1234,true));
     }

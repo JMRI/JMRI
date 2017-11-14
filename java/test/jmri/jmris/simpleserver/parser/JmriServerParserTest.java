@@ -63,7 +63,7 @@ public class JmriServerParserTest extends TestCase {
     }
 
    // test valid Turnout related commands
-   
+
     public void testTurnoutProduction() {
         boolean exceptionOccured = false;
         String code = "TURNOUT IT1 THROWN\n\r";
@@ -124,7 +124,7 @@ public class JmriServerParserTest extends TestCase {
         }
         assertFalse(exceptionOccured);
     }
- 
+
    public void testGetTurnoutCmdStatus() {
         boolean exceptionOccured = false;
         String code = "TURNOUT IT1\n\r";
@@ -150,7 +150,7 @@ public class JmriServerParserTest extends TestCase {
     }
 
    // test valid Light related commands
-   
+
     public void testLightProduction() {
         boolean exceptionOccured = false;
         String code = "LIGHT IL1 ON\n\r";
@@ -237,7 +237,7 @@ public class JmriServerParserTest extends TestCase {
     }
 
    // test valid Reporter related commands
-   
+
     public void testReporterProduction() {
         boolean exceptionOccured = false;
         String code = "REPORTER IR1\n\r";
@@ -288,7 +288,7 @@ public class JmriServerParserTest extends TestCase {
     }
 
    // test valid Sensor related commands
-   
+
     public void testSensorProduction() {
         boolean exceptionOccured = false;
         String code = "Sensor IS1\n\r";

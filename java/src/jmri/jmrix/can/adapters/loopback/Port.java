@@ -25,7 +25,7 @@ public class Port extends AbstractSerialPortController {
         // Register the CAN traffic controller being used for this connection
         this.getSystemConnectionMemo().setTrafficController(new LoopbackTrafficController());
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
 
         this.getSystemConnectionMemo().configureManagers();

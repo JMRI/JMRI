@@ -20,7 +20,7 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
 
     @Override
     protected int maxN() { return 1; }
-    
+
     @Override
     protected String getNameToTest1() {
         return "A";

@@ -64,7 +64,7 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @Test
     public void testCtor4() {
-        // original ctor from number only 
+        // original ctor from number only
         SE8cSignalHead s = new SE8cSignalHead(11);
 
         Assert.assertEquals("system name", "LH11", s.getSystemName());

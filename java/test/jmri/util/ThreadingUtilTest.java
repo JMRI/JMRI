@@ -13,31 +13,31 @@ import org.junit.Assert;
 public class ThreadingUtilTest extends TestCase {
 
     boolean done;
-    
+
     public void testToLayout() {
         done = false;
-        
-        ThreadingUtil.runOnLayout( ()-> { 
-            done = true; 
+
+        ThreadingUtil.runOnLayout( ()-> {
+            done = true;
         } );
-        
+
         Assert.assertTrue(done);
     }
 
     public void testThreadingNesting() {
         done = false;
-        
+
         new Thread(
             new Runnable() {
                 @Override
                 public void run() {
                     // now on another thread
                     // switch back to Layout thread
-                    ThreadingUtil.runOnLayout( ()-> { 
+                    ThreadingUtil.runOnLayout( ()-> {
                         // on layout thread, confirm
                         Assert.assertTrue("on Layout thread", ThreadingUtil.isLayoutThread());
                         // mark done so we know
-                        done = true; 
+                        done = true;
                     } );
                 }
             }
@@ -49,18 +49,18 @@ public class ThreadingUtilTest extends TestCase {
 
     public void testThreadingNestingToSwing() {
         done = false;
-        
+
         javax.swing.SwingUtilities.invokeLater(
             new Runnable() {
                 @Override
                 public void run() {
                     // now on Swing thread
                     // switch back to Layout thread
-                    ThreadingUtil.runOnLayout( ()-> { 
+                    ThreadingUtil.runOnLayout( ()-> {
                         // on layout thread, confirm
                         Assert.assertTrue("on Layout thread", ThreadingUtil.isLayoutThread());
                         // mark done so we known
-                        done = true; 
+                        done = true;
                     } );
                 }
             }
@@ -72,28 +72,28 @@ public class ThreadingUtilTest extends TestCase {
 
     public void testThreadingDelayGUI() {
         done = false;
-        
-        ThreadingUtil.runOnGUIDelayed( ()-> { 
-            done = true; 
+
+        ThreadingUtil.runOnGUIDelayed( ()-> {
+            done = true;
         }, 200 );
 
         // ensure not done now
         Assert.assertTrue(!done);
-        
+
         // wait for separate thread to do it's work before confirming test
         JUnitUtil.waitFor( ()->{ return done; }, "Delayed operation complete");
     }
 
     public void testThreadingDelayLayout() {
         done = false;
-        
-        ThreadingUtil.runOnLayoutDelayed( ()-> { 
-            done = true; 
+
+        ThreadingUtil.runOnLayoutDelayed( ()-> {
+            done = true;
         }, 200 );
 
         // ensure not done now
         Assert.assertTrue(!done);
-        
+
         // wait for separate thread to do it's work before confirming test
         JUnitUtil.waitFor( ()->{ return done; }, "Delayed oepration complete");
     }
@@ -102,7 +102,7 @@ public class ThreadingUtilTest extends TestCase {
      * Show how to query state of _current_ thread
      */
     public void testSelfState() {
-    
+
         // To run the tests, this thread has to be running, not waiting
         Assert.assertTrue(ThreadingUtil.canThreadRun(Thread.currentThread()));
         Assert.assertFalse(ThreadingUtil.isThreadWaiting(Thread.currentThread()));

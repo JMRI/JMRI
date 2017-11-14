@@ -27,7 +27,7 @@ import org.junit.BeforeClass;
                  features="java/acceptancetest/features",
                  tags = {"~@webtest"})
 public class RunCucumberTest {
-   
+
    @BeforeClass
    public static void beforeTests(){
       apps.tests.Log4JFixture.setUp();

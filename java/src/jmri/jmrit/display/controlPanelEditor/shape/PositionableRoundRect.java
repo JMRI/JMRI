@@ -61,7 +61,7 @@ public class PositionableRoundRect extends PositionableRectangle {
         });
         return true;
     }
-    
+
     private void makeEditFrame() {
         if (_editFrame == null) {
             _editFrame = new DrawRoundRect("editShape", "roundRect", this);

@@ -106,7 +106,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 //        jmri.util.JUnitAppender.assertWarnMessage("Deleting the serial node active in the polling loop");
 //        Assert.assertEquals("1st Node after del2", f, c.getSerialNode(0) );
 //        Assert.assertEquals("2nd Node after del2", d, c.getSerialNode(1) );
-//        Assert.assertEquals("no more Nodes after del2", null, c.getSerialNode(2) );        
+//        Assert.assertEquals("no more Nodes after del2", null, c.getSerialNode(2) );
 //    }
 /*     public void testSerialOutput() { */
     /*         SerialTrafficController c = new SerialTrafficController(); */

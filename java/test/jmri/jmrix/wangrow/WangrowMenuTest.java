@@ -12,13 +12,13 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WangrowMenuTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WangrowMenu t = new WangrowMenu(new NceSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }

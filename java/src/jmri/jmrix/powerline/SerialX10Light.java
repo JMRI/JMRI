@@ -185,7 +185,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
             log.debug("sendOnOff(" + newState + ") Current: " + mState);
         }
 
-        // figure out command 
+        // figure out command
         int function;
         double newDim;
         if (newState == ON) {

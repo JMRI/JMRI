@@ -17,11 +17,11 @@
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
         <email>dick@rr-cirkits.com</email>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -30,25 +30,25 @@
         <date>2009-12-21</date>
         <authorinitials>RGJ</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2009-12-27</date>
         <authorinitials>DB, RGJ</authorinitials>
         <revremark>Fix consistency, more aspects</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2010-01-01</date>
         <authorinitials>DB</authorinitials>
         <revremark>More appearances</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2.1</revnumber>
         <date>2010-01-01</date>
         <authorinitials>RGJ</authorinitials>
         <revremark>Add author and revision info</revremark>
-    </revision>    
+    </revision>
     <revision>
          <revnumber>2.2</revnumber>
         <date>2010-01-11</date>
@@ -298,6 +298,6 @@
     <appearancefile href="appearance-PL-1-low.xml"/>
     <appearancefile href="appearance-CPL.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

@@ -65,7 +65,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of items", 4, list.size());
 
         // since this test is internationalized, and the non-english
-        // lists are internationalized, we can just check if each of 
+        // lists are internationalized, we can just check if each of
         // the types is in the list.
         for( ScheduleItem si: list) {
            boolean flag = false;

@@ -124,7 +124,7 @@ abstract public class AbstractTurnoutServer {
            return new TurnoutListener(turnoutName);
         } else {
            return turnouts.get(turnoutName);
-        }        
+        }
     }
 
     protected class TurnoutListener implements PropertyChangeListener {

@@ -25,9 +25,9 @@ public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetwor
     protected void resetupConnection() {
        // reconnect the port to the traffic controller.
        getSystemConnectionMemo().getJMRIClientTrafficController().connectPort(this);
-       // notify the memo that we've restarted, so it can ask the associated 
+       // notify the memo that we've restarted, so it can ask the associated
        // managers to refresh status
-       getSystemConnectionMemo().requestAllStatus();       
+       getSystemConnectionMemo().requestAllStatus();
     }
 
 }

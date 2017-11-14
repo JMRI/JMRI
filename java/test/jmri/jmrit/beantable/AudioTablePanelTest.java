@@ -10,19 +10,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AudioTablePanelTest {
 
     @Test
     public void testCTor() {
-        // The Table Data Models required to create an AudioTablePanel are 
+        // The Table Data Models required to create an AudioTablePanel are
         // internal classes in the AudioTableAction.
         AudioTableAction a = new AudioTableAction();
-        // the getPanel() method of the AudioTableAction calls the 
+        // the getPanel() method of the AudioTableAction calls the
         // constructor for AudioTablePanel. We need to seperate the
         // Table Data Model objects from the AudioTableAction to be
-        // able to create this directly. 
+        // able to create this directly.
         AudioTablePanel t = (AudioTablePanel) a.getPanel();
         Assert.assertNotNull("exists",t);
     }

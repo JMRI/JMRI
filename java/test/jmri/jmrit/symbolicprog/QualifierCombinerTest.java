@@ -50,7 +50,7 @@ public class QualifierCombinerTest {
        q.add(new TestArithmeticQualifier(v1,5,"gt"));
        q.add(new TestArithmeticQualifier(v1,10,"lt"));
        QualifierCombiner qc = new QualifierCombiner(q);
-       Assert.assertNotNull("Exists",qc); 
+       Assert.assertNotNull("Exists",qc);
     }
 
 

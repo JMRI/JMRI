@@ -54,11 +54,11 @@
       <enumChoice choice="Auto Detection">
         <choice>Auto Detection</choice>
         <choice xml:lang="de">automatischer Erkennung</choice>
-        <choice xml:lang="it">Rilevazione Automatica</choice>			
+        <choice xml:lang="it">Rilevazione Automatica</choice>
       </enumChoice>
     </enumVal>
     <label>Analog/Digital operation</label>
-    <label xml:lang="de">Analogen/Digital Betriebsart</label>	
-    <label xml:lang="it">Operatività in Analogico / DCC</label>		
+    <label xml:lang="de">Analogen/Digital Betriebsart</label>
+    <label xml:lang="it">Operatività in Analogico / DCC</label>
   </variable>
 </variables>

@@ -108,9 +108,9 @@ public class RpsPositionIconTest {
 
             // close the panel target frame.
             EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
-            // this panel isn't behaving like others that create a 
-            // panelEditor. It does not create dialogs when it closes, so call 
-            // requestClose without handling the dialogs as in 
+            // this panel isn't behaving like others that create a
+            // panelEditor. It does not create dialogs when it closes, so call
+            // requestClose without handling the dialogs as in
             // to.closeFrameWithConfirmations()
             to.requestClose();
         }

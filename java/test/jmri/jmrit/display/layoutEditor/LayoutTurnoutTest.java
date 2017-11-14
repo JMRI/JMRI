@@ -735,7 +735,7 @@ public class LayoutTurnoutTest {
         Assert.assertTrue("ltDX.getState() is UNKNOWN", ltDX.getState() == Turnout.UNKNOWN);
         Assert.assertTrue("ltRX.getState() is UNKNOWN", ltRX.getState() == Turnout.UNKNOWN);
         Assert.assertTrue("ltLX.getState() is UNKNOWN", ltLX.getState() == Turnout.UNKNOWN);
-    }    
+    }
 
     // from here down is testing infrastructure
     @BeforeClass

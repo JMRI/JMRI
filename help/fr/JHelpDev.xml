@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='ISO-8859-1'?> 
-<!DOCTYPE jhelpdev 
-  PUBLIC "-//Markus Kraetzig//JHelpDev Configuration Settings 1.2" 
-  "http://jhelpdev.sourceforge.net/dtd/jhelpdev_1_2.dtd"> 
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE jhelpdev
+  PUBLIC "-//Markus Kraetzig//JHelpDev Configuration Settings 1.2"
+  "http://jhelpdev.sourceforge.net/dtd/jhelpdev_1_2.dtd">
 
-<jhelpdev version="1.2"> 
+<jhelpdev version="1.2">
 
  <config>
    <project>JmriHelp_fr</project>

@@ -51,7 +51,7 @@ public class MultiThrottleTest extends TestCase {
         JUnitUtil.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

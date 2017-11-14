@@ -28,7 +28,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         tc = memo.getTrafficController();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

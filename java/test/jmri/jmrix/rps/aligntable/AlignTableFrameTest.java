@@ -18,7 +18,7 @@ public class AlignTableFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AlignTableFrame action = new AlignTableFrame();
         Assert.assertNotNull("exists", action);
     }

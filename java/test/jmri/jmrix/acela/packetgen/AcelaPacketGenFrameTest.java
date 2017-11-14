@@ -19,7 +19,7 @@ public class AcelaPacketGenFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AcelaPacketGenFrame f = new AcelaPacketGenFrame(new AcelaSystemConnectionMemo());
         Assert.assertNotNull("exists", f);
     }

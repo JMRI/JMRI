@@ -95,7 +95,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
          * Include an "save" button
          */
         /*    void extras() {
-                
+
          final JComboBox<Object> selectCombo = roster.rosterGroupBox();
          //addToTopBox(selectCombo);
          selectCombo.insertItemAt("",0);

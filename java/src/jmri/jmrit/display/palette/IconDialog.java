@@ -86,7 +86,7 @@ public class IconDialog extends ItemDialog {
         pack();
     }
 
-    // Only multiSensor adds and deletes icons 
+    // Only multiSensor adds and deletes icons
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
     }
 

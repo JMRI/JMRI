@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 /**
  * Interface for objects that handle configuring a layout connection.
  * <p>
- * General design documentation is available on the 
+ * General design documentation is available on the
  * <a href="http://jmri.org/help/en/html/doc/Technical/SystemStructure.shtml">Structure of External System Connections page</a>.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
@@ -26,11 +26,11 @@ public interface ConnectionConfig {
 
     public void setManufacturer(String Manufacturer);
 
-    /** 
+    /**
      * Load the Swing widgets needed to configure
      * this connection into a specified JPanel.
-     * Used during the configuration process to 
-     * fill out the preferences window with 
+     * Used during the configuration process to
+     * fill out the preferences window with
      * content specific to this Connection type.
      * The JPanel contents need to handle their own
      * gets/sets to the underlying Connection content.
@@ -48,11 +48,11 @@ public interface ConnectionConfig {
      * </ul>
      */
     public void register();
-    
-    /** 
+
+    /**
      * Done with this ConnectionConfig object.
      * Invoked in {@link JmrixConfigPane} when switching
-     * away from this particular mode. 
+     * away from this particular mode.
      */
     public void dispose();
 

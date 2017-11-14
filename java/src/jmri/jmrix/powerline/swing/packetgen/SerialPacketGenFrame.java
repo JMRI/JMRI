@@ -31,7 +31,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
     SerialTrafficController tc = null;
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -93,7 +93,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignores messages.
      */
@@ -101,7 +101,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     public void message(SerialMessage m) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignores replies.
      */

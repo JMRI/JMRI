@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JPanels for the various item types that come from tool Tables - e.g. Sensors,
  * Turnouts, etc.
- * 
+ *
 * Devices such as these have sets of icons to display their various states.
  * such sets are called a "family" in the code. These devices then may have sets
  * of families to provide the user with a choice of the icon set to use for a
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * These sets/families are defined in an xml file stored as xml/defaultPanelIcons.xml
  * The subclass FamilyItemPanel.java and its subclasses
  * handles these devices.
- * 
+ *
 * Other devices, e.g. backgrounds or memory, may use only one or no icon to
  * display. The subclass IconItemPanel.java and its subclasses handles these
  * devices.
@@ -59,7 +59,7 @@ public abstract class ItemPanel extends JPanel {
     public void init() {
         _initialized = true;
     }
-    
+
     protected void setEditor(Editor ed) {
         _editor = ed;
     }

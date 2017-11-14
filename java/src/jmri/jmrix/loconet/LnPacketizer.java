@@ -215,7 +215,7 @@ public class LnPacketizer extends LnTrafficController {
                             opCode = byte2;
                             throw new LocoNetMessageException();
                         }
-                        int len=2;  
+                        int len=2;
                         // Decide length
                         switch ((opCode & 0x60) >> 5) {
                             case 0:

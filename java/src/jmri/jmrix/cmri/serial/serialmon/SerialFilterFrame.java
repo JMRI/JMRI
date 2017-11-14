@@ -109,7 +109,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     public void initComponents() {

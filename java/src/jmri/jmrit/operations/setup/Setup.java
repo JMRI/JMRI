@@ -1621,7 +1621,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     /**
      *
      * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
+     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead.
      */
     @Deprecated
     public static JComboBox<String> getPrintColorComboBox() {

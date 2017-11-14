@@ -831,7 +831,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     private void setColor(Color desiredColor, int state){
-        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();        
+        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();
         switch (state) {
            case PositionablePopupUtil.FONT_COLOR:
               util.setForeground(desiredColor);
@@ -876,7 +876,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     private Color getColor(int state){
-        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();        
+        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();
         switch (state) {
            case PositionablePopupUtil.FONT_COLOR:
               return util.getForeground();

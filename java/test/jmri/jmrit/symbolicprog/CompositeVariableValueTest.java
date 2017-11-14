@@ -60,23 +60,23 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
     // (This is removing the majority of the tests, which seems rather much)
     @Override
     public void testVariableValueCreate() {
-    }// mask is ignored 
+    }// mask is ignored
 
     @Override
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableSynch() {

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.TrainIcon objects.
  *
  * @author mstevetodd Copyright: Copyright (c) 2012
- * 
+ *
  */
 public class TrainIconXml extends LocoIconXml {
 
@@ -65,8 +65,8 @@ public class TrainIconXml extends LocoIconXml {
      */
     @Override
     public void load(Element element, Object o) {
-        //NOTE: this method should not be populated.  
-        //  The operations program restores the Icons when the Trains window is opened.   
+        //NOTE: this method should not be populated.
+        //  The operations program restores the Icons when the Trains window is opened.
         //  The train icons have to be placed based on the trains database state,
         //  and not where the icons were on the panel when the panel was saved.
         log.debug("Warning: loading of TrainIcon not implemented, TrainIcons will be placed by Operations");

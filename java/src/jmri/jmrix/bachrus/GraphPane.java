@@ -269,7 +269,7 @@ public class GraphPane extends JPanel implements Printable {
         if (!(g instanceof Graphics2D) ) {
               throw new IllegalArgumentException("Graphics object passed is not the correct type");
         }
-           
+
         Graphics2D g2 = (Graphics2D) g;
         /* User (0,0) is typically outside the imageable area, so we must
          * translate by the X and Y values in the PageFormat to avoid clipping.

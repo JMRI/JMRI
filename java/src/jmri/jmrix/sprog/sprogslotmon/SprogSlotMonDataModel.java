@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of slot manager contents.
  *
- * @author	Bob Jacobsen Copyright (C) 2001 
+ * @author	Bob Jacobsen Copyright (C) 2001
  * @author  Andrew Crosland (C) 2006 ported to SPROG
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener {
@@ -185,7 +185,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
                             if (s.isSpeedPacket()) {
                                 return (s.isForward() ? Bundle.getMessage("DirColForward") : Bundle.getMessage("DirColReverse"));
                             } else {
-                                return "-";                               
+                                return "-";
                             }
                         case SprogConstants.SLOT_FREE:
                             return "-";
@@ -199,7 +199,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
                         justification="better to keep cases in column order rather than to combine")
     public int getPreferredWidth(int col) {
         switch (col) {

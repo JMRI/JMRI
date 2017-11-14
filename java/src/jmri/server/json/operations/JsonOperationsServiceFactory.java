@@ -15,7 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Service factory for the JSON Operations services.
- * 
+ *
  * @author Randall Wood (c) 2016
  */
 @ServiceProvider(service = JsonServiceFactory.class)
@@ -35,5 +35,5 @@ public class JsonOperationsServiceFactory implements JsonServiceFactory {
     public JsonHttpService getHttpService(ObjectMapper mapper) {
         return new JsonOperationsHttpService(mapper);
     }
-    
+
 }

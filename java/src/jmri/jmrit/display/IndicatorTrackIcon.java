@@ -220,7 +220,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
         _iconMap.put(name, icon);
         if (_status.equals(name)) {
-            setIcon(icon);            
+            setIcon(icon);
         }
     }
 
@@ -321,7 +321,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
         updateSize();
     }
-    
+
     @Override
     public void rotate(int deg) {
         super.rotate(deg);

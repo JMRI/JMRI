@@ -141,7 +141,7 @@ public class ControlPanelPropertyEditor extends JDialog {
                     }
                 });
 
-        // disable the speed controls if the control panel says they 
+        // disable the speed controls if the control panel says they
         // aren't possible
         displaySlider.setEnabled(control.
                 isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAY));

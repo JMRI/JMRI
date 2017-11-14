@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JTextPaneAppenderTest {
 
@@ -25,12 +25,12 @@ public class JTextPaneAppenderTest {
         org.apache.log4j.Layout myLayout = new org.apache.log4j.PatternLayout("%d{HH:mm:ss.SSS} (%6r) %-5p [%-7t] %F:%L %x - %m%n");
 
         JTextPaneAppender t = new JTextPaneAppender(myLayout, "name", null, new javax.swing.JTextPane());
-        
+
         t.append(new org.apache.log4j.spi.LoggingEvent(
                 "jmri.util.JTextPaneAppenderTest",
                 org.apache.log4j.Logger.getLogger("jmri.util.JTextPaneAppenderTest"),
                 org.apache.log4j.Priority.DEBUG,
-                "Test message", 
+                "Test message",
                 new Exception("Test exception")
             ));
     }
@@ -42,8 +42,8 @@ public class JTextPaneAppenderTest {
     }
 
     @After
-    public void tearDown() {        
-        // remove any JTextPaneAppender objects that 
+    public void tearDown() {
+        // remove any JTextPaneAppender objects that
         // have been added to logging
         Enumeration<Object> en = LogManager.getCurrentLoggers();
 
@@ -57,7 +57,7 @@ public class JTextPaneAppenderTest {
                     Appender a = appenders.nextElement();
                     if (a instanceof JTextPaneAppender) {
                         logger.removeAppender(a);
-                    }                        
+                    }
                 }
             } // if o instanceof Logger
 
@@ -68,9 +68,9 @@ public class JTextPaneAppenderTest {
             Appender a = appenders.nextElement();
             if (a instanceof JTextPaneAppender) {
                 LogManager.getRootLogger().removeAppender(a);
-            }                        
+            }
         }
-        
+
         jmri.util.JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }

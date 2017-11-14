@@ -19,14 +19,14 @@ public class CMRInetManagerFrameTest {
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetManagerFrame action = new CMRInetManagerFrame(new CMRISystemConnectionMemo()); 
+        CMRInetManagerFrame action = new CMRInetManagerFrame(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testInitComponents() throws Exception{
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetManagerFrame frame = new CMRInetManagerFrame(new CMRISystemConnectionMemo()); 
+        CMRInetManagerFrame frame = new CMRInetManagerFrame(new CMRISystemConnectionMemo());
         // verify that initCompoents doesn't cause an exception
         frame.initComponents();
         // close

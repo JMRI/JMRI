@@ -139,7 +139,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
      * Send Information request to LI-USB.
      */
     void readLIUSBSettings() {
-        /* we request setting an out of range address 
+        /* we request setting an out of range address
          to get the current value. */
         XNetMessage msg = XNetMessage.getLIAddressRequestMsg(32);
         //Then send to the controller

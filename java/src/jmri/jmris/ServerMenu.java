@@ -23,7 +23,7 @@ public class ServerMenu extends JMenu {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.JmriServerBundle");
 
         setText(rb.getString("MenuServer"));
-        // This first menu item is for connection testing only.  
+        // This first menu item is for connection testing only.
         // It provides no parsing.
         //add(new jmri.jmris.JmriServerAction(rb.getString("MenuItemStartServer")));
         add(new jmri.jmris.simpleserver.SimpleServerMenu());

@@ -19,7 +19,7 @@ public class AcelaMonFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AcelaMonFrame f = new AcelaMonFrame(new AcelaSystemConnectionMemo());
         Assert.assertNotNull("exists", f);
     }

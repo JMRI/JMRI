@@ -203,7 +203,7 @@ public class ManageBackupsDialog extends JDialog {
 
         if (selectedSets.size() > 0) {
             // Make sure OK to delete backups
-            int result = JOptionPane.showConfirmDialog(this, String.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"), selectedSets.size()), 
+            int result = JOptionPane.showConfirmDialog(this, String.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"), selectedSets.size()),
                     Bundle.getMessage("ManageBackupsDialog.deletingBackupSets"), JOptionPane.OK_CANCEL_OPTION);
 
             if (result == JOptionPane.OK_OPTION) {

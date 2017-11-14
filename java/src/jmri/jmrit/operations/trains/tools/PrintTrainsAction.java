@@ -51,7 +51,7 @@ public class PrintTrainsAction extends PrintTrainAction {
             log.debug("Print cancelled");
             return;
         }
-        
+
         List<Train> trains = trainsTableFrame.getSortByList();
 
         printSummaryTrains(writer, trains);
@@ -93,9 +93,9 @@ public class PrintTrainsAction extends PrintTrainAction {
                     String name = truncate(train.getName());
                     String desc = truncate(train.getDescription());
                     String route = truncate(train.getTrainRouteName());
-                    String departs = truncate(train.getTrainDepartsName());        
+                    String departs = truncate(train.getTrainDepartsName());
                     String terminates = truncate(train.getTrainTerminatesName());
-                    
+
                     s = name + " " + desc + " " + route + " " + departs + " " + train.getDepartureTime() + " "
                             + terminates + NEW_LINE;
                     writer.write(s);

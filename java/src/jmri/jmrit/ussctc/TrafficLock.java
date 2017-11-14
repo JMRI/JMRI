@@ -36,7 +36,7 @@ public class TrafficLock implements Lock {
     SignalHeadSection farSignal;
     CodeGroupThreeBits direction;
     BeanSetting[] beans;
-    
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
@@ -57,5 +57,5 @@ public class TrafficLock implements Lock {
         }
         return true;
     }
-    
+
 }

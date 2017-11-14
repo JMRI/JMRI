@@ -1,14 +1,14 @@
 package jmri.jmrix.roco.z21;
 
 /**
- * Defines the standard/common routines used in multiple classes related to 
+ * Defines the standard/common routines used in multiple classes related to
  * a Roco z21 Command Station.
  * <P>
- * This class keeps track of the broadcast flags associated with the 
+ * This class keeps track of the broadcast flags associated with the
  * currently connected Roco Z21 Command Station.
  * <P>
  * Brief descriptions of the flags are as follows (loosely
- * translated from  section 2.16 of the manual from the German 
+ * translated from  section 2.16 of the manual from the German
  * with the aid of google translate).
  * <UL>
  * <LI>0x00000001 send XpressNet related information (track
@@ -26,7 +26,7 @@ package jmri.jmrix.roco.z21;
  * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI>
  * </UL>
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001 
+ * @author	Bob Jacobsen Copyright (C) 2001
  * @author      Paul Bender Copyright (C) 2016
  */
 public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation implements jmri.CommandStation {
@@ -51,7 +51,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
    public void setSerialNumber(int sn){
       serial_number = sn;
    }
- 
+
   /**
     * get the software version.
     * @return software version of the connected Z21 command station
@@ -86,7 +86,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
 
    /**
     * get the current value of the broadcast flags as an int
-    * @return value representing the broadcast flags. 
+    * @return value representing the broadcast flags.
     */
    public int getZ21BroadcastFlags(){
         return broadcast_flags;
@@ -94,16 +94,16 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
 
    /**
     * set the current value of the broadcast flags as an int
-    * @param flags representing the broadcast flags. 
+    * @param flags representing the broadcast flags.
     */
    public void setZ21BroadcastFlags(int flags){
         broadcast_flags = flags;
    }
 
    /**
-    * Is flag bit 0x00000001 which tells the command station to send 
+    * Is flag bit 0x00000001 which tells the command station to send
     * XpressNet related information (track power on/off, programming
-    * mode, short circuit, broadcast stop, locomotive information, 
+    * mode, short circuit, broadcast stop, locomotive information,
     * turnout information) set?
     * @return true if flag is set.
     */
@@ -112,9 +112,9 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Set flag bit 0x00000001 which tells the command station to send 
+    * Set flag bit 0x00000001 which tells the command station to send
     * XpressNet related information (track power on/off, programming
-    * mode, short circuit, broadcast stop, locomotive information, 
+    * mode, short circuit, broadcast stop, locomotive information,
     * turnout information).
     * @param flag true if flag is to be set.
     */
@@ -128,7 +128,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Is flag bit 0x00000002 which tells the command station to send 
+    * Is flag bit 0x00000002 which tells the command station to send
     * data changes on the RMBus to the client set?
     * @return true if flag is set.
     */
@@ -137,7 +137,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Set flag bit 0x00000002 which tells the command station to send 
+    * Set flag bit 0x00000002 which tells the command station to send
     * data changes on the RMBus to the client set?
     * @param flag true if flag is to be set.
     */
@@ -151,9 +151,9 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Is flag bit 0x00000004, which tells the command station to 
+    * Is flag bit 0x00000004, which tells the command station to
     * send Railcom data to the client set (this flag may no longer
-    * be supported by Roco). 
+    * be supported by Roco).
     * @return true if flag is set.
     */
     public boolean getRailComMessagesFlag(){
@@ -161,9 +161,9 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Set flag bit 0x00000004, which tells the command station to 
+    * Set flag bit 0x00000004, which tells the command station to
     * send Railcom data to the client set (this flag may no longer
-    * be supported by Roco). 
+    * be supported by Roco).
     * @param flag true if flag is to be set.
     */
     public void setRailComMessagesFlag(boolean flag){
@@ -176,7 +176,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Is flag bit 0x00000100 which tells the command station to send 
+    * Is flag bit 0x00000100 which tells the command station to send
     * changes in system state (such as track voltage) set?
     * @return true if flag is set.
     */
@@ -185,7 +185,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Set flag bit 0x00000100 which tells the command station to send 
+    * Set flag bit 0x00000100 which tells the command station to send
     * changes in system state (such as track voltage).
     * @param flag true if flag is to be set.
     */
@@ -199,7 +199,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Is flag bit 0x00010000 which tells the command station to send 
+    * Is flag bit 0x00010000 which tells the command station to send
     * XpressNet related locomoitve information to the client set?
     *
     * @return true if flag is set
@@ -209,7 +209,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Set flag bit 0x00010000 which tells the command station to send 
+    * Set flag bit 0x00010000 which tells the command station to send
     * XpressNet related locomoitve information to the client.
     * @param flag true if flag is to be set.
     */
@@ -223,7 +223,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Is flag bit 0x01000000 which tells the command station to send 
+    * Is flag bit 0x01000000 which tells the command station to send
     * LocoNet data,except Locomotive and Turnout data, to the client set?
     * @return true if flag is set.
     */
@@ -246,7 +246,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Is flag bit 0x02000000 which tells the command station to send 
+    * Is flag bit 0x02000000 which tells the command station to send
     * Locomotive specific LocoNet data to the client set?
     * @return true if flag is set.
     */
@@ -255,7 +255,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Set flag bit 0x02000000 which tells the command station to send 
+    * Set flag bit 0x02000000 which tells the command station to send
     * Locomotive specific LocoNet data to the client.
     * @param flag true if flag is to be set.
     */
@@ -269,7 +269,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Is flag bit 0x04000000 which tells the command station to send 
+    * Is flag bit 0x04000000 which tells the command station to send
     * Turnout specific LocoNet data to the client set?
     * @return true if flag is set.
     */
@@ -278,7 +278,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Set flag bit 0x04000000 which tells the command station to send 
+    * Set flag bit 0x04000000 which tells the command station to send
     * Turnout specific LocoNet data to the client set?
     * @param flag true if flag is to be set.
     */
@@ -292,7 +292,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Is flag bit 0x08000000 which tells the command station to send 
+    * Is flag bit 0x08000000 which tells the command station to send
     * Occupancy information from LocoNet to the client set?
     * @return true if flag is set.
     */
@@ -301,7 +301,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
-    * Set flag bit 0x08000000 which tells the command station to send 
+    * Set flag bit 0x08000000 which tells the command station to send
     * Occupancy information from LocoNet to the client
     * @param flag true if flag is to be set.
     */

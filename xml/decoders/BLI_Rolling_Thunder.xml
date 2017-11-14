@@ -101,7 +101,7 @@
 			</enumVal>
 		<label>Sensitivity.</label>
 		</variable>
-		
+
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>

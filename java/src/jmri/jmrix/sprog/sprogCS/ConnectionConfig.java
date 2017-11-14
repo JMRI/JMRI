@@ -62,6 +62,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     protected void setInstance() {
         if(adapter == null ) {
            adapter = new SprogCSSerialDriverAdapter();
-        } 
+        }
     }
 }

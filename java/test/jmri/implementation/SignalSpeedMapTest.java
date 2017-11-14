@@ -15,7 +15,7 @@ public class SignalSpeedMapTest extends TestCase {
     public void testLoadDefaultMap() {
         Assert.assertNotNull(jmri.InstanceManager.getDefault(SignalSpeedMap.class));
     }
-    
+
     static final String[] speeds = new String[]{
         "Cab",
         "Maximum",
@@ -31,10 +31,10 @@ public class SignalSpeedMapTest extends TestCase {
     };
 
     SignalSpeedMap map = new SignalSpeedMap();
-    
+
     /**
      * To avoid breaking signal systems, speed definitions should
-     * never be removed from the default map. Hence we check that 
+     * never be removed from the default map. Hence we check that
      * all standard names are present.
      */
     public void testAllSpeedsPresent() {
@@ -44,19 +44,19 @@ public class SignalSpeedMapTest extends TestCase {
     }
 
     public void testMapMonoticity() {
-        
+
         // check for monotonic values
         for (int i = 0; i < speeds.length-1; i++) {
-            Assert.assertTrue(speeds[i+1]+" ("+map.getSpeed(speeds[i+1])+") must be less than "+speeds[i]+" ("+map.getSpeed(speeds[i])+")", 
+            Assert.assertTrue(speeds[i+1]+" ("+map.getSpeed(speeds[i+1])+") must be less than "+speeds[i]+" ("+map.getSpeed(speeds[i])+")",
                 map.getSpeed(speeds[i+1])<map.getSpeed(speeds[i]));
         }
-         
+
     }
 
     /**
      * To avoid breaking signal systems, speed definitions should
      * never be removed from the default map. This test will fail
-     * if a new name is added, at which point you should add it to 
+     * if a new name is added, at which point you should add it to
      * the definition of the "speeds" array above so that it will be
      * tested for in the future.
      */
@@ -69,9 +69,9 @@ public class SignalSpeedMapTest extends TestCase {
                 if (test.equals(name)) continue check;
             }
             Assert.fail("Speed name \""+name+"\" not recognized");
-        }        
+        }
     }
-    
+
     public void testAppearanceSpeedsOK() {
         // check that every speed in <appearanceSpeeds> is defined
         java.util.Enumeration<String> e = map.getAppearanceIterator();
@@ -80,7 +80,7 @@ public class SignalSpeedMapTest extends TestCase {
             name = e.nextElement();
             Assert.assertNotNull("appearanceSpeed \""+name+"\" is defined", map.getAppearanceSpeed(name));
             Assert.assertTrue("appearanceSpeed \""+name+"\" has value", map.getSpeed(map.getAppearanceSpeed(name)) >= 0.);
-        }        
+        }
     }
 
     // from here down is testing infrastructure

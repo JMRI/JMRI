@@ -19,9 +19,9 @@ public class XpaSystemConnectionMemoTest extends TestCase {
     }
 
     public void testGetandSetXpaTrafficController(){
-        XpaSystemConnectionMemo t = new XpaSystemConnectionMemo(); 
-       // first, check to see that an exception is 
-       // thrown when null is passed. 
+        XpaSystemConnectionMemo t = new XpaSystemConnectionMemo();
+       // first, check to see that an exception is
+       // thrown when null is passed.
        boolean exceptionThrown = false;
        try {
          t.setXpaTrafficController(null);
@@ -32,7 +32,7 @@ public class XpaSystemConnectionMemoTest extends TestCase {
 
        t.setXpaTrafficController(new XpaTrafficController());
 
-       Assert.assertNotNull("TrafficController set correctly",t.getXpaTrafficController());    
+       Assert.assertNotNull("TrafficController set correctly",t.getXpaTrafficController());
 
     }
 

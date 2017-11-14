@@ -45,7 +45,7 @@ public class WiFiConsistFileTest extends TestCase {
         JUnitUtil.setUp();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

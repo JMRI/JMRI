@@ -7,7 +7,7 @@ import org.jdom2.Element;
  * Loads and stores the switch list text strings.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * 
+ *
  *
  */
 public class TrainSwitchListText {
@@ -32,9 +32,9 @@ public class TrainSwitchListText {
 
     private static String trainDepartsCars = Bundle.getMessage("TrainDepartsCars");
     private static String trainDepartsLoads = Bundle.getMessage("TrainDepartsLoads");
-    
+
     private static String switchListByTrack = Bundle.getMessage("SwitchListByTrack");
-    private static String holdCar = Bundle.getMessage("HoldCar"); 
+    private static String holdCar = Bundle.getMessage("HoldCar");
 
     public static String getStringSwitchListFor() {
         return switchListFor;
@@ -163,7 +163,7 @@ public class TrainSwitchListText {
     public static void setStringTrainDepartsLoads(String s) {
         trainDepartsLoads = s;
     }
-    
+
     public static String getStringSwitchListByTrack() {
         return switchListByTrack;
     }
@@ -171,7 +171,7 @@ public class TrainSwitchListText {
     public static void setStringSwitchListByTrack(String s) {
         switchListByTrack = s;
     }
-    
+
     public static String getStringHoldCar() {
         return holdCar;
     }

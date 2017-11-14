@@ -64,7 +64,7 @@ public class SplashWindow extends JFrame {
 
         pack();
 
-        /* Center the window and pad the frame size slightly to put some space 
+        /* Center the window and pad the frame size slightly to put some space
          * between logo and frame border*/
         Dimension screenDim
                 = Toolkit.getDefaultToolkit().getScreenSize();

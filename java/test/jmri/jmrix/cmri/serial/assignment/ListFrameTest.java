@@ -19,7 +19,7 @@ public class ListFrameTest {
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListFrame action = new ListFrame(new CMRISystemConnectionMemo()); 
+        ListFrame action = new ListFrame(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

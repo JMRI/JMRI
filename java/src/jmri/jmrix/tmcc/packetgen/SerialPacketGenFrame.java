@@ -27,7 +27,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

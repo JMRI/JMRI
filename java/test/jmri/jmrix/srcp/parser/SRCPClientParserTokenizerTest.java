@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  */
 public class SRCPClientParserTokenizerTest extends TestCase {
 
-    // numeric values 
+    // numeric values
     public void testTokenizeZEROADDR() {
         String cmd = "0234\n\r";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));

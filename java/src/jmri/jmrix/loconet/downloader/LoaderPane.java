@@ -58,34 +58,34 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
-    /** This gets invoked early. We don't want it to do anything, so 
+    /** This gets invoked early. We don't want it to do anything, so
      * we just fail to pass it up. Instead, we wait for the later call of
      * initComponents(LocoNetSystemConnectionMemo memo)
      */
     @Override
     public void initComponents(){
     }
-        
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
-        this.memo = memo; 
+        this.memo = memo;
         super.initComponents();
     }
 
     /**
      * LnPanelInterface implementation creates standard form of title
-     * 
+     *
      * @param menuTitle is a string containing the name of the tool
-     * @return a new string containing the connection's UserName plus the name 
+     * @return a new string containing the connection's UserName plus the name
      *          of the tool
      */
     public String getTitle(String menuTitle) { return jmri.jmrix.loconet.swing.LnPanel.getTitleHelper(memo, menuTitle); }
 
 
-    
+
     // Local GUI member declarations
     JTextField bootload = new JTextField();
     JTextField mfg = new JTextField();
@@ -479,7 +479,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         if (text != null) {
             eestart.setText(text);
         }
-        
+
         text = inputContent.extractValueOfKey("Erase Blk Size"); // NOI18N
         if (text != null) {
             eraseBlockSize.setText(text);
@@ -492,7 +492,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             } catch (java.lang.NumberFormatException e) {
                 interpretationProblem = true;
             }
-            
+
             if (interpretationProblem == true) {
                 log.warn("Invalid dmf file 'Erase Blk Size' value {0}",text);
                 JOptionPane.showMessageDialog(this,
@@ -500,11 +500,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
-                // clear out the firmware image to ensure that the user won't 
+                // clear out the firmware image to ensure that the user won't
                 // write it to the device
                 inputContent.clear();
                 setDefaultFieldValues();
-                clearInputFileName();        
+                clearInputFileName();
             }
         }
     }
@@ -865,7 +865,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     // change to next location
                     setAddr(next);
                     doLongWait(next, 2); // double wait after sending new address
-                    
+
                 }
                 location = next;
 
@@ -904,7 +904,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
          * Wait the specified time.
          *
          * 16*10/16.44 = 14 msec is the time it takes to send the message.
-         * @param address to be sent next, for computing the delay before 
+         * @param address to be sent next, for computing the delay before
          *          sending the next message
          */
         void doWait(int address) {
@@ -916,7 +916,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         tdelay = delayval + 50 + 14;
                     } else {
                         tdelay = delayval + 4 + 14;
-                    }                        
+                    }
                     // do the actual wait
                     wait(tdelay);
                 }
@@ -928,7 +928,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         /**
          * Wait the time appropriate for the address.
          *
-         * @param address to be sent next, for computing the delay before 
+         * @param address to be sent next, for computing the delay before
          *          sending the next message
          */
         void doLongWait(int address, int multiplier) {
@@ -940,7 +940,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         tdelay = (delayval + 50 + 14) * multiplier;
                     } else {
                         tdelay = (delayval) * multiplier;
-                    }                        
+                    }
                     // do the actual wait
                     wait(tdelay);
                 }
@@ -989,7 +989,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         delay.setText("200"); // NOI18N
         eestart.setText("C00000"); // NOI18N
         eraseBlockSize.setText("64"); // NOI18N
-        
+
         try {
             setOptionsRadiobuttons(Integer.toString(DO_NOT_CHECK_SOFTWARE_VERSION + REQUIRE_HARDWARE_VERSION_EXACT_MATCH));
         } catch (NumberFormatException ex) {
@@ -1091,7 +1091,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
         }
         eestart.updateUI();
-        
+
         allIsOk &= temp;
 
         temp = intParameterIsValid(eraseBlockSize, 64, 128);
@@ -1099,7 +1099,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         if (!temp) {
             log.info("Erase Block Sizez is not valid: " + eraseBlockSize.getText());
         }
-        
+
         if (allIsOk == true) {
             log.debug("No problems found when checking parameter values.");
         }

@@ -176,7 +176,7 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0xAF {@code <5 data bytes>} OPs program accessory/signal (1) !,1,3. Not 
+ * 0xAF {@code <5 data bytes>} OPs program accessory/signal (1) !,1,3. Not
  * supported by PH
  * <P>
  * Command Format: 0xAF (addr_h) (addr_l) (CV_h) (CV_l) (data)

@@ -271,7 +271,7 @@ public class Track {
 
     public void setName(String name) {
         String old = _name;
-        _name = name;        
+        _name = name;
         if (!old.equals(name)) {
             InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max track name length for manifests
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
@@ -475,7 +475,7 @@ public class Track {
      * to go to staging if the spur and the alternate track were full. If
      * disabled, cars with custom loads can be forwarded to staging when this
      * spur and all others with this option are also false.
-     * 
+     *
      * @return True if enabled
      */
     public boolean isHoldCarsWithCustomLoadsEnabled() {
@@ -1131,7 +1131,7 @@ public class Track {
      * Gets the drop option for this track. ANY means that all trains and routes
      * can drop cars to this track. The other four options are used to restrict
      * the track to certain trains or routes.
-     * 
+     *
      * @return ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
      */
     public String getDropOption() {
@@ -1156,7 +1156,7 @@ public class Track {
      * Gets the pickup option for this track. ANY means that all trains and
      * routes can pull cars from this track. The other four options are used to
      * restrict the track to certain trains or routes.
-     * 
+     *
      * @return ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
      */
     public String getPickupOption() {
@@ -2289,7 +2289,7 @@ public class Track {
      * When true the C/I track will only accept cars that have a final
      * destination that can be serviced by the track. See
      * acceptsDestination(Location).
-     * 
+     *
      * @return false if any car spotted, true if only cars with a FD.
      */
     public boolean isOnlyCarsWithFinalDestinationEnabled() {

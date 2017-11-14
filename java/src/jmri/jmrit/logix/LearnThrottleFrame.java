@@ -72,7 +72,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     PowerPane powerControl = new PowerPane();
     PowerManager powerMgr = null;
     JButton powerLight;
-    // Load the power lights as icons to be placed in an invisible JButton so the light 
+    // Load the power lights as icons to be placed in an invisible JButton so the light
     // can be clicked to change the power status
     NamedIcon powerOnIcon = new NamedIcon("resources/icons/throttles/GreenPowerLED.gif", "GreenPowerLED");
     NamedIcon powerOffIcon = new NamedIcon("resources/icons/throttles/RedPowerLED.gif", "RedPowerLED");
@@ -242,7 +242,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
                 setSpeedSetting(-0.5F);
                 setSpeedSetting(0.0F);
             }
-            _warrantFrame.getWarrant().releaseThrottle(_throttle);            
+            _warrantFrame.getWarrant().releaseThrottle(_throttle);
         }
         if (powerMgr != null) {
             powerMgr.removePropertyChangeListener(this);
@@ -314,7 +314,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     protected void stopRunTrain() {
         _warrantFrame.stopRunTrain();
     }
-    
+
     /*
      * for JUnint testing
      */

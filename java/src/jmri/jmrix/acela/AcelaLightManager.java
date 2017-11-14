@@ -118,7 +118,7 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Deprecated
     static public AcelaLightManager instance() {
-        return null; 
+        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class);

@@ -5,7 +5,7 @@ import java.io.FilenameFilter;
 
 /**
  * Filter for filenames ending in <em>.xml</em>.
- * 
+ *
  * @author Randall Wood (C) 2013, 2017
  */
 public class XmlFilenameFilter implements FilenameFilter {

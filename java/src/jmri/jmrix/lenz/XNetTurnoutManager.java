@@ -77,17 +77,17 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         if (log.isDebugEnabled()) {
                             log.debug("message has address: " + addr);
                         }
-                        // reach here for switch command; make sure we know 
+                        // reach here for switch command; make sure we know
                         // about this one
                         String s = prefix + typeLetter() + addr;
                         forwardMessageToTurnout(s,l);
                     }
                     if (addr % 2 != 0) {
-                        // If the address we got was odd, we need to check to 
+                        // If the address we got was odd, we need to check to
                         // see if the even address should be added as well.
                         a2 = l.getElement(i + 1);
                         if ((a2 & 0x0c) != 0) {
-                            // reach here for switch command; make sure we know 
+                            // reach here for switch command; make sure we know
                             // about this one
                             String s = prefix + typeLetter() + (addr + 1);
                             forwardMessageToTurnout(s,l);
@@ -101,11 +101,11 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     protected void forwardMessageToTurnout(String s, XNetReply l){
         XNetTurnout t = (XNetTurnout) getBySystemName(s);
         if ( null == t ) {
-           // need to create a new one, and send the message on 
+           // need to create a new one, and send the message on
            // to the newly created object.
            ((XNetTurnout) provideTurnout(s)).initmessage(l);
         } else {
-           // The turnout exists, forward this message to the 
+           // The turnout exists, forward this message to the
            // turnout
            t.message(l);
         }

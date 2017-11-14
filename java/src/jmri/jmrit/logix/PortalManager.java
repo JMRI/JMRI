@@ -56,9 +56,9 @@ public class PortalManager extends AbstractManager<Portal>
 
     /*
      * Method to create a new Portal. Returns null if a
-     * Portal with the same systemName or userName already exists. 
+     * Portal with the same systemName or userName already exists.
      *
-     * Generate a systemName if called with sName == null and 
+     * Generate a systemName if called with sName == null and
      * non null userName.
      */
     public Portal createNewPortal(String sName, String userName) {

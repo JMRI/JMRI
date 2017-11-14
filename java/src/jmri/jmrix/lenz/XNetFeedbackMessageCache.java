@@ -33,7 +33,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
     }
 
     // requestCachedStateFromLayout
-    // provide any cached state to the turnout.  Otherwise, call the turnout's 
+    // provide any cached state to the turnout.  Otherwise, call the turnout's
     // requestUpdateFromLayout() method.
     // @param turnout - the XNetTurnout object we are requesting data for.
     synchronized public void requestCachedStateFromLayout(XNetTurnout turnout) {

@@ -8,18 +8,18 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LnPr2ThrottleManagerTest {
 
     @Test
-    public void testCTor() { 
+    public void testCTor() {
         LnPr2ThrottleManager t = new LnPr2ThrottleManager(new LocoNetSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
     @Test
-    public void testSetAndGettActiveAddress() { 
+    public void testSetAndGettActiveAddress() {
         LnPr2ThrottleManager t = new LnPr2ThrottleManager(new LocoNetSystemConnectionMemo());
         t.requestThrottleSetup(new jmri.DccLocoAddress(3,false));
         Assert.assertEquals("activeAddress",new jmri.DccLocoAddress(3,false),t.getActiveAddress());

@@ -300,7 +300,7 @@
               <text>CV64</text>
             </label>
           </row>
-          <separator/>          
+          <separator/>
           <row>
             <label>
               <text>0</text>
@@ -358,14 +358,14 @@
         <separator/>
         <label>
           <text>   </text>
-        </label>        
+        </label>
         <column>
           <row>
             <label>
               <text>CV61</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>0</text>
@@ -420,10 +420,10 @@
         <label>
           <text>   </text>
         </label>
-        <separator/> 
+        <separator/>
         <label>
           <text>   </text>
-        </label>               
+        </label>
         <column>
           <row>
             <label>
@@ -431,7 +431,7 @@
               <text xml:lang="it">Bianco</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>F1</text>
@@ -485,7 +485,7 @@
         </column>
         <label>
           <text>   </text>
-        </label>   
+        </label>
         <column>
           <row>
             <label>
@@ -493,7 +493,7 @@
               <text xml:lang="it">Giallo</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>F2</text>
@@ -547,7 +547,7 @@
         </column>
         <label>
           <text>   </text>
-        </label>    
+        </label>
         <column>
           <row>
             <label>
@@ -555,7 +555,7 @@
               <text xml:lang="it">Verde</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>F3</text>
@@ -609,7 +609,7 @@
         </column>
         <label>
           <text>   </text>
-        </label>      
+        </label>
         <column>
           <row>
             <label>
@@ -617,7 +617,7 @@
               <text xml:lang="it">Viola</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>F4</text>
@@ -672,10 +672,10 @@
         <label>
           <text>   </text>
         </label>
-        <separator/>  
+        <separator/>
         <label>
           <text>   </text>
-        </label>              
+        </label>
         <column>
           <row>
             <label>
@@ -683,7 +683,7 @@
               <text xml:lang="it">Transponding</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>OFF</text>
@@ -767,7 +767,7 @@
       </label>
       <label>
         <text> </text>
-      </label>           
+      </label>
       <display item="Transponding" format="radiobuttons"/>
       <label>
         <text> </text>
@@ -775,7 +775,7 @@
       <display item="ControlFn">
         <tooltip>Refer to table above for full function mapping</tooltip>
         <tooltip xml:lang="it">Refer to table above for full function mapping</tooltip>
-      </display>      
+      </display>
       <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0 or F1' is not selected above">
         <tooltip>Do not check this box if 'F0 or F1' is not selected above</tooltip>
         <tooltip xml:lang="it">Non spuntare questo box se 'F0 o F1' non è stato selezionato</tooltip>
@@ -798,11 +798,11 @@
       </display>
       <label>
         <text> </text>
-      </label>        
+      </label>
       <display item="Effect Rate Y">
           <label>Effect Rate Yellow Lead (deprecated)</label>
           <tooltip>Ineffective in recent versions of this decoder - Digitrax doc. not up-to-date</tooltip>
-      </display>  
+      </display>
     </column>
     <name>Function Output</name>
     <name xml:lang="it">Uscita Funzione</name>

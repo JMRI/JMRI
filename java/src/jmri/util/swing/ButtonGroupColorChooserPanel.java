@@ -53,7 +53,7 @@ public class ButtonGroupColorChooserPanel extends AbstractColorChooserPanel {
         // build the combo box.
         colorButtonGroup  = new ButtonGroup();
         for (int i = 0; i < numColors; i++) {
-            addButton(colorButtonGroup,colorCode[i],Bundle.getMessage(colorText[i]));   
+            addButton(colorButtonGroup,colorCode[i],Bundle.getMessage(colorText[i]));
         }
     }
 

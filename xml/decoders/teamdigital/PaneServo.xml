@@ -22,7 +22,7 @@
          <label label="---- Servo Configuration ----"/>
          <label label=" "/>
         </column>
-      </row>         
+      </row>
       <row>
         <column>
           <label label="---- Servo 1 Controlled by Logic Cell 17"/>

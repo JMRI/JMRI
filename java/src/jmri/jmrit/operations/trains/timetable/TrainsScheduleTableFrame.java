@@ -83,7 +83,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     // check boxes
     // panel
     JPanel schedule = new JPanel();
-    
+
     // text area
     JTextArea commentTextArea = new JTextArea(2, 70);
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -99,13 +99,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         trainsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         trainsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         trainsScheduleModel.initTable(trainsScheduleTable, this);
-        
+
         // row comment
         JPanel pC = new JPanel();
         pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         pC.setLayout(new GridBagLayout());
         addItem(pC, commentScroller, 1, 0);
-        
+
         // adjust text area width based on window size
         adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
@@ -180,7 +180,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         getContentPane().add(trainsPane);
         getContentPane().add(controlPane);
-        
+
         // show run button only if create CSV files is enabled
         updateRunButton();
 
@@ -408,7 +408,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         activateButton.setEnabled(getSelectedScheduleId() != null
                 && !getSelectedScheduleId().equals(trainManager.getTrainScheduleActiveId()));
-        
+
         commentTextArea.setEnabled(enable);
     }
 
@@ -452,7 +452,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         switchListsButton.setBackground(Color.GREEN);
     }
-    
+
     private void updateRunButton() {
         runFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
     }

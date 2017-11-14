@@ -10,7 +10,7 @@ import jmri.jmrit.operations.trains.TrainSwitchLists;
  * Swing action to preview or print a switch list for a location.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class PrintSwitchListAction extends AbstractAction {
 

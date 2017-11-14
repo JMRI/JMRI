@@ -150,7 +150,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     int lightState() {
         if (light != null) {
             return light.getState();
-        } // This doesn't seem right. (Light.UNKNOWN = Light.ON = 0X01)  
+        } // This doesn't seem right. (Light.UNKNOWN = Light.ON = 0X01)
         //else return Light.UNKNOWN;
         else {
             return Light.INCONSISTENT;

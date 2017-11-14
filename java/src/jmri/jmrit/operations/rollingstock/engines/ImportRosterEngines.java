@@ -45,7 +45,7 @@ public class ImportRosterEngines extends Thread {
         textId.setVisible(true);
         fstatus.setVisible(true);
 
-        // Now get engines from the JMRI roster 
+        // Now get engines from the JMRI roster
         int enginesAdded = 0;
 
         List<RosterEntry> engines = Roster.getDefault().matchingList(null, null, null, null, null, null, null);

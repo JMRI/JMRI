@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * custom manifests.
  *
  * @author Dan Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
 

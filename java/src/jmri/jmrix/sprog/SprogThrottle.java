@@ -177,7 +177,7 @@ public class SprogThrottle extends AbstractThrottle {
     public void setSpeedSetting(float speed) {
         int mode = getSpeedStepMode();
         if ((mode & DccThrottle.SpeedStepMode28) != 0) {
-            // 28 step mode speed commands are 
+            // 28 step mode speed commands are
             // stop, estop, stop, estop, 4, 5, ..., 31
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;

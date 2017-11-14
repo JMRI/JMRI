@@ -80,10 +80,10 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         super.pack();
         Point loc;
         if (_shape == null) {
-            loc = new Point(200, 100);                
+            loc = new Point(200, 100);
         } else {
             loc = _shape.getLocation();
-            loc = new Point(loc.x + _shape.getWidth(), loc.y + _shape.getHeight());                                
+            loc = new Point(loc.x + _shape.getWidth(), loc.y + _shape.getHeight());
         }
         super.setLocation(loc);
         super.setVisible(true);
@@ -107,9 +107,9 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         panel.add(Box.createVerticalStrut(10));
         p.add(panel);
         p.add(Box.createHorizontalGlue());
-        return p;    
+        return p;
     }
-    
+
     private void addLabel(JPanel panel, String text) {
         JLabel label = new JLabel(Bundle.getMessage(text));
         label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
@@ -286,7 +286,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _contentPanel.removeAll();
         _contentPanel.add(makeInstructions());
         _contentPanel.add(makeEditPanel());
-        
+
         _lineWidth = _shape.getLineWidth();
         _lineSlider.setValue(_lineWidth);
         _lineColor = _shape.getLineColor();
@@ -304,7 +304,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         }
 
         _contentPanel.add(makeParamsPanel());
-        _contentPanel.add(makeSensorPanel());            
+        _contentPanel.add(makeSensorPanel());
         _sensorName.setText(_shape.getSensorName());
         _levelComboBox.setSelectedIndex(_shape.getChangeLevel());
         if (_shape.isHideOnSensor()) {
@@ -387,7 +387,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         } else {
             _fillColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
             if (_shape != null) {
-                _shape.setFillColor(_fillColor);                
+                _shape.setFillColor(_fillColor);
             }
         }
         updateShape();
@@ -410,7 +410,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     }
 
 /*
- *   disabled for deal to satisfy P Bender    
+ *   disabled for deal to satisfy P Bender
     protected void setDrawParams() {
         TargetPane targetPane = (TargetPane) _parent.getEditor().getTargetPanel();
         Stroke stroke = new BasicStroke(_lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10f);
@@ -434,7 +434,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             _shape.editing(false);
             ((ControlPanelEditor)_shape.getEditor()).getShapeDrawer().closeDrawFrame();
         }
-        _shape = null;  // tells ShapeDrawer creation and editing is finished. 
+        _shape = null;  // tells ShapeDrawer creation and editing is finished.
         dispose();
     }
 

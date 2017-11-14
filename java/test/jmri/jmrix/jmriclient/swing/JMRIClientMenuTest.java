@@ -20,10 +20,10 @@ public class JMRIClientMenuTest {
 
     private JMRIClientTrafficController tc = null;
     private JMRIClientSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMRIClientMenu action = new JMRIClientMenu(m);
         Assert.assertNotNull("exists", action);
     }

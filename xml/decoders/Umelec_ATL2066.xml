@@ -587,7 +587,7 @@
         </enumVal>
         <label>Exponential brake curve</label>
 		<label xml:lang="de">Exponentielle Abbremskurve</label>
-      </variable>      
+      </variable>
       <variable CV="49" mask="XXXVXXXX" item="ATL1-E">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Starter steam</label>
@@ -759,7 +759,7 @@
         </enumVal>
         <label>Sound Dependency</label>
 		<label xml:lang="de">Anhalte Methode</label>
-      </variable>	  
+      </variable>	
       <variable CV="52" default="50" comment="Range 0-250" item="Signal-E">
         <decVal max="250"/>
         <label>Departure Delay</label>
@@ -1029,7 +1029,7 @@
       <label>
         <text>CV 51 Configuration byte ATL 3, Defines options concerning braking by steps</text>
 		<text xml:lang="de">CV 51, ATL Konfiguration 3, Definiert Optionen bezüglich Stufenbremsen</text>
-	  </label>	
+	  </label>
 	  <display item="ATL3-A" layout="left" format="default"/>
 	  <display item="ATL3-B" layout="left" format="default"/>
 	  <display item="ATL3-C" layout="left" format="default"/>

@@ -37,7 +37,7 @@
 	<enumVal>
 	  <enumChoice choice="None">
 		<choice>None</choice>
-		<choice xml:lang="de">Kein</choice>			
+		<choice xml:lang="de">Kein</choice>
 	  </enumChoice>
 	  <enumChoice choice="F1">
 		<choice>F1</choice>
@@ -79,46 +79,46 @@
 	<label>F-Button Used For Dimming</label>
 	<label xml:lang="de">Nummer der F-Funktion die abblendet</label>
 	<tooltip>F-Button Used For Dimming</tooltip>
-	<tooltip xml:lang="de">definiert die Taste die man zum Abblenden benützt</tooltip>			
+	<tooltip xml:lang="de">definiert die Taste die man zum Abblenden benützt</tooltip>
   </variable>
   <variable CV="118" mask="XXXXXXXV" item="Dim FL(f)" default="0" minOut="2" exclude="DCX32">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Dim FL(f)</label>
-	<label xml:lang="de">Dimmen FL(f)</label>		
+	<label xml:lang="de">Dimmen FL(f)</label>
   </variable>
   <variable CV="118" mask="XXXXXXVX" item="Dim FL(r)" default="0" minOut="2" exclude="DCX32">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Dim FL(r)</label>
-	<label xml:lang="de">Dimmen FL(r)</label>		
+	<label xml:lang="de">Dimmen FL(r)</label>
   </variable>
   <variable CV="118" mask="XXXXXVXX" item="Dim F 1" default="0" minOut="3" exclude="DCX32">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Dim F1</label>
-	<label xml:lang="de">Dimmen F1</label>		
+	<label xml:lang="de">Dimmen F1</label>
   </variable>
   <variable CV="118" mask="XXXXVXXX" item="Dim F 2" default="0" minOut="4" exclude="DCX32">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Dim F 2</label>
-	<label xml:lang="de">Dimmen F2</label>			
+	<label xml:lang="de">Dimmen F2</label>
   </variable>
   <variable CV="118" mask="XXXVXXXX" item="Dim F 3" default="0" minOut="5" exclude="DCX32">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Dim F3</label>
-	<label xml:lang="de">Dimmen F3</label>			
+	<label xml:lang="de">Dimmen F3</label>
   </variable>
   <variable CV="118" mask="XXVXXXXX" item="Dim F 4" default="0" minOut="6" exclude="DCX32">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Dim F4</label>
-	<label xml:lang="de">Dimmen F4</label>			
+	<label xml:lang="de">Dimmen F4</label>
   </variable>
   <variable CV="118" mask="XVXXXXXX" item="Dim F 5" default="0" minOut="7" exclude="DCX32">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Dim F5</label>
-	<label xml:lang="de">Dimmen F5</label>			
+	<label xml:lang="de">Dimmen F5</label>
   </variable>
   <variable CV="118" mask="VXXXXXXX" item="Dim F 6" default="0" minOut="8" exclude="DCX32">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Dim F6</label>
-	<label xml:lang="de">Dimmen F6</label>			
+	<label xml:lang="de">Dimmen F6</label>
   </variable>
 </variables>

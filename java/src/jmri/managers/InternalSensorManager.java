@@ -17,7 +17,7 @@ public class InternalSensorManager extends AbstractSensorManager {
     public InternalSensorManager() {
         log.debug("InternalSensorManager constructed");
     }
-    
+
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;

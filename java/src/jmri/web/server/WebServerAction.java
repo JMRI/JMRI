@@ -44,7 +44,7 @@ public class WebServerAction extends JmriAbstractAction {
 
     @Override
     public jmri.util.swing.JmriPanel makePanel() { return null; } // not used by this classes actionPerformed, as it doesn't show anything
-    
+
     private static class ServerThread extends Thread {
 
         @Override

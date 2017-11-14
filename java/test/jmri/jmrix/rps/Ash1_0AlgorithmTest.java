@@ -111,7 +111,7 @@ public class Ash1_0AlgorithmTest {
     public void setUp() {
         Log4JFixture.setUp();
     }
-    
+
     @After
     public void tearDown() {
         Log4JFixture.tearDown();

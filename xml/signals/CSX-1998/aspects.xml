@@ -17,11 +17,11 @@
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
         <email>dick@rr-cirkits.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -30,7 +30,7 @@
         <date>2011-06-20</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
@@ -216,6 +216,6 @@
     <appearancefile href="appearance-CLS-3-hi.xml"/>
     <appearancefile href="appearance-CLS-3-lo.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

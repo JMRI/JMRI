@@ -21,10 +21,10 @@ public class NmraNetComponentFactoryTest {
 
     private TrafficController tc = null;
     private CanSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NmraNetComponentFactory action = new NmraNetComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

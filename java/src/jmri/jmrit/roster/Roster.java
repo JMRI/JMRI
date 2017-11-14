@@ -811,7 +811,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             throw new IllegalArgumentException("makeValidFilename requires non-empty argument");
         }
 
-        // name sure there are no bogus chars in name        
+        // name sure there are no bogus chars in name
         String cleanName = entry.replaceAll("[\\W]", "_");  // remove \W, all non-word (a-zA-Z0-9_) characters // NOI18N
 
         // ensure suffix
@@ -826,7 +826,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param name filename of roster file
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
-        // roster exists?  
+        // roster exists?
         if (!(new File(name)).exists()) {
             log.debug("no roster file found; this is normal if you haven't put decoders in your roster yet");
             return;

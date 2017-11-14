@@ -9,7 +9,7 @@ import jmri.Turnout;
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
- * 
+ *
  */
 public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 

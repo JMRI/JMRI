@@ -72,12 +72,12 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     abstract public void setIntValue(int i);
 
-    /** 
+    /**
      * Set value from a String value.
      * <p>
-     * The current implementation is a stand-in.  Note that 
-     * e.g. Speed Tables don't use a single Int, so will 
-     * just be skipped. The solution to that is to overload this in 
+     * The current implementation is a stand-in.  Note that
+     * e.g. Speed Tables don't use a single Int, so will
+     * just be skipped. The solution to that is to overload this in
      * complicated variable types.
      */
     public void setValue(String value) {
@@ -88,7 +88,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             log.debug("skipping set of non-integer value \"{}\"", value);
         }
     }
-    
+
     /**
      * Get the value as a single number.
      *
@@ -314,7 +314,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public void setToRead(boolean state) {
         boolean newState = state;
 
-        // if this variable is disabled, then don't read, unless 
+        // if this variable is disabled, then don't read, unless
         // some other variable has already set that
         if (!getAvailable() && !state) { // do want to set when state is true
             log.debug("Variable not available, skipping setToRead(false) to leave as is");
@@ -349,7 +349,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public void setToWrite(boolean state) {
         boolean newState = state;
 
-        // if this variable is disabled, then don't write, unless 
+        // if this variable is disabled, then don't write, unless
         // some other variable has already set that
         if (!getAvailable() && !state) { // do want to set when state is true
             log.debug("Variable not available, skipping setToRead(false) to leave as is");

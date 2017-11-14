@@ -174,7 +174,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             userColumn.setResizable(true);
             TableColumn commentColumn = assignmentColumnModel.getColumn(AssignmentTableModel.COMMENT_COLUMN);
             userColumn.setMinWidth(90);
-            userColumn.setMaxWidth(250);			
+            userColumn.setMaxWidth(250);
             userColumn.setResizable(true);
             JScrollPane assignmentScrollPane = new JScrollPane(assignmentTable);
             assignmentPanel.add(assignmentScrollPane, BorderLayout.CENTER);
@@ -424,13 +424,13 @@ public class ListFrame extends jmri.util.JmriJFrame {
              else if (c==COMMENT_COLUMN) // c2
                 {
                 String  sName = null;
-                if (curRow!=r) 
+                if (curRow!=r)
                 {
-                    if (inputSelected) 
+                    if (inputSelected)
                     {
                      sName = _memo.isInputBitFree(selNodeNum,(r+1));
                     }
-                    else 
+                    else
                     {
                      sName = _memo.isOutputBitFree(selNodeNum,(r+1));
                     }
@@ -447,7 +447,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     return (_memo.getUserNameFromSystemName(sName));
                 }
             }
-            
+
             return "";
         }
 

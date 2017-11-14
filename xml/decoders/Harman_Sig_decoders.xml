@@ -31,8 +31,8 @@
         <output name="8" label="Output H"/>
       </model>
       <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
-        <!--productID=57379 should match Version=E023Hex    
-			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35) 
+        <!--productID=57379 should match Version=E023Hex
+			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35)
 			-->
         <output name="1" label="Output A"/>
         <output name="2" label="Output B"/>
@@ -117,7 +117,7 @@
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="-4"/>
         <label>                    output A</label>
       </variable>
-      <!-- comment these out as unnecessary 
+      <!-- comment these out as unnecessary
       <variable label="                    outputs 3+4" CV="1" mask="VVVVVVVV" default="2" item="Output Lenz 2nd Address" tooltip="Range 2-2044" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="-3"/>
       </variable>
@@ -132,7 +132,7 @@
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="0"/>
         <label>                    output A</label>
       </variable>
-      <!-- comment out as unnecessary 
+      <!-- comment out as unnecessary
       <variable label="                    outputs 3+4" CV="1" mask="VVVVVVVV" default="2" item="Output Roco 2nd Address" tooltip="Range 2-2048" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="1"/>
       </variable>
@@ -597,7 +597,7 @@
       </variable>
       <!--  firmware version is actually CV112 and CV113, CV112 being usually value E0.  But a SplitVal with HEX formatting doesn't work.
 	  <variable label="Firmware sub-version" CV="113" readOnly="yes" default="0" item="User Id #1" tooltip="Firmware sub-version (read only)">
-        <splitVal highCV="112" upperMask="VVVVVVVV" /> 
+        <splitVal highCV="112" upperMask="VVVVVVVV" />
       </variable>
 	  -->
       <!--  Variables 192 to 223 for 32 custom aspects, V023 (productID=57379) and later -->

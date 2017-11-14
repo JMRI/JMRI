@@ -9,7 +9,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Joan</firstname><surname>Carrancà</surname></personname>
@@ -18,13 +18,13 @@
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Oscar</firstname><surname>Moutinho</surname></personname>
         <email>oscar.moutinho@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
-    
+
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
@@ -56,7 +56,7 @@
   <name>Single block signal</name>
   <reference>See <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a> or the <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29">Wikipedia</a></reference>
   <description>Signal to use in blocks, without distant signal head</description>
-  
+
   <appearances>
 
     <appearance>
@@ -86,4 +86,4 @@
     </held>
   </specificappearances><!-- End of Specific Appearances list -->
 
-</appearancetable>  
+</appearancetable>

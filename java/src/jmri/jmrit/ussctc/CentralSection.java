@@ -14,10 +14,10 @@ public interface CentralSection<To extends Enum<To>, From extends Enum<From>> {
      * @return The value to be conveyed to the field.
      */
     public To codeSendStart();
-    
+
     /**
      * Provides the code sequence to the central CTC machine at the end of the indication-send operation
      */
-    public void indicationComplete(From value);    
-    
+    public void indicationComplete(From value);
+
 }

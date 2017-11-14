@@ -24,7 +24,7 @@ public class JmriSRCPServiceHandler extends jmri.jmris.ServiceHandler {
 
     private long _session_number = 0;
 
-    // _client_version holds the SRCP version the client supplied to the 
+    // _client_version holds the SRCP version the client supplied to the
     // server durring handshake.
     private String _client_version = "";
 

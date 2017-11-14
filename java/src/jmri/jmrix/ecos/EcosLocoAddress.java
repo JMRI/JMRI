@@ -209,7 +209,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
 
     /*
      The Temporary Entry Field is used to determine if JMRI has had to create the entry on an ad-hoc basis
-     for the throttle.  If this is set to True, the throttle can evaluate this field to determine if the 
+     for the throttle.  If this is set to True, the throttle can evaluate this field to determine if the
      loco should be removed from the Ecos Database when closing the application.
      */
     boolean _tempEntry = false;

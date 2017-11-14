@@ -31,7 +31,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -117,7 +117,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignore messages.
      */
@@ -125,7 +125,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     public void message(SerialMessage m) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignore replies.
      */

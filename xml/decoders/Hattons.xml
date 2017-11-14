@@ -1591,7 +1591,7 @@
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane> 
+  <pane>
     <name>Momentum</name>
     <column>
       <label label="If Accel 2, 3 and Decel 2, 3 are all set to zero,"/>

@@ -50,7 +50,7 @@ public class SRCPMessageTest {
        Assert.assertTrue("POWER ON",m1.isEnableMain());
        Assert.assertFalse("POWER OFF",m2.isEnableMain());
        Assert.assertFalse("Bad POWER message",m3.isEnableMain());
-    } 
+    }
 
     //Test canned message formats
     @Test

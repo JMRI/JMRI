@@ -20,9 +20,9 @@
     <!--  Version 1 - First version of Hornby TTS sound decoder, based on manual for Duke of Gloucester from Hornby website. -->
     <!--  Version 1.1 adds Class 37 diesel, from manuals posted by user on jmriusers Yahoo Group. 	-->
     <!--  Version 1.2, update to include more recent TTS releases and product ID numbers,  May/June 2016
-            From now on, product IDs follow numeric form, used by Hornby in their documentation. 
+            From now on, product IDs follow numeric form, used by Hornby in their documentation.
             Code change in JMRI to allow automatic identification on CV159 (product number) added to make use of these numbers.
-            Product ID's: 
+            Product ID's:
                 Class 37 = 147   (and "Cl37" label carried over from v1.1)
                 Class 40 = 151
                 Class 47 = 149

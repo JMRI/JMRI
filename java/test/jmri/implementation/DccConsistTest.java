@@ -28,7 +28,7 @@ public class DccConsistTest extends AbstractConsistTestBase {
         JUnitUtil.setUp();        jmri.util.JUnitUtil.initDebugProgrammerManager();
         c = new DccConsist(new DccLocoAddress(12, true));
     }
-   
+
     @After
     @Override
     public void tearDown() {

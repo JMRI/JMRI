@@ -25,7 +25,7 @@ public class NceProgrammerManagerTest extends TestCase {
     public void test_USB_SYSTEM_POWERCAB_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
         memo.setNceCmdGroups(NceTrafficController.CMDS_PROGTRACK);
-        
+
         Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
         Assert.assertNotNull("global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
         Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
@@ -34,7 +34,7 @@ public class NceProgrammerManagerTest extends TestCase {
     public void test_USB_SYSTEM_SB3_NO_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
         memo.setNceCmdGroups(0);
-        
+
         Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
         Assert.assertNotNull("global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
         Assert.assertNull("no global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
@@ -61,15 +61,15 @@ public class NceProgrammerManagerTest extends TestCase {
     // The minimal setup is for log4J
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        
+
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
     }
 
     @Override
-    public void tearDown() {        
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

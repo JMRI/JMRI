@@ -547,7 +547,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                             log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex );
                         }
                     }
-                    
+
                     // process complete, update GUI
                     try {
                         javax.swing.SwingUtilities.invokeAndWait(()->{
@@ -555,7 +555,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                             suppressUpdate = false;
                             m.fireTableDataChanged();
                             if (genSect.isSelected()) {
-                                ((jmri.managers.DefaultSignalMastLogicManager) 
+                                ((jmri.managers.DefaultSignalMastLogicManager)
                                     InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
                             }
                         });

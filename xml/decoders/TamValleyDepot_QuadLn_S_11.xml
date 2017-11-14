@@ -19,7 +19,7 @@
 			<model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6"/>
 		</family>
 		<programming direct="no" paged="yes" register="no" ops="yes"/>
-		
+
 		<variables>
             <variable item="Expansion" CV="11" mask="XXXXXXVV" default="0">
 				<enumVal>
@@ -97,7 +97,7 @@
 			</variable>
 
 			<variable item="Lock Start Address" CV="13" mask="VVVVVVVV" default="100">
-				<splitVal highCV="14" upperMask="XXXXXVVV" offset="1" /> 
+				<splitVal highCV="14" upperMask="XXXXXVVV" offset="1" />
 			</variable>
 
 			<variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
@@ -124,21 +124,21 @@
 			</variable>
 
 			<variable item="Main IO Start Address" CV="9" mask="VVVVVVVV" default="0">
-				<splitVal highCV="10" upperMask="XXXXVVVV" offset="1" /> 
+				<splitVal highCV="10" upperMask="XXXXVVVV" offset="1" />
 			</variable>
 
 			<variable item="Aux IO Start Address" CV="15" mask="VVVVVVVV" default="4">
-				<splitVal highCV="16" upperMask="XXXXVVVV" offset="1" /> 
+				<splitVal highCV="16" upperMask="XXXXVVVV" offset="1" />
 			</variable>
-            
+
 			<variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
                 <enumVal>
                     <enumChoice choice="" />
                 </enumVal>
             </variable>
-            
+
         <!-- the .xsl file will insert here -->
-        
+
         </variables>
 
 		<resets>
@@ -154,7 +154,7 @@
 		</resets>
 	</decoder>
 
-	<pane> 
+	<pane>
         <name>Quad-LN_S</name>
        <column>
             <row>
@@ -403,7 +403,7 @@
 	<pane>
         <name>Routes</name>
  	</pane>
-    
+
 	<pane>
         <name>LED 1-12</name>
         <qualifier>
@@ -420,7 +420,7 @@
             <value>1</value>
         </qualifier>
    </pane>
-                
+
     <pane>
         <name>Aspect 1-8</name>
         <qualifier>

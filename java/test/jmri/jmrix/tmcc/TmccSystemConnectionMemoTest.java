@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  */
 public class TmccSystemConnectionMemoTest {
-     
+
     TmccSystemConnectionMemo memo = null;
 
     @Test

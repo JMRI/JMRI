@@ -65,7 +65,7 @@ public class SignalHeadSignalMastTest {
 
     @Test
     public void testTwoNameSe8cHeadCtorOK() {
-        // create the SE8c heads 
+        // create the SE8c heads
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH:SE8C:\"255\";\"256\"") {
                     @Override
@@ -81,7 +81,7 @@ public class SignalHeadSignalMastTest {
                 }
         );
 
-        // test uses those        
+        // test uses those
         new SignalHeadSignalMast("IF$shsm:AAR-1946:PL-2-high(IH:SE8C:\"255\";\"256\")(IH:SE8C:\"257\";\"258\")", "user");
     }
 

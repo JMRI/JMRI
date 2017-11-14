@@ -36,7 +36,7 @@
     <label>
       <text> </text>
     </label>
-    
+
 
     <display item="Influence of Acceleration on Diesel Sound Steps">
         <!--label>Influence of Acceleration on Diesel Sound Steps</label-->
@@ -50,11 +50,11 @@
         <!--label>Limitation of Acceleration on Diesel Sound Steps</label-->
         <!--label xml:lang="cs">Omezení zrychlení na zvuk stupňů spalovacího motoru</label-->
         </display>
-    
-    <label>    
-    <text> </text>    
+
+    <label>
+    <text> </text>
     </label>
-    
+
     <display item="Fn key driving solo">
         <!--label>Fn key driving solo</label-->
         <!--label xml:lang="cs">Funkční klávesa pro strojovou jízdu</label-->
@@ -71,8 +71,8 @@
         <!--label>Solo change idle only</label-->
         <!--label xml:lang="cs">Strojová jízda volnoběh</label-->
         </display>
-        
-        
+
+
     <display item="Momentum reduction when driving solo">
         <!--label>Momentum reduction when driving solo</label-->
         <!--label xml:lang="cs">Snížení hybnosti při strojové jízdě</label-->
@@ -81,11 +81,11 @@
         <!--label>Driving idle sound speed step threshold</label-->
         <!--label xml:lang="cs">Práh rychlostního stupně pro jízdu na volnoběh</label-->
         </display>
-        
+
     <label>
     <text> </text>
     </label>
-    
+
     <display item="Function Key for Coasting"/>
     <display item="Sound Slot during Coasting"/>
 
@@ -97,7 +97,7 @@
         <!--label>Speed change for automatic coasting</label-->
         <!--label xml:lang="cs">Změna rychlosti pro automatický výběh</label-->
         </display>
-    
+
   </column>
   <column>
     <label>

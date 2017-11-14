@@ -63,7 +63,7 @@
       <reference>Page 146</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_Dwarf/Rule-W292.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Stop-Throw Switch</aspectname>
       <show>dark</show>
@@ -141,7 +141,7 @@
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Stop-Throw Switch</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>

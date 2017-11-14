@@ -19,7 +19,7 @@
 		Removed link to doehler_haass/Pane_map_adv.xml (F1(r), F2(r), as well as dimming/shuting now in std JMRI map pane)
 		-->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20130731"/>
-  <!-- 1 2014/10/14 Creation 
+  <!-- 1 2014/10/14 Creation
 		First decoder template for the Doehler & Haass SD18A combo sound decoder
 		for the Next18 digital interface.
 		Requires variables and panes as defined in the doehler_hass/ folder.

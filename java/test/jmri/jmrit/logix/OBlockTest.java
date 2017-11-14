@@ -29,7 +29,7 @@ public class OBlockTest {
     public void testCTor(){
        Assert.assertNotNull("OBlock Creation",new OBlock("OB01"));
     }
- 
+
    @Test
     public void testCTor2Param(){
        Assert.assertNotNull("OBlock Creation",new OBlock("OB01","test OBlock"));
@@ -60,19 +60,19 @@ public class OBlockTest {
         Assert.assertTrue("Block.UNKNOWN != OBlock.TRACK_ERROR", Block.UNKNOWN != OBlock.TRACK_ERROR);
         Assert.assertTrue("Block.UNKNOWN != OBlock.UNOCCUPIED", Block.UNKNOWN != OBlock.UNOCCUPIED);
     }
-    
+
     @Test
     public void testSetSensor()  throws Exception {
         OBlock b = blkMgr.createNewOBlock("OB100", "a");
         Assert.assertFalse("setSensor", b.setSensor("foo"));
         Assert.assertNull("getSensor", b.getSensor());
-        
+
         SensorManager sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor s1 = sensorMgr.newSensor("IS1", "sensor1");
         Assert.assertTrue("setSensor", b.setSensor("sensor1"));
         Assert.assertEquals("getSensor", s1, b.getSensor());
         Assert.assertEquals("state unknown", OBlock.UNKNOWN, b.getState());
-        
+
         Assert.assertTrue("dup setSensor", b.setSensor("IS1"));
         Assert.assertEquals("dup getSensor s1", s1, b.getSensor());
         Assert.assertEquals("dup state unknown", OBlock.UNKNOWN, b.getState());
@@ -94,14 +94,14 @@ public class OBlockTest {
         OBlock b = blkMgr.createNewOBlock("OB101", "b");
         Assert.assertFalse("setErrorSensor foo", b.setErrorSensor("foo"));
         Assert.assertNull("getErrorSensor foo", b.getErrorSensor());
-        
+
         SensorManager sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor se = sensorMgr.newSensor("ISE1", "error1");
         se.setState(Sensor.ACTIVE);
         Assert.assertTrue("setErrorSensor only", b.setErrorSensor("error1"));
         Assert.assertEquals("getErrorSensor only", se, b.getErrorSensor());
         Assert.assertEquals("state error only", OBlock.TRACK_ERROR | OBlock.UNDETECTED, b.getState());
-        
+
         Sensor s1 = sensorMgr.newSensor("IS1", "sensor1");
         s1.setState(Sensor.ACTIVE);
         Assert.assertTrue("setSensor", b.setSensor("IS1"));
@@ -121,7 +121,7 @@ public class OBlockTest {
         Assert.assertNull("Allocate w1", b.allocate(w1));
         Assert.assertEquals("state allocated & dark", OBlock.ALLOCATED|OBlock.UNDETECTED, b.getState());
         Assert.assertEquals("Allocate w2", Bundle.getMessage("AllocatedToWarrant", w1.getDisplayName(), b.getDisplayName()), b.allocate(w2));
-        
+
         Assert.assertEquals("path not set", Bundle.getMessage("PathNotFound", "PathName", b.getDisplayName()), b.setPath("PathName", w1));
         OPath path1 = new OPath(b, "path1");
         b.addPath(path1);
@@ -134,14 +134,14 @@ public class OBlockTest {
         Assert.assertEquals("Allocate oos", Bundle.getMessage("BlockOutOfService", b.getDisplayName()), b.allocate(w2));
         Assert.assertEquals("state not allocated, dark", OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE, b.getState());
     }
-    
+
     @Test
     public void testSensorChanges() throws Exception {
         OBlock b = blkMgr.createNewOBlock("OB103", null);
         Warrant w0 = new Warrant("IW0", "war0");
         b.setOutOfService(true);
         Assert.assertEquals("state OutOfService & dark", OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE, b.getState());
-       
+
         SensorManager sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor s0 = sensorMgr.newSensor("IS0", "sensor0");
         Assert.assertTrue("setSensor", b.setSensor("sensor0"));
@@ -186,11 +186,11 @@ public class OBlockTest {
         Assert.assertNotNull("Get Portal", p);
         b.removePortal(p);
         Assert.assertEquals("One portals", 1, b.getPortals().size());
-        
-        jmri.util.JUnitAppender.assertWarnMessage("Portal \"foop\" from block \"null\" to block \"null\" not in block OB0"); 
-        jmri.util.JUnitAppender.assertWarnMessage("Portal \"barp\" from block \"null\" to block \"null\" not in block OB0"); 
+
+        jmri.util.JUnitAppender.assertWarnMessage("Portal \"foop\" from block \"null\" to block \"null\" not in block OB0");
+        jmri.util.JUnitAppender.assertWarnMessage("Portal \"barp\" from block \"null\" to block \"null\" not in block OB0");
     }
-        
+
     @Test
     public void testAddPath() {
         OBlock b = blkMgr.createNewOBlock("OB1", "");
@@ -208,20 +208,20 @@ public class OBlockTest {
         OPath path2 = new OPath(bb, "path2");
         Assert.assertFalse("path2 not in block", b.addPath(path2));
         Assert.assertEquals("path2 not in block", 1, b.getPaths().size());
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"path2\" already in block OB2, cannot be added to block OB1"); 
-        
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"path2\" already in block OB2, cannot be added to block OB1");
+
         Assert.assertFalse("path1 already in block", b.addPath(path1));
         Assert.assertEquals("path1 already in block", 1, b.getPaths().size());
         OPath path11 = new OPath(b, "path1");
         Assert.assertFalse("path with name \"path1\" already in block", b.addPath(path11));
         Assert.assertEquals("path with name \"path1\" already in block", 1, b.getPaths().size());
-        
+
         path2 = new OPath("path2", b, portalMgr.providePortal("bar"), null, null);
         portalMgr.providePortal("bar").addPath(path2);
         portalMgr.providePortal("bar").setToBlock(b, false);
         Assert.assertTrue("path2 in block", b.addPath(path2));
         Assert.assertEquals("get \"path1\"", path1, b.getPathByName("path1"));
-        
+
         b.removePath(path1);
         b.removePath(path2);
         Assert.assertEquals("no paths", 0, b.getPaths().size());
@@ -234,7 +234,7 @@ public class OBlockTest {
         b = blkMgr.getBySystemName("OB99");
         Assert.assertEquals("UserName not kept", "99user", b.getUserName());
     }
-    
+
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before

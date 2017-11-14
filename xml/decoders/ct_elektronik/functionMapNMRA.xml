@@ -238,11 +238,11 @@
   <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output 6</label>
-  </variable>		
+  </variable>
   <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output 7</label>
-  </variable>      
+  </variable>
   <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output 8</label>

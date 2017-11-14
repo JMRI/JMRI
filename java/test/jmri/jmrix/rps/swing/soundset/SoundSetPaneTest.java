@@ -18,7 +18,7 @@ public class SoundSetPaneTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SoundSetPane action = new SoundSetPane();
         Assert.assertNotNull("exists", action);
     }

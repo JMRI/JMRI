@@ -42,7 +42,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
     }
 
     Vector<String> portNameVector = null;
-    
+
     @Override
     public Vector<String> getPortNames() {
         portNameVector = new Vector<String>();
@@ -60,7 +60,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         }
         return portNameVector;
     }
-    
+
     @Override
     public String openPort(String portName, String appName) {
         int[] responseCode = new int[] { -1 };
@@ -105,7 +105,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
                                     }
                                 }
                             }
-                            
+
                             @Override
                             public void serviceSearchCompleted(int transID, int respCode) {
                                 synchronized(waitObj) {
@@ -115,7 +115,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
                                     waitObj.notify();
                                 }
                             }
-                            
+
                             @Override
                             public void inquiryCompleted(int discType) { }
                             @Override
@@ -143,7 +143,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             log.error("Unknown IOException when establishing connection to " + portName);
             return IOe.getLocalizedMessage();
         }
-        
+
         if (!opened) {
             ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
             if (exception[0] != null) {
@@ -173,7 +173,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             log.error("Unknown error when connecting to " + portName);
             return "Unknown error when connecting to " + portName;
         }
-        
+
         return null; // normal operation
     }
 

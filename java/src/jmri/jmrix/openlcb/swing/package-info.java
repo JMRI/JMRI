@@ -1,6 +1,6 @@
 /**
  * Head package for Swing-based packages for JMRI's OpenLCB implementation.
- *      
+ *
  * <h2>Related Documentation</h2>
  *
  * For OpenLCB documentation, please see:

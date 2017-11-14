@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2015</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
      <author>
         <personname><firstname>Chuck</firstname><surname>Catania</surname></personname>
         <email>info@modelrailroadcontrolsystems.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -30,7 +30,7 @@
   <name>2 Head Dwarf</name>
   <reference>Non-Prototype USS H-2 Signal Masts".</reference>
   <description>Appearances for a two-searchlight dwarf signal</description>
-  
+
   <appearances>
 
     <appearance>
@@ -81,4 +81,4 @@
     </appearance>
 
   </appearances>
-</appearancetable>  
+</appearancetable>

@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Tests for the TrainCommon class 
+ * Tests for the TrainCommon class
  *
  * @author Paul Bender Copyright (C) 2015
  */

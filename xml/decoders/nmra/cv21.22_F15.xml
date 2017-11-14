@@ -37,7 +37,7 @@
       <date>2015-04-28</date>
       <authorinitials>ALM</authorinitials>
       <revremark>Extension to F9-F15 (Trix)</revremark>
-    </revision>    
+    </revision>
     <revision>
       <revnumber>1</revnumber>
       <date>2015-01-18</date>
@@ -172,5 +172,5 @@
     <label xml:lang="de">Verbundadresse aktiv für F15</label>
     <label>Consist Address Active for F15</label>
     <label xml:lang="cs">Adresa soupravy aktivní na F15</label>
-  </variable>      
+  </variable>
 </variables>

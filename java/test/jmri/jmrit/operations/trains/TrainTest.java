@@ -232,7 +232,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
         Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
-        // add the HopperTest cartype here, so that the train doesn't 
+        // add the HopperTest cartype here, so that the train doesn't
         // know about it.
         InstanceManager.getDefault(CarTypes.class).addName("HopperTest");
 

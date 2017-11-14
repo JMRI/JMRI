@@ -115,8 +115,8 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         // refer to section 5.1 of the z21 lan protocol manual.
         XNetMessage msg = new XNetMessage(4);
         msg.setElement(0,Z21Constants.LAN_X_GET_TURNOUT_INFO);
-        // compared to Lenz devices, the addresses on the Z21 is one below 
-        // the numerical value.  We will correct it here so higher level 
+        // compared to Lenz devices, the addresses on the Z21 is one below
+        // the numerical value.  We will correct it here so higher level
         // code doesn't see the difference.
         msg.setElement(1,((address-1) &0xff00)>>8);
         msg.setElement(2,((address-1) & 0x00ff));
@@ -125,35 +125,35 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
     }
 
     /**
-     * Given a turnout address and whether or not it is thrown, generate 
+     * Given a turnout address and whether or not it is thrown, generate
      * a message to operate the turnout.
      *
      * @param address is the turnout address
      * @param thrown boolean value representing whether the turnout is thrown.
      * @param active boolean value representing whether the output is being set
      * to active.
-     * @param queue boolean value representing whehter or not the message is 
+     * @param queue boolean value representing whehter or not the message is
      * added to the queue.
      */
     public static XNetMessage getZ21SetTurnoutRequestMessage(int address, boolean thrown, boolean active, boolean queue) {
         // refer to section 5.2 of the z21 lan protocol manual.
         XNetMessage msg = new XNetMessage(5);
         msg.setElement(0,Z21Constants.LAN_X_SET_TURNOUT);
-        // compared to Lenz devices, the addresses on the Z21 is one below 
-        // the numerical value.  We will correct it here so higher level 
+        // compared to Lenz devices, the addresses on the Z21 is one below
+        // the numerical value.  We will correct it here so higher level
         // code doesn't see the difference.
         msg.setElement(1,((address-1) &0xff00)>>8);
         msg.setElement(2,((address-1) & 0x00ff));
         int element3=0x80;
         if(active) {
            element3 |=  0x08;
-        } 
+        }
         if(thrown) {
            element3 |=  0x01;
-        } 
+        }
         if(queue) {
            element3 |=  0x20;
-        } 
+        }
 
         msg.setElement(3,element3);
         msg.setParity();

@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version version="1" author="Ronald Kuhn ronald@wirkuhns.de" lastUpdated="20170716"/>
-  <!-- 1 2017/07/16 Creation 
+  <!-- 1 2017/07/16 Creation
         First decoder template for the Rautenhaus decoder range.
         Based on D&H DHP250-file created by Pierre Billon, pierre.bln@me.com
   -->

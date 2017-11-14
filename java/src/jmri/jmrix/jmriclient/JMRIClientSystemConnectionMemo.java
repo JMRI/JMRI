@@ -92,25 +92,25 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
         getTurnoutManager().getSystemNameList().forEach((t) -> {
            ((JMRIClientTurnout)(getTurnoutManager().getTurnout(t))).requestUpdateFromLayout();
-        }); 
+        });
         getSensorManager().getSystemNameList().forEach((s) -> {
             Sensor sen = getSensorManager().getSensor(s);
             if (sen != null) {
                 ((JMRIClientSensor)(sen)).requestUpdateFromLayout();
             }
-        }); 
+        });
         getLightManager().getSystemNameList().forEach((l) -> {
             Light o = getLightManager().getLight(l);
             if (o != null) {
                 ((JMRIClientLight)o).requestUpdateFromLayout();
             }
-        }); 
+        });
         getReporterManager().getSystemNameList().forEach((r) -> {
             Reporter rep = getReporterManager().getReporter(r);
             if (rep != null) {
                 ((JMRIClientReporter)(rep)).requestUpdateFromLayout();
             }
-        }); 
+        });
     }
 
     /*

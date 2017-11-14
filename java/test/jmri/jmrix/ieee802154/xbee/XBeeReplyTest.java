@@ -56,7 +56,7 @@ public class XBeeReplyTest {
     @Test
     public void testToMonitorString(){
         XBeeReply m = new XBeeReply("000A8300072B00010011001028");
-        // since we're letting the XBee API generate the monitor string, just 
+        // since we're letting the XBee API generate the monitor string, just
         // check to make sure the monitor string is not null.
         Assert.assertNotNull("ToMonitorString Return",m.toMonitorString());
     }
@@ -74,9 +74,9 @@ public class XBeeReplyTest {
         String s = new String("000A8300072B00010011001028");
         byte[] ba = jmri.util.StringUtil.bytesFromHexString(s);
         com.digi.xbee.api.packet.UnknownXBeePacket xbresponse = com.digi.xbee.api.packet.UnknownXBeePacket.createPacket(ba);
-       
+
         m.setXBeeResponse(xbresponse);
- 
+
         // make sure the XBeeResponse is not null.
         Assert.assertNotNull("getXBeeRsponse after Set",m.getXBeeResponse());
         Assert.assertEquals("xbee response after set",xbresponse,m.getXBeeResponse());

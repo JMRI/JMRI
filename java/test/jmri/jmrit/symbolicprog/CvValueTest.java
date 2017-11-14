@@ -38,7 +38,7 @@ public class CvValueTest extends TestCase {
         cv.read(null);
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()->{return !cv.isBusy();}, "cv.isBusy");
-        
+
         Assert.assertTrue(cv.getValue() == 123);
         Assert.assertTrue(cv.getState() == CvValue.READ);
     }

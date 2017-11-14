@@ -145,7 +145,7 @@ public class SignalTableModel extends AbstractTableModel {
             }
             signal = portal.getToSignal();
             if (signal != null) {
-                sr = new SignalRow(signal, portal.getToBlock(), portal, portal.getFromBlock(), 
+                sr = new SignalRow(signal, portal.getToBlock(), portal, portal.getFromBlock(),
                         portal.getToSignalOffset(), portal.getFromBlock().isMetric());
                 addToList(tempList, sr);
             }
@@ -191,7 +191,7 @@ public class SignalTableModel extends AbstractTableModel {
                 if (fromBlock == null) {
                     sr.setFromBlock(pFromBlk);
                     /*       } else if (!fromBlock.equals(pFromBlk)) {
-                     msg = Bundle.getMessage("PortalBlockConflict", portal.getName(), 
+                     msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
                      fromBlock.getDisplayName());    */
                 }
             } else if (pFromBlk.equals(toBlock)) {
@@ -397,18 +397,18 @@ public class SignalTableModel extends AbstractTableModel {
                     tempRow[UNITSCOL] = Bundle.getMessage("in");
                 }
                 fireTableRowsUpdated(row, row);
-                return;               
+                return;
             } else if (col == LENGTHCOL) {
                 try {
                     _tempLen = IntlUtilities.floatValue(value.toString());
                     if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                         _tempLen *= 10f;
                     } else {
-                        _tempLen *= 25.4f;                            
+                        _tempLen *= 25.4f;
                     }
                 } catch (ParseException e) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                 }
                 return;
             }
@@ -440,7 +440,7 @@ public class SignalTableModel extends AbstractTableModel {
                     portal = _portalMgr.getPortal(tempRow[PORTAL_COLUMN]);
                     if (portal == null) {
                         msg = Bundle.getMessage("NoSuchPortalName", tempRow[PORTAL_COLUMN]);
-                    }                    
+                    }
                 } else {
                     if (fromBlock != null && toBlock != null) {
                         portal = getPortalwithBlocks(fromBlock, toBlock);
@@ -449,7 +449,7 @@ public class SignalTableModel extends AbstractTableModel {
                         } else {
                             tempRow[PORTAL_COLUMN] = portal.getName();
                         }
-                    }                    
+                    }
                 }
             }
             if (msg == null && tempRow[NAME_COLUMN] != null) {
@@ -479,10 +479,10 @@ public class SignalTableModel extends AbstractTableModel {
                         if (isMetric) {
                             length *= 10f;
                         } else {
-                            length *= 25.4f;                            
+                            length *= 25.4f;
                         }
                     } catch (ParseException e) {
-                        msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);                    
+                        msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);
                     }
                     if (isMetric) {
                         tempRow[UNITSCOL] = Bundle.getMessage("cm");
@@ -493,10 +493,10 @@ public class SignalTableModel extends AbstractTableModel {
                         SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, length, isMetric);
                         msg = setSignal(signalRow, false);
                         if (msg==null) {
-                            _signalList.add(signalRow);                            
+                            _signalList.add(signalRow);
                         }
                         initTempRow();
-                        fireTableDataChanged();                        
+                        fireTableDataChanged();
                     }
                 }
             }
@@ -508,7 +508,7 @@ public class SignalTableModel extends AbstractTableModel {
                     NamedBean signal = Portal.getSignal((String) value);
                     if (signal == null) {
                         msg = Bundle.getMessage("NoSuchSignal", (String) value);
-//                        signalRow.setSignal(null);                              
+//                        signalRow.setSignal(null);
                         break;
                     }
                     Portal portal = signalRow.getPortal();
@@ -630,9 +630,9 @@ public class SignalTableModel extends AbstractTableModel {
                         } else {
                             signalRow.setLength(len * 25.4f);
                         }
-                        fireTableRowsUpdated(row, row);                    
+                        fireTableRowsUpdated(row, row);
                     } catch (ParseException e) {
-                        msg = Bundle.getMessage("BadNumber", value);                    
+                        msg = Bundle.getMessage("BadNumber", value);
                     }
                     if (msg == null && signalRow.getPortal() != null) {
                         msg = setSignal(signalRow, false);

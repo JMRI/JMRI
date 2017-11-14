@@ -184,7 +184,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
-       
+
     }
 
     // The minimal setup for log4J

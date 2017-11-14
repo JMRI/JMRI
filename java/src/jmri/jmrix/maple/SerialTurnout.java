@@ -171,7 +171,7 @@ public class SerialTurnout extends AbstractTurnout {
                                 OutputBits.instance().setOutputBit(tBit, false ^ getInverted());
 //        // start a timer to finish setting this turnout
 //        if (mPulseClosedTimer==null) {
-//         mPulseClosedTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
+//         mPulseClosedTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(),
 //           new java.awt.event.ActionListener() {
 //          public void actionPerformed(java.awt.event.ActionEvent e) {
 //           OutputBits.instance().setOutputBit(tBit, true^getInverted());
@@ -191,12 +191,12 @@ public class SerialTurnout extends AbstractTurnout {
                                 OutputBits.instance().setOutputBit(tBit, true ^ getInverted());
 //        // start a timer to finish setting this turnout
 //        if (mPulseThrownTimer==null) {
-//         mPulseThrownTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
+//         mPulseThrownTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(),
 //           new java.awt.event.ActionListener() {
 //          public void actionPerformed(java.awt.event.ActionEvent e) {
 //           OutputBits.instance().setOutputBit(tBit, false^getInverted());
 //           mPulseThrownTimer.stop();
-//           mPulseTimerOn = false;        
+//           mPulseTimerOn = false;
 //          }
 //         });
 //        }
@@ -217,7 +217,7 @@ public class SerialTurnout extends AbstractTurnout {
 //      OutputBits.instance().setOutputBit(tBit,false^getInverted());
 //      // Start a timer to return bit to off state
 //      if (mPulseClosedTimer==null) {
-//       mPulseClosedTimer = new javax.swing.Timer(iTime, new 
+//       mPulseClosedTimer = new javax.swing.Timer(iTime, new
 //          java.awt.event.ActionListener() {
 //        public void actionPerformed(java.awt.event.ActionEvent e) {
 //         OutputBits.instance().setOutputBit(tBit, true^getInverted());
@@ -227,7 +227,7 @@ public class SerialTurnout extends AbstractTurnout {
 //       });
 //      }
 //      mPulseTimerOn = true;
-//      mPulseClosedTimer.start();      
+//      mPulseClosedTimer.start();
 //     }
                 }
             }

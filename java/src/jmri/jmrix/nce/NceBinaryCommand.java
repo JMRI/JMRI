@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*
- 
+
  From NCE System notes for version March 1, 2007
- 
+
  New 0xAD command sends accessory or signal packets.
  This command can also issue NCE macros
  Command Format: 0xAD <addr_h> <addr_l> <op_1> <data_1>
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  Ex: Accessory Address 2 = 0x00 0x02 (hi byte first)
  Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)
  NOTE: accy/signal address 0 is not a valid address
- 
+
  Op_1   Data_1       Operation description
  01     0-255        NCE macro number 0-255
  02     0-255        Duplicate of Op_1 command 01
@@ -25,18 +25,18 @@ import org.slf4j.LoggerFactory;
  04     0            Accessory Reverse direction (OFF)
  05     0-1f         Signal Aspect 0-31
  06-7f               reserved reserved
- 
+
  Returns: ! = success
  1 = bad accy/signal address
- 
+
  0xA2 sends speed or function packets to a locomotive.
- 
+
  Command Format: 0xA2 <addr_h> <addr_l> <op_1> <data_1>
  Addr_h and Addr_l are the loco address in DCC format.
  If a long address is in use, bits 6 and 7 of the high byte are set.
  Example: Long address 3 = 0xc0 0x03
  Short address 3 = 0x00 0x03
-  
+
  Op_1   Data_1       Operation description
  01     0-7f         Reverse 28 speed command
  02     0-7f         Forward 28 speed command
@@ -62,10 +62,10 @@ import org.slf4j.LoggerFactory;
  16     0-ff         Functions 21-28 control (bit 0=F21, bit 7=F28)
  17     0-3f         Assign this loco to cab number in data_1
  18-7f               reserved reserved
-  
+
  Returns: ! = success
  1 = bad loco address
-   
+
  */
 /**
  * NCE Binary Commands
@@ -152,11 +152,11 @@ public class NceBinaryCommand {
 
     // OxA2 sub commands consist
     public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;    // reverse consist address for lead loco
-    public static final byte LOCO_CMD_FWD_CONSIST_LEAD = 0x0B;    // forward consist address for lead loco 
-    public static final byte LOCO_CMD_REV_CONSIST_REAR = 0x0C;    // reverse consist address for rear loco 
+    public static final byte LOCO_CMD_FWD_CONSIST_LEAD = 0x0B;    // forward consist address for lead loco
+    public static final byte LOCO_CMD_REV_CONSIST_REAR = 0x0C;    // reverse consist address for rear loco
     public static final byte LOCO_CMD_FWD_CONSIST_REAR = 0x0D;    // forward consist address for rear loco
-    public static final byte LOCO_CMD_REV_CONSIST_MID = 0x0E;     // reverse consist address for additional loco 
-    public static final byte LOCO_CMD_FWD_CONSIST_MID = 0x0F;     // forward consist address for additional loco 
+    public static final byte LOCO_CMD_REV_CONSIST_MID = 0x0E;     // reverse consist address for additional loco
+    public static final byte LOCO_CMD_FWD_CONSIST_MID = 0x0F;     // forward consist address for additional loco
     public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10; // Delete loco from consist
     public static final byte LOCO_CMD_KILL_CONSIST = 0x11;        // Kill consist
 
@@ -170,7 +170,7 @@ public class NceBinaryCommand {
         /* Moved to NceMessageCheck
          // USB connected to PowerCab or SB3 can only access addresses up to 250
          if (number > 250
-         && ((NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) || 
+         && ((NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) ||
          (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3))) {
          log.error("invalid NCE accessory address for USB " + number);
          return null;

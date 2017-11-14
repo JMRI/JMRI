@@ -175,7 +175,7 @@
       <!--   <label>Speed Table</label> -->
       <!-- </variable> -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv100error.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>	  
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>	
       <variable item="LISSY Train Category" CV="115" default="1" tooltip="Value 1 - 4">
         <decVal max="4"/>
         <label>LISSY Train Category</label>

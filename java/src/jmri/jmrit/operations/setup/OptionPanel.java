@@ -89,7 +89,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // logging options
         carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
         engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
-        trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());    
+        trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());
         // save manifests
         saveTrainManifestCheckBox.setSelected(Setup.isSaveTrainManifestsEnabled());
 
@@ -180,14 +180,14 @@ public class OptionPanel extends OperationsPreferencesPanel {
         addItemLeft(pLogger, engineLoggerCheckBox, 1, 0);
         addItemLeft(pLogger, carLoggerCheckBox, 1, 1);
         addItemLeft(pLogger, trainLoggerCheckBox, 1, 2);
-        
+
         // Custom Manifests and Switch Lists
         JPanel pCustom = new JPanel();
         pCustom.setLayout(new GridBagLayout());
         pCustom.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutCustomManifests")));
         addItemLeft(pCustom, generateCvsManifestCheckBox, 1, 0);
         addItemLeft(pCustom, generateCvsSwitchListCheckBox, 1, 1);
-        
+
         // Options
         JPanel pOption = new JPanel();
         pOption.setLayout(new GridBagLayout());
@@ -225,7 +225,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
         // check boxes
         addCheckBoxAction(routerCheckBox);
-        addCheckBoxAction(routerRestrictBox);       
+        addCheckBoxAction(routerRestrictBox);
         setRouterCheckBoxesEnabled();
 
         setBuildOption();

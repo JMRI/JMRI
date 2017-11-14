@@ -110,7 +110,7 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
             public void valueChanged(javax.swing.event.TreeSelectionEvent e) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 if (node == null) {
-                    return; //Nothing is selected.	
+                    return; //Nothing is selected.
                 }
                 if (node.getUserObject() == null) {
                     return; // Not an interesting node

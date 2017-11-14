@@ -48,7 +48,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     public int getUA() {
         return getElement(0) - 65;
     }
-    
+
     // CMRI-E  Extended Protocol Messages  c2
     public boolean isEOT()     { return (getElement(1)==0x45); }   // 'E'
     public boolean isQUERY()   { return (getElement(1)==0x51); }   // 'Q'

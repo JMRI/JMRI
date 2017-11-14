@@ -91,7 +91,7 @@
       <variable CV="63" item="Sound Setting 1" default="255">
         <decVal max="255"/>
         <label>Sound Volume</label>
-        <label xml:lang="fr">Volume</label>        
+        <label xml:lang="fr">Volume</label>
         <label xml:lang="de">Lautstärke</label>
         <tooltip>0-255</tooltip>
       </variable>

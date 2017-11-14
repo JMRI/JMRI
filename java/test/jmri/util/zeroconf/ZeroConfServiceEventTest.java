@@ -7,10 +7,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
 import javax.jmdns.JmDNS;
- 
+
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ZeroConfServiceEventTest {
 

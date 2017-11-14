@@ -17,7 +17,7 @@ public class ThrottlesListActionTest {
     public void testCtor() {
         ThrottlesListAction panel = new ThrottlesListAction();
         Assert.assertNotNull("exists", panel);
-        
+
     }
 
     @Before

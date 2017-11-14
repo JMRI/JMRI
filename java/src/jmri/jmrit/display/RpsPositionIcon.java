@@ -269,7 +269,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         }
 
         // remember this measurement for last position, e.g. for
-        // alignment    
+        // alignment
         lastMeasurement = m;
 
         // update state based on if valid measurement, fiducial volume

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence for {@link apps.startup.TriggerRouteModel} objects
- * and set the defined {@link jmri.Route} during application start. 
+ * and set the defined {@link jmri.Route} during application start.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)

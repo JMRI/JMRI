@@ -264,7 +264,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                  Bundle.getMessage("ResetSwitchLists"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
             return;
         }
-        
+
         // this for loop prevents ConcurrentModificationException when printing and status changes
         for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
@@ -447,7 +447,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     /**
      * Creates custom switch lists using an external program like MS Excel.
      * Switch lists are created for locations that have switch lists enabled.
-     * 
+     *
      * @param isChanged when true, only create custom switch list for enabled
      *            locations that have changes. When isChanged is false, create
      *            custom switch lists for all enabled locations.

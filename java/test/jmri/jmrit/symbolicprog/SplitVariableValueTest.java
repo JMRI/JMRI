@@ -92,19 +92,19 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     // how to define the split/shift/mask operations for long CVs
     @Override
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored 
+    } // mask is ignored
 
     // Local tests
     public void testSplitAddressFromCV1() {

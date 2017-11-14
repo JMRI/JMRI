@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * switch lists.
  *
  * @author Dan Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 

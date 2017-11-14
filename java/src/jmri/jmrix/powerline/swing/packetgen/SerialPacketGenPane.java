@@ -81,7 +81,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
     public void initComponents(SerialSystemConnectionMemo memo) {
         this.memo = memo;
         tc = memo.getTrafficController();
-        
+
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");

@@ -88,7 +88,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
 
     String name;
     int feedbackModes = 0;
-    boolean nonce = false;  // created just for one turnout and not reusable 
+    boolean nonce = false;  // created just for one turnout and not reusable
 
     TurnoutOperation(@Nonnull String n) {
         name = n;
@@ -142,15 +142,15 @@ public abstract class TurnoutOperation implements Comparable<Object> {
         if (ro == null) return false;
         if (ro instanceof TurnoutOperation)
             return name.equals(((TurnoutOperation)ro).name);
-        else 
+        else
             return false;
     }
-    
+
     @Override
     public int hashCode() {
         return name.hashCode();
     }
-    
+
     /**
      *
      * @param other another TurnoutOperation

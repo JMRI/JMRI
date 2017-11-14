@@ -21,7 +21,7 @@
     <display item="Analog Vstart" tooltip="Sets the analog input voltage to be reached before the motor begins to move at programmed minimum speed">
       <tooltip xml:lang="it">Imposta il valore di tensione in Volt per muovere il motore alla velocità minima programmata</tooltip>
       <tooltip xml:lang="de">Analogspannung bei der der Motor mit der programmierten minimalen Gschwindigkeit anläuft</tooltip>
-	  <tooltip xml:lang="ca">Estableix el voltatge mínim per a que el motor comenci a girar a la mínima velocitat</tooltip>	  
+	  <tooltip xml:lang="ca">Estableix el voltatge mínim per a que el motor comenci a girar a la mínima velocitat</tooltip>	
     </display>
     <display item="Analog Vhigh" tooltip="Sets the analog input voltage at which the motor reaches programmed maximum speed">
       <tooltip xml:lang="it">Imposta il valore di tensione analogico per muovere il motore alla velocità massima programmata</tooltip>

@@ -88,7 +88,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
                     return true;
             }
         }
-        // break out of loop when ready to continue       
+        // break out of loop when ready to continue
         return true;
     }
 

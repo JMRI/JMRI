@@ -17,7 +17,7 @@ public class TreeFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TreeFrame action = new TreeFrame();
         Assert.assertNotNull("exists", action);
     }

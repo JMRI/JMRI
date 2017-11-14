@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,14 +23,14 @@
         <date>2017-03-16</date>
         <authorinitials>GPM</authorinitials>
         <revremark>Original Edition</revremark>
-    </revision>    
+    </revision>
   </revhistory>
-  
+
   <aspecttable>SOU 1981</aspecttable>
   <name>3 Arm CL Absolute Mast Signal</name>
   <reference>As described in the 1981 version of the Southern Railway Signal Rules.</reference>
   <description>Appearances for 3 arm color light absolute mast signals.</description>
-  
+
   <appearances>
 
     <appearance>
@@ -40,7 +40,7 @@
 	  <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-301.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Approach Diverging</aspectname>
       <show>yellow</show>
@@ -48,7 +48,7 @@
 	  <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-302.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
@@ -56,7 +56,7 @@
 	  <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-303.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Diverging Route Clear (Medium)</aspectname>
       <show>red</show>
@@ -64,7 +64,7 @@
 	  <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-304-M.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Diverging Route Clear (Slow)</aspectname>
       <show>red</show>
@@ -80,7 +80,7 @@
 	  <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-306.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Diverging Route Approach Slow (Medium)</aspectname>
       <show>red</show>
@@ -88,7 +88,7 @@
 	  <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-306-1-M.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Diverging Route Approach Slow (Slow)</aspectname>
       <show>red</show>
@@ -96,7 +96,7 @@
 	  <show>flashyellow</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-306-1-S.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
@@ -104,7 +104,7 @@
 	  <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-307.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Diverging Route Approach (Medium)</aspectname>
       <show>red</show>
@@ -112,7 +112,7 @@
       <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-308.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Diverging Route Approach (Slow)</aspectname>
       <show>red</show>
@@ -120,7 +120,7 @@
       <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-308.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Restricted Proceed</aspectname>
       <show>red</show>
@@ -128,7 +128,7 @@
 	  <show>yellow</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-309.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
@@ -136,27 +136,27 @@
 	  <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-3-Arm-high-absolute/rule-310.gif</imagelink>
     </appearance>
-	
+
   </appearances>
-	
+
    <specificappearances>
-   
+
     <danger>
       <aspect>Stop</aspect>
     </danger>
-	
+
 	<permissive>
 	  <aspect>Restricted Proceed</aspect>
 	</permissive>
-	
+
     <held>
       <aspect>Stop</aspect>
     </held>
-	
+
   </specificappearances>
-	
+
   <aspectMappings>
-  
+
 	<aspectMapping>
 	  <advancedAspect>Clear</advancedAspect>
 	  <ourAspect>Clear</ourAspect>
@@ -164,7 +164,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Approach Diverging</advancedAspect>
 	  <ourAspect>Clear</ourAspect>
@@ -172,7 +172,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Advance Approach</advancedAspect>
 	  <ourAspect>Clear</ourAspect>
@@ -180,7 +180,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
@@ -188,7 +188,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
 	  <ourAspect>Approach Slow</ourAspect>
@@ -196,7 +196,7 @@
 	  <ourAspect>Diverging Route Approach Slow (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Approach Slow</advancedAspect>
 	  <ourAspect>Clear</ourAspect>
@@ -204,7 +204,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
@@ -212,7 +212,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
@@ -220,7 +220,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Approach</advancedAspect>
 	  <ourAspect>Advance Approach</ourAspect>
@@ -228,7 +228,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
@@ -236,7 +236,7 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
@@ -244,22 +244,22 @@
 	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Restricted Proceed</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
 	  <ourAspect>Diverging Route Approach</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
-	
+
 	<aspectMapping>
 	  <advancedAspect>Stop</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
 	  <ourAspect>Diverging Route Approach (Medium)</ourAspect>
 	  <ourAspect>Diverging Route Approach (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>	
-	
+	</aspectMapping>
+
   </aspectMappings>
-		
-</appearancetable>  
+
+</appearancetable>

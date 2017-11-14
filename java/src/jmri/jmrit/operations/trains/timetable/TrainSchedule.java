@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010
  */
 public class TrainSchedule {
-    
+
     public static final String NONE = "";
     public static final String ANY = "ANY"; // allow cars to be picked up any day of the week NOI18N
 

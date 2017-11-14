@@ -99,7 +99,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         panel.setSize(440, 240);
         panel.setPreferredSize(new Dimension(440, 240));
 
-        scale.set(-10., -10., 50., 50.);  // lower left X, Y, then upper right 
+        scale.set(-10., -10., 50., 50.);  // lower left X, Y, then upper right
         scale.update();
 
         // combine

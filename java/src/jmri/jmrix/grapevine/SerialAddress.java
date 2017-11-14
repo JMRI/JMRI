@@ -195,7 +195,7 @@ public class SerialAddress {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format: " + systemName);
             return (null);
         }
@@ -225,7 +225,7 @@ public class SerialAddress {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format: {}", systemName);
             return 0;
         }
@@ -256,7 +256,7 @@ public class SerialAddress {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format: {}", systemName);
             return (-1);
         }
@@ -354,7 +354,7 @@ public class SerialAddress {
                 log.warn("invalid bit number {} in {}", bit, systemName);
                 return NameValidity.INVALID;
             }
-        } else { 
+        } else {
             assert type == 'S'; // see earlier decoding
             // sort on subtype
             String subtype = matcher.group(5);
@@ -373,8 +373,8 @@ public class SerialAddress {
                     log.warn("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
-            } else if (subtype.equals("M")) { 
-                // advanced serial motion 
+            } else if (subtype.equals("M")) {
+                // advanced serial motion
                 if ((bit < 1) || (bit > 24)) {
                     log.warn("invalid bit number {} in  {}", bit, systemName);
                     return NameValidity.INVALID;

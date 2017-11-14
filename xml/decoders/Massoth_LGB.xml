@@ -18,7 +18,7 @@
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.2" lastUpdated="20080127"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20070204"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20060923"/>
-  <!-- 
+  <!--
       This decoder XML is meant to be used with the "Custom" programmer format.
       The pane definitions are included below the decoder definition.  The LGB
       decoders seem to fit the description of "weird" as mentioned in that
@@ -81,7 +81,7 @@
       Version History:
 
         1.0 - 23 Sep 2006
-              Initial release 
+              Initial release
         1.1 - 4 Feb 2007
               Cosmetic format changes
               Made CV 7, 8, & 106 readOnly (works correctly with 1.7.5+)
@@ -975,7 +975,7 @@
     </column>
     <name>Miscellaneous</name>
     <name xml:lang="it">Varie</name>
-    
+
   </pane>
   <pane>
     <column>

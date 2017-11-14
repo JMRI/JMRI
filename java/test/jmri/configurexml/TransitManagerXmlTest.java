@@ -33,15 +33,15 @@ public class TransitManagerXmlTest {
       TransitManagerXml tmx = new TransitManagerXml();
       TransitManager tm = new TransitManager();
       Transit t = tm.createNewTransit("TS1", "user");
-      
+
       Section s = new Section("SS1");
       TransitSection ts = new TransitSection(s,0,0,false);
-      
+
       TransitSectionAction ta = new TransitSectionAction(0,0);
       ts.addAction(ta);
-      
+
       t.addTransitSection(ts);
-      
+
       org.jdom2.Element e;
       Assert.assertNotNull("Element(s) returned", e = tmx.store(tm));
 

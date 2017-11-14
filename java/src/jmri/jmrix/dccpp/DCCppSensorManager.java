@@ -80,7 +80,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             if (log.isDebugEnabled()) {
                 log.debug("SensorDef Reply for Encoder {}", Integer.toString(addr));
             }
-            
+
         } else if (l.isSensorReply()) {
             addr = l.getSensorNumInt();
             if (log.isDebugEnabled()) {
@@ -90,11 +90,11 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         if (addr >= 0) {
             String s = prefix + typeLetter() + (addr);
             if (null == getBySystemName(s)) {
-                // The sensor doesn't exist.  We need to create a 
+                // The sensor doesn't exist.  We need to create a
                 // new sensor, and forward this message to it.
                 ((DCCppSensor) provideSensor(s)).initmessage(l);
             } else {
-                // The sensor exists.  We need to forward this 
+                // The sensor exists.  We need to forward this
                 // message to it.
                 Sensor sen = getBySystemName(s);
                 if (sen == null) {

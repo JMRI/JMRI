@@ -77,7 +77,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MailMessage {
 
-    // first two required 
+    // first two required
     String to;
     String mailhost;
     String subject;

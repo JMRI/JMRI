@@ -22,10 +22,10 @@ public class XNetMenuTest {
 
     private XNetTrafficController tc = null;
     private XNetSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XNetMenu action = new XNetMenu(m);
         Assert.assertNotNull("exists", action);
     }

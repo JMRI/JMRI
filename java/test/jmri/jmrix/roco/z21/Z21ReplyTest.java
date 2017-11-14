@@ -91,7 +91,7 @@ public class Z21ReplyTest {
 
     @Test
     public void getXPressNetThrottleReply(){
-        // this test comes from a user log, where the last byte in the 
+        // this test comes from a user log, where the last byte in the
         // Z21 message incorrectly became the first byte of the XpressNet Reply.
         byte[] msg={(byte)0x0E,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0xEF,(byte)0x00,(byte)0x03,(byte)0x04,(byte)0x80,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x78};
         Z21Reply m = new Z21Reply(msg,14);
@@ -127,14 +127,14 @@ public class Z21ReplyTest {
         byte[] msg1={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         m = new Z21Reply(msg1,7);
         Assert.assertEquals("RailCom Entries",0,m.getNumRailComDataEntries());
-    } 
+    }
 
     @Test
     public void railCom2Entries(){
         byte[] msg={(byte)0x1E,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x20,(byte)0x21,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
         Z21Reply m = new Z21Reply(msg,30);
         Assert.assertEquals("RailCom Entries",2,m.getNumRailComDataEntries());
-    } 
+    }
 
     @Test
     public void railComAddress(){

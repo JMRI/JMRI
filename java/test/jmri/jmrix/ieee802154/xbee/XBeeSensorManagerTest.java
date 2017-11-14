@@ -24,8 +24,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private static final String NODE_ID = "id";
-        
-    private XBeeDevice localDevice;	
+
+    private XBeeDevice localDevice;
     private RemoteXBeeDevice remoteDevice1;
 
     @Override
@@ -62,7 +62,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t2 = l.provideSensor("ABCS2:" + getNumToTest2());
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
@@ -79,7 +79,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     // The minimal setup for log4J
     @Override
-    @Before 
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.resetInstanceManager();
 

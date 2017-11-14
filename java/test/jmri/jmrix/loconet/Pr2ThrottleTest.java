@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -20,7 +20,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * The default mode is 28 speed steps
      */
     @Test

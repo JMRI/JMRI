@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * 
+ *
  */
 public class MergConnectionConfig extends ConnectionConfig {
 

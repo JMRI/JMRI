@@ -8,16 +8,16 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
         <email>dick@rr-cirkits.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -26,20 +26,20 @@
         <date>2011-06-23</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2011-06-27</date>
         <authorinitials>DB</authorinitials>
         <revremark>Added missing map information</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspecttable>CSX</aspecttable>
   <name>Single red over 3 color light dwarf signal</name>
   <reference>As described in the CSX Transportation Signal Rules - 281-298 January 1998.</reference>
   <description>Appearances for a 1 over 3 lamp dwarf signal head without other badging</description>
-  
+
   <appearances>
 
     <appearance>
@@ -204,4 +204,4 @@
     </aspectMapping>
 
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

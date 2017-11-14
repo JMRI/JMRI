@@ -78,7 +78,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     /**
      * Send the command to start programming operation.
-     * 
+     *
      * @param val   Value to be written, or -1 for read
      * @param CV    CV to read/write
      */

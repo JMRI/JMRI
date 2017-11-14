@@ -16,7 +16,7 @@ import org.junit.Test;
  **/
 
 public class RfidComponentFactoryTest {
-        
+
    private RfidSystemConnectionMemo memo = null;
 
    @Test

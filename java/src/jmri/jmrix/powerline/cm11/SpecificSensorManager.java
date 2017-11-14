@@ -119,7 +119,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                                     log.error("Exception setting " + sysName + " sensor INACTIVE: " + e);
                                 }
                             }
- 
+
                             // if we decide we want to add sensors automatically when seen on the wire, this is the place
                         }
                     }

@@ -94,24 +94,24 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public boolean getUseDefaultTimerSettings() {
         return useDefaultTimerSettings;
     }
-    
+
     @Override
     @Deprecated
     public void useDefaultTimerSettings(boolean boo) {
         setUseDefaultTimerSettings(boo);
     }
-    
+
     @Override
     @Deprecated
     public boolean useDefaultTimerSettings() {
         return getUseDefaultTimerSettings();
     }
-    
+
 
     protected Thread thr;
     protected Runnable r;
 
-    /* 
+    /*
      * Before going active or inactive or checking that we can go active, we will wait 500ms
      * for things to settle down to help prevent a race condition
      */
@@ -183,7 +183,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 sensorDebounce();
                 return;
             } else {
-                //we shall try to stop the thread as one of the state changes 
+                //we shall try to stop the thread as one of the state changes
                 //might start the thread, while the other may not.
                 if (thr != null) {
                     thr.interrupt();
@@ -221,7 +221,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 sensorDebounce();
                 return;
             } else {
-                //we shall try to stop the thread as one of the state changes 
+                //we shall try to stop the thread as one of the state changes
                 //might start the thread, while the other may not.
                 if (thr != null) {
                     thr.interrupt();
@@ -340,7 +340,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     /**
      * Get the pull resistance
      *
-     * @return the currently set PullResistance value.  In this default 
+     * @return the currently set PullResistance value.  In this default
      * impelmetnation, PullResistance.PULL_OFF is always returned.
      */
     @Override

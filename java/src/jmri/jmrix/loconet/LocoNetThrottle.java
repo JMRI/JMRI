@@ -331,7 +331,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (isDisposing) return;
         log.debug("throttleDispose - disposing of throttle (and setting slot = null)");
         isDisposing = true;
-        
+
         // stop timeout
         if (mRefreshTimer != null) {
             mRefreshTimer.stop();
@@ -395,7 +395,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         return;
     }
 
-    
+
     /**
      * Get notified when underlying slot information changes
      */
@@ -413,7 +413,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         layout_spd = slot.speed();
         layout_dirf = slot.dirf();
         layout_snd = slot.snd();
-        
+
         // handle change in each state
         if (this.speedSetting != floatSpeed(slot.speed())) {
             Float newSpeed = Float.valueOf(floatSpeed(slot.speed()));
@@ -429,7 +429,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             notifyPropertyChangeListener("IsForward", Boolean.valueOf(temp), Boolean.valueOf(slot.isForward())); // NOI18N
         }
 
-        // Slot status        
+        // Slot status
         if (slotStatus != slot.slotStatus()) {
             int newStat = slot.slotStatus();
             if (log.isDebugEnabled()) {
@@ -440,14 +440,14 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     !((slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE));
             slotStatus = newStat;
         }
-        
+
         // It is possible that the slot status change we are being notified of
         // is the slot being set to status COMMON. In which case the slot just
         // got set to null. No point in continuing. In fact to do so causes a NPE.
         if (slot == null) {
             return;
         }
-        
+
         // Functions
         if (this.f0 != slot.isF0()) {
             temp = this.f0;
@@ -652,7 +652,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
         if (mRefreshTimer != null) // the refresh timer isn't created until
         // after initilization.  We only want to
-        // modify the slot after the initilization 
+        // modify the slot after the initilization
         // is complete.
         {
             network.sendLocoNetMessage(slot.writeMode(status));
@@ -676,8 +676,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("getLocoAddress replying address {} for slot not in-use or for sub-consisted slot or for null slot", address);
         return new DccLocoAddress(address, LnThrottleManager.isLongAddress(65536));
     }
-    
-    //note: throttle listener expects to have "callback" method notifyStealThrottleRequired 
+
+    //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
     //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
 
     // initialize logging

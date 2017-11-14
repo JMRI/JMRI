@@ -24,12 +24,12 @@
 		To add new decoders, use the individual file templates as used from firmware 3.03.
 		-->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20130731"/>
-  <!-- 1 2013/07/31 Creation 
+  <!-- 1 2013/07/31 Creation
 		First decoder template for the Doehler & Haass DH06A.
-		This is the only DH decoder with NO ANALOG SUPPORT, 
+		This is the only DH decoder with NO ANALOG SUPPORT,
 		built to fit into the small German N 'Köf II' Locomotive.
-		This DH06A file creates the corresponding family, and 
-		includes all decoders defs & specs. 
+		This DH06A file creates the corresponding family, and
+		includes all decoders defs & specs.
 		It requires variables and panes as defined in the doehler_hass/ folder.
   -->
   <decoder>

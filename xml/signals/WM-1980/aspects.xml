@@ -29,7 +29,7 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Initial version of the signal set.</revremark>
     </revision>
-    
+
   </revhistory>
 
   <aspects>
@@ -134,7 +134,7 @@
       <speed2>Stop</speed2>
       <route>Either</route>
     </aspect>
-	
+
 	<aspect>
       <name>Stop-Throw Switch</name>
       <rule>Rule W-293</rule>

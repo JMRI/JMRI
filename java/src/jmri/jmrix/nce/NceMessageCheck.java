@@ -82,8 +82,8 @@ public class NceMessageCheck {
      // USB connected to PowerCab or SB3 can only access addresses up to 250
      int number = m.getElement(1);   // high byte address
      number = number*256 + m.getElement(2); // low byte address
-     if (number > 250 && 
-     (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_POWERCAB 
+     if (number > 250 &&
+     (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_POWERCAB
      || (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_SB3))){
      log.debug("invalid NCE accessory address for USB " + number);
      throw new JmriException("invalid NCE accessory address for USB " + number);

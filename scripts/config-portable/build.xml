@@ -24,19 +24,19 @@
 
   <!-- options you might want to change during development,   -->
   <!-- but please change them back before commiting this file -->
-  
+
     <!-- should compiler warn of use of deprecated APIs? (yes/no) -->
     <property name="deprecation" value="no" />
-  
+
     <!-- SDK version (currently 1.4) -->
     <property name="sdk_version" value="1.4" />
-  
+
     <!-- source code version (currently 1.3) -->
     <property name="source_version" value="1.3" />
-  
+
     <!-- JRE version (currently 1.3) -->
     <property name="jre_version" value="1.3" />
-    
+
   <!-- You can specify a DecoderPro/PanelPro config file at runtime -->
   <!-- with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"   -->
 
@@ -44,7 +44,7 @@
   <property name="source" value="src"/>
   <property name="target" value="classes"/>
   <property name="jartarget" value="."/>
-  
+
   <path id="project.class.path">
     <pathelement location=".." />
     <!-- To compile, this requires checking-out the "scripts" CVS target -->
@@ -77,10 +77,10 @@
 
   <target name="compile" depends="init, copyfiles" description="compile source, omitting tests">
     <!-- Compile the java code from ${source} into ${target} -->
-    <javac srcdir="${source}" 
+    <javac srcdir="${source}"
            destdir="${target}"
-           source="${source_version}" 
-           target="${jre_version}" 
+           source="${source_version}"
+           target="${jre_version}"
            fork="true"
            memoryinitialsize="256m"
            memorymaximumsize="256m"
@@ -92,10 +92,10 @@
 
   <target name="debug" depends="init, copyfiles" description="compile source with debugging on, omitting tests">
     <!-- Compile the java code from ${source} into ${target} -->
-    <javac srcdir="${source}" 
-           destdir="${target}" 
-           source="${source_version}" 
-           target="${jre_version}" 
+    <javac srcdir="${source}"
+           destdir="${target}"
+           source="${source_version}"
+           target="${jre_version}"
            fork="true"
            memoryinitialsize="256m"
            memorymaximumsize="256m"
@@ -115,12 +115,12 @@
        <classpath refid="project.class.path"    />
     </nbprofiledirect>
     <java classname="apps.DecoderPro.DecoderPro"
-            dir=".." 
+            dir=".."
 	        fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" path=".:lib/"/>       
+       <sysproperty key="java.security.policy" value="lib/security.policy"/>
+       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+       <sysproperty key="java.library.path" path=".:lib/"/>
        <jvmarg value="${profiler.info.jvmargs.agent}"/>
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
@@ -129,9 +129,9 @@
     </java>
   </target>
 
-  <target name="jar" depends="compile"  
+  <target name="jar" depends="compile"
           description="create working jar file with current contents">
-    <jar jarfile="${jartarget}/config-portable.jar" 
+    <jar jarfile="${jartarget}/config-portable.jar"
          basedir="${target}"
          compress="true" />   <!-- compress="true" is default -->
     <!-- Starting with JMRI 1.9, building the JAR index crashes.  -->

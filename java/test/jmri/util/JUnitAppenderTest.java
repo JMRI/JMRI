@@ -40,7 +40,7 @@ public class JUnitAppenderTest extends TestCase {
         // second not match
         Assert.assertNull(JUnitAppender.checkForMessage(msg));
     }
-    
+
     public void testCheckForMessageWarn() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -49,7 +49,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertNotNull(JUnitAppender.checkForMessage(msg));
         Assert.assertNull(JUnitAppender.checkForMessage(msg));
     }
-    
+
     public void testCheckForMessageInfo() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -72,7 +72,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
     }
-    
+
     public void testCheckForMessageStartWarn() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -84,7 +84,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
     }
-    
+
     public void testCheckForMessageStartInfo() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -109,19 +109,19 @@ public class JUnitAppenderTest extends TestCase {
         // cache values
         cacheFatal = JUnitAppender.unexpectedFatalSeen;
         cacheError = JUnitAppender.unexpectedErrorSeen;
-        cacheWarn  = JUnitAppender.unexpectedWarnSeen; 
-        cacheInfo  = JUnitAppender.unexpectedInfoSeen; 
-        
+        cacheWarn  = JUnitAppender.unexpectedWarnSeen;
+        cacheInfo  = JUnitAppender.unexpectedInfoSeen;
+
         JUnitAppender.unexpectedFatalSeen = false;
         JUnitAppender.unexpectedErrorSeen = false;
-        JUnitAppender.unexpectedWarnSeen  = false; 
-        JUnitAppender.unexpectedInfoSeen  = false; 
+        JUnitAppender.unexpectedWarnSeen  = false;
+        JUnitAppender.unexpectedInfoSeen  = false;
 
         Assert.assertFalse("initial FATAL", JUnitAppender.unexpectedMessageSeen(Level.FATAL));
         Assert.assertFalse("initial ERROR", JUnitAppender.unexpectedMessageSeen(Level.ERROR));
         Assert.assertFalse("initial WARN",  JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertFalse("initial INFO",  JUnitAppender.unexpectedMessageSeen(Level.INFO));
-        
+
         String msg = "Expected WARN message for testing";
         log.warn(msg);
         JUnitAppender.assertWarnMessage(msg);
@@ -163,7 +163,7 @@ public class JUnitAppenderTest extends TestCase {
         log.debug("this is a DEBUG, should still pass");
         log.info("this is an INFO, should still pass");
         log.trace("this is a TRACE, should still pass");
-        
+
         String msg = "Message for testing";
         log.warn(msg);
         JUnitAppender.assertWarnMessage(msg);
@@ -186,13 +186,13 @@ public class JUnitAppenderTest extends TestCase {
     public void testClearBacklogDefaultNone() {
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
-        
+
     public void testClearBacklogDefaultWarn() {
         log.warn("warn message");
         Assert.assertEquals(1,JUnitAppender.clearBacklog());
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
-        
+
     public void testClearBacklogDefaultError() {
         log.error("error message");
         Assert.assertEquals(1,JUnitAppender.clearBacklog());
@@ -207,17 +207,17 @@ public class JUnitAppenderTest extends TestCase {
     public void testClearBacklogDefaultMultiple() {
         log.info("info 1");
         log.warn("warn 1");
-        log.info("info 2");        
+        log.info("info 2");
         Assert.assertEquals(1,JUnitAppender.clearBacklog());
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
-    
+
     public void testClearBacklogAtInfoWithInfo() {
         log.info("info message");
 
         // this test skipped if INFO is not being logged
         if (org.apache.log4j.Category.getRoot().getLevel().toInt() > Level.INFO.toInt()) return;  // redo for Log4J2
-        
+
         Assert.assertEquals(1,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
         Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
     }
@@ -254,7 +254,7 @@ public class JUnitAppenderTest extends TestCase {
     @Override
     protected void tearDown() {
 
-        apps.tests.Log4JFixture.tearDown();     
+        apps.tests.Log4JFixture.tearDown();
 
         // continue the testUnexpectedCheck test
         if (testingUnexpected) {
@@ -266,9 +266,9 @@ public class JUnitAppenderTest extends TestCase {
 
             JUnitAppender.unexpectedFatalSeen = cacheFatal;
             JUnitAppender.unexpectedErrorSeen = cacheError;
-            JUnitAppender.unexpectedWarnSeen  = cacheWarn; 
-            JUnitAppender.unexpectedInfoSeen  = cacheInfo; 
-            
+            JUnitAppender.unexpectedWarnSeen  = cacheWarn;
+            JUnitAppender.unexpectedInfoSeen  = cacheInfo;
+
             testingUnexpected = false;
         }
     }

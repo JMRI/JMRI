@@ -163,7 +163,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
            // Write to disk and close file
            fileOut.flush();
            fileOut.close();
-        
+
            // kill status panel
            fstatus.dispose();
 

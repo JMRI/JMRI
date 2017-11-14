@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Tests for the jmri.jmris.simpleserver.SimpleServerManager class 
+ * Tests for the jmri.jmris.simpleserver.SimpleServerManager class
  *
  * @author Paul Bender
  */

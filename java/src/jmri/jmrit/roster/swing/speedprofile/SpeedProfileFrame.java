@@ -38,14 +38,14 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
         // pack for display
         pack();
     }
-    
+
     public void windowClosingEvent() {
         spPanel.cancelButton();
         if (spPanel.save) {
-            if (JOptionPane.showConfirmDialog(this,  Bundle.getMessage("SaveProfile"), 
-                    Bundle.getMessage("SpeedProfile"), JOptionPane.YES_NO_OPTION, 
+            if (JOptionPane.showConfirmDialog(this,  Bundle.getMessage("SaveProfile"),
+                    Bundle.getMessage("SpeedProfile"), JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                spPanel.updateSpeedProfileWithResults();            
+                spPanel.updateSpeedProfileWithResults();
             }
         }
         if (spPanel != null && spPanel.table !=null) {

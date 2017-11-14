@@ -111,8 +111,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     protected static final int LEARNING = 13;
     protected static final int STOP_PENDING = 14;
     protected static final String[] CNTRL_CMDS = {"Stop", "Halt", "Resume", "Abort", "Retry", "EStop", "Ramp"};
-    protected static final String[] RUN_STATE = {"HaltStart", "atHalt", "Resumed", "Aborts", "Retried", 
-            "EStop", "Ramp", "Running", "RestrictSpeed", "WaitingForClear", "WaitingForSensor", 
+    protected static final String[] RUN_STATE = {"HaltStart", "atHalt", "Resumed", "Aborts", "Retried",
+            "EStop", "Ramp", "Running", "RestrictSpeed", "WaitingForClear", "WaitingForSensor",
             "RunningLate", "WaitingForStart", "RecordingScript", "StopPending"};
 
     // Estimated positions of the train in the block it occupies
@@ -626,7 +626,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         switch (speedMap.getInterpretation()) {
             case SignalSpeedMap.PERCENT_NORMAL:
                 units = Bundle.getMessage("percentNormal");
-                if (_idxCurrentOrder == _orders.size() - 1 
+                if (_idxCurrentOrder == _orders.size() - 1
                         || _engineer.getCurrentCommandIndex() >= _commands.size() - 1) {
                     speed = _speedInfo.get(_idxCurrentOrder).getEntranceSpeed();
                 } else {
@@ -636,7 +636,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             speed = Float.parseFloat(ts.getValue());
                             break;
                         }
-                    }                    
+                    }
                 }
                 speed = (_engineer.getSpeedSetting() / speed) * 100;
                 break;
@@ -918,7 +918,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         int runState = _engineer.getRunState();
         if (log.isDebugEnabled()) {
             log.debug("controlRunTrain({})= \"{}\" for train {} runstate= {}, in block {}. warrant {}",
-                    idx, CNTRL_CMDS[idx], getTrainName(), RUN_STATE[runState], 
+                    idx, CNTRL_CMDS[idx], getTrainName(), RUN_STATE[runState],
                     getBlockAt(_idxCurrentOrder).getDisplayName(), getDisplayName());
         }
         synchronized (_engineer) {
@@ -1387,7 +1387,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 _engineer.resumeSpeedFrom(STOP);
                 int runState = _engineer.getRunState();
                 if (runState == HALT || runState == RAMP_HALT) {
-                    _waitForBlock = true;                    
+                    _waitForBlock = true;
                 } else {
                     _waitForBlock = false;
                 }
@@ -1432,7 +1432,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 _engineer.resumeSpeedFrom(STOP);
                 int runState = _engineer.getRunState();
                 if (runState == HALT || runState == RAMP_HALT) {
-                    _waitForBlock = true;                    
+                    _waitForBlock = true;
                 } else {
                     _waitForBlock = false;
                 }
@@ -1607,11 +1607,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 log.error("goingActive setPath fails: {}", msg);
             }
             if (_engineer != null && _engineer.getSpeedSetting() <= 0.0f) {
-                // Train can still be moving after throttle set to 0. Block 
+                // Train can still be moving after throttle set to 0. Block
                 // boundaries can be crossed.  This is due to momentum 'gliding'
                 // for any nonE-Stop or by choosing ramping to a stop.
                 int runState = _engineer.getRunState();
-                if (runState != WAIT_FOR_CLEAR && runState != HALT && 
+                if (runState != WAIT_FOR_CLEAR && runState != HALT &&
                         runState != STOP_PENDING && runState != RAMP_HALT) {
                     // Apparently NOT already stopped or just about to be.
                     // Therefore, assume a Rogue has just entered.
@@ -2090,7 +2090,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     _waitForBlock, _waitForSignal, speedSetting, getDisplayName());
         }
 
-        if (runState == WAIT_FOR_CLEAR || runState == HALT || 
+        if (runState == WAIT_FOR_CLEAR || runState == HALT ||
                 runState == STOP_PENDING || runState == RAMP_HALT) {
             if (log.isTraceEnabled()) {
                 log.trace("Hold train at block \"{}\" runState= {}, speedSetting= {}.warrant {}",
@@ -2278,7 +2278,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         ///////////////// Down ramp should begin in this block i.e. _idxCurrentOrder, running at _curSpeedType
         // find the time when ramp should start in this block
-        // set throttleSpeed to what it is that the start of the block 
+        // set throttleSpeed to what it is that the start of the block
         if (idxBlockOrder == 0) {
             throttleSpeed = blkSpeedInfo.getExitSpeed();
         } else {
@@ -2316,7 +2316,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             speedTime += ts.getTime() * timeRatio;
             if (cmd.equals("SPEED")) {
                 nextThrottle = Float.parseFloat(ts.getValue()); // new speed
-                if (hasSpeed) { 
+                if (hasSpeed) {
                     prevRampLen = rampLen;
                     // calculate a new ramp length starting from speed nextThrottle (modified for speedType)
                     rampLen = _speedUtil.rampLengthForRampDown(nextThrottle, _curSpeedType, speedType, isForward);

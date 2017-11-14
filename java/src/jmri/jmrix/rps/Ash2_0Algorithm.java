@@ -174,7 +174,7 @@ public class Ash2_0Algorithm extends AbstractCalculator {
         Zt = result.z;
         Vs = result.vs;
 
-        // must convert to new code 
+        // must convert to new code
         int code;
         switch (result.code) {
             case 0: // ok

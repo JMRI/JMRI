@@ -11,7 +11,7 @@ import jmri.util.node.NodeIdentity;
  * @author Randall Wood
  */
 public abstract class AbstractConfigurationProvider {
-    
+
     protected final Profile project;
     private boolean privateBackedUp = false;
     private boolean sharedBackedUp = false;
@@ -70,5 +70,5 @@ public abstract class AbstractConfigurationProvider {
     protected void setSharedBackedUp(boolean sharedBackedUp) {
         this.sharedBackedUp = sharedBackedUp;
     }
-    
+
 }

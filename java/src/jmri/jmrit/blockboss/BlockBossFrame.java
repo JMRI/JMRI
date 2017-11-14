@@ -684,7 +684,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(fNextSignalField2Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
-        // ?? 
+        // ??
         q = new JPanel();
         q.setLayout(new FlowLayout());
         q.add(fdLimitBox);
@@ -864,7 +864,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
             return;
         }
 
-        // find existing logic  
+        // find existing logic
         BlockBossLogic b;
         if (sh != null) {
             b = BlockBossLogic.getExisting(sh);

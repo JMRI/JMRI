@@ -49,7 +49,7 @@ class InitiateSoundEditor extends SdfMacroEditor {
         ActionListener l = new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                // have to convert back from string to 
+                // have to convert back from string to
                 // trigger value
                 String trigger = (String) box.getSelectedItem();
                 int value = jmri.util.StringUtil.getStateFromName(trigger, SdfConstants.triggerCodes, SdfConstants.editorTriggerNames);

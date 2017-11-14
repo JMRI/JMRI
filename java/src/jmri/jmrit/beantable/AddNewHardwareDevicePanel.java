@@ -101,7 +101,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         prefixBox.addActionListener(rangeListener);
 
         /* System.out.println(jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class));
-         java.util.List<jmri.jmrix.SystemConnectionMemo> list 
+         java.util.List<jmri.jmrix.SystemConnectionMemo> list
          = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
          if (list != null) {
          for (jmri.jmrix.SystemConnectionMemo memo : list) {

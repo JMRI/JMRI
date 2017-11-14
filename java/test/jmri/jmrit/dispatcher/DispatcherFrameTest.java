@@ -38,9 +38,9 @@ public class DispatcherFrameTest {
 
     @Test
     public void testParametersRead() {
-        // The Dispatcher functionality is tightly coupled to the Dispatcher 
-        // Frame.  As a result, we can currently only test seting the 
-        // options file by creating a DispatcherFrame object.  A future 
+        // The Dispatcher functionality is tightly coupled to the Dispatcher
+        // Frame.  As a result, we can currently only test seting the
+        // options file by creating a DispatcherFrame object.  A future
         // enhancement shold probably break this coupling.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -99,14 +99,14 @@ public class DispatcherFrameTest {
 
         // Find new table window by name
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-       
+
         // find the add train Button
         JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("InitiateTrain") + "...");
 
         bo.push();
 
         // pushing the button should bring up the Add Train frame
-        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("AddTrainTitle")); 
+        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("AddTrainTitle"));
         // now close the add train frame.
         atf.requestClose();
 
@@ -124,14 +124,14 @@ public class DispatcherFrameTest {
 
         // Find new table window by name
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-       
+
         // find the Allocate Extra SectionsButton
         JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("AllocateExtra") + "...");
 
         bo.push();
 
         // pushing the button should bring up the Extra Sections frame
-        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("ExtraTitle")); 
+        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("ExtraTitle"));
         // now close the add train frame.
         atf.requestClose();
 
@@ -149,14 +149,14 @@ public class DispatcherFrameTest {
 
         // Find new table window by name
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-       
+
         // find the Cancel Restart Button
         JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("CancelRestart") + "...");
 
         bo.push();
 
-        // we don't have an active train, so this shouldn't result in any 
-        // new windows or other results.  This part of the test just verifies 
+        // we don't have an active train, so this shouldn't result in any
+        // new windows or other results.  This part of the test just verifies
         // we don't have any exceptions.
 
         // Ask to close Dispatcher window

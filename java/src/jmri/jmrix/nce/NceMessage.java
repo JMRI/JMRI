@@ -45,7 +45,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static final int READ_DIR_CV_CMD = 0xA9;  //NCE read CV direct command
     public static final int SEND_ACC_SIG_MACRO_CMD = 0xAD; // NCE send NMRA aspect command
 
-    // The following commands are not supported by the NCE USB  
+    // The following commands are not supported by the NCE USB
     public static final int ENABLE_MAIN_CMD = 0x89;  //NCE enable main track, kill programming command
     public static final int KILL_MAIN_CMD = 0x8B;  //NCE kill main track, enable programming command
     public static final int SENDn_BYTES_CMD = 0x90;  //NCE send 3 to 6 bytes (0x9n, n = 3-6) command
@@ -62,7 +62,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static final int REPLY_1 = 1;   // reply length of 1 byte
     public static final int REPLY_2 = 2;   // reply length of 2 byte
     public static final int REPLY_4 = 4;   // reply length of 4 byte
-    public static final int REPLY_16 = 16;   // reply length of 16 bytes 
+    public static final int REPLY_16 = 16;   // reply length of 16 bytes
 
     public NceMessage() {
         super();
@@ -198,7 +198,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         NceMessage m = new NceMessage(1);
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             // Sending exit programming mode binary can crash pre 2006 EPROMs
-            // assumption is that program mode hasn't been entered, so exit without 
+            // assumption is that program mode hasn't been entered, so exit without
             // sending command
             if (tc.getNceProgMode() == false) {
                 return null;
@@ -441,7 +441,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             int i = 0; // counter to make it easier to format the message
 
             m.setElement(i++, SENDn_BYTES_CMD + bytes.length);
-            m.setElement(i++, retries);        // send this many retries. 
+            m.setElement(i++, retries);        // send this many retries.
             for (int j = 0; j < bytes.length; j++) {
                 m.setElement(i++, bytes[j] & 0xFF);
             }

@@ -20,13 +20,13 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     public void testCtor() {
         new SerialTurnout("5", "to5", memo);
     }
-    
+
     @Override
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        
+
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();

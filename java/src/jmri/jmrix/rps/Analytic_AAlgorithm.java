@@ -243,7 +243,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
             for (int k = 0; k <= 3; k++) {
                 for (int i = 0; i <= 3; i++) {
                     n = k + i;
-                    if (n % 2 != 0) //was:    odd(n) 
+                    if (n % 2 != 0) //was:    odd(n)
                     {
                         j = -1;
                     } else {

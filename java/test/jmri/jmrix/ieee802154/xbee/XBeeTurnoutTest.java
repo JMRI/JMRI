@@ -46,7 +46,7 @@ public class XBeeTurnoutTest {
         XBeeTurnout s = new XBeeTurnout("ABCT0002:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
-    
+
     @Test
     public void testCtor16BitHexNodeAddress2pin() {
         XBeeTurnout s = new XBeeTurnout("ABCT0002:4:5", "XBee Turnout Test", tc);

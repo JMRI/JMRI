@@ -283,7 +283,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      *
      * @param inputName System name to be normalized
      * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form 
+     * @return A system name in standard normalized form
      */
     @Override
     @CheckReturnValue

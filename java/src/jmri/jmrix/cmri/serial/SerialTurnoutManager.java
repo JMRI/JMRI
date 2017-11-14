@@ -163,7 +163,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public int askControlType(String systemName) {
-        // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
+        // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or
         // 'pulsed' output (some turnout controllers).
         int iType = selectOutputType();
         if (iType == JOptionPane.CLOSED_OPTION) {

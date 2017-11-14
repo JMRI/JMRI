@@ -39,7 +39,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         // add another button
         //JButton b = new JButton("Configure nodes");
         //details.add(b);
-        //b.addActionListener(new NodeConfigAction());  
+        //b.addActionListener(new NodeConfigAction());
     }
 
     @Override

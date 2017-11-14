@@ -25,7 +25,7 @@ public class SerialMonActionTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction(); 
+        SerialMonAction action = new SerialMonAction();
         Assert.assertNotNull("exists", action);
     }
 

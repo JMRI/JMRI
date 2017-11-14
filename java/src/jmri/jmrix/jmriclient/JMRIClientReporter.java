@@ -64,8 +64,8 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
                 setReport(report);  // this is an update of the report.
             } else {
                 log.debug("setting report to null");
-                setReport(null); // this is an update, but it is just 
-                // telling us the transient current 
+                setReport(null); // this is an update, but it is just
+                // telling us the transient current
                 // report is no longer valid.
             }
         }

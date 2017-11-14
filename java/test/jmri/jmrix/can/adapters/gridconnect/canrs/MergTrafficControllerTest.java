@@ -18,11 +18,11 @@ public class MergTrafficControllerTest extends jmri.jmrix.can.adapters.gridconne
         Assert.assertEquals("default canid value",122,((MergTrafficController)tc).getCanid());
     }
 
-   
+
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new MergTrafficController();
     }
@@ -31,7 +31,7 @@ public class MergTrafficControllerTest extends jmri.jmrix.can.adapters.gridconne
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.tearDown();
     }
 
 }

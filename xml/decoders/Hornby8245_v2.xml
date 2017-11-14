@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Greg Watkins gregd99@yahoo.com" version="2" lastUpdated="20100528"/>
-  <!-- 
+  <!--
 	This is my first attempt to write a decoder description file.
 	All feedback welcome.
 -->
@@ -917,7 +917,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
 				<display item="Current Water#2" label = " " format="hslider"/>
 				<label label=" "/>
 			</column>
-			
+
 		</row>
 		<separator/>
 -->

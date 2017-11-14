@@ -27,7 +27,7 @@ public class XBeeEditNodeFrameTest {
     private XBeeConnectionMemo m = null;
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeNodeConfigFrame frame = new XBeeNodeConfigFrame(tc);
         XBeeEditNodeFrame action = new XBeeEditNodeFrame(tc,(XBeeNode)(tc.getNodeFromAddress("00 02")),frame);
         Assert.assertNotNull("exists", action);

@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.locostats;
 
 /**
  * PR3 (MS100 mode) Interface status
- * 
+ *
  * @author Bob Milhaupt Copyright (C) 2017
  */
 public class PR3MS100ModeStatus {

@@ -47,7 +47,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV35-54_Fn.xml"/>
     <!--  Lighting effects starts here  -->
-		
+
 		<variable CV="62" default="60" item="Function 6 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
 			<decVal/>
 			<label>Momentary Pulse</label>
@@ -228,9 +228,9 @@
 			<label xml:lang="it">Velocit� Sfarfallio casuale 2</label>
 			<tooltip xml:lang="it">Sfarfallio casuale caldaia</tooltip>
 		</variable>
-     
+
 		<!--  Lighting effects ends here  -->
-		
+
 		<xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
 		<variable CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
         <decVal/>

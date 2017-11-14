@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * 
+ *
  */
 public class WiFiConsist extends NmraConsist {
 

@@ -44,7 +44,7 @@ public class ComboBoxColorChooserPanel extends AbstractColorChooserPanel {
         // build the combo box.
         colorCombo = new JComboBox<String>();
         for (int i = 0; i < numColors; i++) {
-            colorCombo.addItem(Bundle.getMessage(colorText[i]));   
+            colorCombo.addItem(Bundle.getMessage(colorText[i]));
         }
         colorCombo.setMaximumRowCount(numColors);
         colorCombo.addActionListener( (ActionEvent e) -> {

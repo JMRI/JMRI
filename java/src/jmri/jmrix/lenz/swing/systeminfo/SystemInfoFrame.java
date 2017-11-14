@@ -128,7 +128,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         XNetMessage msg = XNetMessage.getCSVersionRequestMessage();
         //Then send to the controller
         tc.sendXNetMessage(msg, this);
-        /* Next, get the message to request the Computer Interface 
+        /* Next, get the message to request the Computer Interface
          Hardware/Software Version */
         XNetMessage msg2 = XNetMessage.getLIVersionRequestMessage();
         // Then send it to the controller

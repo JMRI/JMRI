@@ -83,7 +83,7 @@
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv351-359_951-959.xml"/>
       <!-- CVs added in fw 1.01  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362_960-962.xml"/>
-      <!-- CVs added in fw 1.01, 1.02, 1.03, 1.04  -->	
+      <!-- CVs added in fw 1.01, 1.02, 1.03, 1.04  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
       <!-- CVs added in fw 1.02  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350_950.xml"/>

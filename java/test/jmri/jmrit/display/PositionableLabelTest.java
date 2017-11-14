@@ -565,8 +565,8 @@ public class PositionableLabelTest {
         JUnitUtil.tearDown();
     }
 
-    // All of the Pixel enum, and related methods, below was copied from 
-    // jmri.util.SwingTestCase.  The tests above use Pixel values extensively. 
+    // All of the Pixel enum, and related methods, below was copied from
+    // jmri.util.SwingTestCase.  The tests above use Pixel values extensively.
     protected enum Pixel { // protected to limit leakage outside Swing tests
 
         TRANSPARENT(0x00000000),

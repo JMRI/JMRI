@@ -9,12 +9,12 @@
   <!--  Based on version for steady state decoder, MERG_ACC5  -->
   <!--  re-written main programming pane to be more intuitive -->
   <!--  not necessary to duplicate pane for CV's in 500 region as their role duplicates low ranges -->
-  <!-- 
-				Extensive abuse of standard labelling conventions to make decoder address appear in "basic" pane. 
+  <!--
+				Extensive abuse of standard labelling conventions to make decoder address appear in "basic" pane.
 				This decoder has address range of 1-511, split over CV1 and CV9.  By manipulating the way the address
 				range (1-511) and the base turnout address (1-2017 in steps of four), these can appear as the addresses
 				on the Basic Pane and in the Roster.
-				Current arrangement has the base turnout address show in the Roster (Short Address).  
+				Current arrangement has the base turnout address show in the Roster (Short Address).
 			-->
   <decoder>
     <!--  lowVersionID="4" highVersionID="52"   -->
@@ -153,7 +153,7 @@
 			<enumVal>
 				<enumChoice choice="(do not change)"/>
 				<enumChoice choice="Turnout Addresses"/>
-				
+
 				</enumVal>
 			</variable>
 		 -->
@@ -189,13 +189,13 @@
         </enumVal>
         <label>Toggle Mode output 4</label>
       </variable>
-      <!-- dual address not used in ACC4 	
+      <!-- dual address not used in ACC4
 		<variable label="Dual Address Mode" CV="33" mask="VXXXXXXX" default="1">
 		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
 			</variable>
-		
+
 		-->
-      <!-- Output inversion not used in ACC4 
+      <!-- Output inversion not used in ACC4
 		<variable label="Invert bit 0" CV="34" mask="XXXXXXXV" default="1" include="52">
 		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
 			</variable>

@@ -238,7 +238,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
                     log.debug("Status Reply: {}", r.toString());
                     r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
-                } 
+                }
                 return(r);
             case DCCppConstants.THROTTLE_REPLY:
                 if (s.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) {
@@ -322,10 +322,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * 
+     *
      * Not really used inside of DCC++.  Just here
      * to play nicely with the inheritance.
-     * 
+     *
      * TODO: If this is unused, can we just not override it
      * and (not) "use" the superclass version?
      * ANSWER: No, we can't because the superclass looks in
@@ -971,7 +971,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public int getFreeMemoryInt() {
         return(Integer.parseInt(this.getFreeMemoryString()));
     }
-    
+
     public int getCommTypeInt() {
         if (this.isCommTypeReply()) {
             return(this.getValueInt(1));
@@ -980,7 +980,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return(0);
         }
     }
-    
+
     public String getCommTypeValueString() {
         if (this.isCommTypeReply()) {
             return(this.getValueString(2));

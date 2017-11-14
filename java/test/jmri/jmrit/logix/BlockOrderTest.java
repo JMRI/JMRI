@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class BlockOrderTest {
 
@@ -48,7 +48,7 @@ public class BlockOrderTest {
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
         Portal portal = portalMgr.providePortal("foop");
         portal.setToBlock(block, true);
-        SignalHead sh = new jmri.implementation.VirtualSignalHead("IH1", "sig1"); 
+        SignalHead sh = new jmri.implementation.VirtualSignalHead("IH1", "sig1");
         Assert.assertNotNull("signal", sh);
         sh.setAppearance(SignalHead.YELLOW);
         OPath p = new OPath(block, "path");

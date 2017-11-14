@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of SprogSlotMonDataModel 
+ * Test simple functioning of SprogSlotMonDataModel
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -21,7 +21,7 @@ public class SprogSlotMonDataModelTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SprogSlotMonDataModel action = new SprogSlotMonDataModel(jmri.jmrix.sprog.SprogConstants.MAX_SLOTS,8,memo);
         Assert.assertNotNull("exists", action);
     }

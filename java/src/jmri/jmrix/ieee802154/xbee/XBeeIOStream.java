@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*
- * This class provides an interface between the XBee messages that are sent 
+ * This class provides an interface between the XBee messages that are sent
  * to and from the serial port connected to an XBee device.
  * Remote devices may be sending messages in transparent mode.
  *
@@ -190,7 +190,7 @@ final public class XBeeIOStream extends AbstractPortController {
 
         @Override
         public void run() { // start a new thread
-            // this thread has one task.  It repeatedly reads from the XBee 
+            // this thread has one task.  It repeatedly reads from the XBee
             // and writes data to the output pipe
             if (log.isDebugEnabled()) {
                 log.debug("XBee Receive Thread Started");

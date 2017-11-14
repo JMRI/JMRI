@@ -21,7 +21,7 @@ public class SerialPacketGenFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SerialPacketGenFrame action = new SerialPacketGenFrame(tc);
         Assert.assertNotNull("exists", action);
     }

@@ -93,7 +93,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
          ( f2 ? 0x02 : 0) |
          ( f3 ? 0x04 : 0) |
          ( f4 ? 0x08 : 0);
-        
+
          data = data + 0x80;*/
  /*Mx1Message m = Mx1Message.getSendFunction(1, addressLo, addressHi, data);
          if(m!=null)
@@ -112,7 +112,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
          (f7 ? 0x04 : 0)	|
          (f6 ? 0x02 : 0) |
          (f5 ? 0x01 : 0);
-        
+
          data = data + 0xB0;*/
     }
 
@@ -127,7 +127,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
          ( f10 ? 0x02 : 0) |
          ( f11 ? 0x04 : 0) |
          ( f12 ? 0x08 : 0);
-        
+
          data = data + 0xA0;*/
     }
 
@@ -144,7 +144,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 //                 | (f15 ? 0x04 : 0)
 //                 | (f14 ? 0x02 : 0)
 //                 | (f13 ? 0x01 : 0);
-// 
+//
 //         data = data + 0xD0;
 
         /*Mx1Message m = Mx1Message.getSendFunction(4, addressLo, addressHi, data);

@@ -162,7 +162,7 @@ public class PositionablePopupUtil {
                setBackgroundColor(desiredColor);
            }
         });
- 
+
         popup.add(edit);
 
     }

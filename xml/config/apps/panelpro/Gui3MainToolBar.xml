@@ -7,7 +7,7 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
 >
   <name>PanelPro</name>
-  
+
   <node>
     <name>New PP Window</name>
     <name xml:lang="it">Nuova Finestra PanelPro</name>
@@ -41,4 +41,4 @@
   </node>
 
 </nodes>
-  
+

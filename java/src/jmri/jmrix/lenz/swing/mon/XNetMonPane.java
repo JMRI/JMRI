@@ -71,7 +71,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     @SuppressWarnings("fallthrough")
     @Override
     public synchronized void message(XNetMessage l) {
-        // display the raw data if requested  
+        // display the raw data if requested
         StringBuilder raw = new StringBuilder("packet: ");
         if (rawCheckBox.isSelected()) {
             raw.append(l.toString());

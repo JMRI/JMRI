@@ -77,14 +77,14 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     private boolean addPath(List<OPath> list, OPath path) {
         String pName = path.getName();
         for (int i = 0; i < list.size(); i++) {
-            OPath p = list.get(i);           
+            OPath p = list.get(i);
             if (p.equals(path)) {
                 if (pName.equals(p.getName())) {
                     return true;    // OK, everything equal
                 } else {
                     log.warn("Path \"{}\" is duplicate of path \"{}\" in Portal \"{}\" from block {}.",
                             path.getName(), p.getName(), getUserName(), path.getBlock().getDisplayName());
-                    return false;                    
+                    return false;
                 }
             } else if (pName.equals(p.getName())) {
                 log.warn("Path \"{}\" is duplicate name for another path in Portal \"{}\" from block {}.",
@@ -161,7 +161,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Set this portal's toBlock.  Remove this portal from old toBlock, if any.
-     * Add this portal in the new toBlock's list of portals. 
+     * Add this portal in the new toBlock's list of portals.
      *
      * @param block to be the new toBlock
      * @param changePaths if true, set block in paths. If false,
@@ -206,7 +206,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Set this portal's fromBlock.  Remove this portal from old fromBlock, if any.
-     * Add this portal in the new toBlock's list of portals. 
+     * Add this portal in the new toBlock's list of portals.
      *
      * @param block to be the new fromBlock
      * @param changePaths if true, set block in paths. If false,
@@ -594,7 +594,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Check portal has both blocks and they are different blocks
-     * 
+     *
      * @return true if valid
      */
     public boolean isValid() {

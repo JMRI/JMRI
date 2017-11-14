@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of track roads
  *
  * @author Dan Boudreau Copyright (C) 2013, 2014
- * 
+ *
  */
 public class TrackRoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -169,7 +169,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         updateRoadComboBox();
         updateRoadNames();
-        
+
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_RoadOptions", true); // NOI18N
 

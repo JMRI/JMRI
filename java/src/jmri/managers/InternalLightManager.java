@@ -18,7 +18,7 @@ public class InternalLightManager extends AbstractLightManager {
     @Override
     protected Light createNewLight(String systemName, String userName) {
         return new AbstractVariableLight(systemName, userName) {
- 
+
             //protected void forwardCommandChangeToLayout(int s) {}
             @Override
             protected void sendIntensity(double intensity) {

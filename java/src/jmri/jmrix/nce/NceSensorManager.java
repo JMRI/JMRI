@@ -117,29 +117,29 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      *
      */
     /* Some logic notes
-     * 
+     *
      * Sensor polling normally happens on a short cycle - the NCE round-trip
      * response time (normally 50mS, set by the serial line timeout) plus
      * the "shortCycleInterval" defined above. If an async sensor message is received,
      * we switch to the longCycleInterval since really we don't need to poll at all.
-     * 
+     *
      * We use the long poll only if the following conditions are satisified:
-     * 
+     *
      * -- there have been at least two poll cycle completions since the last change
      * to the list of active sensor - this means at least one complete poll cycle,
      * so we are sure we know the states of all the sensors to begin with
-     * 
+     *
      * -- we have received an async message in the last maxSilentInterval, so that
      * if the user turns off async messages (possible, though dumb in mid session)
      * the system will stumble back to life
-     * 
+     *
      * The interaction between buildActiveAIUs and pollManager is designed so that
      * no explicit sync or locking is needed when the former changes the list of active
      * AIUs used by the latter. At worst, there will be one cycle which polls the same
      * sensor twice.
-     * 
+     *
      * Be VERY CAREFUL if you change any of this.
-     * 
+     *
      */
     private void buildActiveAIUs() {
         activeAIUMax = 0;

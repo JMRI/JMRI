@@ -64,7 +64,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                XBeeAdapter xbp = (XBeeAdapter) p;
                xbee = new XBeeDevice(xbp);
                xbee.open();
-               xbee.reset(); 
+               xbee.reset();
                try {
                   synchronized(this){
                      wait(2000);
@@ -201,7 +201,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         nodeArray[numNodes] = null;
         // remove this node from the network too.
         getXBee().getNetwork().addRemoteDevice(node.getXBee());
- 
+
     }
 
 
@@ -338,7 +338,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
         return (null);
     }
- 
+
    /**
      * Public method to identify an XBeeNode from its RemoteXBeeDevice object.
      *

@@ -91,7 +91,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
         Sensor t2 = l.provideSensor("22");
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 

@@ -10,7 +10,7 @@ import jmri.jmrit.operations.locations.LocationEditFrame;
  * types are Spurs, Yards, Interchanges and Staging.
  *
  * @author Daniel Boudreau Copyright (C) 2011
- * 
+ *
  */
 public class ChangeTracksTypeAction extends AbstractAction {
 

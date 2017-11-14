@@ -60,7 +60,7 @@ public class PathLengthTest extends TestCase {
         Assert.assertEquals("check path p1 length Millimeters", 80f, p1.getLengthMm(), 0.0);
         Assert.assertEquals("check path p2 length Millimeters", 50f, p2.getLengthMm(), 0.0);
         Assert.assertEquals("check path p3 length Millimeters", 100f, p3.getLengthMm(), 0.0);
-        
+
         b.setLength(60);
         Assert.assertEquals("check change block length", 60f, b.getLengthMm(), 0.0);
         Assert.assertEquals("check change path p1 length", 60f, p1.getLengthMm(), 0.0);

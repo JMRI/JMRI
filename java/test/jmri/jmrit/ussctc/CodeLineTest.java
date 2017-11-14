@@ -14,7 +14,7 @@ public class CodeLineTest {
     public void testConstruction() {
         new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
     }
-        
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

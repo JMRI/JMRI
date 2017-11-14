@@ -21,7 +21,7 @@ import jmri.util.JUnitUtil;
 /**
  * This is more of an acceptance test than a unit test. It confirms that the entire
  * application can start up and configure itself.
- * 
+ *
  * @author Paul Bender Copyright (C) 2017
  * @author Bob Jacobsen Copyright (C) 2017
  */
@@ -33,7 +33,7 @@ public class PanelProTest {
     @Test
     public void testLaunch() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-                
+
         try {
             // create a custom profile
             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/LocoNet_Simulator"), folder.newFolder());
@@ -41,7 +41,7 @@ public class PanelProTest {
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
-        
+
             // last few messages from a normal startup are:
                 // INFO  - Starting with profile LocoNet_Simulator.3eac0cdc [main] apps.Apps.?()
                 // INFO  - Using jmri-92FD61C1C87D-3eac0cdc as the JMRI Node identity [main] jmri.util.node.NodeIdentity.?()
@@ -59,14 +59,14 @@ public class PanelProTest {
                 // WARN  - Cleaning up frame "PanelPro" (a class jmri.util.JmriJFrame) from earlier test. [main] jmri.util.JUnitUtil.?()
 
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
-        
+
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
 
             //JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("File path scripts:") != null;}, "last Info line seen");
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
 
             // maybe have it run a script to indicate that it's really up?
-            
+
             // now clean up frames, depending on what's actually left
                 // PanelPro
         } finally {
@@ -79,7 +79,7 @@ public class PanelProTest {
     @Test
     public void testLaunchInitLoop() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-                
+
         try {
             // create a custom profile
             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Prevent_Init_Loop"), folder.newFolder());
@@ -87,7 +87,7 @@ public class PanelProTest {
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
-        
+
             // last few messages from a normal startup are:
                 // INFO  - Starting with profile LocoNet_Simulator.3eac0cdc [main] apps.Apps.?()
                 // INFO  - Using jmri-92FD61C1C87D-3eac0cdc as the JMRI Node identity [main] jmri.util.node.NodeIdentity.?()
@@ -105,14 +105,14 @@ public class PanelProTest {
                 // WARN  - Cleaning up frame "PanelPro" (a class jmri.util.JmriJFrame) from earlier test. [main] jmri.util.JUnitUtil.?()
 
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
-        
+
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
 
             //JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("File path scripts:") != null;}, "last Info line seen");
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
 
             // maybe have it run a script to indicate that it's really up?
-            
+
             // now clean up frames, depending on what's actually left
                 // PanelPro
         } finally {
@@ -120,7 +120,7 @@ public class PanelProTest {
             jmri.util.JUnitUtil.releaseThread(this, 5000);
         }
     }
-     
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

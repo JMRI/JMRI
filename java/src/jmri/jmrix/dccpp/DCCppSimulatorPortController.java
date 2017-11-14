@@ -20,7 +20,7 @@ public abstract class DCCppSimulatorPortController extends jmri.jmrix.AbstractSe
     }
 
     // base class. Implementations will provide InputStream and OutputStream
-    // objects to DCCppTrafficController classes, who in turn will deal in messages.    
+    // objects to DCCppTrafficController classes, who in turn will deal in messages.
     // returns the InputStream from the port
     @Override
     public abstract DataInputStream getInputStream();

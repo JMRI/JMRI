@@ -75,7 +75,7 @@ public class JsonThrottleManager {
     public ObjectMapper getObjectMapper() {
         return this.mapper;
     }
-    
+
     public boolean canBeLongAddress(int asInt) {
         return InstanceManager.getDefault(ThrottleManager.class).canBeLongAddress(asInt);
     }

@@ -22,7 +22,7 @@ public class Sprogv4UpdateFrame
         super(memo);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -38,7 +38,7 @@ public class Sprogv4UpdateFrame
         _memo.getSprogVersionQuery().requestVersion(this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

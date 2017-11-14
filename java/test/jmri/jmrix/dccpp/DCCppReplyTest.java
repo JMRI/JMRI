@@ -56,7 +56,7 @@ public class DCCppReplyTest {
     @Test
     public void testGetServiceModeCVValue() {
     }
-    
+
     // Test Comm Type Reply
     @Test
     public void testCommTypeReply() {
@@ -65,13 +65,13 @@ public class DCCppReplyTest {
         Assert.assertEquals('N', l.getOpCodeChar());
         Assert.assertEquals(0, l.getCommTypeInt());
         Assert.assertEquals("SERIAL", l.getCommTypeValueString());
-        
+
         l = DCCppReply.parseDCCppReply("N1: 192.168.0.1");
         Assert.assertTrue(l.isCommTypeReply());
         Assert.assertEquals('N', l.getOpCodeChar());
         Assert.assertEquals(1, l.getCommTypeInt());
         Assert.assertEquals("192.168.0.1", l.getCommTypeValueString());
-        
+
     }
 
     // The minimal setup for log4J

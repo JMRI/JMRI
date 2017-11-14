@@ -28,7 +28,7 @@ public class WiThrottlePrefsPanelTest {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initStartupActionsManager();
     }
-    
+
     @After
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();

@@ -104,7 +104,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-      </variable> 
+      </variable>
      <variable item="Decoder ID 1" CV="250" default="221" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>

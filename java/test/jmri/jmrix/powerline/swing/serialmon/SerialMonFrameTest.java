@@ -21,7 +21,7 @@ public class SerialMonFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SerialMonFrame action = new SerialMonFrame(tc);
         Assert.assertNotNull("exists", action);
     }

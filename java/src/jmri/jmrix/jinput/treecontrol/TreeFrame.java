@@ -26,7 +26,7 @@ public class TreeFrame extends JmriJFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        // add only content pane 
+        // add only content pane
         contentPane.add(new TreePanel());
 
         // add help menu

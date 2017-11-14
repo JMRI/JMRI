@@ -10,11 +10,11 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MonitorActionTest {
 
-    private TrafficControllerScaffold tcs = null; 
+    private TrafficControllerScaffold tcs = null;
     private CanSystemConnectionMemo memo = null;
 
     @Test

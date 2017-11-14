@@ -18,7 +18,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
 
     private NceInterfaceScaffold nis = null;
 
-    @After 
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }

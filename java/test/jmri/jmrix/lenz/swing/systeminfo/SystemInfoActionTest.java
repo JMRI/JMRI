@@ -16,7 +16,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * @author	Bob Jacobsen Copyright (c) 2001, 2002
  */
 public class SystemInfoActionTest {
-        
+
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
     @Test

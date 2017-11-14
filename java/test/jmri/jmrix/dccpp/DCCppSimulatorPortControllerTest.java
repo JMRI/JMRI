@@ -55,7 +55,7 @@ public class DCCppSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialP
             @Override
             public void setOutputBufferEmpty(boolean s){
             }
-            
+
             @Override
             public boolean okToSend(){
                   return true;

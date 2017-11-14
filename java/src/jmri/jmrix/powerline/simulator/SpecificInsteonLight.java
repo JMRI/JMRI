@@ -148,7 +148,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
             log.debug("start sendOnOff(" + newState + ") Current: " + mState);
         }
 
-        // figure out command 
+        // figure out command
         int command1;
         if (newState == ON) {
             command1 = Constants.CMD_LIGHT_ON_FAST;

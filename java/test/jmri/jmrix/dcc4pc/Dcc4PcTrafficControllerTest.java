@@ -42,7 +42,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
         ostream.flush();
         JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
-        
+
 		// test the result of sending
 
 		Assert.assertEquals("total length ", 4, tostream.available());
@@ -88,7 +88,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }
 
     }
-    
+
     Dcc4PcReply rcvdReply;
     Dcc4PcMessage rcvdMsg;
 

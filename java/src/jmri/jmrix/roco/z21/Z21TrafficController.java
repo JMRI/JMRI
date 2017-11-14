@@ -284,7 +284,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
 
         // create a buffer to hold the incoming data.
         byte[] buffer = new byte[100];  // the size here just needs to be longer
-        // than the longest protocol message.  
+        // than the longest protocol message.
         // Otherwise, the receive will truncate.
 
         // create the packet.
@@ -301,7 +301,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             return;
         }
         if (threadStopRequest) return;
-        
+
         // create the reply from the received data.
         Z21Reply msg = new Z21Reply(buffer, receivePacket.getLength());
 
@@ -460,7 +460,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         threadStopRequest = true;
         // ensure socket closed to end pending operations
         if ( controller!=null && ((Z21Adapter) controller).getSocket()!=null) ((Z21Adapter) controller).getSocket().close();
-        
+
         // usual stop process
         super.terminateThreads();
     }

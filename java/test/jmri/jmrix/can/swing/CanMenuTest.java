@@ -21,10 +21,10 @@ public class CanMenuTest {
 
     private TrafficController tc = null;
     private CanSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CanMenu action = new CanMenu(m);
         Assert.assertNotNull("exists", action);
     }

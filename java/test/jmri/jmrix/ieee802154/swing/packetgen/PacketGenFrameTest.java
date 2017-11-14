@@ -21,7 +21,7 @@ public class PacketGenFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PacketGenFrame action = new PacketGenFrame();
         Assert.assertNotNull("exists", action);
     }

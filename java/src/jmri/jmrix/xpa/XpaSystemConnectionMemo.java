@@ -20,7 +20,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     public XpaSystemConnectionMemo(String prefix, String userName){
-        super(prefix, userName); 
+        super(prefix, userName);
         register(); // registers general type
         InstanceManager.store(this,XpaSystemConnectionMemo.class); // also register as specific type
 
@@ -40,7 +40,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
 
     /* manage the associated traffic controller */
     private XpaTrafficController tc = null;
-    
+
     /**
      * Set the XpaTrafficController associated with this memo
      * <P>

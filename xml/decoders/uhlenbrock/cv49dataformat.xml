@@ -33,7 +33,7 @@
       <revremark>Initial version as separate file from Uhlenbrock_73400.xml v2</revremark>
     </revision>
   <!-- Uhlenbrock Decoder Configuration CV 49 - bits 3 and 4 -->
-  <!-- valid for certain decoder types only                  -->  
+  <!-- valid for certain decoder types only                  -->
   </revhistory>
   <variable item="Digital format" CV="49" comment="DCC and Motorola or DCC or Motorola" default="0" mask="XXXVVXXX">
 	<enumVal>
@@ -48,7 +48,7 @@
             <choice xml:lang="it">solo DCC</choice>
 	  </enumChoice>
 	  <enumChoice choice="Motorola only">
-            <choice>Motorola only</choice>              
+            <choice>Motorola only</choice>
             <choice xml:lang="de">nur Motorola</choice>
             <choice xml:lang="it">solo Motorola</choice>
 	  </enumChoice>
@@ -57,7 +57,7 @@
             <choice xml:lang="fr">Désactivé</choice>
             <choice xml:lang="it">Disabilitato</choice>
             <choice xml:lang="de">Deaktiviert</choice>
-	  </enumChoice>		  
+	  </enumChoice>		
 	</enumVal>
 	<label>Digital format</label>
 	<label xml:lang="de">Datenformat</label>

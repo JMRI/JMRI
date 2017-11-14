@@ -6,7 +6,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of switch list text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class EditSwitchListTextFrame extends OperationsFrame {
 

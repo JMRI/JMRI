@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 /**
  * object type for storing uploaded file data based on examples at
- * http://hmkcode.com/java-servlet-jquery-file-upload/ 
+ * http://hmkcode.com/java-servlet-jquery-file-upload/
  *
  */
 @JsonIgnoreProperties({"content"}) //this prevents serializer error when mapping to send back

@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * Common tests for classes derived from jmri.jmris.AbstractTimeServer class
  *
- * @author Paul Bender Copyright (C) 2017 
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class AbstractTimeServerTestBase {
 
@@ -26,7 +26,7 @@ abstract public class AbstractTimeServerTestBase {
        a.listenToTimebase(true);
        Assert.assertEquals("added listener",n+1,t.getMinuteChangeListeners().length);
        a.listenToTimebase(false);
-       // per the jmri.jmrit.simpleclock.SimpleTimebase class, remove is not 
+       // per the jmri.jmrit.simpleclock.SimpleTimebase class, remove is not
        // implemented, so the following check doesn't work.
        //Assert.assertEquals("removed listener",n,t.getMinuteChangeListeners().length);
     }

@@ -135,7 +135,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         // because this is the first time, the state is UNKNOWN; never goes back to that (in this test)
         Assert.assertEquals("KnownState after set CLOSED is UNKNOWN", jmri.Turnout.UNKNOWN, t.getKnownState());
 
-        // notify the Ln of first feedback - AUX is thrown, so moved off 
+        // notify the Ln of first feedback - AUX is thrown, so moved off
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
@@ -160,7 +160,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("CommandedState after set THROWN is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals("KnownState after set THROWN is UNKNOWN", jmri.Turnout.CLOSED, t.getKnownState());
 
-        // notify the Ln of first feedback - SWITCH is thrown, so moved off 
+        // notify the Ln of first feedback - SWITCH is thrown, so moved off
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
@@ -185,7 +185,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("CommandedState after 2nd set CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after 2nd set CLOSED is THROWN", jmri.Turnout.THROWN, t.getKnownState());
 
-        // notify the Ln of first feedback - AUX is thrown, so moved off 
+        // notify the Ln of first feedback - AUX is thrown, so moved off
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
@@ -205,7 +205,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
 
-        // test transition to back to THROWN in wrong order 
+        // test transition to back to THROWN in wrong order
         t.setCommandedState(jmri.Turnout.THROWN);
         Assert.assertEquals("CommandedState after 2nd set THROWN is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals("KnownState after 2nd set THROWN is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
@@ -245,7 +245,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
 
-        // notify the Ln of first feedback (out of order) - AUX is thrown, so moved off 
+        // notify the Ln of first feedback (out of order) - AUX is thrown, so moved off
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);

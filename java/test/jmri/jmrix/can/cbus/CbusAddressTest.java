@@ -48,7 +48,7 @@ public class CbusAddressTest extends TestCase {
         assertTrue(!new CbusAddress("- 001").check());
         assertTrue(!new CbusAddress("ABC").check());
 
-        assertTrue(!new CbusAddress("XABC").check());    // odd number of digits     
+        assertTrue(!new CbusAddress("XABC").check());    // odd number of digits
         assertTrue(!new CbusAddress("Xprs0").check());
 
         assertTrue(!new CbusAddress("+N1E").check());

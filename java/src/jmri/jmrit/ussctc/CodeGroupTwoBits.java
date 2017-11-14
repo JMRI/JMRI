@@ -7,7 +7,7 @@ package jmri.jmrit.ussctc;
  */
 
 enum CodeGroupTwoBits {
-    Double00, 
-    Double10, 
+    Double00,
+    Double10,
     Double01
 }

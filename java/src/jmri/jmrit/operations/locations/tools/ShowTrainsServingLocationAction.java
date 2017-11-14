@@ -10,7 +10,7 @@ import jmri.jmrit.operations.locations.Track;
  * Action to create the ShowTrainsServingLocationFrame.
  *
  * @author Daniel Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class ShowTrainsServingLocationAction extends AbstractAction {
 

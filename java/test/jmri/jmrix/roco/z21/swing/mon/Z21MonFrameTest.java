@@ -18,9 +18,9 @@ import org.junit.Test;
  **/
 
 public class Z21MonFrameTest {
-        
+
    private Z21SystemConnectionMemo memo = null;
-   private Z21InterfaceScaffold tc = null; 
+   private Z21InterfaceScaffold tc = null;
 
    @Test
    public void MemoConstructorTest(){

@@ -60,7 +60,7 @@ public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
         // pane for AbstactMonPaneBase, panel for JmriJPanel
         panel = pane = new EcosMonPane();
-        ((EcosMonPane)pane).initContext(memo); 
+        ((EcosMonPane)pane).initContext(memo);
         title = "ECoS Command Monitor";
     }
 

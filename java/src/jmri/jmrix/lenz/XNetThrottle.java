@@ -18,14 +18,14 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
-    protected boolean isAvailable;  // Flag  stating if the throttle is in 
+    protected boolean isAvailable;  // Flag  stating if the throttle is in
     // use or not.
-    protected java.util.TimerTask statusTask; // Timer Task used to 
-    // periodically get 
-    // current status of the 
-    // throttle when throttle 
+    protected java.util.TimerTask statusTask; // Timer Task used to
+    // periodically get
+    // current status of the
+    // throttle when throttle
     // not available.
-    protected static final int statTimeoutValue = 1000; // Interval to check the 
+    protected static final int statTimeoutValue = 1000; // Interval to check the
     protected XNetTrafficController tc = null;
 
     // status of the throttle
@@ -322,7 +322,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     public void setSpeedStepMode(int Mode) {
         super.setSpeedStepMode(Mode);
-        // On a lenz system, we need to send the speed to make sure the 
+        // On a lenz system, we need to send the speed to make sure the
         // command station knows about the change.
         setSpeedSetting(this.speedSetting);
     }
@@ -365,7 +365,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     synchronized protected void sendStatusInformationRequest() {
         /* Send the request for status */
         XNetMessage msg = XNetMessage.getLocomotiveInfoRequestMsg(this.address);
-        msg.setRetries(1); // Since we repeat this ourselves, don't ask the 
+        msg.setRetries(1); // Since we repeat this ourselves, don't ask the
         // traffic controller to do this for us.
         // now, we queue the message for sending to the command station
         queueMessage(msg, THROTTLESTATSENT);
@@ -450,7 +450,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     // Handle incoming messages for This throttle.
     @Override
     public void message(XNetReply l) {
-        // First, we want to see if this throttle is waiting for a message 
+        // First, we want to see if this throttle is waiting for a message
         //or not.
         if (log.isDebugEnabled()) {
             log.debug("Throttle " + getDccAddress() + " - received message " + l.toString());
@@ -459,7 +459,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (log.isDebugEnabled()) {
                 log.debug("Current throttle status is THROTTLEIDLE");
             }
-            // We haven't sent anything, but we might be told someone else 
+            // We haven't sent anything, but we might be told someone else
             // has taken over this address
             if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                 if (log.isDebugEnabled()) {
@@ -492,7 +492,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (log.isDebugEnabled()) {
                 log.debug("Current throttle status is THROTTLESPEEDSENT");
             }
-            // For a Throttle Command, we're just looking for a return 
+            // For a Throttle Command, we're just looking for a return
             // acknowledgment, Either a Success or Failure message.
             if (l.isOkMessage()) {
                 if (log.isDebugEnabled()) {
@@ -522,11 +522,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (log.isDebugEnabled()) {
                 log.debug("Current throttle status is THROTTLESTATSENT");
             }
-            // This throttle has requested status information, so we need 
-            // to process those messages. 
+            // This throttle has requested status information, so we need
+            // to process those messages.
             if (l.getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
                 if (l.getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
-                    /* handle information response about F13-F28 Momentary 
+                    /* handle information response about F13-F28 Momentary
                      Status*/
                     if (log.isDebugEnabled()) {
                         log.debug("Throttle - message is LOCO_FUNCTION_STATUS_HIGH_MOM");
@@ -567,7 +567,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 int b2 = l.getElement(2);
                 int b3 = l.getElement(3);
                 int b4 = l.getElement(4);
-                // Element 5 is the consist address, it can only be in the 
+                // Element 5 is the consist address, it can only be in the
                 // range 1-99
                 int b5 = l.getElement(5);
 
@@ -595,7 +595,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 int b3 = l.getElement(3);
                 int b4 = l.getElement(4);
 
-                // elements 5 and 6 contain the address of the other unit 
+                // elements 5 and 6 contain the address of the other unit
                 // in the DH
                 int b5 = l.getElement(5);
                 int b6 = l.getElement(6);
@@ -713,7 +713,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             log.debug("Notified of timeout on message" + msg.toString() + " , " + msg.getRetries() + " retries available.");
         }
         if (msg.getRetries() > 0) {
-            // If the message still has retries available, send it back to 
+            // If the message still has retries available, send it back to
             // the traffic controller.
             tc.sendXNetMessage(msg, this);
         } else {
@@ -819,7 +819,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         if (this.speedStepMode == DccThrottle.SpeedStepMode128) {
             // We're in 128 speed step mode
             int speedVal = b2 & 0x7f;
-            // The first speed step used is actually at 2 for 128 
+            // The first speed step used is actually at 2 for 128
             // speed step mode.
             if (speedVal >= 1) {
                 speedVal -= 1;
@@ -839,7 +839,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             // but other bits are in order from 0-3
             int speedVal = ((b2 & 0x0F) << 1)
                     + ((b2 & 0x10) >> 4);
-            // The first speed step used is actually at 4 for 28 
+            // The first speed step used is actually at 4 for 28
             // speed step mode.
             if (speedVal >= 3) {
                 speedVal -= 3;
@@ -859,7 +859,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             // but other bits are in order from 0-3
             int speedVal = ((b2 & 0x0F) << 1)
                     + ((b2 & 0x10) >> 4);
-            // The first speed step used is actually at 4 for 27 
+            // The first speed step used is actually at 4 for 27
             // speed step mode.
             if (speedVal >= 3) {
                 speedVal -= 3;
@@ -1531,7 +1531,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         statusTask = new java.util.TimerTask() {
             @Override
             public void run() {
-                /* If the timer times out, just send a status 
+                /* If the timer times out, just send a status
                  request message */
                 sendStatusInformationRequest();
             }
@@ -1540,7 +1540,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Stop the Status Timer 
+     * Stop the Status Timer
      */
     protected void stopStatusTimer() {
         if (log.isDebugEnabled()) {
@@ -1572,7 +1572,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 log.debug("sending message to traffic controller");
             }
             // if the queue is not empty, remove the first message
-            // from the queue, send the message, and set the state machine 
+            // from the queue, send the message, and set the state machine
             // to the requried state.
             try {
                 msg = requestList.take();

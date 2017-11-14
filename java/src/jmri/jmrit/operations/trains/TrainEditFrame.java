@@ -925,7 +925,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         locationPanelCheckBoxes.revalidate();
     }
-    
+
     private void updateRouteStatus() {
         Route route = null;
         textRouteStatus.setText(NONE); // clear out previous status

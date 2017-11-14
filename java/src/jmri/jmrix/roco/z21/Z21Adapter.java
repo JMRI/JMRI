@@ -154,7 +154,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
        keepAliveTimer = null;
        socket.close();
        opened = false;
-       allowConnectionRecovery = false; // disposing of the object should 
+       allowConnectionRecovery = false; // disposing of the object should
                                         // result in not allowing reconnection.
     }
 

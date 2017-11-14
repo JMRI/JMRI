@@ -77,7 +77,7 @@ public class SRCPTurnout extends AbstractTurnout {
     // data members
     int _number;   // turnout number
     int _bus;   // bus number
-    SRCPTrafficController tc = null;   // traffic controller 
+    SRCPTrafficController tc = null;   // traffic controller
 
     protected void sendMessage(boolean closed) {
         // get the message text

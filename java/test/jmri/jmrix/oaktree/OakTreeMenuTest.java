@@ -18,7 +18,7 @@ public class OakTreeMenuTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OakTreeMenu action = new OakTreeMenu();
         Assert.assertNotNull("exists", action);
     }

@@ -20,7 +20,7 @@ public class MarklinTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         apps.tests.Log4JFixture.setUp();
         tc = new MarklinTrafficController();
     }
-    
+
     @Override
     @After
     public void tearDown() {

@@ -26,7 +26,7 @@ public class CreateTestObjects {
 
         // Create Variables
         ArrayList<ConditionalVariable> variableList = new ArrayList<>();
-        
+
 //       <conditionalStateVariable operator="2" negated="yes" type="1" systemName="Reset" dataString="" num1="0" num2="0" triggersCalc="yes" />
         ConditionalVariable var1 = new ConditionalVariable();
         var1.setOpern(2);

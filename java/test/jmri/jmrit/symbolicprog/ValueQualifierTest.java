@@ -12,13 +12,13 @@ import org.junit.Assert;
 /**
  *
  * @author	Bob Jacobsen, Copyright 2014
- * @author	Bob Jacobsen, Copyright 2017 
+ * @author	Bob Jacobsen, Copyright 2017
  */
 public class ValueQualifierTest extends TestCase {
 
     private ProgDebugger p = new ProgDebugger();
-    private VariableValue qualified = null; 
-    private VariableValue watched = null; 
+    private VariableValue qualified = null;
+    private VariableValue watched = null;
     private CvValue cv1 = null;
     private CvValue cv2 = null;
     HashMap<String, CvValue> v = null;

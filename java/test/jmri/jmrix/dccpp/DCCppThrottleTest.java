@@ -395,7 +395,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc); 
+        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new DCCppThrottleManager(memo));
         instance = new DCCppThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
     }

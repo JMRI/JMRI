@@ -91,7 +91,7 @@ public interface Timebase extends NamedBean {
 
     public boolean getInternalMaster();
 
-    // the following provide for choosing among hardware clocks if hardware master  
+    // the following provide for choosing among hardware clocks if hardware master
     public void setMasterName(@Nonnull String name);
 
     public String getMasterName();
@@ -127,7 +127,7 @@ public interface Timebase extends NamedBean {
 
     public boolean getShowStopButton();
 
-    // methods to get set time at start up option, and start up time  
+    // methods to get set time at start up option, and start up time
     public void setStartSetTime(boolean set, Date time);
 
     public boolean getStartSetTime();
@@ -135,7 +135,7 @@ public interface Timebase extends NamedBean {
     @Nonnull
     public Date getStartTime();
 
-    // methods to get set clock start start up option  
+    // methods to get set clock start start up option
     public void setStartClockOption(int option);
 
     public int getStartClockOption();

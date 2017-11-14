@@ -109,7 +109,7 @@ public class OlcbThrottle extends AbstractThrottle {
             oti.doEmergencyStop();
         }
 
-        // notify 
+        // notify
         if (oldSpeed != this.speedSetting) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
         }

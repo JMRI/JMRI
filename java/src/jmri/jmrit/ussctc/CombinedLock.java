@@ -13,9 +13,9 @@ public class CombinedLock implements Lock {
     public CombinedLock(List<Lock> list) {
         this.list = list;
     }
-    
-    List<Lock> list; 
-    
+
+    List<Lock> list;
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
@@ -25,5 +25,5 @@ public class CombinedLock implements Lock {
             if (!lock.isLockClear()) return false;
         return true;
     }
-    
+
 }

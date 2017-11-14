@@ -70,11 +70,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 //        for (int i = 0; i<l.size(); i++) {
 //            Element n = l.get(i);
 //            int addr = Integer.parseInt(n.getAttributeValue("name"));
-//            int type = Integer.parseInt(findParmValue(n,"nodetype"));            
+//            int type = Integer.parseInt(findParmValue(n,"nodetype"));
 //
 //            // create node (they register themselves)
 //            SerialNode node = new SerialNode(addr, type);
-//            
+//
 //            // Trigger initialization of this Node to reflect these parameters
 //            SerialTrafficController.instance().initializeSerialNode(node);
 //        }

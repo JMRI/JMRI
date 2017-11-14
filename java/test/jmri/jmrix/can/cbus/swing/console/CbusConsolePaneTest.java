@@ -18,7 +18,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     jmri.jmrix.can.CanSystemConnectionMemo memo = null;
     jmri.jmrix.can.TrafficController tc = null;
 
-    @Override 
+    @Override
     @Test
     public void testInitComponents() throws Exception{
         // for now, just makes ure there isn't an exception.

@@ -139,7 +139,7 @@ public class QualifierAdderTest extends TestCase {
         );
 
         // print JDOM tree, to check
-        //org.jdom2.output.XMLOutputter fmt 
+        //org.jdom2.output.XMLOutputter fmt
         //    = new org.jdom2.output.XMLOutputter(org.jdom2.output.Format.getPrettyFormat());
         //try {
         //	 fmt.output(doc, System.out);

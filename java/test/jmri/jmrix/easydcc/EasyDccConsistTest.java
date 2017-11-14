@@ -30,8 +30,8 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     @Test public void checkSizeLimitCS(){
         EasyDccConsist c = new EasyDccConsist(5, _memo);
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertEquals("CS Consist Limit",8,c.sizeLimit());   
-    } 
+        Assert.assertEquals("CS Consist Limit",8,c.sizeLimit());
+    }
 
     @Test public void checkContainsCS(){
         EasyDccConsist c = new EasyDccConsist(5, _memo);
@@ -39,17 +39,17 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
         // nothing added, should be false for all.
-        Assert.assertFalse("CS Consist Contains",c.contains(A));   
-        Assert.assertFalse("CS Consist Contains",c.contains(B));   
+        Assert.assertFalse("CS Consist Contains",c.contains(A));
+        Assert.assertFalse("CS Consist Contains",c.contains(B));
         // add just A
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
-        Assert.assertTrue("CS Consist Contains",c.contains(A));   
-        Assert.assertFalse("CS Consist Contains",c.contains(B));   
+        Assert.assertTrue("CS Consist Contains",c.contains(A));
+        Assert.assertFalse("CS Consist Contains",c.contains(B));
         // then add B
         c.restore(B,false);
-        Assert.assertTrue("CS Consist Contains",c.contains(A));   
-        Assert.assertTrue("CS Consist Contains",c.contains(B));   
+        Assert.assertTrue("CS Consist Contains",c.contains(A));
+        Assert.assertTrue("CS Consist Contains",c.contains(B));
     }
 
     @Test public void checkGetLocoDirectionCS(){
@@ -60,8 +60,8 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // reverse direction.
-        Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));   
-        Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));   
+        Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));
+        Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));
     }
 
     private EasyDccSystemConnectionMemo _memo;
@@ -76,7 +76,7 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
         jmri.InstanceManager.setDefault(jmri.CommandStation.class, new EasyDccCommandStation(_memo));
         c = new EasyDccConsist(5, _memo);
     }
-   
+
     @After
     @Override
     public void tearDown() {

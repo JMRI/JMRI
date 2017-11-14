@@ -9,7 +9,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>James</firstname><surname>Koretsky</surname></personname>
@@ -25,13 +25,13 @@
         <date>2012-08-31</date>
         <authorinitials>JK</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>       
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2012-11-06</date>
         <authorinitials>KSC</authorinitials>
         <revremark>Added basic aspect mappings</revremark>
-    </revision>   
+    </revision>
   </revhistory>
 
   <aspecttable>BN</aspecttable>
@@ -41,7 +41,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
 
   </reference>
   <description>Appearances for a two-searchlight signal head or semaphore which are used in Automatic Block, CTC and Interlocking Systems</description>
-  
+
   <appearances>
 
     <appearance>
@@ -69,7 +69,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <reference>Rule 232</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-232.gif</imagelink>
     </appearance>
-  
+
 
     <appearance>
       <aspectname>Approach Diverging</aspectname>
@@ -115,7 +115,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <reference>Rule 236</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-236-a.gif</imagelink>
     </appearance>
-    
+
 
     <appearance>
       <aspectname>Approach</aspectname>
@@ -125,7 +125,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-236-b.gif</imagelink>
     </appearance>
 
-    
+
     <appearance>
       <aspectname>Diverging Clear</aspectname>
       <show>red</show>
@@ -216,7 +216,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-241-g.gif</imagelink>
     </appearance>
 
-    
+
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
@@ -225,7 +225,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-242.gif</imagelink>
     </appearance>
   </appearances>
-  
+
     <specificappearances><!-- Start of Specific Appearances list -->
        <danger>
           <aspect>Stop</aspect>
@@ -234,19 +234,19 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
           <aspect>Stop</aspect>
        </held>
     </specificappearances><!-- End of Specific Appearances list -->
-  
+
     <aspectMappings><!-- Start of Aspect Mapping -->
 
     <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Restricted Proceed</advancedAspect>
      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
      <advancedAspect>Approach Medium</advancedAspect>
      <ourAspect>Approach</ourAspect>
@@ -263,4 +263,4 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
     </aspectMapping>
 
   </aspectMappings><!-- End of Aspect Mapping -->
-</appearancetable>  
+</appearancetable>

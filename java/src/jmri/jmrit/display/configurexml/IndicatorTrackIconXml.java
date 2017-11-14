@@ -61,7 +61,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         if (p.showTrain()) {
             show = "yes";
         }
-        
+
         elem.addContent(show);
         element.addContent(elem);
 
@@ -147,7 +147,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
             name = element.getChild("occupancysensor");
             if (name != null) {
                 l.setOccSensor(name.getText());
-            }            
+            }
         }
 
         l.setShowTrain(false);

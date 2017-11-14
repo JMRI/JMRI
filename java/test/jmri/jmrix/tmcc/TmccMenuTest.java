@@ -18,7 +18,7 @@ public class TmccMenuTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TmccMenu action = new TmccMenu(new TmccSystemConnectionMemo("T", "TMCC Test"));
         Assert.assertNotNull("exists", action);
     }

@@ -21,7 +21,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.et.setSystemConnectionMemo(this);
         register();
         InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -31,7 +31,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.et.setSystemConnectionMemo(this);
         register();
         InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -39,7 +39,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super("D", "SRCP");
         register(); // registers general type
         InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 

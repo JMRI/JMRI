@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of track roads
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -59,7 +59,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     JRadioButton destinationsAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
     JRadioButton destinationsInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
     JRadioButton destinationsExclude = new JRadioButton(Bundle.getMessage("Exclude"));
-    
+
     // checkboxes
     JCheckBox onlyCarsWithFD = new JCheckBox(Bundle.getMessage("OnlyCarsWithFD"));
 
@@ -116,7 +116,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         pRadioButtons.add(destinationsExclude);
 
         p3.add(pRadioButtons);
-        
+
         // row 4 only for interchange / classification tracks
         JPanel pFD = new JPanel();
         pFD.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
@@ -274,7 +274,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         //      ps.setLayout(new BoxLayout(ps, BoxLayout.Y_AXIS));
         //      text = new JLabel("Start with this");
         //      ps.add(text);
-        //    
+        //
         //      statusFrame.getContentPane().add(ps);
         //      statusFrame.pack();
         //      statusFrame.setSize(Control.panelWidth700, 100);
@@ -430,7 +430,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             car.setLoadName(load);
                             car.setTrack(_track);
                             car.setFinalDestination(destination);
-                            
+
                             // does the destination accept this car?
                             // this checks tracks that have schedules
                             String testDest = "";
@@ -449,7 +449,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                     break; // done
                                 }
                             }
-                            
+
                             if (!testDest.equals(Track.OKAY)) {
                                 noIssues = false;
                                 int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
@@ -460,7 +460,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                     continue;
                                 return false; // done
                             }
-                            
+
                             log.debug("Find train for car type ({}), road ({}), load ({})", type, road, load);
 
                             boolean results = InstanceManager.getDefault(Router.class).setDestination(car, null, null);

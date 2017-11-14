@@ -103,7 +103,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
 
            // Finally, request the current state from the layout.
            this.requestUpdateFromLayout();
-        } 
+        }
     }
 
     /**
@@ -112,7 +112,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     @Override
     public void requestUpdateFromLayout() {
         // Request the sensor status from the XBee Node this sensor is
-        // attached to.  
+        // attached to.
         try  {
            IOValue value = node.getXBee().getDIOValue(IOLine.getDIO(pin));
            if ((value==IOValue.HIGH) ^ _inverted) {
@@ -163,7 +163,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
      */
     @Override
     public void setPullResistance(PullResistance r){
-       try { 
+       try {
           node.setPRParameter(pin,r);
        } catch (TimeoutException toe) {
          log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());

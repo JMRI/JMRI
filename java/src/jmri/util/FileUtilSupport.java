@@ -388,7 +388,7 @@ public class FileUtilSupport extends Bean {
         if (filename == null ) {
             throw new IllegalArgumentException("File \""+file+"\" has a null absolute path which is not allowed");
         }
-        
+
         // compare full path name to see if same as preferences
         if (!ignoreUserFilesPath) {
             if (filename.startsWith(getUserFilesPath())) {
@@ -570,7 +570,7 @@ public class FileUtilSupport extends Bean {
      *
      * @see #getProfilePath()
      * @param path The path to the profile directory using system-specific
-     *             separators. If null, this will cause  {@link #getProfilePath()} to 
+     *             separators. If null, this will cause  {@link #getProfilePath()} to
      *             provide the preferences directory via {@link #getPreferencesPath()}.
      */
     public void setProfilePath(@CheckForNull String path) {
@@ -795,7 +795,7 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Set the path to python scripts. 
+     * Set the path to python scripts.
      *
      * @param path the scriptsPath to set. Null resets to the default, defined in {@link #getScriptsPath()}
      */

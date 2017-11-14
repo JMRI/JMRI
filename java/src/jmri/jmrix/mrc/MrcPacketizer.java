@@ -433,7 +433,7 @@ public class MrcPacketizer extends MrcTrafficController {
                         msg.setElement(i, b);
                         log.trace("char {} is: ", i, Integer.toHexString(b));
                     }
-                    /*Slight trade off with this we may see any transmitted message go out prior to the 
+                    /*Slight trade off with this we may see any transmitted message go out prior to the
                      poll message being passed to the monitor. */
                     if (pollForUs) {
                         synchronized (xmtHandler) {
@@ -537,7 +537,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 try {
                     if (m.getMessageClass() != MrcInterface.POLL) {
                         mCurrentState = WAITFORCMDRECEIVED;
-                        /* We set the current state before transmitting the message otherwise 
+                        /* We set the current state before transmitting the message otherwise
                          the reply to the message may be received before the state is set
                          and the message will timeout and be retransmitted */
                         if (!m.isReplyExpected()) {

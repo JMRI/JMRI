@@ -103,7 +103,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
                 firePropertyChange("Power", null, null);
             }
  }
- 
+
     }
 
     // listen for the messages to the LI100/LI101

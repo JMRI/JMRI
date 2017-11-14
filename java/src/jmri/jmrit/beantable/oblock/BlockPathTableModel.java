@@ -1,7 +1,7 @@
 package jmri.jmrit.beantable.oblock;
 
 /**
- * GUI to define the OPaths within an OBlock.  An OPath is the setting of turnouts 
+ * GUI to define the OPaths within an OBlock.  An OPath is the setting of turnouts
  * from one Portal to another Portal within an OBlock.  It may also be assigned
  * a length.
  * <P>
@@ -53,7 +53,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     private OBlock _block;
     private ArrayList<Boolean> _units;      // gimmick to toggle units of length col for each path
     private float _tempLen;
-    
+
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
     public BlockPathTableModel() {
@@ -93,10 +93,10 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         if (_block.isMetric()) {
             tempRow[UNITSCOL] =  Bundle.getMessage("cm");
         } else {
-            tempRow[UNITSCOL] =  Bundle.getMessage("in");            
+            tempRow[UNITSCOL] =  Bundle.getMessage("in");
         }
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
-        
+
         _units = new ArrayList<Boolean>();
         for(int i=0; i<=_block.getPaths().size(); i++) {
             _units.add(Boolean.valueOf(_block.isMetric()));
@@ -141,7 +141,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         }
         switch (columnIndex) {
             case FROM_PORTAL_COLUMN:
-                if (path !=null) {                   
+                if (path !=null) {
                     Portal portal = path.getFromPortal();
                     if (portal == null) {
                         return "";
@@ -157,7 +157,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     return tempRow[columnIndex];
                 }
             case TO_PORTAL_COLUMN:
-                if (path !=null) {                   
+                if (path !=null) {
                     Portal portal = path.getToPortal();
                     if (portal == null) {
                         return "";
@@ -167,7 +167,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     return tempRow[columnIndex];
                 }
             case LENGTHCOL:
-                if (path !=null) {                   
+                if (path !=null) {
                     if (_units.get(rowIndex)) {
                         return (twoDigit.format(path.getLengthCm()));
                     } else {
@@ -211,25 +211,25 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     if (_block.getPathByName(strValue) != null) {
                         msg = Bundle.getMessage("DuplPathName", strValue);
                         tempRow[col] = strValue;
-                        
+
                     }else {
                         Portal fromPortal = _block.getPortalByName(tempRow[FROM_PORTAL_COLUMN]);
                         Portal toPortal = _block.getPortalByName(tempRow[TO_PORTAL_COLUMN]);
                         if (fromPortal !=null || toPortal!= null) {
-                            OPath path = new OPath(strValue, _block, fromPortal, toPortal, null);                            
+                            OPath path = new OPath(strValue, _block, fromPortal, toPortal, null);
                             float len = 0.0f;
                             try {
                                 len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
                             } catch (ParseException e) {
                                 JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                             }
                             if (tempRow[UNITSCOL].equals((Bundle.getMessage("cm")))) {
                                 path.setLength(len * 10.0f);
                             } else {
                                 path.setLength(len * 25.4f);
                             }
-                            
+
                             if (!_block.addPath(path)) {
                                 msg = Bundle.getMessage("AddPathFailed", strValue);
                                 tempRow[NAME_COLUMN] = strValue;
@@ -249,11 +249,11 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                         if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                             _tempLen *= 10f;
                         } else {
-                            _tempLen *= 25.4f;                            
+                            _tempLen *= 25.4f;
                         }
                     } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     }
                     return;
                 case UNITSCOL:
@@ -379,10 +379,10 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     } else {
                         path.setLength(len * 25.4f);
                     }
-                    fireTableRowsUpdated(row, row);                    
+                    fireTableRowsUpdated(row, row);
                 } catch (ParseException e) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", value),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                 }
                 return;
             case UNITSCOL:

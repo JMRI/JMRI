@@ -26,7 +26,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -88,7 +88,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         return m;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignores messages.
      */
@@ -96,7 +96,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
     public void message(QsiMessage m) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignores replies.
      */

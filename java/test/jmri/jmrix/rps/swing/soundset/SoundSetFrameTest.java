@@ -18,7 +18,7 @@ public class SoundSetFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SoundSetFrame action = new SoundSetFrame();
         Assert.assertNotNull("exists", action);
     }

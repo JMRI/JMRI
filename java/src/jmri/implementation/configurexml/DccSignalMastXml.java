@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * 
+ *
  */
 public class DccSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {

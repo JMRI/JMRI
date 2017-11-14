@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    AlignmentPanelActionTest.class,  
+    AlignmentPanelActionTest.class,
     AlignmentPanelTest.class
 })
 public class PackageTest {

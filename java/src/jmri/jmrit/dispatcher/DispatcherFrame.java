@@ -964,7 +964,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param allocateMethod                  How allocations will be performed.
      *                                        999 - Allocate as many section from start to finish as it can
      *                                        0 - Allocate to the next "Safe" section. If it cannot allocate all the way to
-     *                                        the next "safe" section it does not allocate any sections. It will 
+     *                                        the next "safe" section it does not allocate any sections. It will
      *                                        not allocate beyond the next safe section until it arrives there. This
      *                                        is useful for bidirectional single track running.
      *                                        Any other positive number (in reality thats 1-150 as the create transit
@@ -973,7 +973,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
-            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd, 
+            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd,
             boolean showErrorMessages, JmriJFrame frame, int allocateMethod) {
         log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
                 trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);

@@ -35,8 +35,8 @@ public class NceTurnout extends AbstractTurnout {
         this.prefix = p + "T";
         _number = i;
         if (_number < NmraPacket.accIdLowLimit || _number > NmraPacket.accIdHighLimit) {
-            throw new IllegalArgumentException("Turnout value: " + _number 
-                    + " not in the range " + NmraPacket.accIdLowLimit + " to " 
+            throw new IllegalArgumentException("Turnout value: " + _number
+                    + " not in the range " + NmraPacket.accIdLowLimit + " to "
                     + NmraPacket.accIdHighLimit);
         }
         // At construction, register for messages
@@ -45,7 +45,7 @@ public class NceTurnout extends AbstractTurnout {
 
     private synchronized void initialize() {
         numNtTurnouts++; // increment the total number of NCE turnouts
-        // update feedback modes, MONITORING requires PowerHouse system with new EPROM    
+        // update feedback modes, MONITORING requires PowerHouse system with new EPROM
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006 && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
             if (modeNames == null) {
                 if (_validFeedbackNames.length != _validFeedbackModes.length) {

@@ -135,7 +135,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _depth = d;
         _searchDepth.setText(Integer.toString(_depth));
     }
-    
+
     public JPanel searchDepthPanel(boolean vertical) {
         _searchDepth.setText(Integer.toString(_depth));
         JPanel p = new JPanel();
@@ -236,7 +236,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 setTrainInfo(selection);
             }
         });
-        
+
         _viewProfile.addActionListener((ActionEvent e) -> {
             showProfile();
         });
@@ -262,7 +262,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (name == null) {
             setTrainName(null);
             _dccNumBox.setText(null);
-            _rosterBox.setSelectedIndex(0);            
+            _rosterBox.setSelectedIndex(0);
             return Bundle.getMessage("NoLoco");
         }
         _rosterBox.setSelectedIndex(0);
@@ -271,14 +271,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             _rosterBox.setSelectedItem(_speedUtil.getRosterId());
             if (_trainNameBox.getText() == null) {
                 if (_speedUtil.getRosterEntry()!=null) {
-                    setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
+                    setTrainName(_speedUtil.getRosterEntry().getRoadNumber());
                 } else {
-                    setTrainName(_speedUtil.getDccAddress().toString()); 
+                    setTrainName(_speedUtil.getDccAddress().toString());
                 }
             }
         } else {
             _dccNumBox.setText(null);
-            return Bundle.getMessage("NoLoco");            
+            return Bundle.getMessage("NoLoco");
         }
         return null;
     }
@@ -294,7 +294,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         return trainName;
     }
-    
+
     protected void setAddress() {
         _speedUtil.setDccAddress(_dccNumBox.getText());
         _rosterBox.setSelectedItem(_speedUtil.getRosterId());
@@ -385,13 +385,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             pLeft.setLayout(new BoxLayout(pLeft, BoxLayout.PAGE_AXIS));
             pLeft.add(oPanel);
             pLeft.add(aPanel);
-            
+
             JPanel pRight = new JPanel();
             pRight.setLayout(new BoxLayout(pRight, BoxLayout.PAGE_AXIS));
             pRight.add(searchDepthPanel(true));
             pRight.add(makePickListPanel());
             pRight.add(calculatePanel(true));
-            
+
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
             p.add(pLeft);
@@ -403,7 +403,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         return panel;
     }
-    
+
     private JPanel makeLabelCombo(String title, JComboBox<String> box, String tooltip) {
 
         JPanel p = new JPanel();
@@ -1136,7 +1136,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (pathName != null) {
             for (int i = 0; i < list.size(); i++) {
                 OPath path = (OPath) list.get(i);
-                //if (log.isDebugEnabled()) log.debug("pathIsValid: pathName= "+pathName+", i= "+i+", path is "+path.getName());  
+                //if (log.isDebugEnabled()) log.debug("pathIsValid: pathName= "+pathName+", i= "+i+", path is "+path.getName());
                 if (pathName.equals(path.getName())) {
                     if (path.getFromPortal() == null && path.getToPortal() == null) {
                         return Bundle.getMessage("PathNeedsPortal", pathName, block.getDisplayName());
@@ -1348,7 +1348,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         button.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
         panel.add(button);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        
+
         if (tooltip != null) {
             String tipText = Bundle.getMessage(tooltip);
             panel.setToolTipText(tipText);
@@ -1358,7 +1358,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
         panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
-        return panel;        
+        return panel;
     }
     /**
      * Puts label message to the Right

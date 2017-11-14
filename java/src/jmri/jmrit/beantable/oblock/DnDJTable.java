@@ -95,7 +95,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
             }
             if (tr.isDataFlavorSupported(TABLECELL_FLAVOR)) {
                 try {
-                    // don't allow a cell import back into the cell exported from 
+                    // don't allow a cell import back into the cell exported from
                     TableCellSelection tcss = (TableCellSelection) tr.getTransferData(TABLECELL_FLAVOR);
                     if (row == tcss.getRow() && col == tcss.getCol() && this == tcss.getTable()) {
                         return false;
@@ -155,7 +155,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                     data = (String) sel.getTransferData(DataFlavor.stringFlavor);
                     model.setValueAt(data, row, col);
                     model.fireTableDataChanged();
-                    //if (log.isDebugEnabled()) 
+                    //if (log.isDebugEnabled())
                     //    log.debug("DnDJTable.drop: data= "+data+" dropped at ("+row+", "+col+")");
                     evt.dropComplete(true);
                     return;
@@ -181,7 +181,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
     public void dragGestureRecognized(DragGestureEvent e) {
         //if (log.isDebugEnabled()) log.debug("DnDJTable.dragGestureRecognized ");
         //Transferable t = getTransferable(this);
-        //e.startDrag(DragSource.DefaultCopyDrop, this, this); 
+        //e.startDrag(DragSource.DefaultCopyDrop, this, this);
     }
 
     /**
@@ -370,7 +370,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                         if (parent != null) {
                             ((JInternalFrame) parent).moveToFront();
                         }
-                        //if (log.isDebugEnabled()) 
+                        //if (log.isDebugEnabled())
                         //    log.debug("DnDHandler.importData: data= "+data+" dropped at ("+row+", "+col+")");
                         return true;
                     }

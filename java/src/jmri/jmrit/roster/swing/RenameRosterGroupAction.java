@@ -75,7 +75,7 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
                     Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
-        // can't rename the groups that represent the entire roster 
+        // can't rename the groups that represent the entire roster
         if (group == null || group.equals(Roster.ALLENTRIES)) {
             return;
         }

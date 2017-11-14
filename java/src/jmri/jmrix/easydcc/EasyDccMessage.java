@@ -61,9 +61,9 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * in the normal direction.
      *
      * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
+     * @param LocoAddress - a jmri.DccLocoAddress object representing the
      * locomotive to add
-     * @return an EasyDccMessage of the form GN cc llll 
+     * @return an EasyDccMessage of the form GN cc llll
      */
     static public EasyDccMessage getAddConsistNormal(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
@@ -82,9 +82,9 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * the reverse direction.
      *
      * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
+     * @param LocoAddress - a jmri.DccLocoAddress object representing the
      * locomotive to add
-     * @return an EasyDccMessage of the form GS cc llll 
+     * @return an EasyDccMessage of the form GS cc llll
      */
     static public EasyDccMessage getAddConsistReverse(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
@@ -102,9 +102,9 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * Get a static message to subtract a locomotive from a Standard Consist.
      *
      * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
+     * @param LocoAddress - a jmri.DccLocoAddress object representing the
      * locomotive to remove
-     * @return an EasyDccMessage of the form GS cc llll 
+     * @return an EasyDccMessage of the form GS cc llll
      */
     static public EasyDccMessage getSubtractConsist(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
@@ -122,7 +122,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * Get a static message to delete a Standard Consist.
      *
      * @param ConsistAddress - a consist address in the range 1-255
-     * @return an EasyDccMessage of the form GK cc 
+     * @return an EasyDccMessage of the form GK cc
      */
     static public EasyDccMessage getKillConsist(int ConsistAddress) {
         EasyDccMessage m = new EasyDccMessage(5);
@@ -138,7 +138,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * Get a static message to display a Standard Consist.
      *
      * @param ConsistAddress - a consist address in the range 1-255
-     * @return an EasyDccMessage of the form GD cc 
+     * @return an EasyDccMessage of the form GD cc
      */
     static public EasyDccMessage getDisplayConsist(int ConsistAddress) {
         EasyDccMessage m = new EasyDccMessage(5);

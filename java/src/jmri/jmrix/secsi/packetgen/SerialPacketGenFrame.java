@@ -30,7 +30,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

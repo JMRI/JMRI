@@ -61,7 +61,7 @@ public class EditorFilePane extends javax.swing.JPanel {
 
         add(dataScroll);
 
-        // some stuff at bottom for now       
+        // some stuff at bottom for now
         add(new JSeparator());
         JPanel bottom = new JPanel();
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));

@@ -11,7 +11,7 @@ public class SmallPowerManagerButton extends PowerManagerButton {
     public SmallPowerManagerButton() {
         super();
     }
-    
+
     @Override
     protected void initComponents() {
         setBorderPainted(false);

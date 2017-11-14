@@ -18,7 +18,7 @@ public class LocoNetSystemConnectionMemoTest {
 
     @Test
     public void testCtor(){
-       Assert.assertNotNull("exists",memo); 
+       Assert.assertNotNull("exists",memo);
     }
 
     @Before

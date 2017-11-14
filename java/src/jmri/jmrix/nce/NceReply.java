@@ -82,7 +82,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
 
     @Override
     public boolean isUnsolicited() {
-// Boudreau: check for unsolicited AIU messages in pre 2006 EPROMs     
+// Boudreau: check for unsolicited AIU messages in pre 2006 EPROMs
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             return false;
         }

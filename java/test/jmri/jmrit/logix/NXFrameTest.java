@@ -115,7 +115,7 @@ public class NXFrameTest {
         nxFrame.setMaxSpeed(2);
         pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("badSpeed", "2"), "OK");
-        
+
         nxFrame.setMaxSpeed(0.6f);
         pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
@@ -125,7 +125,7 @@ public class NXFrameTest {
         pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
         // from this point to the end of the test, there are no more references
-        // to nxFrame.  Do we need to split this into multiple tests?  
+        // to nxFrame.  Do we need to split this into multiple tests?
         // The next part deals with a WarrantTableFrame, should it still be
         // in this test file?
 
@@ -220,7 +220,7 @@ public class NXFrameTest {
 
     private void confirmJOptionPane(WindowOperator wo, String title, String message, String buttonLabel) {
         // the previous version of this message verified the text string
-        // in the dialog matched the passed message value.  We need to 
+        // in the dialog matched the passed message value.  We need to
         // determine how to do that using Jemmy.
         JDialogOperator jdo = new JDialogOperator(wo,title);
         JButtonOperator jbo = new JButtonOperator(jdo,buttonLabel);

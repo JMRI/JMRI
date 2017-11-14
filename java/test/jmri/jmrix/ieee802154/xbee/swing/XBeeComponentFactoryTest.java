@@ -20,10 +20,10 @@ public class XBeeComponentFactoryTest {
 
     private XBeeTrafficController tc = null;
     private XBeeConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeComponentFactory action = new XBeeComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

@@ -23,7 +23,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

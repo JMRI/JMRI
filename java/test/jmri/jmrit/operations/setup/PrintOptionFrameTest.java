@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PrintOptionFrameTest {
 
@@ -27,7 +27,7 @@ public class PrintOptionFrameTest {
         PrintOptionFrame f = new PrintOptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
- 
+
         // todo, test operation.
 
         // done

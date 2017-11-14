@@ -469,7 +469,7 @@
           </enumChoice>
         </enumVal>
         <label/>
-      </variable>      
+      </variable>
       <!-- Input Lockout variable definition -->
       <variable CV="14" mask="VVVVVVVV" item="Lockout">
         <splitVal highCV="15" max="7" upperMask="XXXXVVVV"/>
@@ -7125,7 +7125,7 @@
         </column>
       </row>
       <row>
-        <column>    
+        <column>
           <label>
             <text>            Output#</text>
           </label>
@@ -7298,7 +7298,7 @@
           </label>
           <display item="OS16M" format="radiobuttons"/>
         </column>
-      </row>      
+      </row>
     </column>
     <name>Power On Outputs</name>
   </pane>

@@ -284,7 +284,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     private boolean opened = false;
     InputStream serialStream = null;
 
-    
+
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used. Convert to JMRI multi-system support structure.
      */

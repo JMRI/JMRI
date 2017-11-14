@@ -21,7 +21,7 @@ public class PacketGenFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PacketGenFrame action = new PacketGenFrame();
         Assert.assertNotNull("exists", action);
     }
@@ -30,7 +30,7 @@ public class PacketGenFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         tc = new JMRIClientTrafficController();
-    } 
+    }
 
     @After
     public void tearDown() {        JUnitUtil.tearDown();        tc = null;
