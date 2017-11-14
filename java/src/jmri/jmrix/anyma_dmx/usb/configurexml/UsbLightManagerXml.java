@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma_dmx.configurexml;
+package jmri.jmrix.anyma_dmx.usb.configurexml;
 
 import jmri.managers.configurexml.AbstractLightManagerConfigXML;
 import org.jdom2.Element;
@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_LightManagerXml extends AbstractLightManagerConfigXML {
+public class UsbLightManagerXml extends AbstractLightManagerConfigXML {
 
-    public AnymaDMX_LightManagerXml() {
+    public UsbLightManagerXml() {
         super();
         log.info("*	AnymaDMX_LightManagerXml constructor called");
     }
@@ -24,7 +24,7 @@ public class AnymaDMX_LightManagerXml extends AbstractLightManagerConfigXML {
     @Override
     public void setStoreElementClass(Element lights) {
         log.info("*	AnymaDMX_LightManagerXml.setStoreElementClass() called");
-        lights.setAttribute("class", "jmri.jmrix.anyma_dmx.configurexml.AnymaDMX_LightManagerXml");
+        lights.setAttribute("class", this.getClass().getName());
     }
 
     @Override
@@ -36,10 +36,8 @@ public class AnymaDMX_LightManagerXml extends AbstractLightManagerConfigXML {
     public boolean load(Element shared, Element perNode) {
         log.info("*	AnymaDMX_LightManagerXml.load() called");
         // load individual lights
-        //return loadLights(shared, perNode);
-        return loadLights(perNode);
+        return loadLights(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AnymaDMX_LightManagerXml.class);
-
+    private final static Logger log = LoggerFactory.getLogger(UsbLightManagerXml.class);
 }

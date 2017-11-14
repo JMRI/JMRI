@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
  */
 public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
+    private boolean configured = false;
+
     public AnymaDMX_SystemConnectionMemo() {
         this("DX", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "DX" prefix
         log.info("*	AnymaDMX_SystemConnectionMemo Constructor() called");
@@ -35,8 +37,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, AnymaDMX_SystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory for the GUI
-        AnymaDMX_Factory cf = new AnymaDMX_Factory(this);
-        InstanceManager.store(cf, AnymaDMX_Factory.class);
+        InstanceManager.store(new AnymaDMX_Factory(this), AnymaDMX_Factory.class);
     }
 
     /**
@@ -74,34 +75,34 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * @return 0 if an error is found.
      */
     public int getChannelFromSystemName(String systemName) {
+        int result = 0;
         log.info("*	AnymaDMX_SystemConnectionMemo.getChannelFromSystemName() called");
 
         int offset = checkSystemPrefix(systemName);
-        if (offset < 1) {
-            // log.error("invalid system prefix in anyma dmx system name: {}", systemName); // fix test first
-            return 0;
-        }
-        if (validSystemNameFormat(systemName, systemName.charAt(offset)) != NameValidity.VALID) {
-            // No point in normalizing if a valid system name format is not present
-            return 0;
-        }
-
-        // Find the beginning of the channel number field
-        int k = 0;
-        for (int i = offset + 1; (i < systemName.length()) && (k == 0); i++) {
-            if (systemName.charAt(i) == 'L') {
-                k = i + 1;
+        if (offset > 1) {
+            if (validSystemNameFormat(systemName, systemName.charAt(offset)) == NameValidity.VALID) {
+                // Find the beginning of the channel number field
+                int k = 0;
+                for (int i = offset; i < systemName.length(); i++) {
+                    if (systemName.charAt(i) == 'L') {
+                        k = i + 1;
+                        break;
+                    }
+                }
+                if (k > offset) {    // k = position of "L" char in name
+                    try {
+                        result = Integer.parseInt(systemName.substring(k));
+                    } catch (Exception e) {
+                        log.warn("invalid character in channel number field of anyma dmx system name: {}", systemName);
+                    }
+                }
+            } else {
+                log.error("No point in normalizing if a valid system name format is not present");
             }
+        } else {
+            log.error("invalid system prefix in anyma dmx system name: {}", systemName);
         }
-        int n = 0; // channel number
-        if (k > 0) {    // k = position of "L" char in name
-            try {
-                n = Integer.parseInt(systemName.substring(k));
-            } catch (Exception e) {
-                log.warn("invalid character in channel number field of anyma dmx system name: {}", systemName);
-            }
-        }
-        return n;
+        return result;
     }
 
     /**
@@ -434,11 +435,11 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        AbstractNode node = getNodeFromSystemName(systemName);
-        if (node == null) {
-            // The node indicated by this system address is not present
-            return false;
-        }
+//        AbstractNode node = getNodeFromSystemName(systemName);
+//        if (node == null) {
+//            // The node indicated by this system address is not present
+//            return false;
+//        }
         int channel = getChannelFromSystemName(systemName);
         if (type == 'L') {
             if ((channel <= 0) || (channel > 512)) {
@@ -507,25 +508,33 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     @Override
     public boolean provides(Class<?> type) {
+        boolean result = false;
         log.info("*	AnymaDMX_SystemConnectionMemo.provides() called");
-        if (type.equals(LightManager.class)) {
-            return true;
-        } else {
-            return false; // nothing, by default
+        if (!getDisabled()) {
+            if (!configured) {
+                configureManagers();
+            }
+            if (type.equals(LightManager.class)) {
+                result = true;
+            }
         }
+        return result;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
+        T result = null; // nothing by default
         log.info("*	AnymaDMX_SystemConnectionMemo.get() called");
-        if (getDisabled()) {
-            return null;
+        if (!getDisabled()) {
+            if (!configured) {
+                configureManagers();
+            }
+            if (T.equals(LightManager.class)) {
+                return (T) getLightManager();
+            }
         }
-        if (T.equals(LightManager.class)) {
-            return (T) getLightManager();
-        }
-        return null; // nothing by default
+        return result;
     }
 
     /**
@@ -535,6 +544,11 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     public void configureManagers() {
         log.info("*	AnymaDMX_SystemConnectionMemo.configureManagers() called");
         InstanceManager.setLightManager(getLightManager());
+
+        if (configured) {
+            log.warn("configureManagers called for a second time", new Exception("traceback"));
+        }
+        configured = true;
     }
 
     protected UsbLightManager lightManager;
@@ -545,6 +559,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         if (!getDisabled()) {
             if (lightManager == null) {
                 lightManager = new UsbLightManager(this);
+                InstanceManager.setLightManager(lightManager);
             }
             result = lightManager;
         }

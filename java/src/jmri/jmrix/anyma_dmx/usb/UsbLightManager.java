@@ -37,12 +37,12 @@ public class UsbLightManager extends AbstractLightManager {
     /**
      * Method to create a new Light based on the system name.
      * <p>
-     * Assumes calling method has checked that a Light with this system
-     * name does not already exist.
+     * Assumes calling method has checked that a Light with this system name
+     * does not already exist.
      *
-     * @return null if the
-     * system name is not in a valid format or if the system name does not
-     * correspond to a configured anyma dmx digital output channel
+     * @return null if the system name is not in a valid format or if the system
+     *         name does not correspond to a configured anyma dmx digital output
+     *         channel
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -62,7 +62,7 @@ public class UsbLightManager extends AbstractLightManager {
 
         // Validate the systemName
         if (_memo.validSystemNameFormat(systemName, 'L') == Manager.NameValidity.VALID) {
-            lgt = new UsbLight(systemName, userName,_memo);
+            lgt = new UsbLight(systemName, userName, _memo);
 //            if (!_memo.validSystemNameConfig(systemName, 'DX',_memo.getTrafficController())) {
 //                log.warn("Light system Name does not refer to configured hardware: "
 //                        + systemName);
@@ -97,8 +97,8 @@ public class UsbLightManager extends AbstractLightManager {
     /**
      * Public method to validate system name for configuration.
      *
-     * @return 'true' if system name has a valid meaning in current configuration,
-     * else return 'false'
+     * @return 'true' if system name has a valid meaning in current
+     *         configuration, else return 'false'
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -109,7 +109,8 @@ public class UsbLightManager extends AbstractLightManager {
     /**
      * Public method to normalize a system name.
      *
-     * @return a normalized system name if system name has a valid format, else returns ""
+     * @return a normalized system name if system name has a valid format, else
+     *         returns ""
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -121,7 +122,7 @@ public class UsbLightManager extends AbstractLightManager {
      * Public method to convert system name to its alternate format
      *
      * @return a normalized system name if system name is valid and has a valid
-     * alternate representation, else returns ""
+     *         alternate representation, else returns ""
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
@@ -133,9 +134,23 @@ public class UsbLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    public boolean supportsVariableLights(String systemName) {
+        return true;
+    }
+
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getEntryToolTip() {
         log.info("*	UsbLightManager.getEntryToolTip() called");
-        return Bundle.getMessage("AddOutputEntryToolTip");
+        //TODO: Why doesn't this work?!?
+        return null; //BundleBundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(UsbLightManager.class);

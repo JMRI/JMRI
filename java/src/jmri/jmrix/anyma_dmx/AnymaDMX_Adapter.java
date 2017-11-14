@@ -42,13 +42,12 @@ public class AnymaDMX_Adapter extends USBPortAdapter {
             log.info("*full product name: " + fullProductName);
             productNames.add(fullProductName);
         }
-//        option1Name = "USB Device"; // NOI18N
-//        option1Values = productNames.toArray(new String[productNames.size()]);
-//        options.put(option1Name, new Option(option1Name + ":", option1Values, false));
-//
-//        options.remove(option2Name);
-//        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
+        option1Name = "USB Device"; // NOI18N
+        String[] option1Values = productNames.toArray(new String[productNames.size()]);
+        options.put(option1Name, new Option(option1Name + ":", option1Values, false));
 
+        options.remove(option2Name);
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
     }
 
     @Override
@@ -122,7 +121,7 @@ public class AnymaDMX_Adapter extends USBPortAdapter {
         return dmx;
     }
 
-    private String[] commandStationOptions() {
+    protected String[] commandStationOptions() {
         return new String[]{"Goodby", "cruel", "world"};
     }
 
