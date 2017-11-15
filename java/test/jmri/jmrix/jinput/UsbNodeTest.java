@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 
 /**
  *
@@ -14,7 +16,9 @@ import org.slf4j.LoggerFactory;
  */
 public class UsbNodeTest {
 
-    @Test
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
     public void testCTor() {
         UsbNode t = new UsbNode("test",null,null);
         Assert.assertNotNull("exists",t);
