@@ -8,7 +8,7 @@
 
   <title>JMRI: Simple Signal Logic</title>
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20151030">
+  <meta name="Date.Modified" content="20171115">
   <meta name="keywords" content="JMRI help Simple Signal Logic">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -26,9 +26,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Simple Signal Logic</h1><a name="contents" id=
-      "contents"></a>
+      <h1>JMRI: Simple Signal Logic</h1>
 
+      <a name="contents" id="contents"></a>
       <h2>Contents</h2>
 
       <p>The documentation below describes Signaling with JMRI
@@ -41,8 +41,9 @@
         <li><a href="#start">Getting Started</a></li>
 
         <li><a href="#more">More information</a></li>
-      </ul><a name="intro" id="intro"></a>
+      </ul>
 
+      <a name="intro" id="intro"></a>
       <h2>Introduction</h2>
 
       <p>Simple Signal Logic (SSL) provided the first method to
@@ -56,7 +57,7 @@
       <b>Don't use the SSL Tool when you have already built Signal
       Masts and the more advanced Signal Mast Logic in the same
       Panel/Configuration file.</b><br>
-      SSL has no tool to delete an SSL entry or provide an overview
+      SSL has no option to delete an SSL entry or provide an overview
       of all SSL rules other than looking at the XML file of your
       Panel, so make notes as you add SSL items and back up your
       configuration XML file.</p>
@@ -73,9 +74,9 @@
       means for setting up basic signals in an intuitive manner,
       without the user having to be familiar with all of the logic
       necessary to account for the different Signal Aspects.
-      <a href="../../../../images/SE8cExampleLogic.png"><img src=
-      "../../../../images/SE8cExampleLogic.png" align="right"
-      width="290" height="270" hspace="0" vspace="0" alt=
+      <a href="../../../../images/SslExample.png"><img src=
+      "../../../../images/SslExample.png" align="right"
+      width="452" height="287" hspace="0" vspace="0" alt=
       "Simple Signal Logic panel figure"></a></p>
 
       <p>The Simple Signal Logic Tool allows you to configure JMRI
@@ -84,21 +85,21 @@
       each Signal Head on:</p>
 
       <ul>
-        <li><b>Signal Head Named</b> The Signal Head being
+        <li><b>For Signal Head:</b> The Signal Head being
         driven.</li>
 
-        <li><b>Protects Sensor/s</b> Which sensors (occupancy
+        <li><b>Protects Sensor/s:</b> Which sensors (occupancy
         detectors) cover the block immediately past the signal.
         When any of these sensors show "active" the Signal Head
         will be set to red.</li>
 
-        <li><b>Red When Turnout</b> If the block contains a
-        Turnout, enter the Turnout System Name and use the
-        selection button to choose whether you're entering the
-        Closed or Thrown leg. The Signal Head will be set to red
+        <li><b>Red When Turnout:</b> If the block contains a
+        Turnout, pick or enter the Turnout System Name and use the
+        selection buttons to choose whether you're entering the
+        Closed or Thrown leg. The Signal Head will be set to Rred
         whenever the turnout is set against this track.</li>
 
-        <li><b>Protects Signal</b> The next Signal Head that the
+        <li><b>Protects Signal:</b> The next Signal Head that the
         train will reach; this Signal Head will be set Yellow if
         the next signal head is red.</li>
 
@@ -108,20 +109,20 @@
         signal head is yellow, thereby giving four-block
         signaling.</li>
 
-        <li><b>Limited Speed</b> If the checkbox is checked, this
+        <li><b>Limited Speed</b> If this checkbox is checked, this
         Signal Head will be set to Yellow as the least restrictive
         Aspect.</li>
 
-        <li><b>Restricting Speed</b> If the checkbox is checked, this
+        <li><b>Restricting Speed</b> If this checkbox is checked, this
         Signal Head will be set to Flashing Red as the least restrictive
         Aspect.</li>
 
-        <li><b>Is Distant Signal</b> If the checkbox is checked,
+        <li><b>Is Distant Signal</b> If this checkbox is checked,
         this Signal will be set to the most restrictive aspect of
         either this Signal Head or the next protected Signal
         Head.</li>
 
-        <li><b>Approach Lighting Sensor</b> The sensor that
+        <li><b>Approach Lighting Sensor:</b> The sensor that
         controls whether this Signal Head is lit or not. Only the
         actual hardware Signal Head on the layout will go dark.
         Panel indicators will show the normal signal Appearance.
@@ -145,9 +146,9 @@
       required for each one.</p>
 
       <p>Pause your mouse over any entry or item in the SSL
-      creation window for a brief "tooltip" help reminder.</p>
+      creation pane for a brief "tooltip" help reminder.</p>
 
-      <p>It's clear that this won't cover complicated interlockings
+      <p>It's clear that SSL won't cover complicated interlockings
       nor will it cover the speed-signaling seen on some
       prototypes. However, when combined with the logic
       capabilities of JMRI <a href=
@@ -169,28 +170,29 @@
       signals.</p>
 
       <ol>
-        <li>Select <b>Signal Head Table</b> in the <b>Tools</b>
-        menu.</li>
+        <li>Select <b>Signal Heads</b> in the PanelPro
+        <b>Tools &gt; Tables &gt; Signals</b> menu.</li>
 
         <li>In the Signal Head Table window that appears, click
-        <b>Add</b> to begin defining a new signal head.</li>
+        the <b>Add...</b> button to begin defining a new signal
+        head.</li>
 
-        <li>In the Add New Signal window that appears choose the
+        <li>In the Add New Signal Head pane that appears, choose the
         "Virtual Signal" type.</li>
 
-        <li>Enter a system name such as IH1000.</li>
+        <li>Enter a system name such as "IH1000".</li>
 
-        <li>Click <b>OK</b> to enter this head into the Signal Head
+        <li>Click <b>Create</b> to enter this head into the Signal Head
         Table.</li>
 
-        <li>Enter all the signal heads that you will be using for
+        <li>Enter all the Signal Heads that you will be using for
         this test, using different names. The actual name doesn't
         matter, they just have to be different.</li>
 
-        <li>Now select <b>Simple Signal Logic</b> in the
+        <li>Now select <b>Simple Signal Logic...</b> in the
         <b>Tools</b> menu.</li>
 
-        <li>Fill in the various entries to match your signals
+        <li>Fill in the various entries to match your signal's
         requirements as previously shown.</li>
 
         <li>Click <b>Apply</b> to make this entry active.</li>
@@ -211,24 +213,24 @@
 
         <li>Check to be sure that the outputs (Turnout addresses)
         that will control your Signals Heads are in the Turnout
-        Table. If not, click the <b>Add</b> button at the bottom of
-        the Turnout Table.</li>
+        Table. If not, click the <b>Add...</b> button at the bottom
+        of the Turnout Table.</li>
 
         <li>In the Add New Turnout window that appears, enter a
-        system name, (e.g. LT1) and "test" for user name, then
-        click <b>OK</b>.<br>
+        System Name, (e.g. "LT1") and "test" for User Name, then
+        click <b>Create</b>.<br>
         <i>Note:</i> All System Names of JMRI objects must follow
-        the JMRI Naming rules, starting with a capital letter for
-        the DCC connection type (e.g. L for LocoNet) followed bij a
+        the JMRI Naming rules, starting with a capital prefix for
+        the DCC connection type (e.g. "L" for LocoNet) followed bij a
         capital T in the case of Turnouts and the actual hardware
-        number of the Turnout.</li>
+        address of the Turnout.</li>
 
         <li>Clicking on the corresponding <b>Closed/Thrown</b>
         entries in the Turnout Table should now cause your Signal
-        Head to change.</li>
+        Head to change state.</li>
 
-        <li>Select <b>Signal Head Table</b> in the <b>Tools</b>
-        menu.</li>
+        <li>Select <b>Signal Heads</b> in the <b>Tools &gt; Tables
+        &gt; Signals</b> menu.</li>
 
         <li>In the Signal Head Table window that appears, click
         <b>Add...</b> to begin defining a new Signal Head.</li>
@@ -237,35 +239,38 @@
         correct signal type to match your hardware. The required
         item boxes will appear.</li>
 
-        <li>Enter a system name. For example LH152. <i>Note:</i>
-        Signal Head system names must start with CH, IH, LH, NH,
-        XH, etc. and be followed by the number of the Signal
-        Head.</li>
+        <li>Enter a System Name, for example "LH152". <i>Note:</i>
+        Signal Head system names must start with the connection
+        prefix plus "H" for Head (i.e. CH, IH, LH, NH, XH, etc.)
+        and be followed by the hardware address ("number") of the
+        Signal Head.</li>
 
-        <li>Next enter one or more Turnout numbers that will
-        control this signal. <i>Note:</i> In the case of SE8c style
-        signals just enter the first Turnout number of each pair.
+        <li>Next pick or create one or more Turnouts that will
+        control this Signal Head. <i>Note:</i> In the case of
+        SE8C connected signals, just enter the first Turnout number
+        of each pair.
         The second Turnout number is automatically known.</li>
 
-        <li>Click <b>OK</b> to enter this head into the Signal Head
-        Table.</li>
+        <li>Click <b>Create</b> to enter this head into the Signal
+        Head Table.</li>
 
         <li>Enter all the Signal Heads that you will be using.</li>
 
-        <li>Now select <b>Simple Signal Logic</b> in the
-        <b>Tools</b> menu.</li>
+        <li>Now select <b>Simple Signal Logic...</b> in the
+        PanelPro <b>Tools</b> menu.</li>
 
         <li>Fill in the various entries to match the requirements
-        of your first Signal (Head) as previously shown.</li>
+        of your first signal as previously shown.</li>
 
         <li>Click <b>Apply</b> to make this entry active.</li>
 
-        <li>Repeat steps 13-14 for each of your Signal Heads</li>
+        <li>Repeat steps 13-14 for each of your Signal Heads.</li>
 
         <li>Be sure to save your work by selecting "Save Panels..."
         from the Panels menu.</li>
-      </ol><a name="more" id="more"></a>
+      </ol>
 
+      <a name="more" id="more"></a>
       <h2>More on SSL</h2>
 
       <ul>
@@ -276,7 +281,8 @@
         <li><a href=
         "../../../../html/tools/signaling/Logic.shtml">Backgrounds
         on SSL</a></li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
