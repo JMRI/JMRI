@@ -2133,7 +2133,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         int c = Math.max(8, inComboBox.getItemCount());
         while (c > itemsPerScreen) {
             c /= 2; // keeps this a even division of the number of items
-        };
+        }
         inComboBox.setMaximumRowCount(c);
     }
 
