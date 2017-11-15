@@ -8,6 +8,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
@@ -71,14 +72,14 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.addButton);
 
         // confirm panel creation
-        JmriJFrame tef = JmriJFrame.getFrame("Add Train");
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("TitleTrainAdd"));
         Assert.assertNotNull("train edit frame", tef);
 
         // create the TrainSwichListEditFrame
         enterClickAndLeave(f.switchListsButton);
 
         // confirm panel creation
-        JmriJFrame tsle = JmriJFrame.getFrame("Switch Lists by Location");
+        JmriJFrame tsle = JmriJFrame.getFrame(Bundle.getMessage("TitleSwitchLists"));
         Assert.assertNotNull("train switchlist edit frame", tsle);
 
         // kill panels
@@ -139,7 +140,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(trainEditFrame.editButton);
 
         // confirm panel creation
-        JmriJFrame ref = JmriJFrame.getFrame("Edit Route");
+        JmriJFrame ref = JmriJFrame.getFrame(Bundle.getMessage("TitleRouteEdit"));
         Assert.assertNotNull("route add frame", ref);
 
         // increase screen size so clear and set buttons are shown
@@ -190,11 +191,12 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("train requirements 3", Train.CABOOSE, t.getRequirements());
         Assert.assertEquals("caboose road 1", "", t.getCabooseRoad());
         // shouldn't change until Save
-        trainEditFrame.roadCabooseBox.setSelectedItem("NH");
+        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        trainEditFrame.roadCabooseBox.setSelectedItem(roadNames[2]);
         Assert.assertEquals("caboose road 2", "", t.getCabooseRoad());
         enterClickAndLeave(trainEditFrame.saveTrainButton);
 
-        Assert.assertEquals("caboose road 3", "NH", t.getCabooseRoad());
+        Assert.assertEquals("caboose road 3", roadNames[2], t.getCabooseRoad());
         enterClickAndLeave(trainEditFrame.noneRadioButton);
 
         enterClickAndLeave(trainEditFrame.saveTrainButton);
@@ -401,7 +403,8 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.modify1Caboose);
 
         f.routePickup1Box.setSelectedIndex(0);
-        f.roadCaboose1Box.setSelectedItem("NH");
+        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        f.roadCaboose1Box.setSelectedItem(roadNames[2]);
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
@@ -412,7 +415,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.routePickup1Box.setSelectedIndex(2);
         enterClickAndLeave(f.saveTrainButton);
 
-        Assert.assertEquals("caboose 1 road", "NH", t.getSecondLegCabooseRoad());
+        Assert.assertEquals("caboose 1 road", roadNames[2], t.getSecondLegCabooseRoad());
 
         enterClickAndLeave(f.helper1Service);
 
@@ -465,18 +468,18 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.modify2Caboose);
 
         f.routePickup2Box.setSelectedIndex(0);
-        f.roadCaboose2Box.setSelectedItem("NH");
+        f.roadCaboose2Box.setSelectedItem(roadNames[2]);
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("OK"));
 
         Assert.assertEquals("caboose 2 change", Train.ADD_CABOOSE, t.getThirdLegOptions());
 
         f.routePickup2Box.setSelectedIndex(2);
         enterClickAndLeave(f.saveTrainButton);
 
-        Assert.assertEquals("caboose 2 road", "NH", t.getThirdLegCabooseRoad());
+        Assert.assertEquals("caboose 2 road", roadNames[2], t.getThirdLegCabooseRoad());
 
         enterClickAndLeave(f.helper2Service);
 
@@ -633,7 +636,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
         Assert.assertNotNull(f);
-
     }
 
     // Ensure minimal setup for log4J
@@ -641,15 +643,16 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-
+        InstanceManager.getDefault(CarTypes.class).addName("Boxcar");
         loadTrains();
     }
 
     private void loadTrains() {
         // Add some cars for the various tests in this suite
         CarManager cm = InstanceManager.getDefault(CarManager.class);
+        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         // add caboose to the roster
-        Car c = cm.newCar("NH", "687");
+        Car c = cm.newCar(roadNames[2], "687");
         c.setCaboose(true);
         c = cm.newCar("CP", "435");
         c.setCaboose(true);
