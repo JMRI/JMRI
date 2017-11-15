@@ -1,6 +1,8 @@
 package jmri.jmrix.openlcb;
 
 import java.util.List;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.ProgrammingMode;

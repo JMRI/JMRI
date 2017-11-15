@@ -1,6 +1,7 @@
 package jmri.jmrit.ussctc;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Turnout;

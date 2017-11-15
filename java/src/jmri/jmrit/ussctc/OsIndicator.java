@@ -5,6 +5,7 @@ import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Logix;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
