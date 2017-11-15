@@ -57,6 +57,19 @@ abstract public class AbstractEditorTestBase {
         Assert.assertEquals("Menu Item Count",10,jmo.getItemCount());
     }
 
+    @Test
+    public void testSetSize() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        java.awt.Dimension d0 = e.getSize();
+        e.setSize(100, 100);
+        JUnitUtil.waitFor( () -> { return d0 != e.getSize(); } );
+        java.awt.Dimension d = e.getSize();
+        // the java.awt.Dimension stores the values as floating point
+        // numbers, but setSize expects integer parameters.
+        Assert.assertEquals("Width Set", 100.0, d.getWidth(), 0.0);
+        Assert.assertEquals("Height Set", 100.0, d.getHeight(), 0.0);
+    }
+
     // from here down is testing infrastructure
     @Before
     abstract public void setUp(); // must set Editor e
