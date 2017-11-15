@@ -328,7 +328,7 @@ public class LayoutEditorChecks {
         //if (layoutTrack.getName().equals("TO1")
         //        || layoutTrack.getName().equals("TO2")
         //        || layoutTrack.getName().equals("TO3")) {
-        //    log.info("-Stop here!"); // encode the dash as \u2022 to show a bullet in UTF-8
+        //    log.info("-Stop here!");
         //}
             layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
         }
@@ -413,5 +413,4 @@ public class LayoutEditorChecks {
     }   // getCheckMarkedMenuItemNames
 
     private final static Logger log = LoggerFactory.getLogger(LayoutEditorChecks.class);
-
-}   // class LayoutEditorChecks
+}

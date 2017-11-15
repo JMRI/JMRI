@@ -15,7 +15,7 @@ import org.junit.Assert;
  */
 public class CarOwnersTest extends OperationsTestCase {
 
-    public void testCarOwners() {
+    public void testAddAndDeleteCarOwners() {
         CarOwners co1 = InstanceManager.getDefault(CarOwners.class);
 
         co1.addName("Rich Guy 1");
