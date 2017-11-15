@@ -2,9 +2,8 @@ package jmri.jmrix.tams;
 
 /**
  * Encodes a message to a Tams MasterConttol command station.
- * <P>
+ * <p>
  * The {@link TamsReply} class handles the response from the command station.
- * <P>
  * <p>
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *

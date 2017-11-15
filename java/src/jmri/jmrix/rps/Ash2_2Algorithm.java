@@ -8,20 +8,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of 2.1th algorithm for reducing Readings
- * <P>
+ * <p>
  * This algorithm was provided by Robert Ashenfelter based in part on the work
  * of Ralph Bucher in his paper "Exact Solution for Three Dimensional Hyperbolic
  * Positioning Algorithm and Synthesizable VHDL Model for Hardware
  * Implementation".
- * <P>
+ * <p>
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
  * <p>
- * <p>
- * <p>
- * <p>
  * <h2>RPSpos2.2 program description.</h2>
- * <p>
  * <p>
  * As in previous versions, the first thing it does is sort the receivers in
  * order of increasing time delay, discarding those that failed or are too far
@@ -148,8 +144,7 @@ import org.slf4j.LoggerFactory;
  * necessary to prevent the program from reporting a spurious position, are the
  * same as those for version 1.1. These are described in the e-mail with that
  * version sent on 12/9/06.
- * <p>
- * <P>
+ * 
  * @author Robert Ashenfelter Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */

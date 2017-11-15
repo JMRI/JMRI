@@ -318,7 +318,6 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
     /**
      * setMonitorNodePackets
-     * <p>
      */
     public void nodeMonitorAllButtonActionPerformed() {
         for (int i = 0; i < monitorNode.size(); i++) {
