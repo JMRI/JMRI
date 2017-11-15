@@ -153,7 +153,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @SuppressWarnings("unchecked")
@@ -180,7 +180,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     @Override

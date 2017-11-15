@@ -165,7 +165,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (T.equals(jmri.CommandStation.class)) {
             return (T) commandStation;
         }
-        return super.get(T); // nothing, by default
+        return null; // nothing, by default
     }
 
     private EasyDccPowerManager powerManager;
