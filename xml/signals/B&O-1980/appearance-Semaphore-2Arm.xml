@@ -36,7 +36,7 @@
    <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-	  <show>red</show>
+      <show>red</show>
       <reference>Page 128</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-281-2 Arm.gif</imagelink>
     </appearance>
@@ -44,12 +44,12 @@
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-	  <show>red</show>
+      <show>red</show>
       <reference>Page 133</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-285-2 Arm.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Slow Approach Slow</aspectname>
       <show>red</show>
       <show>green</show>
@@ -57,7 +57,7 @@
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-287-2 Arm.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>lunar</show>
@@ -68,7 +68,7 @@
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-	  <show>red</show>
+      <show>red</show>
       <reference>Page 138</reference>
       <comment>Normal speed route appearance</comment>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-292-2 Arm.gif</imagelink>
@@ -81,7 +81,7 @@
       <aspect>Stop</aspect>
     </danger>
 
-	<permissive>
+    <permissive>
       <aspect>Restricting</aspect>
     </permissive>
 
@@ -95,108 +95,108 @@
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
-	  <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach Slow</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
   </aspectMappings>

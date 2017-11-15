@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$	-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,9 +34,9 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
-	<!-- Switching modes for + (plus) decoders   -->
-	<!-- lichteffekt-modi / light effect modes	 -->
-	<!-- Additional modes since version 8.0			 -->
+    <!-- Switching modes for + (plus) decoders   -->
+    <!-- lichteffekt-modi / light effect modes -->
+    <!-- Additional modes since version 8.0 -->
   <enumChoice choice="[120]" value="120">
     <choice>[120] Light house (bulb)</choice>
     <choice xml:lang="de">[120] Leuchtturm (Lampe)</choice>

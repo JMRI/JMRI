@@ -37,76 +37,76 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-301.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-301.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Approach Diverging</aspectname>
       <show>yellow</show>
       <show>green</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-302.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-302.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-303.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-303.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Diverging Route Clear (Medium)</aspectname>
       <show>red</show>
       <show>green</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-304.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-304.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Diverging Route Clear (Slow)</aspectname>
       <show>red</show>
       <show>green</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-304.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-304.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Approach Slow</aspectname>
       <show>flashyellow</show>
       <show>red</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-306.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-306.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Diverging Route Approach Slow (Medium)</aspectname>
       <show>red</show>
       <show>flashyellow</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-306-1.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-306-1.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Diverging Route Approach Slow (Slow)</aspectname>
       <show>red</show>
       <show>flashyellow</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-306-1.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-306-1.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-307.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-307.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Diverging Route Approach (Medium)</aspectname>
       <show>red</show>
-	  <show>yellow</show>
+      <show>yellow</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-308.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Diverging Route Approach (Slow)</aspectname>
       <show>red</show>
-	  <show>yellow</show>
+      <show>yellow</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-308.gif</imagelink>
     </appearance>
 
@@ -114,7 +114,7 @@
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-310.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-high-absolute/rule-310.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -125,7 +125,7 @@
       <aspect>Stop</aspect>
     </danger>
 
-	<held>
+    <held>
       <aspect>Stop</aspect>
     </held>
 
@@ -133,94 +133,94 @@
 
   <aspectMappings>
 
-	<aspectMapping>
-	  <advancedAspect>Clear</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach Diverging</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Advance Approach</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
-	  <ourAspect>Approach Slow</ourAspect>
-	  <ourAspect>Diverging Route Approach Slow (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Approach Slow (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Diverging Route Approach Slow (Medium)</ourAspect>
+      <ourAspect>Diverging Route Approach Slow (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach Slow</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach</advancedAspect>
-	  <ourAspect>Advance Approach</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	   <ourAspect>Diverging Route Clear (Slow)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Route Clear (Medium)</ourAspect>
+       <ourAspect>Diverging Route Clear (Slow)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Restricted Proceed</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Route Approach (Medium)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Route Approach (Medium)</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Stop</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Route Approach (Medium)</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Route Approach (Medium)</ourAspect>
+    </aspectMapping>
 
   </aspectMappings>
 

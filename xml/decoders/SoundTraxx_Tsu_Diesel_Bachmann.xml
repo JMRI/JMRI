@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="9.1" lastUpdated="20150524"/>
   <version author="Alain Le Marchand" version="9" lastUpdated="20150125"/>
-  <!-- This file contains the OEM Bachmann Tsunami definitions for Bachmann Diesel locomotives	    -->
+  <!-- This file contains the OEM Bachmann Tsunami definitions for Bachmann Diesel locomotives -->
   <!-- Version 9  Created from SoundTraxx_Tsu_Steam_Bachmann.xml version 8 file                     -->
   <!-- Version 9.1  Update following publication of datasheet 20150429: horn names, CV216           -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.

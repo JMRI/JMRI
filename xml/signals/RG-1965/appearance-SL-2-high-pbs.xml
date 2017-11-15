@@ -11,18 +11,18 @@
   </copyright>
 
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-	<author>
-    	<personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
-    	<email>dcc2@ebroerse.nl</email>
-		</author>
+    <author>
+        <personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
+        <email>dcc2@ebroerse.nl</email>
+        </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-		<revnumber>1</revnumber>
-		<date>2013-01-28</date>
-		<authorinitials>EBR</authorinitials>
-		<revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
+        <revnumber>1</revnumber>
+        <date>2013-01-28</date>
+        <authorinitials>EBR</authorinitials>
+        <revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
     </revision>
   </revhistory>
 
@@ -158,10 +158,10 @@
     </aspectMapping>
 
     <aspectMapping>
-  	  <advancedAspect>Stop and Proceed</advancedAspect>
-  	  <ourAspect>Approach</ourAspect>
+        <advancedAspect>Stop and Proceed</advancedAspect>
+        <ourAspect>Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>
+    </aspectMapping>
 
   </aspectMappings>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$	-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,12 +34,12 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder function decoder -->
-	<!-- Accessory Address 1st Output - Function decoder -->
-	<variable CV="50" item="Accessory Address A0" default="1" minOut="1">
-		<splitVal highCV="51" upperMask="XXXXXVVV"/>
-		<label>Accessory Address A0</label>
-		<label xml:lang="de">Zubehöradresse A0</label>
-		<tooltip>Accessory address for output A0 (1-2047)</tooltip>
-		<tooltip xml:lang="de">Zubehöradresse für Ausgang A0 (1-2047)</tooltip>
-	</variable>
+    <!-- Accessory Address 1st Output - Function decoder -->
+    <variable CV="50" item="Accessory Address A0" default="1" minOut="1">
+        <splitVal highCV="51" upperMask="XXXXXVVV"/>
+        <label>Accessory Address A0</label>
+        <label xml:lang="de">Zubehöradresse A0</label>
+        <tooltip>Accessory address for output A0 (1-2047)</tooltip>
+        <tooltip xml:lang="de">Zubehöradresse für Ausgang A0 (1-2047)</tooltip>
+    </variable>
 </variables>

@@ -105,7 +105,7 @@
                 <output name="12" label="Mute| ">
                     <label xml:lang="it">Silenzio| </label>
                 </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="13" label="|"/> <!-- Not used for for this decoder -->
                 <output name="14" label="Brakes|"/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>

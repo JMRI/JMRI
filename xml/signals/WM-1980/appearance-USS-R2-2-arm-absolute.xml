@@ -72,13 +72,13 @@
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-GYR_Absolute/Rule-W286.gif</imagelink>
     </appearance>
 
-	<appearance>
-	  <aspectname>Slow Approach</aspectname>
-	  <show>yellow</show>
-	  <show>red</show>
-	  <comment>Atypical aspect used on mast signal 4R for WB movements on track 2 to the Hanover Sub.</comment>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-GYR_Absolute/Rule-W288.gif</imagelink>
-	</appearance>
+    <appearance>
+      <aspectname>Slow Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <comment>Atypical aspect used on mast signal 4R for WB movements on track 2 to the Hanover Sub.</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-GYR_Absolute/Rule-W288.gif</imagelink>
+    </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
@@ -96,7 +96,7 @@
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-GYR_Absolute/Rule-W292.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Stop-Throw Switch</aspectname>
       <show>red</show>
       <show>flashred</show>
@@ -168,28 +168,28 @@
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Stop-Throw Switch</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 

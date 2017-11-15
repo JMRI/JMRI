@@ -2,24 +2,24 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Matthew Harris - matthew.john.harris@gmail.com" version="2.0" lastUpdated="20080818"/>
   <version author="Matthew Harris - matthew.john.harris@gmail.com" version="1.0" lastUpdated="20080814"/>
-  <!-- Version 2.0: Updated various CV's to agree with the document       -->
-  <!-- provided by Marc Fournier found at the following link:             -->
+  <!-- Version 2.0: Updated various CV's to agree with the document -->
+  <!-- provided by Marc Fournier found at the following link: -->
   <!-- http://www.lenz.com/products/decoders/currentdecoders/nornalcv.htm -->
-  <!-- Version 1.0: Created based on the manual found at:                 -->
-  <!-- http://www.lenz.com/manuals/decoders/le103.pdf                     -->
+  <!-- Version 1.0: Created based on the manual found at: -->
+  <!-- http://www.lenz.com/manuals/decoders/le103.pdf -->
   <!-- These are the version 4.1 decoders -->
   <decoder>
     <family name="Lenz version 4.1 decoders" mfg="Lenz" lowVersionID="41" highVersionID="43">

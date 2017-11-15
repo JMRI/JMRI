@@ -24,7 +24,7 @@
         <surname>Jacobsen</surname>
       </personname>
     </author>
-	<author>
+    <author>
       <personname>
         <firstname>Bernd (Ba)</firstname>
         <surname>Wisotzki</surname>
@@ -59,12 +59,12 @@
   </revhistory>
   <!-- Add Your the "includes" here -->
   <variable CV="128" readOnly="yes" item="Product Number">
-	<decVal/>
-	<label>Decoder Software Version (read only): </label>
-	<label xml:lang="it">Versione Software Decoder (sola lettura)</label>
-	<label xml:lang="de">Softwareversion des Dekoders (nur lesen)</label>
-	<label xml:lang="cs">Verze softwaru dekodéru (pouze pro čtení)</label>
-	<label xml:lang="ca">Versió Software del Decoder (Només Lectura)</label>
+    <decVal/>
+    <label>Decoder Software Version (read only): </label>
+    <label xml:lang="it">Versione Software Decoder (sola lettura)</label>
+    <label xml:lang="de">Softwareversion des Dekoders (nur lesen)</label>
+    <label xml:lang="cs">Verze softwaru dekodéru (pouze pro čtení)</label>
+    <label xml:lang="ca">Versió Software del Decoder (Només Lectura)</label>
   </variable>
 
 </variables>

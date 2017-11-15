@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jack Shall jcshall@bellsouth.net" version="1" lastUpdated="20040421"/>
   <!-- Version 2 - added factory reset menu items (Paul Bender) -->
@@ -434,7 +434,7 @@
         </column>
         <column>
           <label>
-            <text>           </text>
+            <text> </text>
           </label>
         </column>
         <column>

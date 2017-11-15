@@ -6544,9 +6544,9 @@
 
       <variable label="PB1 Output-Input" CV="515" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
-		</variable>
+               <enumChoice choice="Output"/>
+          </enumVal>
+        </variable>
 
       <variable label="PB1 Input Direction" CV="515" mask="VXXXXXXX">
         <qualifier>
@@ -6714,8 +6714,8 @@
       </variable>
       <variable label="PB2 Output-Input" CV="527" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
       </variable>
       <variable label="PB2 Input Direction" CV="527" mask="VXXXXXXX">
         <qualifier>
@@ -6879,8 +6879,8 @@
       </variable>
       <variable label="PB3 Output-Input" CV="539" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PB3 Input Direction" CV="539" mask="VXXXXXXX">
@@ -7046,8 +7046,8 @@
       </variable>
       <variable label="PB4 Output-Input" CV="551" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PB4 Input Direction" CV="551" mask="VXXXXXXX">
@@ -7215,8 +7215,8 @@
 
       <variable label="PB5 Output-Input" CV="563" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
 
@@ -7385,8 +7385,8 @@
       </variable>
       <variable label="PB6 Output-Input" CV="575" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PB6 Input Direction" CV="575" mask="VXXXXXXX">
@@ -7552,8 +7552,8 @@
       </variable>
       <variable label="PB7 Output-Input" CV="587" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PB7 Input Direction" CV="587" mask="VXXXXXXX">
@@ -7719,8 +7719,8 @@
       </variable>
       <variable label="PB8 Output-Input" CV="599" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PB8 Input Direction" CV="599" mask="VXXXXXXX">
@@ -7887,8 +7887,8 @@
 
       <variable label="PC1 Output-Input" CV="611" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
 
@@ -8058,8 +8058,8 @@
       </variable>
       <variable label="PC2 Output-Input" CV="623" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PC2 Input Direction" CV="623" mask="VXXXXXXX">
@@ -8224,8 +8224,8 @@
       </variable>
       <variable label="PC3 Output-Input" CV="635" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PC3 Input Direction" CV="635" mask="VXXXXXXX">
@@ -8391,8 +8391,8 @@
       </variable>
       <variable label="PC4 Output-Input" CV="647" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PC4 Input Direction" CV="647" mask="VXXXXXXX">
@@ -8560,8 +8560,8 @@
 
       <variable label="PC5 Output-Input" CV="659" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
 
@@ -8730,8 +8730,8 @@
       </variable>
       <variable label="PC6 Output-Input" CV="671" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PC6 Input Direction" CV="671" mask="VXXXXXXX">
@@ -8897,8 +8897,8 @@
       </variable>
       <variable label="PC7 Output-Input" CV="683" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PC7 Input Direction" CV="683" mask="VXXXXXXX">
@@ -9064,8 +9064,8 @@
       </variable>
       <variable label="PC8 Output-Input" CV="695" mask="XVXXXXXX">
         <enumVal>
-  			 <enumChoice choice="Output"/>
-		  </enumVal>
+               <enumChoice choice="Output"/>
+          </enumVal>
 
       </variable>
       <variable label="PC8 Input Direction" CV="695" mask="VXXXXXXX">
@@ -9965,14 +9965,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB1 Output-Input" value="0"/>
             <compositeSetting label="PB2 Output-Input" value="0"/>
-				<compositeSetting label="PB FU1 Multiplier" value="0"/>
-				<compositeSetting label="PB FU1 Interval" value="0"/>
-				<compositeSetting label="PB FU2 Multiplier" value="0"/>
-				<compositeSetting label="PB FU2 Interval" value="0"/>
-				<compositeSetting label="PB FD1 Multiplier" value="0"/>
-				<compositeSetting label="PB FD1 Interval" value="0"/>
-				<compositeSetting label="PB FD2 Multiplier" value="0"/>
-				<compositeSetting label="PB FD2 Interval" value="0"/>
+                <compositeSetting label="PB FU1 Multiplier" value="0"/>
+                <compositeSetting label="PB FU1 Interval" value="0"/>
+                <compositeSetting label="PB FU2 Multiplier" value="0"/>
+                <compositeSetting label="PB FU2 Interval" value="0"/>
+                <compositeSetting label="PB FD1 Multiplier" value="0"/>
+                <compositeSetting label="PB FD1 Interval" value="0"/>
+                <compositeSetting label="PB FD2 Multiplier" value="0"/>
+                <compositeSetting label="PB FD2 Interval" value="0"/>
             <compositeSetting label="PB1 Paired" value="2"/>
             <compositeSetting label="PB2 Paired" value="2"/>
             <compositeSetting label="PB1 Mode" value="0"/>
@@ -10026,14 +10026,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB1 Output-Input" value="0"/>
             <compositeSetting label="PB2 Output-Input" value="0"/>
-				<compositeSetting label="PB FU1 Multiplier" value="0"/>
-				<compositeSetting label="PB FU1 Interval" value="0"/>
-				<compositeSetting label="PB FU2 Multiplier" value="0"/>
-				<compositeSetting label="PB FU2 Interval" value="0"/>
-				<compositeSetting label="PB FD1 Multiplier" value="0"/>
-				<compositeSetting label="PB FD1 Interval" value="0"/>
-				<compositeSetting label="PB FD2 Multiplier" value="0"/>
-				<compositeSetting label="PB FD2 Interval" value="0"/>
+                <compositeSetting label="PB FU1 Multiplier" value="0"/>
+                <compositeSetting label="PB FU1 Interval" value="0"/>
+                <compositeSetting label="PB FU2 Multiplier" value="0"/>
+                <compositeSetting label="PB FU2 Interval" value="0"/>
+                <compositeSetting label="PB FD1 Multiplier" value="0"/>
+                <compositeSetting label="PB FD1 Interval" value="0"/>
+                <compositeSetting label="PB FD2 Multiplier" value="0"/>
+                <compositeSetting label="PB FD2 Interval" value="0"/>
             <compositeSetting label="PB1 Paired" value="2"/>
             <compositeSetting label="PB2 Paired" value="2"/>
             <compositeSetting label="PB1 Mode" value="0"/>
@@ -10087,14 +10087,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB3 Output-Input" value="0"/>
             <compositeSetting label="PB4 Output-Input" value="0"/>
-				<compositeSetting label="PB FU3 Multiplier" value="0"/>
-				<compositeSetting label="PB FU3 Interval" value="0"/>
-				<compositeSetting label="PB FU4 Multiplier" value="0"/>
-				<compositeSetting label="PB FU4 Interval" value="0"/>
-				<compositeSetting label="PB FD3 Multiplier" value="0"/>
-				<compositeSetting label="PB FD3 Interval" value="0"/>
-				<compositeSetting label="PB FD4 Multiplier" value="0"/>
-				<compositeSetting label="PB FD4 Interval" value="0"/>
+                <compositeSetting label="PB FU3 Multiplier" value="0"/>
+                <compositeSetting label="PB FU3 Interval" value="0"/>
+                <compositeSetting label="PB FU4 Multiplier" value="0"/>
+                <compositeSetting label="PB FU4 Interval" value="0"/>
+                <compositeSetting label="PB FD3 Multiplier" value="0"/>
+                <compositeSetting label="PB FD3 Interval" value="0"/>
+                <compositeSetting label="PB FD4 Multiplier" value="0"/>
+                <compositeSetting label="PB FD4 Interval" value="0"/>
             <compositeSetting label="PB3 Paired" value="2"/>
             <compositeSetting label="PB4 Paired" value="2"/>
             <compositeSetting label="PB3 Mode" value="0"/>
@@ -10148,14 +10148,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB3 Output-Input" value="0"/>
             <compositeSetting label="PB4 Output-Input" value="0"/>
-				<compositeSetting label="PB FU3 Multiplier" value="0"/>
-				<compositeSetting label="PB FU3 Interval" value="0"/>
-				<compositeSetting label="PB FU4 Multiplier" value="0"/>
-				<compositeSetting label="PB FU4 Interval" value="0"/>
-				<compositeSetting label="PB FD3 Multiplier" value="0"/>
-				<compositeSetting label="PB FD3 Interval" value="0"/>
-				<compositeSetting label="PB FD4 Multiplier" value="0"/>
-				<compositeSetting label="PB FD4 Interval" value="0"/>
+                <compositeSetting label="PB FU3 Multiplier" value="0"/>
+                <compositeSetting label="PB FU3 Interval" value="0"/>
+                <compositeSetting label="PB FU4 Multiplier" value="0"/>
+                <compositeSetting label="PB FU4 Interval" value="0"/>
+                <compositeSetting label="PB FD3 Multiplier" value="0"/>
+                <compositeSetting label="PB FD3 Interval" value="0"/>
+                <compositeSetting label="PB FD4 Multiplier" value="0"/>
+                <compositeSetting label="PB FD4 Interval" value="0"/>
             <compositeSetting label="PB3 Paired" value="2"/>
             <compositeSetting label="PB4 Paired" value="2"/>
             <compositeSetting label="PB3 Mode" value="0"/>
@@ -10209,14 +10209,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB5 Output-Input" value="0"/>
             <compositeSetting label="PB6 Output-Input" value="0"/>
-				<compositeSetting label="PB FU5 Multiplier" value="0"/>
-				<compositeSetting label="PB FU5 Interval" value="0"/>
-				<compositeSetting label="PB FU6 Multiplier" value="0"/>
-				<compositeSetting label="PB FU6 Interval" value="0"/>
-				<compositeSetting label="PB FD5 Multiplier" value="0"/>
-				<compositeSetting label="PB FD5 Interval" value="0"/>
-				<compositeSetting label="PB FD6 Multiplier" value="0"/>
-				<compositeSetting label="PB FD6 Interval" value="0"/>
+                <compositeSetting label="PB FU5 Multiplier" value="0"/>
+                <compositeSetting label="PB FU5 Interval" value="0"/>
+                <compositeSetting label="PB FU6 Multiplier" value="0"/>
+                <compositeSetting label="PB FU6 Interval" value="0"/>
+                <compositeSetting label="PB FD5 Multiplier" value="0"/>
+                <compositeSetting label="PB FD5 Interval" value="0"/>
+                <compositeSetting label="PB FD6 Multiplier" value="0"/>
+                <compositeSetting label="PB FD6 Interval" value="0"/>
             <compositeSetting label="PB5 Paired" value="2"/>
             <compositeSetting label="PB6 Paired" value="2"/>
             <compositeSetting label="PB5 Mode" value="0"/>
@@ -10270,14 +10270,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB5 Output-Input" value="0"/>
             <compositeSetting label="PB6 Output-Input" value="0"/>
-				<compositeSetting label="PB FU5 Multiplier" value="0"/>
-				<compositeSetting label="PB FU5 Interval" value="0"/>
-				<compositeSetting label="PB FU6 Multiplier" value="0"/>
-				<compositeSetting label="PB FU6 Interval" value="0"/>
-				<compositeSetting label="PB FD5 Multiplier" value="0"/>
-				<compositeSetting label="PB FD5 Interval" value="0"/>
-				<compositeSetting label="PB FD6 Multiplier" value="0"/>
-				<compositeSetting label="PB FD6 Interval" value="0"/>
+                <compositeSetting label="PB FU5 Multiplier" value="0"/>
+                <compositeSetting label="PB FU5 Interval" value="0"/>
+                <compositeSetting label="PB FU6 Multiplier" value="0"/>
+                <compositeSetting label="PB FU6 Interval" value="0"/>
+                <compositeSetting label="PB FD5 Multiplier" value="0"/>
+                <compositeSetting label="PB FD5 Interval" value="0"/>
+                <compositeSetting label="PB FD6 Multiplier" value="0"/>
+                <compositeSetting label="PB FD6 Interval" value="0"/>
             <compositeSetting label="PB5 Paired" value="2"/>
             <compositeSetting label="PB6 Paired" value="2"/>
             <compositeSetting label="PB5 Mode" value="0"/>
@@ -10331,14 +10331,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB7 Output-Input" value="0"/>
             <compositeSetting label="PB8 Output-Input" value="0"/>
-				<compositeSetting label="PB FU7 Multiplier" value="0"/>
-				<compositeSetting label="PB FU7 Interval" value="0"/>
-				<compositeSetting label="PB FU8 Multiplier" value="0"/>
-				<compositeSetting label="PB FU8 Interval" value="0"/>
-				<compositeSetting label="PB FD7 Multiplier" value="0"/>
-				<compositeSetting label="PB FD7 Interval" value="0"/>
-				<compositeSetting label="PB FD8 Multiplier" value="0"/>
-				<compositeSetting label="PB FD8 Interval" value="0"/>
+                <compositeSetting label="PB FU7 Multiplier" value="0"/>
+                <compositeSetting label="PB FU7 Interval" value="0"/>
+                <compositeSetting label="PB FU8 Multiplier" value="0"/>
+                <compositeSetting label="PB FU8 Interval" value="0"/>
+                <compositeSetting label="PB FD7 Multiplier" value="0"/>
+                <compositeSetting label="PB FD7 Interval" value="0"/>
+                <compositeSetting label="PB FD8 Multiplier" value="0"/>
+                <compositeSetting label="PB FD8 Interval" value="0"/>
             <compositeSetting label="PB7 Paired" value="2"/>
             <compositeSetting label="PB8 Paired" value="2"/>
             <compositeSetting label="PB7 Mode" value="0"/>
@@ -10392,14 +10392,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB7 Output-Input" value="0"/>
             <compositeSetting label="PB8 Output-Input" value="0"/>
-				<compositeSetting label="PB FU7 Multiplier" value="0"/>
-				<compositeSetting label="PB FU7 Interval" value="0"/>
-				<compositeSetting label="PB FU8 Multiplier" value="0"/>
-				<compositeSetting label="PB FU8 Interval" value="0"/>
-				<compositeSetting label="PB FD7 Multiplier" value="0"/>
-				<compositeSetting label="PB FD7 Interval" value="0"/>
-				<compositeSetting label="PB FD8 Multiplier" value="0"/>
-				<compositeSetting label="PB FD8 Interval" value="0"/>
+                <compositeSetting label="PB FU7 Multiplier" value="0"/>
+                <compositeSetting label="PB FU7 Interval" value="0"/>
+                <compositeSetting label="PB FU8 Multiplier" value="0"/>
+                <compositeSetting label="PB FU8 Interval" value="0"/>
+                <compositeSetting label="PB FD7 Multiplier" value="0"/>
+                <compositeSetting label="PB FD7 Interval" value="0"/>
+                <compositeSetting label="PB FD8 Multiplier" value="0"/>
+                <compositeSetting label="PB FD8 Interval" value="0"/>
             <compositeSetting label="PB7 Paired" value="2"/>
             <compositeSetting label="PB8 Paired" value="2"/>
             <compositeSetting label="PB7 Mode" value="0"/>
@@ -10454,14 +10454,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC1 Output-Input" value="0"/>
             <compositeSetting label="PC2 Output-Input" value="0"/>
-				<compositeSetting label="PC FU1 Multiplier" value="0"/>
-				<compositeSetting label="PC FU1 Interval" value="0"/>
-				<compositeSetting label="PC FU2 Multiplier" value="0"/>
-				<compositeSetting label="PC FU2 Interval" value="0"/>
-				<compositeSetting label="PC FD1 Multiplier" value="0"/>
-				<compositeSetting label="PC FD1 Interval" value="0"/>
-				<compositeSetting label="PC FD2 Multiplier" value="0"/>
-				<compositeSetting label="PC FD2 Interval" value="0"/>
+                <compositeSetting label="PC FU1 Multiplier" value="0"/>
+                <compositeSetting label="PC FU1 Interval" value="0"/>
+                <compositeSetting label="PC FU2 Multiplier" value="0"/>
+                <compositeSetting label="PC FU2 Interval" value="0"/>
+                <compositeSetting label="PC FD1 Multiplier" value="0"/>
+                <compositeSetting label="PC FD1 Interval" value="0"/>
+                <compositeSetting label="PC FD2 Multiplier" value="0"/>
+                <compositeSetting label="PC FD2 Interval" value="0"/>
             <compositeSetting label="PC1 Paired" value="2"/>
             <compositeSetting label="PC2 Paired" value="2"/>
             <compositeSetting label="PC1 Mode" value="0"/>
@@ -10515,14 +10515,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC1 Output-Input" value="0"/>
             <compositeSetting label="PC2 Output-Input" value="0"/>
-				<compositeSetting label="PC FU1 Multiplier" value="0"/>
-				<compositeSetting label="PC FU1 Interval" value="0"/>
-				<compositeSetting label="PC FU2 Multiplier" value="0"/>
-				<compositeSetting label="PC FU2 Interval" value="0"/>
-				<compositeSetting label="PC FD1 Multiplier" value="0"/>
-				<compositeSetting label="PC FD1 Interval" value="0"/>
-				<compositeSetting label="PC FD2 Multiplier" value="0"/>
-				<compositeSetting label="PC FD2 Interval" value="0"/>
+                <compositeSetting label="PC FU1 Multiplier" value="0"/>
+                <compositeSetting label="PC FU1 Interval" value="0"/>
+                <compositeSetting label="PC FU2 Multiplier" value="0"/>
+                <compositeSetting label="PC FU2 Interval" value="0"/>
+                <compositeSetting label="PC FD1 Multiplier" value="0"/>
+                <compositeSetting label="PC FD1 Interval" value="0"/>
+                <compositeSetting label="PC FD2 Multiplier" value="0"/>
+                <compositeSetting label="PC FD2 Interval" value="0"/>
             <compositeSetting label="PC1 Paired" value="2"/>
             <compositeSetting label="PC2 Paired" value="2"/>
             <compositeSetting label="PC1 Mode" value="0"/>
@@ -10576,14 +10576,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC3 Output-Input" value="0"/>
             <compositeSetting label="PC4 Output-Input" value="0"/>
-				<compositeSetting label="PC FU3 Multiplier" value="0"/>
-				<compositeSetting label="PC FU3 Interval" value="0"/>
-				<compositeSetting label="PC FU4 Multiplier" value="0"/>
-				<compositeSetting label="PC FU4 Interval" value="0"/>
-				<compositeSetting label="PC FD3 Multiplier" value="0"/>
-				<compositeSetting label="PC FD3 Interval" value="0"/>
-				<compositeSetting label="PC FD4 Multiplier" value="0"/>
-				<compositeSetting label="PC FD4 Interval" value="0"/>
+                <compositeSetting label="PC FU3 Multiplier" value="0"/>
+                <compositeSetting label="PC FU3 Interval" value="0"/>
+                <compositeSetting label="PC FU4 Multiplier" value="0"/>
+                <compositeSetting label="PC FU4 Interval" value="0"/>
+                <compositeSetting label="PC FD3 Multiplier" value="0"/>
+                <compositeSetting label="PC FD3 Interval" value="0"/>
+                <compositeSetting label="PC FD4 Multiplier" value="0"/>
+                <compositeSetting label="PC FD4 Interval" value="0"/>
             <compositeSetting label="PC3 Paired" value="2"/>
             <compositeSetting label="PC4 Paired" value="2"/>
             <compositeSetting label="PC3 Mode" value="0"/>
@@ -10637,14 +10637,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC3 Output-Input" value="0"/>
             <compositeSetting label="PC4 Output-Input" value="0"/>
-				<compositeSetting label="PC FU3 Multiplier" value="0"/>
-				<compositeSetting label="PC FU3 Interval" value="0"/>
-				<compositeSetting label="PC FU4 Multiplier" value="0"/>
-				<compositeSetting label="PC FU4 Interval" value="0"/>
-				<compositeSetting label="PC FD3 Multiplier" value="0"/>
-				<compositeSetting label="PC FD3 Interval" value="0"/>
-				<compositeSetting label="PC FD4 Multiplier" value="0"/>
-				<compositeSetting label="PC FD4 Interval" value="0"/>
+                <compositeSetting label="PC FU3 Multiplier" value="0"/>
+                <compositeSetting label="PC FU3 Interval" value="0"/>
+                <compositeSetting label="PC FU4 Multiplier" value="0"/>
+                <compositeSetting label="PC FU4 Interval" value="0"/>
+                <compositeSetting label="PC FD3 Multiplier" value="0"/>
+                <compositeSetting label="PC FD3 Interval" value="0"/>
+                <compositeSetting label="PC FD4 Multiplier" value="0"/>
+                <compositeSetting label="PC FD4 Interval" value="0"/>
             <compositeSetting label="PC3 Paired" value="2"/>
             <compositeSetting label="PC4 Paired" value="2"/>
             <compositeSetting label="PC3 Mode" value="0"/>
@@ -10698,14 +10698,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC5 Output-Input" value="0"/>
             <compositeSetting label="PC6 Output-Input" value="0"/>
-				<compositeSetting label="PC FU5 Multiplier" value="0"/>
-				<compositeSetting label="PC FU5 Interval" value="0"/>
-				<compositeSetting label="PC FU6 Multiplier" value="0"/>
-				<compositeSetting label="PC FU6 Interval" value="0"/>
-				<compositeSetting label="PC FD5 Multiplier" value="0"/>
-				<compositeSetting label="PC FD5 Interval" value="0"/>
-				<compositeSetting label="PC FD6 Multiplier" value="0"/>
-				<compositeSetting label="PC FD6 Interval" value="0"/>
+                <compositeSetting label="PC FU5 Multiplier" value="0"/>
+                <compositeSetting label="PC FU5 Interval" value="0"/>
+                <compositeSetting label="PC FU6 Multiplier" value="0"/>
+                <compositeSetting label="PC FU6 Interval" value="0"/>
+                <compositeSetting label="PC FD5 Multiplier" value="0"/>
+                <compositeSetting label="PC FD5 Interval" value="0"/>
+                <compositeSetting label="PC FD6 Multiplier" value="0"/>
+                <compositeSetting label="PC FD6 Interval" value="0"/>
             <compositeSetting label="PC5 Paired" value="2"/>
             <compositeSetting label="PC6 Paired" value="2"/>
             <compositeSetting label="PC5 Mode" value="0"/>
@@ -10759,14 +10759,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC5 Output-Input" value="0"/>
             <compositeSetting label="PC6 Output-Input" value="0"/>
-				<compositeSetting label="PC FU5 Multiplier" value="0"/>
-				<compositeSetting label="PC FU5 Interval" value="0"/>
-				<compositeSetting label="PC FU6 Multiplier" value="0"/>
-				<compositeSetting label="PC FU6 Interval" value="0"/>
-				<compositeSetting label="PC FD5 Multiplier" value="0"/>
-				<compositeSetting label="PC FD5 Interval" value="0"/>
-				<compositeSetting label="PC FD6 Multiplier" value="0"/>
-				<compositeSetting label="PC FD6 Interval" value="0"/>
+                <compositeSetting label="PC FU5 Multiplier" value="0"/>
+                <compositeSetting label="PC FU5 Interval" value="0"/>
+                <compositeSetting label="PC FU6 Multiplier" value="0"/>
+                <compositeSetting label="PC FU6 Interval" value="0"/>
+                <compositeSetting label="PC FD5 Multiplier" value="0"/>
+                <compositeSetting label="PC FD5 Interval" value="0"/>
+                <compositeSetting label="PC FD6 Multiplier" value="0"/>
+                <compositeSetting label="PC FD6 Interval" value="0"/>
             <compositeSetting label="PC5 Paired" value="2"/>
             <compositeSetting label="PC6 Paired" value="2"/>
             <compositeSetting label="PC5 Mode" value="0"/>
@@ -10820,14 +10820,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC7 Output-Input" value="0"/>
             <compositeSetting label="PC8 Output-Input" value="0"/>
-				<compositeSetting label="PC FU7 Multiplier" value="0"/>
-				<compositeSetting label="PC FU7 Interval" value="0"/>
-				<compositeSetting label="PC FU8 Multiplier" value="0"/>
-				<compositeSetting label="PC FU8 Interval" value="0"/>
-				<compositeSetting label="PC FD7 Multiplier" value="0"/>
-				<compositeSetting label="PC FD7 Interval" value="0"/>
-				<compositeSetting label="PC FD8 Multiplier" value="0"/>
-				<compositeSetting label="PC FD8 Interval" value="0"/>
+                <compositeSetting label="PC FU7 Multiplier" value="0"/>
+                <compositeSetting label="PC FU7 Interval" value="0"/>
+                <compositeSetting label="PC FU8 Multiplier" value="0"/>
+                <compositeSetting label="PC FU8 Interval" value="0"/>
+                <compositeSetting label="PC FD7 Multiplier" value="0"/>
+                <compositeSetting label="PC FD7 Interval" value="0"/>
+                <compositeSetting label="PC FD8 Multiplier" value="0"/>
+                <compositeSetting label="PC FD8 Interval" value="0"/>
             <compositeSetting label="PC7 Paired" value="2"/>
             <compositeSetting label="PC8 Paired" value="2"/>
             <compositeSetting label="PC7 Mode" value="0"/>
@@ -10881,14 +10881,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC7 Output-Input" value="0"/>
             <compositeSetting label="PC8 Output-Input" value="0"/>
-				<compositeSetting label="PC FU7 Multiplier" value="0"/>
-				<compositeSetting label="PC FU7 Interval" value="0"/>
-				<compositeSetting label="PC FU8 Multiplier" value="0"/>
-				<compositeSetting label="PC FU8 Interval" value="0"/>
-				<compositeSetting label="PC FD7 Multiplier" value="0"/>
-				<compositeSetting label="PC FD7 Interval" value="0"/>
-				<compositeSetting label="PC FD8 Multiplier" value="0"/>
-				<compositeSetting label="PC FD8 Interval" value="0"/>
+                <compositeSetting label="PC FU7 Multiplier" value="0"/>
+                <compositeSetting label="PC FU7 Interval" value="0"/>
+                <compositeSetting label="PC FU8 Multiplier" value="0"/>
+                <compositeSetting label="PC FU8 Interval" value="0"/>
+                <compositeSetting label="PC FD7 Multiplier" value="0"/>
+                <compositeSetting label="PC FD7 Interval" value="0"/>
+                <compositeSetting label="PC FD8 Multiplier" value="0"/>
+                <compositeSetting label="PC FD8 Interval" value="0"/>
             <compositeSetting label="PC7 Paired" value="2"/>
             <compositeSetting label="PC8 Paired" value="2"/>
             <compositeSetting label="PC7 Mode" value="0"/>
@@ -11343,14 +11343,14 @@
             <compositeSetting label="PB2 Paired" value="2"/>
             <compositeSetting label="PB1 Mode" value="0"/>
             <compositeSetting label="PB2 Mode" value="0"/>
-				<compositeSetting label="PB FU1 Multiplier" value="0"/>
-				<compositeSetting label="PB FU1 Interval" value="0"/>
-				<compositeSetting label="PB FU2 Multiplier" value="0"/>
-				<compositeSetting label="PB FU2 Interval" value="0"/>
-				<compositeSetting label="PB FD1 Multiplier" value="0"/>
-				<compositeSetting label="PB FD1 Interval" value="0"/>
-				<compositeSetting label="PB FD2 Multiplier" value="0"/>
-				<compositeSetting label="PB FD2 Interval" value="0"/>
+                <compositeSetting label="PB FU1 Multiplier" value="0"/>
+                <compositeSetting label="PB FU1 Interval" value="0"/>
+                <compositeSetting label="PB FU2 Multiplier" value="0"/>
+                <compositeSetting label="PB FU2 Interval" value="0"/>
+                <compositeSetting label="PB FD1 Multiplier" value="0"/>
+                <compositeSetting label="PB FD1 Interval" value="0"/>
+                <compositeSetting label="PB FD2 Multiplier" value="0"/>
+                <compositeSetting label="PB FD2 Interval" value="0"/>
             <compositeSetting label="PB1 Output Direction" value="0"/>
             <compositeSetting label="PB2 Output Direction" value="1"/>
             <compositeSetting label="PB1 Type" value="0"/>
@@ -11363,14 +11363,14 @@
             <compositeSetting label="PB4 Paired" value="2"/>
             <compositeSetting label="PB3 Mode" value="0"/>
             <compositeSetting label="PB4 Mode" value="0"/>
-				<compositeSetting label="PB FU3 Multiplier" value="0"/>
-				<compositeSetting label="PB FU3 Interval" value="0"/>
-				<compositeSetting label="PB FU4 Multiplier" value="0"/>
-				<compositeSetting label="PB FU4 Interval" value="0"/>
-				<compositeSetting label="PB FD3 Multiplier" value="0"/>
-				<compositeSetting label="PB FD3 Interval" value="0"/>
-				<compositeSetting label="PB FD4 Multiplier" value="0"/>
-				<compositeSetting label="PB FD4 Interval" value="0"/>
+                <compositeSetting label="PB FU3 Multiplier" value="0"/>
+                <compositeSetting label="PB FU3 Interval" value="0"/>
+                <compositeSetting label="PB FU4 Multiplier" value="0"/>
+                <compositeSetting label="PB FU4 Interval" value="0"/>
+                <compositeSetting label="PB FD3 Multiplier" value="0"/>
+                <compositeSetting label="PB FD3 Interval" value="0"/>
+                <compositeSetting label="PB FD4 Multiplier" value="0"/>
+                <compositeSetting label="PB FD4 Interval" value="0"/>
             <compositeSetting label="PB3 Output Direction" value="0"/>
             <compositeSetting label="PB4 Output Direction" value="1"/>
             <compositeSetting label="PB3 Type" value="0"/>
@@ -11383,14 +11383,14 @@
             <compositeSetting label="PB6 Paired" value="2"/>
             <compositeSetting label="PB5 Mode" value="0"/>
             <compositeSetting label="PB6 Mode" value="0"/>
-				<compositeSetting label="PB FU5 Multiplier" value="0"/>
-				<compositeSetting label="PB FU5 Interval" value="0"/>
-				<compositeSetting label="PB FU6 Multiplier" value="0"/>
-				<compositeSetting label="PB FU6 Interval" value="0"/>
-				<compositeSetting label="PB FD5 Multiplier" value="0"/>
-				<compositeSetting label="PB FD5 Interval" value="0"/>
-				<compositeSetting label="PB FD6 Multiplier" value="0"/>
-				<compositeSetting label="PB FD6 Interval" value="0"/>
+                <compositeSetting label="PB FU5 Multiplier" value="0"/>
+                <compositeSetting label="PB FU5 Interval" value="0"/>
+                <compositeSetting label="PB FU6 Multiplier" value="0"/>
+                <compositeSetting label="PB FU6 Interval" value="0"/>
+                <compositeSetting label="PB FD5 Multiplier" value="0"/>
+                <compositeSetting label="PB FD5 Interval" value="0"/>
+                <compositeSetting label="PB FD6 Multiplier" value="0"/>
+                <compositeSetting label="PB FD6 Interval" value="0"/>
             <compositeSetting label="PB5 Output Direction" value="0"/>
             <compositeSetting label="PB6 Output Direction" value="1"/>
             <compositeSetting label="PB5 Type" value="0"/>
@@ -11403,14 +11403,14 @@
             <compositeSetting label="PB8 Paired" value="2"/>
             <compositeSetting label="PB7 Mode" value="0"/>
             <compositeSetting label="PB8 Mode" value="0"/>
-				<compositeSetting label="PB FU7 Multiplier" value="0"/>
-				<compositeSetting label="PB FU7 Interval" value="0"/>
-				<compositeSetting label="PB FU8 Multiplier" value="0"/>
-				<compositeSetting label="PB FU8 Interval" value="0"/>
-				<compositeSetting label="PB FD7 Multiplier" value="0"/>
-				<compositeSetting label="PB FD7 Interval" value="0"/>
-				<compositeSetting label="PB FD8 Multiplier" value="0"/>
-				<compositeSetting label="PB FD8 Interval" value="0"/>
+                <compositeSetting label="PB FU7 Multiplier" value="0"/>
+                <compositeSetting label="PB FU7 Interval" value="0"/>
+                <compositeSetting label="PB FU8 Multiplier" value="0"/>
+                <compositeSetting label="PB FU8 Interval" value="0"/>
+                <compositeSetting label="PB FD7 Multiplier" value="0"/>
+                <compositeSetting label="PB FD7 Interval" value="0"/>
+                <compositeSetting label="PB FD8 Multiplier" value="0"/>
+                <compositeSetting label="PB FD8 Interval" value="0"/>
             <compositeSetting label="PB7 Output Direction" value="0"/>
             <compositeSetting label="PB8 Output Direction" value="1"/>
             <compositeSetting label="PB7 Type" value="0"/>
@@ -11557,14 +11557,14 @@
             <compositeSetting label="PC2 Paired" value="2"/>
             <compositeSetting label="PC1 Mode" value="0"/>
             <compositeSetting label="PC2 Mode" value="0"/>
-				<compositeSetting label="PC FU1 Multiplier" value="0"/>
-				<compositeSetting label="PC FU1 Interval" value="0"/>
-				<compositeSetting label="PC FU2 Multiplier" value="0"/>
-				<compositeSetting label="PC FU2 Interval" value="0"/>
-				<compositeSetting label="PC FD1 Multiplier" value="0"/>
-				<compositeSetting label="PC FD1 Interval" value="0"/>
-				<compositeSetting label="PC FD2 Multiplier" value="0"/>
-				<compositeSetting label="PC FD2 Interval" value="0"/>
+                <compositeSetting label="PC FU1 Multiplier" value="0"/>
+                <compositeSetting label="PC FU1 Interval" value="0"/>
+                <compositeSetting label="PC FU2 Multiplier" value="0"/>
+                <compositeSetting label="PC FU2 Interval" value="0"/>
+                <compositeSetting label="PC FD1 Multiplier" value="0"/>
+                <compositeSetting label="PC FD1 Interval" value="0"/>
+                <compositeSetting label="PC FD2 Multiplier" value="0"/>
+                <compositeSetting label="PC FD2 Interval" value="0"/>
             <compositeSetting label="PC1 Output Direction" value="0"/>
             <compositeSetting label="PC2 Output Direction" value="1"/>
             <compositeSetting label="PC1 Type" value="0"/>
@@ -11577,14 +11577,14 @@
             <compositeSetting label="PC4 Paired" value="2"/>
             <compositeSetting label="PC3 Mode" value="0"/>
             <compositeSetting label="PC4 Mode" value="0"/>
-				<compositeSetting label="PC FU3 Multiplier" value="0"/>
-				<compositeSetting label="PC FU3 Interval" value="0"/>
-				<compositeSetting label="PC FU4 Multiplier" value="0"/>
-				<compositeSetting label="PC FU4 Interval" value="0"/>
-				<compositeSetting label="PC FD3 Multiplier" value="0"/>
-				<compositeSetting label="PC FD3 Interval" value="0"/>
-				<compositeSetting label="PC FD4 Multiplier" value="0"/>
-				<compositeSetting label="PC FD4 Interval" value="0"/>
+                <compositeSetting label="PC FU3 Multiplier" value="0"/>
+                <compositeSetting label="PC FU3 Interval" value="0"/>
+                <compositeSetting label="PC FU4 Multiplier" value="0"/>
+                <compositeSetting label="PC FU4 Interval" value="0"/>
+                <compositeSetting label="PC FD3 Multiplier" value="0"/>
+                <compositeSetting label="PC FD3 Interval" value="0"/>
+                <compositeSetting label="PC FD4 Multiplier" value="0"/>
+                <compositeSetting label="PC FD4 Interval" value="0"/>
             <compositeSetting label="PC3 Output Direction" value="0"/>
             <compositeSetting label="PC4 Output Direction" value="1"/>
             <compositeSetting label="PC3 Type" value="0"/>
@@ -11597,14 +11597,14 @@
             <compositeSetting label="PC6 Paired" value="2"/>
             <compositeSetting label="PC5 Mode" value="0"/>
             <compositeSetting label="PC6 Mode" value="0"/>
-				<compositeSetting label="PC FU5 Multiplier" value="0"/>
-				<compositeSetting label="PC FU5 Interval" value="0"/>
-				<compositeSetting label="PC FU6 Multiplier" value="0"/>
-				<compositeSetting label="PC FU6 Interval" value="0"/>
-				<compositeSetting label="PC FD5 Multiplier" value="0"/>
-				<compositeSetting label="PC FD5 Interval" value="0"/>
-				<compositeSetting label="PC FD6 Multiplier" value="0"/>
-				<compositeSetting label="PC FD6 Interval" value="0"/>
+                <compositeSetting label="PC FU5 Multiplier" value="0"/>
+                <compositeSetting label="PC FU5 Interval" value="0"/>
+                <compositeSetting label="PC FU6 Multiplier" value="0"/>
+                <compositeSetting label="PC FU6 Interval" value="0"/>
+                <compositeSetting label="PC FD5 Multiplier" value="0"/>
+                <compositeSetting label="PC FD5 Interval" value="0"/>
+                <compositeSetting label="PC FD6 Multiplier" value="0"/>
+                <compositeSetting label="PC FD6 Interval" value="0"/>
             <compositeSetting label="PC5 Output Direction" value="0"/>
             <compositeSetting label="PC6 Output Direction" value="1"/>
             <compositeSetting label="PC5 Type" value="0"/>
@@ -11617,14 +11617,14 @@
             <compositeSetting label="PC8 Paired" value="2"/>
             <compositeSetting label="PC7 Mode" value="0"/>
             <compositeSetting label="PC8 Mode" value="0"/>
-				<compositeSetting label="PC FU7 Multiplier" value="0"/>
-				<compositeSetting label="PC FU7 Interval" value="0"/>
-				<compositeSetting label="PC FU8 Multiplier" value="0"/>
-				<compositeSetting label="PC FU8 Interval" value="0"/>
-				<compositeSetting label="PC FD7 Multiplier" value="0"/>
-				<compositeSetting label="PC FD7 Interval" value="0"/>
-				<compositeSetting label="PC FD8 Multiplier" value="0"/>
-				<compositeSetting label="PC FD8 Interval" value="0"/>
+                <compositeSetting label="PC FU7 Multiplier" value="0"/>
+                <compositeSetting label="PC FU7 Interval" value="0"/>
+                <compositeSetting label="PC FU8 Multiplier" value="0"/>
+                <compositeSetting label="PC FU8 Interval" value="0"/>
+                <compositeSetting label="PC FD7 Multiplier" value="0"/>
+                <compositeSetting label="PC FD7 Interval" value="0"/>
+                <compositeSetting label="PC FD8 Multiplier" value="0"/>
+                <compositeSetting label="PC FD8 Interval" value="0"/>
             <compositeSetting label="PC7 Output Direction" value="0"/>
             <compositeSetting label="PC8 Output Direction" value="1"/>
             <compositeSetting label="PC7 Type" value="0"/>

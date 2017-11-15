@@ -55,10 +55,10 @@
 
   </appearances>
   <specificappearances>
-  	<danger>
-  		<aspect>Stop</aspect>
-  	</danger>
-  	<held>
-  		<aspect>Stop</aspect>
-  	</held></specificappearances>
+      <danger>
+          <aspect>Stop</aspect>
+      </danger>
+      <held>
+          <aspect>Stop</aspect>
+      </held></specificappearances>
 </appearancetable>

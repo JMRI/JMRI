@@ -47,8 +47,7 @@
       <model show="no" model="Synch Diesel Sound 1955 - N Gauge GP7, GP9, GP30 and GP35" replacementModel="1955 - N Scale - Atlas GP7, GP9, GP30 and GP35" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="83" width="16" height="7.5" units="mm"/>
       </model>
-<!--
-      <model model="Synch Diesel Sound 1802 - HO Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+<!-- <model model="Synch Diesel Sound 1802 - HO Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="83" width="16" height="7.5" units="mm"/>
       </model>
       <model model="Synch Diesel Sound 1805 - G.E. U23B Prime Mover" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">

@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004, 2008, 2016 All rights reserved -->
 <!--$Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="Alain Le Marchand" version="1.0" lastUpdated="20160731"/>
     <version author="Alain Le Marchand" version="1.1" lastUpdated="20160802"/>
@@ -20,12 +20,12 @@
     <!-- ver1.0   created from "ESU LokPilot Standard V1.0" version 1.2 -->
     <!--          ESU manual: 50708, 50709 Digital car interior lighting, en, Date: 23.04.15, Version: 2 -->
     <!-- ver1.1   renamed family as per discussion https://github.com/JMRI/JMRI/pull/1724 -->
-    <!--          single entry for both model                                             -->
-    <!-- ver1.2   alignement with LokProgrammer 4.4.23: Add CV13, 14 and 20, 21           -->
-    <!--          removed RailCom CV28 and CV29 bit3                                      -->
-    <!--          CV labels as per LokProgrammer                                          -->
-    <!--          f1(r) by default activates AUX1 (CV47)                                  -->
-    <!-- ver1.3   added Scale Trains Tender Light                                         -->
+    <!--          single entry for both model -->
+    <!-- ver1.2   alignement with LokProgrammer 4.4.23: Add CV13, 14 and 20, 21 -->
+    <!--          removed RailCom CV28 and CV29 bit3 -->
+    <!--          CV labels as per LokProgrammer -->
+    <!--          f1(r) by default activates AUX1 (CV47) -->
+    <!-- ver1.3   added Scale Trains Tender Light -->
     <decoder>
         <family name="ESU Miscellaneous decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="ESU digital interior light" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50708 &quot;Warm-white&quot;&lt;br&gt; Ref.50709 &quot;Yellow&quot;&lt;br&gt;Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
@@ -477,18 +477,18 @@
                 <label>Firmware Major Version</label>
             </variable>
             <!-- Decoder Information -->
-            <!--       <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/> -->
-            <!--       <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
+            <!-- <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/> -->
+            <!-- <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
         </variables>
         <resets>
             <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
         </resets>
     </decoder>
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+    <!-- <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/> -->
+    <!-- <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/> -->
 </decoder-config>

@@ -35,7 +35,7 @@
         <appearance>
             <aspectname>Clear</aspectname>
             <show>green</show>
-			<show>dark</show>
+            <show>dark</show>
             <reference>Page 142</reference>
             <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W281.gif</imagelink>
         </appearance>
@@ -43,7 +43,7 @@
         <appearance>
             <aspectname>Approach</aspectname>
             <show>yellow</show>
-			<show>dark</show>
+            <show>dark</show>
             <reference>Page 143</reference>
             <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W285.gif</imagelink>
         </appearance>
@@ -51,15 +51,15 @@
         <appearance>
             <aspectname>Stop</aspectname>
             <show>red</show>
-			<show>red</show>
+            <show>red</show>
             <reference>Page 146</reference>
             <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W292.gif</imagelink>
         </appearance>
 
-		<appearance>
+        <appearance>
             <aspectname>Stop-Throw Switch</aspectname>
             <show>red</show>
-			<show>flashred</show>
+            <show>flashred</show>
             <reference>Page 100 of the 1973 WM Rule Book</reference>
             <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-R_Absolute/Rule-W293.gif</imagelink>
         </appearance>
@@ -127,7 +127,7 @@
             <ourAspect>Approach</ourAspect>
         </aspectMapping>
 
-		<aspectMapping>
+        <aspectMapping>
             <advancedAspect>Stop-Throw Switch</advancedAspect>
             <ourAspect>Approach</ourAspect>
         </aspectMapping>

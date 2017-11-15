@@ -31,7 +31,7 @@
       <authorinitials>PB</authorinitials>
       <revremark>
         This file containts only variables that are common to ALL D&amp;H decoders,
-		in ALL versions, and in ALL firmware versions from fw3.02 and up.
+        in ALL versions, and in ALL firmware versions from fw3.02 and up.
       </revremark>
     </revision>
     <revision>

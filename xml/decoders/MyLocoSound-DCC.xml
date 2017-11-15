@@ -14,10 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20140905"/>
-	<!-- version 1 : Initial file. Based on following documentation :
-										PLC008 Diesel Decoder Instructions 11.doc 26/05/14
-										PLC008 Steam Decoder Instructions 11 26/05/14
-	-->
+    <!-- version 1 : Initial file. Based on following documentation :
+                                        PLC008 Diesel Decoder Instructions 11.doc 26/05/14
+                                        PLC008 Steam Decoder Instructions 11 26/05/14
+    -->
   <decoder>
     <family name="MyLocoSound DCC" mfg="MyLocoSound" type="mobile" lowVersionID="1" highVersionID="9" comment="with stay-alive capacitor">
       <model model="Diesel" numOuts="2" numFns="11" productID="Diesel" maxMotorCurrent="1.5A" formFactor="HO" connector="NMRAmedium" comment="with 40mm x 20mm high bass speaker">

@@ -30,11 +30,11 @@
       <date>2014-02-20</date>
       <authorinitials>PB</authorinitials>
       <revremark>This file contains only variables that are common to D&amp;H decoders released
-		after around 2012 that support DC operation (as of 2014-02: all except the
-		DH06A).
-		Those CVs don't seem to be able applicable to older decoders,
-		even with the latest firmware upgrades.
-	  </revremark>
+        after around 2012 that support DC operation (as of 2014-02: all except the
+        DH06A).
+        Those CVs don't seem to be able applicable to older decoders,
+        even with the latest firmware upgrades.
+      </revremark>
     </revision>
   </revhistory>
   <variable CV="112" default="0" item="DC Brake Momentum" tooltip="CV112 (0:none, 31:strong)">

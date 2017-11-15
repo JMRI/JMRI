@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$	-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,11 +34,11 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
-	<!-- Light Effects for  + (all-in-one) decoders   -->
+    <!-- Light Effects for  + (all-in-one) decoders   -->
   <enumChoice choice="[0]" value="0">
-		<choice>[0]  Not Used</choice>
-		<choice xml:lang="de">[0]  Nicht benutzt</choice>
+        <choice>[0]  Not Used</choice>
+        <choice xml:lang="de">[0]  Nicht benutzt</choice>
   </enumChoice>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/choice-SwitchingModeLightEffects.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/choice-SwitchingModeLightEffectsAdd.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/choice-SwitchingModeLightEffects.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/choice-SwitchingModeLightEffectsAdd.xml"/>
 </enumVal>

@@ -17,9 +17,9 @@
   <decoder>
     <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero">
       <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8">
-	  	</model>
+          </model>
       <model model="ATL2054" lowVersionID="19" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8">
-	  	</model>
+          </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

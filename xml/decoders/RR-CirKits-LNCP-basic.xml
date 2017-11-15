@@ -36,7 +36,7 @@
       </capability>
     </programming>
     <variables>
-      <!--		<variable label="Address" CV="9" item="Extended Address"  -->
+      <!-- <variable label="Address" CV="9" item="Extended Address"  -->
       <variable item="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>
         <label>Primary Address</label>

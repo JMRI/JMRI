@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$				-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -36,7 +36,7 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
-	<!-- 	CVs for output A0											 -->
+    <!-- CVs for output A0 -->
   <variable item="Dimming Off A0" CV="111" mask="XVVVVVVV" default="0" minOut="1">
     <decVal max="100"/>
     <label>Dimming Off A0</label>
@@ -50,8 +50,8 @@
     <label xml:lang="de">Dimmung Aus augeschaltet A0</label>
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
-	</variable>
-	<variable item="Dimming On A0" CV="112" mask="VVVVVVVV" default="100" minOut="1">
+    </variable>
+    <variable item="Dimming On A0" CV="112" mask="VVVVVVVV" default="100" minOut="1">
     <decVal max="100"/>
     <label>Dimming On A0</label>
     <label xml:lang="de">Dimmung Ein A0</label>
@@ -100,21 +100,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A0" CV="117" mask="VVVVVVVV" default="0" minOut="1">
-		<splitVal highCV="116" upperMask="VVVVVVVV"/>
+    <variable item="On Time A0" CV="117" mask="VVVVVVVV" default="0" minOut="1">
+        <splitVal highCV="116" upperMask="VVVVVVVV"/>
     <label>On Time A0</label>
     <label xml:lang="de">An-zeit A0</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A0" CV="119" mask="VVVVVVVV" default="0" minOut="1">
-		<splitVal highCV="118" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A0" CV="119" mask="VVVVVVVV" default="0" minOut="1">
+        <splitVal highCV="118" upperMask="VVVVVVVV"/>
     <label>Off Time A0</label>
     <label xml:lang="de">Ab-zeit A0</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A0" CV="120" mask="XVVVVVVV" default="0" minOut="1">
+      <variable item="Number Pulses A0" CV="120" mask="XVVVVVVV" default="0" minOut="1">
     <decVal max="127"/>
     <label>Number Pulses A0</label>
     <label xml:lang="de">Anzahl der Pulse A0</label>
@@ -128,7 +128,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A1											 -->
+    <!-- CVs for output A1 -->
   <variable item="Dimming Off A1" CV="121" mask="XVVVVVVV" default="0" minOut="2">
     <decVal max="100"/>
     <label>Dimming Off A1</label>
@@ -143,7 +143,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A1" CV="122" mask="VVVVVVVV" default="100" minOut="2">
+    <variable item="Dimming On A1" CV="122" mask="VVVVVVVV" default="100" minOut="2">
     <decVal max="100"/>
     <label>Dimming On A1</label>
     <label xml:lang="de">Dimmung Ein A1</label>
@@ -192,21 +192,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A1" CV="127" mask="VVVVVVVV" default="0" minOut="2">
-		<splitVal highCV="126" upperMask="VVVVVVVV"/>
+    <variable item="On Time A1" CV="127" mask="VVVVVVVV" default="0" minOut="2">
+        <splitVal highCV="126" upperMask="VVVVVVVV"/>
     <label>On Time A1</label>
     <label xml:lang="de">An-zeit A1</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A1" CV="129" mask="VVVVVVVV" default="0" minOut="2">
-		<splitVal highCV="128" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A1" CV="129" mask="VVVVVVVV" default="0" minOut="2">
+        <splitVal highCV="128" upperMask="VVVVVVVV"/>
     <label>Off Time A1</label>
     <label xml:lang="de">Ab-zeit A1</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A1" CV="130" mask="XVVVVVVV" default="0" minOut="2">
+      <variable item="Number Pulses A1" CV="130" mask="XVVVVVVV" default="0" minOut="2">
     <decVal max="127"/>
     <label>Number Pulses A1</label>
     <label xml:lang="de">Anzahl der Pulse A1</label>
@@ -220,7 +220,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A2											 -->
+    <!-- CVs for output A2 -->
   <variable item="Dimming Off A2" CV="131" mask="XVVVVVVV" default="0" minOut="3">
     <decVal max="100"/>
     <label>Dimming Off A2</label>
@@ -235,7 +235,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A2" CV="132" mask="VVVVVVVV" default="100" minOut="3">
+    <variable item="Dimming On A2" CV="132" mask="VVVVVVVV" default="100" minOut="3">
     <decVal max="100"/>
     <label>Dimming On A2</label>
     <label xml:lang="de">Dimmung Ein A2</label>
@@ -284,21 +284,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A2" CV="137" mask="VVVVVVVV" default="0" minOut="3">
-		<splitVal highCV="136" upperMask="VVVVVVVV"/>
+    <variable item="On Time A2" CV="137" mask="VVVVVVVV" default="0" minOut="3">
+        <splitVal highCV="136" upperMask="VVVVVVVV"/>
     <label>On Time A2</label>
     <label xml:lang="de">An-zeit A2</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A2" CV="139" mask="VVVVVVVV" default="0" minOut="3">
-		<splitVal highCV="138" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A2" CV="139" mask="VVVVVVVV" default="0" minOut="3">
+        <splitVal highCV="138" upperMask="VVVVVVVV"/>
     <label>Off Time A2</label>
     <label xml:lang="de">Ab-zeit A2</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A2" CV="140" mask="XVVVVVVV" default="0" minOut="3">
+      <variable item="Number Pulses A2" CV="140" mask="XVVVVVVV" default="0" minOut="3">
     <decVal max="127"/>
     <label>Number Pulses A2</label>
     <label xml:lang="de">Anzahl der Pulse A2</label>
@@ -312,7 +312,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A3											 -->
+    <!-- CVs for output A3 -->
   <variable item="Dimming Off A3" CV="141" mask="XVVVVVVV" default="0" minOut="4">
     <decVal max="100"/>
     <label>Dimming Off A3</label>
@@ -327,7 +327,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A3" CV="142" mask="VVVVVVVV" default="100" minOut="4">
+    <variable item="Dimming On A3" CV="142" mask="VVVVVVVV" default="100" minOut="4">
     <decVal max="100"/>
     <label>Dimming On A3</label>
     <label xml:lang="de">Dimmung Ein A3</label>
@@ -376,21 +376,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A3" CV="147" mask="VVVVVVVV" default="0" minOut="4">
-		<splitVal highCV="146" upperMask="VVVVVVVV"/>
+    <variable item="On Time A3" CV="147" mask="VVVVVVVV" default="0" minOut="4">
+        <splitVal highCV="146" upperMask="VVVVVVVV"/>
     <label>On Time A3</label>
     <label xml:lang="de">An-zeit A3</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A3" CV="149" mask="VVVVVVVV" default="0" minOut="4">
-		<splitVal highCV="148" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A3" CV="149" mask="VVVVVVVV" default="0" minOut="4">
+        <splitVal highCV="148" upperMask="VVVVVVVV"/>
     <label>Off Time A3</label>
     <label xml:lang="de">Ab-zeit A3</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A3" CV="150" mask="XVVVVVVV" default="0" minOut="4">
+      <variable item="Number Pulses A3" CV="150" mask="XVVVVVVV" default="0" minOut="4">
     <decVal max="127"/>
     <label>Number Pulses A3</label>
     <label xml:lang="de">Anzahl der Pulse A3</label>
@@ -404,7 +404,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A4											 -->
+    <!-- CVs for output A4 -->
   <variable item="Dimming Off A4" CV="151" mask="XVVVVVVV" default="0" minOut="5">
     <decVal max="100"/>
     <label>Dimming Off A4</label>
@@ -419,7 +419,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A4" CV="152" mask="VVVVVVVV" default="100" minOut="5">
+    <variable item="Dimming On A4" CV="152" mask="VVVVVVVV" default="100" minOut="5">
     <decVal max="100"/>
     <label>Dimming On A4</label>
     <label xml:lang="de">Dimmung Ein A4</label>
@@ -468,21 +468,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A4" CV="157" mask="VVVVVVVV" default="0" minOut="5">
-		<splitVal highCV="156" upperMask="VVVVVVVV"/>
+    <variable item="On Time A4" CV="157" mask="VVVVVVVV" default="0" minOut="5">
+        <splitVal highCV="156" upperMask="VVVVVVVV"/>
     <label>On Time A4</label>
     <label xml:lang="de">An-zeit A4</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A4" CV="159" mask="VVVVVVVV" default="0" minOut="5">
-		<splitVal highCV="158" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A4" CV="159" mask="VVVVVVVV" default="0" minOut="5">
+        <splitVal highCV="158" upperMask="VVVVVVVV"/>
     <label>Off Time A4</label>
     <label xml:lang="de">Ab-zeit A4</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A4" CV="160" mask="XVVVVVVV" default="0" minOut="5">
+      <variable item="Number Pulses A4" CV="160" mask="XVVVVVVV" default="0" minOut="5">
     <decVal max="127"/>
     <label>Number Pulses A4</label>
     <label xml:lang="de">Anzahl der Pulse A4</label>
@@ -496,7 +496,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A5											 -->
+    <!-- CVs for output A5 -->
   <variable item="Dimming Off A5" CV="161" mask="XVVVVVVV" default="0" minOut="6">
     <decVal max="100"/>
     <label>Dimming Off A5</label>
@@ -511,7 +511,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A5" CV="162" mask="VVVVVVVV" default="100" minOut="6">
+    <variable item="Dimming On A5" CV="162" mask="VVVVVVVV" default="100" minOut="6">
     <decVal max="100"/>
     <label>Dimming On A5</label>
     <label xml:lang="de">Dimmung Ein A5</label>
@@ -560,21 +560,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A5" CV="167" mask="VVVVVVVV" default="0" minOut="6">
-		<splitVal highCV="166" upperMask="VVVVVVVV"/>
+    <variable item="On Time A5" CV="167" mask="VVVVVVVV" default="0" minOut="6">
+        <splitVal highCV="166" upperMask="VVVVVVVV"/>
     <label>On Time A5</label>
     <label xml:lang="de">An-zeit A5</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A5" CV="169" mask="VVVVVVVV" default="0" minOut="6">
-		<splitVal highCV="168" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A5" CV="169" mask="VVVVVVVV" default="0" minOut="6">
+        <splitVal highCV="168" upperMask="VVVVVVVV"/>
     <label>Off Time A5</label>
     <label xml:lang="de">Ab-zeit A5</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A5" CV="170" mask="XVVVVVVV" default="0" minOut="6">
+      <variable item="Number Pulses A5" CV="170" mask="XVVVVVVV" default="0" minOut="6">
     <decVal max="127"/>
     <label>Number Pulses A5</label>
     <label xml:lang="de">Anzahl der Pulse A5</label>
@@ -588,7 +588,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A6											 -->
+    <!-- CVs for output A6 -->
   <variable item="Dimming Off A6" CV="171" mask="XVVVVVVV" default="0" minOut="7">
     <decVal max="100"/>
     <label>Dimming Off A6</label>
@@ -603,7 +603,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A6" CV="172" mask="VVVVVVVV" default="100" minOut="7">
+    <variable item="Dimming On A6" CV="172" mask="VVVVVVVV" default="100" minOut="7">
     <decVal max="100"/>
     <label>Dimming On A6</label>
     <label xml:lang="de">Dimmung Ein A6</label>
@@ -652,21 +652,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A6" CV="177" mask="VVVVVVVV" default="0" minOut="7">
-		<splitVal highCV="176" upperMask="VVVVVVVV"/>
+    <variable item="On Time A6" CV="177" mask="VVVVVVVV" default="0" minOut="7">
+        <splitVal highCV="176" upperMask="VVVVVVVV"/>
     <label>On Time A6</label>
     <label xml:lang="de">An-zeit A6</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A6" CV="179" mask="VVVVVVVV" default="0" minOut="7">
-		<splitVal highCV="178" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A6" CV="179" mask="VVVVVVVV" default="0" minOut="7">
+        <splitVal highCV="178" upperMask="VVVVVVVV"/>
     <label>Off Time A6</label>
     <label xml:lang="de">Ab-zeit A6</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A6" CV="180" mask="XVVVVVVV" default="0" minOut="7">
+      <variable item="Number Pulses A6" CV="180" mask="XVVVVVVV" default="0" minOut="7">
     <decVal max="127"/>
     <label>Number Pulses A6</label>
     <label xml:lang="de">Anzahl der Pulse A6</label>
@@ -680,7 +680,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A7											 -->
+    <!-- CVs for output A7 -->
   <variable item="Dimming Off A7" CV="181" mask="XVVVVVVV" default="0" minOut="8">
     <decVal max="100"/>
     <label>Dimming Off A7</label>
@@ -695,7 +695,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A7" CV="182" mask="VVVVVVVV" default="100" minOut="8">
+    <variable item="Dimming On A7" CV="182" mask="VVVVVVVV" default="100" minOut="8">
     <decVal max="100"/>
     <label>Dimming On A7</label>
     <label xml:lang="de">Dimmung Ein A7</label>
@@ -744,21 +744,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A7" CV="187" mask="VVVVVVVV" default="0" minOut="8">
-		<splitVal highCV="186" upperMask="VVVVVVVV"/>
+    <variable item="On Time A7" CV="187" mask="VVVVVVVV" default="0" minOut="8">
+        <splitVal highCV="186" upperMask="VVVVVVVV"/>
     <label>On Time A7</label>
     <label xml:lang="de">An-zeit A7</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A7" CV="189" mask="VVVVVVVV" default="0" minOut="8">
-		<splitVal highCV="188" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A7" CV="189" mask="VVVVVVVV" default="0" minOut="8">
+        <splitVal highCV="188" upperMask="VVVVVVVV"/>
     <label>Off Time A7</label>
     <label xml:lang="de">Ab-zeit A7</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A7" CV="190" mask="XVVVVVVV" default="0" minOut="8">
+      <variable item="Number Pulses A7" CV="190" mask="XVVVVVVV" default="0" minOut="8">
     <decVal max="127"/>
     <label>Number Pulses A7</label>
     <label xml:lang="de">Anzahl der Pulse A7</label>
@@ -772,7 +772,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A8											 -->
+    <!-- CVs for output A8 -->
   <variable item="Dimming Off A8" CV="191" mask="XVVVVVVV" default="0" minOut="9">
     <decVal max="100"/>
     <label>Dimming Off A8</label>
@@ -787,7 +787,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A8" CV="192" mask="VVVVVVVV" default="100" minOut="9">
+    <variable item="Dimming On A8" CV="192" mask="VVVVVVVV" default="100" minOut="9">
     <decVal max="100"/>
     <label>Dimming On A8</label>
     <label xml:lang="de">Dimmung Ein A8</label>
@@ -836,21 +836,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A8" CV="197" mask="VVVVVVVV" default="0" minOut="9">
-		<splitVal highCV="196" upperMask="VVVVVVVV"/>
+    <variable item="On Time A8" CV="197" mask="VVVVVVVV" default="0" minOut="9">
+        <splitVal highCV="196" upperMask="VVVVVVVV"/>
     <label>On Time A8</label>
     <label xml:lang="de">An-zeit A8</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A8" CV="199" mask="VVVVVVVV" default="0" minOut="9">
-		<splitVal highCV="198" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A8" CV="199" mask="VVVVVVVV" default="0" minOut="9">
+        <splitVal highCV="198" upperMask="VVVVVVVV"/>
     <label>Off Time A8</label>
     <label xml:lang="de">Ab-zeit A8</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A8" CV="200" mask="XVVVVVVV" default="0" minOut="9">
+      <variable item="Number Pulses A8" CV="200" mask="XVVVVVVV" default="0" minOut="9">
     <decVal max="127"/>
     <label>Number Pulses A8</label>
     <label xml:lang="de">Anzahl der Pulse A8</label>
@@ -864,7 +864,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A9											 -->
+    <!-- CVs for output A9 -->
   <variable item="Dimming Off A9" CV="201" mask="XVVVVVVV" default="0" minOut="10">
     <decVal max="100"/>
     <label>Dimming Off A9</label>
@@ -879,7 +879,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A9" CV="202" mask="VVVVVVVV" default="100" minOut="10">
+    <variable item="Dimming On A9" CV="202" mask="VVVVVVVV" default="100" minOut="10">
     <decVal max="100"/>
     <label>Dimming On A9</label>
     <label xml:lang="de">Dimmung Ein A9</label>
@@ -928,21 +928,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A9" CV="207" mask="VVVVVVVV" default="0" minOut="10">
-		<splitVal highCV="206" upperMask="VVVVVVVV"/>
+    <variable item="On Time A9" CV="207" mask="VVVVVVVV" default="0" minOut="10">
+        <splitVal highCV="206" upperMask="VVVVVVVV"/>
     <label>On Time A9</label>
     <label xml:lang="de">An-zeit A9</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A9" CV="209" mask="VVVVVVVV" default="0" minOut="10">
-		<splitVal highCV="208" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A9" CV="209" mask="VVVVVVVV" default="0" minOut="10">
+        <splitVal highCV="208" upperMask="VVVVVVVV"/>
     <label>Off Time A9</label>
     <label xml:lang="de">Ab-zeit A9</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A9" CV="210" mask="XVVVVVVV" default="0" minOut="10">
+      <variable item="Number Pulses A9" CV="210" mask="XVVVVVVV" default="0" minOut="10">
     <decVal max="127"/>
     <label>Number Pulses A9</label>
     <label xml:lang="de">Anzahl der Pulse A9</label>
@@ -956,7 +956,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A10											 -->
+    <!-- CVs for output A10 -->
   <variable item="Dimming Off A10" CV="211" mask="XVVVVVVV" default="0" minOut="11">
     <decVal max="100"/>
     <label>Dimming Off A10</label>
@@ -971,7 +971,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A10" CV="212" mask="VVVVVVVV" default="100" minOut="11">
+    <variable item="Dimming On A10" CV="212" mask="VVVVVVVV" default="100" minOut="11">
     <decVal max="100"/>
     <label>Dimming On A10</label>
     <label xml:lang="de">Dimmung Ein A10</label>
@@ -1020,21 +1020,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A10" CV="217" mask="VVVVVVVV" default="0" minOut="11">
-		<splitVal highCV="216" upperMask="VVVVVVVV"/>
+    <variable item="On Time A10" CV="217" mask="VVVVVVVV" default="0" minOut="11">
+        <splitVal highCV="216" upperMask="VVVVVVVV"/>
     <label>On Time A10</label>
     <label xml:lang="de">An-zeit A10</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A10" CV="219" mask="VVVVVVVV" default="0" minOut="11">
-		<splitVal highCV="218" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A10" CV="219" mask="VVVVVVVV" default="0" minOut="11">
+        <splitVal highCV="218" upperMask="VVVVVVVV"/>
     <label>Off Time A10</label>
     <label xml:lang="de">Ab-zeit A10</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A10" CV="220" mask="XVVVVVVV" default="0" minOut="11">
+      <variable item="Number Pulses A10" CV="220" mask="XVVVVVVV" default="0" minOut="11">
     <decVal max="127"/>
     <label>Number Pulses A10</label>
     <label xml:lang="de">Anzahl der Pulse A10</label>
@@ -1048,7 +1048,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A11											 -->
+    <!-- CVs for output A11 -->
   <variable item="Dimming Off A11" CV="221" mask="XVVVVVVV" default="0" minOut="12">
     <decVal max="100"/>
     <label>Dimming Off A11</label>
@@ -1063,7 +1063,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A11" CV="222" mask="VVVVVVVV" default="100" minOut="12">
+    <variable item="Dimming On A11" CV="222" mask="VVVVVVVV" default="100" minOut="12">
     <decVal max="100"/>
     <label>Dimming On A11</label>
     <label xml:lang="de">Dimmung Ein A11</label>
@@ -1112,21 +1112,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A11" CV="227" mask="VVVVVVVV" default="0" minOut="12">
-		<splitVal highCV="226" upperMask="VVVVVVVV"/>
+    <variable item="On Time A11" CV="227" mask="VVVVVVVV" default="0" minOut="12">
+        <splitVal highCV="226" upperMask="VVVVVVVV"/>
     <label>On Time A11</label>
     <label xml:lang="de">An-zeit A11</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A11" CV="229" mask="VVVVVVVV" default="0" minOut="12">
-		<splitVal highCV="228" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A11" CV="229" mask="VVVVVVVV" default="0" minOut="12">
+        <splitVal highCV="228" upperMask="VVVVVVVV"/>
     <label>Off Time A11</label>
     <label xml:lang="de">Ab-zeit A11</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A11" CV="230" mask="XVVVVVVV" default="0" minOut="12">
+      <variable item="Number Pulses A11" CV="230" mask="XVVVVVVV" default="0" minOut="12">
     <decVal max="127"/>
     <label>Number Pulses A11</label>
     <label xml:lang="de">Anzahl der Pulse A11</label>
@@ -1140,7 +1140,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A12											 -->
+    <!-- CVs for output A12 -->
   <variable item="Dimming Off A12" CV="231" mask="XVVVVVVV" default="0" minOut="13">
     <decVal max="100"/>
     <label>Dimming Off A12</label>
@@ -1155,7 +1155,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A12" CV="232" mask="VVVVVVVV" default="100" minOut="13">
+    <variable item="Dimming On A12" CV="232" mask="VVVVVVVV" default="100" minOut="13">
     <decVal max="100"/>
     <label>Dimming On A12</label>
     <label xml:lang="de">Dimmung Ein A12</label>
@@ -1204,21 +1204,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A12" CV="237" mask="VVVVVVVV" default="0" minOut="13">
-		<splitVal highCV="236" upperMask="VVVVVVVV"/>
+    <variable item="On Time A12" CV="237" mask="VVVVVVVV" default="0" minOut="13">
+        <splitVal highCV="236" upperMask="VVVVVVVV"/>
     <label>On Time A12</label>
     <label xml:lang="de">An-zeit A12</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A12" CV="239" mask="VVVVVVVV" default="0" minOut="13">
-		<splitVal highCV="238" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A12" CV="239" mask="VVVVVVVV" default="0" minOut="13">
+        <splitVal highCV="238" upperMask="VVVVVVVV"/>
     <label>Off Time A12</label>
     <label xml:lang="de">Ab-zeit A12</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A12" CV="240" mask="XVVVVVVV" default="0" minOut="13">
+      <variable item="Number Pulses A12" CV="240" mask="XVVVVVVV" default="0" minOut="13">
     <decVal max="127"/>
     <label>Number Pulses A12</label>
     <label xml:lang="de">Anzahl der Pulse A12</label>
@@ -1232,7 +1232,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A13											 -->
+    <!-- CVs for output A13 -->
   <variable item="Dimming Off A13" CV="241" mask="XVVVVVVV" default="0" minOut="14">
     <decVal max="100"/>
     <label>Dimming Off A13</label>
@@ -1247,7 +1247,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A13" CV="242" mask="VVVVVVVV" default="100" minOut="14">
+    <variable item="Dimming On A13" CV="242" mask="VVVVVVVV" default="100" minOut="14">
     <decVal max="100"/>
     <label>Dimming On A13</label>
     <label xml:lang="de">Dimmung Ein A13</label>
@@ -1296,21 +1296,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A13" CV="247" mask="VVVVVVVV" default="0" minOut="14">
-		<splitVal highCV="246" upperMask="VVVVVVVV"/>
+    <variable item="On Time A13" CV="247" mask="VVVVVVVV" default="0" minOut="14">
+        <splitVal highCV="246" upperMask="VVVVVVVV"/>
     <label>On Time A13</label>
     <label xml:lang="de">An-zeit A13</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A13" CV="249" mask="VVVVVVVV" default="0" minOut="14">
-		<splitVal highCV="248" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A13" CV="249" mask="VVVVVVVV" default="0" minOut="14">
+        <splitVal highCV="248" upperMask="VVVVVVVV"/>
     <label>Off Time A13</label>
     <label xml:lang="de">Ab-zeit A13</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A13" CV="250" mask="XVVVVVVV" default="0" minOut="14">
+      <variable item="Number Pulses A13" CV="250" mask="XVVVVVVV" default="0" minOut="14">
     <decVal max="127"/>
     <label>Number Pulses A13</label>
     <label xml:lang="de">Anzahl der Pulse A13</label>
@@ -1324,7 +1324,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A14											 -->
+    <!-- CVs for output A14 -->
   <variable item="Dimming Off A14" CV="251" mask="XVVVVVVV" default="0" minOut="15">
     <decVal max="100"/>
     <label>Dimming Off A14</label>
@@ -1339,7 +1339,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A14" CV="252" mask="VVVVVVVV" default="100" minOut="15">
+    <variable item="Dimming On A14" CV="252" mask="VVVVVVVV" default="100" minOut="15">
     <decVal max="100"/>
     <label>Dimming On A14</label>
     <label xml:lang="de">Dimmung Ein A14</label>
@@ -1388,21 +1388,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A14" CV="257" mask="VVVVVVVV" default="0" minOut="15">
-		<splitVal highCV="256" upperMask="VVVVVVVV"/>
+    <variable item="On Time A14" CV="257" mask="VVVVVVVV" default="0" minOut="15">
+        <splitVal highCV="256" upperMask="VVVVVVVV"/>
     <label>On Time A14</label>
     <label xml:lang="de">An-zeit A14</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A14" CV="259" mask="VVVVVVVV" default="0" minOut="15">
-		<splitVal highCV="258" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A14" CV="259" mask="VVVVVVVV" default="0" minOut="15">
+        <splitVal highCV="258" upperMask="VVVVVVVV"/>
     <label>Off Time A14</label>
     <label xml:lang="de">Ab-zeit A14</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A14" CV="260" mask="XVVVVVVV" default="0" minOut="15">
+      <variable item="Number Pulses A14" CV="260" mask="XVVVVVVV" default="0" minOut="15">
     <decVal max="127"/>
     <label>Number Pulses A14</label>
     <label xml:lang="de">Anzahl der Pulse A14</label>
@@ -1416,7 +1416,7 @@
     <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for output A15											 -->
+    <!-- CVs for output A15 -->
   <variable item="Dimming Off A15" CV="261" mask="XVVVVVVV" default="0" minOut="16">
     <decVal max="100"/>
     <label>Dimming Off A15</label>
@@ -1431,7 +1431,7 @@
     <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="Dimming On A15" CV="262" mask="VVVVVVVV" default="100" minOut="16">
+    <variable item="Dimming On A15" CV="262" mask="VVVVVVVV" default="100" minOut="16">
     <decVal max="100"/>
     <label>Dimming On A15</label>
     <label xml:lang="de">Dimmung Ein A15</label>
@@ -1480,21 +1480,21 @@
     <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="On Time A15" CV="267" mask="VVVVVVVV" default="0" minOut="16">
-		<splitVal highCV="266" upperMask="VVVVVVVV"/>
+    <variable item="On Time A15" CV="267" mask="VVVVVVVV" default="0" minOut="16">
+        <splitVal highCV="266" upperMask="VVVVVVVV"/>
     <label>On Time A15</label>
     <label xml:lang="de">An-zeit A15</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	<variable item="Off Time A15" CV="269" mask="VVVVVVVV" default="0" minOut="16">
-		<splitVal highCV="268" upperMask="VVVVVVVV"/>
+    <variable item="Off Time A15" CV="269" mask="VVVVVVVV" default="0" minOut="16">
+        <splitVal highCV="268" upperMask="VVVVVVVV"/>
     <label>Off Time A15</label>
     <label xml:lang="de">Ab-zeit A15</label>
     <tooltip>in 1/100 seconds</tooltip>
     <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
   </variable>
-	  <variable item="Number Pulses A15" CV="270" mask="XVVVVVVV" default="0" minOut="16">
+      <variable item="Number Pulses A15" CV="270" mask="XVVVVVVV" default="0" minOut="16">
     <decVal max="127"/>
     <label>Number Pulses A15</label>
     <label xml:lang="de">Anzahl der Pulse A15</label>

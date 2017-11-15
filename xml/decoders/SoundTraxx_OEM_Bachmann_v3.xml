@@ -216,20 +216,20 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <!-- Function Mapping follows -->
-      <!--		<variable label="FL(r) controls Backup Light" CV="34" mask="XXXXXXVX"
-			item="FL(r) controls output 2" minOut="2" default="1">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
+      <!-- <variable label="FL(r) controls Backup Light" CV="34" mask="XXXXXXVX"
+            item="FL(r) controls output 2" minOut="2" default="1">
+            <enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
+        </variable>
 
-		<variable label="F7 controls output Dimming" CV="41" mask="XXXVXXXX"
-			default="1">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
+        <variable label="F7 controls output Dimming" CV="41" mask="XXXVXXXX"
+            default="1">
+            <enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
+        </variable>
 
-		<variable label="F11 controls output Braking" CV="45" mask="XVXXXXXX"
-			default="1" minFn="11">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
+        <variable label="F11 controls output Braking" CV="45" mask="XVXXXXXX"
+            default="1" minFn="11">
+            <enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
+        </variable>
 -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

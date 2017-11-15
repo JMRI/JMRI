@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$	-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -36,23 +36,23 @@
   <!-- Specific for Qdecoder accessory decoder -->
   <!-- Switching modes for motors and switches with 2 connections  -->
    <enumChoice choice="[20]" value="20">
-		<choice>[20] Switch (magnetic) 1/4 sec.</choice>
-		<choice xml:lang="de">[20] Weiche (magnetish) 1/4 sec.</choice>
+        <choice>[20] Switch (magnetic) 1/4 sec.</choice>
+        <choice xml:lang="de">[20] Weiche (magnetish) 1/4 sec.</choice>
   </enumChoice>
   <enumChoice choice="[21]" value="21">
-		<choice>[21] Switch (magnetic) 1/2 sec.</choice>
-		<choice xml:lang="de">[21] Weiche (magnetish) 1/2 sec.</choice>
+        <choice>[21] Switch (magnetic) 1/2 sec.</choice>
+        <choice xml:lang="de">[21] Weiche (magnetish) 1/2 sec.</choice>
   </enumChoice>
   <enumChoice choice="[22]" value="22">
-		<choice>[22] Switch (magnetic) 1 sec.</choice>
-		<choice xml:lang="de">[22] Weiche (magnetish) 1 sec.</choice>
+        <choice>[22] Switch (magnetic) 1 sec.</choice>
+        <choice xml:lang="de">[22] Weiche (magnetish) 1 sec.</choice>
   </enumChoice>
   <enumChoice choice="[23]" value="23">
-		<choice>[23] Switch (magnetic) 2 sec.</choice>
-		<choice xml:lang="de">[23] Weiche (magnetish) 2 sec.</choice>
+        <choice>[23] Switch (magnetic) 2 sec.</choice>
+        <choice xml:lang="de">[23] Weiche (magnetish) 2 sec.</choice>
   </enumChoice>
   <enumChoice choice="[24]" value="24">
-		<choice>[24] DCC switch off (magnetic)</choice>
-		<choice xml:lang="de">[24] DCC schaltbetrieb (magnetish)</choice>
+        <choice>[24] DCC switch off (magnetic)</choice>
+        <choice xml:lang="de">[24] DCC schaltbetrieb (magnetish)</choice>
   </enumChoice>
 </enumChoiceGroup>

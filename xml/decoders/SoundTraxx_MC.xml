@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20110216"/>
   <version author="Michael Mosher" version="2" lastUpdated="20151029"/>
-  <!-- version 1	Based on the "Soundtraxx_Tsu_Diesel by Jack Shall 									-->
-  <!-- version 2	Fixed function mapping and use of more external includes							-->
+  <!-- version 1 Based on the "Soundtraxx_Tsu_Diesel by Jack Shall -->
+  <!-- version 2 Fixed function mapping and use of more external includes -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="MC Motor Decoders" mfg="SoundTraxx (Throttle-Up)">
@@ -137,7 +137,7 @@
         <label>Speed Table Selection</label>
       </variable>
       <!-- CV=29 -->
-	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
@@ -266,78 +266,78 @@
           <value>0</value>
         </qualifier>
           <!-- begin normal function group 2-3 -->
-		  <variable CV="39" mask="XXXXXXVX" item="F5 controls output 4" minOut="1" default="1">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F5 controls output FX5</label>
-		  </variable>
-		  <variable CV="39" mask="XXXXXVXX" item="F5 controls output 5" minOut="2" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F5 controls output FX6</label>
-		  </variable>
-		  <variable item="F5 controls output 6" CV="39" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F5 controls output Dimmer</label>
-		  </variable>
-		  <variable CV="40" mask="XXXXXXVX" item="F6 controls output 4" minOut="1" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F6 controls output FX5</label>
-		  </variable>
-		  <variable CV="40" mask="XXXXXVXX" item="F6 controls output 5" minOut="2" default="1">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F6 controls output FX6</label>
-		  </variable>
-		  <variable item="F6 controls output 6" CV="40" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F6 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F7 controls output 6" CV="41" mask="XXXVXXXX" default="1">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F7 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F7 controls output 7" CV="41" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F7 controls output Brakes</label>
-		  </variable>
-		  <variable item="F8 controls output 6" CV="42" mask="XXXVXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F8 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F8 controls output 7" CV="42" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F8 controls output Brakes</label>
-		  </variable>
-		  <variable item="F9 controls output 6" CV="43" mask="XXXVXXXX" default="0" minFn="9">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F9 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F9 controls output 7" CV="43" mask="VXXXXXXX" default="0" minFn="9">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F9 controls output Brakes</label>
-		  </variable>
-		  <variable item="F10 controls output 6" CV="44" mask="XXXXVXXX" default="0" minFn="10">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F10 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F10 controls output 7" CV="44" mask="XVXXXXXX" default="0" minFn="10">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F10 controls output Brakes</label>
-		  </variable>
-		  <variable item="F11 controls output 6" CV="45" mask="XXXXVXXX" default="0" minFn="11">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F11 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F11 controls output 7" CV="45" mask="XVXXXXXX" default="1" minFn="11">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F11 controls output Brakes</label>
-		  </variable>
-		  <variable item="F12 controls output 6" CV="46" mask="XXXXVXXX" default="0" minFn="12">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F12 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F12 controls output 7" CV="46" mask="XVXXXXXX" default="0" minFn="12">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F12 controls output Brakes</label>
-		  </variable>
+          <variable CV="39" mask="XXXXXXVX" item="F5 controls output 4" minOut="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F5 controls output FX5</label>
+          </variable>
+          <variable CV="39" mask="XXXXXVXX" item="F5 controls output 5" minOut="2" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F5 controls output FX6</label>
+          </variable>
+          <variable item="F5 controls output 6" CV="39" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F5 controls output Dimmer</label>
+          </variable>
+          <variable CV="40" mask="XXXXXXVX" item="F6 controls output 4" minOut="1" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F6 controls output FX5</label>
+          </variable>
+          <variable CV="40" mask="XXXXXVXX" item="F6 controls output 5" minOut="2" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F6 controls output FX6</label>
+          </variable>
+          <variable item="F6 controls output 6" CV="40" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F6 controls output Dimmer</label>
+          </variable>
+          <variable item="F7 controls output 6" CV="41" mask="XXXVXXXX" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F7 controls output Dimmer</label>
+          </variable>
+          <variable item="F7 controls output 7" CV="41" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F7 controls output Brakes</label>
+          </variable>
+          <variable item="F8 controls output 6" CV="42" mask="XXXVXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F8 controls output Dimmer</label>
+          </variable>
+          <variable item="F8 controls output 7" CV="42" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F8 controls output Brakes</label>
+          </variable>
+          <variable item="F9 controls output 6" CV="43" mask="XXXVXXXX" default="0" minFn="9">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F9 controls output Dimmer</label>
+          </variable>
+          <variable item="F9 controls output 7" CV="43" mask="VXXXXXXX" default="0" minFn="9">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F9 controls output Brakes</label>
+          </variable>
+          <variable item="F10 controls output 6" CV="44" mask="XXXXVXXX" default="0" minFn="10">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F10 controls output Dimmer</label>
+          </variable>
+          <variable item="F10 controls output 7" CV="44" mask="XVXXXXXX" default="0" minFn="10">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F10 controls output Brakes</label>
+          </variable>
+          <variable item="F11 controls output 6" CV="45" mask="XXXXVXXX" default="0" minFn="11">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F11 controls output Dimmer</label>
+          </variable>
+          <variable item="F11 controls output 7" CV="45" mask="XVXXXXXX" default="1" minFn="11">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F11 controls output Brakes</label>
+          </variable>
+          <variable item="F12 controls output 6" CV="46" mask="XXXXVXXX" default="0" minFn="12">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F12 controls output Dimmer</label>
+          </variable>
+          <variable item="F12 controls output 7" CV="46" mask="XVXXXXXX" default="0" minFn="12">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F12 controls output Brakes</label>
+          </variable>
         <!-- end normal function group 2-3 -->
       </variables>
       <variables>
@@ -347,78 +347,78 @@
           <value>1</value>
         </qualifier>
         <!-- begin exchanged function group 2-3 -->
-		  <variable CV="39" mask="XXXXXXVX" item="F9 controls output 4(alt)" minOut="1" default="1">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F9 controls output FX5</label>
-		  </variable>
-		  <variable CV="39" mask="XXXXXVXX" item="F9 controls output 5(alt)" minOut="2" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F9 controls output FX6</label>
-		  </variable>
-		  <variable item="F9 controls output 6(alt)" CV="39" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F9 controls output Dimmer</label>
-		  </variable>
-		  <variable CV="40" mask="XXXXXXVX" item="F10 controls output 4(alt)" minOut="1" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F10 controls output FX5</label>
-		  </variable>
-		  <variable CV="40" mask="XXXXXVXX" item="F10 controls output 5(alt)" minOut="2" default="1">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F10 controls output FX6</label>
-		  </variable>
-		  <variable item="F10 controls output 6(alt)" CV="40" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F10 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F11 controls output 6(alt)" CV="41" mask="XXXVXXXX" default="1">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F11 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F11 controls output 7(alt)" CV="41" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F11 controls output Brakes</label>
-		  </variable>
-		  <variable item="F12 controls output 6(alt)" CV="42" mask="XXXVXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F12 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F12 controls output 7(alt)" CV="42" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F12 controls output Brakes</label>
-		  </variable>
-		  <variable item="F5 controls output 6(alt)" CV="43" mask="XXXVXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F5 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F5 controls output 7(alt)" CV="43" mask="VXXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F5 controls output Brakes</label>
-		  </variable>
-		  <variable item="F6 controls output 6(alt)" CV="44" mask="XXXXVXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F6 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F6 controls output 7(alt)" CV="44" mask="XVXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F6 controls output Brakes</label>
-		  </variable>
-		  <variable item="F7 controls output 6(alt)" CV="45" mask="XXXXVXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F7 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F7 controls output 7(alt)" CV="45" mask="XVXXXXXX" default="1">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F7 controls output Brakes</label>
-		  </variable>
-		  <variable item="F8 controls output 6(alt)" CV="46" mask="XXXXVXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F8 controls output Dimmer</label>
-		  </variable>
-		  <variable item="F8 controls output 7(alt)" CV="46" mask="XVXXXXXX" default="0">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-			<label>F8 controls output Brakes</label>
-		  </variable>
+          <variable CV="39" mask="XXXXXXVX" item="F9 controls output 4(alt)" minOut="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F9 controls output FX5</label>
+          </variable>
+          <variable CV="39" mask="XXXXXVXX" item="F9 controls output 5(alt)" minOut="2" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F9 controls output FX6</label>
+          </variable>
+          <variable item="F9 controls output 6(alt)" CV="39" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F9 controls output Dimmer</label>
+          </variable>
+          <variable CV="40" mask="XXXXXXVX" item="F10 controls output 4(alt)" minOut="1" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F10 controls output FX5</label>
+          </variable>
+          <variable CV="40" mask="XXXXXVXX" item="F10 controls output 5(alt)" minOut="2" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F10 controls output FX6</label>
+          </variable>
+          <variable item="F10 controls output 6(alt)" CV="40" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F10 controls output Dimmer</label>
+          </variable>
+          <variable item="F11 controls output 6(alt)" CV="41" mask="XXXVXXXX" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F11 controls output Dimmer</label>
+          </variable>
+          <variable item="F11 controls output 7(alt)" CV="41" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F11 controls output Brakes</label>
+          </variable>
+          <variable item="F12 controls output 6(alt)" CV="42" mask="XXXVXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F12 controls output Dimmer</label>
+          </variable>
+          <variable item="F12 controls output 7(alt)" CV="42" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F12 controls output Brakes</label>
+          </variable>
+          <variable item="F5 controls output 6(alt)" CV="43" mask="XXXVXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F5 controls output Dimmer</label>
+          </variable>
+          <variable item="F5 controls output 7(alt)" CV="43" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F5 controls output Brakes</label>
+          </variable>
+          <variable item="F6 controls output 6(alt)" CV="44" mask="XXXXVXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F6 controls output Dimmer</label>
+          </variable>
+          <variable item="F6 controls output 7(alt)" CV="44" mask="XVXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F6 controls output Brakes</label>
+          </variable>
+          <variable item="F7 controls output 6(alt)" CV="45" mask="XXXXVXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F7 controls output Dimmer</label>
+          </variable>
+          <variable item="F7 controls output 7(alt)" CV="45" mask="XVXXXXXX" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F7 controls output Brakes</label>
+          </variable>
+          <variable item="F8 controls output 6(alt)" CV="46" mask="XXXXVXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F8 controls output Dimmer</label>
+          </variable>
+          <variable item="F8 controls output 7(alt)" CV="46" mask="XVXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label>F8 controls output Brakes</label>
+          </variable>
           <!-- end exchanged function group 2-3 -->
       </variables>
       <!-- end exchangeable function groups -->

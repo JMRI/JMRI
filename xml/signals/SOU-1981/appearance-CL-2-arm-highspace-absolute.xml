@@ -37,28 +37,28 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-301.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-301.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Approach Diverging</aspectname>
       <show>yellow</show>
       <show>green</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-302.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-302.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-303.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-303.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-307.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-307.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -72,7 +72,7 @@
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-310.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-310.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -83,9 +83,9 @@
       <aspect>Stop</aspect>
     </danger>
 
-	<permissive>
-	  <aspect>Restricted Proceed</aspect>
-	</permissive>
+    <permissive>
+      <aspect>Restricted Proceed</aspect>
+    </permissive>
 
     <held>
       <aspect>Stop</aspect>
@@ -95,83 +95,83 @@
 
   <aspectMappings>
 
-	<aspectMapping>
-	  <advancedAspect>Clear</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach Diverging</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Advance Approach</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
-	  <ourAspect>Approach Slow</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach Slow</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach</advancedAspect>
-	  <ourAspect>Advance Approach</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Restricted Proceed</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Stop</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
   </aspectMappings>
 

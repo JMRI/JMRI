@@ -6,7 +6,7 @@
   <version author="Nigel Cliffe" version="0.1" lastUpdated="20130308"/>
   <decoder>
     <family name="Harman Signalist Accessory Decoders" mfg="Harman DCC">
-      <!--  <model model="SC1 version 0.18" numOuts="8" numFns="16" formFactor="HO" productID="V018">
+      <!-- <model model="SC1 version 0.18" numOuts="8" numFns="16" formFactor="HO" productID="V018">
         <versionCV lowVersionID="224" highVersionID="255"/>
         <output name="1" label="Output A"/>
         <output name="2" label="Output B"/>
@@ -17,9 +17,9 @@
         <output name="7" label="Output G"/>
         <output name="8" label="Output H"/>
       </model>
-	  -->
+ -->
       <model model="SC1 version 0.21" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57377">
-        <!-- possibly product ID will need to be both Hex numbers, ie. E021, which is decimal 57377  -->
+        <!-- possibly product ID will need to be both Hex numbers, ie. E021, which is decimal 57377 -->
         <!-- productID=33 should match Version=021Hex  <versionCV lowVersionID="21" highVersionID="22"/> -->
         <output name="1" label="Output A"/>
         <output name="2" label="Output B"/>
@@ -32,8 +32,8 @@
       </model>
       <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
         <!--productID=57379 should match Version=E023Hex
-			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35)
-			-->
+            Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35)
+ -->
         <output name="1" label="Output A"/>
         <output name="2" label="Output B"/>
         <output name="3" label="Output C"/>
@@ -98,20 +98,18 @@
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-7"/>
         <label>                    output A</label>
       </variable>
-      <!--
-	  <variable label="                    output G" CV="1" mask="XXVVVVVV" default="2" item="Decoder Lenz 2nd Address" tooltip="Range 8-2049" minOut="8">
+      <!-- <variable label="                    output G" CV="1" mask="XXVVVVVV" default="2" item="Decoder Lenz 2nd Address" tooltip="Range 8-2049" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="0"/>
       </variable>
-	  -->
+ -->
       <variable CV="1" mask="XXVVVVVV" default="1" item="Decoder Roco Base Address" tooltip="Range 1-2037">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3"/>
         <label>                    output A</label>
       </variable>
-      <!--
-      <variable label="                    output G" CV="1" mask="XXVVVVVV" default="2" item="Decoder Roco 2nd Address" tooltip="Range 8-2045" minOut="8">
+      <!-- <variable label="                    output G" CV="1" mask="XXVVVVVV" default="2" item="Decoder Roco 2nd Address" tooltip="Range 8-2045" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="4"/>
       </variable>
-	  -->
+ -->
       <!-- these calculate turnout (output mode) addresses for Lenz/Digitrax systems.  Roco and MERG use offsets of -3 to 0 -->
       <variable CV="1" mask="VVVVVVVV" default="1" item="Output Lenz Base Address" tooltip="Range 1-2043">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="-4"/>
@@ -127,7 +125,7 @@
       <variable label="                    outputs 7+8" CV="1" mask="VVVVVVVV" default="4" item="Output Lenz 4th Address" tooltip="Range 4-2046" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="-1"/>
       </variable>
-	  -->
+ -->
       <variable CV="1" mask="VVVVVVVV" default="1" item="Output Roco Base Address" tooltip="Range 1-2047">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="0"/>
         <label>                    output A</label>
@@ -142,7 +140,7 @@
       <variable label="                    outputs 7+8" CV="1" mask="VVVVVVVV" default="4" item="Output Roco 4th Address" tooltip="Range 4-2050" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="3"/>
       </variable>
-	  -->
+ -->
       <variable CV="29" mask="XVXXXXXX" item="Address Format" default="0" tooltip="Output mode recommended as device address equals accessory address">
         <enumVal>
           <enumChoice choice="Decoder Address Mode"/>
@@ -596,10 +594,10 @@
         <label>Firmware version</label>
       </variable>
       <!--  firmware version is actually CV112 and CV113, CV112 being usually value E0.  But a SplitVal with HEX formatting doesn't work.
-	  <variable label="Firmware sub-version" CV="113" readOnly="yes" default="0" item="User Id #1" tooltip="Firmware sub-version (read only)">
+      <variable label="Firmware sub-version" CV="113" readOnly="yes" default="0" item="User Id #1" tooltip="Firmware sub-version (read only)">
         <splitVal highCV="112" upperMask="VVVVVVVV" />
       </variable>
-	  -->
+ -->
       <!--  Variables 192 to 223 for 32 custom aspects, V023 (productID=57379) and later -->
       <variable item="CustAspect0.A" CV="192" mask="VXXXXXXX" minOut="8" include="57379">
         <enumVal>
@@ -2404,20 +2402,20 @@
       <row>
         <column>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Address Mode" format="offradiobutton" label="Select to use settings shown below"/>
           <label>
             <text>           To turn off, use Output Address Mode pane</text>
           </label>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
         </column>
       </row>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Decoder Address (1-511)"/>
       <label>
@@ -2430,7 +2428,7 @@
         <text>(*) NB. If using advanced signalling options, then Digitrax does not offset address and follows Roco numbers</text>
       </label>
       <label>
-        <text>    </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2444,7 +2442,7 @@
         </column>
         <column>
           <label>
-            <text>                  </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -2465,20 +2463,20 @@
       <row>
         <column>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Address Mode" format="onradiobutton" label="Select to use settings shown below"/>
           <label>
             <text>           To turn off, use Decoder Address Mode pane</text>
           </label>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
         </column>
       </row>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Output Mode Address (1-2047)"/>
       <label>
@@ -2491,7 +2489,7 @@
         <text>(*) NB. If using advanced signalling options, then Digitrax does not offset address and follows Roco numbers</text>
       </label>
       <label>
-        <text>    </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2505,7 +2503,7 @@
         </column>
         <column>
           <label>
-            <text>                  </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -2524,20 +2522,20 @@
     <name>Signal Settings</name>
     <column>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Signal Type"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>Toggle Mode is required for some systems, if in doubt, turn on. Duration is (x10 MilliSecs), with 0 = continuous</text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2560,7 +2558,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2577,7 +2575,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2600,7 +2598,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2617,7 +2615,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2640,7 +2638,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2657,7 +2655,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2680,7 +2678,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -2697,7 +2695,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Roco Momentary Mode" format="checkbox"/>
     </column>

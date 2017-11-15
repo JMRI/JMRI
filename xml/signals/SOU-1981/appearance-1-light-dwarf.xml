@@ -53,11 +53,11 @@
       <aspect>Stop</aspect>
     </danger>
 
-	<permissive>
-	  <aspect>Restricted Proceed</aspect>
-	</permissive>
+    <permissive>
+      <aspect>Restricted Proceed</aspect>
+    </permissive>
 
-	<held>
+    <held>
       <aspect>Stop</aspect>
     </held>
 
@@ -65,70 +65,70 @@
 
   <aspectMappings>
 
-	<aspectMapping>
-	  <advancedAspect>Clear</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach Diverging</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Advance Approach</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach Slow</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Approach</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Restricted Proceed</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted Proceed</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
-	<aspectMapping>
-	  <advancedAspect>Stop</advancedAspect>
-	  <ourAspect>Restricted Proceed</ourAspect>
-	</aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
 
   </aspectMappings>
 

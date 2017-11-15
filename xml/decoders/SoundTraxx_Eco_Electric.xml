@@ -125,7 +125,7 @@
                 <output name="9" label="Pantograph| ">
                     <label xml:lang="it">Pantografo| </label>
                 </output>
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="10" label="|"/> <!-- Not used for for this decoder -->
                 <output name="11" label="Dimming| ">
                     <label xml:lang="it">Smorzam| </label>
                 </output>
@@ -135,7 +135,7 @@
                 <output name="13" label="Stop|Bell">
                     <label xml:lang="it">Fermare|Campana</label>
                 </output>
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="14" label="|"/> <!-- Not used for for this decoder -->
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -160,7 +160,7 @@
                 <output name="9" label="Pantograph| ">
                     <label xml:lang="it">Pantografo| </label>
                 </output>
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="10" label="|"/> <!-- Not used for for this decoder -->
                 <output name="11" label="Dimming| ">
                     <label xml:lang="it">Smorzam| </label>
                 </output>
@@ -170,7 +170,7 @@
                 <output name="13" label="Stop|Bell">
                     <label xml:lang="it">Fermare|Campana</label>
                 </output>
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="14" label="|"/> <!-- Not used for for this decoder -->
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -195,7 +195,7 @@
                 <output name="9" label="Pantograph| ">
                     <label xml:lang="it">Pantografo| </label>
                 </output>
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="10" label="|"/> <!-- Not used for for this decoder -->
                 <output name="11" label="Dimming| ">
                     <label xml:lang="it">Smorzam| </label>
                 </output>
@@ -205,7 +205,7 @@
                 <output name="13" label="Stop|Bell">
                     <label xml:lang="it">Fermare|Campana</label>
                 </output>
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="14" label="|"/> <!-- Not used for for this decoder -->
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -230,7 +230,7 @@
                 <output name="9" label="Pantograph| ">
                     <label xml:lang="it">Pantografo| </label>
                 </output>
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="10" label="|"/> <!-- Not used for for this decoder -->
                 <output name="11" label="Dimming| ">
                     <label xml:lang="it">Smorzam| </label>
                 </output>
@@ -240,7 +240,7 @@
                 <output name="13" label="Stop|Bell">
                     <label xml:lang="it">Fermare|Campana</label>
                 </output>
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="14" label="|"/> <!-- Not used for for this decoder -->
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -265,7 +265,7 @@
                 <output name="9" label="Pantograph| ">
                     <label xml:lang="it">Pantografo| </label>
                 </output>
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="10" label="|"/> <!-- Not used for for this decoder -->
                 <output name="11" label="Dimming| ">
                     <label xml:lang="it">Smorzam| </label>
                 </output>
@@ -275,7 +275,7 @@
                 <output name="13" label="Stop|Bell">
                     <label xml:lang="it">Fermare|Campana</label>
                 </output>
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+                <output name="14" label="|"/> <!-- Not used for for this decoder -->
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>

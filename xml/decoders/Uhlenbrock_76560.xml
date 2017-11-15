@@ -31,7 +31,7 @@
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>
         <size length="22" width="15" height="3.8" units="mm"/>
-      </model>	
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -91,7 +91,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Function in Analog - A7</label>
         <label xml:lang="de">Funktion im Analogbetrieb - A7</label>
-      </variable>	
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -112,10 +112,10 @@
         <label>Speed Correction Reverse</label>
         <label xml:lang="de">Geschw.-korrektur rückwärts</label>
         <tooltip>Factor = Value/128</tooltip>
-      </variable>	
+      </variable>
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
-      <!-- CV49 bits 3-4 moved to CV12 in this decoder 			-->
+      <!-- CV49 bits 3-4 moved to CV12 in this decoder -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv12dataformat.xml"/>
       <!-- CV49 specific bits for this decoder-->
       <variable item="Braking End" CV="49" mask="XXXXXVXX">
@@ -145,7 +145,7 @@
         </enumVal>
         <label>Voltage divider load regulation EMF</label>
         <label xml:lang="de">Spannungsteiler Motorregelung EMK</label>
-      </variable>	
+      </variable>
       <!-- End CV49 specifics -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv51analog.xml"/>
       <variable item="EMF Option 1" CV="53" default="35">
@@ -154,12 +154,12 @@
         <label xml:lang="de">Wiederholrate der Motorregelung</label>
         <tooltip>Lower if the locomotive does not run smoothly - Value * 53 micro.s</tooltip>
         <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 53 micro.s</tooltip>
-      </variable>	
+      </variable>
       <variable item="EMF Static Config" CV="54" default="20">
         <decVal max="63"/>
         <label>Motor regulation P Constant</label>
         <label xml:lang="de">Motorregelung P-Konstante</label>
-      </variable>	
+      </variable>
       <variable item="EMF Dynamic Config" CV="55" default="10">
         <decVal max="63"/>
         <label>Motor regulation I Constant</label>
@@ -176,14 +176,14 @@
         <decVal max="63"/>
         <label>Motor regulation D Constant</label>
         <label xml:lang="de">Motorregelung D-Konstante</label>
-      </variable>	
+      </variable>
       <variable item="EMF Option 2" CV="58" default="12">
         <decVal max="63"/>
         <label>Time slot for AD measurement</label>
         <label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
         <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
         <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
-      </variable>	
+      </variable>
       <variable item="Short circuit supervision" CV="60" default="9" readOnly="yes">
         <decVal max="9"/>
         <label>Motor Short circuit supervision</label>
@@ -195,7 +195,7 @@
         <label>Shutdown Temperature</label>
         <label xml:lang="de">Abschalttemperatur</label>
         <tooltip>in °C, different with each decoder</tooltip>
-      </variable>	
+      </variable>
       <variable item="Lights Short circuit supervision" CV="62" default="249" readOnly="yes">
         <decVal max="255"/>
         <label>Lights Short circuit supervision</label>
@@ -208,7 +208,7 @@
         <label xml:lang="de">Geschw. am Ende Bremsstrecke</label>
         <tooltip>Valid when CV49 Bit 2=1 (Braking end) and Bit 7=1 (Braking analog)</tooltip>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>	  	
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
       <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
@@ -261,7 +261,7 @@
         <label xml:lang="de">Blinkgenerator Ausschaltzeit</label>
         <tooltip>in 100 ms steps</tooltip>
         <tooltip xml:lang="de">in 100ms Schritten</tooltip>
-      </variable>	
+      </variable>
       <variable item="Global lighting option 3" CV="111" default="5">
         <decVal/>
         <label>Blink Generator on time</label>
@@ -366,12 +366,12 @@
         <tooltip xml:lang="de">Wert * 100ms</tooltip>
       </variable>
       <variable item="Smoke generator option 1" CV="130" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>	
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Smoke generator operation - A1</label>
         <label xml:lang="de">Rauchgeneratorbetrieb - A1</label>
       </variable>
       <variable item="Smoke generator option 2" CV="130" mask="XVXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>	
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Smoke generator operation - A2</label>
         <label xml:lang="de">Rauchgeneratorbetrieb - A2</label>
       </variable>
@@ -396,7 +396,7 @@
         <decVal max="32"/>
         <label>Smoke gen. control PWM - Idle</label>
         <label xml:lang="de">Rauchgen. PWM-Leerlauf</label>
-      </variable>	
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="59" default="1">

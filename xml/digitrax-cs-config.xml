@@ -26,8 +26,8 @@
 
     <!-- Configureable Options for a DCS100 -->
     <options>
-	<group name="Device" >
-	<name xml:lang="it">Modalità</name>
+    <group name="Device" >
+    <name xml:lang="it">Modalità</name>
         <option name="Use this Command Station as a" >
         <name xml:lang="it">Usa questa Centrale come</name>
           <choice name="Power Booster">

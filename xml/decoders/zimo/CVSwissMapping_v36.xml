@@ -673,7 +673,7 @@
     <label xml:lang="it">Mappatur1 Svizzera Gruppo 10 A2 Retro</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 10 A2 vzad</label>
   </variable>
-	<variables>
+    <variables>
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>

@@ -19,14 +19,14 @@
   <version author="Michael Mosher" version="4" lastUpdated="20130703"/>
   <version author="Dave Heap" version="5" lastUpdated="20140401"/>
   <version author="Alain Le Marchand" version="6" lastUpdated="20140530"/>
-  <!-- This file contains the Tsunami definitions for Genesis OEM steam locomotives	-->
-  <!-- version 1	Based on the "SoundTraxx_Tsu_Steam.xml" Ver 5 file.						-->
-  <!-- version 2	Add Rule 17 bit to CV51 & 52 -->
-  <!-- version 3	Add FEF 4-8-4 and greater use of external includes -->
-  <!-- version 4	Add HO Challenger -->
-  <!-- version 5	Implement live function group exchange -->
-  <!-- version 6        Function labels according to Genesis mapping, Output names normalized with other TSU Steam -->
-  <!--                  Default values updated for N Challenger -->
+  <!-- This file contains the Tsunami definitions for Genesis OEM steam locomotives -->
+  <!-- version 1  Based on the "SoundTraxx_Tsu_Steam.xml" Ver 5 file. -->
+  <!-- version 2  Add Rule 17 bit to CV51 & 52 -->
+  <!-- version 3  Add FEF 4-8-4 and greater use of external includes -->
+  <!-- version 4  Add HO Challenger -->
+  <!-- version 5  Implement live function group exchange -->
+  <!-- version 6  Function labels according to Genesis mapping, Output names normalized with other TSU Steam -->
+  <!--            Default values updated for N Challenger -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.

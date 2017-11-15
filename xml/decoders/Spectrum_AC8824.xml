@@ -4434,12 +4434,12 @@
       <row>
         <column>
           <display item="Decoder Address" tooltip="set 9 bit accessory decoder address Range 1-510">
-				</display>
+                </display>
           <separator/>
           <display item="Low Address">
-				</display>
+                </display>
           <display item="High Address">
-				</display>
+                </display>
           <display item="Accessory Decoder config"/>
           <separator/>
           <label>
@@ -6659,15 +6659,15 @@
       <row>
         <column>
           <display item="S0MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S0MAXpos" label="Servo maximum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
         </column>
         <column>
           <display item="S0MINpos" format="hslider" label="" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S0MAXpos" format="hslider" label="" tooltip="Set upper limit of servo, default 180">
-					</display>
+                    </display>
         </column>
       </row>
       <separator/>
@@ -6698,15 +6698,15 @@
       <row>
         <column>
           <display item="S1MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S1MAXpos" label="Servo maximum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
         </column>
         <column>
           <display item="S1MINpos" format="hslider" label="" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S1MAXpos" format="hslider" label="" tooltip="Set upper limit of servo, default 180">
-					</display>
+                    </display>
         </column>
       </row>
       <separator/>
@@ -6737,15 +6737,15 @@
       <row>
         <column>
           <display item="S2MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S2MAXpos" label="Servo maximum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
         </column>
         <column>
           <display item="S2MINpos" format="hslider" label="" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S2MAXpos" format="hslider" label="" tooltip="Set upper limit of servo, default 180">
-					</display>
+                    </display>
         </column>
       </row>
       <separator/>
@@ -6776,15 +6776,15 @@
       <row>
         <column>
           <display item="S3MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S3MAXpos" label="Servo maximum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
         </column>
         <column>
           <display item="S3MINpos" format="hslider" label="" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S3MAXpos" format="hslider" label="" tooltip="Set upper limit of servo, default 180">
-					</display>
+                    </display>
         </column>
       </row>
       <separator/>
@@ -6815,15 +6815,15 @@
       <row>
         <column>
           <display item="S4MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S4MAXpos" label="Servo maximum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
         </column>
         <column>
           <display item="S4MINpos" format="hslider" label="" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S4MAXpos" format="hslider" label="" tooltip="Set upper limit of servo, default 180">
-					</display>
+                    </display>
         </column>
       </row>
       <separator/>
@@ -6854,15 +6854,15 @@
       <row>
         <column>
           <display item="S5MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S5MAXpos" label="Servo maximum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
         </column>
         <column>
           <display item="S5MINpos" format="hslider" label="" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S5MAXpos" format="hslider" label="" tooltip="Set upper limit of servo, default 180">
-					</display>
+                    </display>
         </column>
       </row>
       <separator/>
@@ -6893,15 +6893,15 @@
       <row>
         <column>
           <display item="S6MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S6MAXpos" label="Servo maximum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
         </column>
         <column>
           <display item="S6MINpos" format="hslider" label="" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S6MAXpos" format="hslider" label="" tooltip="Set upper limit of servo, default 180">
-					</display>
+                    </display>
         </column>
       </row>
       <separator/>
@@ -6932,15 +6932,15 @@
       <row>
         <column>
           <display item="S7MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S7MAXpos" label="Servo maximum position" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
         </column>
         <column>
           <display item="S7MINpos" format="hslider" label="" tooltip="Set lower limit of servo, default 16">
-					</display>
+                    </display>
           <display item="S7MAXpos" format="hslider" label="" tooltip="Set upper limit of servo, default 180">
-					</display>
+                    </display>
         </column>
       </row>
       <separator/>

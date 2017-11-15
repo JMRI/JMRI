@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$	-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,18 +34,18 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
-	<variable CV="62" item="Accessory Address Night Mode" default="1023">
-		<splitVal highCV="61" upperMask="XXXXXVVV" min="1"/>
-		<label>Accessory Address Night Mode</label>
-		<label xml:lang="de">Zubehöradresse Nachtbetrieb</label>
-		<tooltip>Accessory address for choosing day/night mode (1-2047)</tooltip>
-		<tooltip xml:lang="de">Zubehöradresse für die Umschaltung Tag-/Nachtbetrieb  (1-2047)</tooltip>
-	</variable>
-	<variable CV="63" item="Additional Dimming" default="50">
-		<decVal max="100"/>
-		<label xml:lang="de">zusätzlicher Dimmfaktor</label>
-		<label>Additional Dimming</label>
-		<tooltip xml:lang="de">(in %) zusätzlicher Dimmfaktor für Nachtbetrieb</tooltip>
-		<tooltip>(in %) Additional dimming factor for night mode</tooltip>
-	</variable>
+    <variable CV="62" item="Accessory Address Night Mode" default="1023">
+        <splitVal highCV="61" upperMask="XXXXXVVV" min="1"/>
+        <label>Accessory Address Night Mode</label>
+        <label xml:lang="de">Zubehöradresse Nachtbetrieb</label>
+        <tooltip>Accessory address for choosing day/night mode (1-2047)</tooltip>
+        <tooltip xml:lang="de">Zubehöradresse für die Umschaltung Tag-/Nachtbetrieb  (1-2047)</tooltip>
+    </variable>
+    <variable CV="63" item="Additional Dimming" default="50">
+        <decVal max="100"/>
+        <label xml:lang="de">zusätzlicher Dimmfaktor</label>
+        <label>Additional Dimming</label>
+        <tooltip xml:lang="de">(in %) zusätzlicher Dimmfaktor für Nachtbetrieb</tooltip>
+        <tooltip>(in %) Additional dimming factor for night mode</tooltip>
+    </variable>
 </variables>

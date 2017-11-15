@@ -24,7 +24,7 @@
         <surname>Jacobsen</surname>
       </personname>
     </author>
-	<author>
+    <author>
       <personname>
         <firstname>Bernd (Ba)</firstname>
         <surname>Wisotzki</surname>
@@ -59,55 +59,55 @@
   </revhistory>
   <!-- Add Your the "includes" here -->
   <variable CV="55" item="Global lighting option 1" default="255" tooltip="Sets intensity of output A (larger number = brighter light)">
-	<decVal min="0" max="255"/>
-	<label>Dimming Intensity, Outputs A (0-255)</label>
-	<label xml:lang="it">Intensità attenuazione Uscite A (0-255)</label>
-	<label xml:lang="de">Helligkeit an Ausgang A (0-255)</label>
-	<tooltip xml:lang="de">Helligkeit an Ausgang A (größer = heller)</tooltip>
+    <decVal min="0" max="255"/>
+    <label>Dimming Intensity, Outputs A (0-255)</label>
+    <label xml:lang="it">Intensità attenuazione Uscite A (0-255)</label>
+    <label xml:lang="de">Helligkeit an Ausgang A (0-255)</label>
+    <tooltip xml:lang="de">Helligkeit an Ausgang A (größer = heller)</tooltip>
     <label xml:lang="cs">Nastavení jasu, výstup A (0-255)</label>
     <tooltip xml:lang="cs">Nastavení jasu světel (vyšší číslo = vyšší jas)</tooltip>
     <label xml:lang="ca">regulació Intensitat, sortida A (0-255)</label>
     <tooltip xml:lang="ca">Intensitat de la sorida A (nombre major ==> més intensitat)</tooltip>
   </variable>
   <variable CV="56" item="Global lighting option 2" default="255" tooltip="Sets intensity of output B (larger number = brighter light)">
-	<decVal min="0" max="255"/>
-	<label>Dimming Intensity, Outputs B (0-255)</label>
-	<label xml:lang="it">Intensità attenuazione Uscite B (0-255)</label>
-	<label xml:lang="de">Helligkeit an Ausgang B (0-255)</label>
-	<tooltip xml:lang="de">Helligkeit an Ausgang B (größer = heller)</tooltip>
+    <decVal min="0" max="255"/>
+    <label>Dimming Intensity, Outputs B (0-255)</label>
+    <label xml:lang="it">Intensità attenuazione Uscite B (0-255)</label>
+    <label xml:lang="de">Helligkeit an Ausgang B (0-255)</label>
+    <tooltip xml:lang="de">Helligkeit an Ausgang B (größer = heller)</tooltip>
         <label xml:lang="cs">Nastavení jasu, výstup B (0-255)</label>
         <tooltip xml:lang="cs">Nastavení jasu světel (vyšší číslo = vyšší jas)</tooltip>
     <label xml:lang="ca">regulació Intensitat, sortida B (0-255)</label>
     <tooltip xml:lang="ca">Intensitat de la sorida B (nombre major ==> més intensitat)</tooltip>
   </variable>
   <variable CV="116" item="Global lighting option 3" default="255" minOut="3" tooltip="Sets intensity of output C (larger number = brighter light)">
-	<decVal min="0" max="255"/>
-	<label>Dimming Intensity, Output C (0-255)</label>
-	<label xml:lang="it">Intensità attenuazione Uscite C (0-255)</label>
-	<label xml:lang="de">Helligkeit an Ausgang C (0-255)</label>
-	<tooltip xml:lang="de">Helligkeit an Ausgang C (größer = heller)</tooltip>
+    <decVal min="0" max="255"/>
+    <label>Dimming Intensity, Output C (0-255)</label>
+    <label xml:lang="it">Intensità attenuazione Uscite C (0-255)</label>
+    <label xml:lang="de">Helligkeit an Ausgang C (0-255)</label>
+    <tooltip xml:lang="de">Helligkeit an Ausgang C (größer = heller)</tooltip>
         <label xml:lang="cs">Nastavení jasu, výstup C (0-255)</label>
         <tooltip xml:lang="cs">Nastavení jasu světel (vyšší číslo = vyšší jas)</tooltip>
      <label xml:lang="ca">regulació Intensitat, sortida C (0-255)</label>
     <tooltip xml:lang="ca">Intensitat de la sorida C (nombre major ==> més intensitat)</tooltip>
   </variable>
   <variable CV="117" item="Global lighting option 4" default="255" minOut="4" tooltip="Sets intensity of output D (larger number = brighter light)">
-	<decVal min="0" max="255"/>
-	<label>Dimming Intensity, Output D (0-255)</label>
-	<label xml:lang="it">Intensità attenuazione Uscite D (0-255)</label>
-	<label xml:lang="de">Helligkeit an Ausgang D (0-255)</label>
-	<tooltip xml:lang="de">Helligkeit an Ausgang D (größer = heller)</tooltip>
+    <decVal min="0" max="255"/>
+    <label>Dimming Intensity, Output D (0-255)</label>
+    <label xml:lang="it">Intensità attenuazione Uscite D (0-255)</label>
+    <label xml:lang="de">Helligkeit an Ausgang D (0-255)</label>
+    <tooltip xml:lang="de">Helligkeit an Ausgang D (größer = heller)</tooltip>
         <label xml:lang="cs">Nastavení jasu, výstup D (0-255)</label>
         <tooltip xml:lang="cs">Nastavení jasu světel (vyšší číslo = vyšší jas)</tooltip>
     <label xml:lang="ca">regulació Intensitat, sortida D (0-255)</label>
     <tooltip xml:lang="ca">Intensitat de la sorida D (nombre major ==> més intensitat)</tooltip>
   </variable>
   <variable CV="118" item="Global lighting option 5" default="255" minOut="5" tooltip="Sets intensity of output E (larger number = brighter light)">
-	<decVal min="0" max="255"/>
-	<label>Dimming Intensity, Output E (0-255)</label>
-	<label xml:lang="it">Intensità attenuazione Uscite E (0-255)</label>
-	<label xml:lang="de">Helligkeit an Ausgang E (0-255)</label>
-	<tooltip xml:lang="de">Helligkeit an Ausgang E (größer = heller)</tooltip>
+    <decVal min="0" max="255"/>
+    <label>Dimming Intensity, Output E (0-255)</label>
+    <label xml:lang="it">Intensità attenuazione Uscite E (0-255)</label>
+    <label xml:lang="de">Helligkeit an Ausgang E (0-255)</label>
+    <tooltip xml:lang="de">Helligkeit an Ausgang E (größer = heller)</tooltip>
     <label xml:lang="cs">Nastavení jasu, výstup E (0-255)</label>
     <tooltip xml:lang="cs">Nastavení jasu světel (vyšší číslo = vyšší jas)</tooltip>
     <label xml:lang="ca">regulació Intensitat, sortida E (0-255)</label>

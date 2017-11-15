@@ -336,7 +336,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-      <!--		<variable label="Address" CV="17" item="Extended Address"  -->
+      <!-- <variable label="Address" CV="17" item="Extended Address"  -->
       <variable CV="17" default="10000" item="Extended Address" comment="5 digit address (Range 00001-16383)">
         <longAddressVal/>
         <label>Long Address</label>

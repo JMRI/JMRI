@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$				-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -274,19 +274,19 @@
     <label xml:lang="de">AUX 6 Timer für Ausschlaten</label>
   </variable>
   <variable item="Function for dimmed lights" CV="131" default="1" tooltip="CV131: 0=>Off, 1-28=>F1-F8, 29=>F0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
-		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
-		<label xml:lang="fr">Fonction pour feux réduits</label>
-		<label xml:lang="de">Funktionszuordnung Abblendlicht</label>
+        <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+        <label xml:lang="fr">Fonction pour feux réduits</label>
+        <label xml:lang="de">Funktionszuordnung Abblendlicht</label>
   </variable>
   <variable item="Function for shunting speed" CV="132" default="1" tooltip="CV132: 0=>Off, 1-28=>F1-F8, 29=>F0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
-		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
-		<label xml:lang="fr">Fonction pour marche réduite</label>
-		<label xml:lang="de">Funktionszuordnung Rangiergang</label>
+        <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+        <label xml:lang="fr">Fonction pour marche réduite</label>
+        <label xml:lang="de">Funktionszuordnung Rangiergang</label>
   </variable>
   <variable item="Function to deactivate start delay" CV="133" default="1" tooltip="CV133: 0=>Off, 1-28=>F1-F8, 29=>F0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
-		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
-		<label xml:lang="fr">Fonction pour désactiver délai de départ</label>
-		<label xml:lang="de">Funktionszuordnung Verzögerung ausschalten</label>
+        <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+        <label xml:lang="fr">Fonction pour désactiver délai de départ</label>
+        <label xml:lang="de">Funktionszuordnung Verzögerung ausschalten</label>
   </variable>
 
 </variables>

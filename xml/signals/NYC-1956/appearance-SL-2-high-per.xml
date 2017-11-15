@@ -121,12 +121,12 @@
   </appearances>
 
   <specificappearances>
-  	<danger>
-  		<aspect>Stop and Proceed</aspect>
-  	</danger>
-  	<held>
-  		<aspect>Stop and Proceed</aspect>
-  	</held>
+      <danger>
+          <aspect>Stop and Proceed</aspect>
+      </danger>
+      <held>
+          <aspect>Stop and Proceed</aspect>
+      </held>
   </specificappearances>
 
   <aspectMappings>

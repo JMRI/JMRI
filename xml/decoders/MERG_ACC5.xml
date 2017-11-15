@@ -4,16 +4,16 @@
 <!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="ncliffe@btinternet.com" version="4d" lastUpdated="20120201"/>
-  <!--  Version 4d (beta) by Nigel Cliffe    -->
+  <!--  Version 4d (beta) by Nigel Cliffe -->
   <!--  Uses decoder indexed variables for address range setting
-			      Bug fixes over version 4c, separating the address ranges from other features,
-				  asking users to use two panels  (because the indexed variables break if
-				  used on a single panel due to the index CV controlling too many other features!)
-			-->
+                  Bug fixes over version 4c, separating the address ranges from other features,
+                  asking users to use two panels  (because the indexed variables break if
+                  used on a single panel due to the index CV controlling too many other features!)
+ -->
   <version author="jacobsen@mac.com" version="5" lastUpdated="20150628"/>
   <!-- Version 5  Using regular variable elements intead of ivariables -->
   <decoder>
-    <!--  lowVersionID="4" highVersionID="52"   -->
+    <!--  lowVersionID="4" highVersionID="52" -->
     <family name="ACC Decoders" mfg="MERG" comment="DCCACC5 is steady state MERG decoder.">
       <model model="DCCACC5 to V5.1" productID="51">
         <versionCV lowVersionID="4" highVersionID="51"/>
@@ -327,152 +327,152 @@
   </decoder>
   <!--
 <pane name="DCCACC5 Settings (old)">
-	<column>
-		<row>
-			<column>
-				<label label="CV1 to CV34          "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-			</column>
-			<column>
-				<label label="If requiring 8 independent addresses, set Dual Address to off, program an address" />
-				<label label="then set Dual Address to on and program the second address block" />
-				<label label="Lenz Toggle Mode (bits set) gives a toggle action for Lenz systems." />
-				<label label=" "/>
-			</column>
-		</row>
+    <column>
+        <row>
+            <column>
+                <label label="CV1 to CV34          "/>
+                <label label=" "/>
+                <label label=" "/>
+                <label label=" "/>
+            </column>
+            <column>
+                <label label="If requiring 8 independent addresses, set Dual Address to off, program an address" />
+                <label label="then set Dual Address to on and program the second address block" />
+                <label label="Lenz Toggle Mode (bits set) gives a toggle action for Lenz systems." />
+                <label label=" "/>
+            </column>
+        </row>
 
-		<row>
-			<column>
-				<label label=" "/>
-				<display item="Dual Address Mode" label="Dual Address Mode  "/>
-				<label label=" "/>
-				<label label="Addressing, enter decoder address or turnout address" />
-				<separator />
-				<label label=" "/>
-				<row>
-					<column>
-					<label label="Decoder Address (1-511)"/>
-					<display item="Decoder Address (1-511)" label="  "/>
-					<label label=" "/>
-					<label label=" "/>
-					<label label=" "/>
-					<label label=" "/>
-					<label label=" "/>
-					</column>
-					<column>
-					<label label="    Turnout Address in blocks"/>
-					<label label="    of 4, range 1-2024"/>
-					<display item="Turnout Address of Output 1 (1-2041)" label="    Output 1 or 5 " />
-					<display item="Turnout Address 2" label="    Output 2 or 6 " />
-					<display item="Turnout Address 3" label="    Output 3 or 7 " />
-					<display item="Turnout Address 4" label="    Output 4 or 8 " />
+        <row>
+            <column>
+                <label label=" "/>
+                <display item="Dual Address Mode" label="Dual Address Mode  "/>
+                <label label=" "/>
+                <label label="Addressing, enter decoder address or turnout address" />
+                <separator />
+                <label label=" "/>
+                <row>
+                    <column>
+                    <label label="Decoder Address (1-511)"/>
+                    <display item="Decoder Address (1-511)" label="  "/>
+                    <label label=" "/>
+                    <label label=" "/>
+                    <label label=" "/>
+                    <label label=" "/>
+                    <label label=" "/>
+                    </column>
+                    <column>
+                    <label label="    Turnout Address in blocks"/>
+                    <label label="    of 4, range 1-2024"/>
+                    <display item="Turnout Address of Output 1 (1-2041)" label="    Output 1 or 5 " />
+                    <display item="Turnout Address 2" label="    Output 2 or 6 " />
+                    <display item="Turnout Address 3" label="    Output 3 or 7 " />
+                    <display item="Turnout Address 4" label="    Output 4 or 8 " />
 
-					</column>
-				</row>
-				<label label=" "/>
+                    </column>
+                </row>
+                <label label=" "/>
 
-				<label label="Output operation, select / deselect as required" />
-				<separator/>
-				<label label=" "/>
-				<row>
-				<column>
-					<display item="Output Active bit 0" format="checkbox" label="Output Active   1" />
-					<label label=" "/>
-					<display item="Invert bit 0" format="checkbox" label="Invert Outputs:   1" />
-				</column>
-				<column>
-					<display item="Output Active bit 1" format="checkbox" label="  2" />
-					<label label=" "/>
-					<display item="Invert bit 1" format="checkbox" label="  2" />
-				</column>
-				<column>
-					<display item="Output Active bit 2" format="checkbox" label="  3" />
-					<label label=" "/>
-					<display item="Invert bit 2" format="checkbox" label="  3" />
-				</column>
-				<column>
-					<display item="Output Active bit 3" format="checkbox" label="  4" />
-					<label label=" "/>
-					<display item="Invert bit 3" format="checkbox" label="  4" />
-				</column>
-				<column>
-					<display item="Output Active bit 4" format="checkbox" label="  5" />
-					<label label=" "/>
-					<display item="Invert bit 4" format="checkbox" label="  5" />
-				</column>
-				<column>
-					<display item="Output Active bit 5" format="checkbox" label="  6" />
-					<label label=" "/>
-					<display item="Invert bit 5" format="checkbox" label="  6" />
-				</column>
-				<column>
-					<display item="Output Active bit 6" format="checkbox" label="  7" />
-					<label label=" "/>
-					<display item="Invert bit 6" format="checkbox" label="  7" />
-				</column>
-				<column>
-					<display item="Output Active bit 7" format="checkbox" label="  8" />
-					<label label=" "/>
-					<display item="Invert bit 7" format="checkbox" label="  8" />
-				</column>
-				</row>
-				<label label=" "/>
-
-
-				<label label=" "/>
+                <label label="Output operation, select / deselect as required" />
+                <separator/>
+                <label label=" "/>
+                <row>
+                <column>
+                    <display item="Output Active bit 0" format="checkbox" label="Output Active   1" />
+                    <label label=" "/>
+                    <display item="Invert bit 0" format="checkbox" label="Invert Outputs:   1" />
+                </column>
+                <column>
+                    <display item="Output Active bit 1" format="checkbox" label="  2" />
+                    <label label=" "/>
+                    <display item="Invert bit 1" format="checkbox" label="  2" />
+                </column>
+                <column>
+                    <display item="Output Active bit 2" format="checkbox" label="  3" />
+                    <label label=" "/>
+                    <display item="Invert bit 2" format="checkbox" label="  3" />
+                </column>
+                <column>
+                    <display item="Output Active bit 3" format="checkbox" label="  4" />
+                    <label label=" "/>
+                    <display item="Invert bit 3" format="checkbox" label="  4" />
+                </column>
+                <column>
+                    <display item="Output Active bit 4" format="checkbox" label="  5" />
+                    <label label=" "/>
+                    <display item="Invert bit 4" format="checkbox" label="  5" />
+                </column>
+                <column>
+                    <display item="Output Active bit 5" format="checkbox" label="  6" />
+                    <label label=" "/>
+                    <display item="Invert bit 5" format="checkbox" label="  6" />
+                </column>
+                <column>
+                    <display item="Output Active bit 6" format="checkbox" label="  7" />
+                    <label label=" "/>
+                    <display item="Invert bit 6" format="checkbox" label="  7" />
+                </column>
+                <column>
+                    <display item="Output Active bit 7" format="checkbox" label="  8" />
+                    <label label=" "/>
+                    <display item="Invert bit 7" format="checkbox" label="  8" />
+                </column>
+                </row>
+                <label label=" "/>
 
 
-			</column>
+                <label label=" "/>
 
-			<column>
-				<label label="                                     "/>
-			</column>
 
-			<column>
+            </column>
 
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label="Output Duration and Toggle Mode"/>
-				<separator />
-				<row>
-				<column>
-					<label label= "Duration of Output" />
-					<display item="A Output (x10) Millisecs" label= "1+2 " />
-					<display item="B Output (x10) Millisecs" label= "3+4 "/>
-					<display item="C Output (x10) Millisecs" label= "5+6 " />
-					<display item="D Output (x10) Millisecs" label= "7+8 " />
-					<label label= "(x10 MilliSecs)" />
-					<label label= "0 = continous output"/>
-				</column>
-				<column>
-					<label label= "         " />
-				</column>
-				<column>
-					<label label ="Toggle Mode Outputs" />
-					<display item="Toggle Mode output 1" format="checkbox" label="1+2" />
-					<display item="Toggle Mode output 2" format="checkbox" label="3+4" />
-					<display item="Toggle Mode output 3" format="checkbox" label="5+6" />
-					<display item="Toggle Mode output 4" format="checkbox" label="7+8" />
-					<label label ="Not used in dual"/>
-					<label label ="address mode"/>
-					</column>
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<label label= "         " />
-				<label label= "         " />
-				<label label="Read Only Information "/>
-				<separator />
-				<display item="Configuration" />
-				<display item="Decoder Version" label="Decoder Version"/>
-				<display item="Manufacturer" label="Manufacturer"/>
-			</column>
+            <column>
+                <label label="                                     "/>
+            </column>
 
-		</row>
-	</column>
+            <column>
+
+                <label label=" "/>
+                <label label=" "/>
+                <label label=" "/>
+                <label label="Output Duration and Toggle Mode"/>
+                <separator />
+                <row>
+                <column>
+                    <label label= "Duration of Output" />
+                    <display item="A Output (x10) Millisecs" label= "1+2 " />
+                    <display item="B Output (x10) Millisecs" label= "3+4 "/>
+                    <display item="C Output (x10) Millisecs" label= "5+6 " />
+                    <display item="D Output (x10) Millisecs" label= "7+8 " />
+                    <label label= "(x10 MilliSecs)" />
+                    <label label= "0 = continous output"/>
+                </column>
+                <column>
+                    <label label= "         " />
+                </column>
+                <column>
+                    <label label ="Toggle Mode Outputs" />
+                    <display item="Toggle Mode output 1" format="checkbox" label="1+2" />
+                    <display item="Toggle Mode output 2" format="checkbox" label="3+4" />
+                    <display item="Toggle Mode output 3" format="checkbox" label="5+6" />
+                    <display item="Toggle Mode output 4" format="checkbox" label="7+8" />
+                    <label label ="Not used in dual"/>
+                    <label label ="address mode"/>
+                    </column>
+                </row>
+                <label label=" "/>
+                <label label=" "/>
+                <label label= "         " />
+                <label label= "         " />
+                <label label="Read Only Information "/>
+                <separator />
+                <display item="Configuration" />
+                <display item="Decoder Version" label="Decoder Version"/>
+                <display item="Manufacturer" label="Manufacturer"/>
+            </column>
+
+        </row>
+    </column>
 </pane>
 -->
   <pane>
@@ -709,7 +709,7 @@
             </column>
             <column>
               <label>
-                <text>         </text>
+                <text> </text>
               </label>
             </column>
             <column>

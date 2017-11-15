@@ -210,13 +210,13 @@
 
   <appearancefiles>
     <appearancefile href="appearance-CPL-High.xml"/>
-	<appearancefile href="appearance-CPL-High-permissive.xml"/>
-	<appearancefile href="appearance-CPL-Dwarf.xml"/>
-	<appearancefile href="appearance-Semaphore-3Arm.xml"/>
-	<appearancefile href="appearance-Semaphore-2Arm.xml"/>
-	<appearancefile href="appearance-Semaphore-1Arm.xml"/>
-	<appearancefile href="appearance-Semaphore-1Armwithmarker.xml"/>
-	<appearancefile href="appearance-Semaphore-1ArmDwarf.xml"/>
-	<appearancefile href="appearance-CPL-High-NJInternational.xml"/>
+    <appearancefile href="appearance-CPL-High-permissive.xml"/>
+    <appearancefile href="appearance-CPL-Dwarf.xml"/>
+    <appearancefile href="appearance-Semaphore-3Arm.xml"/>
+    <appearancefile href="appearance-Semaphore-2Arm.xml"/>
+    <appearancefile href="appearance-Semaphore-1Arm.xml"/>
+    <appearancefile href="appearance-Semaphore-1Armwithmarker.xml"/>
+    <appearancefile href="appearance-Semaphore-1ArmDwarf.xml"/>
+    <appearancefile href="appearance-CPL-High-NJInternational.xml"/>
   </appearancefiles>
 </aspecttable>

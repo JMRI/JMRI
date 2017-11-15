@@ -49,9 +49,9 @@
       <model model="QSI Magnum Steam" numFns="14" numOuts="0" productID="3010">
       </model>
       <model model="Q1 Pot" numFns="14" numOuts="0" productID="3048">
-	  </model>
+      </model>
       <model model="Q1 Reed" numFns="14" numOuts="0" productID="3049">
-	  </model>
+      </model>
       <model model="Austrains C35 Class 4-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="326">
         <output name="1" label="" connection="other"/>
         <output name="2" label="" connection="other"/>

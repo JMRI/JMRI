@@ -48,11 +48,11 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 129</reference>
-	  <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
+      <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-282.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
@@ -99,19 +99,19 @@
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-291-medium.gif</imagelink>
     </appearance>
 
-	<appearance>
-	  <aspectname>unlit</aspectname>
-	  <show>dark</show>
-	  <show>dark</show>
-	  <show>dark</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/dark.gif</imagelink>
-    </appearance>	
+    <appearance>
+      <aspectname>unlit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/dark.gif</imagelink>
+    </appearance>
 
   </appearances>
 
   <specificappearances>
 
-	<danger>
+    <danger>
       <aspect>Stop and Proceed</aspect>
     </danger>
 
@@ -119,9 +119,9 @@
       <aspect>Stop</aspect>
     </held>
 
-	<dark>
-	  <aspect>unlit</aspect>
-	</dark>
+    <dark>
+      <aspect>unlit</aspect>
+    </dark>
 
   </specificappearances>
 
@@ -136,7 +136,7 @@
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
@@ -146,20 +146,20 @@
       <ourAspect>Approach Limited</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-	</aspectMapping>
+    </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-	</aspectMapping>
+    </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
@@ -188,22 +188,22 @@
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
   </aspectMappings>

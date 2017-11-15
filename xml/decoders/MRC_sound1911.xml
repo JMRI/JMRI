@@ -21,14 +21,14 @@
     <family name="Sound Decoders" mfg="MRC" lowVersionID="19" highVersionID="20" comment="Synchronized Sound Brilliance(TM) Decoders">
       <!-- note All 28 functions are NMRA compatible -->
       <model show="no" model="HO Gauge Steam Universal - 16 Bit 1911 with multi-chuffs, multi-whistles" replacementModel="1911 - HO Scale - Steam Universal" replacementFamily="Sound Decoders" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector">
-	<size length="29.5" width="10.6" height="5" units="mm"/>
+    <size length="29.5" width="10.6" height="5" units="mm"/>
       </model>
       <model model="1911 - HO Scale - Steam Universal" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="&lt;html&gt;HO-Scale, with NMRA 8 pin and 9 pin JST connector, &lt;br&gt;16 Bit, with multi-chuffs, multi-whistles&lt;/html&gt;">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
         <output name="3" label="Green" connection="wire"/>
         <output name="4" label="Brown" connection="wire"/>
-	<size length="29.5" width="10.6" height="5" units="mm"/>
+    <size length="29.5" width="10.6" height="5" units="mm"/>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>

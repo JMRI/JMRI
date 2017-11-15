@@ -2,26 +2,26 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Nigel Cliffe ncliffe@btinternet.com" version="1" lastUpdated="20110516"/>
   <!-- Initial test version, missing are all the advanced features in section 5 of the manual, -->
   <!--  not least because the manual appears to be missing a few key details in how to calculate -->
   <!--  the values used in Advanced Conditionals.  Its possible that reading the CML SIG-10 manual -->
-  <!--  might clear up some of these details  -->
+  <!--  might clear up some of these details -->
   <decoder>
     <family name="DAC20" mfg="CML Systems" type="stationary" comment="DAC20 is a stationary decoder with a lot of additional features">
       <model model="DAC20" lowVersionID="1">
-			</model>
+            </model>
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes"/>
     <variables>
@@ -3641,7 +3641,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -3691,7 +3691,7 @@
         <text>or use two Elements to enter values Y and X, see DAC20 manual</text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -3770,7 +3770,7 @@
         <text>or use two Elements to enter values Y and X, see DAC20 manual</text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -3893,7 +3893,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -3922,13 +3922,13 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -3957,7 +3957,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4005,13 +4005,13 @@
         </column>
         <column>
           <label>
-            <text>                      </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>                      </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4095,7 +4095,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4124,13 +4124,13 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4159,7 +4159,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4207,13 +4207,13 @@
         </column>
         <column>
           <label>
-            <text>                      </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>                      </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4297,7 +4297,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4326,13 +4326,13 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4361,7 +4361,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4409,13 +4409,13 @@
         </column>
         <column>
           <label>
-            <text>                      </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>                      </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4499,7 +4499,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4528,13 +4528,13 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4563,7 +4563,7 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4611,13 +4611,13 @@
         </column>
         <column>
           <label>
-            <text>                      </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>                      </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4691,13 +4691,13 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4725,13 +4725,13 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4759,13 +4759,13 @@
         </column>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4855,11 +4855,11 @@
           <display item="Ext Dev 10 Y" label=" Y"/>
         </column>
         <label>
-          <text>        </text>
+          <text> </text>
         </label>
         <separator/>
         <label>
-          <text>    </text>
+          <text> </text>
         </label>
         <column>
           <display item="Ext Dev 11 X" label="Device 11, X"/>
@@ -4886,11 +4886,11 @@
           <display item="Ext Dev 20 Y" label=" Y"/>
         </column>
         <label>
-          <text>        </text>
+          <text> </text>
         </label>
         <separator/>
         <label>
-          <text>    </text>
+          <text> </text>
         </label>
         <column>
           <display item="Ext Dev 21 X" label="Device 21, X"/>
@@ -4917,11 +4917,11 @@
           <display item="Ext Dev 30 Y" label=" Y"/>
         </column>
         <label>
-          <text>        </text>
+          <text> </text>
         </label>
         <separator/>
         <label>
-          <text>    </text>
+          <text> </text>
         </label>
         <column>
           <display item="Ext Dev 31 X" label="Device 31, X"/>

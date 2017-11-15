@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$	-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,22 +34,22 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
-	<variable item="2nd locomotive address" CV="272" mask="VVVVVVVV" default="0">
-		<splitVal highCV="271" upperMask="VVVVVVVV"/>
+    <variable item="2nd locomotive address" CV="272" mask="VVVVVVVV" default="0">
+        <splitVal highCV="271" upperMask="VVVVVVVV"/>
     <label>2nd locomotive Address</label>
     <label xml:lang="de">zweite Lokadresse</label>
     <tooltip>only for use with signal aspect function generator</tooltip>
     <tooltip xml:lang="de">nur für die Auswertung im Signalbildgenerator benötigt</tooltip>
   </variable>
-	<variable item="3rd locomotive address" CV="274" mask="VVVVVVVV" default="0">
-		<splitVal highCV="273" upperMask="VVVVVVVV"/>
+    <variable item="3rd locomotive address" CV="274" mask="VVVVVVVV" default="0">
+        <splitVal highCV="273" upperMask="VVVVVVVV"/>
     <label>3rd locomotive Address</label>
     <label xml:lang="de">dritte Lokadresse</label>
     <tooltip>only for use with signal aspect function generator</tooltip>
     <tooltip xml:lang="de">nur für die Auswertung im Signalbildgenerator benötigt</tooltip>
   </variable>
-	<variable item="4th locomotive address" CV="276" mask="VVVVVVVV" default="0">
-		<splitVal highCV="275" upperMask="VVVVVVVV"/>
+    <variable item="4th locomotive address" CV="276" mask="VVVVVVVV" default="0">
+        <splitVal highCV="275" upperMask="VVVVVVVV"/>
     <label>4th locomotive Address</label>
     <label xml:lang="de">vierte Lokadresse</label>
     <tooltip>only for use with signal aspect function generator</tooltip>

@@ -152,12 +152,12 @@
 
     </appearances>
   <specificappearances>
-  	<danger>
-  		<aspect>Stop</aspect>
-  	</danger>
-  	<held>
-  		<aspect>Held</aspect>
-  	</held>
+      <danger>
+          <aspect>Stop</aspect>
+      </danger>
+      <held>
+          <aspect>Held</aspect>
+      </held>
   </specificappearances>
 
   <aspectMappings>

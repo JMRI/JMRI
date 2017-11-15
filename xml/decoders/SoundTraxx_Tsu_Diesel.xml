@@ -29,54 +29,54 @@
   <version author="Alain Le Marchand" version="14" lastUpdated="20140530"/>
   <version author="Alain Le Marchand" version="15" lastUpdated="20140827"/>
   <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives         -->
-  <!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.			-->
-  <!--			Co-authored by Michael Mosher.	Special thanks to Bob Jacobsen and Phil Utley		-->
-  <!--			for their assistance, and Marc Fournier for getting the ball rolling.			-->
-  <!--			This file incorporates the "include" attribute to allow proper display of		-->
-  <!--			various elements based on their pertinence to a particular model.  When adding		-->
-  <!--			models, the productID must be attached to the proper sets of horn selections.		-->
-  <!-- version 2	Fixed bug in CV112 where auto/manual control of air compressor and radiator fans	-->
-  <!--			was reversed (this was corrected in Tsunami Diesel Tech. Ref. v1.10).  Fixed bug	-->
-  <!--			in CV116, bit 4 "Engine RPM Interlock".  Added CV116, bit 5 "Auto Engine Start		-->
-  <!--			Enable" and CV118 "Motor Recovery Speed".  Updated some tool tips.			-->
-  <!-- version 3	Added Alco 539 models 827011, 827012, 828049.						-->
-  <!-- version 4	Added Kato loco specific models 828060,828061,828062,828063,828064,828065.		-->
-  <!--			Thanks to Michael Mosher and Jarrette Ireland for providing horn info.			-->
-  <!--			Removed default="3" from CV17 to solve bug found by M. Fournier.			-->
-  <!-- version 5	Added Baldwin VO (model 827111), 608NA (model 827112) and 608A (model 827113).		-->
-  <!-- version 6	Added EMD 645-Turbo (model 827002), EMD 710 (model 827003) and				-->
-  <!--			GE Cummins (model 827014) TSU-750 series decoders.					-->
-  <!-- version 7	Added BW1000 series decoders: EMD 567 (828020), Baldwin 608A Turbo (828023),		-->
-  <!--			ALCO 251 V16 (828025) and GE FDL-16 (828026).						-->
-  <!--			Also added TSU-1000 UP Gas Turbine (827114).                                		-->
-  <!-- version 8	Added the new sound CVs used in the TSU-1000 UP Gas Turbine (827114).  Made minor	-->
-  <!--			formatting changes in Sounds and Advanced section.  Created new Pane for Tsunami 	-->
-  <!--			lighting.  Added new lighting CVs 53, 54, 57 and 58.  Added Rule 17 mode to		-->
-  <!--			FX5/FX6.  Moved custom Pane formats to external files.                  		-->
-  <!--			Special thanks to Michael Mosher for his assistance.					-->
-  <!-- version 9	Added new 1000 series decoders: EMD 710 G3C-T2 (827115), GE Gevo-12 (827116)		-->
-  <!-- version 10	Added decoders: EMD 567D (Turbo) (827119)(828039), EMD 567 (Dual) (827018)(827118),	-->
-  <!--			GE FDL-16 (Modern) (827117)(828038)(828057), ALCO 251C (Supercharged) (828037).		-->
-  <!--			Also added TSU-750 UP Gas Turbine (827015), TSU-GN1000 EMD 710 G3C-T2 (828053) and	-->
-  <!--			TSU-KT1000 for KATO GP35 (828067)							-->
-  <!-- version 11	Added new TSU-1000 series decoder: GE FDL-16 (Dual Motors) (827124).  Modified a	-->
-  <!-- 			few of the control labels for the Gas Turbine definition to help clarify the intent	-->
-  <!-- 			of these controls.  Slight rearrangement of Sound controls to improve clarity.		-->
-  <!-- version 12	Added new GN1000 series decoder: EMD 645 (Non-Turbo) (828058)				-->
-  <!-- version 13	Add AT1000 for Genset and make more use of extrenal includes                            -->
-  <!-- version 14	Fixed function mapping for TSU-750 with 2 physical outputs only (no physical FX5 an FX6)-->
-  <!--                  Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)    -->
-  <!-- version 15	Fixed CV171 to 173 for Genset                                                           -->
-  <!--                  Added TSU-IM1000 (828070, 828071, 828074) from Addendum for TSU-IM1000 (SW rel. 1.18)   -->
-  <!--                    + default values read in decoder for 828070 (EMD 567) thanks to Steve Eckart          -->
-  <!--                    + default values from OEM versions doc. for 828071, 828074 (CV49 to 57 light effects) -->
-  <!--                  (to be checked, likely not to be fully applicable to full fledged TSU-IM1000)		-->
-  <!--                  Added TSU-GN1000 GEVO-12 (828059), TSU-KT1000 P42 (828068)      			-->
+  <!-- version 1 Based on the "Soundtraxx_Tsu_(various diesels)" series of files. -->
+  <!--           Co-authored by Michael Mosher. Special thanks to Bob Jacobsen and Phil Utley -->
+  <!--           for their assistance, and Marc Fournier for getting the ball rolling. -->
+  <!--           This file incorporates the "include" attribute to allow proper display of -->
+  <!--           various elements based on their pertinence to a particular model.  When adding -->
+  <!--           models, the productID must be attached to the proper sets of horn selections. -->
+  <!-- version 2 Fixed bug in CV112 where auto/manual control of air compressor and radiator fans -->
+  <!--           was reversed (this was corrected in Tsunami Diesel Tech. Ref. v1.10).  Fixed bug -->
+  <!--           in CV116, bit 4 "Engine RPM Interlock".  Added CV116, bit 5 "Auto Engine Start -->
+  <!--           Enable" and CV118 "Motor Recovery Speed".  Updated some tool tips. -->
+  <!-- version 3 Added Alco 539 models 827011, 827012, 828049. -->
+  <!-- version 4 Added Kato loco specific models 828060,828061,828062,828063,828064,828065. -->
+  <!--           Thanks to Michael Mosher and Jarrette Ireland for providing horn info. -->
+  <!--           Removed default="3" from CV17 to solve bug found by M. Fournier. -->
+  <!-- version 5 Added Baldwin VO (model 827111), 608NA (model 827112) and 608A (model 827113). -->
+  <!-- version 6 Added EMD 645-Turbo (model 827002), EMD 710 (model 827003) and -->
+  <!--           GE Cummins (model 827014) TSU-750 series decoders. -->
+  <!-- version 7 Added BW1000 series decoders: EMD 567 (828020), Baldwin 608A Turbo (828023), -->
+  <!--           ALCO 251 V16 (828025) and GE FDL-16 (828026). -->
+  <!--           Also added TSU-1000 UP Gas Turbine (827114). -->
+  <!-- version 8 Added the new sound CVs used in the TSU-1000 UP Gas Turbine (827114).  Made minor -->
+  <!--           formatting changes in Sounds and Advanced section.  Created new Pane for Tsunami  -->
+  <!--           lighting.  Added new lighting CVs 53, 54, 57 and 58.  Added Rule 17 mode to -->
+  <!--           FX5/FX6.  Moved custom Pane formats to external files. -->
+  <!--           Special thanks to Michael Mosher for his assistance. -->
+  <!-- version 9 Added new 1000 series decoders: EMD 710 G3C-T2 (827115), GE Gevo-12 (827116) -->
+  <!-- version 10 Added decoders: EMD 567D (Turbo) (827119)(828039), EMD 567 (Dual) (827018)(827118), -->
+  <!--            GE FDL-16 (Modern) (827117)(828038)(828057), ALCO 251C (Supercharged) (828037). -->
+  <!--            Also added TSU-750 UP Gas Turbine (827015), TSU-GN1000 EMD 710 G3C-T2 (828053) and -->
+  <!--            TSU-KT1000 for KATO GP35 (828067) -->
+  <!-- version 11 Added new TSU-1000 series decoder: GE FDL-16 (Dual Motors) (827124).  Modified a -->
+  <!--            few of the control labels for the Gas Turbine definition to help clarify the intent -->
+  <!--            of these controls.  Slight rearrangement of Sound controls to improve clarity. -->
+  <!-- version 12 Added new GN1000 series decoder: EMD 645 (Non-Turbo) (828058) -->
+  <!-- version 13 Add AT1000 for Genset and make more use of extrenal includes                            -->
+  <!-- version 14 Fixed function mapping for TSU-750 with 2 physical outputs only (no physical FX5 an FX6)-->
+  <!--            Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)    -->
+  <!-- version 15 Fixed CV171 to 173 for Genset                                                           -->
+  <!--            Added TSU-IM1000 (828070, 828071, 828074) from Addendum for TSU-IM1000 (SW rel. 1.18)   -->
+  <!--            + default values read in decoder for 828070 (EMD 567) thanks to Steve Eckart          -->
+  <!--            + default values from OEM versions doc. for 828071, 828074 (CV49 to 57 light effects) -->
+  <!--            (to be checked, likely not to be fully applicable to full fledged TSU-IM1000) -->
+  <!--            Added TSU-GN1000 GEVO-12 (828059), TSU-KT1000 P42 (828068) -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
-  <!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped               -->
+  <!--          For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped               -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami diesel decoders">
@@ -96,7 +96,7 @@
         <output name="Short" label="Horn">
           <label xml:lang="it">Tromba</label>
         </output>
-	      <output name="Reserved"/>
+          <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -120,7 +120,7 @@
         <output name="Short" label="Horn">
           <label xml:lang="it">Tromba</label>
         </output>
-	      <output name="Reserved"/>
+          <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -144,7 +144,7 @@
         <output name="Short" label="Horn">
           <label xml:lang="it">Tromba</label>
         </output>
-	      <output name="Reserved"/>
+          <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -168,7 +168,7 @@
         <output name="Short" label="Horn">
           <label xml:lang="it">Tromba</label>
         </output>
-	      <output name="Reserved"/>
+          <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -192,7 +192,7 @@
         <output name="Short" label="Horn">
           <label xml:lang="it">Tromba</label>
         </output>
-	      <output name="Reserved"/>
+          <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -216,7 +216,7 @@
         <output name="Short" label="Horn">
          <label xml:lang="it">Tromba</label>
         </output>
-	      <output name="Reserved"/>
+          <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -240,7 +240,7 @@
         <output name="Short" label="Horn">
          <label xml:lang="it">Tromba</label>
         </output>
-	      <output name="Reserved"/>
+          <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -420,7 +420,7 @@
         <output name="Short" label="Horn">
          <label xml:lang="it">Tromba</label>
         </output>
-	      <output name="Reserved"/>
+          <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1376,7 +1376,7 @@
           <label xml:lang="it">Freni</label>
         </output>
         <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+    <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1889,7 +1889,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Short Horn</label>
       </variable>
-			<variable item="F3 controls output 9" CV="37" mask="XXVXXXXX" default="0" include="828070,828071,828074">
+            <variable item="F3 controls output 9" CV="37" mask="XXVXXXXX" default="0" include="828070,828071,828074">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output output 9</label>
       </variable>
@@ -2570,7 +2570,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-			<variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="1" include="828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+            <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="1" include="828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>

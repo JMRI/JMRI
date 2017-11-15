@@ -21,18 +21,18 @@
   <version author="Michael Mosher" version="6" lastUpdated="20111229"/>
   <version author="Michael Mosher" version="7" lastUpdated="20130308"/>
   <version author="Alain Le Marchand" version="8" lastUpdated="20140530"/>
-  <!-- This file contains the OEM Bachmann Tsunami definitions for Bachmann steam locomotives	    -->
-  <!-- Version 1  Made from SoundTraxx_TSU_2Med.xml file											-->
-  <!-- Version 2  Added Reset option																-->
-  <!-- version 3	Added many tooltips, a bit of organization, fixed a couple bugs, deleted CVs	-->
-  <!--			and sections that weren't applicable, added missing CVs, attempt at making		-->
-  <!--			terminology more closely resemble factory usage, updated default values.		-->
-  <!--			Different whistles are used in the different Bachmann decoders, but neither		-->
-  <!--			Bachmann nor SoundTraxx seem to have a comprehensive list of what's in what.	-->
-  <!--			Thanks to George Bogatiuk at SoundTraxx for his assistance.						-->
-  <!-- Version 4  Add more models  																-->
-  <!-- Version 5  Add HO 3 truck shay, On30 4-6-0, Fn3 3 truck shay & climax 						-->
-  <!-- Version 6  Add HO 2-8-8-4																	-->
+  <!-- This file contains the OEM Bachmann Tsunami definitions for Bachmann steam locomotives -->
+  <!-- Version 1  Made from SoundTraxx_TSU_2Med.xml file -->
+  <!-- Version 2  Added Reset option -->
+  <!-- version 3  Added many tooltips, a bit of organization, fixed a couple bugs, deleted CVs -->
+  <!--            and sections that weren't applicable, added missing CVs, attempt at making -->
+  <!--            terminology more closely resemble factory usage, updated default values. -->
+  <!--            Different whistles are used in the different Bachmann decoders, but neither -->
+  <!--            Bachmann nor SoundTraxx seem to have a comprehensive list of what's in what. -->
+  <!--            Thanks to George Bogatiuk at SoundTraxx for his assistance. -->
+  <!-- Version 4  Add more models -->
+  <!-- Version 5  Add HO 3 truck shay, On30 4-6-0, Fn3 3 truck shay & climax -->
+  <!-- Version 6  Add HO 2-8-8-4 -->
   <!-- version 7  Add 2-4-4-2 & Hiesler and greater use of external includes -->
   <!-- version 8  Fixed function mapping (no physical FX5 an FX6)-->
   <!--            Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)     -->

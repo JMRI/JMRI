@@ -16,12 +16,12 @@
     <version author="Alain Carasso" version="3" lastUpdated="20170419"/>
     <version author="Alain Le Marchand" version="2" lastUpdated="20140510"/>
     <version author="Simon Ginsburg" version="1" lastUpdated="20060722"/>
-	<!-- Version 3 (Alain Carasso) Updated highVersionID to 40 -->
-	<!-- Version 2 (Alain Le Marchand) Updated function mapping to use "fnmapping" element on the regular function map pane
-					and created a fragment file for this function mapping. Refactored several variables,
-					and used generic items on standard panes (motor, lights, analog) as much as possible
-	                Using English/German terms as defined in official Uhlenbrock documentation								-->
-	<!-- 			Add 76200, 76425																						-->
+    <!-- Version 3 (Alain Carasso) Updated highVersionID to 40 -->
+    <!-- Version 2 (Alain Le Marchand) Updated function mapping to use "fnmapping" element on the regular function map pane
+                    and created a fragment file for this function mapping. Refactored several variables,
+                    and used generic items on standard panes (motor, lights, analog) as much as possible
+                    Using English/German terms as defined in official Uhlenbrock documentation -->
+    <!--            Add 76200, 76425 -->
   <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
     <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order">
@@ -60,7 +60,7 @@
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>
         <size length="22" width="12.5" height="5.5" units="mm"/>
-      </model>	
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -108,7 +108,7 @@
         </enumVal>
         <label>RailCom data transmission</label>
         <label xml:lang="de">RailCom Datenübertragung</label>
-      </variable>	
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29analog.xml"/>
@@ -116,7 +116,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom</label>
         <label xml:lang="de">RailCom</label>
-      </variable>	
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <!-- Include function mapping -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap2outputs.xml"/>
@@ -132,7 +132,7 @@
         <label>Speed Correction Reverse</label>
         <label xml:lang="de">Geschw.-korrektur rückwärts</label>
         <tooltip>Factor = Value/128</tooltip>
-      </variable>	
+      </variable>
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49dataformat.xml"/>
@@ -190,7 +190,7 @@
         <label xml:lang="de">Geschw. am Ende Bremsstrecke</label>
         <tooltip>Valid when CV49 Bit 2=1 (Braking end) and Bit 7=1 (Braking analog)</tooltip>
       </variable>
-	  <variable item="EMF Option 1" CV="53" default="150" include="76200">
+      <variable item="EMF Option 1" CV="53" default="150" include="76200">
         <decVal min="60"/>
         <label>Repetition rate</label>
         <label xml:lang="de">Wiederholrate der Motorregelung</label>
@@ -215,7 +215,7 @@
         <decVal max="255"/>
         <label>Motor regulation P Constant</label>
         <label xml:lang="de">Motorregelung P-Konstante</label>
-      </variable>	
+      </variable>
       <variable item="EMF Static Config" CV="54" default="20" include="76420,76425">
         <decVal max="63"/>
         <label>Motor regulation P Constant</label>
@@ -225,7 +225,7 @@
         <decVal max="255"/>
         <label>Motor regulation I Constant</label>
         <label xml:lang="de">Motorregelung I-Konstante</label>
-      </variable>	
+      </variable>
       <variable item="EMF Dynamic Config" CV="55" default="10" include="76420,76425">
         <decVal max="63"/>
         <label>Motor regulation I Constant</label>
@@ -249,7 +249,7 @@
         <decVal max="255"/>
         <label>Motor regulation D Constant</label>
         <label xml:lang="de">Motorregelung D-Konstante</label>
-      </variable>	
+      </variable>
       <variable item="EMF Droop Config" CV="57" default="12" include="76420,76425">
         <decVal max="63"/>
         <label>Motor regulation D Constant</label>
@@ -261,7 +261,7 @@
         <label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
         <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
         <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
-      </variable>	
+      </variable>
       <variable item="EMF Option 2" CV="58" default="10" include="76400">
         <decVal/>
         <label>Time slot for AD measurement</label>
@@ -324,7 +324,7 @@
         <label>Temperature Error</label>
         <label xml:lang="de">Fehler Temperatur</label>
       </variable>
-      <!-- End braking speed CV64 for 76425 : see above CV52 for 76400, 76420 -->	
+      <!-- End braking speed CV64 for 76425 : see above CV52 for 76400, 76420 -->
       <variable item="Forward Trim" CV="64" default="128" include="76400">
         <decVal/>
         <label>Speed Correction Forward</label>
@@ -376,7 +376,7 @@
         <decVal/>
         <label>Shunting speed for electric couplings on A1/A2</label>
         <label xml:lang="de">Rangiergeschw. zum Vorziehen beim Entkuppeln über A1/A2</label>
-      </variable>	
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
       <variable item="LISSY Train Category" CV="115" default="3" include="76400">
         <decVal max="4"/>

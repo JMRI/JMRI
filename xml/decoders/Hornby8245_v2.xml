@@ -2,21 +2,21 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Greg Watkins gregd99@yahoo.com" version="2" lastUpdated="20100528"/>
   <!--
-	This is my first attempt to write a decoder description file.
-	All feedback welcome.
+    This is my first attempt to write a decoder description file.
+    All feedback welcome.
 -->
   <!--
 nmraWarrant="yes" nmraWarrantStart="2009-005"
@@ -570,7 +570,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
         </column>
         <column>
           <label>
-            <text>          </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -607,7 +607,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
         </column>
         <column>
           <label>
-            <text>          </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -648,7 +648,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
         </column>
         <column>
           <label>
-            <text>          </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -782,7 +782,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
         </column>
         <column>
           <label>
-            <text>        </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -901,25 +901,25 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
         </column>
       </row>
       <!-- These CVs not accessible except in ops mode
-		<separator/>
+        <separator/>
 
-		<row>
-			<column>
-				<label label=" "/>
-				<display item="Current Fuel or Coal#2" />
-				<display item="Current Water#2" />
-				<label label=" "/>
-			</column>
+        <row>
+            <column>
+                <label label=" "/>
+                <display item="Current Fuel or Coal#2" />
+                <display item="Current Water#2" />
+                <label label=" "/>
+            </column>
 
-			<column>
-				<label label=" "/>
-				<display item="Current Fuel or Coal#2" label = " " format="hslider" />
-				<display item="Current Water#2" label = " " format="hslider"/>
-				<label label=" "/>
-			</column>
+            <column>
+                <label label=" "/>
+                <display item="Current Fuel or Coal#2" label = " " format="hslider" />
+                <display item="Current Water#2" label = " " format="hslider"/>
+                <label label=" "/>
+            </column>
 
-		</row>
-		<separator/>
+        </row>
+        <separator/>
 -->
     </column>
   </pane>

@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20140427"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20140615"/>
@@ -19,22 +19,22 @@
   <version author="John McMasters" version="3" lastUpdated="20150919"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20170218"/>
   <!-- Created from version 7 of the Digitrax_0SFX file -->
-  <!--     and from Digitrax_2SFX file (John McMasters  1/26/2014, in JMRI Users file section)  -->
-  <!--    Version 1 (Alain Le Marchand)                                             -->
-  <!--    New series 6 sound decoders: SDH166D, SDXH166D, SDN136PS, SDXN136PS       -->
-  <!--                                 no variants/sound projects in version 1      -->
-  <!--    Version 1.1 (Alain Le Marchand) Fix sound selection for SDH166D/SDN166PS  -->
-  <!--           Added Function labels for John McMasters' extended sound projects  -->
+  <!--     and from Digitrax_2SFX file (John McMasters  1/26/2014, in JMRI Users file section) -->
+  <!--    Version 1 (Alain Le Marchand) -->
+  <!--    New series 6 sound decoders: SDH166D, SDXH166D, SDN136PS, SDXN136PS -->
+  <!--                                 no variants/sound projects in version 1 -->
+  <!--    Version 1.1 (Alain Le Marchand) Fix sound selection for SDH166D/SDN166PS -->
+  <!--           Added Function labels for John McMasters' extended sound projects -->
   <!--    Version 2 (Alain Le Marchand)
                  Updated CV150 with default values from Digitrax documentation SDXH116D dated April 7, 2015
-                 Updated Function labels for John McMasters' extended sound projects  -->
+                 Updated Function labels for John McMasters' extended sound projects -->
    <!--   Version 3 (John McMasters)
-		 Create Extended Series 6 Steam and Diesel within Family for John McMasters' extended sound projects  -->
+         Create Extended Series 6 Steam and Diesel within Family for John McMasters' extended sound projects -->
   <!--    Version 4 (Alain Le Marchand)
                  Added SDH186MT and SDXH186MT
                  Added SDXN146K1E, SDXN146K2 and SDXN146K4
                  Defaut function labels according to Digitrax V2 manual
-                 Function number = 12 for all decoders (for consist advanced function behavior)                     -->
+                 Function number = 12 for all decoders (for consist advanced function behavior) -->
   <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back -->
   <decoder>
     <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16">
@@ -129,7 +129,7 @@
           <functionlabel num="7" lockable="true">Notch DOWN decel./Steam Blowdown, vol at load</functionlabel>
           <functionlabel num="8" lockable="true">Mute (full-half-silent)</functionlabel>
           <functionlabel num="9" lockable="true">Brake squeal (eStop wF8)</functionlabel>
-          <functionlabel num="10" lockable="true">Xing Gate Airhorn/Whistle</functionlabel>   <!-- Xing Gate Airhorn wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="10" lockable="true">Xing Gate Airhorn/Whistle</functionlabel> <!-- Xing Gate Airhorn wBell / Steam Xing Gate Whistle wBell -->
           <functionlabel num="11" lockable="true">UNcoupling</functionlabel>
           <functionlabel num="12" lockable="false">Wheel Squeal</functionlabel>
           <functionlabel num="13" lockable="true">Air feat. disabled/Steam Coal Fill</functionlabel>
@@ -167,7 +167,7 @@
           <functionlabel num="7" lockable="true">Steam Blowdown, vol at load</functionlabel>
           <functionlabel num="8" lockable="true">Mute (full-half-silent) [eStop with F9]</functionlabel>
           <functionlabel num="9" lockable="true">Brakes [eStop wF8]</functionlabel>
-          <functionlabel num="10" lockable="true">Xing Gate Whistle / Bells</functionlabel>   <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="10" lockable="true">Xing Gate Whistle / Bells</functionlabel> <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
           <functionlabel num="11" lockable="true">UNcoupling [disables toots on F3]</functionlabel>
           <functionlabel num="12" lockable="false">Wheel Squeal [disables bell on F6]</functionlabel>
           <functionlabel num="13" lockable="true">Coal Fill</functionlabel>
@@ -205,7 +205,7 @@
           <functionlabel num="7" lockable="true">Notch DOWN decel. / vol at load</functionlabel>
           <functionlabel num="8" lockable="true">Mute (full-half-silent) [eStop with F9]</functionlabel>
           <functionlabel num="9" lockable="true">Brake squeal (eStop wF8)</functionlabel>
-          <functionlabel num="10" lockable="true">Xing Gate Airhorn / Bells</functionlabel>   <!-- Xing Gate Airhorn wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="10" lockable="true">Xing Gate Airhorn / Bells</functionlabel> <!-- Xing Gate Airhorn wBell / Steam Xing Gate Whistle wBell -->
           <functionlabel num="11" lockable="true">UNcoupling [disables toots on F3]</functionlabel>
           <functionlabel num="12" lockable="false">Wheel Squeal [disables bell on F6]</functionlabel>
           <functionlabel num="13" lockable="true">Air feat. disabled</functionlabel>
@@ -384,7 +384,7 @@
         <decVal/>
         <label>IPL counter</label>
       </variable>
-      -->
+ -->
       <!-- Sound options -->
       <variable CV="132" item="Sound Setting 2" default="72">
         <decVal/>
@@ -401,7 +401,7 @@
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
       </variable>
-	  <variable CV="133" item="Sound Setting 15" default="63" exclude="SDXH166DExtS,SDXH166DExtD">
+      <variable CV="133" item="Sound Setting 15" default="63" exclude="SDXH166DExtS,SDXH166DExtD">
         <decVal max="128"/>
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
@@ -848,8 +848,8 @@
       <!-- For customized Extended Sound Projects -->
       <xi:include href="http://jmri.org/xml/decoders/digitrax/soundExtSeries6.xml"/>
       <!-- highest used so far: -->
-      <!-- "Sound Option 7"     -->
-      <!-- "Sound Setting 17"   -->
+      <!-- "Sound Option 7" -->
+      <!-- "Sound Setting 17" -->
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">

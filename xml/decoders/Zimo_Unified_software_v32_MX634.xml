@@ -15,7 +15,7 @@
   <version author="ronald@wirkuhns.de" version="2" lastUpdated="2016/05/06"/>
   <!-- add translation to german in splitted files -->
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20150207"/>
-  <!-- Based on the "2014 04 20" English version of the ZIMO "Small decoder manual	     -->
+  <!-- Based on the "2014 04 20" English version of the ZIMO "Small decoder manual -->
   <!--                                                                                       -->
   <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->

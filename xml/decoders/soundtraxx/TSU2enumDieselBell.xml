@@ -14,150 +14,150 @@
 <!-- version 1 - new include file for SoundTraxx Tsunami2                   -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice>
-	<choice>ALCO 1: slow</choice>
+    <choice>ALCO 1: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 1: medium-slow</choice>
+    <choice>ALCO 1: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 1: medium-fast</choice>
+    <choice>ALCO 1: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 1: fast</choice>
+    <choice>ALCO 1: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 2: slow</choice>
+    <choice>ALCO 2: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 2: medium-slow</choice>
+    <choice>ALCO 2: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 2: medium-fast</choice>
+    <choice>ALCO 2: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 2: fast</choice>
+    <choice>ALCO 2: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 3: slow</choice>
+    <choice>ALCO 3: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 3: medium-slow</choice>
+    <choice>ALCO 3: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 3: medium-fast</choice>
+    <choice>ALCO 3: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>ALCO 3: fast</choice>
+    <choice>ALCO 3: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 1: slow</choice>
+    <choice>EMD 1: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 1: medium-slow</choice>
+    <choice>EMD 1: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 1: medium-fast</choice>
+    <choice>EMD 1: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 1: fast</choice>
+    <choice>EMD 1: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 2: slow</choice>
+    <choice>EMD 2: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 2: medium-slow</choice>
+    <choice>EMD 2: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 2: medium-fast</choice>
+    <choice>EMD 2: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 2: fast</choice>
+    <choice>EMD 2: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 3: slow</choice>
+    <choice>EMD 3: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 3: medium-slow</choice>
+    <choice>EMD 3: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 3: medium-fast</choice>
+    <choice>EMD 3: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 3: fast</choice>
+    <choice>EMD 3: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 4: slow</choice>
+    <choice>EMD 4: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 4: medium-slow</choice>
+    <choice>EMD 4: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 4: medium-fast</choice>
+    <choice>EMD 4: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>EMD 4: fast</choice>
+    <choice>EMD 4: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Fairbanks-Morse: slow</choice>
+    <choice>Fairbanks-Morse: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Fairbanks-Morse: medium-slow</choice>
+    <choice>Fairbanks-Morse: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Fairbanks-Morse: medium-fast</choice>
+    <choice>Fairbanks-Morse: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Fairbanks-Morse: fast</choice>
+    <choice>Fairbanks-Morse: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>GE FDL: slow</choice>
+    <choice>GE FDL: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>GE FDL: medium-slow</choice>
+    <choice>GE FDL: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>GE FDL: medium-fast</choice>
+    <choice>GE FDL: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>GE FDL: fast</choice>
+    <choice>GE FDL: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Graham White Electronic: medium-fast</choice>
+    <choice>Graham White Electronic: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Western Cullen Hayes Gong: slow</choice>
+    <choice>Western Cullen Hayes Gong: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Western Cullen Hayes Gong: medium-slow</choice>
+    <choice>Western Cullen Hayes Gong: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Western Cullen Hayes Gong: medium-fast</choice>
+    <choice>Western Cullen Hayes Gong: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Western Cullen Hayes Gong: fast</choice>
+    <choice>Western Cullen Hayes Gong: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Rio Grande Southern Galloping Goose: slow</choice>
+    <choice>Rio Grande Southern Galloping Goose: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Rio Grande Southern Galloping Goose: medium-slow</choice>
+    <choice>Rio Grande Southern Galloping Goose: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Rio Grande Southern Galloping Goose: medium-fast</choice>
+    <choice>Rio Grande Southern Galloping Goose: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Rio Grande Southern Galloping Goose: fast</choice>
+    <choice>Rio Grande Southern Galloping Goose: fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Canadian Brass: slow</choice>
+    <choice>Canadian Brass: slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Canadian Brass: medium-slow</choice>
+    <choice>Canadian Brass: medium-slow</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Canadian Brass: medium-fast</choice>
+    <choice>Canadian Brass: medium-fast</choice>
   </enumChoice>
   <enumChoice>
-	<choice>Canadian Brass: fast</choice>
+    <choice>Canadian Brass: fast</choice>
   </enumChoice>
 </enumVal>

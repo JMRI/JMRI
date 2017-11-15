@@ -77,7 +77,7 @@
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
@@ -87,20 +87,20 @@
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	</aspectMapping>
+    </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach</ourAspect>
-	</aspectMapping>
+    </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
@@ -129,22 +129,22 @@
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
   </aspectMappings>

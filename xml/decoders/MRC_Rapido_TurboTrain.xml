@@ -18,7 +18,7 @@
   <version author="Ilidio Serra" version="1" lastUpdated="20090825"/>
   <!-- made from the MRC_soundbrilliance1636 file by Bob Jacobsen-->
   <!-- Version 2 - Added consist, moved consist functions to consist pane, added locomotive direction
-		, removed speed table pane and added CV6 to Basic speed pane, corrected factory reset -->
+        , removed speed table pane and added CV6 to Basic speed pane, corrected factory reset -->
   <!-- Version 3 - Added tooltips and correct spelling errors -->
   <decoder>
     <family name="Rapido" mfg="MRC" lowVersionID="32" highVersionID="32">

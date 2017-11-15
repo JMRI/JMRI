@@ -40,12 +40,12 @@
              productID="???">
         <versionCV lowVersionID="1"/>
                                       <!-- Function Mapping Table / page 17 -->
-        <output name="1" label="  Marker Lamp B  "/>         <!-- FX0F      -->
-        <output name="2" label="  Marker Lamp A  "/>         <!-- FX0R      -->
+        <output name="1" label="  Marker Lamp B  "/> <!-- FX0F      -->
+        <output name="2" label="  Marker Lamp A  "/> <!-- FX0R      -->
         <output name="Grade Crossing Logic" label="(Horn)"/> <!-- XingLogic -->
-        <output name="FX5" label="  Interior Light  "/>      <!-- FX5       -->
-        <output name="FX6" label="        n.c.      "/>      <!-- FX6       -->
-        <output name="Dimming" />                            <!-- Dimming   -->
+        <output name="FX5" label="  Interior Light  "/> <!-- FX5       -->
+        <output name="FX6" label="        n.c.      "/> <!-- FX6       -->
+        <output name="Dimming" /> <!-- Dimming   -->
       </model>
     </family>
 
@@ -3051,4 +3051,4 @@
 
 </decoder-config>
 
- 	  	
+

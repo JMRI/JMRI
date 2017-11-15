@@ -12,11 +12,11 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- 																		-->
+<!-- -->
 <!-- version 1 - Created as a separate file from Uhlenbrock_73400.xml v2    -->
-<!-- 					Alain Le Marchand (2014-05-09)						-->
-<!-- 	Valid for 731x0, 734x0, 764x0 families (non exhaustive list)        -->
-<!-- 																		-->
+<!--             Alain Le Marchand (2014-05-09) -->
+<!--             Valid for 731x0, 734x0, 764x0 families (non exhaustive list) -->
+<!-- -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <separator/>
@@ -33,9 +33,9 @@
     <label>
       <text> </text>
     </label>
-      <display item="RailCom" format="checkbox"/>	
+      <display item="RailCom" format="checkbox"/>
       <display item="RailCom broadcast"/>
-      <display item="RailCom data transmission"/>	
+      <display item="RailCom data transmission"/>
     <label>
       <text> </text>
     </label>
@@ -44,7 +44,7 @@
       <text> </text>
     </label>
       <display item="Digital format"/>
-      <display item="Motorola address 2"/>	
+      <display item="Motorola address 2"/>
     <label>
       <text> </text>
     </label>
@@ -85,7 +85,7 @@
     <label>
       <text> </text>
     </label>
-      <separator/>		
+      <separator/>
       <label>
         <text>Errors or Information (Read-Only)</text>
         <text xml:lang="de">Fehler oder Information (Read-Only)</text>
@@ -94,12 +94,12 @@
     <label>
       <text> </text>
     </label>
-      <display item="Shutdown Temperature"/>	
+      <display item="Shutdown Temperature"/>
       <display item="Short circuit supervision"/>
       <display item="Lights Short circuit supervision"/>
       <display item="Short circuit supervision 1" format="checkbox"/>
       <display item="Short circuit supervision 2" format="checkbox"/>
-      <display item="Short circuit supervision 3" format="checkbox"/>	
+      <display item="Short circuit supervision 3" format="checkbox"/>
       <display item="Error register"/>
     <label>
       <text> </text>

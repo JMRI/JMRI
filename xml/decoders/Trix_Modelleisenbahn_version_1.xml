@@ -19,7 +19,7 @@
   <decoder>
     <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder">
       <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65">
-		</model>
+        </model>
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>

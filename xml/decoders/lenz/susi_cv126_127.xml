@@ -24,7 +24,7 @@
         <surname>Jacobsen</surname>
       </personname>
     </author>
-	<author>
+    <author>
       <personname>
         <firstname>Bernd (Ba)</firstname>
         <surname>Wisotzki</surname>
@@ -45,10 +45,10 @@
       <revremark>Czech translation</revremark>
     </revision>
     <revision>
-    	<revnumber>7</revnumber>
-    	<date>2014-07-25</date>
-    	<authorinitials>Ba</authorinitials>
-    	<revremark>There are Lenz-decoders, which have less then 4 outputs...</revremark>
+        <revnumber>7</revnumber>
+        <date>2014-07-25</date>
+        <authorinitials>Ba</authorinitials>
+        <revremark>There are Lenz-decoders, which have less then 4 outputs...</revremark>
     </revision><revision>
       <revnumber>6</revnumber>
       <date>2014-05-18</date>
@@ -65,30 +65,30 @@
   </revhistory>
   <!-- Add Your the "includes" here -->
   <variable CV="126" item="SUSI Indicator" default="102" comment="Range 0-255">
-	<decVal min="0" max="255"/>
-	<label>CV indicator for SUSI, offset 800</label>
-	<label xml:lang="it">Indicatore Cv per SUSI, offset 800</label>
-	<comment>Range 0-255</comment>
-	<comment xml:lang="it">Valori da 0 a 255</comment>
-	<label xml:lang="de">Zeiger-CV für SUSI, offset 800</label>
-	<comment xml:lang="de">Wertebereich 0-255</comment>
-	<label xml:lang="cs">CV ukazatel pro SUSI, offset 800</label>
-	<comment xml:lang="cs">Meze 0-255</comment>
-	<label xml:lang="ca">Adreça CV de SUSI, offset 800</label>
-	<comment xml:lang="ca">RANG 0-255</comment>
+    <decVal min="0" max="255"/>
+    <label>CV indicator for SUSI, offset 800</label>
+    <label xml:lang="it">Indicatore Cv per SUSI, offset 800</label>
+    <comment>Range 0-255</comment>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Zeiger-CV für SUSI, offset 800</label>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">CV ukazatel pro SUSI, offset 800</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Adreça CV de SUSI, offset 800</label>
+    <comment xml:lang="ca">RANG 0-255</comment>
   </variable>
   <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
-	<decVal min="0" max="255"/>
-	<label>CV transport device for SUSI</label>
-	<label xml:lang="it">Dispositivo trasferimento SUSI</label>
-	<comment>Range 0-255</comment>
-	<comment xml:lang="it">Valori da 0 a 255</comment>
-	<label xml:lang="de">Transport-CV für SUSI</label>
-	<comment xml:lang="de">Wertebereich 0-255</comment>
-	<label xml:lang="cs">CV transport pro SUSI</label>
-	<comment xml:lang="cs">Meze 0-255</comment>
-	<label xml:lang="ca">Dispositiu de transferència SUSI</label>
-	<comment xml:lang="ca">Rang 0-255</comment>
+    <decVal min="0" max="255"/>
+    <label>CV transport device for SUSI</label>
+    <label xml:lang="it">Dispositivo trasferimento SUSI</label>
+    <comment>Range 0-255</comment>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Transport-CV für SUSI</label>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">CV transport pro SUSI</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Dispositiu de transferència SUSI</label>
+    <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
 
 </variables>

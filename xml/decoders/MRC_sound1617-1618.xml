@@ -26,14 +26,14 @@
         <output name="2" label="Yellow" connection="plug"/>
         <output name="3" label="Green" connection="wire"/>
         <output name="4" label="Brown" connection="wire"/>
-	<size length="29.5" width="17.6" height="5" units="mm"/>
+    <size length="29.5" width="17.6" height="5" units="mm"/>
       </model>
       <model model="1617 - HO Scale - Light Steam - Universal" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector, 16 bit">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
         <output name="3" label="Green" connection="wire"/>
         <output name="4" label="Brown" connection="wire"/>
-	<size length="29.5" width="17.6" height="5" units="mm"/>
+    <size length="29.5" width="17.6" height="5" units="mm"/>
       </model>
       <model show="no" model="HO Gauge Steam Universal - 16 Bit 1618 Heavy Steam" replacementModel="1618 - HO Scale - Heavy Steam - Universal" replacementFamily="Sound Decoders" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector">
         <output name="1" label="White" connection="plug"/>

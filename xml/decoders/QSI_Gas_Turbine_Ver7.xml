@@ -53,9 +53,9 @@
       <model model="QSI Magnum Turbine" numFns="14" numOuts="0" productID="5000">
       </model>
       <model model="Q1 Pot" numFns="14" numOuts="0" productID="5048">
-	  </model>
+      </model>
       <model model="Q1 Reed" numFns="14" numOuts="0" productID="5049">
-	  </model>
+      </model>
       <model model="Lionel Veranda Turbine" numFns="14" numOuts="14" productID="500">
         <output name="1" label="" connection="other"/>
         <output name="2" label="" connection="other"/>

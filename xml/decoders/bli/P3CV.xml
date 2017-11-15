@@ -2,22 +2,22 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable item="Function 1 option 2" CV="159" mask="XXXXVXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		<label>L4/L5 Power Up State</label>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>L4/L5 Power Up State</label>
   </variable>
   <variable item="Function 1 option 3" CV="159" mask="XXVXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
-		<label>L4 Logic</label>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
+        <label>L4 Logic</label>
   </variable>
   <variable item="Function 2 option 2" CV="159" mask="XVXXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
-		<label>L5 Logic</label>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
+        <label>L5 Logic</label>
   </variable>
   <variable CV="176" default="114" item="Fatal OverCurrent Config" readOnly="yes" tooltip="This value determines the internal references, multiplies and comparator selection. DO NOT CHANGE.">
-	<decVal/>
+    <decVal/>
   </variable>
   <variable CV="177" default="120" item="Fatal OverCurrent Sensitivity" tooltip="This value determines how sensitive or not the over current circuit is. Increasing this value decreases the sensitivity.">
-	<decVal/>
+    <decVal/>
   </variable>
   <variable CV="212" default="1" item="Sound Group 1 Option 1">
     <decVal max="29"/>
@@ -36,53 +36,53 @@
     <label>Rolling Thunder Frequency</label>
   </variable>
   <variable CV="213" default="0" mask="XVVVXXXX" item="Sound Group 1 Option 3">
-	<enumVal>
-	  <enumChoice>
-		<choice>8 max</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>7</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>6</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>5</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>4</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>3</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>2</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>1 min</choice>
-	  </enumChoice>
-	</enumVal>
-	<label>Rolling Thunder Power Level</label>
+    <enumVal>
+      <enumChoice>
+        <choice>8 max</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>7</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>6</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>5</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>4</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>3</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>2</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>1 min</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Rolling Thunder Power Level</label>
   </variable>
   <variable CV="213" default="0" mask="XXXXXXXV" item="Sound Group 1 Option 4">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label>Rolling Thunder Track Voltage</label>
-	<tooltip>sends track voltage for diagnostics</tooltip>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Rolling Thunder Track Voltage</label>
+    <tooltip>sends track voltage for diagnostics</tooltip>
   </variable>
   <variable CV="214" default="128" item="Sound Setting 40">
-	<decVal/>
-	<label>Rolling Thunder Volume</label>
+    <decVal/>
+    <label>Rolling Thunder Volume</label>
   </variable>
   <variable item="Sound Group 2 Option 2" CV="223" default="0">
-	<enumVal>
-	  <enumChoice>
-		<choice>Bell1</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>Bell2</choice>
-	  </enumChoice>
-	</enumVal>
-	<label>Bell Select</label>
+    <enumVal>
+      <enumChoice>
+        <choice>Bell1</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>Bell2</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Bell Select</label>
   </variable>
   <variable CV="224" default="0" item="Sound Group 2 Option 1">
     <enumVal>

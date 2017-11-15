@@ -61,7 +61,7 @@
   <decoder>
     <family name="Champex-Linden" mfg="Massoth Elektronik, GmbH">
       <model model="Sound Module 63000" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="0" numFns="0" formFactor="G" connector="other">
-		</model>
+        </model>
     </family>
     <programming direct="yes" paged="no" register="yes" ops="no"/>
     <variables>

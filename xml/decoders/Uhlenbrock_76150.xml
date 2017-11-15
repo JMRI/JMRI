@@ -33,7 +33,7 @@
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>
         <size length="19" width="15.4" height="5" units="mm"/>
-      </model>	
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -66,8 +66,7 @@
             <choice xml:lang="fr">Utiliser V démarrage (Vstart, Vmid, Vhigh)</choice>
             <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
           </enumChoice>
-          <!--
-          <enumChoice choice="(Not supported) Use table in CVs 67 through 94">
+          <!-- <enumChoice choice="(Not supported) Use table in CVs 67 through 94">
             <choice>(Not supported) Use table in CVs 67 through 94</choice>
             <choice xml:lang="de">(Nicht unterstützt) Geschwindigkeitskennlinie nutzen</choice>
           </enumChoice>
@@ -126,7 +125,7 @@
         </enumVal>
         <label>Adaptation for motor</label>
         <label xml:lang="de">Anpassung an Motor</label>
-      </variable>	
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv54motorReg.xml"/>
       <variable item="EMF Option 2" CV="58" default="8">
         <decVal max="255"/>
@@ -147,12 +146,12 @@
         <label xml:lang="de">Motorola lokadresse 2</label>
         <tooltip>for F5 to F8 (Value 1-80)</tooltip>
         <tooltip xml:lang="de">für F5 bis F8 (Wert 1-80)</tooltip>
-      </variable>	
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
       <!-- No Speed Table for this decoder -->
       <!-- <variable label="Speed Table" CV="67"> -->
-      <!--   <speedTableVal/> -->
-      <!--   <label>Speed Table</label> -->
+      <!-- <speedTableVal/> -->
+      <!-- <label>Speed Table</label> -->
       <!-- </variable> -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv100error.xml"/>
       <variable item="LISSY Train Category" CV="115" default="1" include="76150">

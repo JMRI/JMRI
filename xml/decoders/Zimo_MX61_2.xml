@@ -16,7 +16,7 @@
   <version author="sip@euronet.nl" version="1.1" lastUpdated="20031008"/>
   <!-- Based on the contribution of many others -->
   <!-- V 1.01 default values actualized         -->
-  <!-- V 1.02 physical info added	          -->
+  <!-- V 1.02 physical info added -->
   <!-- V 1.1 changed spelling of "behavior" (Jack Shall) -->
   <decoder>
     <family name="Zimo Silent BEMF decoders, early model" mfg="Zimo">

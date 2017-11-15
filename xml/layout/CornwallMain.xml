@@ -7,7 +7,7 @@
 
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Panel" x="1" y="48" height="640" width="1000">
 
-	<!-- control lever layout (upper row) -->
+    <!-- control lever layout (upper row) -->
     <sensoricon sensor="CS26" x="190" y="246" inactive="program:resources/icons/smallschematics/LEDs/green.gif" active="resources/icons/smallschematics/LEDs/gray.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS26" x="238" y="246" inactive="program:resources/icons/smallschematics/LEDs/gray.gif" active="resources/icons/smallschematics/LEDs/red.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <turnouticon turnout="LT11" x="188" y="246" closed="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
@@ -40,7 +40,7 @@
     <sensoricon sensor="CS36" x="976" y="246" inactive="program:resources/icons/smallschematics/LEDs/gray.gif" active="resources/icons/smallschematics/LEDs/red.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <turnouticon turnout="LT15" x="926" y="246" closed="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
 
-	<!-- occupancy sensors (upper row) -->
+    <!-- occupancy sensors (upper row) -->
     <sensoricon sensor="CS49" x="2" y="116" active="program:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="program:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS54" x="2" y="141" active="program:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="program:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
@@ -71,14 +71,14 @@
 
     <sensoricon sensor="CS27" x="967" y="91" active="program:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="program:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-	<!-- Indicator for the "gate" sensor -->
+    <!-- Indicator for the "gate" sensor -->
     <sensoricon sensor="CS59" x="160" y="260" active="program:resources/icons/mediumschematics/LEDs/GREENLED.gif" inactive="program:resources/icons/mediumschematics/LEDs/REDLED.gif" unknown="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="program:resources/icons/mediumschematics/LEDs/AMBERLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-	<!-- turnouts on the upper schematic (left to right); the C/MRI ones are inputs only, so are coded with sensors -->
+    <!-- turnouts on the upper schematic (left to right); the C/MRI ones are inputs only, so are coded with sensors -->
     <sensoricon sensor="CS52" x="19" y="111" active="program:resources/icons/cornwall/TurnoutClosedL.gif" inactive="program:resources/icons/cornwall/TurnoutThrownL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS57" x="18" y="143" active="program:resources/icons/cornwall/TurnoutThrownR.gif" inactive="program:resources/icons/cornwall/TurnoutClosedR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-	<!-- Next one commented out, as there is no associated input sensor -->
+    <!-- Next one commented out, as there is no associated input sensor -->
     <!-- <sensoricon sensor="" x="94" y="168" active="program:resources/icons/cornwall/TurnoutThrownL.gif" inactive="program:resources/icons/cornwall/TurnoutClosedL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" /> -->
 
     <sensoricon sensor="CS53" x="136" y="111" active="program:resources/icons/cornwall/TurnoutClosedR.gif" inactive="program:resources/icons/cornwall/TurnoutThrownR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
@@ -90,7 +90,7 @@
     <sensoricon sensor="CS26" x="216" y="118" active="program:resources/icons/cornwall/TurnoutThrownL.gif" inactive="program:resources/icons/cornwall/TurnoutClosedL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS26" x="215" y="136" active="program:resources/icons/cornwall/TurnoutThrownR.gif" inactive="program:resources/icons/cornwall/TurnoutClosedR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-	<!-- Next two are commented out, as there is no associated input sensor -->
+    <!-- Next two are commented out, as there is no associated input sensor -->
     <!-- <sensoricon sensor="" x="280" y="111" active="program:resources/icons/cornwall/TurnoutThrownL.gif" inactive="program:resources/icons/cornwall/TurnoutClosedL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" /> -->
     <!-- <sensoricon sensor="" x="418" y="111" active="program:resources/icons/cornwall/TurnoutThrownR.gif" inactive="program:resources/icons/cornwall/TurnoutClosedR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" /> -->
 
@@ -110,7 +110,7 @@
 
     <sensoricon sensor="CS36" x="913" y="118" active="program:resources/icons/cornwall/TurnoutThrownL.gif" inactive="program:resources/icons/cornwall/TurnoutClosedL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-	<!-- signal heads on the upper schematic -->
+    <!-- signal heads on the upper schematic -->
     <signalheadicon signalhead="IH18a" x="50" y="85" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="IH18b" x="50" y="110" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="IH19a" x="50" y="135" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
@@ -150,7 +150,7 @@
     <signalheadicon signalhead="IH9a" x="890" y="127" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="IH9b" x="890" y="152" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
 
-	<!-- control lever layout (lower row) -->
+    <!-- control lever layout (lower row) -->
     <sensoricon sensor="CS5" x="39" y="521" inactive="program:resources/icons/smallschematics/LEDs/green.gif" active="resources/icons/smallschematics/LEDs/gray.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS5" x="87" y="521" inactive="program:resources/icons/smallschematics/LEDs/gray.gif" active="resources/icons/smallschematics/LEDs/red.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <turnouticon turnout="LT2" x="37" y="521" closed="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
@@ -191,7 +191,7 @@
     <sensoricon sensor="CS44" x="693" y="521" inactive="program:resources/icons/smallschematics/LEDs/gray.gif" active="resources/icons/smallschematics/LEDs/red.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <turnouticon turnout="LT18" x="643" y="521" closed="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="program:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
 
-	<!-- occupancy sensors (lower row) -->
+    <!-- occupancy sensors (lower row) -->
 
     <sensoricon sensor="CS20" x="23" y="339" active="program:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="program:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS21" x="23" y="364" active="program:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="program:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
@@ -220,7 +220,7 @@
     <sensoricon sensor="CS49" x="911" y="339" active="program:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="program:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS54" x="911" y="364" active="program:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="program:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="program:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-	<!-- turnouts on the lower schematic (left to right); the C/MRI ones are inputs only, so are coded with sensors -->
+    <!-- turnouts on the lower schematic (left to right); the C/MRI ones are inputs only, so are coded with sensors -->
     <sensoricon sensor="CS5" x="71" y="341" active="program:resources/icons/cornwall/TurnoutThrownL.gif" inactive="program:resources/icons/cornwall/TurnoutClosedL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
     <sensoricon sensor="CS35" x="117" y="458" active="program:resources/icons/cornwall/TurnoutClosedR.gif" inactive="program:resources/icons/cornwall/TurnoutThrownR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
@@ -247,7 +247,7 @@
     <sensoricon sensor="CS47" x="790" y="366" active="program:resources/icons/cornwall/TurnoutThrownL.gif" inactive="program:resources/icons/cornwall/TurnoutClosedL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS48" x="834" y="341" active="program:resources/icons/cornwall/TurnoutThrownL.gif" inactive="program:resources/icons/cornwall/TurnoutClosedL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-	<!-- signal heads on the lower schematic -->
+    <!-- signal heads on the lower schematic -->
     <signalheadicon signalhead="IH8b" x="50" y="350" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="IH8a" x="50" y="375" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
 
@@ -276,7 +276,7 @@
     <signalheadicon signalhead="IH17b" x="756" y="375" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="IH17c" x="756" y="400" red="program:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="program:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="program:resources/icons/smallschematics/searchlights/right-flashyellow-short-white.gif" green="program:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
 
-	<!-- background image; put it last so that its on the bottom -->
+    <!-- background image; put it last so that its on the bottom -->
     <positionablelabel class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="0" y="0" icon="program:resources/icons/cornwall/cornwallmainpanel.gif" rotate="0" />
 
   </paneleditor>

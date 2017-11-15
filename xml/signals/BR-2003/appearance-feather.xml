@@ -23,8 +23,8 @@
         <date>2013-04-30</date>
         <authorinitials>NC</authorinitials>
         <revremark>Initial Version.  Not linked to Layout Editor automatic routing, so to control Feather use manually constructed
-				 Logix associated with turnout settings.
-		           The Feather was intended for use with Signal Accessory Decoders such as the Harman SC1. </revremark>
+                 Logix associated with turnout settings.
+                   The Feather was intended for use with Signal Accessory Decoders such as the Harman SC1. </revremark>
     </revision>
 
   </revhistory>

@@ -131,7 +131,7 @@
       </column>
       <column>
         <display item="MA25 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="MA25 Group" tooltip="Selects the mast number" label="    ">
@@ -238,7 +238,7 @@
       </column>
       <column>
         <display item="MA26 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="MA26 Group" tooltip="Selects the mast number" label="    ">
@@ -345,7 +345,7 @@
       </column>
       <column>
         <display item="MA27 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="MA27 Group" tooltip="Selects the mast number" label="    ">
@@ -452,7 +452,7 @@
       </column>
       <column>
         <display item="MA28 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="MA28 Group" tooltip="Selects the mast number" label="    ">
@@ -559,7 +559,7 @@
       </column>
       <column>
         <display item="MA29 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="MA29 Group" tooltip="Selects the mast number" label="    ">
@@ -666,7 +666,7 @@
       </column>
       <column>
         <display item="MA30 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="MA30 Group" tooltip="Selects the mast number" label="    ">
@@ -773,7 +773,7 @@
       </column>
       <column>
         <display item="MA31 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="MA31 Group" tooltip="Selects the mast number" label="    ">
@@ -880,7 +880,7 @@
       </column>
       <column>
         <display item="MA32 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="MA32 Group" tooltip="Selects the mast number" label="    ">

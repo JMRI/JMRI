@@ -24,7 +24,7 @@
         <surname>Jacobsen</surname>
       </personname>
     </author>
-	<author>
+    <author>
       <personname>
         <firstname>Bernd (Ba)</firstname>
         <surname>Wisotzki</surname>
@@ -59,42 +59,42 @@
   </revhistory>
   <!-- Add Your the "includes" here -->
   <variable CV="112" tooltip="Duration of motor timeout t = value * 16 ms" item="Motor Timeout" default="16" comment="Range 0-255">
-	<decVal min="0" max="255"/>
-	<label>Motor timeout on loss of DCC</label>
-	<label xml:lang="it">Timeout Motore per mancanza di DCC</label>
-	<comment>Range 0-255</comment>
-	<comment xml:lang="it">Valori da 0 a 255</comment>
-	<label xml:lang="de">Motor Timeout bei nicht vorhandenem DCC</label>
-	<comment xml:lang="de">Wertebereich 0-255</comment>
-	<tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
-	<label xml:lang="cs">Timeout motoru při ztrátě DDC</label>
-	<comment xml:lang="cs">Meze 0-255</comment>
-	<tooltip xml:lang="cs">Timeout motoru t = hodnota * 16 ms</tooltip>
-	<label xml:lang="ca">Timeout del Motor per manca de DCC</label>
-	<comment xml:lang="ca">Rang 0-255</comment>
-	<tooltip xml:lang="ca">Timeout del motor t = Valor * 16 ms</tooltip>
+    <decVal min="0" max="255"/>
+    <label>Motor timeout on loss of DCC</label>
+    <label xml:lang="it">Timeout Motore per mancanza di DCC</label>
+    <comment>Range 0-255</comment>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Motor Timeout bei nicht vorhandenem DCC</label>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
+    <tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
+    <label xml:lang="cs">Timeout motoru při ztrátě DDC</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <tooltip xml:lang="cs">Timeout motoru t = hodnota * 16 ms</tooltip>
+    <label xml:lang="ca">Timeout del Motor per manca de DCC</label>
+    <comment xml:lang="ca">Rang 0-255</comment>
+    <tooltip xml:lang="ca">Timeout del motor t = Valor * 16 ms</tooltip>
   </variable>
   <variable CV="113" item="Minimum PWM Value" default="40" comment="Range 0-255">
-	<decVal min="0" max="255"/>
-	<label>Minimum PWM (Types 4, 5 only)</label>
-	<label xml:lang="it">PWM Minino (solo tipi 4 e 5)</label>
-	<comment>Range 0-255</comment>
-	<comment xml:lang="it">Valori da 0 a 255</comment>
-	<label xml:lang="de">Miniamler PWM Wert (Motortyp 4 und 5) (0-255)</label>
-	<comment xml:lang="de">Wertebereich 0-255</comment>
+    <decVal min="0" max="255"/>
+    <label>Minimum PWM (Types 4, 5 only)</label>
+    <label xml:lang="it">PWM Minino (solo tipi 4 e 5)</label>
+    <comment>Range 0-255</comment>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Miniamler PWM Wert (Motortyp 4 und 5) (0-255)</label>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
     <label xml:lang="cs">Minimální hodnota PWM (pouze motory typu 4 a 5)</label>
     <comment xml:lang="cs">Meze 0-255</comment>
     <label xml:lang="ca">PWM mínim (només tipus 4 i 5)</label>
     <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
   <variable CV="114" item="Motor Duty Cycle" default="10" comment="Range 0-255">
-	<decVal min="0" max="255"/>
-	<label>Duty Cycle (Types 4, 5 only)</label>
-	<label xml:lang="it">Tempo di Ciclo (solo tipi 4 e 5)</label>
-	<comment>Range 0-255</comment>
-	<comment xml:lang="it">Valori da 0 a 255</comment>
-	<label xml:lang="de">Motor Duty Cycle (Motortyp 4 und 5) (0-255)</label>
-	<comment xml:lang="de">Wertebereich 0-255</comment>
+    <decVal min="0" max="255"/>
+    <label>Duty Cycle (Types 4, 5 only)</label>
+    <label xml:lang="it">Tempo di Ciclo (solo tipi 4 e 5)</label>
+    <comment>Range 0-255</comment>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Motor Duty Cycle (Motortyp 4 und 5) (0-255)</label>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
     <label xml:lang="cs">Pracovní cyklus (pouze motory typu 4 a 5)</label>
     <comment xml:lang="cs">Meze 0-255</comment>
     <label xml:lang="ca">Temps de cicle (Tipus de motor 4 o 5)</label>

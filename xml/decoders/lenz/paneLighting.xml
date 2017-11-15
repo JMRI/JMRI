@@ -87,7 +87,7 @@
           <text xml:lang="it">Un valore di 23 ad esempio risulta come (Gyra light all'uscita B) e ( Lampeggiante all'uscita A)</text>
           <text xml:lang="de">Beipiel:  Der Wert 23 unten ergibt Gyralight am Ausgang B und Strobe (Blitz) am Ausgang A.</text>
           <text xml:lang="cs">Příklad: Hodnota 23 zapne gyroskopické světlo na výstupu B a stroboskopické na výstupu A.</text>
-		  <text xml:lang="ca">Un valor de 23 o menor representa un llum giratori a la sortida B i estreboscic a la soritda A</text>
+          <text xml:lang="ca">Un valor de 23 o menor representa un llum giratori a la sortida B i estreboscic a la soritda A</text>
         </label>
         <label>
           <text> </text>
@@ -190,7 +190,7 @@
           <text>   1</text>
           <text xml:lang="de">   1</text>
           <text xml:lang="cs">   1</text>
-		  <text xml:lang="ca">   1</text>
+          <text xml:lang="ca">   1</text>
         </label>
         <label>
           <text>   2</text>

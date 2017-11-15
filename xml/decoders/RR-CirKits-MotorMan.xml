@@ -46,7 +46,7 @@
       <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="MotorMan ID=25">
         <decVal/>
       </variable>
-		<variable label="Extended Address" CV="17" default="9999" item="Long Address" comment="5 digit address (Range 00001-16383)">
+        <variable label="Extended Address" CV="17" default="9999" item="Long Address" comment="5 digit address (Range 00001-16383)">
         <longAddressVal/>
       </variable>
       <variable label="Reserved" CV="20" readOnly="yes">
@@ -9407,16 +9407,16 @@
     <column>
       <row>
         <column>
-      	<label label=" "/>
-      	<label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+          <label label=" "/>
+          <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
            <qualifier>
            <variableref>Hardware ID</variableref>
            <relation>ne</relation>
            <value>25</value></qualifier>
          </label>
-      	<label label=" "/>
-      	<label label="&lt;html&gt;&lt;h1&gt;MotorMan&lt;/h1&gt;&lt;/html&gt;"/>
-      	<label label=" "/>
+          <label label=" "/>
+          <label label="&lt;html&gt;&lt;h1&gt;MotorMan&lt;/h1&gt;&lt;/html&gt;"/>
+          <label label=" "/>
         </column>
       </row>
       <row>

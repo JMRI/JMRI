@@ -30,8 +30,8 @@
       <date>2014-06-03</date>
       <authorinitials>PB</authorinitials>
       <revremark>The decoder adress is NOT saved in the sound module itself, but rather in the
-	"Master" decoder. The address options have been added nevertheless, as read only.
-	 This adresses the issue of the DCC address being a compulsory item in JMRI</revremark>
+    "Master" decoder. The address options have been added nevertheless, as read only.
+     This adresses the issue of the DCC address being a compulsory item in JMRI</revremark>
     </revision>
   </revhistory>
   <variable CV="1" comment="Short address" item="Short Address" default="03" readOnly="yes">

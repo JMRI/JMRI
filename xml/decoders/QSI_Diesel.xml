@@ -309,7 +309,7 @@
         <label>F1 controls output 5</label>
       </variable>
       <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
-<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>        <label>F1 controls output 6</label>
+<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> <label>F1 controls output 6</label>
       </variable>
       <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -745,8 +745,7 @@
       <variable label="Coupler Sounds" CV="52.34" default="11" comment="QSI" item="CV52.34">
         <decVal max="15"/>
       </variable>
-      <!--
-    <ivariable label="Air Brakes" CVname="52.37" CV="52" PI="37" default="11" comment="QSI" item="CV52.37">
+      <!-- <ivariable label="Air Brakes" CVname="52.37" CV="52" PI="37" default="11" comment="QSI" item="CV52.37">
       <indexedVal max="15"/> </ivariable>
 -->
       <variable label="Output 1 - Forward/Reverse Only" CV="53.1.0" infoOnly="yes" default="107" comment="QSI" item="CV53.1.0">
@@ -2145,7 +2144,7 @@
         </column>
         <column>
           <label>
-            <text>           </text>
+            <text> </text>
           </label>
         </column>
         <column>

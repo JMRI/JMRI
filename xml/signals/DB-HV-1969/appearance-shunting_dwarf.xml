@@ -50,7 +50,7 @@
         <authorinitials>OM</authorinitials>
         <revremark>Add Speed and Route to Aspects. Add Aspect Mapping and Specific Aspects</revremark>
     </revision>
-	</revhistory>
+    </revhistory>
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Shunting signal, dwarf-type</name>

@@ -1967,7 +1967,7 @@
         <text xml:lang="it">         Descrizione                         Filo Uscita o operazione</text>
       </label>
       <label>
-        <text>                                                                     </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -1981,7 +1981,7 @@
             <text>                                A  </text>
           </label>
           <label>
-            <text>   </text>
+            <text> </text>
           </label>
           <display item="AltF13 controls output 1" format="checkbox" label="F13 Button  "/>
           <display item="AltF14 controls output 1" format="checkbox" label="F14 Button  "/>
@@ -2273,7 +2273,7 @@
         <text>Tip: you must set CV15 equal to this number to unlock the decoder for programming</text>
       </label>
       <label>
-        <text>                       </text>
+        <text> </text>
       </label>
       <label>
         <text>Decoder release (CV15)</text>

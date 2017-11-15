@@ -5,19 +5,19 @@
 <!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="ncliffe" version="4b" lastUpdated="20090330"/>
-  <!--  Version 4b (beta) by Nigel Cliffe    -->
-  <!--  Based on version for steady state decoder, MERG_ACC5  -->
+  <!--  Version 4b (beta) by Nigel Cliffe -->
+  <!--  Based on version for steady state decoder, MERG_ACC5 -->
   <!--  re-written main programming pane to be more intuitive -->
   <!--  not necessary to duplicate pane for CV's in 500 region as their role duplicates low ranges -->
   <!--
-				Extensive abuse of standard labelling conventions to make decoder address appear in "basic" pane.
-				This decoder has address range of 1-511, split over CV1 and CV9.  By manipulating the way the address
-				range (1-511) and the base turnout address (1-2017 in steps of four), these can appear as the addresses
-				on the Basic Pane and in the Roster.
-				Current arrangement has the base turnout address show in the Roster (Short Address).
-			-->
+                Extensive abuse of standard labelling conventions to make decoder address appear in "basic" pane.
+                This decoder has address range of 1-511, split over CV1 and CV9.  By manipulating the way the address
+                range (1-511) and the base turnout address (1-2017 in steps of four), these can appear as the addresses
+                on the Basic Pane and in the Roster.
+                Current arrangement has the base turnout address show in the Roster (Short Address).
+ -->
   <decoder>
-    <!--  lowVersionID="4" highVersionID="52"   -->
+    <!--  lowVersionID="4" highVersionID="52" -->
     <family name="ACC Decoders" mfg="MERG" comment="DCCACC4 is pulsed MERG decoder for solenoid motors.">
       <model model="DCCACC4" productID="acc4">
         <versionCV lowVersionID="4" highVersionID="5"/>
@@ -148,15 +148,15 @@
         <label>Configuration</label>
       </variable>
       <!-- abuse the value in CV29, which should be 128 in all these decoders
-		<variable label="Do Not Change address mode" CV="29" readOnly="yes" mask="VXXXXXXX"
-				item="Address Format" default="1" >
-			<enumVal>
-				<enumChoice choice="(do not change)"/>
-				<enumChoice choice="Turnout Addresses"/>
+        <variable label="Do Not Change address mode" CV="29" readOnly="yes" mask="VXXXXXXX"
+                item="Address Format" default="1" >
+            <enumVal>
+                <enumChoice choice="(do not change)"/>
+                <enumChoice choice="Turnout Addresses"/>
 
-				</enumVal>
-			</variable>
-		 -->
+                </enumVal>
+            </variable>
+ -->
       <variable item="Lenz Toggle Mode" CV="33" mask="VVVVVVVV" default="15">
         <decVal min="0" max="255"/>
         <label>Lenz Toggle Mode</label>
@@ -190,37 +190,37 @@
         <label>Toggle Mode output 4</label>
       </variable>
       <!-- dual address not used in ACC4
-		<variable label="Dual Address Mode" CV="33" mask="VXXXXXXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
+        <variable label="Dual Address Mode" CV="33" mask="VXXXXXXX" default="1">
+              <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
+            </variable>
 
-		-->
+ -->
       <!-- Output inversion not used in ACC4
-		<variable label="Invert bit 0" CV="34" mask="XXXXXXXV" default="1" include="52">
-		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
-			</variable>
-		<variable label="Invert bit 1" CV="34" mask="XXXXXXVX" default="1" include="52">
-		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
-			</variable>
-		<variable label="Invert bit 2" CV="34" mask="XXXXXVXX" default="1" include="52">
-		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
-			</variable>
-		<variable label="Invert bit 3" CV="34" mask="XXXXVXXX" default="1" include="52">
-		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
-			</variable>
-		<variable label="Invert bit 4" CV="34" mask="XXXVXXXX" default="1" include="52">
-		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
-			</variable>
-		<variable label="Invert bit 5" CV="34" mask="XXVXXXXX" default="1" include="52">
-		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
-			</variable>
-		<variable label="Invert bit 6" CV="34" mask="XVXXXXXX" default="1" include="52">
-		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
-			</variable>
-		<variable label="Invert bit 7" CV="34" mask="VXXXXXXX" default="1" include="52">
-		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
-		</variable>
-		-->
+        <variable label="Invert bit 0" CV="34" mask="XXXXXXXV" default="1" include="52">
+              <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
+            </variable>
+        <variable label="Invert bit 1" CV="34" mask="XXXXXXVX" default="1" include="52">
+              <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
+            </variable>
+        <variable label="Invert bit 2" CV="34" mask="XXXXXVXX" default="1" include="52">
+              <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
+            </variable>
+        <variable label="Invert bit 3" CV="34" mask="XXXXVXXX" default="1" include="52">
+              <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
+            </variable>
+        <variable label="Invert bit 4" CV="34" mask="XXXVXXXX" default="1" include="52">
+              <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
+            </variable>
+        <variable label="Invert bit 5" CV="34" mask="XXVXXXXX" default="1" include="52">
+              <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
+            </variable>
+        <variable label="Invert bit 6" CV="34" mask="XVXXXXXX" default="1" include="52">
+              <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
+            </variable>
+        <variable label="Invert bit 7" CV="34" mask="VXXXXXXX" default="1" include="52">
+              <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
+        </variable>
+ -->
     </variables>
   </decoder>
   <pane>
@@ -374,7 +374,7 @@
         </column>
         <column>
           <label>
-            <text>                           </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -403,7 +403,7 @@
             </column>
             <column>
               <label>
-                <text>         </text>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -415,10 +415,10 @@
               <display item="Toggle Mode output 3" format="checkbox" label="5+6"/>
               <display item="Toggle Mode output 4" format="checkbox" label="7+8"/>
               <label>
-                <text>         </text>
+                <text> </text>
               </label>
               <label>
-                <text>         </text>
+                <text> </text>
               </label>
             </column>
           </row>
@@ -429,10 +429,10 @@
             <text> </text>
           </label>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
           <label>
             <text>Read Only Information </text>

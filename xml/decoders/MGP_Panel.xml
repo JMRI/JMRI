@@ -4,23 +4,23 @@
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
 <!-- $Id:$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
 
   <decoder>
     <family name="Panel" mfg="MGP" type="stationary" comment="Panel, a LocoNet decoder control panels">
       <model model="Panel" lowVersionID="1">
-			</model>
+            </model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV2MODE</mode>
@@ -29,9 +29,9 @@
       <variable CV="2" item="Decoder Version" readOnly="yes" >
         <decVal/>
         <label>Manufacturer Version No.</label>
-	  </variable>	
+      </variable>
       <variable CV="3" item="Serial Number" readOnly="yes" >
-		<splitVal highCV="4" upperMask="XXXXVVVV"/>
+        <splitVal highCV="4" upperMask="XXXXVVVV"/>
         <label>Decoder serial number</label>
       </variable>
       <variable CV="7" item="Manufacturer" readOnly="yes" >
@@ -47,48 +47,48 @@
         <label>Product Id</label>
       </variable>
 
-	  <variable CV="21" item="Short Address" default="1">
-		<splitVal highCV="22" upperMask="XXXXXVVV"/>
-		<label>Long Address</label>
-	  </variable>	
+      <variable CV="21" item="Short Address" default="1">
+        <splitVal highCV="22" upperMask="XXXXXVVV"/>
+        <label>Long Address</label>
+      </variable>
 
 <!--
-<group name="General">	
+<group name="General">
 -->
-	<variable item="Interrogate at startup" CV="24" mask="VVVVVVVV">
-		<enumVal>
-			<enumChoice choice="No" value="0"/>
-			<enumChoice choice="after 2s" value="2"/>
-			<enumChoice choice="after 5s" value="5"/>
-			<enumChoice choice="after 10s" value="10"/>
-			<enumChoice choice="after 30s" value="30"/>
-		</enumVal>
-	</variable>
-	<variable item="Switch message button on/off" CV="25" mask="XXXXXXXV">
-		<enumVal>
-			<enumChoice choice="normal - on" value="0"/>
-			<enumChoice choice="extra - on/off" value="1"/>
-		</enumVal>
-	</variable>
-	<variable item="Blink at unknow state" CV="25" mask="XXXXXXVX">
-		<enumVal>
-			<enumChoice choice="No blinking" value="0"/>
-			<enumChoice choice="Blinking" value="1"/>
-		</enumVal>
-	</variable>
-	<variable item="Flash LED at startup" CV="25" mask="XXXXXVXX">
-		<enumVal>
-			<enumChoice choice="No" value="0"/>
-			<enumChoice choice="Yes" value="1"/>
-		</enumVal>
-	</variable>
-	<variable item="LED Test Sequence" CV="26">
+    <variable item="Interrogate at startup" CV="24" mask="VVVVVVVV">
+        <enumVal>
+            <enumChoice choice="No" value="0"/>
+            <enumChoice choice="after 2s" value="2"/>
+            <enumChoice choice="after 5s" value="5"/>
+            <enumChoice choice="after 10s" value="10"/>
+            <enumChoice choice="after 30s" value="30"/>
+        </enumVal>
+    </variable>
+    <variable item="Switch message button on/off" CV="25" mask="XXXXXXXV">
+        <enumVal>
+            <enumChoice choice="normal - on" value="0"/>
+            <enumChoice choice="extra - on/off" value="1"/>
+        </enumVal>
+    </variable>
+    <variable item="Blink at unknow state" CV="25" mask="XXXXXXVX">
+        <enumVal>
+            <enumChoice choice="No blinking" value="0"/>
+            <enumChoice choice="Blinking" value="1"/>
+        </enumVal>
+    </variable>
+    <variable item="Flash LED at startup" CV="25" mask="XXXXXVXX">
+        <enumVal>
+            <enumChoice choice="No" value="0"/>
+            <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+    </variable>
+    <variable item="LED Test Sequence" CV="26">
         <decVal min="0" max="64"/>
-	</variable>
+    </variable>
 
-	<variable item="LED max intensity" CV="100">
+    <variable item="LED max intensity" CV="100">
         <decVal />
-	</variable>
+    </variable>
 
 <!--
 <group name="Input">
@@ -104,14 +104,14 @@ in xsl
 
 
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
     </variables>
   </decoder>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
   <pane>
     <name>General decoder info</name>
@@ -142,47 +142,47 @@ in xsl
     </column>
   </pane>
 
-	<pane>
-		<name>General Panel Info</name>
-		<column>
-			<label>
-				<text> </text>
-			</label>
-			<display item="Interrogate at startup"/>
-			<label>
-				<text> </text>
-			</label>
-			<display item="Switch message button on/off"/>
-			<label>
-				<text> </text>
-			</label>
-			<display item="Blink at unknow state"/>
-			<label>
-				<text> </text>
-			</label>
-			<display item="Flash LED at startup"/>
-			<label>
-				<text> </text>
-			</label>
-			<display item="LED Test Sequence"/>
-			<label>
-				<text> </text>
-			</label>
-			<display item="LED max intensity"></display>
-		</column>
-	</pane>
+    <pane>
+        <name>General Panel Info</name>
+        <column>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Interrogate at startup"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Switch message button on/off"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Blink at unknow state"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Flash LED at startup"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="LED Test Sequence"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="LED max intensity"></display>
+        </column>
+    </pane>
 
 
-  	<pane>
+      <pane>
         <name>InputPane</name>
     </pane>
-  	<pane>
+      <pane>
         <name>LedPane</name>
     </pane>
-  	<pane>
+      <pane>
         <name>RoutesPane</name>
     </pane>
-  	<pane>
+      <pane>
         <name>ComboPane</name>
     </pane>
 

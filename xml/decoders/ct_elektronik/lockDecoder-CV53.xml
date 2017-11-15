@@ -34,24 +34,24 @@
     </revision>
   </revhistory>
   <variable CV="53" item="Advanced Group 1 Option 12" default="0">
-	<!-- Values of 1 and 2 are to be used with Roco Lokmaus only, not relevant with JMRI -->
-	<enumVal>
-	  <enumChoice choice="Unlocked/Not Set" value="0">
-		<choice>Unlocked/Not Set</choice>
-		<choice xml:lang="de">entsperrt/nicht gesetzt</choice>
-	  </enumChoice>
-	  <enumChoice choice="Lock Decoder" value="66">
-		<choice>Lock Decoder</choice>
-		<choice xml:lang="de">Decoder sperren</choice>
-	  </enumChoice>
-	  <enumChoice choice="Unlock Decoder" value="77">
-		<choice>Unlock Decoder</choice>
-		<choice xml:lang="de">Decoder freigeben</choice>
-	  </enumChoice>
-	</enumVal>
-	<label>Lock Decoder</label>
-	<label xml:lang="de">Decoder sperren</label>
-	<tooltip>&lt;html&gt;When locked, decoder will not respond to read orders.&lt;br&gt; Write value &quot;Unlock Decoder&quot; (77) to force unlock the decoder.&lt;/html&gt;</tooltip>
-	<tooltip xml:lang="de">&lt;html&gt;Wenn gesperrt ist, wird Decoder nicht reagieren, Aufträge zu lesen.&lt;br&gt; Schreibwert &quot;Decoder freigeben&quot; (77) zu zwingen, Entsperren der Decoder.&lt;/html&gt;</tooltip>
+    <!-- Values of 1 and 2 are to be used with Roco Lokmaus only, not relevant with JMRI -->
+    <enumVal>
+      <enumChoice choice="Unlocked/Not Set" value="0">
+        <choice>Unlocked/Not Set</choice>
+        <choice xml:lang="de">entsperrt/nicht gesetzt</choice>
+      </enumChoice>
+      <enumChoice choice="Lock Decoder" value="66">
+        <choice>Lock Decoder</choice>
+        <choice xml:lang="de">Decoder sperren</choice>
+      </enumChoice>
+      <enumChoice choice="Unlock Decoder" value="77">
+        <choice>Unlock Decoder</choice>
+        <choice xml:lang="de">Decoder freigeben</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Lock Decoder</label>
+    <label xml:lang="de">Decoder sperren</label>
+    <tooltip>&lt;html&gt;When locked, decoder will not respond to read orders.&lt;br&gt; Write value &quot;Unlock Decoder&quot; (77) to force unlock the decoder.&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;Wenn gesperrt ist, wird Decoder nicht reagieren, Aufträge zu lesen.&lt;br&gt; Schreibwert &quot;Decoder freigeben&quot; (77) zu zwingen, Entsperren der Decoder.&lt;/html&gt;</tooltip>
   </variable>
 </variables>

@@ -21,7 +21,7 @@
   <decoder>
     <family name="TCS Tx series decoders" mfg="Train Control Systems">
       <model show="no" model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35" replacementModel="T1" replacementFamily="Jan 2000">
-			</model>
+            </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

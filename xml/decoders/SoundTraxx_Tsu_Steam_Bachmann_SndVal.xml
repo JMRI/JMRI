@@ -18,9 +18,9 @@
   <version author="Alain Le Marchand" version="3" lastUpdated="20150406"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20150524"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20160522"/>
-  <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders	-->
-  <!-- version 1	Based on the "Soundtraxx_Tsu files.                                             -->
-  <!--			Includes the Alco 2-6-0                                                         -->
+  <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders -->
+  <!-- version 1        Based on the "Soundtraxx_Tsu files.                                             -->
+  <!--                  Includes the Alco 2-6-0                                                         -->
   <!-- version 2        Fixed function mapping (no physical FX5 an FX6)                                     -->
   <!--                  Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis -->
   <!--                  Factoring in line with most recent Tsunami decoders definition files                -->
@@ -56,14 +56,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -85,14 +85,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -114,14 +114,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -146,14 +146,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -179,14 +179,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -211,14 +211,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -243,14 +243,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -275,14 +275,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -307,14 +307,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -339,14 +339,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -371,14 +371,14 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Whistle">
             <label xml:lang="it">Breve|Fischio</label>
         </output>
         <output name="9" label="Steam|Release">
             <label xml:lang="it">Rilascio|Vapore</label>
         </output>
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>

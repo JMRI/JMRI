@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2007, 2014 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="36" lastUpdated="20140427"/>
   <version author="Alain Le Marchand" version="35" lastUpdated="20140406"/>
@@ -71,10 +71,10 @@
   <!-- Version 33 - Add DH465 (Michael Greene) -->
   <!-- Version 34 - Add DN163A4 (derived from DN163A2) + fix width values for DN163A1/A2 - Add DN163I2, DN163K0E (Alain Le Marchand) -->
   <!-- Version 35 - Add DN135D, DN135PS, DN163A3, DN163K4A, DN163L0A, DZ123PS, DZ123Z0. -->
-  <!--				Renamed DZ123MO in DZ123M0 (zero) and fully update definition -->
-  <!--				Removed LowVersionID for DZ143 and DZ143PS (back to default for this family - tested with a decoder of that type -->
-  <!--				Add comment to N and Z-Scale decoders. Change connector to DropIn for N and Z-scale replacement boards -->
-  <!--  			Update DN143K2 output definition + add a note for swapped headlights for display on Function map pane (Alain Le Marchand) -->
+  <!--              Renamed DZ123MO in DZ123M0 (zero) and fully update definition -->
+  <!--              Removed LowVersionID for DZ143 and DZ143PS (back to default for this family - tested with a decoder of that type -->
+  <!--              Add comment to N and Z-Scale decoders. Change connector to DropIn for N and Z-scale replacement boards -->
+  <!--              Update DN143K2 output definition + add a note for swapped headlights for display on Function map pane (Alain Le Marchand) -->
   <!-- Version 35 - Refactoring of common parts - more comments for HO decoders (Alain Le Marchand) -->
   <decoder>
     <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51">

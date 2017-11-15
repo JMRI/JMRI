@@ -278,25 +278,25 @@
       </set>
     </FastClock>
 
-	<Portal>
-		<Standard>
+    <Portal>
+        <Standard>
           <hidden>
-          	resources/icons/Invisible.gif
+              resources/icons/Invisible.gif
           </hidden>
           <path>
-          	resources/icons/greenSquare.gif
+              resources/icons/greenSquare.gif
           </path>
           <block>
-          	resources/icons/throttles/RoundRedCircle20.png
+              resources/icons/throttles/RoundRedCircle20.png
           </block>
           <fromArrow>
-          	resources/icons/track/fromArrow.gif
+              resources/icons/track/fromArrow.gif
           </fromArrow>
           <toArrow>
-          	resources/icons/track/toArrow.gif
+              resources/icons/track/toArrow.gif
           </toArrow>
         </Standard>
-	</Portal>
+    </Portal>
 
     <IndicatorTrack>
       <BlockSegment>

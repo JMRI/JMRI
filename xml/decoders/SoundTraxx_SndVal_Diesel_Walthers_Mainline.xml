@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20171110"/>
   <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                           -->
-  <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.                                    -->
+  <!-- version 1 Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.                                    -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Sound Value Diesel Walthers Mainline OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Mainline Sound Value diesel decoders">
@@ -104,35 +104,35 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
-	  <variable CV="3" item="Accel" default="6" comment="Range 0-255">
-		<decVal max="255"/>
-		<label>Acceleration Rate</label>
-		<label xml:lang="it">Accellerazione (0-255)</label>
-		<label xml:lang="cs">Míra zrychlení</label>
-		<label xml:lang="fr">Accelération (0-255)</label>
-		<label xml:lang="de">Anfahrverzögerung</label>
-		<comment>Range 0-255</comment>
-		<comment xml:lang="it">Valori 0-255</comment>
-		<comment xml:lang="cs">Meze 0-255</comment>
-		<comment xml:lang="fr">Valeur 0-255</comment>
-		<comment xml:lang="de">Wert 0-255</comment>
-		<comment xml:lang="nl">Waarde van 0-255</comment>
-	  </variable>
-	  <variable CV="4" item="Decel" default="5" comment="Range 0-255">
-		<decVal max="255"/>
-		<label>Deceleration Rate</label>
-		<label xml:lang="it">Decellerazione (0-255)</label>
-		<label xml:lang="cs">Míra zpomalení</label>
-		<label xml:lang="fr">Décélération (0-255)</label>
-		<label xml:lang="de">Bremszeit</label>
-		<label xml:lang="nl">Remvertraging</label>
-		<comment>Range 0-255</comment>
-		<comment xml:lang="it">Valori 0-255</comment>
-		<comment xml:lang="cs">Meze 0-255</comment>
-		<comment xml:lang="fr">Valeur 0-255</comment>
-		<comment xml:lang="de">Wert 0-255</comment>
-		<comment xml:lang="nl">Waarde van 0-255</comment>
-	  </variable>
+      <variable CV="3" item="Accel" default="6" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Acceleration Rate</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="cs">Míra zrychlení</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung</label>
+        <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
+        <comment xml:lang="cs">Meze 0-255</comment>
+        <comment xml:lang="fr">Valeur 0-255</comment>
+        <comment xml:lang="de">Wert 0-255</comment>
+        <comment xml:lang="nl">Waarde van 0-255</comment>
+      </variable>
+      <variable CV="4" item="Decel" default="5" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Deceleration Rate</label>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="cs">Míra zpomalení</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit</label>
+        <label xml:lang="nl">Remvertraging</label>
+        <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
+        <comment xml:lang="cs">Meze 0-255</comment>
+        <comment xml:lang="fr">Valeur 0-255</comment>
+        <comment xml:lang="de">Wert 0-255</comment>
+        <comment xml:lang="nl">Waarde van 0-255</comment>
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;     to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
@@ -387,7 +387,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dimming</label>
       </variable>
-	  <!-- begin exchangeable function groups -->
+      <!-- begin exchangeable function groups -->
       <variables>
         <qualifier>
           <variableref>Function Group 2 and 3 Exchange</variableref>
