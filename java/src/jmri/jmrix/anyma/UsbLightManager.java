@@ -1,8 +1,8 @@
-package jmri.jmrix.anyma_dmx.usb;
+package jmri.jmrix.anyma;
 
 import jmri.Light;
 import jmri.Manager;
-import jmri.jmrix.anyma_dmx.AnymaDMX_SystemConnectionMemo;
+import jmri.jmrix.anyma.AnymaDMX_SystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

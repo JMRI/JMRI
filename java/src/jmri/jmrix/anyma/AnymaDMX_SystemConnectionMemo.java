@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma_dmx;
+package jmri.jmrix.anyma;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
@@ -9,7 +9,6 @@ import jmri.Manager.NameValidity;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.anyma_dmx.usb.UsbLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -569,7 +568,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         log.debug("*	AnymaDMX_SystemConnectionMemo.getActionModelResourceBundle() called");
-        return ResourceBundle.getBundle("jmri.jmrix.anyma_dmx.AnymaDMX_ActionListBundle");
+        return ResourceBundle.getBundle("jmri.jmrix.anyma.AnymaDMX_ActionListBundle");
     }
 
     @Override

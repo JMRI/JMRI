@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma_dmx;
+package jmri.jmrix.anyma;
 
 public interface AnymaDMX_Provider {
 

@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma_dmx.usb;
+package jmri.jmrix.anyma;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class Bundle extends jmri.jmrix.anyma_dmx.Bundle {
+public class Bundle extends jmri.jmrix.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.anyma_dmx.usb.Bundle";
+    private static final String name = "jmri.jmrix.anyma.Bundle";
 
     //
     // below here is boilerplate to be copied exactly

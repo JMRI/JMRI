@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma_dmx;
+package jmri.jmrix.anyma;
 
 import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
@@ -17,7 +17,7 @@ public class AnymaDMX_ConnectionTypeList implements jmri.jmrix.ConnectionTypeLis
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.anyma_dmx.AnymaDMX_ConnectionConfig"
+            "jmri.jmrix.anyma.AnymaDMX_ConnectionConfig"
         };
     }
 

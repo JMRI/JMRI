@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma_dmx.usb.configurexml;
+package jmri.jmrix.anyma.configurexml;
 
 import jmri.managers.configurexml.AbstractLightManagerConfigXML;
 import org.jdom2.Element;

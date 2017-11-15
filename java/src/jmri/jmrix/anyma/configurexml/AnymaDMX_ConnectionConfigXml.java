@@ -1,7 +1,7 @@
-package jmri.jmrix.anyma_dmx.configurexml;
+package jmri.jmrix.anyma.configurexml;
 
-import jmri.jmrix.anyma_dmx.AnymaDMX_Adapter;
-import jmri.jmrix.anyma_dmx.AnymaDMX_ConnectionConfig;
+import jmri.jmrix.anyma.AnymaDMX_Adapter;
+import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
 import jmri.jmrix.configurexml.AbstractUsbConnectionConfigXml;
 import org.jdom2.Element;
 import org.slf4j.Logger;

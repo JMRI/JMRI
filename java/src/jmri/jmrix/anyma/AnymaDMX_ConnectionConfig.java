@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma_dmx;
+package jmri.jmrix.anyma;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
