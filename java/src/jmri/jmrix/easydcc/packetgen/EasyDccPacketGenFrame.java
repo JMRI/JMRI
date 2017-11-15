@@ -8,7 +8,7 @@ import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 /**
- * Frame for user input of EasyDCC messages
+ * Frame for user input of EasyDCC messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */

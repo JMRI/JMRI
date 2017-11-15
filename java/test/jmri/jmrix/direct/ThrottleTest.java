@@ -36,6 +36,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF0() {
         boolean f0 = false;
         instance.setF0(f0);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -46,6 +47,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF1() {
         boolean f1 = false;
         instance.setF1(f1);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -56,6 +58,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF2() {
         boolean f2 = false;
         instance.setF2(f2);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -66,6 +69,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF3() {
         boolean f3 = false;
         instance.setF3(f3);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -76,6 +80,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF4() {
         boolean f4 = false;
         instance.setF4(f4);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -86,6 +91,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF5() {
         boolean f5 = false;
         instance.setF5(f5);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -96,6 +102,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF6() {
         boolean f6 = false;
         instance.setF6(f6);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -106,6 +113,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF7() {
         boolean f7 = false;
         instance.setF7(f7);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -116,6 +124,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF8() {
         boolean f8 = false;
         instance.setF8(f8);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -126,6 +135,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF9() {
         boolean f9 = false;
         instance.setF9(f9);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -136,6 +146,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF10() {
         boolean f10 = false;
         instance.setF10(f10);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -146,6 +157,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF11() {
         boolean f11 = false;
         instance.setF11(f11);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**
@@ -156,6 +168,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetF12() {
         boolean f12 = false;
         instance.setF12(f12);
+        jmri.util.JUnitAppender.assertWarnMessage("sendMessage: no connection established");
     }
 
     /**

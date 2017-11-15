@@ -9,7 +9,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.easydcc.EasyDccTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
 

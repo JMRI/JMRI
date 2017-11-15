@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - Lionel TMCC</title><!-- Style -->
+  <title>JMRI Hardware Support - Lionel TMCC</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -65,13 +67,16 @@
         opens automatically the first time a program is run, or you
         can select it from the "Edit" menu.</li>
 
-        <li>Select "TMCC (Lionel)" as the System Manufacturer.</li>
+        <li>Click the + tab and Select "TMCC (Lionel)" as the System Manufacturer.</li>
 
-        <li>Under Settings, pick the name of the serial port that
-        you have connected to the TMCC system.</li>
+        <li>Under Connections, choose from Serial and Simulator.<br>
+        Enter a Prefix and Connection Name to identify this connection.
+        </li>
 
-        <li>If the baud rate doesn't show a fixed value, set it to
-        9600 baud.</li>
+        <li>When using Serial, pick the name of the serial port that
+        you have connected to the TMCC system.<br>
+        If the baud rate doesn't show a fixed value, set it to
+        9,600 baud.</li>
 
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit, click "Yes".</li>
@@ -185,8 +190,9 @@
         <dt>F21</dt>
 
         <dd>Brake</dd>
-      </dl><a name="documentation" id="documentation"></a>
+      </dl>
 
+      <a name="documentation" id="documentation"></a>
       <h3>TMCC New Entry Format Summary</h3>
       <p>Here's a summary on how to enter the address for a new item (eg. Turnouts):</p>
 
@@ -204,32 +210,12 @@
         <tr>
           <td>o</td>
           <td>3</td>
-          <td>Node 0, Bit 3</td>
+          <td>Turnout 3</td>
           <td>TT3</td>
           <td> </td>
           <td> </td>
           <td>1</td>
-          <td>999</td>
-        </tr>
-        <tr>
-          <td>o</td>
-          <td>4003</td>
-          <td>Node 4, Bit 3</td>
-          <td>TT4003</td>
-          <td>n digits (node) + 3 digit (pin)</td>
-          <td>4:3</td>
-          <td>node: 1; bit: 1</td>
-          <td>node: 127; bit: 999</td>
-        </tr>
-        <tr>
-          <td>o</td>
-          <td>4B3</td>
-          <td>Node 4, Bit 3</td>
-          <td>TT4B3</td>
-          <td> </td>
-          <td>4003</td>
-          <td>0B1</td>
-          <td>node: 127; bit: 2048</td>
+          <td>511</td>
         </tr>
       </table>
       <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml

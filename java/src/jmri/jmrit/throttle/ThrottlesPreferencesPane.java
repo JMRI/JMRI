@@ -35,6 +35,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
     private JCheckBox cbHideUndefinedButtons;
     private JCheckBox cbIgnoreThrottlePosition;
     private JCheckBox cbSaveThrottleOnLayoutSave;
+    private JCheckBox cbSilentSteal;
     private JLabel labelApplyWarning;
     private JButton jbApply;
     private JButton jbCancel;
@@ -65,6 +66,12 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         gridBagConstraints13.anchor = GridBagConstraints.WEST;
         gridBagConstraints13.gridy = 99;
 
+        GridBagConstraints gridBagConstraints15 = new GridBagConstraints();
+        gridBagConstraints15.gridx = 0;
+        gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
+        gridBagConstraints15.anchor = GridBagConstraints.WEST;
+        gridBagConstraints15.gridy = 11;
+        
         GridBagConstraints gridBagConstraints14 = new GridBagConstraints();
         gridBagConstraints14.gridx = 0;
         gridBagConstraints14.insets = new Insets(2, 23, 2, 2);
@@ -149,6 +156,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbHideUndefinedButtons = new JCheckBox();
         cbIgnoreThrottlePosition = new JCheckBox();
         cbSaveThrottleOnLayoutSave = new JCheckBox();
+        cbSilentSteal = new JCheckBox();
 
         labelApplyWarning = new JLabel();
 
@@ -163,6 +171,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbIgnoreThrottlePosition.setText(Bundle.getMessage("ExThrottleIgnoreThrottlePosition"));
         labelApplyWarning.setText(Bundle.getMessage("ExThrottleLabelApplyWarning"));
         cbSaveThrottleOnLayoutSave.setText(Bundle.getMessage("ExThrottleSaveThrottleOnLayoutSave"));
+        cbSilentSteal.setText(Bundle.getMessage("ExThrottleSilentSteal"));
 
         ActionListener al = (ActionEvent evt) -> {
             checkConsistancy();
@@ -184,8 +193,8 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
 
         setLayout(new GridBagLayout());
 
-        this.add(cbUseExThrottle, gridBagConstraints1);
-        this.add(cbSaveThrottleOnLayoutSave, gridBagConstraints2);
+        this.add(cbUseExThrottle, gridBagConstraints1);        
+        this.add(cbSaveThrottleOnLayoutSave, gridBagConstraints2);        
         this.add(cbUseRosterImage, gridBagConstraints3);
         this.add(cbResizeWinImg, gridBagConstraints4);
         this.add(cbEnableRosterSearch, gridBagConstraints5);
@@ -197,6 +206,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         this.add(cbIgnoreThrottlePosition, gridBagConstraints10);
         this.add(cbUseToolBar, gridBagConstraints12);
         this.add(cbUseFunctionIcon, gridBagConstraints14);
+        this.add(cbSilentSteal,gridBagConstraints15 );
         this.add(labelApplyWarning, gridBagConstraints13);
     }
 
@@ -214,6 +224,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbEnableAutoLoad.setSelected(tp.isAutoLoading());
         cbHideUndefinedButtons.setSelected(tp.isHidingUndefinedFuncButt());
         cbIgnoreThrottlePosition.setSelected(tp.isIgnoringThrottlePosition());
+        cbSilentSteal.setSelected(tp.isSilentSteal());
     }
 
     private ThrottlesPreferences getThrottlesPreferences() {
@@ -224,6 +235,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         tp.setResizeWindow(cbResizeWinImg.isSelected());
         tp.setUseRosterImage(cbUseRosterImage.isSelected());
         tp.setSaveThrottleOnLayoutSave(cbSaveThrottleOnLayoutSave.isSelected());
+        tp.setSilentSteal(cbSilentSteal.isSelected());
         tp.setEnableRosterSearch(cbEnableRosterSearch.isSelected());
         tp.setAutoLoad(cbEnableAutoLoad.isSelected());
         tp.setHideUndefinedFuncButt(cbHideUndefinedButtons.isSelected());

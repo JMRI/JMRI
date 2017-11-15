@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * User interface for adding an item to the log file.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2007
-  */
+ */
 public class LogPanel extends JPanel {
 
     // member declarations
-    javax.swing.JLabel label = new javax.swing.JLabel("Message:");
-    javax.swing.JButton sendButton = new javax.swing.JButton("Add");
+    javax.swing.JLabel label = new javax.swing.JLabel(Bundle.getMessage("LogMessageLabel"));
+    javax.swing.JButton sendButton = new javax.swing.JButton(Bundle.getMessage("AddButtonText"));
     javax.swing.JTextField textField = new javax.swing.JTextField(40);
 
     public LogPanel() {
@@ -28,7 +28,7 @@ public class LogPanel extends JPanel {
         add(p1);
         add(sendButton);
 
-        sendButton.setToolTipText("Add message to the log file");
+        sendButton.setToolTipText(Bundle.getMessage("LogSendToolTip"));
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {

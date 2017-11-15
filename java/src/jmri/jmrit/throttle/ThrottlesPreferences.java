@@ -24,6 +24,7 @@ public class ThrottlesPreferences {
     private boolean _hideUndefinedFunButton = false;
     private boolean _ignoreThrottlePosition = true;
     private boolean _saveThrottleOnLayoutSave = true;
+    private boolean _isSilentSteal = false;
     protected boolean dirty = false;
 
     private Dimension _winDim = new Dimension(800, 600);
@@ -90,6 +91,9 @@ public class ThrottlesPreferences {
         if ((a = e.getAttribute("isIgnoringThrottlePosition")) != null) {
             setIgnoreThrottlePosition(a.getValue().compareTo("true") == 0);
         }
+        if ((a = e.getAttribute("isSilentSteal")) != null) {
+            setSilentSteal(a.getValue().compareTo("true") == 0);
+        }
         this.dirty = false;
     }
 
@@ -121,6 +125,7 @@ public class ThrottlesPreferences {
         e.setAttribute("isAutoLoading", "" + isAutoLoading());
         e.setAttribute("isHidingUndefinedFunctionButtons", "" + isHidingUndefinedFuncButt());
         e.setAttribute("isIgnoringThrottlePosition", "" + isIgnoringThrottlePosition());
+        e.setAttribute("isSilentSteal", "" + isSilentSteal());
         return e;
     }
 
@@ -136,6 +141,7 @@ public class ThrottlesPreferences {
         setAutoLoad(tp.isAutoLoading());
         setHideUndefinedFuncButt(tp.isHidingUndefinedFuncButt());
         setIgnoreThrottlePosition(tp.isIgnoringThrottlePosition());
+        setSilentSteal(tp.isSilentSteal());
 
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
@@ -156,7 +162,8 @@ public class ThrottlesPreferences {
                 || isUsingRosterImage() != tp.isUsingRosterImage()
                 || isEnablingRosterSearch() != tp.isEnablingRosterSearch()
                 || isAutoLoading() != tp.isAutoLoading()
-                || isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt());
+                || isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt())
+                || isSilentSteal() != tp.isSilentSteal();
     }
 
     public void save() {
@@ -301,6 +308,16 @@ public class ThrottlesPreferences {
         return _saveThrottleOnLayoutSave;
     }
 
+    public boolean isSilentSteal() {
+        return _isSilentSteal;
+    }
+    
+    
+    public void setSilentSteal(boolean b) {
+        _isSilentSteal = b;
+        this.dirty = true;
+    }
+    
     /**
      * Add an AddressListener. AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address

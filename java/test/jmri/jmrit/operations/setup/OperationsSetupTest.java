@@ -57,17 +57,17 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertEquals("Operations Setup Constant NORTH", 4, Setup.NORTH);
         Assert.assertEquals("Operations Setup Constant SOUTH", 8, Setup.SOUTH);
 
-        Assert.assertEquals("Operations Setup Constant EAST_DIR", "East", Setup.EAST_DIR);
-        Assert.assertEquals("Operations Setup Constant WEST_DIR", "West", Setup.WEST_DIR);
-        Assert.assertEquals("Operations Setup Constant NORTH_DIR", "North", Setup.NORTH_DIR);
-        Assert.assertEquals("Operations Setup Constant SOUTH_DIR", "South", Setup.SOUTH_DIR);
+        Assert.assertEquals("Operations Setup Constant EAST_DIR", Bundle.getMessage("East"), Setup.EAST_DIR);
+        Assert.assertEquals("Operations Setup Constant WEST_DIR", Bundle.getMessage("West"), Setup.WEST_DIR);
+        Assert.assertEquals("Operations Setup Constant NORTH_DIR", Bundle.getMessage("North"), Setup.NORTH_DIR);
+        Assert.assertEquals("Operations Setup Constant SOUTH_DIR", Bundle.getMessage("South"), Setup.SOUTH_DIR);
 
-        Assert.assertEquals("Operations Setup Constant DESCRIPTIVE", "Descriptive", Setup.DESCRIPTIVE);
+        Assert.assertEquals("Operations Setup Constant DESCRIPTIVE", Bundle.getMessage("Descriptive"), Setup.DESCRIPTIVE);
         /* Should be fixed in setup to AAR Codes */
-        Assert.assertEquals("Operations Setup Constant AAR", "ARR Codes", Setup.AAR);
+        Assert.assertEquals("Operations Setup Constant AAR", Bundle.getMessage("ArrCodes"), Setup.AAR);
 
-        Assert.assertEquals("Operations Setup Constant MONOSPACED", "Monospaced", Setup.MONOSPACED);
-        Assert.assertEquals("Operations Setup Constant LENGTHABV", "'", Setup.LENGTHABV);
+        Assert.assertEquals("Operations Setup Constant MONOSPACED", Bundle.getMessage("Monospaced"), Setup.MONOSPACED);
+        Assert.assertEquals("Operations Setup Constant LENGTHABV", Bundle.getMessage("LengthSymbol"), Setup.LENGTHABV);
 
         Assert.assertEquals("Operations Setup Constant BUILD_REPORT_MINIMAL", "1", Setup.BUILD_REPORT_MINIMAL);
         Assert.assertEquals("Operations Setup Constant BUILD_REPORT_NORMAL", "3", Setup.BUILD_REPORT_NORMAL);

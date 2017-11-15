@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>WM 1980</name>
+  <date>1980</date>
+  <reference>As described in the 1980 Chessie System Operating Rules.</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
+        <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
+        <email>gpmccartney@gmail.com</email>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+
+    <revision>
+
+        <revnumber>1</revnumber>
+        <date>2016-12-15</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Initial version of the signal set.</revremark>
+    </revision>
+    
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule W-281</rule>
+      <indication>Proceed</indication>
+      <reference>Page 142</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+	  <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Diverging</name>
+      <rule>Rule W-282</rule>
+      <indication>Proceed approaching next signal prepared to take diverging route.</indication>
+      <reference>Page 142</reference>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+	  <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Clear</name>
+      <rule>Rule W-283</rule>
+      <indication>Proceed through crossovers, turnouts, sidings, interlocking limits, and over power switches at speed specified in special instructions for that location; then proceed at maximum authorized speed.</indication>
+      <reference>Page 143</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule W-285</rule>
+      <indication>Proceed prepared to stop at next signal.  Train or engine exceeding medium speed must take action at or before reaching approach indication to reduce to that speed.</indication>
+      <reference>Page 143</reference>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+	  <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Approach</name>
+      <rule>Rule W-286</rule>
+      <indication>Proceed through crossovers, turnouts, sidings, interlocking limits, and over power switches at speed specified in special instructions for that location; then proceed at not exceeding medium speed prepared to stop at next signal.</indication>
+      <reference>Page 144</reference>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Clear</name>
+      <rule>Rule W-287</rule>
+      <indication>Proceed; Slow speed through crossovers, turnouts, sidings, interlocking limits, and over power switches; then proceed at maximum authorized speed.</indication>
+      <reference>Page 144</reference>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule W-288</rule>
+      <indication>Slow speed through crossovers, turnouts, sidings, interlocking limits, and over power switches; then proceed at not exceeding medium speed prepared to stop at next signal.</indication>
+      <reference>Page 144</reference>
+	  <comment>The mast signal shown here is a non-standard indication.  The rule book shows this as an approach indication.  Yet based on David Hughes' article in the WMHS Magazine show it was called Slow Approach and used at Emory Grove for west bound trains crossing over from track 2 to track 1 and entering the Hanover Subdivision.  Interestingly westbound trains on track 1 would receive a standard Approach when routed for the Hanover Subdivision.</comment>
+      <speed>Slow</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule W-290</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 145</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule W-291</rule>
+      <indication>Stop; then proceed at restricted speed.</indication>
+      <reference>Page 145</reference>
+      <speed>Stop</speed>
+      <speed2>Restricted</speed2>
+	  <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule W-292</rule>
+      <indication>Stop and stay.</indication>
+      <reference>Page 146</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+	
+	<aspect>
+      <name>Stop-Throw Switch</name>
+      <rule>Rule W-293</rule>
+      <indication>Stop. Throw the switch.</indication>
+      <reference>Page 100 WM 1973 Rule Book</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-USS-R2-2-arm-absolute.xml"/>
+	<appearancefile href="appearance-USS-R2-1-arm-high-marker-absolute.xml"/>
+	<appearancefile href="appearance-USS-R2-1-arm-low-marker-absolute.xml"/>
+	<appearancefile href="appearance-USS-R2-1-arm-absolute.xml"/>
+	<appearancefile href="appearance-USS-R2-1-arm-low-marker-permissive.xml"/>
+	<appearancefile href="appearance-USS-R2-1-arm-permissive.xml"/>
+	<appearancefile href="appearance-WM-Dwarf-absolute.xml"/>
+  </appearancefiles>
+
+</aspecttable>
+

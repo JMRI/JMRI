@@ -43,7 +43,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         // the following fails on a 13" laptop
         //enterClickAndLeave(f.addButton);
         // confirm panel creation
-        JmriJFrame ref = JmriJFrame.getFrame("Add Route");
+        JmriJFrame ref = JmriJFrame.getFrame(Bundle.getMessage("TitleRouteAdd"));
         Assert.assertNotNull("route edit frame", ref);
 
         // create edit route frame

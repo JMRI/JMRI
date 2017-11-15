@@ -401,7 +401,7 @@ Automated conditional updates based on versionID or productID are not possible
 as these values are <a href="#id">not stored</a> in the roster entry.
 An interactive update process is now available in these cases
 and uses a special syntax:
-<span class="since">Since <a href="/releasenotes/jmri4.9.x.shtml" target="_blank">JMRI 4.9.x</a></span>
+<span class="since">Since <a href="/releasenotes/jmri4.9.5.shtml" target="_blank">JMRI 4.9.5</a></span>
 </p>
       <pre style="font-family: monospace;">
     &lt;model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000&#124;June 2007&#124;Jan 2012"&gt;
