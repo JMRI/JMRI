@@ -19,6 +19,7 @@ public class UsbNodeTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
+    @Test
     public void testCTor() {
         UsbNode t = new UsbNode("test",null,null);
         Assert.assertNotNull("exists",t);
