@@ -1,4 +1,4 @@
-package jmri.jmrix.acela.configurexml;
+package jmri.jmrix.anyma.configurexml;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
