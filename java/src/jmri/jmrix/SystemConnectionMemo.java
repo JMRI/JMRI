@@ -5,7 +5,6 @@ import java.util.Enumeration;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
 import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
