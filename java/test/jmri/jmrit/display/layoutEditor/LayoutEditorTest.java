@@ -711,6 +711,9 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testSetHighlightSelectedBlockTrue() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         le.setHighlightSelectedBlock(true);
+        // setHighlightSelectedBlock performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", le.getHighlightSelectedBlock());
     }
 
@@ -718,6 +721,9 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testSetHighlightSelectedBlockFalse() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         le.setHighlightSelectedBlock(false);
+        // setHighlightSelectedBlock performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", le.getHighlightSelectedBlock());
     }
 
