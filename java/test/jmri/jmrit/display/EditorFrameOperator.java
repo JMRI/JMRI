@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-
+import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
  * Jemmy Operator for Editor panels swing interfaces.
@@ -14,34 +14,65 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 public class EditorFrameOperator extends JFrameOperator {
 
-    public EditorFrameOperator(String title){
-       super(title);
+    public EditorFrameOperator(String title) {
+        super(title);
     }
 
-    public EditorFrameOperator(JFrame frame){
-       super(frame);
+    public EditorFrameOperator(JFrame frame) {
+        super(frame);
     }
 
-    public void closeFrameWithConfirmations(){
+    public void closeFrameWithConfirmations() {
         // if OK to here, close window
         this.requestClose();
 
-        // that pops dialog, find and press Delete
-        JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));
+        dismissClosingDialogs();
+    }
 
-        // Find the button that deletes the panel
-        JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonDeletePanel"));
+    public void deleteViaFileMenuWithConfirmations() {
+        JMenuOperator jmo = new JMenuOperator(this, Bundle.getMessage("MenuFile"));
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuFile") + "/" + Bundle.getMessage("DeletePanel"), "/");
+        dismissClosingDialogs();
 
-        // Click button to delete panel and close window
-        bo.push();
+    }
+
+    private void dismissClosingDialogs() {
+        // the reminder dialog doesn't appear every time we close, so put
+        // pressing the button in that dialog into a thread by itself.  If
+        // the dialog appears, it will get clicked, but it's not an error
+        // if it doesn't appear.
+        Thread t = new Thread(() -> {
+            try {
+                JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));
+                // Find the button that deletes the panel
+                JButtonOperator bo = new JButtonOperator(d, Bundle.getMessage("ButtonDeletePanel"));
+
+                // Click button to delete panel and close window
+                bo.push();
+            } catch (Exception e) {
+                // exceptions in this thread are not considered an error.
+                return;
+            }
+        });
+
+        t.start();
 
         // that pops dialog, find and press Yes - Delete
-        d = new JDialogOperator(Bundle.getMessage("DeleteVerifyTitle"));
+        JDialogOperator d = new JDialogOperator(Bundle.getMessage("DeleteVerifyTitle"));
 
         // Find the button that deletes the panel
-        bo = new JButtonOperator(d,Bundle.getMessage("ButtonYesDelete"));
+        JButtonOperator bo = new JButtonOperator(d, Bundle.getMessage("ButtonYesDelete"));
 
         // Click button to delete panel and close window
         bo.push();
+
+        // join t
+        /* try {
+            t.join();
+        } catch( java.lang.InterruptedException ie) {
+           // do nothing, this isn't an error in this test.
+           return;
+        }*/
     }
+
 }

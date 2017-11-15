@@ -4,7 +4,9 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 
 /**
  *
@@ -12,10 +14,13 @@ import org.junit.Test;
  */
 public class UsbNodeTest {
 
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
     @Test
     public void testCTor() {
-        UsbNode t = new UsbNode("test",null,null);
-        Assert.assertNotNull("exists",t);
+        UsbNode t = new UsbNode("test", null, null);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -30,5 +35,4 @@ public class UsbNodeTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(UsbNodeTest.class);
-
 }

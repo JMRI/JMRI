@@ -5,10 +5,9 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;//
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -22,13 +21,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.event.ChangeEvent;
+import jmri.InstanceManager;
+import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.swing.ButtonSwatchColorChooserPanel;
-
+import jmri.util.swing.JmriBeanComboBox;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * Frame to create/edit a Control Panel shape PositionableShape object.
+ *
  * @author Pete Cressman Copyright (c) 2012
  */
 public abstract class DrawFrame extends jmri.util.JmriJFrame {
@@ -44,7 +49,8 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     JRadioButton _fillColorButon;
     JSlider _lineSlider;
     JSlider _alphaSlider;
-    JTextField _sensorName = new JTextField(30);
+    private transient JmriBeanComboBox _sensorBox = new JmriBeanComboBox(
+        InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     JRadioButton _hideShape;
     JRadioButton _changeLevel;
     JComboBox<String> _levelComboBox;
@@ -198,29 +204,17 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         JPanel p0 = new JPanel();
         p0.add(new JLabel(Bundle.getMessage("SensorMsg")));
         panel.add(p0);
-        p.add(new JLabel(Bundle.getMessage("VisibleSensor") + ":"));
-        p.add(_sensorName);
-        _sensorName.addActionListener((ActionEvent e) -> {
-            String msg = _shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());
+        p.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("VisibleSensor"))));
+        _sensorBox.setFirstItemBlank(true); // already filled with names of all existing sensors
+        p.add(_sensorBox);
+        _sensorBox.addActionListener((ActionEvent e) -> {
+            String msg = _shape.setControlSensor(_sensorBox.getDisplayName(), _hideShape.isSelected(), _shape.getChangeLevel());
+            log.debug("Setting sensor to {} after action", _sensorBox.getDisplayName());
             if (msg != null) {
                 JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
-                _sensorName.setText("");
+                _sensorBox.setText("");
             }
-        });
-        _sensorName.addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                updateShape();
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                String msg = _shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());
-                if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
-                    _sensorName.setText("");
-                }
-            }
+            updateShape();
         });
         panel.add(p);
 
@@ -270,6 +264,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
     /**
      * Create a panel for setting parameters for the PositionableShape.
+     *
      * @return a parameters panel
      */
     protected JPanel makeParamsPanel() {
@@ -279,8 +274,8 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Set parameters on the popup that will edit the PositionableShape Called
-     * both for creation and editing. (don't make a copy for Cancel)
+     * Set parameters on the popup that will edit the PositionableShape.
+     * Called both for creation and editing. (don't make a copy for Cancel)
      */
     protected void setDisplayParams() {
         _contentPanel.removeAll();
@@ -305,7 +300,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
         _contentPanel.add(makeParamsPanel());
         _contentPanel.add(makeSensorPanel());
-        _sensorName.setText(_shape.getSensorName());
+        _sensorBox.setText(_shape.getSensorName());
         _levelComboBox.setSelectedIndex(_shape.getChangeLevel());
         if (_shape.isHideOnSensor()) {
             _hideShape.setSelected(true);
@@ -318,7 +313,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Editing an existing shape (only make copy for cancel of edits)
+     * Editing an existing shape (only make copy for cancel of edits).
      *
      * @param ps shape
      */
@@ -479,4 +474,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
      * @param ed editor making the call
      */
     abstract protected void makeFigure(MouseEvent event, jmri.jmrit.display.Editor ed);
+
+    private final static Logger log = LoggerFactory.getLogger(DrawFrame.class);
+
 }
