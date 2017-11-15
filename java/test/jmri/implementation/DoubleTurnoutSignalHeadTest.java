@@ -15,6 +15,8 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
+import jmri.util.MockPropertyChangeListener;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,24 +29,7 @@ import org.junit.Test;
  */
 public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
 
-    interface MockablePropertyChangeListener {
-        void onChange(String property, Object newValue);
-    }
-
-    class FakePropertyChangeListener implements PropertyChangeListener {
-        MockablePropertyChangeListener m;
-
-        FakePropertyChangeListener() {
-            m = mock(MockablePropertyChangeListener.class);
-        }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-            m.onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
-        }
-    }
-
-    protected FakePropertyChangeListener l = new FakePropertyChangeListener();
+    protected MockPropertyChangeListener l = new MockPropertyChangeListener();
 
     @Test
     public void testCTor() {

@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -172,6 +173,8 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        ct.addName("Boxcar");
 
         loadLocations();
 
@@ -181,6 +184,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
+       
     }
 
     // The minimal setup for log4J

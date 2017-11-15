@@ -47,8 +47,10 @@ Standards and Recommendations Section, Layout Control Specifications:
 <p>Note: <strong>C/MRI</strong> and <strong>CMRI</strong> (without the slash)
 are used interchangeably.  The C/MRI communication protocol is referred to as
 <strong>CMRInet</strong>.</p>
-<p style="margin-left:0em">The documentation below is divided into sections;
-for easy access click an item in this list:</p>
+<ul>
+<li>The documentation below is divided into sections;
+  for easy access click an item in this list:</li>
+</ul>
 
 <div class="toc">
 <ul>
@@ -70,9 +72,9 @@ for easy access click an item in this list:</p>
       <li><a href="#L363">Editing a Node Definition</a></li>
       <li><a href="#L391">C/MRI Input and Output Bits</a> 
         <ul>
-          <li><a href="#L395">Inputs - Sensor Table</a></li>
-          <li><a href="#L405">Outputs - Turnout Table</a></li>
-          <li><a href="#L419">Outputs - Light Table</a></li>
+          <li><a href="#L395">Inputs - Sensors Table</a></li>
+          <li><a href="#L405">Outputs - Turnouts Table</a></li>
+          <li><a href="#L419">Outputs - Lights Table</a></li>
           <li><a href="#L429">Unique Output Bits</a></li>
           <li><a href="#L447">Alternate Numbering Scheme for C/MRI System Names</a></li>
         </ul>
@@ -89,34 +91,22 @@ for easy access click an item in this list:</p>
       <li><a href="#L568">CMRInet Manager</a></li>
       <li><a href="#L580">CMRInet Packet Monitor</a></li>
       <li><a href="#L597">CMRInet Network Metrics</a></li>
+    </ul>
+    <ul>
       <li><a href="#L609">Listing C/MRI Bit Assignments</a></li>
+    </ul>
       <li><a href="#L624">Diagnostics</a></li>
       <li style="margin-left:0;"><a href="#L632">CMRInet Network
       Connections</a></li>
       <li><a href="#L652">Using An Ethernet Network Connection</a></li>
       <li><a href="#L662">Running JMRI when disconnected from your C/MRI
         system</a></li>
-      <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>
-    </ul>
-  </li>
-  <li><a href="#L737">Documentation</a>
-    <ul>
+      <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>  
       <li><a href="#L739">JMRI Help</a></li>
       <li><a href="#L746">Third Party info</a></li>
+      <li><a href="#L145">Supported Hardware</a></li>
     </ul>
-  </li>
-</ul>
-
-  <a name="hardware" id="hardware"></a> 
-
-  <h2 id="L145">Supported Hardware</h2>
-  <ul>
-    <li>Chubb C/MRI USIC</li>
-    <li>Chubb C/MRI SMINI</li>
-    <li>Chubb C/MRI SUSIC</li>
-    <li>Model Railroad Control Systems (MRCS) CPNODE</li>
-  </ul>
-
+    
   <h2 id="L164">Limitations</h2>
   <p>Original Chubb IBEC and UBEC interfaces for older PC system buses (ISA,
   PCI) are not supported.</p>
@@ -494,7 +484,7 @@ for easy access click an item in this list:</p>
   appropriate data table. Tables are accessed by selecting from the PanelPro
   main screen Tools -&gt; Tables -&gt; {table name}</p>
 
-  <h3 id="L395">Inputs - Sensor Table</h3>
+  <h3 id="L395">Inputs - Sensors Table</h3>
   <p>Sensors provide input to JMRI about conditions on the layout; a button is
   pushed, a block is occupied, etc.
   <strong>When you see a "Sensor" reference, think "input bit" or "input
@@ -512,7 +502,7 @@ for easy access click an item in this list:</p>
   "active" when its assigned input bit is On and "inactive" when its input bit
   is Off.</p>
 
-  <h3 id="L405">Outputs - Turnout Table</h3>
+  <h3 id="L405">Outputs - Turnouts Table</h3>
   <p>JMRI refers to C/MRI output bits as Turnouts. Turnouts are on/off switches
   that JMRI can change to control things on the layout.
   <strong>When you see a "Turnout" reference, think "output bit" or "output
@@ -534,7 +524,7 @@ for easy access click an item in this list:</p>
   accessed by selecting <strong>Turnout Table</strong> in the Tools menu from
   the PanelPro main window.</p>
 
-  <h3 id="L419">Outputs - Light Table</h3>
+  <h3 id="L419">Outputs - Lights Table</h3>
   <p>Similarly, a new Light may be created via the JMRI Light Table
 	<strong>When you see a "Light" reference, think "output bit" or "output
   port".</strong>
@@ -573,10 +563,10 @@ for easy access click an item in this list:</p>
   start with the connection prefix, "C". This assigns the System name to an
   established CMRInet connection.</p>
 
-  <p>The next character in the System Name is the type of physical entity the
+  The next character in the System Name is the type of physical entity the
   bit or port is connected. Sensors are designated with a "<strong>S"</strong>,
   Turnouts with a "<strong>T"</strong>, and Lights with an
-  "<strong>L</strong>".</p>
+  "<strong>L</strong>".
 
   <p>Next, is the node address as a decimal value, in the range of 0-127. While
   a node address of zero does not need to be inserted, it is preferred to
@@ -618,7 +608,7 @@ for easy access click an item in this list:</p>
   addressed.</p>
 
   <h2 id="L459">Creating a Sensor Input</h2>
-  <p>To create a sensor input, open the Sensor table by selecting
+  <p>To create a sensor input, open the Sensors table by selecting
   <strong>T</strong><strong>ools -&gt; Tables -&gt; Sensors</strong> in the
   main PanelPro menu.</p>
 
@@ -649,7 +639,7 @@ for easy access click an item in this list:</p>
   the node.</p>
 
   <h2 id="L484">Creating a Turnout Output</h2>
-  <p>To create a turnout output, open the Turnout table by selecting
+  <p>To create a turnout output, open the Turnouts table by selecting
   <strong>Tools -&gt; Tables -&gt; Turnouts</strong> in the main PanelPro
   menu.</p>
 
@@ -802,7 +792,7 @@ for easy access click an item in this list:</p>
 
   <h2 id="L547">Creating a Light Output</h2>
 
-  <p>To create a Lights output, open the Light table by selecting Tools -&gt;
+  <p>To create a Lights output, open the Lights table by selecting Tools -&gt;
   Tables -&gt; Lights in the main PanelPro menu.</p>
 
   <p><img alt="" src="images/lightstable.png" width="1123" height="505"></p>
@@ -938,20 +928,21 @@ for easy access click an item in this list:</p>
 
   <p>The following screen shows polling with responses for nodes 20 and 21. </p>
 
-  <p><img alt="" src="images/cmrinetmonitor-pollrespwtext.png" width="858"
-  height="518"></p>
+  <p><img alt="" src="images/cmrinetmonitor-pollresponse.png" width="997"
+  height="480"></p>
 
   <p>There are display option checkboxes which provide additional information
   and formatting for the messages.</p>
 
-  <p>If the<strong>Show Timestamps</strong> check box option is checked, each
+  <p>If the <strong>Show Timestamps</strong> check box option is checked, each
   message is prefixed with the system time in the form of hh:mm:ss:mss. The
   message type (e.g Receive) and node address (ua) are displayed next. The "IB"
   are the input data bytes, displayed as hexadecimal digits, one digit per 8
   bit byte.</p>
 
+
   <p><img alt="" src="images/cmrinetmonitor-pollresponsetimestamp.png"
-  width="1040" height="585"></p>
+  width="1040" height="559"></p>
 
   <p>Here are examples of the Initialization messages for each of the node
   types.</p>
@@ -962,6 +953,7 @@ for easy access click an item in this list:</p>
   <p><img alt="" src="images/cmrinetinit-SMINI.png" width="427"
   height="169"></p>
 
+
   <p></p>
 
   <p>The following screen shows the node initialization message sequence for
@@ -970,11 +962,11 @@ for easy access click an item in this list:</p>
   the node type (NDP) of C which is a cpNode. DL is the delay value, and Opts
   are node options entered in the node configuration window. A
   <strong>Transmit</strong> message follows with the node address (ua) of 20.
-  OB are the output data bytes as hexadecimal values. Five polls are seen
+  OB are the output data bytes as hexadecimal values. Polls are seen
   followed by the poll/response sequence.</p>
 
   <p><img alt="" src="images/cmrinetmonitor-pollinitialization.png"
-  width="1040" height="586"></p>
+  width="904" height="559"></p>
 
   <p>If a node goes off line and stops responding to polls, JMRI will initiate
   an initialization sequence consisting of five polls. If five polls result in
@@ -982,11 +974,13 @@ for easy access click an item in this list:</p>
   poll/init/transmit message sequence is repeated until the node comes back on
   line.</p>
 
-  <p><img alt="" src="images/cmrinetmonitor-polltimeoutinit.png" width="1040"
-  height="586"></p>
+  <p><img alt="" src="images/cmrinetmonitor-polltimeoutinit.png" width="1018"
+  height="561"></p>
 
   <p>The following screen shows a poll to node 20, followed by a response, then
   output bytes sent to the node.</p>
+  
+  
 
 <p><img alt="" src="images/cmrinetmonitor-transmitmessage.png" width="1040"
 height="586"></p>
@@ -995,12 +989,10 @@ height="586"></p>
   of options is:</p>
 
   <p style="margin-left:2em;"><strong>timestamp</strong>s as hh:mm:ss:mss,
-  <strong>time diff</strong>(erence)<strong></strong> in milliseconds between
-  messages, <strong>raw data</strong> in hexadecimal, <strong>data
-  message</strong></p>
+  <strong>raw data</strong> in hexadecimal, <strong>data message</strong></p>
 
-  <p><img alt="" src="images/cmrinetmonitor-pollresponseraw.png" width="1040"
-  height="586"></p>
+  <p><img alt="" src="images/cmrinetmonitor-timestampraw.png" width="997"
+  height="480"></p>
 
   <p>CMRInet messages can be filtered from display by clicking the
   <strong>Filter Packets</strong> button. The packet filter window lets you
@@ -1055,7 +1047,7 @@ height="586"></p>
   <p><img alt="" src="images/listbitassignment.png" width="773"
   height="726"></p>
 
-  <h2 id="L624">Diagnostics</h2>
+  <h1 id="L624">Diagnostics</h2>
 
   <p>JMRI supports the two automated diagnostic procedures mentioned in Chapter
   6 of Bruce Chubb's C/MRI User's Manual, Version 3.0. Diagnostics are useful
@@ -1075,6 +1067,7 @@ height="586"></p>
 
   <p>Click "Edit Node" to update, then close the pane.</p>
 
+  <h1 id="L632">CMRInet Network Connections</h1>
   <h2>Send Command
   <img alt="" src="images/CMRISendSerialCommand.png" width="246"
           height="146" align ="right"></h2>
@@ -1227,7 +1220,7 @@ height="586"></p>
   <p><img alt="" src="images/example-sensortable.png" width="1153"
   height="449"></p>
 
-  <p>Outputs are defined in the Turnout table. As described earlier, the name
+  <p>Outputs are defined in the Turnouts table. As described earlier, the name
   "turnout" is historical. Again, just think of turnouts as the output ports.
   Output states are Closed for Off, and Thrown for On. If the port is connected
   to an actual turnout, Closed would normally be "Normal" and Thrown would be
@@ -1264,12 +1257,20 @@ height="586"></p>
   <a name="documentation" id="documentation"></a>
   <h2 id="L737">Documentation</h2>
 
-  <h3 id="L739">JMRI Help</h3>
+  <h2 id="L739">JMRI Help</h2>
   <ul>
     <li><a href="Signals.shtml">C/MRI signals</a></li>
   </ul>
 
-  <h3 id="L746">Third Party info</h3>
+  <h2 id="L746">Third Party info</h2>
+
+  <h2 id="L145">Supported Hardware</h2>
+      <ul>
+        <li>Chubb C/MRI USIC</li>
+        <li>Chubb C/MRI SMINI</li>
+        <li>Chubb C/MRI SUSIC</li>
+        <li>Model Railroad Control Systems (MRCS) CPNODE</li>
+     </ul>
 
   <p>For more information on C/MRI (including the C/MRI User Manual), please
   see:</p>
@@ -1277,16 +1278,9 @@ height="586"></p>
     <li><a href="http://www.jlcenterprises.net/">JLC Enterprises web
     site</a></li>
     <li><a href="http://www.sliqelectronics.com/">SLIQ Electronics</a></li>
-    <li><a href="https://groups.yahoo.com/neo/groups/CMRI_Users/info">C/MRI
+    <li><a href="http://groups.yahoo.com/neo/groups/CMRI_Users/info">C/MRI
       Users Yahoo group</a></li>
     <li><a href="http://www.modelrailroadcontrolsystems.com/">Model Railroad
       Control Systems (MRCS)</a></li>
   </ul>
-
-  <!--#include virtual="/Footer" -->
-</div>
-<!-- closes #mainContent-->
-</div>
-<!-- closes #mBody-->
-</body>
-</html>
+  

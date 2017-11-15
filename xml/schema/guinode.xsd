@@ -102,7 +102,7 @@
     <xs:complexType>
       <xs:sequence>
 
-        <xs:element name="name" minOccurs="0" maxOccurs="1">
+        <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation><xs:documentation>
           Name or title of this set of controls
           </xs:documentation></xs:annotation>

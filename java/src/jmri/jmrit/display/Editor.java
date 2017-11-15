@@ -165,7 +165,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     boolean showCloseInfoMessage = true; //display info message when closing panel
 
-    protected ArrayList<Positionable> _contents = new ArrayList<Positionable>();
+    protected ArrayList<Positionable> _contents = new ArrayList<>();
     protected JLayeredPane _targetPanel;
     private JFrame _targetFrame;
     private JScrollPane _panelScrollPane;
@@ -217,9 +217,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected boolean _pastePending = false;
 
     // map of icon editor frames (incl, icon editor) keyed by name
-    protected HashMap<String, JFrameItem> _iconEditorFrame = new HashMap<String, JFrameItem>();
+    protected HashMap<String, JFrameItem> _iconEditorFrame = new HashMap<>();
 
-    private static volatile ArrayList<Editor> editors = new ArrayList<Editor>();
+    private static volatile ArrayList<Editor> editors = new ArrayList<>();
     // store panelMenu state so preference is retained on headless systems
     private boolean panelMenuIsVisible = true;
 
@@ -251,7 +251,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     NamedIcon _newIcon;
     boolean _ignore = false;
     boolean _delete;
-    HashMap<String, String> _urlMap = new HashMap<String, String>();
+    HashMap<String, String> _urlMap = new HashMap<>();
 
     public NamedIcon loadFailed(String msg, String url) {
         log.debug("loadFailed _ignore= {} {}", _ignore, msg);
@@ -637,7 +637,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             Graphics2D g2d = null;
             if (g instanceof Graphics2D) {
                 g2d = (Graphics2D) g;
-                g2d.scale(_paintScale, _paintScale);                
+                g2d.scale(_paintScale, _paintScale);
             }
 
             super.paint(g);
@@ -647,11 +647,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (g2d != null) {
                 stroke = g2d.getStroke();
             }
-            Color color = g.getColor();                
+            Color color = g.getColor();
             if (_selectRect != null) {
                 //Draw a rectangle on top of the image.
                 if (g2d != null) {
-                    g2d.setStroke(_selectRectStroke);                    
+                    g2d.setStroke(_selectRectStroke);
                 }
                 g.setColor(_selectRectColor);
                 g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
@@ -659,7 +659,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_selectionGroup != null) {
                 g.setColor(_selectGroupColor);
                 if (g2d != null) {
-                    g2d.setStroke(new BasicStroke(2.0f));                    
+                    g2d.setStroke(new BasicStroke(2.0f));
                 }
                 for (Positionable p : _selectionGroup) {
                     if (!(p instanceof PositionableShape)) {
@@ -674,7 +674,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_highlightcomponent != null) {
                 g.setColor(_highlightColor);
                 if (g2d != null) {
-                    g2d.setStroke(new BasicStroke(2.0f));                    
+                    g2d.setStroke(new BasicStroke(2.0f));
                 }
                 g.drawRect(_highlightcomponent.x, _highlightcomponent.y,
                         _highlightcomponent.width, _highlightcomponent.height);
@@ -1170,48 +1170,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         //if (showCoordinates()) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
-        JMenuItem jmi = null;
+        JMenuItem edit = null;
         if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
             MemoryIcon pm = (MemoryIcon) p;
 
-            jmi = edit.add("x = " + pm.getOriginalX());
-            jmi.setEnabled(false);
+            edit = new JMenuItem(Bundle.getMessage(
+                "EditLocationXY", pm.getOriginalX(), pm.getOriginalY()));
 
-            jmi = edit.add("y = " + pm.getOriginalY());
-            jmi.setEnabled(false);
-
-            edit.add(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
+            edit.addActionListener(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
         } else {
-            jmi = edit.add("x = " + p.getX());
-            jmi.setEnabled(false);
-
-            jmi = edit.add("y = " + p.getY());
-            jmi.setEnabled(false);
-
-            edit.add(CoordinateEdit.getCoordinateEditAction(p));
+            edit = new JMenuItem(Bundle.getMessage(
+                "EditLocationXY", p.getX(), p.getY()));
+            edit.addActionListener(CoordinateEdit.getCoordinateEditAction(p));
         }
         popup.add(edit);
         return true;
         //}
         //return false;
-    }
-
-    /**
-     * Display the rotation of the Positionable item and provide a dialog menu
-     * item to edit it.
-     *
-     * @param p     The item to add the menu item to
-     * @param popup The menu item to add the action to
-     * @return always returns true
-     */
-    public boolean setShowRotationMenu(Positionable p, JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("Rotation", "..."));
-        JMenuItem jmi = edit.add(Bundle.getMessage("Rotation", " = " + p.getDegrees()));
-        jmi.setEnabled(false);
-        edit.add(CoordinateEdit.getRotateEditAction(p));
-        popup.add(edit);
-        return true;
     }
 
     /**
@@ -1400,10 +1375,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param popup the menu to add entries to
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        JMenuItem jmi = edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
-        jmi.setEnabled(false);
-        edit.add(CoordinateEdit.getLevelEditAction(p));
+        JMenuItem edit = new JMenuItem(Bundle.getMessage("EditLevel_", p.getDisplayLevel()));
+        edit.addActionListener(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
     }
 
@@ -2830,7 +2803,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     protected List<Positionable> getSelectedItems(MouseEvent event) {
         Rectangle rect = new Rectangle();
-        ArrayList<Positionable> selections = new ArrayList<Positionable>();
+        ArrayList<Positionable> selections = new ArrayList<>();
         for (Positionable p : _contents) {
             double x = event.getX();
             double y = event.getY();
@@ -2876,7 +2849,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     protected void makeSelectionGroup(MouseEvent event) {
         if (!event.isControlDown() || _selectionGroup == null) {
-            _selectionGroup = new ArrayList<Positionable>();
+            _selectionGroup = new ArrayList<>();
         }
         Rectangle test = new Rectangle();
         List<Positionable> list = getContents();
@@ -2914,7 +2887,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     protected void modifySelectionGroup(Positionable selection, MouseEvent event) {
         if (!event.isControlDown() || _selectionGroup == null) {
-            _selectionGroup = new ArrayList<Positionable>();
+            _selectionGroup = new ArrayList<>();
         }
         boolean removed = false;
         if (event.isControlDown()) {
@@ -3256,7 +3229,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 throw new PropertyVetoException(message.toString(), evt);
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-            ArrayList<Positionable> toDelete = new ArrayList<Positionable>();
+            ArrayList<Positionable> toDelete = new ArrayList<>();
             for (Positionable p : _contents) {
                 if (nb.equals(p.getNamedBean())) {
                     toDelete.add(p);

@@ -552,11 +552,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         }
         int ua;
         if (noB) {
-            int num = Integer.valueOf(systemName.substring(offset+1)).intValue();
+            int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
             if (num > 0) {
                 ua = num / 1000;
             } else {
-                log.warn("invalid CMRI system name: " + systemName);
+                log.warn("invalid CMRI system name: {}", systemName);
                 return -1;
             }
         } else {

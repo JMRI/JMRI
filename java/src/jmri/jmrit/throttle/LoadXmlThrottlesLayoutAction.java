@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Element;
@@ -92,18 +93,23 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
             ThrottlePrefs prefs = new ThrottlePrefs();
             Element root = prefs.rootFromFile(f);
             List<Element> throttles = root.getChildren("ThrottleFrame");
+            ThrottleFrameManager tfManager = InstanceManager.getDefault(ThrottleFrameManager.class);
             if ((throttles != null) && (throttles.size() > 0)) { // OLD FORMAT
-                for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
-                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
-                    tf.setXml(i.next());
-                    tf.toFront();
+                for (Element e : throttles) {
+                    SwingUtilities.invokeLater(() -> {
+                        ThrottleFrame tf = tfManager.createThrottleFrame();
+                        tf.setXml(e);
+                        tf.toFront();
+                    });
                 }
             } else {
                 throttles = root.getChildren("ThrottleWindow");
-                for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
-                    ThrottleWindow tw = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleWindow();
-                    tw.setXml(i.next());
-                    tw.setVisible(true);
+                for (Element e : throttles) {
+                    SwingUtilities.invokeLater(() -> {
+                        ThrottleWindow tw = tfManager.createThrottleWindow();
+                        tw.setXml(e);
+                        tw.setVisible(true);
+                    });
                 }
                 Element tlp = root.getChild("ThrottlesListPanel");
                 if (tlp != null) {

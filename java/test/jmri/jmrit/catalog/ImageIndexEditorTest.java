@@ -12,9 +12,7 @@ import org.junit.Assert;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
- * LinkingLabelTest.java
- * <p>
- * Description:
+ * ImageIndexEditorTest
  *
  * @author pete cressman
  */
@@ -32,9 +30,9 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
             indexEditor.addNode();
         });
         flushAWT();
-        java.awt.Container pane = findContainer(Bundle.getMessage("info"));
+        java.awt.Container pane = findContainer(Bundle.getMessage("MessageTitle"));
         Assert.assertNotNull("Select node prompt not found", pane);
-        pressButton(pane, "OK");
+        pressButton(pane, Bundle.getMessage("ButtonOK"));
         junit.extensions.jfcunit.TestHelper.disposeWindow(indexEditor, this);
     }
 
@@ -150,4 +148,5 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class);
+
 }

@@ -70,8 +70,9 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      getMrcTrafficController().setCommandOptions(val);
      jmri.InstanceManager.setCommandStation(mrcTrafficController);
      }*/
+
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {

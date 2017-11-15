@@ -13,7 +13,7 @@ import jmri.jmrit.display.Positionable;
  */
 public class ShapeDrawer {
 
-    private Editor _editor;
+    private final Editor _editor;
     private DrawFrame _drawFrame;
     private PositionableShape _currentSelection;
 
@@ -191,4 +191,5 @@ public class ShapeDrawer {
             ((DrawPolygon) _drawFrame).deleteVertex();
         }
     }
+
 }

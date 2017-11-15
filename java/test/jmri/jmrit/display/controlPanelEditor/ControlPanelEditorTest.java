@@ -13,21 +13,39 @@ import org.junit.Test;
  *
  * @author  Paul Bender Copyright (C) 2017 
  */
-public class ControlPanelEditorTest {
+public class ControlPanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
+        
+    private ControlPanelEditor frame = null;
+
+    @Test
+    public void testDefaultCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor f = new ControlPanelEditor();
+        Assert.assertNotNull("exists", f );
+        f.dispose();
+    }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor();
         Assert.assertNotNull("exists", frame );
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            e = frame = new ControlPanelEditor("Control Panel Editor Test");
+        }
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        if (frame != null) {
+            JUnitUtil.dispose(frame);
+            e = frame = null;
+        }
+       JUnitUtil.tearDown();
+    }
 
 }

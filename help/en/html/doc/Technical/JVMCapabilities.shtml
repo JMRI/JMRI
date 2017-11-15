@@ -340,10 +340,14 @@
       finds numerous pages that show how to install Java 1.7 on XP
       or XP SP2.</p>
 
-      <p>Java 9 is not released yet, but pre-release information is
-      available on the <a href=
-      "https://jdk9.java.net/jdk9_supported_platforms.html">supported
-      platforms page</a>.</p>
+      <p>Oracle has announced that "Java SE 9 will be a short term release, and users should immediately transition to the next release (18.3) when available".
+      That 18.3 refers to the statement "Oracle has proposed a new version scheme (YY.M) starting in March, 2018", 
+      hence 18.3 for that version. But they've also said that: "
+      Java SE 18.3 will be a short term release and users should transition to the next release when available"
+      So there's some uncertainty coming in the Java releases. For more info, please
+      see the 
+      <a href=
+      "http://www.oracle.com/technetwork/java/eol-135779.html">Oracle Java SE Support Roadmap page</a>.</p>
 
       <table border="1">
         <tr>

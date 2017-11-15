@@ -108,7 +108,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         Color bkgrnd = _editor.getTargetPanel().getBackground();
         _chooser = new JColorChooser(bkgrnd);
-        _sample = new Hashtable<String, PositionableLabel>();
+        _sample = new Hashtable<>();
 
         _previewPanel = new JPanel();
         _previewPanel.setLayout(new BorderLayout());
@@ -201,7 +201,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("Active", ACTIVE_FONT, sample, _util, true); // NOI18N
+                doPopupUtility("Active", ACTIVE_FONT, sample, true); // NOI18N
 
                 sample = new PositionableLabel(si.getInactiveText(), _editor);
                 sample.setForeground(si.getTextInActive());
@@ -210,7 +210,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("InActive", INACTIVE_FONT, sample, _util, true); // NOI18N
+                doPopupUtility("InActive", INACTIVE_FONT, sample, true); // NOI18N
 
                 sample = new PositionableLabel(si.getUnknownText(), _editor);
                 sample.setForeground(si.getTextUnknown());
@@ -219,7 +219,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("Unknown", UNKOWN_FONT, sample, _util, true); // NOI18N
+                doPopupUtility("Unknown", UNKOWN_FONT, sample, true); // NOI18N
 
                 sample = new PositionableLabel(si.getInconsistentText(), _editor);
                 sample.setForeground(si.getTextInconsistent());
@@ -228,7 +228,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("Inconsistent", INCONSISTENT_FONT, sample, _util, true); // NOI18N
+                doPopupUtility("Inconsistent", INCONSISTENT_FONT, sample, true); // NOI18N
             }
         } else { // not a SensorIcon
             PositionableLabel sample = new PositionableLabel("", _editor);
@@ -258,10 +258,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             } else {
                 addtextField = true;                
             }
-            doPopupUtility("Text", TEXT_FONT, sample, _util, addtextField);
+            doPopupUtility("Text", TEXT_FONT, sample, addtextField);
         }
         makeFontPanels();
-//        item.setVisible(false);  // otherwise leaves traces for PositionableJPanels
 
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
@@ -272,18 +271,18 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
     
     private void doPopupUtility(String type, int which, 
-            PositionableLabel sample, PositionablePopupUtil ut, boolean editText) {
+            PositionableLabel sample, boolean editText) {
         PositionablePopupUtil util = sample.getPopupUtility();
-        util.setJustification(ut.getJustification());
-        util.setHorizontalAlignment(ut.getJustification());
-        util.setFixedWidth(ut.getFixedWidth());
-        util.setFixedHeight(ut.getFixedHeight());
-        util.setMargin(ut.getMargin());
-        util.setBorderSize(ut.getBorderSize());
-        util.setBorderColor(ut.getBorderColor());
-        util.setFont(util.getFont().deriveFont(ut.getFontStyle()));
-        util.setFontSize(ut.getFontSize());
-        util.setOrientation(ut.getOrientation());
+        util.setJustification(_util.getJustification());
+        util.setHorizontalAlignment(_util.getJustification());
+        util.setFixedWidth(_util.getFixedWidth());
+        util.setFixedHeight(_util.getFixedHeight());
+        util.setMargin(_util.getMargin());
+        util.setBorderSize(_util.getBorderSize());
+        util.setBorderColor(_util.getBorderColor());
+        util.setFont(util.getFont().deriveFont(_util.getFontStyle()));
+        util.setFontSize(_util.getFontSize());
+        util.setOrientation(_util.getOrientation());
         sample.updateSize();
        
         _sample.put(type, sample);
@@ -388,6 +387,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 public void keyReleased(KeyEvent E) {
                     JTextField tmp = (JTextField) E.getSource();
                     sample.setText(tmp.getText());
+                    updateSamples();
                 }
             }.init(sample));
             p.add(textField);            

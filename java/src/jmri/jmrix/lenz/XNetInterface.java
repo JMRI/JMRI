@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz;
 
 /**
- * XNetInterface defines the general connection to a XNet layout.
+ * XNetInterface defines the general connection to an XNet layout.
  * <P>
- * Use this interface to send messages to a XNet layout. Classes implementing
+ * Use this interface to send messages to an XNet layout. Classes implementing
  * the XNetListener interface can register here to receive incoming XNet
  * messages as events.
  * <P>
@@ -30,7 +30,7 @@ public interface XNetInterface {
     /**
      * Request a message be sent to the attached XNet. Return is immediate,
      * with the message being queued for eventual sending.  If you're interested
-     * in a reply, you need to register a XNetListener object to watch the
+     * in a reply, you need to register an XNetListener object to watch the
      * message stream. When sending, you specify (in 2nd parameter) who
      * you are so you're not redundantly notified of this message.
      */

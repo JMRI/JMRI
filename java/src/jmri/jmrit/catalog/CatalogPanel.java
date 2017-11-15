@@ -58,18 +58,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This panel is used in the Icon Editors and also in the ImageIndex Editor.
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
  * @author Pete Cressman Copyright 2009
  *
  */
@@ -408,9 +396,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     private JPanel makeButtonPanel() {
-        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("white"), false);
-        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"), true);
-        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"), false);
+        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("White"), false);
+        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("LightGray"), true);
+        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("DarkGray"), false);
         whiteButton.addActionListener((ActionEvent e) -> {
             _currentBackground = Color.white;
             setBackground(_preview);

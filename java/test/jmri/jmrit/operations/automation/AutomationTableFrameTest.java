@@ -176,7 +176,7 @@ public class AutomationTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
         enterClickAndLeave(f.deleteAutomationButton);
         // confirm delete dialog window should appear
-        pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), Bundle.getMessage("ButtonYes"));
         Assert.assertEquals(0, InstanceManager.getDefault(AutomationManager.class).getSize());
 
         JUnitUtil.dispose(f);
@@ -208,7 +208,7 @@ public class AutomationTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
         enterClickAndLeave(f.deleteAutomationButton);
         // confirm delete dialog window should appear
-        pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), "No");
+        pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), Bundle.getMessage("ButtonNo"));
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
 
         JUnitUtil.dispose(f);

@@ -6,10 +6,10 @@ import java.io.DataOutputStream;
 /**
  * Provide an abstract implementation of a *StreamPortController for stream
  * based ports.
- * <P>
+ * <p>
  * Implementing classes need to implement status and configure from the
  * portAdapter interface, along with any system specific requirements.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2014
  */
 public abstract class AbstractStreamPortController extends AbstractPortController {

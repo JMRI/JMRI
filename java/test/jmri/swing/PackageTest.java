@@ -4,6 +4,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import jmri.util.swing.DedupingPropertyChangeListenerTest;
+
 /**
  * Invokes complete set of tests in the jmri.swing tree
  *
@@ -19,7 +21,8 @@ import org.junit.runners.Suite.SuiteClasses;
     DefaultEditableListModelTest.class,
     RowSorterUtilTest.class,
     JTitledSeparatorTest.class,
-    DefaultListCellEditorTest.class
+    DefaultListCellEditorTest.class,
+    DedupingPropertyChangeListenerTest.class
 })
 public class PackageTest {
 }
