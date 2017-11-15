@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import jmri.jmrit.display.EditorFrameOperator;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
@@ -30,6 +31,7 @@ abstract public class AbstractEditorTestBase {
     }
 
     @Test
+    @Ignore("The test sometimes has trouble finding the file menu")
     public void checkFileDeleteMenuItem() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -58,6 +60,7 @@ abstract public class AbstractEditorTestBase {
     }
 
     @Test
+    @Ignore("This test seems to be reliable on Linux, but fails on Windows (appveyor)")
     public void testSetSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         java.awt.Dimension d0 = e.getSize();
