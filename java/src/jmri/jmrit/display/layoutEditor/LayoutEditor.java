@@ -2104,7 +2104,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * set the maximum number of rows based on screen size
      *
-     * @param inComboBox
+     * @param inComboBox JComboxBox to be set up
      */
     public static void setupComboBoxMaxRows(@Nonnull JmriBeanComboBox inComboBox) {
         // find the max height of all popup items
