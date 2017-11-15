@@ -1229,7 +1229,7 @@
       <userName>Newquay Plat1 Stop</userName>
     </memory>
     <memory systemName="IM:AUTO:0001&#x9;NEWQUAY PLAT1">
-      <systemName>IM:AUTO:0001	NEWQUAY PLAT1</systemName>
+      <systemName>IM:AUTO:0001&#x9;NEWQUAY PLAT1</systemName>
     </memory>
     <memory systemName="IMCURRENTTIME" value="3:43 PM">
       <systemName>IMCURRENTTIME</systemName>
