@@ -2831,7 +2831,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             String aspect = DccSignalHead.getDefaultValidStateNames()[i];
             dccSignalPanel.add(new JLabel(aspect));
 
-            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
+            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 0, 31, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             //tmp.setFocusable(false);
             tmp.setValue(DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
@@ -2855,7 +2855,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             String aspect = DccSignalHead.getDefaultValidStateNames()[i];
             dccSignalPanelEdt.add(new JLabel(aspect));
 
-            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
+            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 0, 31, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             dccAspectEdt[i] = tmp; // store the whole JSpinner
             dccSignalPanelEdt.add(tmp); // and display that copy on the JPanel
