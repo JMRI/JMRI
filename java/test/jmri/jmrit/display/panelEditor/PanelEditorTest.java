@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017
  */
 public class PanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
-        
+
     private PanelEditor pe = null;
 
     @Test

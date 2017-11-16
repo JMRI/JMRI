@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017
  */
 public class ControlPanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
-        
+
     private ControlPanelEditor frame = null;
 
     @Test

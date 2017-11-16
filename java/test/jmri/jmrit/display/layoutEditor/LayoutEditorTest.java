@@ -790,7 +790,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                              + Bundle.getMessage("ToolBar") + "/"
                              + Bundle.getMessage("ToolBarSideTop"), "/");
-         
+
         //Left
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                              + Bundle.getMessage("ToolBar") + "/"

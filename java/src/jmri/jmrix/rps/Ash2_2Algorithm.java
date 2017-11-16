@@ -144,7 +144,7 @@ import org.slf4j.LoggerFactory;
  * necessary to prevent the program from reporting a spurious position, are the
  * same as those for version 1.1. These are described in the e-mail with that
  * version sent on 12/9/06.
- * 
+ *
  * @author Robert Ashenfelter Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
