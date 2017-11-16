@@ -16,11 +16,29 @@ import org.slf4j.LoggerFactory;
  */
 public class UsbPortAdapter extends AbstractPortController {
 
+    private Short vendorID = 0;
+    private Short productID = 0;
+    UsbDevice usbDevice = null;
+
     public UsbPortAdapter(SystemConnectionMemo memo) {
         super(memo);
     }
 
-//    private HashMap<String, String> options = new HashMap<>();
+    public Short getVendorID() {
+        return vendorID;
+    }
+
+    public void setVendorID(Short value) {
+        vendorID = value;
+    }
+
+    public Short getProductID() {
+        return productID;
+    }
+
+    public void setProductID(Short value) {
+        productID = value;
+    }
 
     /**
      * {@inheritDoc}
@@ -49,7 +67,6 @@ public class UsbPortAdapter extends AbstractPortController {
 //        log.info("*	setManufacturer('{}')", manufacturer);
 //        this.manufacturer = manufacturer;
 //    }
-
     /**
      * {@inheritDoc}
      */
@@ -155,7 +172,6 @@ public class UsbPortAdapter extends AbstractPortController {
 //    public void dispose() {
 //        log.info("*	dispose()");
 //    }
-
     /**
      * {@inheritDoc}
      */
@@ -181,7 +197,6 @@ public class UsbPortAdapter extends AbstractPortController {
 //        log.info("*	isRestartRequired()");
 //        return false;
 //    }
-
     /**
      * {@inheritDoc}
      */
@@ -200,7 +215,6 @@ public class UsbPortAdapter extends AbstractPortController {
 //        log.info("*	status()");
 //        return status;
 //    }
-
     /**
      * {@inheritDoc}
      */
@@ -208,7 +222,7 @@ public class UsbPortAdapter extends AbstractPortController {
         log.info("*	getPortNames()");
 
         List<String> results = new ArrayList<>();
-        List<UsbDevice> usbDevices = USBUtil.getMatchingDevices((short) 0x16C0, (short) 0x05DC);
+        List<UsbDevice> usbDevices = USBUtil.getMatchingDevices(vendorID, productID);
         for (UsbDevice usbDevice : usbDevices) {
             results.add(USBUtil.getLocationID(usbDevice));
         }
@@ -220,8 +234,16 @@ public class UsbPortAdapter extends AbstractPortController {
      * {@inheritDoc}
      */
     public String openPort(String portName, String appName) {
+        String result = null;   // assume success (optimist!)
+
         log.info("*	openPort('{}','{}')", portName, appName);
-        return null;
+        usbDevice = USBUtil.getMatchingDevice(
+                (short) 0x16C0, (short) 0x05DC, portName);
+        if (usbDevice == null) {
+            result = String.format(
+                    "USB device at location id {} not found.", portName);
+        }
+        return result;
     }
 
     private String port = null;

@@ -34,6 +34,9 @@ public class UsbLight extends AbstractVariableLight {
     /**
      * Create a Light object, with both system and user names.
      * <P>
+     * @param systemName the system name
+     * @param userName the user name
+     * @param memo the memo 
      * 'systemName' was previously validated in UsbLightManager
      */
     public UsbLight(String systemName, String userName, AnymaDMX_SystemConnectionMemo memo) {
@@ -93,6 +96,16 @@ public class UsbLight extends AbstractVariableLight {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         //TODO: turn off the light!
         log.info("* sendOnOffCommand({})", newState);
+
+        switch (newState) {
+            case ON: {
+                break;
+            }
+            default:
+            case OFF: {
+                break;
+            }
+        }
     }
 
     @Override

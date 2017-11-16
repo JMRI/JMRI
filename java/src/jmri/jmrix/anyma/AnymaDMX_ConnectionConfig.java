@@ -42,9 +42,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public AnymaDMX_ConnectionConfig() {
-        super();
-        log.info("* constructor");
-        adapter = new AnymaDMX_Adapter();
+        this(new AnymaDMX_Adapter());
     }
 
     /**

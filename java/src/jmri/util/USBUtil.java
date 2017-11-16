@@ -45,6 +45,34 @@ public final class USBUtil {
     }
 
     /**
+     * get matching USB device
+     *
+     * @param idVendor   the vendor id to match (or zero to always match)
+     * @param idProduct  the product id to match (or zero to always match)
+     * @param idLocation the location id to match (never zero)
+     * @return a list of matching UsbDevices
+     */
+    public static UsbDevice getMatchingDevice(short idVendor, short idProduct, String idLocation) {
+        UsbDevice result = null;    // assume failure (pessimist!)
+
+        if ((idLocation != null) && !idLocation.isEmpty()) {
+            long longLocationID = Long.decode(idLocation).longValue();
+            if (longLocationID > 0) {
+                List<UsbDevice> usbDevices = new ArrayList<>();
+                recursivelyCollectUSBDevices(null, idVendor, idProduct, usbDevices);
+                for (UsbDevice usbDevice : usbDevices) {
+                    String locationID = getLocationID(usbDevice);
+                    if (locationID.equals(idLocation)) {
+                        result = usbDevice;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
      * get a USB device's full product (manufacturer + product) name
      *
      * @param usbDevice the usb device you want to full product name of
