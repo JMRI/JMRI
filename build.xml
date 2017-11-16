@@ -1206,6 +1206,18 @@
         " />
     </target>
 
+    <target name="trimlineends" description="Strip trailing whitespace from lines">
+        <replaceregexp byline="true">
+            <fileset dir=".">
+                <include name="**/*.properties"/>
+                <include name="**/*.java"/>
+                <include name="**/*.xml"/>
+            </fileset>
+            <regexp pattern="\s+$"/>
+            <substitution expression=""/>
+        </replaceregexp>
+    </target>
+
     <!-- ============================================================================= -->
     <!-- Test execution targets                                                        -->
     <!-- ============================================================================= -->
