@@ -10,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @since       4.9.6
  */
 @ServiceProvider(service = ConnectionTypeList.class)
-public class AnymaDMX_ConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
+public class AnymaDMX_ConnectionTypeList implements ConnectionTypeList {
 
     public static final String ANYMA_DMX = "Anyma DMX";
 

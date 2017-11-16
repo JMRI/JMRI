@@ -19,7 +19,7 @@ public class UsbLightManager extends AbstractLightManager {
     private AnymaDMX_SystemConnectionMemo _memo = null;
 
     public UsbLightManager(AnymaDMX_SystemConnectionMemo memo) {
-        log.info("*	UsbLightManager constructor called");
+        log.debug("*    UsbLightManager constructor called");
         _memo = memo;
     }
 
@@ -28,7 +28,7 @@ public class UsbLightManager extends AbstractLightManager {
      */
     @Override
     public String getSystemPrefix() {
-        log.info("*	UsbLightManager.getSystemPrefix() called");
+        log.debug("*    UsbLightManager.getSystemPrefix() called");
         return _memo.getSystemPrefix();
     }
 
@@ -44,7 +44,7 @@ public class UsbLightManager extends AbstractLightManager {
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
-        log.info("*	UsbLightManager.createNewLight() called");
+        log.debug("*    UsbLightManager.createNewLight() called");
         Light lgt = null;
 
         int nAddress = -1;
@@ -60,7 +60,7 @@ public class UsbLightManager extends AbstractLightManager {
 
         // Validate the systemName
         if (_memo.validSystemNameFormat(systemName, 'L') == Manager.NameValidity.VALID) {
-            lgt = new UsbLight(systemName, userName, _memo);
+            lgt = new AnymaDMX_UsbLight(systemName, userName, _memo);
 //            if (!_memo.validSystemNameConfig(systemName, 'DX',_memo.getTrafficController())) {
 //                log.warn("Light system Name does not refer to configured hardware: "
 //                        + systemName);
@@ -75,7 +75,7 @@ public class UsbLightManager extends AbstractLightManager {
      * Public method to notify user of Light creation error.
      */
     public void notifyLightCreationError(String conflict, int channelNum) {
-        log.info("*	UsbLightManager.notifyLightCreationError() called");
+        log.debug("*    UsbLightManager.notifyLightCreationError() called");
 //        javax.swing.JOptionPane.showMessageDialog(null,
 //                Bundle.getMessage("ErrorAssignDialog", "" + channelNum, conflict) + "\n" +
 //                Bundle.getMessage("ErrorAssignLine2L"),
@@ -88,7 +88,7 @@ public class UsbLightManager extends AbstractLightManager {
      */
     @Override
     public Manager.NameValidity validSystemNameFormat(String systemName) {
-        log.info("*	UsbLightManager.validSystemNameFormat() called");
+        log.debug("*    UsbLightManager.validSystemNameFormat() called");
         return _memo.validSystemNameFormat(systemName, 'L');
     }
 
@@ -100,7 +100,7 @@ public class UsbLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        log.info("*	UsbLightManager.validSystemNameConfig() called");
+        log.debug("*    UsbLightManager.validSystemNameConfig() called");
         return _memo.validSystemNameConfig(systemName, 'L');
     }
 
@@ -112,7 +112,7 @@ public class UsbLightManager extends AbstractLightManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        log.info("*	UsbLightManager.normalizeSystemName() called");
+        log.debug("*    UsbLightManager.normalizeSystemName() called");
         return _memo.normalizeSystemName(systemName);
     }
 
@@ -124,7 +124,7 @@ public class UsbLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
-        log.info("*	UsbLightManager.convertSystemNameToAlternate() called");
+        log.debug("*    UsbLightManager.convertSystemNameToAlternate() called");
         return _memo.convertSystemNameToAlternate(systemName);
     }
 
@@ -146,10 +146,11 @@ public class UsbLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        log.info("*	UsbLightManager.getEntryToolTip() called");
+        log.debug("*    UsbLightManager.getEntryToolTip() called");
         //TODO: Why doesn't this work?!?
         return null; //BundleBundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbLightManager.class);
+    private final static Logger log
+            = LoggerFactory.getLogger(UsbLightManager.class);
 }

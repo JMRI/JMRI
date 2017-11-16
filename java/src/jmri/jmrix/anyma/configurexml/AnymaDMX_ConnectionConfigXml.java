@@ -2,7 +2,7 @@ package jmri.jmrix.anyma.configurexml;
 
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.UsbPortAdapter;
-import jmri.jmrix.anyma.AnymaDMX_Adapter;
+import jmri.jmrix.anyma.AnymaDMX_UsbPortAdapter;
 import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
 import jmri.jmrix.configurexml.AbstractUsbConnectionConfigXml;
 import org.slf4j.Logger;
@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of layout connections by persisting the
- * AnymaDMX_Adapter. Note this is named as the XML version of a
- * AnymaDMX_ConnectionConfig object, but it's actually persisting the
- * AnymaDMX_Adapter.
- * <P>
+ AnymaDMX_UsbPortAdapter. Note this is named as the XML version of a
+ AnymaDMX_ConnectionConfig object, but it's actually persisting the
+ AnymaDMX_UsbPortAdapter.
+ <P>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -23,18 +23,16 @@ import org.slf4j.LoggerFactory;
  */
 public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml {
 
-//    private AnymaDMX_Adapter adapter = null;
-
     public AnymaDMX_ConnectionConfigXml() {
         super();
-        log.info("* constructor()");
+        log.debug("* constructor()");
     }
 
     @Override
     protected void getInstance() {
-        log.info("* getInstance()");
+        log.debug("* getInstance()");
         if (getAdapter() == null) {
-            setAdapter(new AnymaDMX_Adapter());
+            setAdapter(new AnymaDMX_UsbPortAdapter());
             //if (adapter.getAnymaDMX_Controller() == null) {
             //    try {
             //        this.creationErrorEncountered("Not running on Anyma DMX.", adapter.getSystemPrefix(), adapter.getUserName(), null);
@@ -52,7 +50,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
 
     @Override
     protected void register() {
-        this.register(new AnymaDMX_ConnectionConfig((AnymaDMX_Adapter) adapter));
+        this.register(new AnymaDMX_ConnectionConfig((AnymaDMX_UsbPortAdapter) adapter));
     }
 
 //    /**
@@ -64,7 +62,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
 //     */
 //    @Override
 //    public Element store(Object o) {
-//        log.info("* store({})", o);
+//        log.debug("* store({})", o);
 //        getInstance(o);
 //        Element e = new Element("connection");
 //        storeCommon(e, adapter);
@@ -75,7 +73,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
 //
 //    @Override
 //    public boolean load(Element shared, Element perNode) {
-//        log.info("* load({},{})", shared, perNode);
+//        log.debug("* load({},{})", shared, perNode);
 //        getInstance();
 //        loadCommon(shared, perNode, adapter);
 //

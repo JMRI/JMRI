@@ -1,12 +1,9 @@
 package jmri.jmrix.anyma;
 
-import java.util.List;
 import java.util.Vector;
 import javax.swing.JPanel;
-import javax.usb.UsbDevice;
 import jmri.jmrix.AbstractUsbConnectionConfig;
 import jmri.jmrix.JmrixConfigPane;
-import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,16 +11,16 @@ import org.slf4j.LoggerFactory;
  * Definition of objects to handle configuring an Anyma DMX layout connection
  * via a SerialDriverAdapter object.
  * <P>
- * This uses the {@link AnymaDMX_Adapter} class to do the actual connection.
+ * This uses the {@link AnymaDMX_UsbPortAdapter} class to do the actual
+ * connection.
  *
  * @author George Warner Copyright (c) 2017
  * @since 4.9.6
- * @see AnymaDMX_Adapter
+ * @see AnymaDMX_UsbPortAdapter
  */
 public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
 
     private boolean disabled = false;
-//    private AnymaDMX_Adapter adapter = null;
 //    private Date DMXMessageShown = null;
 
     /**
@@ -32,9 +29,9 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      *
      * @param p the pre-existing adapter
      */
-    public AnymaDMX_ConnectionConfig(AnymaDMX_Adapter p) {
+    public AnymaDMX_ConnectionConfig(AnymaDMX_UsbPortAdapter p) {
         super();
-        log.info("* constructor('{}').", p);
+        log.debug("*    constructor('{}').", p);
         adapter = p;
     }
 
@@ -42,7 +39,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public AnymaDMX_ConnectionConfig() {
-        this(new AnymaDMX_Adapter());
+        this(new AnymaDMX_UsbPortAdapter());
     }
 
     /**
@@ -50,7 +47,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      * {@link JmrixConfigPane} when switching away from this particular mode.
      */
     public void dispose() {
-        log.info("* dispose()");
+        log.debug("*    dispose()");
         super.dispose();
     }
 
@@ -60,7 +57,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      * @return true if configuration needs to be saved, false otherwise
      */
     public boolean isDirty() {
-        log.info("* isDirty()");
+        log.debug("*    isDirty()");
         return super.isDirty();
     }
 
@@ -71,24 +68,23 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      * @return true if application needs to restart, false otherwise
      */
     public boolean isRestartRequired() {
-        log.info("* isRestartRequired()");
+        log.debug("*    isRestartRequired()");
         return super.isRestartRequired();
     }
 
     @Override
     public void updateAdapter() {
-        log.info("* updateAdapter()");
+        log.debug("*    updateAdapter()");
         if ((adapter.getSystemConnectionMemo() != null)
                 && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
-
     }
 
     @Override
     protected void showAdvancedItems() {
-        log.info("* showAdvancedItems()");
+        log.debug("*    showAdvancedItems()");
         super.showAdvancedItems();
     }
 
@@ -103,7 +99,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      */
     @Override
     public void loadDetails(final JPanel details) {
-        log.info("* loadDetails()");
+        log.debug("*    loadDetails()");
         super.loadDetails(details);
     }
 
@@ -119,16 +115,15 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      */
     @Override
     public void register() {
-        log.info("* register()");
+        log.debug("*    register()");
         super.register();
     }
 
     @Override
     protected void setInstance() {
-        log.info("* setInstance()");
+        log.debug("*    setInstance()");
         if (adapter == null) {
-            adapter = new AnymaDMX_Adapter();
-
+            adapter = new AnymaDMX_UsbPortAdapter();
         }
 //        if (adapter.getDMXController() == null) {
 //            // don't show more than once every 30 seconds
@@ -144,66 +139,58 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
     }
 
     @Override
-    public AnymaDMX_Adapter getAdapter() {
-        log.info("* getAdapter()");
-        return (AnymaDMX_Adapter) adapter;
+    public AnymaDMX_UsbPortAdapter getAdapter() {
+        log.debug("*    getAdapter()");
+        return (AnymaDMX_UsbPortAdapter) adapter;
     }
 
     @Override
     public String getInfo() {
-        log.info("* getInfo()");
+        log.debug("*    getInfo()");
         return "DMX";
     }
 
     @Override
     public String getManufacturer() {
-        log.info("* getManufacturer()");
+        log.debug("*    getManufacturer()");
         return AnymaDMX_ConnectionTypeList.ANYMA_DMX;
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
-        log.info("* setManufacturer('{}')", manufacturer);
+        log.debug("*    setManufacturer('{}')", manufacturer);
     }
 
     @Override
     public String name() {
-        log.info("* name()");
+        log.debug("*    name()");
         return getConnectionName();
     }
 
     @Override
     public String getConnectionName() {
-        log.info("* getConnectionName()");
+        log.debug("*    getConnectionName()");
         return "Anyma DMX";
     }
 
     @Override
     public boolean getDisabled() {
-        log.info("* getDisabled()");
+        log.debug("*    getDisabled()");
         return disabled;
     }
 
     @Override
     public void setDisabled(boolean disable) {
-        log.info("* setDisabled({})", disable ? "True" : "False");
+        log.debug("*    setDisabled({})", disable ? "True" : "False");
         this.disabled = disable;
     }
 
     @Override
     protected Vector<String> getPortNames() {
-        log.info("*	getPortNames()");
-        Vector<String> results = new Vector<>();
-
-        List<UsbDevice> usbDevices = USBUtil.getMatchingDevices((short) 0x16C0, (short) 0x05DC);
-        for (UsbDevice usbDevice : usbDevices) {
-            String location = USBUtil.getLocationID(usbDevice);
-            if (!location.isEmpty()) {
-                results.add(location);
-            }
-        }
-        return results;
+        log.debug("*	getPortNames()");
+        return new Vector<String>(getAdapter().getPortNames());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AnymaDMX_ConnectionConfig.class);
+    private final static Logger log
+            = LoggerFactory.getLogger(AnymaDMX_ConnectionConfig.class);
 }

@@ -39,7 +39,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
      */
     public AbstractUsbConnectionConfig(PortAdapter p) {
         this((UsbPortAdapter) p);
-        log.info("*	AbstractUSBConnectionConfig({})", p);
+        log.debug("*	AbstractUSBConnectionConfig({})", p);
     }
 
     /**
@@ -48,20 +48,20 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
      */
     public AbstractUsbConnectionConfig() {
         this(null);
-        log.info("*	AbstractUSBConnectionConfig()");
+        log.debug("*	AbstractUSBConnectionConfig()");
     }
 
     public AbstractUsbConnectionConfig(UsbPortAdapter p) {
         adapter = p;
         //addToActionList();
-        log.info("*	AbstractUSBConnectionConfig({})", p);
+        log.debug("*	AbstractUSBConnectionConfig({})", p);
     }
 
     protected UsbPortAdapter adapter = null;
 
     @Override
     public UsbPortAdapter getAdapter() {
-        log.info("*	getAdapter()");
+        log.debug("*	getAdapter()");
         return adapter;
     }
 
@@ -146,7 +146,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void updateAdapter() {
-        log.info("*	updateAdapter()");
+        log.debug("*	updateAdapter()");
     }
 
     protected UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
@@ -155,7 +155,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public String getInfo() {
-        log.info("*	getInfo()");
+        log.debug("*	getInfo()");
         String t = (String) portBox.getSelectedItem();
         if (t != null) {
             return t;
@@ -174,7 +174,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @SuppressWarnings("UseOfObsoleteCollectionType")
     public void refreshPortBox() {
-        log.info("*	refreshPortBox()");
+        log.debug("*	refreshPortBox()");
         if (!init) {
             v = getPortNames();
             portBox.setRenderer(new ComboBoxRenderer());
@@ -255,8 +255,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         }
         // finally, insist on synchronization of selected port name with underlying port
 
-        adapter.setPort(
-                (String) portBox.getSelectedItem());
+        adapter.setPort((String) portBox.getSelectedItem());
 
         // add a listener for later changes
         portBox.addActionListener(
@@ -267,12 +266,12 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         );
     }
 
-    String value;
+    //String value;
 
     @Override
     @SuppressWarnings("UseOfObsoleteCollectionType")
     public void loadDetails(final JPanel details) {
-        log.info("*	loadDetails()");
+        log.debug("*	loadDetails()");
         _details = details;
         setInstance();
         if (!init) {
@@ -337,7 +336,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     protected void showAdvancedItems() {
-        log.info("*	showAdvancedItems()");
+        log.debug("*	showAdvancedItems()");
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
         cL.insets = new Insets(2, 5, 0, 5);
@@ -406,7 +405,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     }
 
     protected int addStandardDetails(boolean incAdvanced, int i) {
-        log.info("*	addStandardDetails()");
+        log.debug("*	addStandardDetails()");
         if (!isPortAdvanced()) {
             cR.gridy = i;
             cL.gridy = i;
@@ -421,19 +420,19 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     }
 
     public boolean isPortAdvanced() {
-        log.info("*	isPortAdvanced()");
+        log.debug("*	isPortAdvanced()");
         return false;
     }
 
     @Override
     public String getManufacturer() {
-        log.info("*	getManufacturer()");
+        log.debug("*	getManufacturer()");
         return adapter.getManufacturer();
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
-        log.info("*	setManufacturer('{}')", manufacturer);
+        log.debug("*	setManufacturer('{}')", manufacturer);
         if (adapter != null) {
             adapter.setManufacturer(manufacturer);
         }
@@ -441,7 +440,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public boolean getDisabled() {
-        log.info("*	getDisabled()");
+        log.debug("*	getDisabled()");
         if (adapter == null) {
             return true;
         }
@@ -450,7 +449,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void setDisabled(boolean disabled) {
-        log.info("*	setDisabled({})", disabled ? "True" : "False");
+        log.debug("*	setDisabled({})", disabled ? "True" : "False");
         if (adapter != null) {
             adapter.setDisabled(disabled);
         }
@@ -458,7 +457,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public String getConnectionName() {
-        log.info("*	getConnectionName()");
+        log.debug("*	getConnectionName()");
         if ((adapter != null) && (adapter.getSystemConnectionMemo() != null)) {
             return adapter.getSystemConnectionMemo().getUserName();
         } else {
@@ -468,7 +467,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void dispose() {
-        log.info("*	dispose()");
+        log.debug("*	dispose()");
         if (adapter != null) {
             adapter.dispose();
             adapter = null;

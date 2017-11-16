@@ -18,7 +18,7 @@ public class UsbPortAdapter extends AbstractPortController {
 
     private Short vendorID = 0;
     private Short productID = 0;
-    UsbDevice usbDevice = null;
+    protected UsbDevice usbDevice = null;
 
     public UsbPortAdapter(SystemConnectionMemo memo) {
         super(memo);
@@ -40,12 +40,22 @@ public class UsbPortAdapter extends AbstractPortController {
         productID = value;
     }
 
+    public UsbDevice getUsbDevice() {
+        if (usbDevice == null) {
+            String errorString = openPort(port, null);
+            if (errorString != null) {
+                log.error(errorString);
+            }
+        }
+        return usbDevice;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void connect() throws java.io.IOException {
-        log.info("*	connect()");
+        log.debug("*	connect()");
     }
 
 //    private String manufacturer = null;
@@ -55,7 +65,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getManufacturer() {
-//        log.info("*	getManufacturer()");
+//        log.debug("*	getManufacturer()");
 //        return manufacturer;
 //    }
 //
@@ -64,7 +74,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void setManufacturer(String manufacturer) {
-//        log.info("*	setManufacturer('{}')", manufacturer);
+//        log.debug("*	setManufacturer('{}')", manufacturer);
 //        this.manufacturer = manufacturer;
 //    }
     /**
@@ -72,7 +82,7 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public DataInputStream getInputStream() {
-        log.info("*	getInputStream()");
+        log.debug("*	getInputStream()");
         return null;
     }
 
@@ -81,7 +91,7 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public DataOutputStream getOutputStream() {
-        log.info("*	getOutputStream()");
+        log.debug("*	getOutputStream()");
         return null;
     }
 
@@ -92,7 +102,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public boolean getDisabled() {
-//        log.info("*	getDisabled()");
+//        log.debug("*	getDisabled()");
 //        return disabled;
 //    }
 //
@@ -101,7 +111,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void setDisabled(boolean disabled) {
-//        log.info("*	setDisabled()");
+//        log.debug("*	setDisabled()");
 //        this.disabled = disabled;
 //    }
 //
@@ -112,7 +122,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getUserName() {
-//        log.info("*	getUserName()");
+//        log.debug("*	getUserName()");
 //        return userName;
 //    }
 //
@@ -121,7 +131,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void setUserName(String userName) throws IllegalArgumentException {
-//        log.info("*	setUserName('{}')", userName);
+//        log.debug("*	setUserName('{}')", userName);
 //        this.userName = userName;
 //    }
 //
@@ -132,7 +142,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getSystemPrefix() {
-//        log.info("*	getSystemPrefix()");
+//        log.debug("*	getSystemPrefix()");
 //        return systemPrefix;
 //    }
 //
@@ -141,7 +151,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void setSystemPrefix(String systemPrefix) throws IllegalArgumentException {
-//        log.info("*	setSystemPrefix('{}')", systemPrefix);
+//        log.debug("*	setSystemPrefix('{}')", systemPrefix);
 //        this.systemPrefix = systemPrefix;
 //    }
 //
@@ -152,7 +162,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public SystemConnectionMemo getSystemConnectionMemo() {
-//        log.info("*	getSystemConnectionMemo()");
+//        log.debug("*	getSystemConnectionMemo()");
 //        return systemConnectionMemo;
 //    }
 //
@@ -161,7 +171,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException {
-//        log.info("*	setSystemConnectionMemo()");
+//        log.debug("*	setSystemConnectionMemo()");
 //        systemConnectionMemo = connectionMemo;
 //    }
 //
@@ -170,14 +180,14 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void dispose() {
-//        log.info("*	dispose()");
+//        log.debug("*	dispose()");
 //    }
     /**
      * {@inheritDoc}
      */
     @Override
     public void recover() {
-        log.info("*	recover()");
+        log.debug("*	recover()");
     }
 
 //    /**
@@ -185,7 +195,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public boolean isDirty() {
-//        log.info("*	isDirty()");
+//        log.debug("*	isDirty()");
 //        return false;
 //    }
 //
@@ -194,7 +204,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public boolean isRestartRequired() {
-//        log.info("*	isRestartRequired()");
+//        log.debug("*	isRestartRequired()");
 //        return false;
 //    }
     /**
@@ -202,7 +212,7 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public void configure() {
-        log.info("*	configure()");
+        log.debug("*	configure()");
     }
 
 //    private boolean status = true;
@@ -212,14 +222,14 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public boolean status() {
-//        log.info("*	status()");
+//        log.debug("*	status()");
 //        return status;
 //    }
     /**
      * {@inheritDoc}
      */
     public List<String> getPortNames() {
-        log.info("*	getPortNames()");
+        log.debug("*	getPortNames()");
 
         List<String> results = new ArrayList<>();
         List<UsbDevice> usbDevices = USBUtil.getMatchingDevices(vendorID, productID);
@@ -236,9 +246,8 @@ public class UsbPortAdapter extends AbstractPortController {
     public String openPort(String portName, String appName) {
         String result = null;   // assume success (optimist!)
 
-        log.info("*	openPort('{}','{}')", portName, appName);
-        usbDevice = USBUtil.getMatchingDevice(
-                (short) 0x16C0, (short) 0x05DC, portName);
+        log.debug("*	openPort('{}','{}')", portName, appName);
+        usbDevice = USBUtil.getMatchingDevice(vendorID, productID, portName);
         if (usbDevice == null) {
             result = String.format(
                     "USB device at location id {} not found.", portName);
@@ -252,7 +261,7 @@ public class UsbPortAdapter extends AbstractPortController {
      * {@inheritDoc}
      */
     public void setPort(String s) {
-        log.info("*	setPort('{}')", s);
+        log.debug("*	setPort('{}')", s);
         port = s;
     }
 
@@ -261,7 +270,7 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public String getCurrentPortName() {
-        log.info("*	getCurrentPortName()");
+        log.debug("*	getCurrentPortName()");
         return port;
     }
 
@@ -270,7 +279,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getOption1Name() {
-//        log.info("*	getOption1Name()");
+//        log.debug("*	getOption1Name()");
 //        return "Location ID";
 //    }
 //
@@ -279,7 +288,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getOption2Name() {
-//        log.info("*	getOption2Name()");
+//        log.debug("*	getOption2Name()");
 //        return null;
 //    }
 //
@@ -288,7 +297,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getOption3Name() {
-//        log.info("*	getOption3Name()");
+//        log.debug("*	getOption3Name()");
 //        return null;
 //    }
 //
@@ -297,7 +306,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getOption4Name() {
-//        log.info("*	getOption4Name()");
+//        log.debug("*	getOption4Name()");
 //        return null;
 //    }
 //
@@ -306,7 +315,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void configureOption1(String value) {
-//        log.info("*	configureOption1('{}')", value);
+//        log.debug("*	configureOption1('{}')", value);
 //        setPort(value);
 //    }
 //
@@ -315,7 +324,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void configureOption2(String value) {
-//        log.info("*	configureOption2('{}')", value);
+//        log.debug("*	configureOption2('{}')", value);
 //    }
 //
 //    /**
@@ -323,7 +332,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void configureOption3(String value) {
-//        log.info("*	configureOption3('{}')", value);
+//        log.debug("*	configureOption3('{}')", value);
 //    }
 //
 //    /**
@@ -331,7 +340,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void configureOption4(String value) {
-//        log.info("*	configureOption4('{}')", value);
+//        log.debug("*	configureOption4('{}')", value);
 //    }
 //
 //    /**
@@ -339,7 +348,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String[] getOptions() {
-//        log.info("*	getOptions()");
+//        log.debug("*	getOptions()");
 //        Set<String> keySet = options.keySet();
 //        return keySet.toArray(new String[keySet.size()]);
 //    }
@@ -349,7 +358,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public boolean isOptionAdvanced(String option) {
-//        log.info("*	isOptionAdvanced('{}')", option);
+//        log.debug("*	isOptionAdvanced('{}')", option);
 //        return false;
 //    }
 //
@@ -358,7 +367,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getOptionDisplayName(String option) {
-//        log.info("*	getOptionDisplayName('{}')", option);
+//        log.debug("*	getOptionDisplayName('{}')", option);
 //        return Bundle.getMessage(options.get(option));
 //    }
 //
@@ -367,7 +376,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public void setOptionState(String option, String value) {
-//        log.info("*	setOptionState('{}', '{}')", option, value);
+//        log.debug("*	setOptionState('{}', '{}')", option, value);
 //        options.put(option, value);
 //    }
 //
@@ -376,7 +385,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //     */
 //    @Override
 //    public String getOptionState(String option) {
-//        log.info("*	getOptionState('{}')", option);
+//        log.debug("*	getOptionState('{}')", option);
 //        return options.get(option);
 //    }
 //
@@ -386,7 +395,7 @@ public class UsbPortAdapter extends AbstractPortController {
 //    @Override
 //    public String[] getOptionChoices(String option) {
 //        String[] results = new String[]{};
-//        log.info("*	getOptionChoices('{}')", option);
+//        log.debug("*	getOptionChoices('{}')", option);
 //        if (option.equals("XXX")) {
 //            List<String> portNames = getPortNames();
 //            results = portNames.toArray(new String[portNames.size()]);

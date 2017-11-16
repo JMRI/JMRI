@@ -23,12 +23,12 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
     protected UsbPortAdapter adapter;
 
     protected void setAdapter(UsbPortAdapter usbPortAdapter) {
-        log.info("* setAdapter({})", usbPortAdapter);
+        log.debug("* setAdapter({})", usbPortAdapter);
         adapter = usbPortAdapter;
     }
 
     protected UsbPortAdapter getAdapter() {
-        log.info("* getAdapter({})");
+        log.debug("* getAdapter({})");
         return adapter;
     }
 
@@ -46,7 +46,7 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
      */
     @Override
     public Element store(Object object) {
-        log.info("* store({})", object);
+        log.debug("* store({})", object);
         getInstance(object);
         Element e = new Element("connection");
 
@@ -80,12 +80,12 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
      */
     @Override
     protected void extendElement(Element e) {
-        log.info("* extendElement({})", e);
+        log.debug("* extendElement({})", e);
     }
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        log.info("* load({}, {})", shared, perNode);
+        log.debug("* load({}, {})", shared, perNode);
         boolean result = true;
         getInstance();
         // configure port name
