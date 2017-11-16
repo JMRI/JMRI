@@ -1,6 +1,6 @@
 package jmri.jmrix.configurexml;
 
-import jmri.jmrix.USBPortAdapter;
+import jmri.jmrix.UsbPortAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
  * Abstract base (and partial implementation) for classes persisting the status
  * of (non-serial) USB adapters.
  * <p>
- * IOW: if you're just using usb to access a serial buss on the other side
- *      then you should be using AbstractSerialConnectionConfigXml instead.
+ * IOW: if you're just using usb to access a serial buss on the other side then
+ * you should be using AbstractSerialConnectionConfigXml instead.
  * <p>
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author George Warner Copyright: Copyright (c) 2017
@@ -20,9 +20,20 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
     public AbstractUsbConnectionConfigXml() {
     }
 
-    protected USBPortAdapter adapter;
+    protected UsbPortAdapter adapter;
+
+    protected void setAdapter(UsbPortAdapter usbPortAdapter) {
+        log.info("* setAdapter({})", usbPortAdapter);
+        adapter = usbPortAdapter;
+    }
+
+    protected UsbPortAdapter getAdapter() {
+        log.info("* getAdapter({})");
+        return adapter;
+    }
 
     protected void getInstance(Object object) {
+        log.error("getInstance not over-ridden");
         getInstance(); // over-ridden during migration
     }
 
@@ -35,11 +46,12 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
      */
     @Override
     public Element store(Object object) {
+        log.info("* store({})", object);
         getInstance(object);
         Element e = new Element("connection");
 
         if (adapter == null) {
-            log.warn("No adapter found while saving serial port configuration {}", object.toString());
+            log.warn("No adapter found while saving usb port configuration {}", object.toString());
             return null;
         }
 
@@ -68,10 +80,12 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
      */
     @Override
     protected void extendElement(Element e) {
+        log.info("* extendElement({})", e);
     }
 
     @Override
     public boolean load(Element shared, Element perNode) {
+        log.info("* load({}, {})", shared, perNode);
         boolean result = true;
         getInstance();
         // configure port name
@@ -116,6 +130,6 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
     }
 
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(AbstractUsbConnectionConfigXml.class);
-
+    private static final Logger log
+            = LoggerFactory.getLogger(AbstractUsbConnectionConfigXml.class);
 }

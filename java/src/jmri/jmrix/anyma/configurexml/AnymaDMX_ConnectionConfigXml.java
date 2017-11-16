@@ -1,9 +1,10 @@
 package jmri.jmrix.anyma.configurexml;
 
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.UsbPortAdapter;
 import jmri.jmrix.anyma.AnymaDMX_Adapter;
 import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
 import jmri.jmrix.configurexml.AbstractUsbConnectionConfigXml;
-import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,74 +18,73 @@ import org.slf4j.LoggerFactory;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017
  * @since       4.9.6
  */
 public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml {
 
-    private AnymaDMX_Adapter adapter = null;
+//    private AnymaDMX_Adapter adapter = null;
 
     public AnymaDMX_ConnectionConfigXml() {
         super();
-        log.info("*	AnymaDMX_ConnectionConfigXml constructor called");
+        log.info("* constructor()");
     }
 
     @Override
     protected void getInstance() {
-        log.info("*	AnymaDMX_ConnectionConfigXml.getInstance() called");
-        if (adapter == null) {
-            adapter = new AnymaDMX_Adapter();
-            if (adapter.getAnymaDMX_Controller() == null) {
-                //try {
-                //    this.creationErrorEncountered("Not running on Anyma DMX.", adapter.getSystemPrefix(), adapter.getUserName(), null);
-                //} catch (JmriConfigureXmlException ex) {
-                //    log.error("Not running on Anyma DMX.", ex);
-                //}
-            }
+        log.info("* getInstance()");
+        if (getAdapter() == null) {
+            setAdapter(new AnymaDMX_Adapter());
+            //if (adapter.getAnymaDMX_Controller() == null) {
+            //    try {
+            //        this.creationErrorEncountered("Not running on Anyma DMX.", adapter.getSystemPrefix(), adapter.getUserName(), null);
+            //    } catch (JmriConfigureXmlException ex) {
+            //        log.error("Not running on Anyma DMX.", ex);
+            //    }
+            //}
         }
     }
 
+    @Override
     protected void getInstance(Object object) {
-        log.info("*	AnymaDMX_ConnectionConfigXml.getInstance() called");
-        adapter = ((AnymaDMX_ConnectionConfig) object).getAdapter();
+        setAdapter((UsbPortAdapter) ((ConnectionConfig) object).getAdapter());
     }
 
     @Override
     protected void register() {
-        log.info("*	AnymaDMX_ConnectionConfigXml.register() called");
-        this.register(new AnymaDMX_ConnectionConfig(adapter));
+        this.register(new AnymaDMX_ConnectionConfig((AnymaDMX_Adapter) adapter));
     }
 
-    /**
-     * Default implementation for storing the static contents of the serial port
-     * implementation
-     *
-     * @param o Object to store, of type PositionableLabel
-     * @return Element containing the complete info
-     */
-    @Override
-    public Element store(Object o) {
-        log.info("*	AnymaDMX_ConnectionConfigXml.store() called");
-        getInstance(o);
-        Element e = new Element("connection");
-        storeCommon(e, adapter);
-
-        e.setAttribute("class", this.getClass().getName());
-        return e;
-    }
-
-    @Override
-    public boolean load(Element shared, Element perNode) {
-        log.info("*	AnymaDMX_ConnectionConfigXml.load() called");
-        getInstance();
-        loadCommon(shared, perNode, adapter);
-
-        // register, so can be picked up next time
-        register();
-
-        adapter.configure();
-        return true;
-    }
+//    /**
+//     * Default implementation for storing the static contents of the serial port
+//     * implementation
+//     *
+//     * @param o Object to store, of type PositionableLabel
+//     * @return Element containing the complete info
+//     */
+//    @Override
+//    public Element store(Object o) {
+//        log.info("* store({})", o);
+//        getInstance(o);
+//        Element e = new Element("connection");
+//        storeCommon(e, adapter);
+//
+//        e.setAttribute("class", this.getClass().getName());
+//        return e;
+//    }
+//
+//    @Override
+//    public boolean load(Element shared, Element perNode) {
+//        log.info("* load({},{})", shared, perNode);
+//        getInstance();
+//        loadCommon(shared, perNode, adapter);
+//
+//        // register, so can be picked up next time
+//        register();
+//
+//        adapter.configure();
+//        return true;
+//    }
 
     private final static Logger log = LoggerFactory.getLogger(AnymaDMX_ConnectionConfigXml.class);
 }

@@ -3,7 +3,6 @@ package jmri.jmrix.anyma;
 import static jmri.Light.OFF;
 
 import jmri.implementation.AbstractVariableLight;
-import jmri.jmrix.anyma.AnymaDMX_SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Implementation of the Light Object for anyma dmx
  * <P>
- *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017
  * @since 4.9.6
  */
 public class UsbLight extends AbstractVariableLight {

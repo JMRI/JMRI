@@ -2,7 +2,6 @@ package jmri.jmrix.anyma;
 
 import jmri.Light;
 import jmri.Manager;
-import jmri.jmrix.anyma.AnymaDMX_SystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "DXLnnn", where nnn is the channel number without padding.
  * <P>
- *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017
  * @since 4.9.6
  */
 public class UsbLightManager extends AbstractLightManager {

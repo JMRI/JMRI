@@ -253,7 +253,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     @Override
     public String getManufacturer() {
-        return this.manufacturerName;
+        return manufacturerName;
     }
 
     @Override

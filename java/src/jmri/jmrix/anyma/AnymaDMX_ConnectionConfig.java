@@ -1,29 +1,30 @@
 package jmri.jmrix.anyma;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.util.Date;
-import javax.swing.JOptionPane;
-import jmri.jmrix.AbstractUSBConnectionConfig;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JPanel;
+import javax.usb.UsbDevice;
+import jmri.jmrix.AbstractUsbConnectionConfig;
+import jmri.jmrix.JmrixConfigPane;
+import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle configuring a Anyma DMX layout connection.
+ * Definition of objects to handle configuring an Anyma DMX layout connection
+ * via a SerialDriverAdapter object.
  * <P>
  * This uses the {@link AnymaDMX_Adapter} class to do the actual connection.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017
  * @since 4.9.6
- *
  * @see AnymaDMX_Adapter
  */
-public class AnymaDMX_ConnectionConfig extends AbstractUSBConnectionConfig {
+public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
 
     private boolean disabled = false;
-    private AnymaDMX_Adapter adapter = null;
-    private Date DMXMessageShown = null;
+//    private AnymaDMX_Adapter adapter = null;
+//    private Date DMXMessageShown = null;
 
     /**
      * Ctor for an object being created during load process; Swing init is
@@ -33,7 +34,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUSBConnectionConfig {
      */
     public AnymaDMX_ConnectionConfig(AnymaDMX_Adapter p) {
         super();
-        log.info("*	AnymaDMX_ConnectionConfig constructor called.");
+        log.info("* constructor('{}').", p);
         adapter = p;
     }
 
@@ -42,63 +43,43 @@ public class AnymaDMX_ConnectionConfig extends AbstractUSBConnectionConfig {
      */
     public AnymaDMX_ConnectionConfig() {
         super();
-        log.info("*	AnymaDMX_ConnectionConfig constructor called.");
+        log.info("* constructor");
         adapter = new AnymaDMX_Adapter();
     }
 
-    protected boolean init = false;
+    /**
+     * Done with this ConnectionConfig object. Invoked in
+     * {@link JmrixConfigPane} when switching away from this particular mode.
+     */
+    public void dispose() {
+        log.info("* dispose()");
+        super.dispose();
+    }
 
-    @Override
-    protected void checkInitDone() {
-        log.info("*	AnymaDMX_ConnectionConfig.checkInitDone() called.");
-        if (!init) {
-            if (adapter.getSystemConnectionMemo() != null) {
-                systemPrefixField.addActionListener((ActionEvent e) -> {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
-                    }
-                });
-                systemPrefixField.addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                            JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
-                        }
-                    }
+    /**
+     * Determine if configuration needs to be written to disk.
+     *
+     * @return true if configuration needs to be saved, false otherwise
+     */
+    public boolean isDirty() {
+        log.info("* isDirty()");
+        return super.isDirty();
+    }
 
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                    }
-                });
-                connectionNameField.addActionListener((ActionEvent e) -> {
-                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
-                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
-                });
-                connectionNameField.addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                            JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
-                            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                        }
-                    }
-
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                    }
-                });
-            }   // if (adapter.getSystemConnectionMemo() != null)
-            init = true;
-        }   // if (!init)
-    }   // checkInitDone()
+    /**
+     * Determine if application needs to be restarted for configuration changes
+     * to be applied.
+     *
+     * @return true if application needs to restart, false otherwise
+     */
+    public boolean isRestartRequired() {
+        log.info("* isRestartRequired()");
+        return super.isRestartRequired();
+    }
 
     @Override
     public void updateAdapter() {
-        log.info("*	AnymaDMX_ConnectionConfig.updateAdapter() called.");
+        log.info("* updateAdapter()");
         if ((adapter.getSystemConnectionMemo() != null)
                 && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
@@ -109,29 +90,44 @@ public class AnymaDMX_ConnectionConfig extends AbstractUSBConnectionConfig {
 
     @Override
     protected void showAdvancedItems() {
-        log.info("*	AnymaDMX_ConnectionConfig.showAdvancedItems() called.");
+        log.info("* showAdvancedItems()");
+        super.showAdvancedItems();
     }
 
+    /**
+     * Load the Swing widgets needed to configure this connection into a
+     * specified JPanel. Used during the configuration process to fill out the
+     * preferences window with content specific to this Connection type. The
+     * JPanel contents need to handle their own gets/sets to the underlying
+     * Connection content.
+     *
+     * @param details The specific Swing object to be configured and filled.
+     */
     @Override
-    public void loadDetails(final javax.swing.JPanel details) {
-        log.info("*	AnymaDMX_ConnectionConfig.loadDetails() called.");
-        _details = details;
-        setInstance();
-        if (!init) {
-            if (adapter.getSystemConnectionMemo() != null) {
-                systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
-                connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                NUMOPTIONS = NUMOPTIONS + 2;
-            }
-            addStandardDetails(adapter, false, NUMOPTIONS);
-            init = false;
-            checkInitDone();
-        }
+    public void loadDetails(final JPanel details) {
+        log.info("* loadDetails()");
+        super.loadDetails(details);
+    }
+
+    /**
+     * Register the ConnectionConfig with the running JMRI process.
+     * <p>
+     * At a minimum, is responsible for:
+     * <ul>
+     * <li>Registering this object with the ConfigurationManager for
+     * persistance, typically at the "Preferences" level
+     * <li>Adding this object to the default (@link ConnectionConfigManager}
+     * </ul>
+     */
+    @Override
+    public void register() {
+        log.info("* register()");
+        super.register();
     }
 
     @Override
     protected void setInstance() {
-        log.info("*	AnymaDMX_ConnectionConfig.setInstance() called.");
+        log.info("* setInstance()");
         if (adapter == null) {
             adapter = new AnymaDMX_Adapter();
 
@@ -151,49 +147,64 @@ public class AnymaDMX_ConnectionConfig extends AbstractUSBConnectionConfig {
 
     @Override
     public AnymaDMX_Adapter getAdapter() {
-        log.info("*	AnymaDMX_ConnectionConfig.getAdapter() called.");
-        return adapter;
+        log.info("* getAdapter()");
+        return (AnymaDMX_Adapter) adapter;
     }
 
     @Override
     public String getInfo() {
-        log.info("*	AnymaDMX_ConnectionConfig.getInfo() called.");
+        log.info("* getInfo()");
         return "DMX";
     }
 
     @Override
     public String getManufacturer() {
-        log.info("*	AnymaDMX_ConnectionConfig.getManufacturer() called.");
+        log.info("* getManufacturer()");
         return AnymaDMX_ConnectionTypeList.ANYMA_DMX;
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
-        log.info("*	AnymaDMX_ConnectionConfig.setManufacturer() called.");
+        log.info("* setManufacturer('{}')", manufacturer);
     }
 
     @Override
     public String name() {
-        log.info("*	AnymaDMX_ConnectionConfig.name() called.");
+        log.info("* name()");
         return getConnectionName();
     }
 
     @Override
     public String getConnectionName() {
-        log.info("*	AnymaDMX_ConnectionConfig.getConnectionName() called.");
+        log.info("* getConnectionName()");
         return "Anyma DMX";
     }
 
     @Override
     public boolean getDisabled() {
-        log.info("*	AnymaDMX_ConnectionConfig.getDisabled() called.");
+        log.info("* getDisabled()");
         return disabled;
     }
 
     @Override
     public void setDisabled(boolean disable) {
-        log.info("*	AnymaDMX_ConnectionConfig.setDisabled() called.");
+        log.info("* setDisabled({})", disable ? "True" : "False");
         this.disabled = disable;
+    }
+
+    @Override
+    protected Vector<String> getPortNames() {
+        log.info("*	getPortNames()");
+        Vector<String> results = new Vector<>();
+
+        List<UsbDevice> usbDevices = USBUtil.getMatchingDevices((short) 0x16C0, (short) 0x05DC);
+        for (UsbDevice usbDevice : usbDevices) {
+            String location = USBUtil.getLocationID(usbDevice);
+            if (!location.isEmpty()) {
+                results.add(location);
+            }
+        }
+        return results;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AnymaDMX_ConnectionConfig.class);

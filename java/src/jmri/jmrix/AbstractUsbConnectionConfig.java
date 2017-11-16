@@ -30,37 +30,38 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author George Warner Copyright (C) 2017
  */
-abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConfig {
+abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConfig {
 
     /**
      * Ctor for an object being created during load process
      *
      * @param p port being configured
      */
-    public AbstractUSBConnectionConfig(PortAdapter p) {
-        this((USBPortAdapter) p);
-        log.debug("*	ConnectionConfig()");
+    public AbstractUsbConnectionConfig(PortAdapter p) {
+        this((UsbPortAdapter) p);
+        log.info("*	AbstractUSBConnectionConfig({})", p);
     }
 
     /**
      * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
      */
-    public AbstractUSBConnectionConfig() {
+    public AbstractUsbConnectionConfig() {
         this(null);
+        log.info("*	AbstractUSBConnectionConfig()");
     }
 
-    public AbstractUSBConnectionConfig(USBPortAdapter p) {
+    public AbstractUsbConnectionConfig(UsbPortAdapter p) {
         adapter = p;
         //addToActionList();
-        log.debug("*	ConnectionConfig()");
+        log.info("*	AbstractUSBConnectionConfig({})", p);
     }
 
-    private USBPortAdapter adapter = null;
+    protected UsbPortAdapter adapter = null;
 
     @Override
-    public USBPortAdapter getAdapter() {
-        log.debug("*	ConnectionConfig()");
+    public UsbPortAdapter getAdapter() {
+        log.info("*	getAdapter()");
         return adapter;
     }
 
@@ -145,23 +146,16 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void updateAdapter() {
-
+        log.info("*	updateAdapter()");
     }
 
-    UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
+    protected UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
     protected JComboBox<String> portBox = new JComboBox<>();
     protected JLabel portBoxLabel;
 
-
-    /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
-     */
-    @Override
-    abstract protected void setInstance();
-
     @Override
     public String getInfo() {
+        log.info("*	getInfo()");
         String t = (String) portBox.getSelectedItem();
         if (t != null) {
             return t;
@@ -180,6 +174,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
     @SuppressWarnings("UseOfObsoleteCollectionType")
     public void refreshPortBox() {
+        log.info("*	refreshPortBox()");
         if (!init) {
             v = getPortNames();
             portBox.setRenderer(new ComboBoxRenderer());
@@ -236,32 +231,40 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
             }
         }
 
+        updateUsbPortNames(portName, portBox, v);
+
         // If there's no name selected, select one that seems most likely
         boolean didSetName = false;
-        if (portName == null || portName.equals(Bundle.getMessage("noneSelected")) || portName.equals(Bundle.getMessage("noPortsFound"))) {
-            //for (int i = 0; i < portBox.getItemCount(); i++) {
-            //    for (String friendlyName : getPortFriendlyNames()) {
-            //        if ((portBox.getItemAt(i)).contains(friendlyName)) {
-            //            portBox.setSelectedIndex(i);
-            //            adapter.setPort(portBox.getItemAt(i));
-            //            didSetName = true;
-            //            break;
-            //        }
-            //    }
-            //}
+        if ((portName == null)
+                || portName.equals(Bundle.getMessage("noneSelected"))
+                || portName.equals(Bundle.getMessage("noPortsFound"))) {
+//            for (int i = 0; i < portBox.getItemCount(); i++) {
+//                for (String friendlyName : getPortFriendlyNames()) {
+//                    if ((portBox.getItemAt(i)).contains(friendlyName)) {
+//                        portBox.setSelectedIndex(i);
+//                        adapter.setPort(portBox.getItemAt(i));
+//                        didSetName = true;
+//                        break;
+//                    }
+//                }
+//            }
             // if didn't set name, don't leave it hanging
             if (!didSetName) {
                 portBox.setSelectedIndex(0);
             }
         }
         // finally, insist on synchronization of selected port name with underlying port
-        adapter.setPort((String) portBox.getSelectedItem());
+
+        adapter.setPort(
+                (String) portBox.getSelectedItem());
 
         // add a listener for later changes
-        portBox.addActionListener((ActionEvent e) -> {
-            String port = (String) portBox.getSelectedItem();
-            adapter.setPort(port);
-        });
+        portBox.addActionListener(
+                (ActionEvent e) -> {
+                    String port = (String) portBox.getSelectedItem();
+                    adapter.setPort(port);
+                }
+        );
     }
 
     String value;
@@ -269,6 +272,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
     @Override
     @SuppressWarnings("UseOfObsoleteCollectionType")
     public void loadDetails(final JPanel details) {
+        log.info("*	loadDetails()");
         _details = details;
         setInstance();
         if (!init) {
@@ -319,7 +323,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
         NUMOPTIONS = NUMOPTIONS + options.size();
 
-        portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
+        portBoxLabel = new JLabel(Bundle.getMessage("UsbPortLocationLabel"));
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
@@ -333,6 +337,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
     @Override
     protected void showAdvancedItems() {
+        log.info("*	showAdvancedItems()");
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
         cL.insets = new Insets(2, 5, 0, 5);
@@ -341,27 +346,25 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
         cR.gridx = 1;
         cL.gridx = 0;
         int i = 0;
-        int stdrows = 0;
-        boolean incAdvancedOptions = true;
-        if (!isPortAdvanced()) {
-            stdrows++;
-        }
-        for (String item : options.keySet()) {
-            if (!options.get(item).isAdvanced()) {
-                stdrows++;
+
+        boolean incAdvancedOptions = isPortAdvanced();
+
+        if (!incAdvancedOptions) {
+            for (String item : options.keySet()) {
+                if (options.get(item).isAdvanced()) {
+                    incAdvancedOptions = true;
+                    break;
+                }
             }
         }
 
-        if (adapter.getSystemConnectionMemo() != null) {
-            stdrows = stdrows + 2;
-        }
-        if (stdrows == NUMOPTIONS) {
-            incAdvancedOptions = false;
-        }
         _details.setLayout(gbLayout);
-        i = addStandardDetails(incAdvancedOptions, i);
-        if (showAdvanced.isSelected()) {
 
+        i = addStandardDetails(incAdvancedOptions, i);
+
+        showAdvanced.setVisible(incAdvancedOptions);
+
+        if (incAdvancedOptions && showAdvanced.isSelected()) {
             if (isPortAdvanced()) {
                 cR.gridy = i;
                 cL.gridy = i;
@@ -403,6 +406,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
     }
 
     protected int addStandardDetails(boolean incAdvanced, int i) {
+        log.info("*	addStandardDetails()");
         if (!isPortAdvanced()) {
             cR.gridy = i;
             cL.gridy = i;
@@ -417,16 +421,19 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
     }
 
     public boolean isPortAdvanced() {
+        log.info("*	isPortAdvanced()");
         return false;
     }
 
     @Override
     public String getManufacturer() {
+        log.info("*	getManufacturer()");
         return adapter.getManufacturer();
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
+        log.info("*	setManufacturer('{}')", manufacturer);
         if (adapter != null) {
             adapter.setManufacturer(manufacturer);
         }
@@ -434,6 +441,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
     @Override
     public boolean getDisabled() {
+        log.info("*	getDisabled()");
         if (adapter == null) {
             return true;
         }
@@ -442,6 +450,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void setDisabled(boolean disabled) {
+        log.info("*	setDisabled({})", disabled ? "True" : "False");
         if (adapter != null) {
             adapter.setDisabled(disabled);
         }
@@ -449,6 +458,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
     @Override
     public String getConnectionName() {
+        log.info("*	getConnectionName()");
         if ((adapter != null) && (adapter.getSystemConnectionMemo() != null)) {
             return adapter.getSystemConnectionMemo().getUserName();
         } else {
@@ -458,12 +468,14 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void dispose() {
-        super.dispose();
+        log.info("*	dispose()");
         if (adapter != null) {
             adapter.dispose();
             adapter = null;
         }
         //removeFromActionList();
+        super.dispose();
+
     }
 
     class ComboBoxRenderer extends JLabel
@@ -498,7 +510,7 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
             }
             if (invalidPort != null) {
                 String port = displayName;
-                if (port.equals(invalidPort)) {
+                if ((port == null) || port.isEmpty() || port.equals(invalidPort)) {
                     list.setSelectionForeground(Color.red);
                     setForeground(Color.red);
                 }
@@ -510,24 +522,32 @@ abstract public class AbstractUSBConnectionConfig extends AbstractConnectionConf
         }
     }
 
-    @SuppressWarnings({"unchecked", "UseOfObsoleteCollectionType"})
-    protected Vector<String> getPortNames() {
-        log.debug("*	ConnectionConfig()");
-        Vector<String> portNameVector = new Vector<>();
-
-        return portNameVector;
+    /**
+     * Handle friendly port names. Note that this changes the selection in
+     * portCombo, so that should be tracked after this returns.
+     *
+     * @param portName  The currently-selected port name
+     * @param portCombo The combo box that's displaying the available ports
+     * @param portList  The list of valid (unfriendly) port names
+     */
+    @SuppressWarnings("UseOfObsoleteCollectionType")
+    protected synchronized static void updateUsbPortNames(String portName, JComboBox<String> portCombo, Vector<String> portList) {
+        for (int i = 0; i < portList.size(); i++) {
+            String commPort = portList.elementAt(i);
+            portCombo.addItem(commPort);
+            if (commPort.equals(portName)) {
+                portCombo.setSelectedIndex(i);
+            }
+        }
     }
 
-//    protected final void addToActionList() {
-//        log.debug("*	ConnectionConfig()");
-//        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
-//    }
-//
-//    protected void removeFromActionList() {
-//        log.debug("*	ConnectionConfig()");
-//        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
-//    }
+    @SuppressWarnings({"unchecked", "UseOfObsoleteCollectionType"})
+    protected Vector<String> getPortNames() {
+        log.error("getPortNames() called in abstract class; should be overridden.");
+        return new Vector<>();
+    }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractUSBConnectionConfig.class);
+    private final static Logger log = LoggerFactory.getLogger(AbstractUsbConnectionConfig.class
+    );
 
 }

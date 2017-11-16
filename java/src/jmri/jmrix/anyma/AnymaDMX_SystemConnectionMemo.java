@@ -24,13 +24,13 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     public AnymaDMX_SystemConnectionMemo() {
         this("DX", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "DX" prefix
-        log.info("*	AnymaDMX_SystemConnectionMemo Constructor() called");
+        log.info("* Constructor()");
     }
 
     public AnymaDMX_SystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
 
-        log.info("*	AnymaDMX_SystemConnectionMemo Constructor ({}, {}) called", prefix, userName);
+        log.info("* Constructor ({}, {})", prefix, userName);
 
         register(); // registers general type
         InstanceManager.store(this, AnymaDMX_SystemConnectionMemo.class); // also register as specific type
@@ -46,7 +46,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *         exist
      */
     public String getUserNameFromSystemName(String systemName) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.getUserNameFromSystemName() called");
+        log.info("* getUserNameFromSystemName('{}')", systemName);
         String result = "";        // not any known light
         int offset = checkSystemPrefix(systemName);
         if (offset > 0) {
@@ -75,7 +75,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      */
     public int getChannelFromSystemName(String systemName) {
         int result = 0;
-        log.info("*	AnymaDMX_SystemConnectionMemo.getChannelFromSystemName() called");
+        log.info("* getChannelFromSystemName('{}')", systemName);
 
         int offset = checkSystemPrefix(systemName);
         if (offset > 1) {
@@ -112,7 +112,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *         for this connection
      */
     public int checkSystemPrefix(String systemName) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.checkSystemPrefix() called");
+        log.info("* checkSystemPrefix('{}')", systemName);
         int result = -1;
         if (systemName.startsWith(getSystemPrefix())) {
             result = getSystemPrefix().length();
@@ -130,7 +130,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *         assignment.
      */
     public String isOutputChannelFree(int nAddress, int channelNum) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.isOutputChannelFree() called");
+        log.info("* isOutputChannelFree({}, {})", nAddress, channelNum);
 
         if ((nAddress < 0) || (nAddress > 127)) {
             log.warn("invalid node address in free channel test");
@@ -168,7 +168,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *         format as the input name.
      */
     public String normalizeSystemName(String systemName) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.normalizeSystemName() called");
+        log.info("* normalizeSystemName('{}')", systemName);
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
 //            log.error("invalid system prefix in anyma dmx system name: {}", systemName); // fix test first
@@ -211,7 +211,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *         naming scheme
      */
     public String convertSystemNameToAlternate(String systemName) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.convertSystemNameToAlternate() called");
+        log.info("* convertSystemNameToAlternate('{}')", systemName);
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
             log.error("invalid system prefix in anyma dmx system name: {}", systemName);
@@ -256,7 +256,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * @return enum indicating current validity, which might be just as a prefix
      */
     public NameValidity validSystemNameFormat(String systemName, char type) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.validSystemNameFormat() called");
+        log.info("* validSystemNameFormat('{}', '{}')", systemName, type);
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
             log.error("invalid system prefix in anyma dmx system name: {}", systemName);
@@ -343,7 +343,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *         assignment.
      */
     public String isInputChannelFree(int nAddress, int channelNum) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.isInputChannelFree() called");
+        log.info("* isInputChannelFree({}, {})", nAddress, channelNum);
         if ((nAddress < 0) || (nAddress > 127)) {
             log.warn("invalid node address in free channel test");
             return "";
@@ -383,7 +383,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *         or CSnnnBxxxx format. The returned name is normalized.
      */
     public String makeSystemName(String type, int nAddress, int channelNum) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.makeSystemName() called");
+        log.info("* makeSystemName('{}', {}, {})", type, nAddress, channelNum);
         String nName = "";
         if (type.equals("L")) {
             if ((nAddress >= 0) && (nAddress < 128)) {
@@ -411,7 +411,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * @return 'null' if invalid systemName format or if the node is not found
      */
     public AbstractNode getNodeFromSystemName(String systemName) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.getNodeFromSystemName() called");
+        log.info("* getNodeFromSystemName('{}')", systemName);
         // get the node address
         int ua;
         ua = getNodeAddressFromSystemName(systemName);
@@ -429,7 +429,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *         configuration, else returns 'false'.
      */
     public boolean validSystemNameConfig(String systemName, char type) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.validSystemNameConfig() called");
+        log.info("* validSystemNameConfig('{}', '{}')", systemName, type);
         if (validSystemNameFormat(systemName, type) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             return false;
@@ -463,7 +463,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * @return '-1' if invalid systemName format or if the node is not found.
      */
     public int getNodeAddressFromSystemName(String systemName) {
-        log.info("*	AnymaDMX_SystemConnectionMemo.getNodeAddressFromSystemName() called");
+        log.info("* getNodeAddressFromSystemName('{}')", systemName);
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
             return -1;
@@ -508,7 +508,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     @Override
     public boolean provides(Class<?> type) {
         boolean result = false;
-        log.info("*	AnymaDMX_SystemConnectionMemo.provides() called");
+        log.info("* provides('{}')", type);
         if (!getDisabled()) {
             if (!configured) {
                 configureManagers();
@@ -524,7 +524,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     @Override
     public <T> T get(Class<?> T) {
         T result = null; // nothing by default
-        log.info("*	AnymaDMX_SystemConnectionMemo.get() called");
+        log.info("* get({})", T.toString());
         if (!getDisabled()) {
             if (!configured) {
                 configureManagers();
@@ -541,11 +541,11 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * common manager config in one place.
      */
     public void configureManagers() {
-        log.info("*	AnymaDMX_SystemConnectionMemo.configureManagers() called");
+        log.info("* configureManagers()");
         InstanceManager.setLightManager(getLightManager());
 
         if (configured) {
-            log.warn("configureManagers called for a second time", new Exception("traceback"));
+            log.warn("configureManagers for a second time", new Exception("traceback"));
         }
         configured = true;
     }
@@ -553,7 +553,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     protected UsbLightManager lightManager;
 
     public UsbLightManager getLightManager() {
-        log.info("*	AnymaDMX_SystemConnectionMemo.getLightManager() called");
+        log.info("* getLightManager()");
         UsbLightManager result = null;
         if (!getDisabled()) {
             if (lightManager == null) {
@@ -567,13 +567,13 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        log.debug("*	AnymaDMX_SystemConnectionMemo.getActionModelResourceBundle() called");
-        return ResourceBundle.getBundle("jmri.jmrix.anyma.AnymaDMX_ActionListBundle");
+        log.info("* getActionModelResourceBundle()");
+        return ResourceBundle.getBundle("jmri.jmrix.anyma.AnymaDMX_Bundle");
     }
 
     @Override
     public void dispose() {
-        log.info("*	AnymaDMX_SystemConnectionMemo.dispose() called");
+        log.info("* dispose()");
         InstanceManager.deregister(this, AnymaDMX_SystemConnectionMemo.class);
         if (lightManager != null) {
             InstanceManager.deregister(lightManager, UsbLightManager.class);
