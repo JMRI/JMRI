@@ -275,6 +275,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
         setWidth(r.width);
         setHeight(r.height);
         setSize(r.width, r.height);
+        getEditor().repaint();
     }
 
     @Override
