@@ -3,6 +3,8 @@ package jmri.implementation;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
+import jmri.CommandStation;
+import jmri.InstanceManager;
 
 /**
  * Default Consist Manager which uses the NmraConsist class for
@@ -13,8 +15,15 @@ import jmri.DccLocoAddress;
  */
 public class NmraConsistManager extends DccConsistManager implements ConsistManager {
 
+    private CommandStation commandStation = null;
+
     public NmraConsistManager() {
+        this(InstanceManager.getDefault(CommandStation.class));
+    }
+
+    public NmraConsistManager(CommandStation cs) {
         super();
+        commandStation = cs;
     }
 
     @Override
@@ -23,7 +32,7 @@ public class NmraConsistManager extends DccConsistManager implements ConsistMana
             return (consistTable.get(address));
         }
         NmraConsist consist;
-        consist = new NmraConsist(address);
+        consist = new NmraConsist(address,commandStation);
         consistTable.put(address, consist);
         return (consist);
     }
