@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
- * <p>
+ *
  * <h2>RPSpos2.2 program description.</h2>
  * <p>
  * As in previous versions, the first thing it does is sort the receivers in
