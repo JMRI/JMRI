@@ -247,17 +247,27 @@ public final class TreeModel extends DefaultTreeModel {
             Component[] components = controller.getComponents();
             log.info("Controller " + controller.getName() + " has " + components.length + " components");
             for (Component component : components) {
-                // ensure controller node exists directly under root
-                String controllerName = controller.getName() + " [" + controller.getType().toString() + "]";
-                UsbNode controllerNode = UsbNode.getNode(controllerName, controller, null);
-                controllerNode = (UsbNode) insertNode(controllerNode, dRoot);
+                try {
+                    // ensure controller node exists directly under root
+                    String controllerName = controller.getName() + " [" + controller.getType().toString() + "]";
+                    UsbNode controllerNode = UsbNode.getNode(controllerName, controller, null);
+                    controllerNode = (UsbNode) insertNode(controllerNode, dRoot);
 
-                // Device (component) node
-                String deviceName = component.getName() + " [" + component.getIdentifier().toString() + "]";
-                UsbNode deviceNode = UsbNode.getNode(deviceName, controller, component);
-                deviceNode = (UsbNode) insertNode(deviceNode, controllerNode);
+                    // Device (component) node
+                    String deviceName = component.getName() + " [" + component.getIdentifier().toString() + "]";
+                    UsbNode deviceNode = UsbNode.getNode(deviceName, controller, component);
+                    deviceNode = (UsbNode) insertNode(deviceNode, controllerNode);
 
-                deviceNode.setValue(0.0f);
+                    deviceNode.setValue(0.0f);
+                } catch (IllegalStateException e) {
+                    // node does not allow children
+                    break;  // skip this controller
+                } catch (IllegalArgumentException e) {
+                    // ignore components that throw IllegalArgumentExceptions
+                } catch (Exception e) {
+                    // log all others
+                    log.error("Exception " + e);
+                }
             }
         }
         return true;
