@@ -34,8 +34,8 @@ public final class USBUtil {
     /**
      * get matching USB devices
      *
-     * @param idVendor  the vendor id to match
-     * @param idProduct the product id to match
+     * @param idVendor   the vendor id to match (or zero to always match)
+     * @param idProduct  the product id to match (or zero to always match)
      * @return a list of matching UsbDevices
      */
     public static List<UsbDevice> getMatchingDevices(short idVendor, short idProduct) {

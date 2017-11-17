@@ -546,7 +546,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         return new Vector<>();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractUsbConnectionConfig.class
-    );
+    private final static Logger log
+        = LoggerFactory.getLogger(AbstractUsbConnectionConfig.class);
 
 }

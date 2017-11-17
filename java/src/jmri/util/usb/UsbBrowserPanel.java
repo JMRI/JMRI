@@ -68,7 +68,6 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
     /**
      * Create new UsbBrowserPanel.
-     * <p>
      */
     public UsbBrowserPanel() {
         root = new UsbTreeNode();
