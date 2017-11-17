@@ -177,13 +177,13 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getScaleEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("scale", "...")) {
+        return new AbstractAction(Bundle.getMessage("Rescale", "...")) {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("scale", ""), pos, true);
+                f.init(Bundle.getMessage("Rescale", ""), pos, true);
                 f.initScale();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);

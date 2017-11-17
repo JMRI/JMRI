@@ -2584,11 +2584,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //
         // set background color
         //
-        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor"));
+        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         optionMenu.add(backgroundColorMenuItem);
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("SetBackgroundColor"),
+                    Bundle.getMessage("SetBackgroundColor", ""),
                     defaultBackgroundColor);
             if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
                 defaultBackgroundColor = desiredColor;
@@ -2601,11 +2601,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //
         // set default text color
         //
-        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor"));
+        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         optionMenu.add(textColorMenuItem);
         textColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("DefaultTextColor"),
+                    Bundle.getMessage("DefaultTextColor", ""),
                     defaultTextColor);
             if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
                 setDefaultTextColor(desiredColor);
