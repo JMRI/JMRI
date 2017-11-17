@@ -25,5 +25,4 @@ public class AnymaDMX_ConnectionTypeList implements ConnectionTypeList {
     public String[] getManufacturers() {
         return new String[]{ANYMA_DMX};
     }
-
 }
