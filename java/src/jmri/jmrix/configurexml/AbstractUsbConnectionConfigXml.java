@@ -1,6 +1,6 @@
 package jmri.jmrix.configurexml;
 
-import jmri.jmrix.UZBPortAdapter;
+import jmri.jmrix.UsbPortAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +20,14 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
     public AbstractUsbConnectionConfigXml() {
     }
 
-    protected UZBPortAdapter adapter;
+    protected UsbPortAdapter adapter;
 
-    protected void setAdapter(UZBPortAdapter usbPortAdapter) {
+    protected void setAdapter(UsbPortAdapter usbPortAdapter) {
         log.debug("* setAdapter({})", usbPortAdapter);
         adapter = usbPortAdapter;
     }
 
-    protected UZBPortAdapter getAdapter() {
+    protected UsbPortAdapter getAdapter() {
         log.debug("* getAdapter({})");
         return adapter;
     }

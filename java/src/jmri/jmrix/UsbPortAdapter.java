@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author George Warner Copyright (C) 2017
  */
-public class UZBPortAdapter extends AbstractPortController {
+public class UsbPortAdapter extends AbstractPortController {
 
     private Short vendorID = 0;
     private Short productID = 0;
     protected UsbDevice usbDevice = null;
 
-    public UZBPortAdapter(SystemConnectionMemo memo) {
+    public UsbPortAdapter(SystemConnectionMemo memo) {
         super(memo);
     }
 
@@ -402,5 +402,5 @@ public class UZBPortAdapter extends AbstractPortController {
 //        }
 //        return results;
 //    }
-    private final static Logger log = LoggerFactory.getLogger(UZBPortAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(UsbPortAdapter.class);
 }
