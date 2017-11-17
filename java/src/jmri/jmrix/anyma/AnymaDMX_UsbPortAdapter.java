@@ -12,7 +12,7 @@ import javax.usb.UsbConst;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDisconnectedException;
 import javax.usb.UsbException;
-import jmri.jmrix.UsbPortAdapter;
+import jmri.jmrix.UZBPortAdapter;
 import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_UsbPortAdapter extends UsbPortAdapter {
+public class AnymaDMX_UsbPortAdapter extends UZBPortAdapter {
 
     //private AnymaDMX_Controller dmx = null;
 

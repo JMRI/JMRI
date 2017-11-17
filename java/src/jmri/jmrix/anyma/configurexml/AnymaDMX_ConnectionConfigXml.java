@@ -1,7 +1,7 @@
 package jmri.jmrix.anyma.configurexml;
 
 import jmri.jmrix.ConnectionConfig;
-import jmri.jmrix.UsbPortAdapter;
+import jmri.jmrix.UZBPortAdapter;
 import jmri.jmrix.anyma.AnymaDMX_UsbPortAdapter;
 import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
 import jmri.jmrix.configurexml.AbstractUsbConnectionConfigXml;
@@ -45,7 +45,7 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
 
     @Override
     protected void getInstance(Object object) {
-        setAdapter((UsbPortAdapter) ((ConnectionConfig) object).getAdapter());
+        setAdapter((UZBPortAdapter) ((ConnectionConfig) object).getAdapter());
     }
 
     @Override

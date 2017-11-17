@@ -38,7 +38,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
      * @param p port being configured
      */
     public AbstractUsbConnectionConfig(PortAdapter p) {
-        this((UsbPortAdapter) p);
+        this((UZBPortAdapter) p);
         log.debug("*	AbstractUSBConnectionConfig({})", p);
     }
 
@@ -51,16 +51,16 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         log.debug("*	AbstractUSBConnectionConfig()");
     }
 
-    public AbstractUsbConnectionConfig(UsbPortAdapter p) {
+    public AbstractUsbConnectionConfig(UZBPortAdapter p) {
         adapter = p;
         //addToActionList();
         log.debug("*	AbstractUSBConnectionConfig({})", p);
     }
 
-    protected UsbPortAdapter adapter = null;
+    protected UZBPortAdapter adapter = null;
 
     @Override
-    public UsbPortAdapter getAdapter() {
+    public UZBPortAdapter getAdapter() {
         log.debug("*	getAdapter()");
         return adapter;
     }
