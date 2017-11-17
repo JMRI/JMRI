@@ -12,15 +12,20 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = ConnectionTypeList.class)
 public class AnymaDMX_ConnectionTypeList implements ConnectionTypeList {
 
-    public static final String ANYMA_DMX = "Anyma DMX";
+    protected static final String ANYMA_DMX = "Anyma DMX512";
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.anyma.AnymaDMX_ConnectionConfig"
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] getManufacturers() {
         return new String[]{ANYMA_DMX};

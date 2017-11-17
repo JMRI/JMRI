@@ -61,25 +61,6 @@ public class UsbPortAdapter extends AbstractPortController {
         log.debug("*	connect()");
     }
 
-//    private String manufacturer = null;
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getManufacturer() {
-//        log.debug("*	getManufacturer()");
-//        return manufacturer;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void setManufacturer(String manufacturer) {
-//        log.debug("*	setManufacturer('{}')", manufacturer);
-//        this.manufacturer = manufacturer;
-//    }
     /**
      * {@inheritDoc}
      */
@@ -98,93 +79,6 @@ public class UsbPortAdapter extends AbstractPortController {
         return null;
     }
 
-//    private boolean disabled = false;
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public boolean getDisabled() {
-//        log.debug("*	getDisabled()");
-//        return disabled;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void setDisabled(boolean disabled) {
-//        log.debug("*	setDisabled()");
-//        this.disabled = disabled;
-//    }
-//
-//    private String userName = null;
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getUserName() {
-//        log.debug("*	getUserName()");
-//        return userName;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void setUserName(String userName) throws IllegalArgumentException {
-//        log.debug("*	setUserName('{}')", userName);
-//        this.userName = userName;
-//    }
-//
-//    private String systemPrefix = null;
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getSystemPrefix() {
-//        log.debug("*	getSystemPrefix()");
-//        return systemPrefix;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void setSystemPrefix(String systemPrefix) throws IllegalArgumentException {
-//        log.debug("*	setSystemPrefix('{}')", systemPrefix);
-//        this.systemPrefix = systemPrefix;
-//    }
-//
-//    private SystemConnectionMemo systemConnectionMemo = null;
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public SystemConnectionMemo getSystemConnectionMemo() {
-//        log.debug("*	getSystemConnectionMemo()");
-//        return systemConnectionMemo;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException {
-//        log.debug("*	setSystemConnectionMemo()");
-//        systemConnectionMemo = connectionMemo;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void dispose() {
-//        log.debug("*	dispose()");
-//    }
     /**
      * {@inheritDoc}
      */
@@ -193,23 +87,6 @@ public class UsbPortAdapter extends AbstractPortController {
         log.debug("*	recover()");
     }
 
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public boolean isDirty() {
-//        log.debug("*	isDirty()");
-//        return false;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public boolean isRestartRequired() {
-//        log.debug("*	isRestartRequired()");
-//        return false;
-//    }
     /**
      * {@inheritDoc}
      */
@@ -218,16 +95,6 @@ public class UsbPortAdapter extends AbstractPortController {
         log.debug("*	configure()");
     }
 
-//    private boolean status = true;
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public boolean status() {
-//        log.debug("*	status()");
-//        return status;
-//    }
     /**
      * {@inheritDoc}
      */
@@ -277,135 +144,15 @@ public class UsbPortAdapter extends AbstractPortController {
         return port;
     }
 
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getOption1Name() {
-//        log.debug("*	getOption1Name()");
-//        return "Location ID";
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getOption2Name() {
-//        log.debug("*	getOption2Name()");
-//        return null;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getOption3Name() {
-//        log.debug("*	getOption3Name()");
-//        return null;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getOption4Name() {
-//        log.debug("*	getOption4Name()");
-//        return null;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void configureOption1(String value) {
-//        log.debug("*	configureOption1('{}')", value);
-//        setPort(value);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void configureOption2(String value) {
-//        log.debug("*	configureOption2('{}')", value);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void configureOption3(String value) {
-//        log.debug("*	configureOption3('{}')", value);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void configureOption4(String value) {
-//        log.debug("*	configureOption4('{}')", value);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String[] getOptions() {
-//        log.debug("*	getOptions()");
-//        Set<String> keySet = options.keySet();
-//        return keySet.toArray(new String[keySet.size()]);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public boolean isOptionAdvanced(String option) {
-//        log.debug("*	isOptionAdvanced('{}')", option);
-//        return false;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getOptionDisplayName(String option) {
-//        log.debug("*	getOptionDisplayName('{}')", option);
-//        return Bundle.getMessage(options.get(option));
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void setOptionState(String option, String value) {
-//        log.debug("*	setOptionState('{}', '{}')", option, value);
-//        options.put(option, value);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String getOptionState(String option) {
-//        log.debug("*	getOptionState('{}')", option);
-//        return options.get(option);
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public String[] getOptionChoices(String option) {
-//        String[] results = new String[]{};
-//        log.debug("*	getOptionChoices('{}')", option);
-//        if (option.equals("XXX")) {
-//            List<String> portNames = getPortNames();
-//            results = portNames.toArray(new String[portNames.size()]);
-//        }
-//        return results;
-//    }
-
+    /**
+     * send USB control transfer
+     * @param requestType the request type
+     * @param request the request
+     * @param value the value
+     * @param index the index
+     * @param data the data
+     * @return true if successful sent
+     */
     public boolean sendControlTransfer(int requestType, int request, int value, int index, byte[] data) {
         boolean result = false;    // assume failure (pessimist!)
         if (usbDevice != null) {

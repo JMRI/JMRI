@@ -17,13 +17,13 @@ import org.slf4j.LoggerFactory;
  */
 public class AnymaDMX_UsbLight extends AbstractVariableLight {
 
-    AnymaDMX_SystemConnectionMemo _memo = null;
-
+    private AnymaDMX_SystemConnectionMemo _memo = null;
 
     /**
      * Create a Light object, with only system name.
      * <P>
-     * 'systemName' was previously validated in UsbLightManager
+     * @param systemName the system name (previously validated)
+     * @param memo       the system memo
      */
     public AnymaDMX_UsbLight(String systemName, AnymaDMX_SystemConnectionMemo memo) {
         super(systemName);
@@ -36,12 +36,12 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
     /**
      * Create a Light object, with both system and user names.
      * <P>
-     * @param systemName the system name
+     * @param systemName the system name (previously validated)
      * @param userName   the user name
-     * @param memo       the memo 'systemName' was previously validated in
-     *                   UsbLightManager
+     * @param memo       the system memo
      */
-    public AnymaDMX_UsbLight(String systemName, String userName, AnymaDMX_SystemConnectionMemo memo) {
+    public AnymaDMX_UsbLight(String systemName,
+            String userName, AnymaDMX_SystemConnectionMemo memo) {
         super(systemName, userName);
         log.debug("*    UsbLight constructor called");
         _memo = memo;
@@ -52,11 +52,12 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
      * Sets up system dependent instance variables and sets system independent
      * instance variables to default values Note: most instance variables are in
      * AbstractLight.java
+     * @param systemName the system name for this light
      */
     private void initializeLight(String systemName) {
         log.debug("*    UsbLight.initializeLight() called");
         // Extract the Channel from the name
-        mChannel = _memo.getChannelFromSystemName(systemName) - 1;
+        mChannel = _memo.getChannelFromSystemName(systemName);
         // Set initial state
         setState(OFF);
     }
@@ -64,14 +65,12 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
     /**
      * System dependent instance variables
      */
-    private int mChannel = 0;                // channel within the node (0-511)
+    private int mChannel = 0;                // channel within the node (1-512)
 
     /**
-     * Set the current state of this Light. This routine requests the hardware
-     * to change. If this is really a change in state of this channel (tested in
-     * UsbNode), a Transmit packet will be sent before this Node is next polled.
+     * {@inheritDoc}
      */
-    @Override
+     @Override
     protected void doNewState(int oldState, int newState) {
         log.debug("*    UsbLight.doNewState({}, {}) called", oldState, newState);
         AnymaDMX_TrafficController trafficController = _memo.getTrafficController();
@@ -86,8 +85,10 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
         }
     }
 
-    @Override
-    protected void sendIntensity(double intensity) {
+    /**
+     * {@inheritDoc}
+     */
+     protected void sendIntensity(double intensity) {
         log.debug("*    sendIntensity({})", "" + intensity);
         AnymaDMX_TrafficController trafficController = _memo.getTrafficController();
         if (trafficController != null) {
@@ -96,8 +97,10 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
         }
     }
 
-    @Override
-    protected void sendOnOffCommand(int newState) {
+    /**
+     * {@inheritDoc}
+     */
+     protected void sendOnOffCommand(int newState) {
         log.debug("*    sendOnOffCommand({})", newState);
         AnymaDMX_TrafficController trafficController = _memo.getTrafficController();
         if (trafficController != null) {
@@ -111,8 +114,10 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
         }
     }
 
-    @Override
-    protected int getNumberOfSteps() {
+    /**
+     * {@inheritDoc}
+     */
+     protected int getNumberOfSteps() {
         return 256;
     }
 

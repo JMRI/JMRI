@@ -19,6 +19,9 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     public AbstractConnectionConfigXml() {
     }
 
+    /**
+     * get instance
+     */
     abstract protected void getInstance();
 
     abstract protected void register();

@@ -147,11 +147,11 @@ abstract public class SystemConnectionMemo extends Bean {
      * @return true if the specified manager is provided
      */
     public boolean provides(Class<?> c) {
-        return false; // nothing, by default
+        return (get(c) != null);
     }
 
     /**
-     * Does this connection provide a manager of this type?
+     * get a manager of this type
      *
      * @param <T> Type of manager to get
      * @param T   Type of manager to get

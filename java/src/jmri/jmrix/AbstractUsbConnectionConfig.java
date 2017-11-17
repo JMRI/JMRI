@@ -266,8 +266,9 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         );
     }
 
-    //String value;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @SuppressWarnings("UseOfObsoleteCollectionType")
     public void loadDetails(final JPanel details) {

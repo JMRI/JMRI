@@ -2,8 +2,8 @@ package jmri.jmrix.anyma.configurexml;
 
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.UsbPortAdapter;
-import jmri.jmrix.anyma.AnymaDMX_UsbPortAdapter;
 import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
+import jmri.jmrix.anyma.AnymaDMX_UsbPortAdapter;
 import jmri.jmrix.configurexml.AbstractUsbConnectionConfigXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +23,17 @@ import org.slf4j.LoggerFactory;
  */
 public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml {
 
+    /**
+     * constructor
+     */
     public AnymaDMX_ConnectionConfigXml() {
         super();
         log.debug("* constructor()");
     }
 
+    /**
+     * get instance
+     */
     @Override
     protected void getInstance() {
         log.debug("* getInstance()");
@@ -43,6 +49,11 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
         }
     }
 
+    /**
+     * get instance
+     *
+     * @param object to get the instance of
+     */
     @Override
     protected void getInstance(Object object) {
         setAdapter((UsbPortAdapter) ((ConnectionConfig) object).getAdapter());
@@ -52,37 +63,6 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
     protected void register() {
         this.register(new AnymaDMX_ConnectionConfig((AnymaDMX_UsbPortAdapter) adapter));
     }
-
-//    /**
-//     * Default implementation for storing the static contents of the serial port
-//     * implementation
-//     *
-//     * @param o Object to store, of type PositionableLabel
-//     * @return Element containing the complete info
-//     */
-//    @Override
-//    public Element store(Object o) {
-//        log.debug("* store({})", o);
-//        getInstance(o);
-//        Element e = new Element("connection");
-//        storeCommon(e, adapter);
-//
-//        e.setAttribute("class", this.getClass().getName());
-//        return e;
-//    }
-//
-//    @Override
-//    public boolean load(Element shared, Element perNode) {
-//        log.debug("* load({},{})", shared, perNode);
-//        getInstance();
-//        loadCommon(shared, perNode, adapter);
-//
-//        // register, so can be picked up next time
-//        register();
-//
-//        adapter.configure();
-//        return true;
-//    }
 
     private final static Logger log = LoggerFactory.getLogger(AnymaDMX_ConnectionConfigXml.class);
 }

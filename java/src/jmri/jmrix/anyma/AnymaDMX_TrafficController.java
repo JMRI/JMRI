@@ -24,6 +24,9 @@ public class AnymaDMX_TrafficController {
     private ScheduledExecutorService execService = null;
     private AnymaDMX_UsbPortAdapter controller = null;
 
+    /**
+     * constructor
+     */
     public AnymaDMX_TrafficController() {
         execService = Executors.newScheduledThreadPool(5);
         execService.scheduleAtFixedRate(() -> {
@@ -41,18 +44,19 @@ public class AnymaDMX_TrafficController {
                 if (from <= to) {
                     int len = to - from + 1;
                     byte[] buf = new byte[len];
-                    System.arraycopy(new_data, from, buf, 0,
-                            Math.min(new_data.length, len));
-                    if (setChannelRangeValues(from, to, buf)) {
+                    System.arraycopy(new_data, from, buf, 0, len);
+                    if (sendChannelRangeValues(from, to, buf)) {
                         arraycopy(new_data, from, old_data, from, len);
                     }
                 }
             }
-        }, 0, 100L, TimeUnit.MILLISECONDS);
+        }, 0, 100L, TimeUnit.MILLISECONDS); // 10 times per second
     }
 
     /**
      * Make connection to existing PortController (adapter) object.
+     *
+     * @param p the AnymaDMX_UsbPortAdapter we're connecting to
      */
     public void connectPort(AnymaDMX_UsbPortAdapter p) {
         if (controller != null) {
@@ -66,26 +70,13 @@ public class AnymaDMX_TrafficController {
     /**
      * set a channel's value
      *
-     * @param channel the channel (0 - 511 inclusive)
+     * @param channel the channel (1 - 512 inclusive)
      * @param value   the value
      */
     public void setChannelValue(int channel, byte value) {
-//        byte buf[] = {value};
-//        setChannelRangeValues(channel, channel, buf);
-
-        if ((0 <= channel) && (channel <= 511)) {
-            new_data[channel] = value;
+        if ((1 <= channel) && (channel <= 512)) {
+            new_data[channel - 1] = value;
         }
-
-        //channel = MathUtil.pin(channel, 1, 512) - 1;
-        //byte requestType = UsbConst.REQUESTTYPE_TYPE_VENDOR
-        //        | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE
-        //        | UsbConst.ENDPOINT_DIRECTION_OUT;
-        //byte request = 0x01;    // anyma dmx cmd_SetSingleChannel
-        //int e = sendControlTransfer(requestType, request, value, channel, null);
-        //if (e < 0) {
-        //    log.error("sendControlTransfer error: " + e);
-        //}
     }
 
     /**
@@ -94,9 +85,31 @@ public class AnymaDMX_TrafficController {
      * @param from the beginning index (inclusive)
      * @param to   the ending index (inclusive)
      * @param buf  the data to send
-     * @note the from/to indexes are 0-511 (inclusive)
+     * note: the from/to indexes are 1-512 (inclusive)
      */
-    protected boolean setChannelRangeValues(int from, int to, byte buf[]) {
+    public void setChannelRangeValues(int from, int to, byte buf[]) {
+        if ((1 <= from) && (from <= 512) && (1 <= to) && (to <= 512)) {
+            int len = to - from + 1;
+            if (len == buf.length) {
+                arraycopy(new_data, from, buf, 0, len);
+            } else {
+                log.error("range does not match buffer size");
+            }
+        } else {
+            log.error("channel(s) out of range (1-512): {from: {}, to: {}}.",
+                    from, to);
+        }
+    }
+
+    /**
+     * send the values for a range of channels (to the controller)
+     *
+     * @param from the beginning index (inclusive)
+     * @param to   the ending index (inclusive)
+     * @param buf  the data to send
+     * @return true if successful
+     */
+    private boolean sendChannelRangeValues(int from, int to, byte buf[]) {
         from = MathUtil.pin(from, 0, 511);
         to = MathUtil.pin(to, from, 511);
         int len = to - from + 1;
@@ -104,11 +117,7 @@ public class AnymaDMX_TrafficController {
                 | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE
                 | UsbConst.ENDPOINT_DIRECTION_OUT;
         byte request = 0x02;    // anyma dmx cmd_SetChannelRange
-        boolean f = controller.sendControlTransfer(requestType, request, len, from, buf);
-        //if (f) {
-        //    log.error("sendControlTransfer error");
-        //}
-        return f;
+        return controller.sendControlTransfer(requestType, request, len, from, buf);
     }
 
     private final static Logger log

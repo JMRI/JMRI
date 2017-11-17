@@ -20,9 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
 
-    private boolean disabled = false;
-//    private Date DMXMessageShown = null;
-
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
@@ -52,26 +49,26 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
     }
 
     /**
-     * Determine if configuration needs to be written to disk.
-     *
-     * @return true if configuration needs to be saved, false otherwise
+     * {@inheritDoc}
      */
+    @Override
     public boolean isDirty() {
         log.debug("*    isDirty()");
         return super.isDirty();
     }
 
     /**
-     * Determine if application needs to be restarted for configuration changes
-     * to be applied.
-     *
-     * @return true if application needs to restart, false otherwise
+     * {@inheritDoc}
      */
+    @Override
     public boolean isRestartRequired() {
         log.debug("*    isRestartRequired()");
         return super.isRestartRequired();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateAdapter() {
         log.debug("*    updateAdapter()");
@@ -82,6 +79,9 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void showAdvancedItems() {
         log.debug("*    showAdvancedItems()");
@@ -89,13 +89,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
     }
 
     /**
-     * Load the Swing widgets needed to configure this connection into a
-     * specified JPanel. Used during the configuration process to fill out the
-     * preferences window with content specific to this Connection type. The
-     * JPanel contents need to handle their own gets/sets to the underlying
-     * Connection content.
-     *
-     * @param details The specific Swing object to be configured and filled.
+     * {@inheritDoc}
      */
     @Override
     public void loadDetails(final JPanel details) {
@@ -104,14 +98,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
     }
 
     /**
-     * Register the ConnectionConfig with the running JMRI process.
-     * <p>
-     * At a minimum, is responsible for:
-     * <ul>
-     * <li>Registering this object with the ConfigurationManager for
-     * persistance, typically at the "Preferences" level
-     * <li>Adding this object to the default (@link ConnectionConfigManager}
-     * </ul>
+     * {@inheritDoc}
      */
     @Override
     public void register() {
@@ -119,70 +106,32 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
         super.register();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         log.debug("*    setInstance()");
         if (adapter == null) {
             adapter = new AnymaDMX_UsbPortAdapter();
         }
-//        if (adapter.getDMXController() == null) {
-//            // don't show more than once every 30 seconds
-//            if (!GraphicsEnvironment.isHeadless()
-//                    && (this.DMXMessageShown == null || ((new Date().getTime() - this.DMXMessageShown.getTime()) / 1000 % 60) > 30)) {
-//                JOptionPane.showMessageDialog(this._details,
-//                        Bundle.getMessage("NoDMXControllerMessage"),
-//                        Bundle.getMessage("NoDMXControllerTitle"),
-//                        JOptionPane.ERROR_MESSAGE);
-//                this.DMXMessageShown = new Date();
-//            }
-//        }
-    }
-
-    @Override
-    public AnymaDMX_UsbPortAdapter getAdapter() {
-        log.debug("*    getAdapter()");
-        return (AnymaDMX_UsbPortAdapter) adapter;
-    }
-
-    @Override
-    public String getInfo() {
-        log.debug("*    getInfo()");
-        return "DMX";
-    }
-
-    @Override
-    public String getManufacturer() {
-        log.debug("*    getManufacturer()");
-        return AnymaDMX_ConnectionTypeList.ANYMA_DMX;
-    }
-
-    @Override
-    public void setManufacturer(String manufacturer) {
-        log.debug("*    setManufacturer('{}')", manufacturer);
+        //if (adapter.getDMXController() == null) {
+        //    // don't show more than once every 30 seconds
+        //    if (!GraphicsEnvironment.isHeadless()
+        //            && (this.DMXMessageShown == null || ((new Date().getTime() - this.DMXMessageShown.getTime()) / 1000 % 60) > 30)) {
+        //        JOptionPane.showMessageDialog(this._details,
+        //                Bundle.getMessage("NoDMXControllerMessage"),
+        //                Bundle.getMessage("NoDMXControllerTitle"),
+        //                JOptionPane.ERROR_MESSAGE);
+        //        this.DMXMessageShown = new Date();
+        //    }
+        //}
     }
 
     @Override
     public String name() {
         log.debug("*    name()");
         return getConnectionName();
-    }
-
-    @Override
-    public String getConnectionName() {
-        log.debug("*    getConnectionName()");
-        return "Anyma DMX";
-    }
-
-    @Override
-    public boolean getDisabled() {
-        log.debug("*    getDisabled()");
-        return disabled;
-    }
-
-    @Override
-    public void setDisabled(boolean disable) {
-        log.debug("*    setDisabled({})", disable ? "True" : "False");
-        this.disabled = disable;
     }
 
     @Override

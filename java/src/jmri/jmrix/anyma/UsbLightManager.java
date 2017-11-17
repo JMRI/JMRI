@@ -18,6 +18,11 @@ public class UsbLightManager extends AbstractLightManager {
 
     private AnymaDMX_SystemConnectionMemo _memo = null;
 
+    /**
+     * constructor
+     *
+     * @param memo the system connection memo
+     */
     public UsbLightManager(AnymaDMX_SystemConnectionMemo memo) {
         log.debug("*    UsbLightManager constructor called");
         _memo = memo;
@@ -38,49 +43,35 @@ public class UsbLightManager extends AbstractLightManager {
      * Assumes calling method has checked that a Light with this system name
      * does not already exist.
      *
+     * @param systemName the system name to use for this light
+     * @param userName   the user name to use for this light
      * @return null if the system name is not in a valid format or if the system
-     *         name does not correspond to a configured anyma dmx digital output
-     *         channel
+     *         name does not correspond to a valid channel
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
         log.debug("*    UsbLightManager.createNewLight() called");
-        Light lgt = null;
+        Light result = null;    // assume failure (pessimist!)
 
-        int nAddress = -1;
-        nAddress = _memo.getNodeAddressFromSystemName(systemName);
-        if (nAddress == -1) {
-            return (null);
+        int nAddress = _memo.getNodeAddressFromSystemName(systemName);
+        if (nAddress != -1) {
+            int channelNum = _memo.getChannelFromSystemName(systemName);
+            if (channelNum != 0) {
+                // Validate the systemName
+                if (_memo.validSystemNameFormat(systemName, 'L') == Manager.NameValidity.VALID) {
+                    if (_memo.validSystemNameConfig(systemName, 'L')) {
+                        result = new AnymaDMX_UsbLight(systemName, userName, _memo);
+                    } else {
+                        log.warn("Light System Name does not refer to configured hardware: " + systemName);
+                    }
+                } else {
+                    log.error("Invalid Light System Name format: " + systemName);
+                }
+            } else {
+                log.error("Invalid channel number from System Name: " + systemName);
+            }
         }
-
-        int channelNum = _memo.getChannelFromSystemName(systemName);
-        if (channelNum == 0) {
-            return (null);
-        }
-
-        // Validate the systemName
-        if (_memo.validSystemNameFormat(systemName, 'L') == Manager.NameValidity.VALID) {
-            lgt = new AnymaDMX_UsbLight(systemName, userName, _memo);
-//            if (!_memo.validSystemNameConfig(systemName, 'DX',_memo.getTrafficController())) {
-//                log.warn("Light system Name does not refer to configured hardware: "
-//                        + systemName);
-//            }
-        } else {
-            log.error("Invalid Light system Name format: " + systemName);
-        }
-        return lgt;
-    }
-
-    /**
-     * Public method to notify user of Light creation error.
-     */
-    public void notifyLightCreationError(String conflict, int channelNum) {
-        log.debug("*    UsbLightManager.notifyLightCreationError() called");
-//        javax.swing.JOptionPane.showMessageDialog(null,
-//                Bundle.getMessage("ErrorAssignDialog", "" + channelNum, conflict) + "\n" +
-//                Bundle.getMessage("ErrorAssignLine2L"),
-//                Bundle.getMessage("ErrorAssignTitle"),
-//                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+        return result;
     }
 
     /**
@@ -95,6 +86,7 @@ public class UsbLightManager extends AbstractLightManager {
     /**
      * Public method to validate system name for configuration.
      *
+     * @param systemName the system name to validate
      * @return 'true' if system name has a valid meaning in current
      *         configuration, else return 'false'
      */
@@ -107,6 +99,7 @@ public class UsbLightManager extends AbstractLightManager {
     /**
      * Public method to normalize a system name.
      *
+     * @param systemName the system name to normalize
      * @return a normalized system name if system name has a valid format, else
      *         returns ""
      */
@@ -119,6 +112,7 @@ public class UsbLightManager extends AbstractLightManager {
     /**
      * Public method to convert system name to its alternate format
      *
+     * @param systemName the system name to convert
      * @return a normalized system name if system name is valid and has a valid
      *         alternate representation, else returns ""
      */
@@ -136,6 +130,9 @@ public class UsbLightManager extends AbstractLightManager {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;

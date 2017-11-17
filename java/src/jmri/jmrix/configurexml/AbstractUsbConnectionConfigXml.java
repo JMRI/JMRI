@@ -32,6 +32,11 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
         return adapter;
     }
 
+    /**
+     * get instance
+     *
+     * @param object to get the instance of
+     */
     protected void getInstance(Object object) {
         log.error("getInstance not over-ridden");
         getInstance(); // over-ridden during migration

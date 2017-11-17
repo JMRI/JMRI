@@ -1,8 +1,5 @@
 package jmri.jmrix.anyma;
 
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import jmri.jmrix.UsbPortAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +13,9 @@ import org.slf4j.LoggerFactory;
  */
 public class AnymaDMX_UsbPortAdapter extends UsbPortAdapter {
 
-    //private AnymaDMX_Controller dmx = null;
-
+    /**
+     * constructor
+     */
     public AnymaDMX_UsbPortAdapter() {
         super(new AnymaDMX_SystemConnectionMemo());
         log.debug("*    Constructor");
@@ -29,38 +27,23 @@ public class AnymaDMX_UsbPortAdapter extends UsbPortAdapter {
     @Override
     public void dispose() {
         log.debug("*    dispose() called.");
-        //dmx.shutdown(); // terminate all DMX connections.
         super.dispose();
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public void configure() {
         log.debug("*    configure() called.");
 
-      // connect to the traffic controller
-        AnymaDMX_TrafficController control = new AnymaDMX_TrafficController();
-        control.connectPort(this);
+        // connect to the traffic controller
+        AnymaDMX_TrafficController controller = new AnymaDMX_TrafficController();
+        controller.connectPort(this);
 
-        getSystemConnectionMemo().setTrafficController(control);
-        getSystemConnectionMemo().configureManagers();
-    }
+        AnymaDMX_SystemConnectionMemo memo = (AnymaDMX_SystemConnectionMemo) getSystemConnectionMemo();
 
-    @Override
-    public DataInputStream getInputStream() {
-        log.debug("*    getInputStream() called.");
-        return null;
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        log.debug("*    getOutputStream() called.");
-        return null;
-    }
-
-    @Override
-    public AnymaDMX_SystemConnectionMemo getSystemConnectionMemo() {
-        log.debug("*    getSystemConnectionMemo() called.");
-        return (AnymaDMX_SystemConnectionMemo) super.getSystemConnectionMemo();
+        memo.setTrafficController(controller);
+        memo.configureManagers();
     }
 
     private final static Logger log
