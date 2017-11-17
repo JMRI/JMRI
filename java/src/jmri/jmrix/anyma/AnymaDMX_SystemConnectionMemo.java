@@ -36,15 +36,29 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, AnymaDMX_SystemConnectionMemo.class); // also register as specific type
     }
 
-    private AnymaDMX_UsbPortAdapter adapter = null;
+    private AnymaDMX_TrafficController trafficController = null;
 
-    protected AnymaDMX_UsbPortAdapter getAdapter() {
-        return adapter;
+    /**
+     * 
+     * @return 
+     */
+    protected AnymaDMX_TrafficController getTrafficController() {
+        return trafficController;
     }
 
-    protected void setAdapter(AnymaDMX_UsbPortAdapter adapter) {
-        this.adapter = adapter;
+    protected void setTrafficController(AnymaDMX_TrafficController trafficController) {
+        this.trafficController = trafficController;
     }
+
+//    private AnymaDMX_UsbPortAdapter trafficController = null;
+//
+//    protected AnymaDMX_UsbPortAdapter getAdapter() {
+//        return trafficController;
+//    }
+//
+//    protected void setAdapter(AnymaDMX_UsbPortAdapter trafficController) {
+//        this.trafficController = trafficController;
+//    }
 
     /**
      * Public static method to the user name for a valid system name.

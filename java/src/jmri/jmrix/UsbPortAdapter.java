@@ -4,7 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
+import javax.usb.UsbDisconnectedException;
+import javax.usb.UsbException;
 import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -402,5 +405,30 @@ public class UsbPortAdapter extends AbstractPortController {
 //        }
 //        return results;
 //    }
+
+    public boolean sendControlTransfer(int requestType, int request, int value, int index, byte[] data) {
+        boolean result = false;    // assume failure (pessimist!)
+        if (usbDevice != null) {
+            try {
+                UsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(
+                        (byte) requestType, (byte) request,
+                        (short) value, (short) index);
+                if (data == null) {
+                    data = new byte[0];
+                }
+                usbControlIrp.setData(data);
+                usbControlIrp.setLength(data.length);
+
+                //log.debug("sendControlTransfer,  requestType: {}, request: {}, value: {}, index: {}, data: {}", requestType, request, value, index, getByteString(data));
+                usbDevice.syncSubmit(usbControlIrp);
+                result = true; // it's good!
+            } catch (IllegalArgumentException | UsbException | UsbDisconnectedException e) {
+                //log.error("Exception " + e);
+                //e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(UsbPortAdapter.class);
 }

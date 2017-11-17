@@ -19,6 +19,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
 
     AnymaDMX_SystemConnectionMemo _memo = null;
 
+
     /**
      * Create a Light object, with only system name.
      * <P>
@@ -73,12 +74,12 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
     @Override
     protected void doNewState(int oldState, int newState) {
         log.debug("*    UsbLight.doNewState({}, {}) called", oldState, newState);
-        AnymaDMX_UsbPortAdapter adapter = _memo.getAdapter();
-        if (adapter != null) {
+        AnymaDMX_TrafficController trafficController = _memo.getTrafficController();
+        if (trafficController != null) {
             if (newState == ON) {
-                adapter.setChannelValue(mChannel, (byte) 0xFF);
+                trafficController.setChannelValue(mChannel, (byte) 0xFF);
             } else if (newState == OFF) {
-                adapter.setChannelValue(mChannel, (byte) 0x00);
+                trafficController.setChannelValue(mChannel, (byte) 0x00);
             } else {
                 log.warn("illegal state requested for Light: " + getSystemName());
             }
@@ -88,22 +89,22 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
     @Override
     protected void sendIntensity(double intensity) {
         log.debug("*    sendIntensity({})", "" + intensity);
-        AnymaDMX_UsbPortAdapter adapter = _memo.getAdapter();
-        if (adapter != null) {
+        AnymaDMX_TrafficController trafficController = _memo.getTrafficController();
+        if (trafficController != null) {
             byte value = (byte) MathUtil.pin(intensity * 255.0, 0.0, 255.0);
-            adapter.setChannelValue(mChannel, value);
+            trafficController.setChannelValue(mChannel, value);
         }
     }
 
     @Override
     protected void sendOnOffCommand(int newState) {
         log.debug("*    sendOnOffCommand({})", newState);
-        AnymaDMX_UsbPortAdapter adapter = _memo.getAdapter();
-        if (adapter != null) {
+        AnymaDMX_TrafficController trafficController = _memo.getTrafficController();
+        if (trafficController != null) {
             if (newState == ON) {
-                adapter.setChannelValue(mChannel, (byte) 0xFF);
+                trafficController.setChannelValue(mChannel, (byte) 0xFF);
             } else if (newState == OFF) {
-                adapter.setChannelValue(mChannel, (byte) 0x00);
+                trafficController.setChannelValue(mChannel, (byte) 0x00);
             } else {
                 log.warn("illegal state requested for Light: " + getSystemName());
             }
