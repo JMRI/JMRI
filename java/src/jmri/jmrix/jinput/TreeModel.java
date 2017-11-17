@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * jinput requires that there be only one of these for a given USB system in a
  * given JVM so we use a pseudo-singlet "instance" approach
- *
+ * <p>
  * Class is final because it starts a survey thread, which runs while
  * constructor is still active.
  *
@@ -43,8 +43,10 @@ public final class TreeModel extends DefaultTreeModel {
 
         // load initial USB objects
         boolean pass = loadSystem();
-        if (!pass) log.error("loadSystem failed");
-        
+        if (!pass) {
+            log.error("loadSystem failed");
+        }
+
         // If you don't call loadSystem, the following line was
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
@@ -54,7 +56,7 @@ public final class TreeModel extends DefaultTreeModel {
         runner.start();
     }
     Runner runner;
-    
+
     /**
      * Add a node to the tree if it doesn't already exist
      *
@@ -94,11 +96,13 @@ public final class TreeModel extends DefaultTreeModel {
 
     // intended for test routines only
     void terminateThreads() throws InterruptedException {
-        if (runner == null) return;
+        if (runner == null) {
+            return;
+        }
         runner.interrupt();
         runner.join();
     }
-    
+
     static private TreeModel instanceValue = null;
 
     class Runner extends Thread {
@@ -238,29 +242,24 @@ public final class TreeModel extends DefaultTreeModel {
             return false;
         }
 
-        for (int i = 0; i < ca.length; i++) {
+        for (Controller controller : controllers()) {
             // Get this controllers components (buttons and axis)
-            Component[] components = ca[i].getComponents();
-            log.info("Controller " + ca[i].getName() + " has " + components.length + " components");
-            for (int j = 0; j < components.length; j++) {
-
-                Controller controller = ca[i];
-                Component component = components[j];
-
+            Component[] components = controller.getComponents();
+            log.info("Controller " + controller.getName() + " has " + components.length + " components");
+            for (Component component : components) {
                 // ensure controller node exists directly under root
-                String cname = controller.getName() + " [" + controller.getType().toString() + "]";
-                UsbNode cNode = UsbNode.getNode(cname, controller, null);
-                cNode = (UsbNode) insertNode(cNode, dRoot);
+                String controllerName = controller.getName() + " [" + controller.getType().toString() + "]";
+                UsbNode controllerNode = UsbNode.getNode(controllerName, controller, null);
+                controllerNode = (UsbNode) insertNode(controllerNode, dRoot);
 
                 // Device (component) node
-                String dname = component.getName() + " [" + component.getIdentifier().toString() + "]";
-                UsbNode dNode = UsbNode.getNode(dname, controller, component);
-                dNode = (UsbNode) insertNode(dNode, cNode);
+                String deviceName = component.getName() + " [" + component.getIdentifier().toString() + "]";
+                UsbNode deviceNode = UsbNode.getNode(deviceName, controller, component);
+                deviceNode = (UsbNode) insertNode(deviceNode, controllerNode);
 
-                dNode.setValue(0.0f);
+                deviceNode.setValue(0.0f);
             }
         }
-
         return true;
     }
 
