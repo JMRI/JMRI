@@ -14,7 +14,7 @@ import jmri.AddressedProgrammerManager;
  * @author Paul Bender Copyright (C) 2003
  * @author Randall Wood Copyright (C) 2013
  */
-public class DccConsistManager extends AbstractConsistManager implements ConsistManager {
+public class DccConsistManager extends AbstractConsistManager {
 
     private AddressedProgrammerManager opsProgManager = null;
 
