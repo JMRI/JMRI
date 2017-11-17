@@ -22,10 +22,12 @@ public class WiFiConsistManager extends NmraConsistManager {
         isValid = true;
     }
 
+    /** 
+     * @deprecated since 4.9.6 use @link{jmri.jmrit.withrottle.ConsistController.stringToDcc()} instead.
+     */
+    @Deprecated
     public DccLocoAddress stringToDcc(String s) {
-        int num = Integer.parseInt(s.substring(1));
-        boolean isLong = (s.charAt(0) == 'L');
-        return (new DccLocoAddress(num, isLong));
+        return ConsistController.stringToDcc(s);
     }
 
     /**
