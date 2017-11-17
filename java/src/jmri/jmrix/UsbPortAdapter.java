@@ -250,7 +250,7 @@ public class UsbPortAdapter extends AbstractPortController {
         usbDevice = USBUtil.getMatchingDevice(vendorID, productID, portName);
         if (usbDevice == null) {
             result = String.format(
-                    "USB device at location id {} not found.", portName);
+                    "USB device at location ID %s not found.", portName);
         }
         return result;
     }
