@@ -3,7 +3,7 @@ package jmri.jmrit.withrottle;
 import java.util.ArrayList;
 import jmri.Consist;
 import jmri.DccLocoAddress;
-import jmri.implementation.AbstractConsistManager;
+import jmri.implementation.NmraConsistManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * @author Brett Hoffman Copyright (C) 2010, 2011
  * 
  */
-public class WiFiConsistManager extends AbstractConsistManager {
+public class WiFiConsistManager extends NmraConsistManager {
 
     ArrayList<ControllerInterface> listeners = null;
     boolean isValid = false;
@@ -49,16 +49,6 @@ public class WiFiConsistManager extends AbstractConsistManager {
         consist = new WiFiConsist(address);
         consistTable.put(address, consist);
         return consist;
-    }
-
-    @Override
-    public boolean isCommandStationConsistPossible() {
-        return false;
-    }
-
-    @Override
-    public boolean csConsistNeedsSeperateAddress() {
-        return false;
     }
 
     /**
