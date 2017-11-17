@@ -264,9 +264,9 @@ abstract public class SystemConnectionMemo extends Bean {
         if(consistManager == null) {
            // a consist manager doesn't exist, so we can create it.
            if(provides(jmri.CommandStation.class)){
-              setConsistManager(new NmraConsistManager());
+              setConsistManager(new NmraConsistManager(get(jmri.CommandStation.class)));
            } else if(provides(jmri.AddressedProgrammerManager.class)){
-              setConsistManager(new DccConsistManager());
+              setConsistManager(new DccConsistManager(get(jmri.AddressedProgrammerManager.class)));
            }
         }
         return consistManager;
