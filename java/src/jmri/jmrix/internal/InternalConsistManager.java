@@ -12,12 +12,31 @@ import jmri.InstanceManager;
  * @author Paul Bender Copyright (C) 2003
  * @author Randall Wood Copyright (C) 2013
  */
-public class InternalConsistManager extends jmri.implementation.NmraConsistManager {
+public class InternalConsistManager extends jmri.implementation.AbstractConsistManager {
 
     public InternalConsistManager() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isCommandStationConsistPossible(){
+       return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean csConsistNeedsSeperateAddress(){
+      return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Consist addConsist(DccLocoAddress address) {
         if (consistTable.containsKey(address)) {
