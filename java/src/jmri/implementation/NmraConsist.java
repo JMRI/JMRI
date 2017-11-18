@@ -4,6 +4,7 @@ import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.CommandStation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,8 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2011
  */
 public class NmraConsist extends DccConsist implements Consist {
+        
+    private CommandStation commandStation = null;
 
 // Initialize a consist for the specific address.
     public NmraConsist(int address) {
@@ -24,7 +27,12 @@ public class NmraConsist extends DccConsist implements Consist {
     }
 
     public NmraConsist(DccLocoAddress address) {
+        this(address,InstanceManager.getDefault(CommandStation.class));
+    }
+ 
+    public NmraConsist(DccLocoAddress address,CommandStation cs){
         super(address);
+        commandStation = cs;
         log.debug("Nmra Consist created for address: {}", address.toString());
     }
 
@@ -47,7 +55,7 @@ public class NmraConsist extends DccConsist implements Consist {
                 LocoAddress.isLongAddress(),
                 consistAddress.getNumber(),
                 directionNormal);
-        InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(contents, 4);
+        commandStation.sendPacket(contents, 4);
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
 
     }
@@ -68,7 +76,7 @@ public class NmraConsist extends DccConsist implements Consist {
                 LocoAddress.isLongAddress(),
                 0, //set to 0 to remove
                 true);//always normal direction
-        InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(contents, 4);
+        commandStation.sendPacket(contents, 4);
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
     }
     private final static Logger log = LoggerFactory.getLogger(NmraConsist.class);

@@ -173,7 +173,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     /**
@@ -219,7 +219,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getSlotManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     protected LocoNetThrottledTransmitter tm;
@@ -261,8 +261,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.setReporterManager(
                 getReporterManager());
 
-        InstanceManager.setConsistManager(
-                getConsistManager());
+        setConsistManager(new jmri.jmrix.loconet.LocoNetConsistManager(this));
 
         InstanceManager.addClockControl(
                 getClockControl());
@@ -364,18 +363,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return lightManager;
     }
 
-    private LocoNetConsistManager consistManager;
-
-    public LocoNetConsistManager getConsistManager() {
-        if (getDisabled()) {
-            return null;
-        }
-        if (consistManager == null) {
-            consistManager = new jmri.jmrix.loconet.LocoNetConsistManager(this);
-        }
-        return consistManager;
-    }
-
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
@@ -410,9 +397,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             } else if (throttleManager instanceof jmri.jmrix.debugthrottle.DebugThrottleManager) {
                 InstanceManager.deregister(((jmri.jmrix.debugthrottle.DebugThrottleManager) throttleManager), jmri.jmrix.debugthrottle.DebugThrottleManager.class);
             }
-        }
-        if (consistManager != null) {
-            InstanceManager.deregister(consistManager, jmri.jmrix.loconet.LocoNetConsistManager.class);
         }
         if (clockControl != null) {
             InstanceManager.deregister(clockControl, jmri.jmrix.loconet.LnClockControl.class);

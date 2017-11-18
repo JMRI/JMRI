@@ -12,15 +12,15 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class GrapevineSystemConnectionMemoTest {
-     
-    GrapevineSystemConnectionMemo memo = null;
+public class GrapevineSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
-
+     
+    @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
@@ -29,9 +29,10 @@ public class GrapevineSystemConnectionMemoTest {
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
           }
        };
-       memo = new GrapevineSystemConnectionMemo();
+       scm = new GrapevineSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown(){
        JUnitUtil.tearDown();

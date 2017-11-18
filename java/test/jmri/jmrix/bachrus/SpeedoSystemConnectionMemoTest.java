@@ -13,19 +13,23 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SpeedoSystemConnectionMemoTest {
+public class SpeedoSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    @Test public void integerConstructorTest() {
-        SpeedoSystemConnectionMemo m = new SpeedoSystemConnectionMemo();
-        Assert.assertNotNull(m);
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = new SpeedoSystemConnectionMemo();
     }
    
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

@@ -16,7 +16,7 @@ public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         cm = new XNetConsistManager(new XNetSystemConnectionMemo(tc));
     }
@@ -25,7 +25,7 @@ public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Override
     public void tearDown() {
         cm = null;
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }
