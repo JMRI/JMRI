@@ -10,16 +10,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of layout connections by persisting the
- AnymaDMX_UsbPortAdapter. Note this is named as the XML version of a
- AnymaDMX_ConnectionConfig object, but it's actually persisting the
- AnymaDMX_UsbPortAdapter.
- <P>
+ * AnymaDMX_UsbPortAdapter. Note this is named as the XML version of a
+ * AnymaDMX_ConnectionConfig object, but it's actually persisting the
+ * AnymaDMX_UsbPortAdapter.
+ * <P>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
  * @author George Warner Copyright (c) 2017
- * @since       4.9.6
+ * @since 4.9.6
  */
 public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml {
 
@@ -62,8 +62,12 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
      */
     @Override
     protected void register() {
-        this.register(new AnymaDMX_ConnectionConfig((AnymaDMX_UsbPortAdapter) adapter));
+        if (adapter instanceof AnymaDMX_UsbPortAdapter) {
+            this.register(new AnymaDMX_ConnectionConfig(
+                    (AnymaDMX_UsbPortAdapter) adapter));
+        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AnymaDMX_ConnectionConfigXml.class);
+    private final static Logger log
+            = LoggerFactory.getLogger(AnymaDMX_ConnectionConfigXml.class);
 }

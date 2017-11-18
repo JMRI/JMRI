@@ -25,9 +25,8 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
      * @param p the pre-existing adapter
      */
     public AnymaDMX_ConnectionConfig(AnymaDMX_UsbPortAdapter p) {
-        super();
+        super(p);
         log.debug("*    constructor('{}').", p);
-        adapter = p;
     }
 
     /**

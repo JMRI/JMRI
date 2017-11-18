@@ -32,17 +32,6 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (C) 2017
  */
 abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConfig {
-
-    /**
-     * Ctor for an object being created during load process
-     *
-     * @param p port being configured
-     */
-    public AbstractUsbConnectionConfig(PortAdapter p) {
-        this((UsbPortAdapter) p);
-        log.debug("*	AbstractUSBConnectionConfig({})", p);
-    }
-
     /**
      * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
@@ -391,7 +380,8 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         }
         cL.gridwidth = 1;
 
-        if (_details.getParent() != null && _details.getParent() instanceof JViewport) {
+        if ((_details.getParent() != null)
+                && (_details.getParent() instanceof JViewport)) {
             JViewport vp = (JViewport) _details.getParent();
             vp.revalidate();
             vp.repaint();

@@ -160,7 +160,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         int offset = checkSystemPrefix(systemName);
         if (offset > 1) {
             if (validSystemNameFormat(systemName, systemName.charAt(offset)) == NameValidity.VALID) {
-                int channelNum = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+                int channelNum = Integer.parseInt(systemName.substring(offset + 1));
                 result = systemName.substring(0, offset + 1) + Integer.toString(channelNum);
             } else {
                 // No point in normalizing if a valid system name format is not present
@@ -186,7 +186,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         int offset = checkSystemPrefix(systemName);
         if (offset > 0) {
             if (validSystemNameFormat(systemName, systemName.charAt(offset)) == NameValidity.VALID) {
-                int channelNum = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+                int channelNum = Integer.parseInt(systemName.substring(offset + 1));
                 result = systemName.substring(0, offset + 1) + Integer.toString(channelNum);
             } else {
                 log.error("valid system name format not present in anyma dmx system name: {}", systemName);
@@ -213,12 +213,14 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 // This is a CLnnnxxx pattern address
                 int num;
                 try {
-                    num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+                    num = Integer.parseInt(systemName.substring(offset + 1));
                     if ((num >= 1) && (num <= 512)) {
                         result = NameValidity.VALID;
                     } else {
                         log.debug("number field out of range in anyma dmx system name: {}", systemName);
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     log.debug("invalid character in number field of anyma dmx system name: {}", systemName);
                 }
@@ -303,7 +305,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         int offset = checkSystemPrefix(systemName);
         if (offset > 1) {
             if (systemName.charAt(offset) == 'L') {
-                int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+                int num = Integer.parseInt(systemName.substring(offset + 1));
                 if (num > 0) {
                     result = num;
                 } else {

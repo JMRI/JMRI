@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -1782,34 +1783,35 @@ public class LayoutTrackEditors {
         editLayoutTurntableNeedsRedraw = false;
     }
 
-    private void deleteRayTrackPressed(ActionEvent a) {
-        double ang = 0.0;
-        try {
-            ang = Float.parseFloat(editLayoutTurntableAngleTextField.getText());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "
-                    + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        // scan rays to find the one to delete
-        LayoutTurntable.RayTrack closest = null;
-        double bestDel = 360.0;
-        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
-            double del = MathUtil.absDiffAngleDEG(rt.getAngle(), ang);
-            if (del < bestDel) {
-                bestDel = del;
-                closest = rt;
-            }
-        }
-        if (bestDel > 30.0) {
-            JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("Error13"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        layoutTurntable.deleteRay(closest);
-    }
-
+    //TODO: find where/when this was used and re-implement or dead-code strip
+    //note: commented out to fix findbugs
+    //private void deleteRayTrackPressed(ActionEvent a) {
+    //    double ang = 0.0;
+    //    try {
+    //        ang = Float.parseFloat(editLayoutTurntableAngleTextField.getText());
+    //    } catch (Exception e) {
+    //        JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "
+    //                + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
+    //                JOptionPane.ERROR_MESSAGE);
+    //        return;
+    //    }
+    //    // scan rays to find the one to delete
+    //    LayoutTurntable.RayTrack closest = null;
+    //    double bestDel = 360.0;
+    //    for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
+    //        double del = MathUtil.absDiffAngleDEG(rt.getAngle(), ang);
+    //        if (del < bestDel) {
+    //            bestDel = del;
+    //            closest = rt;
+    //        }
+    //    }
+    //    if (bestDel > 30.0) {
+    //        JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("Error13"),
+    //                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+    //        return;
+    //    }
+    //    layoutTurntable.deleteRay(closest);
+    //}
     private void editLayoutTurntableDonePressed(ActionEvent a) {
         // check if new radius was entered
         String str = editLayoutTurntableRadiusTextField.getText();
@@ -1854,6 +1856,8 @@ public class LayoutTrackEditors {
     /*===================*\
     | Turntable Ray Panel |
     \*===================*/
+    @SuppressWarnings("serial")
+    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
     public class TurntableRayPanel extends JPanel {
 
         // variables for Edit Turntable ray pane
@@ -1953,10 +1957,9 @@ public class LayoutTrackEditors {
                     Bundle.getMessage("Question7"),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION);
-            if (n == JOptionPane.NO_OPTION) {
-                return;
+            if (n == JOptionPane.YES_OPTION) {
+                layoutTurntable.deleteRay(rayTrack);
             }
-            layoutTurntable.deleteRay(rayTrack);
         }
 
         private void updateDetails() {
