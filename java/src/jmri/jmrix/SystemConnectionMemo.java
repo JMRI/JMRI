@@ -5,7 +5,11 @@ import java.util.Enumeration;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.InstanceManager;
+import jmri.ConsistManager;
+import jmri.implementation.DccConsistManager;
+import jmri.implementation.NmraConsistManager;
 import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,8 +150,21 @@ abstract public class SystemConnectionMemo extends Bean {
      * @param c The class type for the manager to be provided
      * @return true if the specified manager is provided
      */
+    @OverridingMethodsMustInvokeSuper
     public boolean provides(Class<?> c) {
-        return false; // nothing, by default
+        if(c.equals(jmri.ConsistManager.class)){
+           if(consistManager!=null){
+             return true; // we have a consist manager already
+           } else if(provides(jmri.CommandStation.class)){
+             return true; // we can construct an NMRAConsistManager
+           } else if(provides(jmri.AddressedProgrammerManager.class)){
+             return true; // we can construct a DccConsistManager
+           } else {
+             return false;
+           }
+        } else {
+           return false; // nothing, by default
+        }
     }
 
     /**
@@ -157,8 +174,13 @@ abstract public class SystemConnectionMemo extends Bean {
      * @param T   Type of manager to get
      * @return The manager or null
      */
+    @OverridingMethodsMustInvokeSuper
     public <T> T get(Class<?> T) {
-        return null; // nothing, by default
+        if(T.equals(jmri.ConsistManager.class)){
+           return (T) getConsistManager();
+        } else {
+           return null; // nothing, by default
+        }
     }
 
     public void dispose() {
@@ -232,6 +254,30 @@ abstract public class SystemConnectionMemo extends Bean {
     public boolean isRestartRequired() {
         return this.isDirty();
     }
+
+    /**
+     * Provide access to the Consist Manager for this particular connection.
+     * <p>
+     * NOTE: Consist manager defaults to NULL
+     */
+    public ConsistManager getConsistManager() {
+        if(consistManager == null) {
+           // a consist manager doesn't exist, so we can create it.
+           if(provides(jmri.CommandStation.class)){
+              setConsistManager(new NmraConsistManager(get(jmri.CommandStation.class)));
+           } else if(provides(jmri.AddressedProgrammerManager.class)){
+              setConsistManager(new DccConsistManager(get(jmri.AddressedProgrammerManager.class)));
+           }
+        }
+        return consistManager;
+    }
+
+    public void setConsistManager(ConsistManager c) {
+        consistManager = c;
+        jmri.InstanceManager.store(consistManager,ConsistManager.class);
+    }
+
+    private ConsistManager consistManager = null;
 
     private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
 
