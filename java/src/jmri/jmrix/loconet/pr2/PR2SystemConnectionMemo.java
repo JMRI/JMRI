@@ -90,7 +90,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             return (T) getProgrammerManager();
         }
 
-        return null;
+        return super.get(type);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             return getProgrammerManager().isAddressedModePossible();
         }
 
-        return false;
+        return super.provides(type);
     }
 
     @Override

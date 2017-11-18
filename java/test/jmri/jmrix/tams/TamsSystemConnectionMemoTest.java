@@ -12,22 +12,17 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class TamsSystemConnectionMemoTest {
+public class TamsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
      
-    TamsSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo);
-    }
-
+    @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
        TamsTrafficController tc = new TamsInterfaceScaffold();
-       memo = new TamsSystemConnectionMemo();
+       scm = new TamsSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown(){
        JUnitUtil.tearDown();

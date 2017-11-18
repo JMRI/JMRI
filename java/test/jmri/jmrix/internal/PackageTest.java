@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
    InternalConnectionTypeListTest.class,
    InternalSystemConnectionMemoTest.class,
    BundleTest.class,
+   InternalConsistManagerTest.class,
+   InternalConsistManagerOpsModeTest.class,
 })
 /**
  * Tests for the jmri.jmrix.internal package.
