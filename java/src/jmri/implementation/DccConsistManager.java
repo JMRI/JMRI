@@ -3,6 +3,7 @@ package jmri.implementation;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
+import jmri.AddressedProgrammerManager;
 
 /**
  * The Default Consist Manager which uses the DccConsist class for
@@ -13,10 +14,17 @@ import jmri.DccLocoAddress;
  * @author Paul Bender Copyright (C) 2003
  * @author Randall Wood Copyright (C) 2013
  */
-public class DccConsistManager extends AbstractConsistManager implements ConsistManager {
+public class DccConsistManager extends AbstractConsistManager {
+
+    private AddressedProgrammerManager opsProgManager = null;
 
     public DccConsistManager() {
+        this(jmri.InstanceManager.getDefault(AddressedProgrammerManager.class));
+    }
+
+    public DccConsistManager(AddressedProgrammerManager apm) {
         super();
+        opsProgManager = apm;
     }
 
     @Override
@@ -25,7 +33,7 @@ public class DccConsistManager extends AbstractConsistManager implements Consist
             return consistTable.get(address);
         }
         DccConsist consist;
-        consist = new DccConsist(address);
+        consist = new DccConsist(address,opsProgManager);
         consistTable.put(address, consist);
         return consist;
     }

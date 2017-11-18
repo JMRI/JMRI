@@ -222,7 +222,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         if (T.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     /**
@@ -248,7 +248,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         if (type.equals(jmri.ReporterManager.class)) {
             return (null != reporterManager);
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
 }

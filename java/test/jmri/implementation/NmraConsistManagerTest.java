@@ -2,7 +2,9 @@ package jmri.implementation;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -10,12 +12,18 @@ import org.junit.Before;
  */
 public class NmraConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
+    @Test
+    public void testCtor2(){
+        Assert.assertNotNull("NmraConsistManager Default Constructor",new NmraConsistManager());
+    }
+
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        cm = new NmraConsistManager();
+        jmri.util.JUnitUtil.initDebugCommandStation();
+        cm = new NmraConsistManager(jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class));
     }
 
     @After

@@ -12,27 +12,28 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class AcelaSystemConnectionMemoTest {
+public class AcelaSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
      
-    private AcelaSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo);
-    }
-
     @Test
     public void testDefaultCtor(){
        Assert.assertNotNull("exists",new AcelaSystemConnectionMemo());
     }
 
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    }
+
+    @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
        AcelaTrafficController tc = new AcelaTrafficControlScaffold();
-       memo = new AcelaSystemConnectionMemo(tc);
+       scm = new AcelaSystemConnectionMemo(tc);
     }
 
+    @Override
     @After
     public void tearDown(){
        JUnitUtil.tearDown();

@@ -10,20 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PR3SystemConnectionMemoTest {
+public class PR3SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    @Test
-    public void testCTor() {
-        PR3SystemConnectionMemo t = new PR3SystemConnectionMemo();
-        Assert.assertNotNull("exists",t);
-    }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = new PR3SystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

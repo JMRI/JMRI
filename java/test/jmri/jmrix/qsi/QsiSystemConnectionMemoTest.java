@@ -12,22 +12,23 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class QsiSystemConnectionMemoTest {
-     
-    QsiSystemConnectionMemo memo = null;
-
+public class QsiSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+    
+    @Override
     @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
+    @Override 
     @Before
     public void setUp(){
        JUnitUtil.setUp();
        QsiTrafficController tc = new QsiTrafficControlScaffold();
-       memo = new QsiSystemConnectionMemo();
+       scm = new QsiSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown(){
        JUnitUtil.tearDown();
