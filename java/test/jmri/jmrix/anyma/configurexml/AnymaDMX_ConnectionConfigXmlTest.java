@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * AnymaDMX_ConnectionConfigXmlTest.java
- *
+ * <p>
  * Description: tests for the AnymaDMX_ConnectionConfigXml class
  *
  * @author George Warner Copyright (C) 2017
@@ -17,8 +17,8 @@ import org.junit.Test;
 public class AnymaDMX_ConnectionConfigXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("AnymaDMX_ConnectionConfigXml constructor",new AnymaDMX_ConnectionConfigXml());
+    public void testCtor() {
+        Assert.assertNotNull("AnymaDMX_ConnectionConfigXml constructor", new AnymaDMX_ConnectionConfigXml());
     }
 
     // The minimal setup for log4J
@@ -33,4 +33,3 @@ public class AnymaDMX_ConnectionConfigXmlTest {
     }
 
 }
-

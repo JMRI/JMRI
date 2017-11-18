@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * UsbLightManagerXmlTest.java
- *
+ * <p>
  * Description: tests for the UsbLightManagerXml class
  *
  * @author George Warner Copyright (C) 2017
@@ -17,8 +17,8 @@ import org.junit.Test;
 public class UsbLightManagerXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("UsbLightManagerXml constructor",new UsbLightManagerXml());
+    public void testCtor() {
+        Assert.assertNotNull("UsbLightManagerXml constructor", new UsbLightManagerXml());
     }
 
     // The minimal setup for log4J
@@ -33,4 +33,3 @@ public class UsbLightManagerXmlTest {
     }
 
 }
-

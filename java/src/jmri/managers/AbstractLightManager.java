@@ -47,7 +47,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * {@inheritDoc}
      */
     @Override
-    @CheckForNull
+    @Nonnull
     public Light provideLight(@Nonnull String name) {
         Light t = getLight(name);
         if (t == null) {
@@ -100,7 +100,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @Nonnull
-    public Light newLight(@Nonnull String systemName, @Nonnull String userName) {
+    public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
         if (log.isDebugEnabled()) {
             log.debug("newLight:"
                     + ((systemName == null) ? "null" : systemName)
@@ -222,7 +222,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * @return a string for the type of object handled by this manager
      */
     @Override
-    @CheckForNull
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLight");
     }

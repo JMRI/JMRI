@@ -1,5 +1,7 @@
 package jmri.jmrix.anyma.configurexml;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.slf4j.Logger;
@@ -8,8 +10,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     AnymaDMX_ConnectionConfigXmlTest.class,
-    UsbLightManagerXmlTest.class,
-})
+    UsbLightManagerXmlTest.class,})
 
 /**
  * Tests for the jmri.jmrix.acela.configurexml package.
@@ -21,9 +22,9 @@ public class PackageTest {
 
     // Main entry point
     static public void main(String[] args) {
-        org.junit.runner.Result result = org.junit.runner.JUnitCore
-                 .runClasses(PackageTest.class);
-        for(org.junit.runner.notification.Failure fail: result.getFailures()) {
+        Result result = JUnitCore
+                .runClasses(PackageTest.class);
+        for (org.junit.runner.notification.Failure fail : result.getFailures()) {
             log.error(fail.toString());
         }
         //junit.textui.TestRunner.main(testCaseName);

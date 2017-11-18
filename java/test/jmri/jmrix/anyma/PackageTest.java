@@ -1,5 +1,7 @@
 package jmri.jmrix.anyma;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.slf4j.Logger;
@@ -23,10 +25,9 @@ import org.slf4j.LoggerFactory;
  */
 public class PackageTest {
 
-    // Main entry point
+// Main entry point
     static public void main(String[] args) {
-        org.junit.runner.Result result = org.junit.runner.JUnitCore
-                .runClasses(PackageTest.class);
+        Result result = JUnitCore.runClasses(PackageTest.class);
         for (org.junit.runner.notification.Failure fail : result.getFailures()) {
             log.error(fail.toString());
         }
@@ -36,5 +37,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
+    private final static Logger log
+            = LoggerFactory.getLogger(PackageTest.class);
 }
