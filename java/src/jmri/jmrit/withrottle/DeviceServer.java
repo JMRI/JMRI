@@ -10,18 +10,18 @@ package jmri.jmrit.withrottle;
  * Thread with input and output streams for each connected device. Creates an
  * invisible throttle window for each.
  *
- * Sorting codes: 
- *  'T'hrottle - sends to throttleController 
+ * Sorting codes:
+ *  'T'hrottle - sends to throttleController
  *  'S'econdThrottle - sends to secondThrottleController
- *  'C' - Not used anymore except to provide backward compliance, same as 'T' 
- *  'N'ame of device 
+ *  'C' - Not used anymore except to provide backward compliance, same as 'T'
+ *  'N'ame of device
  *  'H' hardware info - followed by:
- *      'U' UDID - unique device identifier 
- *  'P' panel - followed by: 
+ *      'U' UDID - unique device identifier
+ *  'P' panel - followed by:
  *      'P' track power
- *      'T' turnouts 
+ *      'T' turnouts
  *      'R' routes
- *  'R' roster - followed by: 
+ *  'R' roster - followed by:
  *      'C' consists
  *  'Q'uit - device has quit, close its throttleWindow
  *  '*' - heartbeat from client device ('*+' starts, '*-' stops)
@@ -79,11 +79,13 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import jmri.CommandStation;
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.web.server.WebServerPreferences;
@@ -93,20 +95,20 @@ import org.slf4j.LoggerFactory;
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
     //  Manually increment as features are added
-    private static final String versionNumber = "2.0";
+    private static final String VERSION_NUMBER = "2.0";
 
     private Socket device;
     private CommandStation cmdStation = jmri.InstanceManager.getNullableDefault(CommandStation.class);
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;
-    ArrayList<DeviceListener> listeners;
+    private final ArrayList<DeviceListener> listeners = new ArrayList<>();
     String deviceName = "Unknown";
     String deviceUDID;
 
     ThrottleController throttleController;
     ThrottleController secondThrottleController;
-    Hashtable<Character, MultiThrottle> multiThrottles;
+    HashMap<Character, MultiThrottle> multiThrottles;
     private boolean keepReading;
     private boolean isUsingHeartbeat = false;
     private boolean heartbeat = true;
@@ -115,22 +117,19 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private int stopEKGCount;
 
     private TrackPowerController trackPower = null;
-    final boolean isTrackPowerAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTrackPower();
+    final boolean isTrackPowerAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowTrackPower();
     private TurnoutController turnoutC = null;
     private RouteController routeC = null;
-    final boolean isTurnoutAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTurnout();
-    final boolean isRouteAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowRoute();
+    final boolean isTurnoutAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowTurnout();
+    final boolean isRouteAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowRoute();
     private ConsistController consistC = null;
     private boolean isConsistAllowed;
-    
+
     private DeviceManager manager;
 
     DeviceServer(Socket socket, DeviceManager manager) {
         this.device = socket;
         this.manager = manager;
-        if (listeners == null) {
-            listeners = new ArrayList<DeviceListener>(2);
-        }
 
         try {
             if (log.isDebugEnabled()) {
@@ -198,7 +197,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
                         case 'M': {  //  MultiThrottle M(id character)('A'ction '+' or '-')(message)
                             if (multiThrottles == null) {
-                                multiThrottles = new Hashtable<Character, MultiThrottle>(1);
+                                multiThrottles = new HashMap<>(1);
                             }
                             char id = inPackage.charAt(1);
                             if (!multiThrottles.containsKey(id)) {   //  Create a MT if this is a new id
@@ -258,7 +257,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                                 }
 
                                 default: {
-                                    log.warn("Received unknown network package: " + inPackage);
+                                    log.warn("Received unknown network package: {}", inPackage);
 
                                     break;
                                 }
@@ -269,10 +268,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
                         case 'N': {  //  Prefix for deviceName
                             deviceName = inPackage.substring(1);
-                            log.info("Received Name: " + deviceName);
+                            log.info("Received Name: {}", deviceName);
 
-                            if (WiThrottleManager.withrottlePreferencesInstance().isUseEStop()) {
-                                pulseInterval = WiThrottleManager.withrottlePreferencesInstance().getEStopDelay();
+                            if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseEStop()) {
+                                pulseInterval = InstanceManager.getDefault(WiThrottlePreferences.class).getEStopDelay();
                                 sendPacketToDevice("*" + pulseInterval); //  Turn on heartbeat, if used
                             }
                             break;
@@ -343,7 +342,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                         }
 
                         default: {   //  If an unknown makes it through, do nothing.
-                            log.warn("Received unknown network package: " + inPackage);
+                            log.warn("Received unknown network package: {}", inPackage);
                             break;
                         }
 
@@ -363,9 +362,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
             if (consecutiveErrors > 0) { //a read error was encountered
                 if (consecutiveErrors < 25) { //pause thread to give time for reconnection
-                    try{  
-                        Thread.sleep(200); 
-                    } catch (java.lang.InterruptedException ex){}
+                    try {
+                        Thread.sleep(200);
+                    } catch (java.lang.InterruptedException ex) {
+                    }
                 } else {
                     keepReading = false;
                     log.error("readLine failure limit exceeded, ending thread run loop for device '{}'", getName());
@@ -391,9 +391,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
         if (multiThrottles != null) {
             for (char key : multiThrottles.keySet()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Closing throttles for key: " + key + " for device: " + getName());
-                }
+                log.debug("Closing throttles for key: {} for device: {}", key, getName());
                 multiThrottles.get(key).dispose();
             }
         }
@@ -430,22 +428,23 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         try {
             if (device.isClosed()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("device socket " + getName() + device.getRemoteSocketAddress() + " already closed.");
+                    log.debug("device socket {}{} already closed.", getName(), device.getRemoteSocketAddress());
                 }
             } else {
                 device.close();
                 if (log.isDebugEnabled()) {
-                    log.debug("device socket " + getName() + device.getRemoteSocketAddress() + " closed.");
+                    log.debug("device socket {}{} closed.", getName(), device.getRemoteSocketAddress());
                 }
             }
         } catch (IOException e) {
             if (log.isDebugEnabled()) {
-                log.error("device socket " + getName() + device.getRemoteSocketAddress() + " close failed with IOException.");
+                log.debug("device socket {}{} close failed with IOException.", getName(), device.getRemoteSocketAddress());
             }
         }
     }
 
     public void startEKG() {
+        log.debug("starting heartbeat EKG for '{}' with interval: {}", getName(), pulseInterval);
         isUsingHeartbeat = true;
         stopEKGCount = 0;
         ekg = new Timer();
@@ -494,7 +493,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     private void addControllers() {
         if (isTrackPowerAllowed) {
-            trackPower = WiThrottleManager.trackPowerControllerInstance();
+            trackPower = InstanceManager.getDefault(WiThrottleManager.class).getTrackPowerController();
             if (trackPower.isValid) {
                 if (log.isDebugEnabled()) {
                     log.debug("Track Power valid.");
@@ -504,7 +503,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
         }
         if (isTurnoutAllowed) {
-            turnoutC = WiThrottleManager.turnoutControllerInstance();
+            turnoutC = InstanceManager.getDefault(WiThrottleManager.class).getTurnoutController();
             if (turnoutC.verifyCreation()) {
                 if (log.isDebugEnabled()) {
                     log.debug("Turnout Controller valid.");
@@ -515,7 +514,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
         }
         if (isRouteAllowed) {
-            routeC = WiThrottleManager.routeControllerInstance();
+            routeC = InstanceManager.getDefault(WiThrottleManager.class).getRouteController();
             if (routeC.verifyCreation()) {
                 if (log.isDebugEnabled()) {
                     log.debug("Route Controller valid.");
@@ -527,12 +526,12 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
 
         //  Consists can be selected regardless of pref, as long as there is a ConsistManager.
-        consistC = WiThrottleManager.consistControllerInstance();
+        consistC = InstanceManager.getDefault(WiThrottleManager.class).getConsistController();
         if (consistC.verifyCreation()) {
             if (log.isDebugEnabled()) {
                 log.debug("Consist Controller valid.");
             }
-            isConsistAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowConsist();
+            isConsistAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowConsist();
             consistC.addControllerListener(this);
             consistC.setIsConsistAllowed(isConsistAllowed);
             consistC.sendConsistListType();
@@ -574,7 +573,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public static String getWiTVersion() {
-        return versionNumber;
+        return VERSION_NUMBER;
     }
 
     public static String getWebServerPort() {
@@ -602,13 +601,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     /**
      * Add a DeviceListener
+     *
      * @param l handle for listener to add
      *
      */
     public void addDeviceListener(DeviceListener l) {
-        if (listeners == null) {
-            listeners = new ArrayList<DeviceListener>(2);
-        }
         if (!listeners.contains(l)) {
             listeners.add(l);
         }
@@ -616,13 +613,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     /**
      * Remove a DeviceListener
+     *
      * @param l listener to remove
      *
      */
     public void removeDeviceListener(DeviceListener l) {
-        if (listeners == null) {
-            return;
-        }
         if (listeners.contains(l)) {
             listeners.remove(l);
         }
@@ -651,6 +646,23 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
         }
 
+    }
+
+    /**
+     * System has declined the address request, may be an in-use address. Need
+     * to clear the address from the proper multiThrottle.
+     *
+     * @param tc      The throttle controller that was listening for a response
+     *                to an address request
+     * @param address The address to send a cancel to
+     */
+    @Override
+    public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address) {
+        log.debug("notifyControllerAddressDeclined");
+        if (multiThrottles != null) {   //  Should exist by this point
+            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
+            multiThrottles.get(tc.whichThrottle).canceledThrottleRequest(tc.locoKey);
+        }
     }
 
     /**
@@ -683,6 +695,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return ("RL" + rosterList.size() + rosterString);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeviceServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeviceServer.class);
 
 }

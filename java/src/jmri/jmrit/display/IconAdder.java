@@ -478,7 +478,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * @return the selected item
      */
     public NamedBean getTableSelection() {
-        if (ImageIndexEditor.isIndexChanged()) {
+        if (InstanceManager.getDefault(ImageIndexEditor.class).isIndexChanged()) {
             checkIconSizes();
         }
         int row = _table.getSelectedRow();
@@ -541,7 +541,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * arbitrary inmage, or a value, such a
      * memory value.
      * @param changeIconAction - ActionListener that displays sources from
-     * which to select an image file.  
+     * which to select an image file.
      */
     public void complete(ActionListener addIconAction, boolean changeIcon,
             boolean addToTable, boolean update) {
@@ -651,7 +651,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     /*
-     * Add panel to change icons 
+     * Add panel to change icons
      */
     public void addCatalog() {
         if (log.isDebugEnabled()) {
@@ -727,7 +727,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             }
         }
         root.add(_defaultIcons);
-        ImageIndexEditor.indexChanged(true);
+        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
     }
 
     private class IconButton extends DropButton {
@@ -839,5 +839,5 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IconAdder.class);
 }

@@ -17,7 +17,7 @@ public class NodeTableAction extends AbstractAction {
     }
 
     public NodeTableAction() {
-        this("Configure Grapevine Nodes");
+        this(Bundle.getMessage("WindowTitle"));
     }
 
     @Override
@@ -31,5 +31,7 @@ public class NodeTableAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeTableAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(NodeTableAction.class);
+
 }

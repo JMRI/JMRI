@@ -12,6 +12,8 @@ import jmri.SignalMast;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.signalling.EntryExitPairs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Source {
 
@@ -31,7 +33,7 @@ public class Source {
     EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
     //Using Object here rather than sourceSensor, working on the basis that it might
-    //one day be possible to have a signal icon selectable on a panel and 
+    //one day be possible to have a signal icon selectable on a panel and
     //generate a propertychange, so hence do not want to tie it down at this stage.
     transient HashMap<PointDetails, DestinationPoints> pointToDest = new HashMap<PointDetails, DestinationPoints>();
 
@@ -60,7 +62,8 @@ public class Source {
         point.setSource(this);
         sourceSignal = point.getSignal();
         pd = point;
-        createPopUpMenu();
+        createPopUpMenu();   // LE only supports markers for view mode context menus.
+// Functionality has been replaced by re-selecting the route which also includes stacking.
     }
 
     //ArrayList<LayoutBlock> protectingBlocks;
@@ -68,8 +71,8 @@ public class Source {
         if (entryExitPopUp != null) {
             return;
         }
-        entryExitPopUp = new JMenu(Bundle.getMessage("MenuEntryExit"));
-        editClear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));
+        entryExitPopUp = new JMenu(Bundle.getMessage("MenuEntryExit"));  // NOI18N
+        editClear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));  // NOI18N
         editClear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,7 +80,7 @@ public class Source {
             }
         });
         entryExitPopUp.add(editClear);
-        editCancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));
+        editCancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));  // NOI18N
         editCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,7 +89,7 @@ public class Source {
         });
         entryExitPopUp.add(editCancel);
 
-        editOneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));
+        editOneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));  // NOI18N
         editOneClick.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,7 +98,7 @@ public class Source {
         });
         entryExitPopUp.add(editOneClick);
 
-        clear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));
+        clear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));  // NOI18N
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,7 +106,7 @@ public class Source {
             }
         });
 
-        cancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));
+        cancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));  // NOI18N
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,7 +114,7 @@ public class Source {
             }
         });
 
-        oneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));
+        oneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));  // NOI18N
         oneClick.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -204,7 +207,7 @@ public class Source {
     }
 
     public ArrayList<PointDetails> getDestinationPoints() {
-        //ArrayList<PointDetails> rtn = 
+        //ArrayList<PointDetails> rtn =
         return new ArrayList<PointDetails>(pointToDest.keySet());
     }
 
@@ -324,4 +327,6 @@ public class Source {
         }
         return null;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(Source.class);
 }

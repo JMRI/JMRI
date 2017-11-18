@@ -1,16 +1,14 @@
 package jmri.jmrix.sprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.PowerManager;
+import java.util.*;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-
-import java.util.*;
 import jmri.managers.DefaultProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Implements the jmri.Programmer interface via commands for the Sprog
+ * Implement the jmri.Programmer interface via commands for the Sprog
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -24,20 +22,20 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
 
     /**
-     * Types implemented here.
+     * Implemented Types.
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
-        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         return ret;
     }
 
     @Override
     public boolean getCanRead() {
-        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) return true;
-        else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE)) return true;
+        if (getMode().equals(ProgrammingMode.PAGEMODE)) return true;
+        else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) return true;
         else {
             log.error("Unknown internal mode {} returned true from getCanRead()",getMode());
             return true;
@@ -79,7 +77,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     private jmri.ProgListener _usingProgrammer = null;
 
     /**
-     * Send the command to start programming operation
+     * Send the command to start programming operation.
      * 
      * @param val   Value to be written, or -1 for read
      * @param CV    CV to read/write
@@ -98,7 +96,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
-    // internal method to remember who's using the programmer
+    /**
+     * Internal method to remember who's using the programmer.
+     */
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
@@ -112,7 +112,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
-    // internal method to create the SprogMessage for programmer task start
+    /**
+     * Internal method to create the SprogMessage for programmer task start.
+     */
     protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
@@ -209,8 +211,6 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogProgrammer.class);
 
 }
-
-

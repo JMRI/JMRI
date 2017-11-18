@@ -26,7 +26,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn");
-        suite.addTest(IdentifyDecoderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IdentifyDecoderTest.class));
         suite.addTest(DecoderIndexFileTest.suite());
         suite.addTest(DecoderFileTest.suite());
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
@@ -35,6 +35,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(DecoderIndexCreateActionTest.class));
         suite.addTest(new JUnit4TestAdapter(InstallDecoderFileActionTest.class));
         suite.addTest(new JUnit4TestAdapter(InstallDecoderURLActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(PrintDecoderListActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         // Disabled until #2601 is resolved
         // suite.addTest(new JUnit4TestAdapter(DuplicateTest.class));
 

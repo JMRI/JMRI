@@ -1,9 +1,7 @@
 package jmri.jmrix.can;
 
 /**
- * CanConstants.java
- *
- * Description: Constants to represent CAN protocols and adpters
+ * Constants to represent CAN protocols and adapters
  *
  * @author Andrew Crosland Copyright (C) 2008
  */

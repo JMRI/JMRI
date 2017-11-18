@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -34,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     Train _train = null;
-    CarManager carManager = CarManager.instance();
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
     TrainCommon trainCommon = new TrainCommon();
 
     JScrollPane carPane;
@@ -193,10 +194,12 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                         }
                     }
 
-                    textStatus.setText(getStatus(rl));
-                } else {
-                    textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
-                            new Object[]{_train.getTrainTerminatesName()}));
+                    if (rl != _train.getTrainTerminatesRouteLocation()) {
+                        textStatus.setText(getStatus(rl));
+                    } else {
+                        textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
+                                new Object[]{_train.getTrainTerminatesName()}));
+                    }
                 }
                 pCars.repaint();
             }
@@ -250,5 +253,5 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainFrame.class);
 }

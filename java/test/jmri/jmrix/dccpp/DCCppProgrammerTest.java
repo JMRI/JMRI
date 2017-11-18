@@ -9,11 +9,11 @@
 package jmri.jmrix.dccpp;
 
 import jmri.JmriException;
-import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
+import jmri.ProgrammingMode;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class DCCppProgrammerTest extends TestCase {
 
@@ -40,9 +40,9 @@ public class DCCppProgrammerTest extends TestCase {
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|87|29 34");
         t.sendTestMessage(mr1);
 
-        // At this point, the standard DCC++ programmer 
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // At this point, the standard DCC++ programmer
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -54,7 +54,7 @@ public class DCCppProgrammerTest extends TestCase {
     }
 
     public void testWriteRegisterSequence() throws JmriException {
-	/*
+        /*
         // infrastructure objects
         DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
@@ -66,7 +66,7 @@ public class DCCppProgrammerTest extends TestCase {
         };
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
         p.writeCV(29, 12, l);
@@ -93,9 +93,9 @@ public class DCCppProgrammerTest extends TestCase {
         mr2.setElement(4, 0x7A);
         t.sendTestMessage(mr2);
 
-        // At this point, the standard XPressNet programmer 
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // At this point, the standard XpressNet programmer
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -105,7 +105,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
 
         Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
-	*/
+         */
     }
 
     public void testReadCvSequence() throws JmriException {
@@ -130,9 +130,9 @@ public class DCCppProgrammerTest extends TestCase {
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|29 12");
         t.sendTestMessage(mr1);
 
-        // At this point, the standard DCC++ programmer 
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // At this point, the standard DCC++ programmer
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -145,7 +145,7 @@ public class DCCppProgrammerTest extends TestCase {
     }
 
     public void testReadRegisterSequence() throws JmriException {
-	/*
+        /*
         // infrastructure objects
         DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
@@ -157,7 +157,7 @@ public class DCCppProgrammerTest extends TestCase {
         };
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV(29, l);
@@ -183,9 +183,9 @@ public class DCCppProgrammerTest extends TestCase {
         mr2.setElement(4, 0x54);
         t.sendTestMessage(mr2);
 
-        // At this point, the standard XPressNet programmer 
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // At this point, the standard XpressNet programmer
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -194,12 +194,12 @@ public class DCCppProgrammerTest extends TestCase {
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
-	*/
+         */
     }
 
     // this test is the same as the testWriteCvSequence test, but
-    // it checks the sequence for CVs greater than 256, which use 
-    // different XPressNet commands.
+    // it checks the sequence for CVs greater than 256, which use
+    // different XpressNet commands.
     public void testWriteHighCvSequence() throws JmriException {
         // infrastructure objects
         DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -221,9 +221,9 @@ public class DCCppProgrammerTest extends TestCase {
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|87|300 34");
         t.sendTestMessage(mr1);
 
-        // At this point, the standard DCC++ programmer 
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // At this point, the standard DCC++ programmer
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -235,8 +235,8 @@ public class DCCppProgrammerTest extends TestCase {
     }
 
     // this test is the same as the testReadCvSequence test, but
-    // it checks the sequence for CVs greater than 256, which use 
-    // different XPressNet commands.
+    // it checks the sequence for CVs greater than 256, which use
+    // different XpressNet commands.
     public void testReadCvHighSequence() throws JmriException {
         // infrastructure objects
         DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -259,9 +259,9 @@ public class DCCppProgrammerTest extends TestCase {
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|300 34");
         t.sendTestMessage(mr1);
 
-        // At this point, the standard DCC++ programmer 
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // At this point, the standard DCC++ programmer
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -273,7 +273,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
-    // Test to make sure the getCanWrite(int,string) function works correctly 
+    // Test to make sure the getCanWrite(int,string) function works correctly
     // TODO: Fix test to verify exception thrown for Register and paged modes.
     public void testGetCanWrite() {
         // infrastructure objects
@@ -284,48 +284,43 @@ public class DCCppProgrammerTest extends TestCase {
         //cs.setCommandStationSoftwareVersion(3.5f);
         DCCppProgrammer p = new DCCppProgrammer(t);
 
-        //p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertTrue("DCC++ Base Station can write CV3 in Register Mode", p.getCanWrite("3"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
-
-        //p.setMode(DefaultProgrammerManager.PAGEMODE);
+        //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertTrue("DCC++ Base Station Can Write CV3 in paged mode", p.getCanWrite("3"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
-
-        p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Write CV3 in direct byte mode", p.getCanWrite("3"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
-        p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
+        p.setMode(ProgrammingMode.DIRECTBITMODE);
         Assert.assertTrue("DCC++ Base Station Can Write CV3 in direct bit mode", p.getCanWrite("3"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
-        //p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Write CV300 in register mode", p.getCanWrite("300"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
-
-        //p.setMode(DefaultProgrammerManager.PAGEMODE);
+        //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Write CV300 in paged mode", p.getCanWrite("300"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
-
-        p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Write CV300 in direct byte mode", p.getCanWrite("300"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
-        p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
+        p.setMode(ProgrammingMode.DIRECTBITMODE);
         Assert.assertTrue("DCC++ Base Station Can Write CV300 in direct bit mode", p.getCanWrite("300"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
-        p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertFalse("DCC++ Base Station Can Not Write CV3000 in direct byte mode", p.getCanWrite("3000"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
-        p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
+        p.setMode(ProgrammingMode.DIRECTBITMODE);
         Assert.assertFalse("DCC++ Base Station Can Not  Write CV3000 in direct bit mode", p.getCanWrite("3000"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
     }
-
 
     // Test to make sure the getCanRead(int,string) function works correctly
     // TODO: Fix test to verify exception thrown for Register and paged modes.
@@ -336,51 +331,45 @@ public class DCCppProgrammerTest extends TestCase {
 
         //cs.setCommandStationType(DCCppConstants.CS_TYPE_LZ100);
         //cs.setCommandStationSoftwareVersion(3.5f);
-
         DCCppProgrammer p = new DCCppProgrammer(t);
 
-        //p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertTrue("DCC++ Base Station Can Read CV3 in register mode", p.getCanRead("3"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
-
-        //p.setMode(DefaultProgrammerManager.PAGEMODE);
+        //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertTrue("DCC++ Base Station Can Read CV3 in paged mode", p.getCanRead("3"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
-
-        p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Read CV3 in direct byte mode", p.getCanRead("3"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
-        p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
+        p.setMode(ProgrammingMode.DIRECTBITMODE);
         Assert.assertTrue("DCC++ Base Station Can Read CV3 in direct bit mode", p.getCanRead("3"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
-        //p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Read CV300 in register mode", p.getCanRead("300"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
-
-        //p.setMode(DefaultProgrammerManager.PAGEMODE);
+        //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Read CV300 in paged mode", p.getCanRead("300"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
-
-        p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Read CV300 in direct byte mode", p.getCanRead("300"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
-        p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
+        p.setMode(ProgrammingMode.DIRECTBITMODE);
         Assert.assertTrue("DCC++ Base Station Can Read CV300 in direct bit mode", p.getCanRead("300"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
-        p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertFalse("DCC++ Base Station Can not Read CV3000 in direct byte mode", p.getCanRead("3000"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
-        p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
+        p.setMode(ProgrammingMode.DIRECTBITMODE);
         Assert.assertFalse("DCC++ Base Station Can not Read CV3000 in direct bit mode", p.getCanRead("3000"));
         //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
     }
-
 
     // from here down is testing infrastructure
     public DCCppProgrammerTest(String s) {

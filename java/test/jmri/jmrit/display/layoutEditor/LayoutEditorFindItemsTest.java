@@ -1,13 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,22 +20,19 @@ public class LayoutEditorFindItemsTest {
         LayoutEditor e = new LayoutEditor();
         LayoutEditorFindItems t = new LayoutEditorFindItems(e);
         Assert.assertNotNull("exists", t);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItemsTest.class.getName());
-
+    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItemsTest.class);
 }

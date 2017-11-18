@@ -1,9 +1,11 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * XNetSystemConnectionMemoTest.java
@@ -12,20 +14,20 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class XNetSystemConnectionMemoTest extends TestCase {
+public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Test
+    @Override
     public void testCtor() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-
-        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo(tc);
+        XNetSystemConnectionMemo t = (XNetSystemConnectionMemo)scm;
         Assert.assertNotNull(t);
         Assert.assertNotNull(t.getXNetTrafficController());
         // While we are constructing the memo, we should also set the 
         // SystemMemo parameter in the traffic controller.
-        Assert.assertNotNull(tc.getSystemConnectionMemo());
+        Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
     }
 
+    @Test
     public void testXNetTrafficControllerSetCtor() {
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -39,16 +41,17 @@ public class XNetSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull(t.getXNetTrafficController());
         // and while we're doing that, we should also set the SystemMemo 
         // parameter in the traffic controller.
-        Assert.assertNotNull(tc.getSystemConnectionMemo());
+        Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
     }
 
+    @Test
     public void testProivdesConsistManagerMultiMaus() {
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation(){
           @Override
           public int getCommandStationType(){
               return(0x10); // MultiMaus
-          };
+          }
         });
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
@@ -57,47 +60,26 @@ public class XNetSystemConnectionMemoTest extends TestCase {
         Assert.assertFalse(t.provides(jmri.ConsistManager.class));
     }
 
-    public void testProivdesConsistManagerLZV100() {
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation(){
           @Override
           public int getCommandStationType(){
               return(0x00); // LZV100
-          };
+          }
         });
 
-        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
-        t.setXNetTrafficController(tc);
-        t.setCommandStation(tc.getCommandStation());
-        Assert.assertTrue(t.provides(jmri.ConsistManager.class));
+        scm = new XNetSystemConnectionMemo(tc);
     }
 
-    // from here down is testing infrastructure
-    public XNetSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XNetSystemConnectionMemoTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
+    @After
     @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

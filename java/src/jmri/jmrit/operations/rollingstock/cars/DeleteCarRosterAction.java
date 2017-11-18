@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,18 +36,18 @@ public class DeleteCarRosterAction extends AbstractAction {
             if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("carSureDelete"),
                     Bundle.getMessage("carDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 log.debug("removing all cars from roster");
-                CarManager.instance().deleteAll();
+                InstanceManager.getDefault(CarManager.class).deleteAll();
             }
         } else {
             if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("carDeleteCarsTrack"),
                     new Object[]{_carsTableFrame.carsTableModel.trackName}),
                     Bundle.getMessage("carDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                for (RollingStock car : _carsTableFrame.carsTableModel.getSelectedCarList()) {
-                    CarManager.instance().deregister(car);
+                for (Car car : _carsTableFrame.carsTableModel.getSelectedCarList()) {
+                    InstanceManager.getDefault(CarManager.class).deregister(car);
                 }
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeleteCarRosterAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeleteCarRosterAction.class);
 }

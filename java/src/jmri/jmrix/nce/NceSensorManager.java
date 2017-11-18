@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This class is responsible for generating polling messages for the
  * NceTrafficController, see nextAiuPoll()
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
-  */
+ */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {
 
@@ -55,6 +55,15 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void dispose() {
         stopPolling = true;  // tell polling thread to go away
+        Thread thread = pollThread;
+        if (thread != null) {
+            try {
+                thread.interrupt();
+                thread.join();
+            } catch (InterruptedException ex) {
+                log.warn("dispose interrupted");
+            }
+        }
         tc.removeNceListener(listener);
         super.dispose();
     }
@@ -86,8 +95,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private static final int MAXAIU = 63;
     private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
 
-    Thread pollThread;
-    boolean stopPolling = false;
+    volatile Thread pollThread;
+    volatile boolean stopPolling = false;
     NceListener listener;
 
     // polling parameters and variables
@@ -172,7 +181,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * construct a binary-formatted AIU poll message
+     * Construct a binary-formatted AIU poll message
      *
      * @param aiuNo number of AIU to poll
      * @return message to be queued
@@ -204,11 +213,10 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * pollManager - send poll messages for AIU sensors. Also interact with
+     * Send poll messages for AIU sensors. Also interact with
      * asynchronous sensor state messages. Adjust poll cycle according to
      * whether any async messages have been received recently. Also we require
      * one poll of each sensor before squelching active polls.
-     *
      */
     private void pollManager() {
         while (!stopPolling) {
@@ -227,6 +235,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             wait(pollTimeout);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
+                            return;
                         }
                     }
                     int delay = shortCycleInterval;
@@ -246,6 +255,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             wait(delay);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
+                            return;
                         } finally {
                             awaitingDelay = false;
                         }
@@ -262,7 +272,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Process single received reply from sensor poll
+     * Process single received reply from sensor poll.
      */
     @Override
     public void reply(NceReply r) {
@@ -284,7 +294,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Handle an unsolicited sensor (AIU) state message
+     * Handle an unsolicited sensor (AIU) state message.
      *
      * @param r sensor message
      */
@@ -341,8 +351,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
-            //Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
-            //Should we be validating the values of aiucab address and pin number?
+            // Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
+            // Should we be validating the values of aiucab address and pin number?
             // Yes we should, added check for valid AIU and pin ranges DBoudreau 2/13/2013
             int seperator = curAddress.indexOf(":");
             try {
@@ -367,16 +377,15 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
         // only pins 1 through 14 are valid
         if (pin == 0 || pin > MAXPIN) {
-            log.error("NCE sensor " + curAddress + " pin number " + pin + " is out of range only pin numbers 1 - 14 are valid");
+            log.error("NCE sensor " + curAddress + " pin number " + pin + " is out of range; only pin numbers 1 - 14 are valid");
             throw new JmriException("Sensor pin number is out of range");
         }
         if (aiucab == 0 || aiucab > MAXAIU) {
-            log.error("NCE sensor " + curAddress + " AIU number " + aiucab + " is out of range only AIU 1 - 63 are valid");
+            log.error("NCE sensor " + curAddress + " AIU number " + aiucab + " is out of range; only AIU 1 - 63 are valid");
             throw new JmriException("AIU number is out of range");
 
         }
         return prefix + typeLetter() + iName;
-
     }
 
     int aiucab = 0;
@@ -392,12 +401,12 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
         if (s != null) {
             for (int x = 1; x < 10; x++) {
@@ -415,9 +424,81 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         } else {
             return Integer.toString(iName);
         }
-
     }
-    private final static Logger log = LoggerFactory.getLogger(NceSensorManager.class.getName());
+
+    /**
+     * Get the bit address from the system name.
+     * Does not support the M:p format, so preprocess that beforehand.
+     *
+     * @param systemName system name for sensor
+     * @return index value for sensor
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "S"))) {
+            // here if an illegal nce light system name
+            log.error("illegal character in header field of nce sensor system name: " + systemName);
+            return (0);
+        }
+        // system name must be in the NLnnnnn format (N is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())
+            ).intValue();
+        } catch (Exception e) {
+            log.debug("illegal character in number field of system name: " + systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.error("invalid nce sensor system name: " + systemName);
+            return (0);
+        } else if (num > 4096) {
+            log.warn("bit number out of range in nce sensor system name: " + systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @param systemName to be checked
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        if (systemName.contains(":") && !systemName.endsWith(":")) { // prevent to try parsing too soon
+            // If sensor address is presented in the AIU Cab Address:Pin Number On AIU format,
+            // translate it into nnnn. Copied from createSystemName()
+            String curAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length());
+            int seperator = curAddress.indexOf(":"); // assuming the ":" is not in the prefix
+            int _aiucab;
+            int _pin;
+            log.debug(curAddress);
+            try {
+                _aiucab = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+                _pin = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+            } catch (NumberFormatException ex) {
+                log.debug("Unable to convert " + curAddress + " into the cab and pin format of nn:xx");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
+                return NameValidity.INVALID;
+            }
+            systemName = getSystemPrefix() + "S" + ((_aiucab - 1) * 16 + _pin - 1);
+        }
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(NceSensorManager.class);
+
 }
-
-

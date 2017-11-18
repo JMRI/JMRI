@@ -1,6 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
+import java.util.List;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -36,8 +37,8 @@ public class AutoTurnouts {
         _dispatcher = d;
     }
 
-    private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
-    private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+    private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+    private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     // operational variables
     protected DispatcherFrame _dispatcher = null;
@@ -133,9 +134,9 @@ public class AutoTurnouts {
         if (nextSection != null) {
             exitPt = s.getExitPointToSection(nextSection, direction);
         }
-        Block curBlock = null;    // must be in the section
-        Block prevBlock = null;   // must start outside the section or be null
-        int curBlockSeqNum = -1;   // sequence number of curBlock in Section
+        Block curBlock;         // must be in the section
+        Block prevBlock = null; // must start outside the section or be null
+        int curBlockSeqNum;     // sequence number of curBlock in Section
         if (entryPt != null) {
             curBlock = entryPt.getBlock();
             prevBlock = entryPt.getFromBlock();
@@ -160,12 +161,20 @@ public class AutoTurnouts {
             }
         } else {
 
-            if (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST) {
-                //This can be considered normal where SignalMast Logic is used.
-                return true;
+            //if (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST) {
+            //    //This can be considered normal where SignalMast Logic is used.
+            //    return true;
+            //}
+            // this is an error but is it? It only happens when system is under stress
+            // which would point to a threading issue.
+            try {
+            log.error("[{}]direction[{}] Section[{}]Error in turnout check/set request - initial Block and Section mismatch",
+                    at.getActiveTrainName(),at.isAllocationReversed(),s.getUserName(),
+                    at.getStartBlock().getUserName(),at.getEndBlock().getUserName());
+            } catch (Exception ex ) {
+                log.warn(ex.getLocalizedMessage());
             }
-            log.error("Error in turnout check/set request - initial Block and Section mismatch");
-            return false;
+            return true;
         }
 
         Block nextBlock = null;
@@ -175,27 +184,40 @@ public class AutoTurnouts {
             // next Block is outside of the Section
             nextBlock = exitPt.getFromBlock();
         } else {
-            // next Block is inside the Section
-            if (direction == Section.FORWARD) {
-                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
-                nextBlockSeqNum = curBlockSeqNum + 1;
-            } else if (direction == Section.REVERSE) {
-                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
-                nextBlockSeqNum = curBlockSeqNum - 1;
-            }
-            if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
-                log.error("Error in block sequence numbers when setting/checking turnouts");
-                return false;
+            if (!at.isAllocationReversed()) {
+                if (direction == Section.FORWARD) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+                    nextBlockSeqNum = curBlockSeqNum + 1;
+                } else if (direction == Section.REVERSE) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+                    nextBlockSeqNum = curBlockSeqNum - 1;
+                }
+                if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
+                    log.error("Error in block sequence numbers fwd when setting/checking turnouts");
+                    return false;
+                }
+            } else {
+                if (direction == Section.REVERSE) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+                    nextBlockSeqNum = curBlockSeqNum + 1;
+                } else if (direction == Section.FORWARD) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+                    nextBlockSeqNum = curBlockSeqNum - 1;
+                }
+                if ((nextBlock == null) && (curBlock != at.getStartBlock())) {
+                    log.error("Error in block sequence numbers rev when setting/checking turnouts");
+                    return false;
+                }
             }
         }
 
-        ArrayList<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();
-        ArrayList<Integer> settingsList = new ArrayList<Integer>();
+        List<LayoutTurnout> turnoutList = new ArrayList<>();
+        List<Integer> settingsList = new ArrayList<>();
         // get turnouts by Block
         boolean turnoutsOK = true;
         while (curBlock != null) {
-            /*No point in getting the list if the previous block is null as it will return empty and generate an error, 
-             this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of 
+            /*No point in getting the list if the previous block is null as it will return empty and generate an error,
+             this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of
              been set correctly for the train to have arrived in the first place.
              */
             if (prevBlock != null) {
@@ -205,7 +227,7 @@ public class AutoTurnouts {
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
                 Turnout to = turnoutList.get(i).getTurnout();
-                int setting = settingsList.get(i).intValue();
+                int setting = settingsList.get(i);
                 if (turnoutList.get(i) instanceof LayoutSlip) {
                     setting = ((LayoutSlip) turnoutList.get(i)).getTurnoutState(settingsList.get(i));
                 }
@@ -216,7 +238,7 @@ public class AutoTurnouts {
                     to.setCommandedState(setting);
                     try {
                         Thread.sleep(100);
-                    } catch (Exception ex) {
+                    } catch (InterruptedException ex) {
                     }  //TODO: move this to separate thread
                 } else {
                     if (to.getKnownState() != setting) {
@@ -230,7 +252,7 @@ public class AutoTurnouts {
                                 to.setCommandedState(setting);
                                 try {
                                     Thread.sleep(100);
-                                } catch (Exception ex) {
+                                } catch (InterruptedException ex) {
                                 }  //TODO: move this to separate thread
                             } else {
                                 turnoutsOK = false;
@@ -270,7 +292,6 @@ public class AutoTurnouts {
                 if (nextBlockSeqNum >= 0) {
                     prevBlock = curBlock;
                     curBlock = nextBlock;
-                    curBlockSeqNum = nextBlockSeqNum;
                     if ((exitPt != null) && (curBlock == exitPt.getBlock())) {
                         // next block is outside of the Section
                         nextBlock = exitPt.getFromBlock();
@@ -297,5 +318,5 @@ public class AutoTurnouts {
         return turnoutsOK;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class);
 }

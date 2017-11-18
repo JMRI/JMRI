@@ -34,17 +34,12 @@ public class CvValue extends AbstractValue implements ProgListener {
         _tableEntry.setBackground(COLOR_UNKNOWN);
     }
 
-    public CvValue(String num, String cvName, String piCv, int piVal, String siCv, int siVal, String iCv, Programmer pProgrammer) {
+    public CvValue(String num, String cvName, Programmer pProgrammer) {
         _num = num;
         _cvName = cvName;
         if (cvName == null) {
             log.error("cvName == null in ctor num: " + num); // NOI18N
         }
-        _piCv = piCv;
-        _piVal = piVal;
-        _siCv = siCv;
-        _siVal = siVal;
-        _iCv = iCv;
         mProgrammer = pProgrammer;
         _tableEntry = new JTextField("0", 3);
         _defaultColor = _tableEntry.getBackground();
@@ -53,8 +48,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     @Override
     public String toString() {
-        return "CvValue _num=" + _num + " _cvName=" + _cvName + " _piCv=" + _piCv + " _siCv=" + _siCv
-                + " _iCv=" + _iCv;
+        return "CvValue _num=" + _num + " _cvName=" + _cvName;
     }
 
     void setProgrammer(Programmer p) {
@@ -70,41 +64,6 @@ public class CvValue extends AbstractValue implements ProgListener {
         return _cvName;
     }
     private String _cvName = "";
-
-    @Deprecated // since 3.7.1
-    public String piCv() {
-        return _piCv;
-    }
-    @Deprecated // since 3.7.1
-    private String _piCv;
-
-    @Deprecated // since 3.7.1
-    public int piVal() {
-        return _piVal;
-    }
-    @Deprecated // since 3.7.1
-    private int _piVal;
-
-    @Deprecated // since 3.7.1
-    public String siCv() {
-        return _siCv;
-    }
-    @Deprecated // since 3.7.1
-    private String _siCv;
-
-    @Deprecated // since 3.7.1
-    public int siVal() {
-        return _siVal;
-    }
-    @Deprecated // since 3.7.1
-    private int _siVal;
-
-    @Deprecated // since 3.7.1
-    public String iCv() {
-        return _iCv;
-    }
-    @Deprecated // since 3.7.1
-    private String _iCv;
 
     private JLabel _status = null;
 
@@ -399,84 +358,6 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
 
-    @Deprecated // since 3.7.1
-    public void readIcV(JLabel status) {
-        setToRead(false);
-        // get a programmer reference and write an indexed CV
-        _status = status;
-
-        if (status != null) {
-            status.setText(
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("StateReadingIndexedCV"),
-                            new Object[]{"" + _iCv, "" + _piVal + (_siVal >= 0 ? "." + _siVal : "")}));
-        }
-
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = true;
-            _confirm = false;
-            try {
-                setState(UNKNOWN);
-                mProgrammer.readCV(_iCv, this);
-            } catch (Exception e) {
-                setState(UNKNOWN);
-                if (status != null) {
-                    status.setText(
-                            java.text.MessageFormat.format(
-                                    Bundle.getMessage("StateExceptionDuringIndexedRead"),
-                                    new Object[]{e.toString()}));
-                }
-                log.warn("Exception during IndexedCV read: " + e); // NOI18N
-                setBusy(false);
-            }
-        } else {
-            if (status != null) {
-                status.setText(Bundle.getMessage("StateNoProgrammer"));
-            }
-            log.error("No programmer available!"); // NOI18N
-        }
-    }
-
-    @Deprecated // since 3.7.1
-    public void confirmIcV(JLabel status) {
-        setToRead(false);
-        // get a programmer reference and write an indexed CV
-        _status = status;
-
-        if (status != null) {
-            status.setText(
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("StateConfirmIndexedCV"),
-                            new Object[]{"" + _iCv, "" + _piVal + (_siVal >= 0 ? "." + _siVal : "")}));
-        }
-
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = false;
-            _confirm = true;
-            try {
-                setState(UNKNOWN);
-                mProgrammer.readCV(_iCv, this);
-            } catch (Exception e) {
-                setState(UNKNOWN);
-                if (status != null) {
-                    status.setText(
-                            java.text.MessageFormat.format(
-                                    Bundle.getMessage("StateExceptionDuringIndexedRead"),
-                                    new Object[]{e.toString()}));
-                }
-                log.warn("Exception during IndexedCV read: " + e); // NOI18N
-                setBusy(false);
-            }
-        } else {
-            if (status != null) {
-                status.setText(Bundle.getMessage("StateNoProgrammer"));
-            }
-            log.error("No programmer available!"); // NOI18N
-        }
-    }
-
     public void confirm(JLabel status) {
         log.debug("confirm call with Cv number {}", _num); // NOI18N
 
@@ -543,130 +424,6 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     new Object[]{e.toString()}));
                 }
                 log.warn("Exception during write CV '" + _num + "' to '" + _value + "'", e); // NOI18N
-                setBusy(false);
-            }
-        } else {
-            if (status != null) {
-                status.setText(Bundle.getMessage("StateNoProgrammer"));
-            }
-            log.error("No programmer available!"); // NOI18N
-        }
-    }
-
-    @Deprecated // since 3.7.1
-    public void writePI(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("write call with PI number " + _piVal); // NOI18N
-        }
-        // get a programmer reference and write to the primary index
-        _status = status;
-        if (status != null) {
-            status.setText(
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("StateWritingPICV"),
-                            new Object[]{"" + _num}));
-        }
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = false;
-            _confirm = false;
-            try {
-                setState(UNKNOWN);
-                mProgrammer.writeCV(_piCv, _piVal, this);
-            } catch (Exception e) {
-                setState(UNKNOWN);
-                if (status != null) {
-                    status.setText(
-                            java.text.MessageFormat.format(
-                                    Bundle.getMessage("StateExceptionDuringWrite"),
-                                    new Object[]{e.toString()}));
-                }
-                log.warn("Exception during CV write of '" + _piCv + "' to '" + _piVal + "'", e); // NOI18N
-                setBusy(false);
-            }
-        } else {
-            if (status != null) {
-                status.setText(Bundle.getMessage("StateNoProgrammer"));
-            }
-            log.error("No programmer available!"); // NOI18N
-        }
-    }
-
-    @Deprecated // since 3.7.1
-    public void writeSI(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("write call with SI number " + _siVal); // NOI18N
-        }
-        // get a programmer reference and write to the secondary index
-        _status = status;
-        if (status != null) {
-            status.setText(
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("StateWritingSICV"),
-                            new Object[]{"" + _num}));
-        }
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = false;
-            _confirm = false;
-            try {
-                setState(UNKNOWN);
-                if (_siVal >= 0) {
-                    mProgrammer.writeCV(_siCv, _siVal, this);
-                } else { // just in case we get called without a real SI value
-                    mProgrammer.writeCV(_siCv, 0, this);
-                }
-            } catch (Exception e) {
-                setState(UNKNOWN);
-                if (status != null) {
-                    status.setText(
-                            java.text.MessageFormat.format(
-                                    Bundle.getMessage("StateExceptionDuringWrite"),
-                                    new Object[]{e.toString()}));
-                }
-                log.warn("Exception during CV write: " + e); // NOI18N
-                setBusy(false);
-            }
-        } else {
-            if (status != null) {
-                status.setText(Bundle.getMessage("StateNoProgrammer"));
-            }
-            log.error("No programmer available!"); // NOI18N
-        }
-    }
-
-    @Deprecated // since 3.7.1
-    public void writeIcV(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("write call with IndexedCv number " + _iCv); // NOI18N
-        }
-        setToWrite(false);
-        // get a programmer reference and write the indexed CV
-        _status = status;
-
-        if (status != null) {
-            status.setText(
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("StateWritingIndexedCV"),
-                            new Object[]{"" + _iCv, "" + _piVal + (_siVal >= 0 ? "." + _siVal : "")}));
-        }
-
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = false;
-            _confirm = false;
-            try {
-                setState(UNKNOWN);
-                mProgrammer.writeCV(_iCv, _value, this);
-            } catch (Exception e) {
-                setState(UNKNOWN);
-                if (status != null) {
-                    status.setText(
-                            java.text.MessageFormat.format(
-                                    Bundle.getMessage("StateExceptionDuringIndexedWrite"),
-                                    new Object[]{e.toString()}));
-                }
-                log.warn("Exception during CV write: " + e); // NOI18N
                 setBusy(false);
             }
         } else {
@@ -754,6 +511,6 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CvValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CvValue.class);
 
 }

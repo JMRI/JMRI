@@ -86,8 +86,6 @@ Operations:
     
 
 Still needed:
-    
-*) Transforms handle variable elements but not ivariable elements - consider ivariables obsolete?
 
 (Is normalize not creating a default choice element?  Will I18N 
 notice if there's a default choice _element_?)

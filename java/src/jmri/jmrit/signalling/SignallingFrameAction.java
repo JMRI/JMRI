@@ -1,7 +1,6 @@
 package jmri.jmrit.signalling;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +11,6 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingFrameAction extends AbstractAction {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     /**
      * Create an action with the supplied name.
@@ -28,7 +25,7 @@ public class SignallingFrameAction extends AbstractAction {
      * Create an action with a preset name, localizable via the Bundle mechanism.
      */
     public SignallingFrameAction() {
-        super(rb.getString("SignallingPairs"));
+        super(Bundle.getMessage("SignallingPairs"));  // NOI18N
     }
 
     @Override
@@ -37,10 +34,10 @@ public class SignallingFrameAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: " + ex.toString());  // NOI18N
             ex.printStackTrace();
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(SignallingFrameAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignallingFrameAction.class);
 }

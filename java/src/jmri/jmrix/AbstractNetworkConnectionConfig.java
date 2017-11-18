@@ -11,7 +11,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Hashtable;
 import java.util.ResourceBundle;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -287,7 +286,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             //Build up list of options
             //Hashtable<String, AbstractPortController.Option> adapterOptions = ((AbstractPortController)adapter).getOptionList();
             String[] optionsAvailable = adapter.getOptions();
-            options = new Hashtable<String, Option>();
+            options.clear();
             for (String i : optionsAvailable) {
                 JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
@@ -562,6 +561,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfig.class);
 
 }

@@ -13,7 +13,7 @@ public interface NetworkPortAdapter extends PortAdapter {
     /**
      * Connects to the end device using a hostname/ip address and port
      */
-    public void connect(String host, int port) throws Exception;
+    public void connect(String host, int port) throws java.io.IOException;
 
     /**
      * Configure all of the other jmrix widgets needed to work with this adapter
@@ -22,8 +22,9 @@ public interface NetworkPortAdapter extends PortAdapter {
     public void configure();
 
     /**
-     * Query the status of this connection. If all OK, at least as far as is
-     * known, return true
+     * Query the status of this connection.
+     *
+     * @return true if all is OK, at least as far as known
      */
     @Override
     public boolean status();
@@ -58,7 +59,7 @@ public interface NetworkPortAdapter extends PortAdapter {
     public boolean getMdnsConfigure();
 
     /*
-     * perform the automatic configuration
+     * Perform the automatic configuration.
      */
     public void autoConfigure();
 

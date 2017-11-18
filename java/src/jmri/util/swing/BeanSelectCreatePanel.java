@@ -10,14 +10,24 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Manager;
+import jmri.MemoryManager;
 import jmri.NamedBean;
+import jmri.SensorManager;
+import jmri.TurnoutManager;
+import jmri.UserPreferencesManager;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.managers.AbstractProxyManager;
 import jmri.util.ConnectionNameFromSystemName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class BeanSelectCreatePanel extends JPanel {
+public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
 
-    Manager _manager;
+    Manager<E> _manager;
     NamedBean _defaultSelect;
     String _reference = null;
     JRadioButton existingItem = new JRadioButton();
@@ -27,7 +37,6 @@ public class BeanSelectCreatePanel extends JPanel {
     JmriBeanComboBox existingCombo;
     JTextField hardwareAddress = new JTextField(8);
     JComboBox<String> prefixBox = new JComboBox<>();
-    jmri.UserPreferencesManager p;
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
 
     /**
@@ -38,10 +47,10 @@ public class BeanSelectCreatePanel extends JPanel {
      * @param manager       the bean manager
      * @param defaultSelect the bean that is selected by default
      */
-    public BeanSelectCreatePanel(Manager manager, NamedBean defaultSelect) {
+    public BeanSelectCreatePanel(Manager<E> manager, NamedBean defaultSelect) {
         _manager = manager;
         _defaultSelect = defaultSelect;
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
         existingItem = new JRadioButton(Bundle.getMessage("UseExisting"), true);
         newItem = new JRadioButton(Bundle.getMessage("CreateNew"));
         existingItem.addActionListener((ActionEvent e) -> {
@@ -54,11 +63,13 @@ public class BeanSelectCreatePanel extends JPanel {
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
         existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+        LayoutEditor.setupComboBox(existingCombo, false, true);
         // If the combo list is empty we go straight to creation.
         if (existingCombo.getItemCount() == 0) {
             newItem.setSelected(true);
         }
         existingCombo.setFirstItemBlank(true);
+
         JPanel radio = new JPanel();
         radio.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         JPanel bean = new JPanel();
@@ -66,23 +77,16 @@ public class BeanSelectCreatePanel extends JPanel {
         radio.add(existingItem);
         radio.add(newItem);
 
-        if (_manager instanceof jmri.managers.AbstractProxyManager) {
-            List<Manager> managerList = new ArrayList<>();
-            if (_manager instanceof jmri.TurnoutManager) {
-                jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
-                managerList = proxy.getManagerList();
-            } else if (_manager instanceof jmri.SensorManager) {
-                jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
-                managerList = proxy.getManagerList();
-            } else if (_manager instanceof jmri.LightManager) {
-                jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) InstanceManager.lightManagerInstance();
-                managerList = proxy.getManagerList();
-            } else if (_manager instanceof jmri.ReporterManager) {
-                jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(jmri.ReporterManager.class);
-                managerList = proxy.getManagerList();
-            }
-            for (int x = 0; x < managerList.size(); x++) {
-                String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
+        List<String> manuNameList = new ArrayList<>();
+
+        // get list of system manufacturer names if there are multiple managers inside a proxy
+        if (manager instanceof AbstractProxyManager) {
+            List<Manager<E>> managerList = ((AbstractProxyManager<E>) _manager).getManagerList();
+            managerList.forEach((mgr) -> {
+                manuNameList.add(ConnectionNameFromSystemName.getConnectionName(mgr.getSystemPrefix()));
+            });
+
+            manuNameList.forEach((manuName) -> {
                 Boolean addToPrefix = true;
                 //Simple test not to add a system with a duplicate System prefix
                 for (int i = 0; i < prefixBox.getItemCount(); i++) {
@@ -93,11 +97,11 @@ public class BeanSelectCreatePanel extends JPanel {
                 if (addToPrefix) {
                     prefixBox.addItem(manuName);
                 }
-            }
+            });
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
-        } else {
+        } else { // not a proxy, just one, e.g. Block
             prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(_manager.getSystemPrefix()));
         }
 
@@ -105,10 +109,10 @@ public class BeanSelectCreatePanel extends JPanel {
         bean.add(prefixBox);
         bean.add(hardwareAddress);
         hardwareAddress.setToolTipText(Bundle.getMessage("EnterHWaddressAsIntTooltip"));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(radio);
-        add(bean);
-        update();
+        super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        super.add(radio);
+        super.add(bean);
+        BeanSelectCreatePanel.this.update();
     }
 
     void update() {
@@ -154,7 +158,7 @@ public class BeanSelectCreatePanel extends JPanel {
             try {
                 NamedBean nBean = createBean();
                 return nBean.getDisplayName();
-            } catch (jmri.JmriException e) {
+            } catch (JmriException e) {
                 return "";
             }
         }
@@ -165,70 +169,74 @@ public class BeanSelectCreatePanel extends JPanel {
      * has been created.
      *
      * @return the selected bean or a new bean
-     * @throws jmri.JmriException if a bean needs to be created but can't be
+     * @throws JmriException if a bean needs to be created but can't be
      */
-    public NamedBean getNamedBean() throws jmri.JmriException {
+    public NamedBean getNamedBean() throws JmriException {
         if (existingItem.isSelected()) {
             return existingCombo.getSelectedBean();
         }
         try {
             return createBean();
-        } catch (jmri.JmriException e) {
+        } catch (JmriException e) {
             throw e;
         }
     }
 
-    private NamedBean createBean() throws jmri.JmriException {
+    private NamedBean createBean() throws JmriException {
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         NamedBean nBean = null;
-        if (_manager instanceof jmri.TurnoutManager) {
-            String sName = "";
-            try {
-                sName = InstanceManager.turnoutManagerInstance().createSystemName(hardwareAddress.getText(), prefix);
-            } catch (jmri.JmriException e) {
-                throw e;
-            }
-            try {
-                nBean = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
-            } catch (IllegalArgumentException ex) {
-                // user input no good
-                throw new jmri.JmriException("ErrorTurnoutAddFailed");
-            }
-        } else if (_manager instanceof jmri.SensorManager) {
-            String sName = "";
-            try {
-                sName = InstanceManager.sensorManagerInstance().createSystemName(hardwareAddress.getText(), prefix);
-            } catch (jmri.JmriException e) {
-                throw e;
-            }
-            try {
-                nBean = InstanceManager.sensorManagerInstance().provideSensor(sName);
-            } catch (IllegalArgumentException ex) {
-                // user input no good
-                throw new jmri.JmriException("ErrorSensorAddFailed");
-            }
-        } else {
-            String sName = _manager.makeSystemName(hardwareAddress.getText());
-            if (_manager instanceof jmri.MemoryManager) {
+        if (prefix != null) {
+            if (_manager instanceof TurnoutManager) {
+                String sName = "";
                 try {
-                    nBean = InstanceManager.memoryManagerInstance().provideMemory(sName);
-                } catch (IllegalArgumentException ex) {
-                    // user input no good
-                    throw new jmri.JmriException("ErrorMemoryAddFailed");
+                    sName = ((TurnoutManager) _manager).createSystemName(hardwareAddress.getText(), prefix);
+                } catch (JmriException e) {
+                    throw e;
                 }
-            } else if (_manager instanceof jmri.Block) {
                 try {
-                    nBean = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock(sName);
+                    nBean = ((TurnoutManager) _manager).provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    throw new jmri.JmriException("ErrorBlockAddFailed");
+                    throw new JmriException("ErrorTurnoutAddFailed");
+                }
+            } else if (_manager instanceof SensorManager) {
+                String sName = "";
+                try {
+                    sName = ((SensorManager) _manager).createSystemName(hardwareAddress.getText(), prefix);
+                } catch (JmriException e) {
+                    throw e;
+                }
+                try {
+                    nBean = ((SensorManager) _manager).provideSensor(sName);
+                } catch (IllegalArgumentException ex) {
+                    // user input no good
+                    throw new JmriException("ErrorSensorAddFailed");
+                }
+            } else {
+                String sName = _manager.makeSystemName(hardwareAddress.getText());
+                if (_manager instanceof MemoryManager) {
+                    try {
+                        nBean = ((MemoryManager) _manager).provideMemory(sName);
+                    } catch (IllegalArgumentException ex) {
+                        // user input no good
+                        throw new JmriException("ErrorMemoryAddFailed");
+                    }
+                } else if (_manager instanceof BlockManager) {
+                    try {
+                        nBean = ((BlockManager) _manager).provideBlock(sName);
+                    } catch (IllegalArgumentException ex) {
+                        // user input no good
+                        throw new JmriException("ErrorBlockAddFailed");
+                    }
                 }
             }
         }
         if (nBean == null) {
-            throw new jmri.JmriException("Unable to create bean");
+            throw new JmriException("Unable to create bean");
         }
-        if ((_reference != null && !_reference.equals("")) && (nBean.getComment() == null || nBean.getComment().equals(""))) {
+        // Update comment if there's content, and there's not already a comment
+        String comment = nBean.getComment();
+        if ((_reference != null && !_reference.isEmpty()) && (comment == null || comment.isEmpty())) {
             nBean.setComment(_reference);
         }
         setDefaultNamedBean(nBean);
@@ -263,4 +271,6 @@ public class BeanSelectCreatePanel extends JPanel {
         existingCombo.dispose();
     }
 
+    //initialize logging
+    private final static Logger log = LoggerFactory.getLogger(BeanSelectCreatePanel.class.getName());
 }

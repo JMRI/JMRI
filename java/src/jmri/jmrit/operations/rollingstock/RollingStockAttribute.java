@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * color, type, load, road, owner, model etc.
  *
  * @author Daniel Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class RollingStockAttribute {
 
@@ -212,6 +212,6 @@ public class RollingStockAttribute {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);
 
 }

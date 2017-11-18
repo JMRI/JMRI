@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.zimo.swing.monitor.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1ComponentFactoryTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1MenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1NamedPaneActionTest.class));
 
         return suite;
     }

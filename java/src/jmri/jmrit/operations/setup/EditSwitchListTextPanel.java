@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 
 /**
@@ -283,7 +284,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         TrainSwitchListText.setStringSwitchListByTrack(switchListByTrackTextField.getText());
         TrainSwitchListText.setStringHoldCar(holdCarTextField.getText());
 
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
     }
 
     @Override

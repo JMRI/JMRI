@@ -44,6 +44,9 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -61,7 +64,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
 
         _BoardModel = new ReaderBoardModel();
         JTable boardTable = new JTable(_BoardModel);
-        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>();
+        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>(_BoardModel);
         sorter.setComparator(ReaderBoardModel.ADDRESS_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, ReaderBoardModel.ADDRESS_COLUMN, SortOrder.ASCENDING);
         
@@ -77,15 +80,20 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         add(footer, BorderLayout.SOUTH);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
     }
 
     JLabel sourceLabel = new JLabel();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-
     }
 
     private List<Integer> _boardListCount;
@@ -172,7 +180,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 return rb.getString("ColumnDescription");
             }
             if (col == EDIT_COLUMN) {
-                return rb.getString(""); //no title above Edit buttons
+                return ""; //rb.getString(""); //no title above Edit buttons
             }
             return "";
         }
@@ -338,6 +346,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BoardListPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BoardListPanel.class);
 
 }

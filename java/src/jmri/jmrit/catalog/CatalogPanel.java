@@ -58,18 +58,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This panel is used in the Icon Editors and also in the ImageIndex Editor.
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
  * @author Pete Cressman Copyright 2009
  *
  */
@@ -225,7 +213,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             log.debug("addTreeBranch called for node= {}, has {} children.",
                     node.toString(), node.getChildCount());
         }
-        //String name = node.toString(); 
+        //String name = node.toString();
         CatalogTreeNode root = (CatalogTreeNode) _model.getRoot();
         Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {
@@ -331,7 +319,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         CatalogTreeNode node = new CatalogTreeNode(name);
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(parent);
         tree.insertNodeInto(node, cParent, index);
-        ImageIndexEditor.indexChanged(true);
+        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         return true;
     }
 
@@ -344,7 +332,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
         tree.removeNodeFromParent(getCorrespondingNode(node));
         _model.removeNodeFromParent(node);
-        ImageIndexEditor.indexChanged(true);
+        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
     }
 
     /**
@@ -364,7 +352,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         node.setUserObject(name);
         tree.nodeChanged(cNode);
         _model.nodeChanged(node);
-        ImageIndexEditor.indexChanged(true);
+        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         updatePanel();
         return true;
     }
@@ -408,9 +396,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     private JPanel makeButtonPanel() {
-        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("white"), false);
-        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"), true);
-        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"), false);
+        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("White"), false);
+        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("LightGray"), true);
+        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("DarkGray"), false);
         whiteButton.addActionListener((ActionEvent e) -> {
             _currentBackground = Color.white;
             setBackground(_preview);
@@ -708,7 +696,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         }
         node.deleteLeaf(icon.getName(), icon.getURL());
         updatePanel();
-        ImageIndexEditor.indexChanged(true);
+        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
     }
 
     private void rename(NamedIcon icon) {
@@ -729,7 +717,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             _dTree.setSelectionPath(null);
             _dTree.setSelectionPath(path);
 //            updatePanel();
-            ImageIndexEditor.indexChanged(true);
+            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         }
     }
 
@@ -878,5 +866,5 @@ public class CatalogPanel extends JPanel implements MouseListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CatalogPanel.class);
 }

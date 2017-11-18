@@ -1,6 +1,5 @@
 package jmri.jmrit.signalling;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
@@ -11,8 +10,6 @@ import javax.swing.JButton;
  */
 public class SignallingSourceFrame extends jmri.util.JmriJFrame {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
-
     public SignallingSourceFrame() {
         super(false, true);
     }
@@ -22,16 +19,16 @@ public class SignallingSourceFrame extends jmri.util.JmriJFrame {
     // boolean inEditMode = false; // to warn and prevent opening more than 1 editing session
     // cannot determine finishing of Edit session (cf. SignalGroupTableAction#addPressed(e)
 
-    public void initComponents(jmri.SignalMast source) throws Exception {
+    public void initComponents(jmri.SignalMast source) {
         // the following code sets the frame's initial state
         sigPanel = new SignallingSourcePanel(source);
 
-        setTitle(rb.getString("SignallingPairs") + ": " + source.getDisplayName());
+        setTitle(Bundle.getMessage("SignallingPairs") + ": " + source.getDisplayName());  // NOI18N
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(sigPanel);
 
-        addHelpMenu("package.jmri.jmrit.signalling.SignallingSourceFrame", true);
+        addHelpMenu("package.jmri.jmrit.signalling.SignallingSourceFrame", true);  // NOI18N
 
         // pack for display
         pack();

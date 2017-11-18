@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -21,17 +22,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import jmri.implementation.SignalSpeedMap;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete Cressman Copyright (C) 2015
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel, ItemListener {
 
     static int STRUT_SIZE = 10;
@@ -39,8 +45,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private boolean _isDirty = false;
 
     private JComboBox<ScaleData> _layoutScales;
-    private JTextField _searchDepth;
-    private JTextField _timeIncre;
+    private JSpinner _searchDepth;
+    private JSpinner _timeIncre;
     private JTextField _rampIncre;
     private JTextField _throttleScale;
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;
@@ -51,6 +57,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private AppearanceTableModel _appearanceModel;
     private JTable _appearanceTable;
     private ArrayList<DataPair<String, Integer>> _stepIncrementMap;
+    private WarrantPreferences.Shutdown _shutdown;
 
     public WarrantPreferencesPanel() {
         initGUI();
@@ -58,7 +65,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
 
     private void initGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-//        add(new JTitledSeparator(Bundle.getMessage("TitleWarrantPreferences")));
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
         JPanel rightPanel = new JPanel();
@@ -68,10 +74,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         leftPanel.add(timeIncrementPanel(true));
         leftPanel.add(throttleIncrementPanel(true));
         leftPanel.add(throttleScalePanel(true));
+        leftPanel.add(speedRosterPanel(true));
         rightPanel.add(speedNamesPanel());
         rightPanel.add(Box.createGlue());
-        rightPanel.add(interpretationPanel());
-        rightPanel.add(Box.createGlue());
+//        rightPanel.add(interpretationPanel());
+//        rightPanel.add(Box.createGlue());
         rightPanel.add(appearancePanel());
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
@@ -83,7 +90,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private JPanel layoutScalePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        _layoutScales = new JComboBox<ScaleData>();
+        _layoutScales = new JComboBox<>();
         _layoutScales.addItem(new ScaleData("G", 20.3f));
         _layoutScales.addItem(new ScaleData("L", 38f));
         _layoutScales.addItem(new ScaleData("O", 43f));
@@ -109,7 +116,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         panel.add(label);
         JPanel p = new JPanel();
         p.add(_layoutScales);
-//        p.add(Box.createVerticalGlue());
         panel.add(p);
         return panel;
     }
@@ -166,6 +172,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
 
+    // Preferences left column items
+
     class ScaleData {
 
         float scale;
@@ -198,23 +206,117 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
 
     private JPanel searchDepthPanel(boolean vertical) {
-        _searchDepth = new JTextField(5);
-        _searchDepth.setText(Integer.toString(WarrantPreferences.getDefault().getSearchDepth()));
+        _searchDepth = new JSpinner(new SpinnerNumberModel(20, 1, 50, 1));
+        int searchDepthPref = WarrantPreferences.getDefault().getSearchDepth();
+        if (searchDepthPref >= 1 && searchDepthPref <= 50) {
+            _searchDepth.setValue(searchDepthPref);
+        }
         JPanel p = new JPanel();
         p.add(WarrantRoute.makeTextBoxPanel(vertical, _searchDepth, "SearchDepth", "ToolTipSearchDepth"));
-        _searchDepth.setColumns(5);
         p.setToolTipText(Bundle.getMessage("ToolTipSearchDepth"));
         return p;
     }
 
     private JPanel throttleScalePanel(boolean vertical) {
         _throttleScale = new JTextField(5);
-        _throttleScale.setText(Float.toString(WarrantPreferences.getDefault().getThrottleScale()));
+        _throttleScale.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleScale()));
         JPanel p = new JPanel();
-        p.add(WarrantFrame.makeTextBoxPanel(vertical, _throttleScale, "ThrottleScale", "ToolTipThrottleScale"));
+        p.add(WarrantRoute.makeTextBoxPanel(vertical, _throttleScale, "ThrottleScale", "ToolTipThrottleScale"));
         _throttleScale.setColumns(8);
         p.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
         return p;
+    }
+
+    private JPanel timeIncrementPanel(boolean vertical) {
+        _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 10000, 1));
+        int timeIncrePrefs = WarrantPreferences.getDefault().getTimeIncrement();
+        if (timeIncrePrefs >= 200 && timeIncrePrefs <= 10000) {
+            _timeIncre.setValue(timeIncrePrefs);
+        }
+        JPanel incrPanel = new JPanel();
+        incrPanel.add(_timeIncre);
+        incrPanel.add(new JLabel(Bundle.getMessage("milliseconds")));
+        JPanel p = new JPanel();
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, incrPanel, "TimeIncrement", "ToolTipTimeIncrement"));
+        p.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
+        return p;
+    }
+
+    private JPanel throttleIncrementPanel(boolean vertical) {
+        _rampIncre = new JTextField(6);
+        _rampIncre.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleIncrement()*100));
+        JPanel incrPanel = new JPanel();
+        incrPanel.add(_rampIncre);
+        incrPanel.add(new JLabel(Bundle.getMessage("percent")));
+        JPanel p = new JPanel();
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, incrPanel, "RampIncrement", "ToolTipRampIncrement"));
+        p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
+        _rampIncre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = _rampIncre.getText();
+                boolean showdialog = false;
+                try {
+                    float incr = NumberFormat.getNumberInstance().parse(text).floatValue();
+                    showdialog = (incr < 0.5f || incr > 25f);
+                } catch (java.text.ParseException pe) {
+                    showdialog = true;
+                }
+                if (showdialog) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        return p;
+    }
+
+    private JPanel speedRosterPanel(boolean vertical) {
+        ButtonGroup bg = new ButtonGroup();
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        JRadioButton b1 = new JRadioButton(Bundle.getMessage("NeverMerge"));
+        b1.addActionListener((ActionEvent e) -> {
+            if (b1.isSelected()) {
+                _shutdown = WarrantPreferences.Shutdown.NO_MERGE;
+            }
+        });
+        bg.add(b1);
+        p.add(b1);
+        JRadioButton b2 = new JRadioButton(Bundle.getMessage("PromptMerges"));
+        b2.addActionListener((ActionEvent e) -> {
+            if (b2.isSelected()) {
+                _shutdown = WarrantPreferences.Shutdown.PROMPT;
+            }
+        });
+        bg.add(b2);
+        p.add(b2);
+        JRadioButton b3 = new JRadioButton(Bundle.getMessage("AlwaysMerge"));
+        b3.addActionListener((ActionEvent e) -> {
+            if (b3.isSelected()) {
+                _shutdown = WarrantPreferences.Shutdown.MERGE_ALL;
+            }
+        });
+        bg.add(b3);
+        p.add(b3);
+        _shutdown = WarrantPreferences.getDefault().getShutdown();
+        switch (_shutdown) {
+            case NO_MERGE:
+                b1.setSelected(true);
+                break;
+            case PROMPT:
+                b2.setSelected(true);
+                break;
+            case MERGE_ALL:
+                b3.setSelected(true);
+                break;
+            default:
+                // fall out
+                break;
+        }
+        JPanel panel = new JPanel();
+        panel.add(WarrantRoute.makeTextBoxPanel(vertical, p, "MergeRoster", "ToolTipMergeRoster"));
+        return panel;
     }
 
     private JPanel speedNamesPanel() {
@@ -250,6 +352,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             }
         };
         panel.add(tablePanel(_speedNameTable, "ToolTipSpeedNameTable", insertAction, deleteAction));
+        panel.add(interpretationPanel());
         return panel;
     }
 
@@ -259,7 +362,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                 Bundle.getMessage("LabelAppearanceTable"),
                 javax.swing.border.TitledBorder.CENTER,
                 javax.swing.border.TitledBorder.TOP));
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
         _appearanceMap = new ArrayList<>();
         Iterator<Entry<String, String>> it = WarrantPreferences.getDefault().getAppearanceEntryIterator();
@@ -273,7 +376,9 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             int width = _appearanceModel.getPreferredWidth(i);
             _appearanceTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
+        panel.add(Box.createGlue());
         panel.add(tablePanel(_appearanceTable, "ToolTipAppearanceTable", null, null));
+        panel.add(Box.createGlue());
         return panel;
     }
 
@@ -316,7 +421,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        _speedNameMap.add(row, new DataPair<String, Float>("", 0f));
+        _speedNameMap.add(row, new DataPair<>("", 0f));
         _speedNameModel.fireTableDataChanged();
     }
 
@@ -343,11 +448,14 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JPanel p = new JPanel();
-        JLabel label = new JLabel(Bundle.getMessage("LabelInterpretation"));
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
+        p.add(Box.createGlue());
+        JLabel label = new JLabel(Bundle.getMessage("LabelInterpretation", SwingConstants.CENTER));
         label.setToolTipText(Bundle.getMessage("ToolTipInterpretation"));
         p.setToolTipText(Bundle.getMessage("ToolTipInterpretation"));
         p.add(label);
-        panel.add(p);
+        p.add(Box.createGlue());
+        panel.add(p, SwingConstants.CENTER);
         panel.add(buttonPanel, Box.CENTER_ALIGNMENT);
         return panel;
     }
@@ -379,58 +487,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
 
-    private JPanel timeIncrementPanel(boolean vertical) {
-        _timeIncre = new JTextField(5);
-        _timeIncre.setText(Integer.toString(WarrantPreferences.getDefault().getTimeIncrement()));
-        JPanel p = new JPanel();
-        p.add(WarrantFrame.makeTextBoxPanel(vertical, _timeIncre, "TimeIncrement", "ToolTipTimeIncrement"));
-        p.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
-        return p;
-    }
-
-    private JPanel throttleIncrementPanel(boolean vertical) {
-        _rampIncre = new JTextField(5);
-        _rampIncre.setText(Float.toString(WarrantPreferences.getDefault().getThrottleIncrement()));
-        JPanel p = new JPanel();
-        p.add(WarrantFrame.makeTextBoxPanel(vertical, _rampIncre, "RampIncrement", "ToolTipRampIncrement"));
-        p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
-        _rampIncre.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String text = _rampIncre.getText();
-                boolean showdialog = false;
-                try {
-                    float incr = Float.parseFloat(text);
-                    showdialog = (incr < 0.002f || incr > 0.2f);
-                } catch (NumberFormatException nfe) {
-                    showdialog = true;
-                }
-                if (showdialog) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        });
-        return p;
-    }
-
-    /* alternative UI test
-    private JPanel throttleIncrementPanel(boolean vertical) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.add(new JLabel("Ramp step amount"));
-        JPanel p = new JPanel();
-        p.add(new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(1,1,20,1 )));
-        p.add(new JLabel(" steps, in"));
-        panel.add(p);
-        p = new JPanel();
-        String[] modes = {"14", "28", "128"};
-        p.add(new JComboBox<String>(modes));
-        p.add(new JLabel(" stepmode"));
-        panel.add(p);
-        return panel;
-    }*/
-
     /**
      * Compare GUI values with Preferences. When different, update Preferences
      * and set _isDirty flag.
@@ -438,12 +494,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private void setValues() {
         WarrantPreferences preferences = WarrantPreferences.getDefault();
-        int depth = preferences.getSearchDepth();
-        try {
-            depth = Integer.parseInt(_searchDepth.getText());
-        } catch (NumberFormatException nfe) {
-            _searchDepth.setText(Integer.toString(preferences.getSearchDepth()));
-        }
+        int depth = (Integer) _searchDepth.getValue();
         if (preferences.getSearchDepth() != depth) {
             preferences.setSearchDepth(depth);
             _isDirty = true;
@@ -454,18 +505,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             _isDirty = true;
         }
 
-        int time = preferences.getTimeIncrement();
-        try {
-            time = Integer.parseInt(_timeIncre.getText());
-            if (time < 200) {
-                time = 200;
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("timeWarning"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                _timeIncre.setText(Integer.toString(preferences.getTimeIncrement()));
-            }
-        } catch (NumberFormatException nfe) {
-            _timeIncre.setText(Integer.toString(preferences.getTimeIncrement()));
-        }
+        int time = (Integer) _timeIncre.getValue();
         if (preferences.getTimeIncrement() != time) {
             preferences.setTimeIncrement(time);
             _isDirty = true;
@@ -473,23 +513,36 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
 
         float scale = preferences.getThrottleIncrement();
         try {
-            scale = Float.parseFloat(_rampIncre.getText());
-        } catch (NumberFormatException nfe) {
-            _rampIncre.setText(Float.toString(preferences.getThrottleIncrement()));
+            scale = NumberFormat.getNumberInstance().parse(_rampIncre.getText()).floatValue();
+        } catch (java.text.ParseException pe) {
+            _rampIncre.setText(NumberFormat.getNumberInstance().format(preferences.getThrottleIncrement()*100));
         }
-        if (preferences.getThrottleIncrement() != scale) {
-            preferences.setThrottleIncrement(scale);
-            _isDirty = true;
+        if (scale < 0.5f || scale > 25f) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", _rampIncre.getText()),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                
+            _rampIncre.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleIncrement()*100));
+        } else {
+            scale /= 100;
+            if (preferences.getThrottleIncrement() != scale) {
+                preferences.setThrottleIncrement(scale);
+                _isDirty = true;
+            }
         }
 
         scale = preferences.getThrottleScale();
         try {
-            scale = Float.parseFloat(_throttleScale.getText());
-        } catch (NumberFormatException nfe) {
-            _throttleScale.setText(Float.toString(preferences.getThrottleScale()));
+            scale = NumberFormat.getNumberInstance().parse(_throttleScale.getText()).floatValue();
+        } catch (java.text.ParseException pe) {
+            _throttleScale.setText(NumberFormat.getNumberInstance().format(preferences.getThrottleScale()));
         }
         if (preferences.getThrottleScale() != scale) {
             preferences.setThrottleScale(scale);
+            _isDirty = true;
+        }
+
+        WarrantPreferences.Shutdown shutDown = preferences.getShutdown();
+        if (shutDown != _shutdown) {
+            preferences.setShutdown(_shutdown);
             _isDirty = true;
         }
 
@@ -521,7 +574,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         if (tce != null) {
             tce.stopCellEditing();
         }
-        if (preferences.getAppeaancesSize() != _appearanceMap.size()) {
+        if (preferences.getAppearances().size() != _appearanceMap.size()) {
             different = true;
         } else {
             for (int i = 0; i < _appearanceMap.size(); i++) {
@@ -718,7 +771,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                     try {
                         float f = Float.parseFloat((String) value);
                         if (f < 0) {
-                            msg = Bundle.getMessage("MustBeFloat", (String) value);
+                            msg = Bundle.getMessage("InvalidNumber", (String) value);
                         } else {
                             data.setValue(f);
                         }
@@ -736,7 +789,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
 
-    /* *********************** appearance Table ******************************/
+    /* *********************** Appearance Table ******************************/
     class AppearanceTableModel extends AbstractTableModel {
 
         public AppearanceTableModel() {
@@ -913,5 +966,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class);
+
 }

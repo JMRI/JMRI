@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 /**
  * A utility class replacing common methods formerly implementing the
  * IndicatorTrack interface.
- * <P>
  *
  * @author Pete Cressman Copyright (c) 2012
  */
@@ -30,7 +29,7 @@ class IndicatorTrackPaths {
     protected IndicatorTrackPaths deepClone() {
         IndicatorTrackPaths p = new IndicatorTrackPaths();
         if (_paths != null) {
-            p._paths = new ArrayList<String>();
+            p._paths = new ArrayList<>();
             for (int i = 0; i < _paths.size(); i++) {
                 p._paths.add(_paths.get(i));
             }
@@ -49,7 +48,7 @@ class IndicatorTrackPaths {
 
     protected void addPath(String path) {
         if (_paths == null) {
-            _paths = new ArrayList<String>();
+            _paths = new ArrayList<>();
         }
         if (path != null && path.length() > 0) {
             path = path.trim();
@@ -144,7 +143,6 @@ class IndicatorTrackPaths {
         _loco.setWidth(width + height / 2);
         _loco.setHeight(height + 2);
         _loco.setCornerRadius(height);
-        _loco.makeShape();
         _loco.setDisplayLevel(Editor.MARKERS);
         _loco.updateSize();
         pt.x = pt.x + (size.width - _loco.maxWidth()) / 2;
@@ -158,18 +156,22 @@ class IndicatorTrackPaths {
      */
     protected String getStatus(int state) {
         String status;
-        if (state == Sensor.ACTIVE) {
-            status = "OccupiedTrack";
-        } else if (state == Sensor.INACTIVE) {
-            status = "ClearTrack";
-        } else if (state == Sensor.UNKNOWN) {
-            status = "DontUseTrack";
-        } else {
-            status = "ErrorTrack";
+        switch (state) {
+            case Sensor.ACTIVE:
+                status = "OccupiedTrack";
+                break;
+            case Sensor.INACTIVE:
+                status = "ClearTrack";
+                break;
+            case Sensor.UNKNOWN:
+                status = "DontUseTrack";
+                break;
+            default:
+                status = "ErrorTrack";
+                break;
         }
         return status;
     }
 
-
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class);
 }

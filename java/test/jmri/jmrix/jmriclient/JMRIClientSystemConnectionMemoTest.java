@@ -1,9 +1,10 @@
 package jmri.jmrix.jmriclient;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JMRIClientSystemConnectionMemoTest.java
@@ -13,39 +14,26 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class JMRIClientSystemConnectionMemoTest extends TestCase {
+public class JMRIClientSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    public void testCtor() {
-        JMRIClientSystemConnectionMemo m = new JMRIClientSystemConnectionMemo();
-        Assert.assertNotNull(m);
-    }
-
-    // from here down is testing infrastructure
-    public JMRIClientSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JMRIClientSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JMRIClientSystemConnectionMemoTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        scm = new JMRIClientSystemConnectionMemo();
     }
 
     @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

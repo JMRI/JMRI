@@ -138,7 +138,7 @@ public class MarklinTurnout extends AbstractTurnout
                 try {
                     sendOffMessage((state ? 1 : 0));
                 } catch (Exception e) {
-                    log.error("Exception occured while sending delayed off to turnout: " + e);
+                    log.error("Exception occurred while sending delayed off to turnout: " + e);
                 }
             }
         }, METERINTERVAL);
@@ -195,5 +195,5 @@ public class MarklinTurnout extends AbstractTurnout
     static final int METERINTERVAL = 100;  // msec wait before closed
     static java.util.Timer meterTimer = new java.util.Timer(true);
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class);
 }

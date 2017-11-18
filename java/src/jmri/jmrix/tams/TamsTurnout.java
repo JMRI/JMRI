@@ -156,9 +156,6 @@ public class TamsTurnout extends AbstractTurnout
      */
     protected void sendMessage(boolean closed) {
         log.debug("*** sendMessage ***");
-        if (getInverted()) {
-            closed = !closed;
-        }
         // get control
         TamsMessage m = new TamsMessage("xT " + _number + "," + (closed ? "r" : "g") + ",1");
         tc.sendTamsMessage(m, this);
@@ -231,7 +228,7 @@ public class TamsTurnout extends AbstractTurnout
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsTurnout.class);
 }
 
 

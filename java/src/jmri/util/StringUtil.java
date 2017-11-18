@@ -1,5 +1,9 @@
 package jmri.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 import javax.annotation.CheckForNull;
@@ -458,29 +462,40 @@ public class StringUtil {
     }
 
     /**
-     * Return String after replacing various special characters with their
-     * "escaped" counterpart, to facilitate use with web servers.
+     * Replace various special characters with their "escaped" counterpart in
+     * UTF-8 character encoding, to facilitate use with web servers.
      *
      * @param s String to escape
      * @return String with escaped values
+     * @throws java.io.UnsupportedEncodingException if unable to escape in UTF-8
+     * @deprecated since 4.9.1; use
+     * {@link java.net.URLEncoder#encode(java.lang.String, java.lang.String)}
+     * directly
      */
     @CheckReturnValue
     @Nonnull
-    static public String escapeString(@Nonnull String s) {
-        return s.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26").replaceAll("'", "%27").replaceAll("\"", "%22").replaceAll("<", "%3C").replaceAll(">", "%3E");
+    @Deprecated
+    static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
     }
 
     /**
-     * Return String after replacing various escaped character with their
+     * Replace various escaped character in UTF-8 character encoding with their
      * "regular" counterpart, to facilitate use with web servers.
      *
      * @param s String to unescape
      * @return String with escaped values replaced with regular values
+     * @throws java.io.UnsupportedEncodingException if unable to unescape from
+     *                                              UTF-8
+     * @deprecated since 4.9.1; use
+     * {@link java.net.URLDecoder#decode(java.lang.String, java.lang.String)}
+     * directly
      */
     @CheckReturnValue
     @Nonnull
-    static public String unescapeString(@Nonnull String s) {
-        return s.replaceAll("%20", " ").replaceAll("%23", "#").replaceAll("%26", "&").replaceAll("%27", "'").replaceAll("%22", "\"").replaceAll("%3C", "<").replaceAll("%3E", ">");
+    @Deprecated
+    static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
     }
 
     /**

@@ -1,24 +1,13 @@
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
-import javax.swing.JComboBox;
 
 /**
  * Tests for the OptionFrame class
@@ -83,7 +72,7 @@ public class OptionFrameTest extends OperationsSwingTestCase {
 
         enterClickAndLeave(p.saveButton);
         // done
-        f.dispose();
+        JUnitUtil.dispose(f);
 
         f = new OptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
@@ -101,7 +90,7 @@ public class OptionFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("router", p.routerCheckBox.isSelected());
 
         // done
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J
@@ -119,6 +108,6 @@ public class OptionFrameTest extends OperationsSwingTestCase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OptionFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OptionFrameTest.class);
 
 }

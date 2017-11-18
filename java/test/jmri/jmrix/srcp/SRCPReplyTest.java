@@ -3,6 +3,7 @@ package jmri.jmrix.srcp;
 import java.io.StringReader;
 import jmri.jmrix.srcp.parser.ParseException;
 import jmri.jmrix.srcp.parser.SRCPClientParser;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -89,11 +90,11 @@ public class SRCPReplyTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

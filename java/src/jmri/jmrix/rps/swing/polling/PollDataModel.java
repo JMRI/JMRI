@@ -116,7 +116,7 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
             case NAMECOL:
                 return Engine.instance().getTransmitter(r).getRosterName();
             case IDCOL:
-                return Engine.instance().getTransmitter(r).getID();
+                return Engine.instance().getTransmitter(r).getId();
             case ADDRCOL:
                 return Integer.valueOf(Engine.instance().getTransmitter(r).getAddress());
             case LONGCOL:
@@ -165,7 +165,7 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
         switch (c) {
             case IDCOL:
                 String s = ((String) value);
-                Engine.instance().getTransmitter(r).setID(s);
+                Engine.instance().getTransmitter(r).setId(s);
                 modifiedFlag.setModifiedFlag(true);
                 return;
             case POLLCOL:
@@ -193,6 +193,6 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
         Distributor.instance().removeMeasurementListener(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PollDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollDataModel.class);
 
 }

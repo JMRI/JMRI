@@ -39,11 +39,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(XNetLightManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetTrafficControllerTest.class));
         suite.addTest(new TestSuite(XNetTrafficRouterTest.class));
-        suite.addTest(new TestSuite(XNetSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetSystemConnectionMemoTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetThrottleTest.class));
-        suite.addTest(new TestSuite(XNetConsistManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetConsistManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetConsistTest.class));
-        suite.addTest(new TestSuite(XNetInitializationManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetOpsModeProgrammerTest.class));
@@ -73,6 +73,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(XNetFeedbackMessageCacheTest.class));
         suite.addTest(new JUnit4TestAdapter(AbstractXNetSerialConnectionConfigTest.class));
         suite.addTest(new JUnit4TestAdapter(AbstractXNetInitializationManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetAddressTest.class));
         return suite;
     }
 

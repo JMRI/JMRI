@@ -1,5 +1,8 @@
 package jmri.jmrix.tmcc;
 
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
+
 /**
  * Returns a list of valid lenz XpressNet Connection Types
  * <P>
@@ -7,6 +10,7 @@ package jmri.jmrix.tmcc;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String LIONEL = "Lionel TMCC";
@@ -14,7 +18,8 @@ public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.tmcc.serialdriver.ConnectionConfig"
+            "jmri.jmrix.tmcc.serialdriver.ConnectionConfig",
+            "jmri.jmrix.tmcc.simulator.ConnectionConfig"
         };
     }
 

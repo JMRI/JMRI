@@ -28,10 +28,10 @@ import jmri.LocoAddress;
 import jmri.beans.ArbitraryBean;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -97,7 +97,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String SPEED_PROFILE = "speedprofile"; // NOI18N
     public static final String SOUND_LABEL = "soundlabel"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class);
 
     // members to remember all the info
     protected String _fileName = null;
@@ -750,10 +750,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
 
         loadFunctions(e.getChild("functionlabels"), "RosterEntry");
-
-// Temporarily ignore soundlabels in Roster Entry until  they are user-editable and resettable to defaults.
-// Needed to correct bad sound labels from ESU definitions - only ones used to date.
-//         loadSounds(e.getChild("soundlabels"), "RosterEntry");
+        loadSounds(e.getChild("soundlabels"), "RosterEntry");
         loadAttributes(e.getChild("attributepairs"));
 
         if (e.getChild(RosterEntry.SPEED_PROFILE) != null) {
@@ -797,7 +794,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
-                String val = fn.getText();
+                String val = LocaleSelector.getAttribute(fn,"text");
+                if (val == null){
+                    val = fn.getText();
+                }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setFunctionLabel(num, val);
                     this.setFunctionLockable(num, lock.equals("true"));
@@ -862,7 +862,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             List<Element> l = e3.getChildren(RosterEntry.SOUND_LABEL);
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
-                String val = fn.getText();
+                String val = LocaleSelector.getAttribute(fn,"text");
+                if (val == null){
+                    val = fn.getText();
+                }
                 if ((this.getSoundLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setSoundLabel(num, val);
                 }
@@ -1287,11 +1290,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * as the actual XML creation is done in the LocoFile class.
      *
      * @param cvModel       CV contents to include in file
-     * @param iCvModel      indexed CV contents to include in file
      * @param variableModel Variable contents to include in file
      *
      */
-    public void writeFile(CvTableModel cvModel, IndexedCvTableModel iCvModel, VariableTableModel variableModel) {
+    public void writeFile(CvTableModel cvModel, VariableTableModel variableModel) {
         LocoFile df = new LocoFile();
 
         // do I/O
@@ -1307,7 +1309,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             changeDateUpdated();
 
             // and finally write the file
-            df.writeFile(f, cvModel, iCvModel, variableModel, this);
+            df.writeFile(f, cvModel, variableModel, this);
 
         } catch (Exception e) {
             log.error("error during locomotive file output", e);
@@ -1344,9 +1346,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *
      * @param varModel the variable model to load
      * @param cvModel  CV contents to load
-     * @param iCvModel Indexed CV contents to load
      */
-    public void loadCvModel(VariableTableModel varModel, CvTableModel cvModel, IndexedCvTableModel iCvModel) {
+    public void loadCvModel(VariableTableModel varModel, CvTableModel cvModel) {
         if (cvModel == null) {
             log.error("loadCvModel must be given a non-null argument");
             return;
@@ -1360,7 +1361,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 LocoFile.loadVariableModel(mRootElement.getChild("locomotive"), varModel);
             }
 
-            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel, getDecoderFamily());
+            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, getDecoderFamily());
         } catch (Exception ex) {
             log.error("Error reading roster entry", ex);
             try {

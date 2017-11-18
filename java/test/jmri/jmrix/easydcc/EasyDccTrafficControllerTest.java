@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Description:	JUnit tests for the EasyDccTrafficController class
+ * JUnit tests for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
@@ -20,18 +20,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
 
     @Test
     public void testSendThenRcvReply() throws Exception {
-        EasyDccTrafficController c = (EasyDccTrafficController)tc;
-        /*EasyDccTrafficController c = new EasyDccTrafficController() {
-            // skip timeout message
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
-            }
-
-            public void receiveLoop() {
-            }
-
-            protected void portWarn(Exception e) {
-            }
-        };*/
+        c = (EasyDccTrafficController) tc;
 
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -59,7 +48,6 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         Assert.assertEquals("Char 2", '2', tostream.readByte());
         Assert.assertEquals("EOM", 0x0d, tostream.readByte());
 
-
         // now send reply
         tistream.write('P');
         tistream.write(0x0d);
@@ -73,7 +61,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
     }
 
-    // internal class to simulate a EasyDccListener
+    // internal class to simulate an EasyDccListener
     class EasyDccListenerScaffold implements EasyDccListener {
 
         public EasyDccListenerScaffold() {
@@ -94,7 +82,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     EasyDccReply rcvdReply;
     EasyDccMessage rcvdMsg;
 
-    // internal class to simulate a EasyDccPortController
+    // internal class to simulate an EasyDccPortController
     class EasyDccPortControllerScaffold extends EasyDccPortController {
 
         @Override
@@ -146,22 +134,26 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         }
     }
     DataOutputStream ostream;  // Traffic controller writes to this
-    DataInputStream tostream; // so we can read it from this
+    DataInputStream tostream;  // so we can read it from this
 
     DataOutputStream tistream; // tests write to this
-    DataInputStream istream;  // so the traffic controller can read from this
+    DataInputStream istream;   // so the traffic controller can read from this
 
+    EasyDccTrafficController c;
+    
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
+        c = null;
         apps.tests.Log4JFixture.setUp();
-        tc = new EasyDccTrafficController();
+        tc = new EasyDccTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC Test"));
     }
 
     @Override
     @After
     public void tearDown() {
+        if (c!=null) c.terminateThreads();
         apps.tests.Log4JFixture.tearDown();
     }
 

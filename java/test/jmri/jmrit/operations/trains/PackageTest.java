@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
         suite.addTest(TrainManagerTest.suite());
         suite.addTest(TrainTest.suite());
         suite.addTest(TrainCommonTest.suite());
-        suite.addTest(TrainBuilderTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainBuilderTest.class));
         suite.addTest(XmlTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.operations.trains.tools.PackageTest.suite());
@@ -61,6 +61,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCsvManifestTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainEditFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManifestTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainEditBuildOptionsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainLoadOptionsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainRoadOptionsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainIconAnimationTest.class));
         return suite;
     }
 

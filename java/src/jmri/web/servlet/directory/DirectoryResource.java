@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.util.StringUtil;
@@ -39,8 +40,8 @@ public class DirectoryResource extends Resource {
     @Override
     public String getListHTML(String base, boolean parent)
             throws IOException {
-        base = URIUtil.canonicalPath(base);
-        if (base == null || !isDirectory()) {
+        String resource = URIUtil.canonicalPath(base);
+        if (resource == null || !isDirectory()) {
             return null;
         }
 
@@ -50,27 +51,27 @@ public class DirectoryResource extends Resource {
         }
         Arrays.sort(ls);
 
-        String decodedBase = URIUtil.decodePath(base);
+        String decodedBase = URIUtil.decodePath(resource);
         String title = Bundle.getMessage(this.locale, "DirectoryTitle", deTag(decodedBase)); // NOI18N
 
         StringBuilder table = new StringBuilder(4096);
         String row = Bundle.getMessage(this.locale, "TableRow"); // NOI18N
         if (parent) {
             table.append(String.format(this.locale, row,
-                    URIUtil.addPaths(base, "../"),
+                    URIUtil.addPaths(resource, "../"),
                     Bundle.getMessage(this.locale, "ParentDirectory"),
                     "",
                     ""));
         }
 
-        String encodedBase = hrefEncodeURI(base);
+        String encodedBase = hrefEncodeURI(resource);
 
         DateFormat dfmt = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, this.locale);
         for (String l : ls) {
             Resource item = addPath(l);
             String path = URIUtil.addPaths(encodedBase, URIUtil.encodePath(l));
             if (item.isDirectory() && !path.endsWith("/")) {
-                path = path + URIUtil.SLASH;
+                path += URIUtil.SLASH;
             }
             table.append(String.format(this.locale, row,
                     path,
@@ -84,12 +85,12 @@ public class DirectoryResource extends Resource {
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(this.locale, "Directory.html"))), // NOI18N
                 String.format(this.locale,
                         Bundle.getMessage(this.locale, "HtmlTitle"), // NOI18N
-                        ServletUtil.getInstance().getRailroadName(false),
+                        InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                         title
                 ),
-                ServletUtil.getInstance().getNavBar(this.locale, base),
-                ServletUtil.getInstance().getRailroadName(false),
-                ServletUtil.getInstance().getFooter(this.locale, base),
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(this.locale, resource),
+                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                InstanceManager.getDefault(ServletUtil.class).getFooter(this.locale, resource),
                 title,
                 table
         );
@@ -123,7 +124,7 @@ public class DirectoryResource extends Resource {
                     buf = new StringBuffer(raw.length() << 1);
                     break loop;
                 default:
-                    log.warn("Unhandled code: {}", c);
+                    log.debug("Unhandled code: {}", c);
                     break;
             }
         }
@@ -241,5 +242,5 @@ public class DirectoryResource extends Resource {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DirectoryResource.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DirectoryResource.class);
 }

@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.locations;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.Before;
 
@@ -14,9 +13,7 @@ public class YardmasterPanelTest extends jmri.jmrit.operations.CommonConductorYa
     @Before
     @Override
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
-        p = new YardmasterPanel();
+        JUnitUtil.setUp();        p = new YardmasterPanel();
     }
 
 }

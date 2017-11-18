@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanNamedPaneAction;
@@ -16,16 +15,11 @@ public class CbusMenu extends JMenu {
     public CbusMenu(CanSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.CbusBundle");
-
-        String title;
         if (memo != null) {
-            title = memo.getUserName();
+            setText(memo.getUserName());
         } else {
-            title = rb.getString("MenuItemCBUS");
+            setText(Bundle.getMessage("MenuItemCBUS"));
         }
-
-        setText(title);
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
@@ -33,10 +27,9 @@ public class CbusMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new CanNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new CanNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
-
     }
 
     Item[] panelItems = new Item[]{
@@ -57,4 +50,5 @@ public class CbusMenu extends JMenu {
         String name;
         String load;
     }
+
 }

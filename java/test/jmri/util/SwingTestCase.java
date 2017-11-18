@@ -27,9 +27,9 @@ public class SwingTestCase extends JFCTestCase {
 
     /**
      * Get the displayed content of a JComponent.
-     *
+     * <p>
      * static so that it can in invoked outside SwingTestCases subclasses
-     *
+     * <p>
      * Note: this does no adjustment, e.g. pack, etc. That should have been
      * already been done as required.
      *
@@ -146,7 +146,7 @@ public class SwingTestCase extends JFCTestCase {
         // setHelper( new RobotTestHelper( ) ); // Uses the OS Event Queue.
     }
 
-    protected void leaveAllWindowsOpen() {
+    protected void leaveAllWindowsOpen()  throws org.apache.regexp.RESyntaxException {
         TestHelper.addSystemWindow(".");  // all windows left open
     }
 

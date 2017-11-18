@@ -59,7 +59,7 @@
 
         <li>Display Message Log</li>
 
-        <li><a href="vsdecoder/VSDecoderFrame.shtml">Virtual Sound
+        <li><a href="vsdecoder/swing/VSDManagerFrame.shtml">Virtual Sound
         Decoder</a></li>
 
         <li>PRICOM</li>

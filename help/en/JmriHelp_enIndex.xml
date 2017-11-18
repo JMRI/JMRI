@@ -200,7 +200,7 @@
 
  <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
- <indexitem text="Switchboard Editor " target="package.jmri.jmrit.display.SwitchbaordEditor"/>
+ <indexitem text="Switchboard Editor " target="package.jmri.jmrit.display.SwitchboardEditor"/>
 
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
 
@@ -259,7 +259,11 @@
  <indexitem text="Logix ">
   <indexitem text="Add Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
-  <indexitem text="Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
+  <indexitem text="Add/Edit Conditionals using the List Editor " target="package.jmri.jmrit.conditional.ConditionalListEditor"/>
+
+  <indexitem text="Add/Edit Conditionals using the Tree Editor " target="package.jmri.jmrit.conditional.ConditionalTreeEditor"/>
+
+  <indexitem text="Conditional State Variable and Action List " target="package.jmri.jmrit.conditional.StateVariableActionList"/>
 
   <indexitem text="Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
@@ -329,7 +333,7 @@
  <indexitem text="PanelPro " target="html.apps.PanelPro.Panels">
   <indexitem text="Display Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
-  <indexitem text="Handling Errors " target="package.jmri.configurexml.ErrorHander"/>
+  <indexitem text="Handling Errors " target="package.jmri.configurexml.ErrorHandler"/>
 
   <indexitem text="Intro " target="html.apps.PanelPro.Panels"/>
 
@@ -547,15 +551,9 @@
  <indexitem text="USB-to-Serial Adapter " target="html.hardware.USBtoSerial"/>
 
  <indexitem text="USS CTC Tools " target="html.tools.uss.index">
-  <indexitem text="Code  Button " target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
-
   <indexitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
 
   <indexitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
-
-  <indexitem text="Signal Lever " target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
-
-  <indexitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
 
  </indexitem>
  <indexitem text="Wangrow " target="html.hardware.nce.Wangrow"/>

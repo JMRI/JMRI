@@ -29,7 +29,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
     public Mx1Adapter() {
         super(new Mx1SystemConnectionMemo());
-        option1Name = "FlowControl";
+        option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option("MX-1 connection uses : ", validOption1));
         this.manufacturerName = jmri.jmrix.zimo.Mx1ConnectionTypeList.ZIMO;
     }
@@ -237,16 +237,12 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         }
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = 0;
         }
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -259,7 +255,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     protected int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
     protected String[] validOption2 = new String[]{"3", "5"};
     //protected String selectedOption1=validOption1[0];
 
@@ -279,6 +275,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     }
     static Mx1Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class);
 
 }

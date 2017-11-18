@@ -9,7 +9,9 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.symbolicprog.NameFile;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -65,7 +67,7 @@ public class NameCheckAction extends AbstractAction {
                 Iterator<Element> iter = root.getChild("decoder").getChild("variables")
                         .getDescendants(new ElementFilter("variable"));
 
-                jmri.jmrit.symbolicprog.NameFile nfile = jmri.jmrit.symbolicprog.NameFile.instance();
+                NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
                 String warnings = "";
 
@@ -131,6 +133,6 @@ public class NameCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NameCheckAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NameCheckAction.class);
 
 }

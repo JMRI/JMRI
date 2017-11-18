@@ -3,7 +3,9 @@ package jmri.jmrit.logix;
 import java.util.ArrayList;
 import jmri.BeanSetting;
 import jmri.Block;
+import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -117,17 +119,15 @@ public class OPathTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         _blkMgr = new OBlockManager();
-        _portalMgr = new PortalManager();
+        _portalMgr = InstanceManager.getDefault(PortalManager.class);
         _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

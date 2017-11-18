@@ -41,13 +41,16 @@
         "../TabbedPreferences.shtml">Pr&eacute;f&eacute;rences</a>
         )</li>
 
-        <li><a href=
-        "../../jmri/jmrit/ToolsMenu.shtml">Outils</a></li>
+<p>
+Aide sur les menus sp&#233;cifiques:
+<ul>
+<li> Edition - (<a href="../TabbedPreferences.shtml"> Pr&#233;f&#233;rences </a>)
+<li> <a href="../../jmri/jmrit/ToolsMenu.shtml"> Outils </a>
+<li> <a href="../../../html/apps/DecoderPro/Roster.shtml#menu"> Inventaire</a>
+</ul>
 
-        <li><a href=
-        "../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a></li>
-      </ul><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+ <!--#include virtual="/Footer" -->
+  </div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->  
 </body>
 </html>

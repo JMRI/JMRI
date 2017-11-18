@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.ExportCars;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -102,7 +103,7 @@ public class ExportTrains extends XmlFile {
 
         int count = 0;
 
-        for (Train train : TrainManager.instance().getTrainsByTimeList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
             if (!train.isBuildEnabled())
                 continue;
             count++;
@@ -152,7 +153,7 @@ public class ExportTrains extends XmlFile {
                 Bundle.getMessage("Attributes");
         fileOut.println(header);
 
-        for (Train train : TrainManager.instance().getTrainsByTimeList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
             if (!train.isBuildEnabled())
                 continue;
 
@@ -227,15 +228,15 @@ public class ExportTrains extends XmlFile {
     }
 
     public static void setOperationsFileName(String name) {
-        OperationsFileName = name;
+        operationsFileName = name;
     }
 
     public static String getOperationsFileName() {
-        return OperationsFileName;
+        return operationsFileName;
     }
 
-    private static String OperationsFileName = "ExportOperationsTrainRoster.csv"; // NOI18N
+    private static String operationsFileName = "ExportOperationsTrainRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCars.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExportCars.class);
 
 }

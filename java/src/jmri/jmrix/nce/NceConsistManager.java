@@ -1,8 +1,6 @@
 /**
- * NceConsistManager.java
- *
- * Description: Consist Manager for use with the NceConsist class for the
- * consists it builds
+ * Consist Manager for use with the NceConsist class for the
+ * consists it builds.
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
@@ -26,7 +24,8 @@ public class NceConsistManager extends AbstractConsistManager {
         memo = m;
     }
 
-    /* request an update from the layout, loading
+    /**
+     * Request an update from the layout, loading
      * Consists from the command station.
      */
     @Override
@@ -153,5 +152,5 @@ public class NceConsistManager extends AbstractConsistManager {
             notifyConsistListChanged();
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(NceConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistManager.class);
 }

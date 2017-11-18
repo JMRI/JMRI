@@ -4,10 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 /**
- * Override default XPressNet classes to use z21 specific versions.
- * <p>
+ * Override default XpressNet classes to use z21 specific versions.
  *
- * @author	Paul Bender Copyright (C) 2004,2010,2014
+ * @author Paul Bender Copyright (C) 2004, 2010, 2014
  */
 public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortController {
 
@@ -28,10 +27,10 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(getCurrentPortName(),jmri.jmrix.ConnectionStatus.CONNECTION_UP);
     }
 
-  @Override
-  public void dispose(){
-     this.getSystemConnectionMemo().dispose();
-     super.dispose();
-  }
+    @Override
+    public void dispose(){
+        this.getSystemConnectionMemo().dispose();
+        super.dispose();
+    }
 
 }

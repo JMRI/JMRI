@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     PreferencesFrameTest.class,
     PreferencesFrameActionTest.class,
-    PreferencesPaneTest.class
+    PreferencesPaneTest.class,
+    BundleTest.class
 })
 
 /**
@@ -32,6 +33,6 @@ public class PackageTest{
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

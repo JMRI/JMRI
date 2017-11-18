@@ -1,11 +1,12 @@
 package jmri.jmrix.loconet.locomon;
 
-import jmri.jmrix.loconet.LnTurnout;
-import jmri.jmrix.loconet.LnTurnoutManager;
-import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnReporter;
 import jmri.jmrix.loconet.LnReporterManager;
+import jmri.jmrix.loconet.LnSensorManager;
+import jmri.jmrix.loconet.LnTurnout;
+import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -36,7 +37,7 @@ public class LlnmonTest extends TestCase {
         assertEquals(" in B", "Transponder address 1056 present at LR163 () (BDL16x Board ID 11 RX4 zone B).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x24, 0x7d, 0x70, 0x04});
-        assertEquals(" in C", "Transponder address 112(short) (b2) present at LR165 () (BDL16x Board ID 11 RX4 zone C).\n", f.displayMessage(l));
+        assertEquals(" in C", "Transponder address 112 (short, or \"B2\") (or long address 16112) present at LR165 () (BDL16x Board ID 11 RX4 zone C).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x26, 0x08, 0x20, 0x04});
         assertEquals(" in D", "Transponder address 1056 present at LR167 () (BDL16x Board ID 11 RX4 zone D).\n", f.displayMessage(l));
@@ -57,31 +58,31 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x2E, 0x7d, 0x01, 0x04});
         assertEquals("another in H",
-                "Transponder address 1(short) present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n",
+                "Transponder address 1 (short) (or long address 16001) present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x7D, 0x03, 0x00, 0x00, 0x00, 0x2D});
-        assertEquals("find loco 3(short)",
-                "Transponding Find query for loco address 3(short).\n",
+        assertEquals("find loco 3 (short)",
+                "Transponding Find query for loco address 3 (short) (or long address 16003).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
         assertEquals(" in H",
-                "Transponder Find report: address 3(short) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
+                "Transponder Find report: address 3 (short) (or long address 16003) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         LnReporter r = (LnReporter) lnrm.provideReporter("LR19");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x14, 0x00, 0x7F});
         assertEquals("Transponding no reporter user name",
-                "Transponder Find report: address 3(short) present at LR21 (BDL16x Board 2 RX4 zone C).\n",
+                "Transponder Find report: address 3 (short) (or long address 16003) present at LR21 (BDL16x Board 2 RX4 zone C).\n",
                 f.displayMessage(l));
 
         r.setUserName("AUserName");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
         assertEquals("Transponding in B, with reporter user name",
-                "Transponder Find report: address 3(short) present at LR19 (AUserName) (BDL16x Board 2 RX4 zone B).\n",
+                "Transponder Find report: address 3 (short) (or long address 16003) present at LR19 (AUserName) (BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x01, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
@@ -91,12 +92,12 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x00, 0x04, 0x00, 0x00, 0x00, 0x2D});
         assertEquals("find loco 4 (long)",
-                "Transponding Find query for loco address 4.\n",
+                "Transponding Find query for loco address 4 (short).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x16, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR23 (BDL16x Board 2 RX4 zone D).\n",
+                "Transponder Find report: address 4 (short) present at LR23 (BDL16x Board 2 RX4 zone D).\n",
                 f.displayMessage(l));
 
         assertNotNull("reporter Got Created", lnrm.getBySystemName("LR23"));
@@ -104,7 +105,7 @@ public class LlnmonTest extends TestCase {
         assertNull("reporter is Not Yet Created", lnrm.getBySystemName("LR25"));
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x18, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR25 (BDL16x Board 2 RX4 zone E).\n",
+                "Transponder Find report: address 4 (short) present at LR25 (BDL16x Board 2 RX4 zone E).\n",
                 f.displayMessage(l));
         assertNotNull("reporter Created", lnrm.getBySystemName("LR25"));
         ((LnReporter) lnrm.getBySystemName("LR25")).setUserName("Friendly name E");
@@ -120,37 +121,37 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x18, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR25 (Friendly name E) (BDL16x Board 2 RX4 zone E).\n",
+                "Transponder Find report: address 4 (short) present at LR25 (Friendly name E) (BDL16x Board 2 RX4 zone E).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x14, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR21 (Friendly Name C) (BDL16x Board 2 RX4 zone C).\n",
+                "Transponder Find report: address 4 (short) present at LR21 (Friendly Name C) (BDL16x Board 2 RX4 zone C).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR19 (Friendly Name B) (BDL16x Board 2 RX4 zone B).\n",
+                "Transponder Find report: address 4 (short) present at LR19 (Friendly Name B) (BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x10, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR17 (Friendly Name A) (BDL16x Board 2 RX4 zone A).\n",
+                "Transponder Find report: address 4 (short) present at LR17 (Friendly Name A) (BDL16x Board 2 RX4 zone A).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1A, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR27 (Friendly Name F) (BDL16x Board 2 RX4 zone F).\n",
+                "Transponder Find report: address 4 (short) present at LR27 (Friendly Name F) (BDL16x Board 2 RX4 zone F).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1C, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR29 (Friendly Name G) (BDL16x Board 2 RX4 zone G).\n",
+                "Transponder Find report: address 4 (short) present at LR29 (Friendly Name G) (BDL16x Board 2 RX4 zone G).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1E, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 present at LR31 (Friendly Name H) (BDL16x Board 2 RX4 zone H).\n",
+                "Transponder Find report: address 4 (short) present at LR31 (Friendly Name H) (BDL16x Board 2 RX4 zone H).\n",
                 f.displayMessage(l));
 
     }
@@ -292,12 +293,12 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x48, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x49});
         assertEquals("SV2 test 2", "(SV Format 2) Reply from destination address 513 to Identify device request initiated by agent 1:\n"
-                +"\tDevice characteristics are manufacturer 3, developer number 4, product 1,541, serial number 2,055\n"
+                +"\tDevice characteristics are manufacturer 3, developer number 4, product "+jmri.util.IntlUtilities.valueOf(1541)+", serial number "+jmri.util.IntlUtilities.valueOf(2055)+"\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x12, 0x40, 0x20, 0x10, 0x08, 0x10, 0x04, 0x02, 0x01, 0x7F, 0x0A});
-        assertEquals("SV2 test 3","(SV Format 2) Write single SV request to destination address 41,024 initiated by agent 1:\n"
-                +"\tChange SV2,064 to 4\n"
+        assertEquals("SV2 test 3","(SV Format 2) Write single SV request to destination address "+jmri.util.IntlUtilities.valueOf(41024)+" initiated by agent 1:\n"
+                +"\tChange SV"+jmri.util.IntlUtilities.valueOf(2064)+" to 4\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x10, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x08});
@@ -307,51 +308,51 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x10, 0x01, 0x02, 0x04, 0x08, 0x10, 0x10, 0x20, 0x40, 0x7F, 0x08});
         assertEquals("SV test 5", "(SV Format 2) Write single SV request to destination address 513 initiated by agent 1:\n"
-                +"\tChange SV2,052 to 16\n"
+                +"\tChange SV"+jmri.util.IntlUtilities.valueOf(2052)+" to 16\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x02, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x03});
         assertEquals("SV test 6", "(SV Format 2) Read single SV request to destination address 513 initiated by agent 1:\n"
-                +"\tRead request for SV1,027\n"
+                +"\tRead request for SV"+jmri.util.IntlUtilities.valueOf(1027)+"\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x03, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x02});
         assertEquals("SV2 test 7", "(SV Format 2) Write single SV (masked) request to destination address 513 initiated by agent 1:\n"
-                +"\tchange SV1,027 to 5, applying write mask 6\n"
+                +"\tchange SV"+jmri.util.IntlUtilities.valueOf(1027)+" to 5, applying write mask 6\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x10, 0x01, 0x02, 0x04, 0x08, 0x10, 0x10, 0x20, 0x40, 0x7F, 0x0C});
         assertEquals("SV2 test 8", "(SV Format 2) Write four request to destination address 513 initiated by agent 1:\n"
-                +"\twrite SVs 2,052 thru 2,055(?) with values 16, 32, 64, and 127\n"
+                +"\twrite SVs "+jmri.util.IntlUtilities.valueOf(2052)+" thru "+jmri.util.IntlUtilities.valueOf(2055)+"(?) with values 16, 32, 64, and 127\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x10, 0x02, 0x04, 0x08, 0x10, 0x10, 0x20, 0x40, 0x7F, 0x01, 0x0C});
-        assertEquals("SV2 test 9", "(SV Format 2) Write four request to destination address 1,026 initiated by agent 1:\n"
-                +"\twrite SVs 4,104 thru 4,107(?) with values 32, 64, 127, and 1\n"
+        assertEquals("SV2 test 9", "(SV Format 2) Write four request to destination address "+jmri.util.IntlUtilities.valueOf(1026)+" initiated by agent 1:\n"
+                +"\twrite SVs "+jmri.util.IntlUtilities.valueOf(4104)+" thru "+jmri.util.IntlUtilities.valueOf(4107)+"(?) with values 32, 64, 127, and 1\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x10, 0x04, 0x08, 0x10, 0x20, 0x10, 0x40, 0x7F, 0x01, 0x02, 0x0C});
-        assertEquals("SV2 test 10", "(SV Format 2) Write four request to destination address 2,052 initiated by agent 1:\n"
-                +"\twrite SVs 8,208 thru 8,211(?) with values 64, 127, 1, and 2\n"
+        assertEquals("SV2 test 10", "(SV Format 2) Write four request to destination address "+jmri.util.IntlUtilities.valueOf(2052)+" initiated by agent 1:\n"
+                +"\twrite SVs "+jmri.util.IntlUtilities.valueOf(8208)+" thru "+jmri.util.IntlUtilities.valueOf(8211)+"(?) with values 64, 127, 1, and 2\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x10, 0x08, 0x10, 0x20, 0x40, 0x10, 0x7F, 0x01, 0x02, 0x04, 0x0C});
-        assertEquals("SV2 test 11", "(SV Format 2) Write four request to destination address 4,104 initiated by agent 1:\n"
-                +"\twrite SVs 16,416 thru 16,419(?) with values 127, 1, 2, and 4\n"
+        assertEquals("SV2 test 11", "(SV Format 2) Write four request to destination address "+jmri.util.IntlUtilities.valueOf(4104)+" initiated by agent 1:\n"
+                +"\twrite SVs "+jmri.util.IntlUtilities.valueOf(16416)+" thru "+jmri.util.IntlUtilities.valueOf(16419)+"(?) with values 127, 1, 2, and 4\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x10, 0x10, 0x20, 0x40, 0x7F, 0x10, 0x01, 0x02, 0x04, 0x08, 0x0C});
-        assertEquals("SV2 test 12", "(SV Format 2) Write four request to destination address 8,208 initiated by agent 1:\n"
-                +"\twrite SVs 32,576 thru 32,579(?) with values 1, 2, 4, and 8\n"
+        assertEquals("SV2 test 12", "(SV Format 2) Write four request to destination address "+jmri.util.IntlUtilities.valueOf(8208)+" initiated by agent 1:\n"
+                +"\twrite SVs "+jmri.util.IntlUtilities.valueOf(32576)+" thru "+jmri.util.IntlUtilities.valueOf(32579)+"(?) with values 1, 2, 4, and 8\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x10, 0x20, 0x40, 0x7F, 0x01, 0x10, 0x02, 0x04, 0x08, 0x10, 0x0C});
-        assertEquals("SV2 test 13", "(SV Format 2) Write four request to destination address 16,416 initiated by agent 1:\n"
+        assertEquals("SV2 test 13", "(SV Format 2) Write four request to destination address "+jmri.util.IntlUtilities.valueOf(16416)+" initiated by agent 1:\n"
                 +"\twrite SVs 383 thru 386(?) with values 2, 4, 8, and 16\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x10, 0x40, 0x7F, 0x01, 0x02, 0x10, 0x04, 0x08, 0x10, 0x20, 0x0C});
-        assertEquals("SV2 test 14", "(SV Format 2) Write four request to destination address 32,576 initiated by agent 1:\n"
+        assertEquals("SV2 test 14", "(SV Format 2) Write four request to destination address "+jmri.util.IntlUtilities.valueOf(32576)+" initiated by agent 1:\n"
                 +"\twrite SVs 513 thru 516(?) with values 4, 8, 16, and 32\n"
                 , f.displayMessage(l));
 
@@ -361,7 +362,7 @@ public class LlnmonTest extends TestCase {
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x12, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x0E});
-        assertEquals("SV2 test 16", "(SV Format 2) Write four request to destination address 32,768 initiated by agent 1:\n"
+        assertEquals("SV2 test 16", "(SV Format 2) Write four request to destination address "+jmri.util.IntlUtilities.valueOf(32768)+" initiated by agent 1:\n"
                 +"\twrite SVs 0 thru 3(?) with values 0, 0, 0, and 0\n"
                 , f.displayMessage(l));
 
@@ -372,7 +373,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x18, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x04});
         assertEquals("SV2 test 18", "(SV Format 2) Write four request to destination address 0 initiated by agent 1:\n"
-                +"\twrite SVs 32,768 thru 32,771(?) with values 0, 0, 0, and 0\n"
+                +"\twrite SVs "+jmri.util.IntlUtilities.valueOf(32768)+" thru "+jmri.util.IntlUtilities.valueOf(32771)+"(?) with values 0, 0, 0, and 0\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x05, 0x02, 0x10, 0x00, 0x00, 0x00, 0x00, 0x11, 0x00, 0x00, 0x00, 0x00, 0x0D});
@@ -397,7 +398,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x06, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x07});
         assertEquals("SV2 test 23", "(SV Format 2) Read four SVs request to destination address 513 initiated by agent 1:\n"
-                +"\tread SVs 1,027 thru 1,030(?)\n"
+                +"\tread SVs "+jmri.util.IntlUtilities.valueOf(1027)+" thru "+jmri.util.IntlUtilities.valueOf(1030)+"(?)\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x07, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x06});
@@ -410,7 +411,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x09, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x08});
         assertEquals("SV2 test 26", "(SV Format 2) Change address request initiated by agent 1:\n"
-                +"\tChange address of device with manufacturer 3, developer number 4, product 1,541, and serial number 2,055 so that it responds as destination address 513\n"
+                +"\tChange address of device with manufacturer 3, developer number 4, product "+jmri.util.IntlUtilities.valueOf(1541)+", and serial number "+jmri.util.IntlUtilities.valueOf(2055)+" so that it responds as destination address 513\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x0A, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x0B});
@@ -423,42 +424,42 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x41, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x40});
         assertEquals("SV2 test 29", "(SV Format 2) Reply from destination address 513 for Write single SV request initiated by agent 1:\n"
-                +"\tSV1,027 current value is 5\n"
+                +"\tSV"+jmri.util.IntlUtilities.valueOf(1027)+" current value is 5\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x42, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x43});
         assertEquals("SV2 test 30", "(SV Format 2) Reply from destination address 513 for Read single SV request initiated by agent 1:\n"
-                +"\tSV1,027 current value is 5\n"
+                +"\tSV"+jmri.util.IntlUtilities.valueOf(1027)+" current value is 5\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x43, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x42});
         assertEquals("SV2 test 31", "(SV Format 2) Reply from destination address 513 for Write single SV (masked) request initiated by agent 1:\n"
-                +"\tSV1,027 written with mask 6; SV1,027 current value is 5\n"
+                +"\tSV"+jmri.util.IntlUtilities.valueOf(1027)+" written with mask 6; SV"+jmri.util.IntlUtilities.valueOf(1027)+" current value is 5\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x45, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x44});
         assertEquals("SV2 test 32", "(SV Format 2) Reply from destination address 513 to Write four request initiated by agent 1:\n"
-                +"\tSVs 1,027 thru 1,030(?) current values are 5, 6, 7, and 8\n"
+                +"\tSVs "+jmri.util.IntlUtilities.valueOf(1027)+" thru "+jmri.util.IntlUtilities.valueOf(1030)+"(?) current values are 5, 6, 7, and 8\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x46, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x47});
         assertEquals("SV2 test 33", "(SV Format 2) Reply from destination address 513 to Read four request initiated by agent 1:\n"
-                +"\tSVs 1,027 thru 1,030(?) current values are 5, 6, 7, and 8\n"
+                +"\tSVs "+jmri.util.IntlUtilities.valueOf(1027)+" thru "+jmri.util.IntlUtilities.valueOf(1030)+"(?) current values are 5, 6, 7, and 8\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x47, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x46});
         assertEquals("SV2 test 34", "(SV Format 2) Reply from destination address 513 to Discover devices request initiated by agent 1:\n"
-                +"\tDevice characteristics are manufacturer 3, developer number 4, product 1,541, serial number 2,055\n"
+                +"\tDevice characteristics are manufacturer 3, developer number 4, product "+jmri.util.IntlUtilities.valueOf(1541)+", serial number "+jmri.util.IntlUtilities.valueOf(2055)+"\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x48, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x49});
         assertEquals("SV2 test 35", "(SV Format 2) Reply from destination address 513 to Identify device request initiated by agent 1:\n"
-                +"\tDevice characteristics are manufacturer 3, developer number 4, product 1,541, serial number 2,055\n"
+                +"\tDevice characteristics are manufacturer 3, developer number 4, product "+jmri.util.IntlUtilities.valueOf(1541)+", serial number "+jmri.util.IntlUtilities.valueOf(2055)+"\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x49, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x48});
         assertEquals("SV2 test 36", "(SV Format 2) Reply to Change address request initiated by agent 1:\n"
-                +"\tDevice with manufacturer 3, developer number 4, product 1,541, and serial number 2,055 is now using destination address 513\n"
+                +"\tDevice with manufacturer 3, developer number 4, product "+jmri.util.IntlUtilities.valueOf(1541)+", and serial number "+jmri.util.IntlUtilities.valueOf(2055)+" is now using destination address 513\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x4A, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x4B});
@@ -467,7 +468,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x4F, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x4E});
         assertEquals("SV2 test 38", "(SV Format 2) Reply from destination address 513 to Reconfigure request initiated by agent 1:\n"
-                +"\tDevice characteristics are manufacturer 3, developer number 4, product 1,541, serial number 2,055\n"
+                +"\tDevice characteristics are manufacturer 3, developer number 4, product "+jmri.util.IntlUtilities.valueOf(1541)+", serial number "+jmri.util.IntlUtilities.valueOf(2055)+"\n"
                 , f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x00, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x01});
@@ -1445,6 +1446,11 @@ public class LlnmonTest extends TestCase {
         assertEquals("OpsModeProg test 3", "Byte Read on Main Track (Ops Mode): Decoder address 5155: CV18.\n",
                 f.displayMessage(l));
 
+        l = new LocoNetMessage(new int[] {0xEf, 0x0E, 0x7c, 0x2F, 0, 0x7D, 0x01, 0x00, 0x02, 0x01, 0x7F, 0x7F, 0x7F, 0x4D}); //!!
+        assertEquals("Bit mode direct read test 16001",
+                "Byte Read on Main Track (Ops Mode): Decoder address 1 (short) (or long address 16001): CV2.\n",
+                f.displayMessage(l));
+
         l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x7F, 0x5B});
         assertEquals("OpsModeProg test 4",
                 "LONG_ACK: Function not implemented, no reply will follow.\n",
@@ -1507,12 +1513,12 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7C, 0x2F, 0x00, 0x00, 0x01, 0x00, 0x00, 0x65, 0x23, 0x33, 0x44, 0x02});
         assertEquals("OpsModeProg test 17",
-                "Byte Read on Main Track (Ops Mode): Decoder address 1: CV102.\n",
+                "Byte Read on Main Track (Ops Mode): Decoder address 1 (short): CV102.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7C, 0x2F, 0x10, 0x00, 0x01, 0x00, 0x02, 0x7f, 0x00, 0x33, 0x44, 0x6F});
         assertEquals("OpsModeProg test 19",
-                "Programming Response: Byte Read on Main Track (Ops Mode) Was successful via RX4/BDL16x: Decoder address 1: CV128 value 128 (0x80, 10000000b).\n",
+                "Programming Response: Byte Read on Main Track (Ops Mode) Was successful via RX4/BDL16x: Decoder address 1 (short): CV128 value 128 (0x80, 10000000b).\n",
                 f.displayMessage(l));
 
         /*
@@ -1737,7 +1743,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xEf, 0x0E, 0x7c, 0x64, 0, 0x00, 0x02, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
         assertEquals("Bit mode direct write test 2",
-                "Byte Write (No feedback) on Main Track: Decoder address 2: CV129 value 9 (0x09, 00001001b).\n",
+                "Byte Write (No feedback) on Main Track: Decoder address 2 (short): CV129 value 9 (0x09, 00001001b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x64, 0, 0x04, 0x08, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
@@ -1757,7 +1763,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x24, 0, 0x7d, 0x03, 0x00, 0x02, 0x01, 0x08, 0, 0, 0x6F});
         assertEquals("Bit mode direct test 5",
-                "Programming Response: Byte Read (No feedback) on Main Track (Ops Mode) Was Successful: Decoder address 3(short): CV2 value 136 (0x88, 10001000b).\n",
+                "Programming Response: Byte Read (No feedback) on Main Track (Ops Mode) Was Successful: Decoder address 3 (short) (or long address 16003): CV2 value 136 (0x88, 10001000b).\n",
                 f.displayMessage(l));
 
         /*
@@ -1772,7 +1778,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xEf, 0x0E, 0x7c, 0x6C, 0, 0x00, 0x02, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
         assertEquals("Bit mode direct write test 2",
-                "Byte Write on Main Track (Ops Mode): Decoder address 2: CV129 value 9 (0x09, 00001001b).\n",
+                "Byte Write on Main Track (Ops Mode): Decoder address 2 (short): CV129 value 9 (0x09, 00001001b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x6C, 0, 0x04, 0x08, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
@@ -1792,7 +1798,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x2C, 0, 0x7d, 0x03, 0x00, 0x02, 0x01, 0x08, 0, 0, 0x6F});
         assertEquals("Bit mode direct test 5",
-                "Programming Response: Byte Read on Main Track (Ops Mode) Was Successful: Decoder address 3(short): CV2 value 136 (0x88, 10001000b).\n",
+                "Programming Response: Byte Read on Main Track (Ops Mode) Was Successful: Decoder address 3 (short) (or long address 16003): CV2 value 136 (0x88, 10001000b).\n",
                 f.displayMessage(l));
 
         /*
@@ -1807,7 +1813,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xEf, 0x0E, 0x7c, 0x44, 0, 0x00, 0x02, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
         assertEquals("Bit mode direct write test 2",
-                "Bit Write (No feedback) on Main Track (Ops Mode): Decoder address 2: CV129 value 9 (0x09, 00001001b).\n",
+                "Bit Write (No feedback) on Main Track (Ops Mode): Decoder address 2 (short): CV129 value 9 (0x09, 00001001b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x44, 0, 0x04, 0x08, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
@@ -1827,7 +1833,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x04, 0, 0x7d, 0x03, 0x00, 0x02, 0x01, 0x08, 0, 0, 0x6F});
         assertEquals("Bit mode direct test 5",
-                "Programming Response: Bit Read (No feedback) on Main Track (Ops Mode) Was Successful: Decoder address 3(short): CV2 value 136 (0x88, 10001000b).\n",
+                "Programming Response: Bit Read (No feedback) on Main Track (Ops Mode) Was Successful: Decoder address 3 (short) (or long address 16003): CV2 value 136 (0x88, 10001000b).\n",
                 f.displayMessage(l));
 
         /*
@@ -1842,7 +1848,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xEf, 0x0E, 0x7c, 0x4c, 0, 0x00, 0x02, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
         assertEquals("Bit mode direct write test 2",
-                "Bit Write on Main Track (Ops Mode): Decoder address 2: CV129 value 9 (0x09, 00001001b).\n",
+                "Bit Write on Main Track (Ops Mode): Decoder address 2 (short): CV129 value 9 (0x09, 00001001b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x4c, 0, 0x04, 0x08, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
@@ -1862,7 +1868,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x0c, 0, 0x7d, 0x03, 0x00, 0x02, 0x01, 0x08, 0, 0, 0x6F});
         assertEquals("Bit mode direct test 5",
-                "Programming Response: Bit Read on Main Track (Ops Mode) Was Successful: Decoder address 3(short): CV2 value 136 (0x88, 10001000b).\n",
+                "Programming Response: Bit Read on Main Track (Ops Mode) Was Successful: Decoder address 3 (short) (or long address 16003): CV2 value 136 (0x88, 10001000b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x4c, 1, 0x04, 0x08, 0x00, 0x01, 0x00, 0x09, 0, 0, 0x6F});
@@ -1887,22 +1893,22 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x0c, 0x01, 0x7d, 0x03, 0x00, 0x02, 0x01, 0x08, 0, 0, 0x6F});
         assertEquals("Bit mode direct test 5",
-                "Programming Response: Bit Read on Main Track (Ops Mode) Failed, Service Mode programming track empty: Decoder address 3(short): CV2 value 136 (0x88, 10001000b).\n",
+                "Programming Response: Bit Read on Main Track (Ops Mode) Failed, Service Mode programming track empty: Decoder address 3 (short) (or long address 16003): CV2 value 136 (0x88, 10001000b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x0c, 0x02, 0x7d, 0x03, 0x00, 0x02, 0x01, 0x08, 0, 0, 0x6F});
         assertEquals("Bit mode direct test 5",
-                "Programming Response: Bit Read on Main Track (Ops Mode) Failed, No Write Acknowledge from decoder: Decoder address 3(short): CV2 value 136 (0x88, 10001000b).\n",
+                "Programming Response: Bit Read on Main Track (Ops Mode) Failed, No Write Acknowledge from decoder: Decoder address 3 (short) (or long address 16003): CV2 value 136 (0x88, 10001000b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x0c, 0x04, 0x7d, 0x03, 0x00, 0x02, 0x01, 0x08, 0, 0, 0x6F});
         assertEquals("Bit mode direct test 5",
-                "Programming Response: Bit Read on Main Track (Ops Mode) Failed, Read Compare Acknowledge not detected: Decoder address 3(short): CV2 value 136 (0x88, 10001000b).\n",
+                "Programming Response: Bit Read on Main Track (Ops Mode) Failed, Read Compare Acknowledge not detected: Decoder address 3 (short) (or long address 16003): CV2 value 136 (0x88, 10001000b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7c, 0x0c, 0x08, 0x7d, 0x03, 0x00, 0x02, 0x01, 0x08, 0, 0, 0x6F});
         assertEquals("Bit mode direct test 5",
-                "Programming Response: Bit Read on Main Track (Ops Mode) Failed, User Aborted: Decoder address 3(short): CV2 value 136 (0x88, 10001000b).\n",
+                "Programming Response: Bit Read on Main Track (Ops Mode) Failed, User Aborted: Decoder address 3 (short) (or long address 16003): CV2 value 136 (0x88, 10001000b).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xEf, 0x0E, 0x7c, 0x41, 0, 0x01, 0x00, 0x00, 0x00, 0x01, 0x59, 0, 0, 0x6F});
@@ -2053,12 +2059,12 @@ public class LlnmonTest extends TestCase {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x7D, 0x03, 0x00, 0x00, 0x00, 0x2D});
         assertEquals(" basic Transponding Test 01",
-                "Transponding Find query for loco address 3(short).\n",
+                "Transponding Find query for loco address 3 (short) (or long address 16003).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x12, 0x7D, 0x03, 0x63});
         assertEquals(" basic Transponding Test 02",
-                "Transponder address 3(short) present at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
+                "Transponder address 3 (short) (or long address 16003) present at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x0B, 0x70, 0x36});
@@ -2073,12 +2079,12 @@ public class LlnmonTest extends TestCase {
 
        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
         assertEquals(" basic Transponding Test 05",
-                "Transponder Find report: address 3(short) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
+                "Transponder Find report: address 3 (short) (or long address 16003) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x00, 0x12, 0x7D, 0x03, 0x43});
         assertEquals(" basic Transponding Test 06",
-                "Transponder address 3(short) absent at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
+                "Transponder address 3 (short) (or long address 16003) absent at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x0B, 0x60, 0x26});
@@ -2088,7 +2094,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x00, 0x01, 0x00, 0x00, 0x00, 0x2D});
         assertEquals(" basic Transponding Test 08",
-                "Transponding Find query for loco address 1.\n",
+                "Transponding Find query for loco address 1 (short).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x02, 0x01, 0x00, 0x00, 0x00, 0x2D});
@@ -2098,22 +2104,22 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x00, 0x71, 0x00, 0x00, 0x00, 0x2D});
         assertEquals(" basic Transponding Test 10",
-                "Transponding Find query for loco address 113 (b3).\n",
+                "Transponding Find query for loco address 113 (short, or \"B3\").\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x12, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 11",
-                "Transponder address 3 present at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
+                "Transponder address 3 (short) present at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x15, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 12",
-                "Transponder address 3 present at LR22 () (BDL16x Board ID 2 RX4 zone (Unknown 5)).\n",
+                "Transponder address 3 (short) present at LR22 () (BDL16x Board ID 2 RX4 zone (Unknown 5)).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x00, 0x15, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 12",
-                "Transponder address 3 absent at LR22 () (BDL16x Board ID 2 RX4 zone (Unknown 5)).\n",
+                "Transponder address 3 (short) absent at LR22 () (BDL16x Board ID 2 RX4 zone (Unknown 5)).\n",
                 f.displayMessage(l));
 
     }
@@ -2608,7 +2614,7 @@ public class LlnmonTest extends TestCase {
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x5e, 0x00, 0x7f, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         assertEquals(" Immediate Packet test 69",
-                "Write CV on Main Track (Ops Mode) for Uhlenbrock IB-COM / Intellibox - Address: 32,512 CV: 0 Value: 0.\n",
+                "Write CV on Main Track (Ops Mode) for Uhlenbrock IB-COM / Intellibox - Address: "+jmri.util.IntlUtilities.valueOf(32512)+" CV: 0 Value: 0.\n",
             f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x5e, 0x00, 0x00, 0x01, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -4418,7 +4424,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7f, 0x05, 0x00, 0x0, 0x30, 0x30, 0x30, 0x30, 0x70, 0x30, 0x30, 0x30, 0x30, 0x00});
         assertEquals("Throttle message 1",
-                "Send Throttle Text Message to Throttle 5 with message 00000000.\n",
+                "Send Throttle Text Message to Throttle 5 (short) with message 00000000.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7f, 0x00, 0x22, 0x0, 0x31, 0x32, 0x30, 0x30, 0x70, 0x30, 0x30, 0x30, 0x30, 0x00});
@@ -4499,7 +4505,7 @@ public class LlnmonTest extends TestCase {
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x40, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x51}  );
         assertEquals(" Slot test 2",
                 "Report of slot 64 information:\n"
-                +"\tLoco 0 is Not Consisted, Free, operating in 28 SS mode, and is moving Forward at speed 0,\n"
+                +"\tLoco 0 (short) is Not Consisted, Free, operating in 28 SS mode, and is moving Forward at speed 0,\n"
                 +"\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
                 + "\tMaster supports LocoNet 1.1; Track Status: Off/Running; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x00 0x00 (0).\n",
                 f.displayMessage(l));
@@ -4579,7 +4585,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xBF, 0x00, 0x00, 0x40} );
-        assertEquals(" Slot test 18", "Request slot for loco address 0.\n", f.displayMessage(l));
+        assertEquals(" Slot test 18", "Request slot for loco address 0 (short).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0x81, 0x7E} );
         assertEquals(" Slot test 19", "Master is busy.\n", f.displayMessage(l));
@@ -4595,7 +4601,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x02, 0x03, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10} );
         assertEquals(" Slot test 23", "Report of slot 2 information:\n"
-                +"\tLoco 0 is Not Consisted, Free, operating in 128 SS mode, and is moving Forward at speed 0,\n"
+                +"\tLoco 0 (short) is Not Consisted, Free, operating in 128 SS mode, and is moving Forward at speed 0,\n"
                 +"\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
                 +"\tMaster supports LocoNet 1.1; Track Status: On/Running; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x00 0x00 (0).\n",
                 f.displayMessage(l));
@@ -4862,10 +4868,10 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xBF, 0x7d, 0x04, 0x40} );
-        assertEquals(" Slot test 79", "Request slot for loco address 4(short).\n", f.displayMessage(l));
+        assertEquals(" Slot test 79", "Request slot for loco address 4 (short) (or long address 16004).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xBF, 0x00, 0x70, 0x40} );
-        assertEquals(" Slot test 80", "Request slot for loco address 112 (b2).\n", f.displayMessage(l));
+        assertEquals(" Slot test 80", "Request slot for loco address 112 (short, or \"B2\").\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA2, 0x25, 0x07, 0x7E});
         assertEquals(" Slot test 81",
@@ -5076,14 +5082,14 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x01, 0x03, 0x31, 0x00, 0x00, 0x07, 0x00, 0x7d, 0x00, 0x20, 0x30, 0x03} );
         assertEquals(" Slot test 13", "Report of slot 1 information:\n"
-                +"\tLoco 49(short) is Not Consisted, Free, operating in 128 SS mode, and is moving Forward at speed 0,\n"
+                +"\tLoco 49 (short) (or long address 16049) is Not Consisted, Free, operating in 128 SS mode, and is moving Forward at speed 0,\n"
                 +"\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
                 +"\tMaster supports LocoNet 1.1; Track Status: On/Running; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x30 0x20 (6176).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x01, 0x03, 0x31, 0x00, 0x00, 0x07, 0x00, 0x7F, 0x00, 0x20, 0x30, 0x03} );
         assertEquals(" Slot test 13", "Report of slot 1 information:\n"
-                +"\tLoco 49 (via an Alias) is Not Consisted, Free, operating in 128 SS mode, and is moving Forward at speed 0,\n"
+                +"\tLoco 49 (short) (via an Alias) is Not Consisted, Free, operating in 128 SS mode, and is moving Forward at speed 0,\n"
                 +"\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
                 +"\tMaster supports LocoNet 1.1; Track Status: On/Running; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x30 0x20 (6176).\n",
                 f.displayMessage(l));
@@ -5125,39 +5131,39 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x01, 0x00, 0x0f, 0x00, 0x01, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 09", "Report Alias pair 1: 128 is an alias for 8; 0 is an alias for 0.\n",
+        assertEquals("aliasing 09", "Report Alias pair 1: 128 is an alias for 8; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x02, 0x00, 0x0f, 0x00, 0x02, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 10", "Report Alias pair 2: 256 is an alias for 9; 0 is an alias for 0.\n",
+        assertEquals("aliasing 10", "Report Alias pair 2: 256 is an alias for 9; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x03, 0x00, 0x0f, 0x00, 0x04, 0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 11", "Report Alias pair 3: 512 is an alias for 10; 0 is an alias for 0.\n",
+        assertEquals("aliasing 11", "Report Alias pair 3: 512 is an alias for 10; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x04, 0x00, 0x0f, 0x00, 0x08, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 12", "Report Alias pair 4: 1024 is an alias for 11; 0 is an alias for 0.\n",
+        assertEquals("aliasing 12", "Report Alias pair 4: 1024 is an alias for 11; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x05, 0x00, 0x0f, 0x00, 0x10, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 13", "Report Alias pair 5: 2048 is an alias for 12; 0 is an alias for 0.\n",
+        assertEquals("aliasing 13", "Report Alias pair 5: 2048 is an alias for 12; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x06, 0x00, 0x0f, 0x00, 0x20, 0x0d, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 14", "Report Alias pair 6: 4096 is an alias for 13; 0 is an alias for 0.\n",
+        assertEquals("aliasing 14", "Report Alias pair 6: 4096 is an alias for 13; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x07, 0x00, 0x0f, 0x00, 0x40, 0x0e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 15", "Report Alias pair 7: 8192 is an alias for 14; 0 is an alias for 0.\n",
+        assertEquals("aliasing 15", "Report Alias pair 7: 8192 is an alias for 14; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x08, 0x00, 0x0f, 0x01, 0x01, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 16", "Report Alias pair 8: 129 is an alias for 15; 0 is an alias for 0.\n",
+        assertEquals("aliasing 16", "Report Alias pair 8: 129 is an alias for 15; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x09, 0x00, 0x0f, 0x7f, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
-        assertEquals("aliasing 17", "Report Alias pair 9: 255 is an alias for 16; 0 is an alias for 0.\n",
+        assertEquals("aliasing 17", "Report Alias pair 9: 255 is an alias for 16; 0 (short) is an alias for 0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x00, 0x02, 0x00, 0x00, 0x0f, 0x7f, 0x01, 0x10, 0x00, 0x0A, 0x01, 0x20, 0x00, 0x00} );
@@ -5186,63 +5192,63 @@ public class LlnmonTest extends TestCase {
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xbf, 0x00, 0x01, 0x7f});
-        assertEquals("convert To Mixed 1", "Request slot for loco address 1.\n",
+        assertEquals("convert To Mixed 1", "Request slot for loco address 1 (short).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7d, 0x01, 0x7f});
-        assertEquals("convert To Mixed 2", "Request slot for loco address 1(short).\n",
+        assertEquals("convert To Mixed 2", "Request slot for loco address 1 (short) (or long address 16001).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7F, 0x01, 0x7f});
-        assertEquals("convert To Mixed 3", "Request slot for loco address 1.\n",
+        assertEquals("convert To Mixed 3", "Request slot for loco address 1 (short).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x00, 99, 0x7f});
-        assertEquals("convert To Mixed 4", "Request slot for loco address 99.\n",
+        assertEquals("convert To Mixed 4", "Request slot for loco address 99 (short).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7d, 99, 0x7f});
-        assertEquals("convert To Mixed 5", "Request slot for loco address 99(short).\n",
+        assertEquals("convert To Mixed 5", "Request slot for loco address 99 (short) (or long address 16099).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7f, 99, 0x7f});
-        assertEquals("convert To Mixed 6", "Request slot for loco address 99.\n",
+        assertEquals("convert To Mixed 6", "Request slot for loco address 99 (short).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x00, 100, 0x7f});
-        assertEquals("convert To Mixed 7", "Request slot for loco address 100 (a0).\n",
+        assertEquals("convert To Mixed 7", "Request slot for loco address 100 (short, or \"A0\").\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7d, 100, 0x7f});
-        assertEquals("convert To Mixed 8", "Request slot for loco address 100(short) (a0).\n",
+        assertEquals("convert To Mixed 8", "Request slot for loco address 100 (short, or \"A0\") (or long address 16100).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7f, 109, 0x7f});
-        assertEquals("convert To Mixed 9", "Request slot for loco address 109 (a9).\n",
+        assertEquals("convert To Mixed 9", "Request slot for loco address 109 (short, or \"A9\").\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x00, 111, 0x7f});
-        assertEquals("convert To Mixed 10", "Request slot for loco address 111 (b1).\n",
+        assertEquals("convert To Mixed 10", "Request slot for loco address 111 (short, or \"B1\").\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7d, 111, 0x7f});
-        assertEquals("convert To Mixed 11", "Request slot for loco address 111(short) (b1).\n",
+        assertEquals("convert To Mixed 11", "Request slot for loco address 111 (short, or \"B1\") (or long address 16111).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7f, 114, 0x7f});
-        assertEquals("convert To Mixed 12", "Request slot for loco address 114 (b4).\n",
+        assertEquals("convert To Mixed 12", "Request slot for loco address 114 (short, or \"B4\").\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x00, 122, 0x7f});
-        assertEquals("convert To Mixed 13", "Request slot for loco address 122 (c2).\n",
+        assertEquals("convert To Mixed 13", "Request slot for loco address 122 (short, or \"C2\").\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7d, 122, 0x7f});
-        assertEquals("convert To Mixed 14", "Request slot for loco address 122(short) (c2).\n",
+        assertEquals("convert To Mixed 14", "Request slot for loco address 122 (short, or \"C2\") (or long address 16122).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x7f, 123, 0x7f});
-        assertEquals("convert To Mixed 15", "Request slot for loco address 123 (c3).\n",
+        assertEquals("convert To Mixed 15", "Request slot for loco address 123 (short, or \"C3\").\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xbf, 0x01, 14, 0x7f});
@@ -6164,8 +6170,7 @@ public class LlnmonTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initReporterManager();
 
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
@@ -6181,6 +6186,7 @@ public class LlnmonTest extends TestCase {
 
     @Override
     protected void tearDown() {
+        lnsm.dispose();
         apps.tests.Log4JFixture.tearDown();
     }
 

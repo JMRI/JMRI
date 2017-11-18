@@ -1,32 +1,28 @@
 package jmri.jmrix.zimo;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Mx1ThrottleManagerTest {
+public class Mx1ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     private Mx1SystemConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
-        Mx1ThrottleManager t = new Mx1ThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         Mx1TrafficController tc = new Mx1TrafficController(){
            @Override
            public boolean status(){
@@ -37,14 +33,14 @@ public class Mx1ThrottleManagerTest {
            }
         };
         memo = new Mx1SystemConnectionMemo(tc);
+        tm = new Mx1ThrottleManager(memo);
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1ThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1ThrottleManagerTest.class);
 
 }

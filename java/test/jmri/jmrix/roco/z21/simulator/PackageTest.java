@@ -12,10 +12,11 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     Z21SimulatorAdapterTest.class,
     Z21XNetSimulatorAdapterTest.class,
-    ConnectionConfigTest.class,
+    Z21SimulatorConnectionConfigTest.class,
     jmri.jmrix.roco.z21.simulator.configurexml.PackageTest.class,
     Z21SimulatorLocoDataTest.class,
-    Z21SimulatorTest.class
+    Z21SimulatorTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }

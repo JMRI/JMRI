@@ -1,7 +1,7 @@
 package jmri.jmrix.bachrus.swing;
 
-import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
 import jmri.jmrix.bachrus.SpeedoMenu;
+import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
 
 /**
  * Provide access to Swing components for the Speedo subsystem.

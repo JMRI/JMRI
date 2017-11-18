@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement light manager for DCC++ systems
- * <P>
+ * <p>
  * System names are "DCCppLnnnnn", where nnnnn is the bit number without padding.
- * <P>
+ * <p>
  * Based in part on SerialLightManager.java
  *
  * @author Paul Bender Copyright (C) 2008
@@ -26,7 +26,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for XPressNet
+     * Returns the system letter for DCC++.
      */
     @Override
     public String getSystemPrefix() {
@@ -34,9 +34,11 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
-     * system name is not in a valid format Assumes calling method has checked
-     * that a Light with this system name does not already exist
+     * Method to create a new Light based on the system name.
+     * Assumes calling method has checked that a Light with this
+     * system name does not already exist.
+     *
+     * @return null if the system name is not in a valid format
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -54,7 +56,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -64,39 +66,41 @@ public class DCCppLightManager extends AbstractLightManager {
         systemName, getSystemPrefix(), typeLetter());
             return (0);
         }
-        // name must be in the DCCppLnnnnn format
+        // name must be in the DCCppLnnnnn format (DCCPP is user configurable)
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid DCC++ light system name: " + systemName);
+            log.debug("invalid DCC++ light system name: " + systemName);
             return (0);
         } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.error("bit number out of range in DCC++ light system name: " + systemName);
+            log.debug("bit number out of range in DCC++ light system name: {}", systemName);
             return (0);
         }
         return (num);
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Public method to validate system name format.
+     *
+     * @return VALID if system name has a valid format, else returns INVALID
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false' for now, this method always returns 'true'; it is needed for the
-     * Abstract Light class
+     * Public method to validate system name for configuration.
+     * Needed for the Abstract Light class.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else returns 'false' for now, this method always returns 'true'
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -115,13 +119,22 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Allow access to DCCppLightManager
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Allow access to DCCppLightManager.
      */
     @Deprecated
     static public DCCppLightManager instance() {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class);
 
 }

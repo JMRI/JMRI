@@ -1,51 +1,34 @@
 package jmri.jmrix.openlcb;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import jmri.util.JUnitUtil;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.regex.Pattern;
 import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
-
-import org.junit.Assert;
-import org.mockito.Mockito;
-import org.mockito.internal.matchers.Matches;
-import org.openlcb.EventID;
-import org.openlcb.implementations.EventTable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.MockPropertyChangeListener;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.regex.Pattern;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import org.junit.Assert;
+import org.openlcb.EventID;
+import org.openlcb.implementations.EventTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutTest extends TestCase {
-    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
 
-    interface MockablePropertyChangeListener {
-        void onChange(String property, Object newValue);
-    }
-    class FPropertyChangeListener implements PropertyChangeListener {
-        MockablePropertyChangeListener m;
-        FPropertyChangeListener() {
-            m = mock(MockablePropertyChangeListener.class);
-        }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-            m.onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
-        }
-    }
-
-    protected FPropertyChangeListener l = new FPropertyChangeListener();
+    protected MockPropertyChangeListener l = new MockPropertyChangeListener();
 
     private static final String COMMANDED_STATE = "CommandedState";
     private static final String KNOWN_STATE = "KnownState";
@@ -313,6 +296,6 @@ public class OlcbTurnoutTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

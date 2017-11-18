@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +22,7 @@ public class AcelaLightTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("AcelaLight Constructor",new AcelaLight("AL2",_memo ));
+      Assert.assertNotNull("AcelaLight Constructor", new AcelaLight("AL2", _memo ));
     }
 
     @Test
@@ -32,8 +33,7 @@ public class AcelaLightTest {
    // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tcis = new AcelaTrafficControlScaffold();
         _memo = new jmri.jmrix.acela.AcelaSystemConnectionMemo(tcis);
         // create and register the manager object
@@ -43,9 +43,7 @@ public class AcelaLightTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
-
 
 }

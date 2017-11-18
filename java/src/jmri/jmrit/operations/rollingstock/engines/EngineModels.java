@@ -1,9 +1,13 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.Hashtable;
+import java.util.Set;
+import jmri.InstanceInitializer;
+import jmri.InstanceManager;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Element;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * some default models for the user. These values can be overridden by the user.
  *
  * Model Horsepower Length Type
- * 
+ *
  * E8 2250 70 Diesel FT 1350 50 Diesel F3 1500 50 Diesel F7 1500 50 Diesel F9
  * 1750 50 Diesel GP20 2000 56 Diesel GP30 2250 56 Diesel GP35 2500 56 Diesel
  * GP38 2000 59 Diesel GP40 3000 59 Diesel RS1 1000 51 Diesel RS2 1500 52 Diesel
@@ -37,31 +41,25 @@ public class EngineModels extends RollingStockAttribute {
     public static final String ENGINEMODELS_NAME_CHANGED_PROPERTY = "EngineModelsName"; // NOI18N
 
     // protected List<String> _list = new ArrayList<String>();
-    protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<String, String>();
-    protected Hashtable<String, String> _engineLengthHashTable = new Hashtable<String, String>();
-    protected Hashtable<String, String> _engineTypeHashTable = new Hashtable<String, String>();
-    protected Hashtable<String, String> _engineWeightHashTable = new Hashtable<String, String>();
-    protected Hashtable<String, Boolean> _engineBunitHashTable = new Hashtable<String, Boolean>();
+    protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<>();
+    protected Hashtable<String, String> _engineLengthHashTable = new Hashtable<>();
+    protected Hashtable<String, String> _engineTypeHashTable = new Hashtable<>();
+    protected Hashtable<String, String> _engineWeightHashTable = new Hashtable<>();
+    protected Hashtable<String, Boolean> _engineBunitHashTable = new Hashtable<>();
 
     public EngineModels() {
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private static EngineModels _instance = null;
-
+    @Deprecated
     public static synchronized EngineModels instance() {
-        if (_instance == null) {
-            log.debug("EngineModels creating instance");
-            // create and load
-            _instance = new EngineModels();
-            _instance.loadDefaults();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("EngineModels returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(EngineModels.class);
     }
 
     @Override
@@ -193,10 +191,31 @@ public class EngineModels extends RollingStockAttribute {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        EngineManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(EngineManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineModels.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineModels.class);
 
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(EngineModels.class)) {
+                EngineModels instance = new EngineModels();
+                instance.loadDefaults();
+                return instance;
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(EngineModels.class);
+            return set;
+        }
+
+    }
 }

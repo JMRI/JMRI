@@ -129,6 +129,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     }
     static SimDriverAdapter mInstance;
 
-    private final static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class);
 
 }

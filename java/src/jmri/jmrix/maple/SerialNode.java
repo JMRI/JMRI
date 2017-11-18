@@ -33,9 +33,9 @@ public class SerialNode extends AbstractNode {
 // protected int pulseWidth = 500;    // Pulse width for pulsed turnout control (milliseconds)
     private int _address = 0;
 
-    // operational instance variables  (should not be preserved between runs)
+    // operational instance variables (should not be preserved between runs)
     /**
-     * Assumes a node address of 1, and a node type of 0 If this constructor is
+     * Assumes a node address of 1, and a node type of 0. If this constructor is
      * used, actual node address must be set using setNodeAddress.
      */
     public SerialNode() {
@@ -44,7 +44,8 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Creates a new SerialNode and initialize default instance variables
-     * address - Address of node on serial bus (0-99) type - 0 (ignored).
+     * @param address Address of node on serial bus (0-99)
+     * @param type 0 (ignored)
      */
     public SerialNode(int address, int type) {
         // set address 
@@ -64,7 +65,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Check valid node address, must match value configured in the Maple HMI
+     * Check valid node address, must match value configured in the Maple HMI.
      * Allowed values are 1-99
      */
     @Override
@@ -90,7 +91,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to create an Transmit packet (SerialMessage) Not used in
+     * Public Method to create a Transmit packet (SerialMessage) Not used in
      * Maple.
      */
     @Override
@@ -134,7 +135,6 @@ public class SerialNode extends AbstractNode {
         return timeout;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
+
 }
-
-

@@ -1,33 +1,32 @@
 package jmri.jmrix.tmcc;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialTurnoutManagerTest.java
- *
- * Description:	tests for the SerialTurnoutManager class
+ * Tests for the SerialTurnoutManager class.
  *
  * @author	Bob Jacobsen
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override
-    @Before
     public void setUp(){
         apps.tests.Log4JFixture.setUp();
+
         // create and register the manager object
-        l = new SerialTurnoutManager();
+        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo("T", "TMCC Test");
+        l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
@@ -59,6 +58,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

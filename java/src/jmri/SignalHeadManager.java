@@ -1,7 +1,6 @@
 package jmri;
 
 import java.util.List;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -26,7 +25,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SignalHeadManager extends Manager {
+public interface SignalHeadManager extends Manager<SignalHead> {
 
     // to free resources when no longer used
     @Override

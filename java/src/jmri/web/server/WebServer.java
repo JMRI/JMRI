@@ -56,13 +56,13 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     private static enum Registration {
         DENIAL, REDIRECTION, RESOURCE, SERVLET
-    };
+    }
     private final Server server;
     private ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
     private ShutDownTask shutDownTask = null;
     private final HashMap<String, Registration> registeredUrls = new HashMap<>();
-    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class);
 
     /**
      * Create a WebServer instance with the default preferences.
@@ -96,6 +96,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
             return InstanceManager.setDefault(WebServer.class, new WebServer());
         });
     }
+
 
     /**
      * Start the web server.
@@ -138,7 +139,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     /**
      * Stop the server.
      *
-     * @throws Exception if there is an error stopping the server
+     * @throws Exception if there is an error stopping the server; defined by Jetty superclass
      */
     @Override
     public void stop() throws Exception {
@@ -364,6 +365,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleFailure(LifeCycle lc, Throwable thrwbl) {
+        if (zeroConfService != null) {
+            zeroConfService.stop();
+        }
         log.error("Web Server failed", thrwbl);
     }
 
@@ -377,6 +381,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleStopped(LifeCycle lc) {
+        if (zeroConfService != null) {
+            zeroConfService.stop();
+        }
         InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
             manager.deregister(shutDownTask);
         });
@@ -454,7 +461,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
         @Override
         public boolean execute() {
-            new Thread(() -> {
+            Thread t = new Thread(() -> {
                 try {
                     server.stop();
                 } catch (Exception ex) {
@@ -464,7 +471,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
                     log.debug("Details follow: ", ex);
                 }
                 this.isComplete = true;
-            }).start();
+            });
+            t.setName("ServerShutDownTask");
+            t.start();
             return true;
         }
 

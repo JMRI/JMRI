@@ -6,13 +6,12 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.util.JUnitUtil;
 
 /**
  * SplitVariableValueTest.java
@@ -313,6 +312,6 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SplitVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SplitVariableValueTest.class);
 
 }

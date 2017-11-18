@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
+import jmri.server.web.spi.WebServerConfiguration;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +17,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2016
  */
-public class DefaultWebServerConfiguration extends AbstractWebServerConfiguration {
+@ServiceProvider(service = WebServerConfiguration.class)
+public final class DefaultWebServerConfiguration extends AbstractWebServerConfiguration {
 
     private final HashMap<String, String> redirections = new HashMap<>();
     private final HashMap<String, String> files = new HashMap<>();

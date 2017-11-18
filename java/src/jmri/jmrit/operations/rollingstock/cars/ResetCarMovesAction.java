@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ResetCarMovesAction extends AbstractAction {
 
-    CarManager manager = CarManager.instance();
+    CarManager manager = InstanceManager.getDefault(CarManager.class);
 
     public ResetCarMovesAction(String actionName, Component frame) {
         super(actionName);
@@ -31,5 +32,5 @@ public class ResetCarMovesAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(ResetCarMovesAction.class.getName());
+            .getLogger(ResetCarMovesAction.class);
 }

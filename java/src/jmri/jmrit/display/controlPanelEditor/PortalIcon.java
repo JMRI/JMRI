@@ -2,12 +2,16 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
@@ -21,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Pete Cressman Copyright (C) 2011
  */
-public class PortalIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
+public class PortalIcon extends PositionableIcon implements PropertyChangeListener {
 
     public static final String HIDDEN = "hidden";
     public static final String VISIBLE = "block";
@@ -38,7 +42,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         // super ctor call to make sure this is an icon label
         super(editor);
         initMap();
-        setPopupUtility(null);        // no text
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -75,9 +78,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         return super.finishClone(pos);
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     protected void setIcon(String name, NamedIcon ic) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " put icon key= \"" + name + "\" icon= " + ic);
@@ -88,9 +88,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         _iconMap.put(name, icon);
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     public void setArrowOrientatuon(boolean set) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " setArrowOrientatuon regular=" + set + " from " + _regular);
@@ -98,9 +95,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         _regular = set;
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     public void setHideArrows(boolean set) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " setHideArrows hide=" + set + " from " + _hide);
@@ -135,11 +129,11 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                 port.removePropertyChangeListener(this);
             }
         }
-        _portalHdl = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
+        _portalHdl = InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(portal.getUserName(), portal);
         portal.addPropertyChangeListener(this);
         setName(portal.getName());
-        setTooltip(new ToolTip(portal.getDescription(), 0, 0));
+        setToolTip(new ToolTip(portal.getDescription(), 0, 0));
     }
 
     public void setStatus(String status) {
@@ -156,7 +150,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     /* currently Portals do not have an instance manager - !!!todo? */
     @Override
-    public jmri.NamedBean getNamedBean() {
+    public NamedBean getNamedBean() {
         return getPortal();
     }
 
@@ -190,7 +184,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         Object source = e.getSource();
 //        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" PropertyChange= "+e.getPropertyName()+
 //          " oldValue= "+e.getOldValue().toString()+" newValue= "+e.getNewValue().toString());
@@ -200,7 +194,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                     setStatus(HIDDEN);
                     return;
                 }
-                switch (((Integer) e.getNewValue()).intValue()) {
+                switch (((Integer) e.getNewValue())) {
                     case Portal.UNKNOWN:
                         setStatus(HIDDEN);
                         break;
@@ -211,7 +205,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                         setStatus(FROM_ARROW);
                         break;
                     default:
-                        log.warn("Unhandled portal value: {}", ((Integer)e.getNewValue()) );
+                        log.warn("Unhandled portal value: {}", e.getNewValue() );
                 }
             } else if ("UserName".equals(e.getPropertyName())) {
                 setName((String) e.getNewValue());
@@ -243,7 +237,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
             JCheckBoxMenuItem checkBox;
 
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 comp.setPositionable(!checkBox.isSelected());
             }
 
@@ -253,29 +247,18 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                 return this;
             }
         }.init(this, lockItem));
-        JMenuItem jmi = popup.add(lockItem);
-        jmi.setEnabled(false);
+        popup.add(lockItem);
     }
 
     private void setShowCoordinatesMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
-
-        JMenuItem jmi = edit.add("x = " + getX());
-        jmi.setEnabled(false);
-
-        jmi = edit.add("y = " + getY());
-        jmi.setEnabled(false);
-
-        edit.add(CoordinateEdit.getCoordinateEditAction(this));
+        JMenu edit = new JMenu(Bundle.getMessage("EditLocationXY", getX(), getY()));
+        edit.addActionListener(CoordinateEdit.getCoordinateEditAction(this));
         popup.add(edit);
     }
 
     private void setDisplayLevelMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        JMenuItem jmi = edit.add("level= " + getDisplayLevel());
-        jmi.setEnabled(false);
-
-        edit.add(CoordinateEdit.getLevelEditAction(this));
+        JMenu edit = new JMenu(Bundle.getMessage("EditLevel_", getDisplayLevel()));
+        edit.addActionListener(CoordinateEdit.getLevelEditAction(this));
         popup.add(edit);
     }
 
@@ -294,8 +277,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
      */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
-        JMenuItem jmi = popup.add(getNameString());
-        jmi.setEnabled(false);
+        popup.add(getNameString());
         setPositionableMenu(popup);
         if (isPositionable()) {
             setShowCoordinatesMenu(popup);
@@ -324,5 +306,5 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalIcon.class);
 }

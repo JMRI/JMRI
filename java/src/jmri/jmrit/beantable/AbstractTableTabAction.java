@@ -17,6 +17,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.TableRowSorter;
 import jmri.Manager;
 import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
@@ -146,7 +147,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         JTable dataTable;
         JScrollPane dataScroll;
         Box bottomBox;
-        Boolean AddToFrameRan = false;
+        boolean addToFrameRan = false;
         Manager manager;
 
         int bottomBoxIndex; // index to insert extra stuff
@@ -187,6 +188,9 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
 
             sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
             RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+
+            sorter.setComparator(BeanTableDataModel.USERNAMECOL, new AlphanumComparator());
+            RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.USERNAMECOL, SortOrder.ASCENDING);
 
             dataModel.configureTable(dataTable);
 
@@ -235,11 +239,11 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
 
         public boolean getAdditionsToFrameDone() {
-            return AddToFrameRan;
+            return addToFrameRan;
         }
 
         public void setAddToFrameRan() {
-            AddToFrameRan = true;
+            addToFrameRan = true;
         }
 
         public JTable getDataTable() {
@@ -268,6 +272,6 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTableTabAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTableTabAction.class);
 
 }

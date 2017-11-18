@@ -105,8 +105,5 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
     public void message(MarklinMessage m) {
         // messages are ignored
     }
-    private final static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class);
 }
-
-
-

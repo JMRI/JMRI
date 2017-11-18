@@ -1,16 +1,15 @@
 package apps.gui3.dp3;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DecoderPro3WindowTest {
 
@@ -18,14 +17,15 @@ public class DecoderPro3WindowTest {
     @Ignore("needs more setup")
     public void testCTor() {
         DecoderPro3Window t = new DecoderPro3Window();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.disposeFrame("Decoder Pro Wizard", true, true);
+        JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initConnectionConfigManager();
@@ -34,10 +34,8 @@ public class DecoderPro3WindowTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderPro3WindowTest.class.getName());
-
+    // private final static Logger log = LoggerFactory.getLogger(DecoderPro3WindowTest.class);
 }

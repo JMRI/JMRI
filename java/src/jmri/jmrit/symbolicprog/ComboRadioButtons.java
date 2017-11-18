@@ -28,15 +28,6 @@ public class ComboRadioButtons extends JPanel {
         init();
     }
 
-    ComboRadioButtons(JComboBox<String> box, IndexedEnumVariableValue var) {
-        super();
-        _var = var;
-        _value = var._value;
-        _box = box;
-
-        init();
-    }
-
     void init() {
         l1 = new ActionListener[_box.getItemCount()];
         b1 = new JRadioButton[_box.getItemCount()];
@@ -153,6 +144,6 @@ public class ComboRadioButtons extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ComboRadioButtons.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ComboRadioButtons.class);
 
 }

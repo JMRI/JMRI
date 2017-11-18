@@ -1,12 +1,10 @@
 package jmri.jmrix;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,19 +23,144 @@ public class SystemConnectionMemoTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testGetConsistManagerNull() {
+        SystemConnectionMemo t = new SystemConnectionMemo("T","Test"){
+           @Override
+           protected java.util.ResourceBundle getActionModelResourceBundle(){
+              return null;
+           }
+        };
+        Assert.assertNull("null consist manager",t.get(jmri.ConsistManager.class));
+    }
+
+    @Test
+    public void testProvidesConsistManagerNull() {
+        SystemConnectionMemo t = new SystemConnectionMemo("T","Test"){
+           @Override
+           protected java.util.ResourceBundle getActionModelResourceBundle(){
+              return null;
+           }
+        };
+        Assert.assertFalse("null consist manager",t.provides(jmri.ConsistManager.class));
+    }
+
+    @Test
+    public void testGetConsistManagerWithCS() {
+        SystemConnectionMemo t = new SystemConnectionMemo("T","Test"){
+           @Override
+           protected java.util.ResourceBundle getActionModelResourceBundle(){
+              return null;
+           }
+           @Override
+           public boolean provides(Class <?> c){
+               if(c.equals(jmri.CommandStation.class)){
+                  return true;
+               }
+               return super.provides(c);
+           }
+           @Override
+           public <T> T get(Class <?> T){
+               if(T.equals(jmri.CommandStation.class)){
+                  return (T) jmri.InstanceManager.getDefault(T);
+               }
+               return super.get(T);
+           }
+          
+        };
+        Assert.assertNotNull("consist manager",t.get(jmri.ConsistManager.class));
+    }
+
+    @Test
+    public void testProvidesConsistManagerWithCS() {
+        SystemConnectionMemo t = new SystemConnectionMemo("T","Test"){
+           @Override
+           protected java.util.ResourceBundle getActionModelResourceBundle(){
+              return null;
+           }
+           @Override
+           public boolean provides(Class <?> c){
+               if(c.equals(jmri.CommandStation.class)){
+                  return true;
+               }
+               return super.provides(c);
+           }
+           @Override
+           public <T> T get(Class <?> T){
+               if(T.equals(jmri.CommandStation.class)){
+                  return (T) jmri.InstanceManager.getDefault(T);
+               }
+               return super.get(T);
+           }
+        };
+        Assert.assertTrue("null consist manager",t.provides(jmri.ConsistManager.class));
+    }
+
+    @Test
+    public void testGetConsistManagerWithAPM() {
+        SystemConnectionMemo t = new SystemConnectionMemo("T","Test"){
+           @Override
+           protected java.util.ResourceBundle getActionModelResourceBundle(){
+              return null;
+           }
+           @Override
+           public boolean provides(Class <?> c){
+               if(c.equals(jmri.AddressedProgrammerManager.class)){
+                  return true;
+               }
+               return super.provides(c);
+           }
+           @Override
+           public <T> T get(Class <?> T){
+               if(T.equals(jmri.AddressedProgrammerManager.class)){
+                  return (T) jmri.InstanceManager.getDefault(T);
+               }
+               return super.get(T);
+           }
+          
+        };
+        Assert.assertNotNull("consist manager",t.get(jmri.ConsistManager.class));
+    }
+
+    @Test
+    public void testProvidesConsistManagerWithAPM() {
+        SystemConnectionMemo t = new SystemConnectionMemo("T","Test"){
+           @Override
+           protected java.util.ResourceBundle getActionModelResourceBundle(){
+              return null;
+           }
+           @Override
+           public boolean provides(Class <?> c){
+               if(c.equals(jmri.AddressedProgrammerManager.class)){
+                  return true;
+               }
+               return super.provides(c);
+           }
+           @Override
+           public <T> T get(Class <?> T){
+               if(T.equals(jmri.AddressedProgrammerManager.class)){
+                  return (T) jmri.InstanceManager.getDefault(T);
+               }
+               return super.get(T);
+           }
+        };
+        Assert.assertTrue("null consist manager",t.provides(jmri.ConsistManager.class));
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initDebugCommandStation();
+        JUnitUtil.initDebugProgrammerManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemoTest.class);
 
 }

@@ -88,5 +88,5 @@ public class DnDTableImportExportHandler extends DnDTableExportHandler {
         }
         return false;
     }
-    private final static Logger log = LoggerFactory.getLogger(DnDTableImportExportHandler.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DnDTableImportExportHandler.class);
 }

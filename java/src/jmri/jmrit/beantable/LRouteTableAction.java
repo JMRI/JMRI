@@ -22,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -358,10 +359,10 @@ public class LRouteTableAction extends AbstractTableAction {
     JTextField soundFile = new JTextField(30);
     JTextField scriptFile = new JTextField(30);
 
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
-    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
     boolean routeDirty = false;  // true to fire reminder to save work
 
@@ -510,9 +511,7 @@ public class LRouteTableAction extends AbstractTableAction {
         _userName.setText(logix.getUserName());
         String logixSysName = logix.getSystemName();
         int numConditionals = logix.getNumConditionals();
-        if (log.isDebugEnabled()) {
-            log.debug("setupEdit: logixSysName= " + logixSysName + ", numConditionals= " + numConditionals);
-        }
+        log.debug("setupEdit: logixSysName= {}, numConditionals= {}", logixSysName, numConditionals);
         for (int i = 0; i < numConditionals; i++) {
             String cSysName = logix.getConditionalByNumberOrder(i);
             switch (getRouteConditionalType(logixSysName, cSysName)) {
@@ -542,7 +541,8 @@ public class LRouteTableAction extends AbstractTableAction {
             _newRouteButton.doClick();
         }
         createButton.setVisible(false);
-    }   // setupEdit
+        _addFrame.setTitle(rbx.getString("LRouteEditTitle"));
+    }
 
     /**
      * Get the type letter from the possible LRoute conditional.
@@ -601,10 +601,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         soundFile.setText(action.getActionString());
                         continue;
                     default:
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                         continue;
                 }
                 String name = action.getDeviceName();
@@ -614,10 +614,10 @@ public class LRouteTableAction extends AbstractTableAction {
                     elt = _outputMap.get(key);
                 }
                 if (elt == null) {
-                    javax.swing.JOptionPane.showMessageDialog(
+                    JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                     new Object[]{action.toString(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                 } else {
                     elt.setIncluded(true);
                     elt.setState(action.getActionData());
@@ -625,10 +625,10 @@ public class LRouteTableAction extends AbstractTableAction {
                     if (k == 0) {
                         onChange = change;
                     } else if (change != onChange) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("OnChangeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
@@ -676,10 +676,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         break;
                     default:
                         if (!LOGIX_INITIALIZER.equals(variable.getName())) {
-                            javax.swing.JOptionPane.showMessageDialog(
+                            JOptionPane.showMessageDialog(
                                     _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                             new Object[]{variable.toString(), c.getSystemName()}),
-                                    rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                    rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                         }
                         continue;
                 }
@@ -698,10 +698,10 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
                 if (elt == null) {
                     if (!LOGIX_INITIALIZER.equals(name)) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                         new Object[]{variable.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     elt.setIncluded(true);
@@ -724,10 +724,10 @@ public class LRouteTableAction extends AbstractTableAction {
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 if (action.getType() != Conditional.ACTION_SET_SENSOR) {
-                    javax.swing.JOptionPane.showMessageDialog(
+                    JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn1"),
                                     new Object[]{action.toString(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                 } else {
                     String name = action.getDeviceName();
                     String key = SENSOR_TYPE + name;
@@ -736,16 +736,16 @@ public class LRouteTableAction extends AbstractTableAction {
                         element = _alignMap.get(key);
                     }
                     if (element == null) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
 
                     } else if (!name.equals(action.getDeviceName())) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn2"),
                                         new Object[]{action.toString(), action.getDeviceName(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
 
                     } else {
                         element.setIncluded(true);
@@ -786,10 +786,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         break;
                     default:
                         if (!LOGIX_INITIALIZER.equals(variable.getName())) {
-                            javax.swing.JOptionPane.showMessageDialog(
+                            JOptionPane.showMessageDialog(
                                     _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                             new Object[]{variable.toString(), c.getSystemName()}),
-                                    rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                    rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                         }
                         continue;
                 }
@@ -820,19 +820,19 @@ public class LRouteTableAction extends AbstractTableAction {
             ArrayList<RouteOutputElement> tList = makeTurnoutLockList();
             ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
             if (actionList.size() != tList.size()) {
-                javax.swing.JOptionPane.showMessageDialog(
+                JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn1"),
                                 new Object[]{Integer.toString(tList.size()), c.getSystemName(),
                                     Integer.toString(actionList.size())}),
-                        rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                        rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
             }
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 if (action.getType() != Conditional.ACTION_LOCK_TURNOUT) {
-                    javax.swing.JOptionPane.showMessageDialog(
+                    JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn2"),
                                     new Object[]{action.getDeviceName(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                 } else {
                     String name = action.getDeviceName();
                     boolean found = false;
@@ -845,10 +845,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         }
                     }
                     if (!found) {
-                        javax.swing.JOptionPane.showMessageDialog(
+                        JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn3"),
                                         new Object[]{name, c.getSystemName()}),
-                                rbx.getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
@@ -861,9 +861,11 @@ public class LRouteTableAction extends AbstractTableAction {
      * @param e the action event
      */
     void cancelPressed(ActionEvent e) {
-        Logix logix = checkNamesOK();
-        if (logix != null) {
-            logix.activateLogix();
+        if (_addFrame.getTitle().equals(rbx.getString("LRouteEditTitle"))) { // Warnings shown are useless when cancelling Add New LRoute
+            Logix logix = checkNamesOK();
+            if (logix != null) {
+                logix.activateLogix();
+            }
         }
         clearPage();
     }
@@ -877,13 +879,16 @@ public class LRouteTableAction extends AbstractTableAction {
         _addFrame.setVisible(true);
         _systemName.setEnabled(true);
         _userName.setEnabled(true);
+        _addFrame.setTitle(rbx.getString("LRouteAddTitle"));
     }
 
-    // Set up window
+    /**
+     * Set up Create/Edit LRoute pane
+     */
     void makeEditWindow() {
         if (_addFrame == null) {
             buildLists();
-            _addFrame = new JmriJFrame(rbx.getString("AddTitle"), false, false);
+            _addFrame = new JmriJFrame(rbx.getString("LRouteAddTitle"), false, false);
             _addFrame.addHelpMenu("package.jmri.jmrit.beantable.LRouteAddEdit", true);
             _addFrame.setLocation(100, 30);
 
@@ -943,14 +948,19 @@ public class LRouteTableAction extends AbstractTableAction {
             tab1.add(_typePanel);
             tab1.add(Box.createVerticalGlue());
 
-            // add buttons - Add Route button
+            // add buttons
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout());
+            // Cancel button
+            pb.add(cancelButton);
+            cancelButton.addActionListener(this::cancelPressed);
+            cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
+            cancelButton.setName("CancelButton");
+            // Add Route button
             pb.add(createButton);
             createButton.addActionListener(this::createPressed);
             createButton.setToolTipText(rbx.getString("CreateHint"));
             createButton.setName("CreateButton");
-
             // Delete Route button
             pb.add(deleteButton);
             deleteButton.addActionListener(this::deletePressed);
@@ -962,12 +972,6 @@ public class LRouteTableAction extends AbstractTableAction {
             });
             updateButton.setToolTipText(rbx.getString("UpdateHint"));
             updateButton.setName("UpdateButton");
-
-            // Cancel button
-            pb.add(cancelButton);
-            cancelButton.addActionListener(this::cancelPressed);
-            cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
-            cancelButton.setName("CancelButton");
 
             // Show the initial buttons, and hide the others
             cancelButton.setVisible(true);
@@ -1268,9 +1272,9 @@ public class LRouteTableAction extends AbstractTableAction {
 
     void showMessage(String msg) {
 
-        javax.swing.JOptionPane.showMessageDialog(
+        JOptionPane.showMessageDialog(
                 _addFrame, rbx.getString(msg), Bundle.getMessage("WarningTitle"),
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+                JOptionPane.WARNING_MESSAGE);
     }
 
     boolean checkNewNamesOK() {
@@ -1350,7 +1354,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             try {
-                soundFile.setText(soundChooser.getSelectedFile().getCanonicalPath());
+                soundFile.setText(FileUtil.getPortableFilename(soundChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
                 log.error("exception setting sound file: " + e);
             }
@@ -1371,7 +1375,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             try {
-                scriptFile.setText(scriptChooser.getSelectedFile().getCanonicalPath());
+                scriptFile.setText(FileUtil.getPortableFilename(scriptChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
                 log.error("exception setting script file: " + e);
             }
@@ -1533,9 +1537,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
             }
             if (actionList.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(
+                JOptionPane.showMessageDialog(
                         _addFrame, rbx.getString("noAction"),
-                        rbx.getString("addErr"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                        rbx.getString("addErr"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } else {
@@ -1600,9 +1604,9 @@ public class LRouteTableAction extends AbstractTableAction {
             }
         }
         if (numConds == 1) {
-            javax.swing.JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                     _addFrame, rbx.getString("noVars"),
-                    rbx.getString("addErr"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                    rbx.getString("addErr"), JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -1741,10 +1745,10 @@ public class LRouteTableAction extends AbstractTableAction {
             if (vList.size() > 0) {
                 numConds = makeAlignConditional(numConds, aList, vList, logix, sName, uName);
             } else {
-                javax.swing.JOptionPane.showMessageDialog(
+                JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("NoAlign"),
                                 new Object[]{name, sensor.getAlignType()}),
-                        Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }
         ///////////////// Make Lock Conditional //////////////////////////
@@ -1795,7 +1799,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create a new route conditional.
+     * Create a new Route conditional.
      *
      * @param numConds number of existing route conditionals
      * @param actionList actions to take in conditional
@@ -1884,12 +1888,10 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(_addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorLRouteAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(_addFrame,
+                Bundle.getMessage("ErrorLRouteAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -2435,8 +2437,8 @@ public class LRouteTableAction extends AbstractTableAction {
     private static final String SET_TO_CLOSED = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateClosed")); //rbx.getString("xSetClosed");
     private static final String SET_TO_THROWN = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateThrown")); //rbx.getString("xSetThrown");
     private static final String SET_TO_TOGGLE = Bundle.getMessage("SetBeanState", "", Bundle.getMessage("Toggle")); //rbx.getString("xSetToggle");
-    private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOn")); //rbx.getString("xSetLightOn");
-    private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOff")); //rbx.getString("xSetLightOff");
+    private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOn")); //rbx.getString("xSetLightOn");
+    private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOff")); //rbx.getString("xSetLightOff");
     private static final String SET_TO_DARK = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateDark")); //rbx.getString("xSetDark");
     private static final String SET_TO_LIT = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("ColumnHeadLit")); //rbx.getString("xSetLit");
     private static final String SET_TO_HELD = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateHeld")); //rbx.getString("xSetHeld");
@@ -3018,5 +3020,5 @@ public class LRouteTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleLRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class);
 }

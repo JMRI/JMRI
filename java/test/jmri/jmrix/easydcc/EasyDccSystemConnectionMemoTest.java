@@ -8,29 +8,22 @@ import org.junit.Test;
 
 /**
  * JUnit tests for the EasyDccSystemConnectionMemo class
- * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class EasyDccSystemConnectionMemoTest {
+public class EasyDccSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    private EasyDccSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo); 
-    }
-
+    @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
-       memo = new EasyDccSystemConnectionMemo();
+       JUnitUtil.setUp();
+       scm = new EasyDccSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
+
 }

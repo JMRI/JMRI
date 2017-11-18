@@ -69,7 +69,7 @@
       or Bean Settings. Paths and Bean Settings are not shown in
       the Block Table, and are described here only for
       completeness.<br>
-      Paths may however be deleted using the Paths menu.</p>
+      Paths may however be deleted using the <b>Paths</b> menu.</p>
 
       <h3>The Block Table</h3>
 
@@ -87,27 +87,18 @@
       <h4>Block Table controls</h4>
 
       <ul>
-        <li>Below the Block Table you'll find the <b>Add...</b>
-        button</li>
+        <li>Below the Block Table you'll find the
+        <a href="../../package/jmri/jmrit/beantable/BlockAddEdit.shtml">Add...</a>
+        button to add new Blocks.</li>
 
-        <li>The <b>Paths</b> menu contains a Delete Paths...
-        item</li>
+        <li>The <b>Paths</b> menu contains a <b>Delete Paths...</b>
+        item.</li>
 
         <li>The <b>Speeds</b> menu lets you set system wide
         Defaults...</li>
-      </ul><a name="addBlock" id="addBlock"></a>
+      </ul>
 
-      <h3>Adding a new Block</h3>
-
-      <p>To add a new Block, follow this <a href=
-      "../../package/jmri/jmrit/beantable/BlockAddEdit.shtml">procedure</a></p>
-
-      <h3>Editing an existing Block</h3>
-
-      <p>To check or change the properties of a Block, follow this
-      <a href=
-      "../../package/jmri/jmrit/beantable/BlockEdit.shtml">procedure</a></p>
-
+      <a name="addBlock" id="addBlock"></a>
       <h3>Saving Blocks to disk</h3>
 
       <p>Blocks are saved in your layout configuration file, along
@@ -118,8 +109,9 @@
       in the <b>Panel</b> menu. Note that the occupied/unoccupied
       state of each Block is not saved in the configuration file.
       When Blocks are loaded from a configuration file, their
-      status is read from the Sensors. 
-      <!--#include virtual="/Footer" --></p>
+      status is read from the Sensors.</p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

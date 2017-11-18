@@ -114,12 +114,6 @@
 
      <tocitem text="The Basic Programmer " target="manual.DecoderPro3.Basic_Start"/>
 
-     <tocitem text="Reading Data " target="manual.DecoderPro.Basic_BasicPane_Read Data"/>
-
-     <tocitem text="Writing to Decoder " target="manual.DecoderPro.Basic_BasicPane_Write Data"/>
-
-     <tocitem text="Saving to a File " target="manual.DecoderPro.Basic_BasicPane_Save Data"/>
-
      <tocitem text="What Next? " target="manual.DecoderPro3.Basic_BasicPane_DoMore"/>
 
     </tocitem>
@@ -300,7 +294,11 @@
 
    <tocitem text="Add/Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
-   <tocitem text="Add/Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
+   <tocitem text="Add/Edit Conditionals using the List Editor " target="package.jmri.jmrit.conditional.ConditionalListEditor"/>
+
+   <tocitem text="Add/Edit Conditionals using the Tree Editor " target="package.jmri.jmrit.conditional.ConditionalTreeEditor"/>
+
+   <tocitem text="Conditional State Variable and Action List " target="package.jmri.jmrit.conditional.StateVariableActionList"/>
 
   </tocitem>
   <tocitem text="LRoutes " target="html.tools.LRoutes">
@@ -420,7 +418,7 @@
 
    <tocitem text="NXWarrants " target="package.jmri.jmrit.logix.NXWarrant"/>
 
-   <tocitem text="Signal Controlled Warrants " target="package.jmri.jmrit.logix.SCWarrant"/>
+   <tocitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
    <tocitem text="The Occupancy Block Tables " target="package.jmri.jmrit.logix.OBlockTable"/>
 
@@ -428,12 +426,6 @@
 
   </tocitem>
   <tocitem text="USS CTC Tools " target="html.tools.uss.index">
-   <tocitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
-
-   <tocitem text="Signal Lever " target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
-
-   <tocitem text="Code Button " target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
-
    <tocitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
 
    <tocitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>

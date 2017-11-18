@@ -63,9 +63,6 @@ public class OperationsSwingTestCase {
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
 
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -82,9 +79,6 @@ public class OperationsSwingTestCase {
 
     @After
     public void tearDown() throws Exception {
-        // restore locale
-        Locale.setDefault(Locale.getDefault());
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

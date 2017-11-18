@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    jmri.jmrix.rfid.swing.serialmon.PackageTest.class,
    RfidMenuTest.class,
-   RfidComponentFactoryTest.class
+   RfidComponentFactoryTest.class,
+   RfidNamedPaneActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.rfid.swing package

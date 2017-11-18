@@ -136,7 +136,7 @@ public class Throttle extends AbstractThrottle {
 
     @Override
     public LocoAddress getLocoAddress() {
-        log.error("getLocoAddress not fully implemented yet");
+        //log.error("getLocoAddress not fully implemented yet");
         return new DccLocoAddress(address, address > 100);   // always short address if <100
     }
 
@@ -146,6 +146,6 @@ public class Throttle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Throttle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Throttle.class);
 
 }

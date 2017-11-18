@@ -27,10 +27,12 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h2>JMRI Layout Automation</h2>JMRI applications provide a
+      <h2>JMRI Layout Automation</h2>
+
+      <p>JMRI applications provide a
       large number of ways of automating your layout, ranging from
       simple fill-in forms to full-fledged scripting and
-      programming capabilities. These include:
+      programming capabilities. These include:</p>
 
       <dl>
         <dt><a href="../signaling/index.shtml">Signaling</a></dt>
@@ -43,6 +45,11 @@
 
         <dd>A simple form of automation is to define Routes, which
         allow you to simplify the control of your turnouts.</dd>
+
+        <dt><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dt>
+
+        <dd>Dispatcher lets you dispatch and (automatically) run
+          trains on layouts with <a href="../../apps/PanelPro/PanelPro.shtml">Layout Editor Panels</a>.</dd>
 
         <dt><a href="../Logix.shtml">Logix</a></dt>
 
@@ -60,7 +67,8 @@
 
         <dd>The JMRI libraries greatly simplify writing a program
         to make your layout do exactly what you want.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

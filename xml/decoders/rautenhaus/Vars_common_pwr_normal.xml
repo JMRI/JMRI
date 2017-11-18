@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2017-07-16</date>
+      <authorinitials>RK</authorinitials>
+    </revision>
+  </revhistory>
+  <!-- MOTOR SETTINGS -->
+  <variable item="Vhigh" CV="5" default="92">
+    <decVal min="0" max="127"/>
+    <label>Vhigh</label>
+    <label xml:lang="it">Volt Massimi</label>
+    <label xml:lang="fr">Vmax</label>
+    <label xml:lang="de">Höchstgeschwindigkeit</label>
+  </variable>
+  <variable CV="49" default="1" item="Motor Option 2" tooltip="0=1ms, 1=2ms, 2=4ms, 3=8ms">
+    <decVal min="0" max="3"/>
+    <label>Impulse width</label>
+    <label xml:lang="it">Largh.Impulsi</label>
+    <label xml:lang="fr">Largeur d'impulsion</label>
+    <label xml:lang="de">Impulsbreite</label>
+  </variable>
+  <variable CV="61" default="62" item="Speed in shunting mode" tooltip="CV61 (0-127)">
+    <decVal min="0" max="127"/>
+    <label>Speed in shunting mode</label>
+    <label xml:lang="it">Velocità in Manovra</label>
+    <label xml:lang="fr">Vitesse en mode manoeuvre</label>
+    <label xml:lang="de">Rangiergang Geschwindigkeit</label>
+  </variable>
+</variables>

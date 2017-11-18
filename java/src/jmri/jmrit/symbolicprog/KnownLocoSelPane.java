@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.progsupport.ProgModeSelector;
@@ -117,7 +118,7 @@ public class KnownLocoSelPane extends LocoSelPane {
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyLoco id = new IdentifyLoco(p) {
             private KnownLocoSelPane who = me;
@@ -198,6 +199,6 @@ public class KnownLocoSelPane extends LocoSelPane {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class);
 
 }

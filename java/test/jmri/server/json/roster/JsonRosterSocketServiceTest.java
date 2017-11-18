@@ -1,6 +1,5 @@
 package jmri.server.json.roster;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -28,8 +27,8 @@ public class JsonRosterSocketServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
         JUnitUtil.initConfigureManager();
         InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
         // clear the last message (if any) from the connection
@@ -37,10 +36,7 @@ public class JsonRosterSocketServiceTest {
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
     /**
      * Test of listen method, of class JsonRosterSocketService.

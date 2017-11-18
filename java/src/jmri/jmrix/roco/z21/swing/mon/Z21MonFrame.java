@@ -29,7 +29,7 @@ public class Z21MonFrame extends jmri.jmrix.AbstractMonFrame implements Z21Liste
 
     @Override
     protected String title() {
-        return "Z21 Traffic";
+        return Bundle.getMessage("Z21TrafficTitle");
     }
 
     // Z21 Listener methods

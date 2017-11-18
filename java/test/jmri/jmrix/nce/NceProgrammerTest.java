@@ -6,11 +6,11 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
 import jmri.JmriException;
-import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
+import jmri.ProgrammingMode;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,9 +71,9 @@ public class NceProgrammerTest extends TestCase {
         Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
     }
 
-    // Test names ending with "String" are for the new writeCV(String, ...) 
-    // etc methods.  If you remove the older writeCV(int, ...) tests, 
-    // you can rename these. Note that not all (int,...) tests may have a 
+    // Test names ending with "String" are for the new writeCV(String, ...)
+    // etc methods.  If you remove the older writeCV(int, ...) tests,
+    // you can rename these. Note that not all (int,...) tests may have a
     // String(String, ...) test defined, in which case you should create those.
     public void xtestWriteCvSequenceAsciiString() throws JmriException, Exception {
 
@@ -153,7 +153,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
         p.writeCV(3, 12, l);
@@ -177,7 +177,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
         p.writeCV("3", 12, l);
@@ -201,7 +201,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
         p.writeCV(3, 12, l);
@@ -225,7 +225,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
         p.writeCV("3", 12, l);
@@ -327,7 +327,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV(3, l);
@@ -356,7 +356,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV(3, l);
@@ -533,6 +533,6 @@ public class NceProgrammerTest extends TestCase {
     // apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     // protected void setUp() { log4jfixtureInst.setUp(); }
     // protected void tearDown() { log4jfixtureInst.tearDown(); }
-    private final static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class);
 
 }

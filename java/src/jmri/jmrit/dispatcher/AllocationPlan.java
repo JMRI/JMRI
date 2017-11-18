@@ -134,7 +134,7 @@ public class AllocationPlan {
         if ((_atOne == null) || (_atTwo == null)) {
             return false;
         }
-        java.util.ArrayList<AllocatedSection> aSections = _atOne.getAllocatedSectionList();
+        java.util.List<AllocatedSection> aSections = _atOne.getAllocatedSectionList();
         boolean complete = false;
         for (int i = 0; i < aSections.size(); i++) {
             if ((aSections.get(i).getSection() == _tSectionOne)
@@ -160,5 +160,5 @@ public class AllocationPlan {
         // does nothing for now
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AllocationPlan.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AllocationPlan.class);
 }

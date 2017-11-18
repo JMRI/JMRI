@@ -1,6 +1,5 @@
 package jmri.jmrit.signalling;
 
-import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.SignalMast;
@@ -10,8 +9,6 @@ import jmri.util.JmriJFrame;
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingGuiTools {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingGuiTools");
 
     private SignallingGuiTools() {
     }
@@ -26,12 +23,12 @@ public class SignallingGuiTools {
      * @param newMast new main signal mast (object) to attach to SML
      */
     static public void updateSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
-        Object[] options = {Bundle.getMessage("ButtonUpdate"),
-            rb.getString("LeaveButton")};
+        Object[] options = {Bundle.getMessage("ButtonUpdate"),  // NOI18N
+            Bundle.getMessage("LeaveButton")};  // NOI18N
         int n = JOptionPane.showOptionDialog(frame,
-                java.text.MessageFormat.format(rb.getString("UpdateLogic"),
+                java.text.MessageFormat.format(Bundle.getMessage("UpdateLogic"),  // NOI18N
                         new Object[]{oldMast.getDisplayName(), newMast.getDisplayName()}),
-                "Update Logic",
+                "Update Logic",  // NOI18N
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -51,12 +48,12 @@ public class SignallingGuiTools {
      * @param newMast signal mast (object) #2
      */
     static public void swapSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
-        Object[] options = {Bundle.getMessage("ButtonUpdate"),
-            rb.getString("LeaveButton")};
+        Object[] options = {Bundle.getMessage("ButtonUpdate"),  // NOI18N
+            Bundle.getMessage("LeaveButton")};  // NOI18N
         int n = JOptionPane.showOptionDialog(frame,
-                java.text.MessageFormat.format(rb.getString("SwapLogic"),
+                java.text.MessageFormat.format(Bundle.getMessage("SwapLogic"),  // NOI18N
                         new Object[]{oldMast.getDisplayName(), newMast.getDisplayName()}),
-                rb.getString("UpdateLogicTitle"),
+                Bundle.getMessage("UpdateLogicTitle"),  // NOI18N
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -76,12 +73,12 @@ public class SignallingGuiTools {
      * @return true if user confirmed delete request
      */
     static public boolean removeSignalMastLogic(JmriJFrame frame, SignalMast mast) {
-        Object[] options = {rb.getString("RemoveButton"),
-            rb.getString("LeaveButton")};
+        Object[] options = {Bundle.getMessage("RemoveButton"),  // NOI18N
+            Bundle.getMessage("LeaveButton")};  // NOI18N
         int n = JOptionPane.showOptionDialog(frame,
-                java.text.MessageFormat.format(rb.getString("RemoveLogic"),
+                java.text.MessageFormat.format(Bundle.getMessage("RemoveLogic"),  // NOI18N
                         new Object[]{mast.getDisplayName()}),
-                rb.getString("RemoveLogicTitle"),
+                Bundle.getMessage("RemoveLogicTitle"),  // NOI18N
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -104,12 +101,12 @@ public class SignallingGuiTools {
      * @param mast the main signal mast (object) selected on that frame
      */
     static public void removeAlreadyAssignedSignalMastLogic(JmriJFrame frame, SignalMast mast) {
-        Object[] options = {rb.getString("RemoveButton"),
-            rb.getString("LeaveButton")};
+        Object[] options = {Bundle.getMessage("RemoveButton"),  // NOI18N
+            Bundle.getMessage("LeaveButton")};  // NOI18N
         int n = JOptionPane.showOptionDialog(frame,
-                java.text.MessageFormat.format(rb.getString("RemoveAlreadyLogic"),
+                java.text.MessageFormat.format(Bundle.getMessage("RemoveAlreadyLogic"),  // NOI18N
                         new Object[]{mast.getDisplayName()}),
-                rb.getString("RemoveLogicTitle"),
+                Bundle.getMessage("RemoveLogicTitle"),  // NOI18N
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,

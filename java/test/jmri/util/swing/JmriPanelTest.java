@@ -1,12 +1,10 @@
 package jmri.util.swing;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,25 +12,44 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriPanelTest {
 
+    protected JmriPanel panel = null;
+    protected String helpTarget = null;
+    protected String title = null;
+
     @Test
     public void testCTor() {
-        JmriPanel t = new JmriPanel();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",panel);
+    }
+
+    @Test
+    public void testInitComponents() throws Exception{
+        // for now, just makes ure there isn't an exception.
+        panel.initComponents();
+    }
+
+    @Test
+    public void testGetHelpTarget(){
+        Assert.assertEquals("help target",helpTarget,panel.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        Assert.assertEquals("title",title,panel.getTitle());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        panel = new JmriPanel();
+        helpTarget = "package.jmri.util.swing.JmriPanel";
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriPanelTest.class);
 
 }

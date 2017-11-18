@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * <ul>
  * <li> SHORT_TIMEOUT, the "short timer", is on operations other than reads
  * <li> LONG_TIMEOUT, the "long timer", is for the "read from decoder" step, which can take a long time.
- *</ul>
+ * </ul>
  * The duration of these can be adjusted by changing the values of those constants in subclasses.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2012, 2013
@@ -299,6 +299,6 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class);
 
 }

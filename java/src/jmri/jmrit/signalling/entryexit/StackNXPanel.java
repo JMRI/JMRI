@@ -35,7 +35,7 @@ public class StackNXPanel extends JPanel {
         entryExitPanel.setDoubleBuffered(true);
         entryExitPanel.setLayout(new BoxLayout(entryExitPanel, BoxLayout.Y_AXIS));
         entryExitPanel.add(listScrollPane);
-        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,8 +47,8 @@ public class StackNXPanel extends JPanel {
                 manager.cancelStackedRoute(listToDest.get(list.getSelectedValue()), false);
                 } else {
                     JOptionPane.showMessageDialog(entryExitPanel,
-                            Bundle.getMessage("Error1", Bundle.getMessage("ButtonCancel")),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("Error1", Bundle.getMessage("ButtonCancel")),  // NOI18N
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);  // NOI18N
                     // Keep Panel open
                 }
             }

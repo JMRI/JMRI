@@ -533,9 +533,6 @@ public class SlipIconAdder extends IconAdder {
         }
     }
 
-    /**
-     *
-     */
     void delete(int index) {
         if (index >= _order.size()) {
             return;
@@ -701,5 +698,5 @@ public class SlipIconAdder extends IconAdder {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SlipIconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlipIconAdder.class);
 }

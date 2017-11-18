@@ -1,7 +1,7 @@
 package jmri.jmrix.cmri.swing;
 
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.CMRIMenu;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Provide access to Swing components for the CMRI subsystem.

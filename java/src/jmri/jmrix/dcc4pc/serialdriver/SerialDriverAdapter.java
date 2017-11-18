@@ -31,7 +31,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new Dcc4PcSystemConnectionMemo());
-        option1Name = "Programmer";
+        option1Name = "Programmer"; // NOI18N
         options.put(option1Name, new Option("Programmer : ", validOption1()));
         setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
     }
@@ -50,7 +50,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             }
             try {
                 activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+                configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
             }
@@ -112,7 +112,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             }
             for (int i = 0; i < connList.size(); i++) {
                 SystemConnectionMemo scm = connList.get(i);
-                if (scm.provides(jmri.ProgrammerManager.class) && (!scm.getUserName().equals(userName))) {
+                if ((scm.provides(jmri.AddressedProgrammerManager.class) || scm.provides(jmri.GlobalProgrammerManager.class))
+                        && (!scm.getUserName().equals(userName))) {
                     progConn.add(scm.getUserName());
                 }
             }
@@ -214,6 +215,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

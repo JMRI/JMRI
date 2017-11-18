@@ -16,7 +16,7 @@ import jmri.SignalHeadManager;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public class AbstractSignalHeadManager extends AbstractManager
+public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
         implements SignalHeadManager, java.beans.PropertyChangeListener {
 
     public AbstractSignalHeadManager() {
@@ -54,12 +54,12 @@ public class AbstractSignalHeadManager extends AbstractManager
 
     @Override
     public SignalHead getBySystemName(String name) {
-        return (SignalHead) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public SignalHead getByUserName(String key) {
-        return (SignalHead) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override

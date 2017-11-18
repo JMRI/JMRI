@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     StackMonFrameTest.class,
     StackMonActionTest.class,
-    StackMonDataModelTest.class
+    StackMonDataModelTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }

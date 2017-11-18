@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -8,31 +9,29 @@ import javax.swing.JDialog;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
-import junit.extensions.jfcunit.TestHelper;
-import junit.extensions.jfcunit.eventdata.EventDataConstants;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.util.JmriJFrame;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JComponentOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
- * Swing jfcUnit tests for the SensorIcon
+ * Swing tests for the SensorIcon
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author  Paul Bender Copyright 2017
  */
-public class SensorIconWindowTest extends jmri.util.SwingTestCase {
+public class SensorIconWindowTest {
 
-    @SuppressWarnings("unchecked") // DialogFinder not parameterized
+    @Test
     public void testPanelEditor() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("SensorIconWindowTest.testPanelEditor");
-
-        JComponent jf = panel.getTargetPanel();
 
         SensorIcon icon = new SensorIcon(panel);
         panel.putItem(icon);
@@ -44,71 +43,50 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         icon.setDisplayLevel(Editor.SENSORS);	//daboudreau added this for Win7
 
         panel.setVisible(true);
-        //jf.setVisible(true);
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
-        java.awt.Point location = new java.awt.Point(
-                icon.getLocation().x + icon.getSize().width / 2,
-                icon.getLocation().y + icon.getSize().height / 2);
+        JComponentOperator co = new JComponentOperator(panel.getTargetPanel());
+        int xloc = icon.getLocation().x + icon.getSize().width / 2;
+        int yloc = icon.getLocation().y + icon.getSize().height / 2;
+        co.clickMouse(xloc,yloc,1);
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        jf, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
+        // if it's still false after max wait it throws an assert.
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() != Sensor.UNKNOWN;
+        }, "state not still unknown after one click");
 
         Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
 
         // Click icon change state to inactive
-        getHelper().enterClickAndLeave(new MouseEventData(this, icon));
+        co.clickMouse(xloc,yloc,1);
+
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() != Sensor.INACTIVE;
+        }, "state not still inactive after two clicks");
 
         Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
 
-        // if OK to here, close window
-        TestHelper.disposeWindow(panel.getTargetFrame(), this);
+        // close the panel editor frame
+        JFrameOperator eo = new JFrameOperator(panel);
+        eo.requestClose();
 
-        // that pops dialog, find and press Delete
-        List<JDialog> dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
-        JDialog d = dialogList.get(0);
-
-        // Find the button that deletes the panel
-        AbstractButtonFinder bf = new AbstractButtonFinder("Delete Panel");
-        JButton button = (JButton) bf.find(d, 0);
-        Assert.assertNotNull(button);
-
-        // Click button to delete panel and close window
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
-        // that pops dialog, find and press Yes - Delete
-        dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
-        d = dialogList.get(0);
-
-        // Find the button that deletes the panel
-        bf = new AbstractButtonFinder("Yes - Dele");
-        button = (JButton) bf.find(d, 0);
-        Assert.assertNotNull(button);
-
-        // Click button to delete panel and close window
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
+        // close the panel target frame.
+        EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
+        to.closeFrameWithConfirmations();
     }
 
-    @SuppressWarnings("unchecked") // DialogFinder not parameterized
+    @Test
     public void testLayoutEditor() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
+
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("SensorIconWindowTest.testLayoutEditor");
-
-        JComponent jf = panel.getTargetPanel();
 
         SensorIcon icon = new SensorIcon(panel);
         panel.putItem(icon);
@@ -122,93 +100,56 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         icon.setDisplayLevel(Editor.SENSORS); //daboudreau added this for Win7
 
         panel.setVisible(true);
-        //jf.setVisible(true);
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
-        java.awt.Point location = new java.awt.Point(
-                icon.getLocation().x + icon.getSize().width / 2,
-                icon.getLocation().y + icon.getSize().height / 2);
+        JComponentOperator co = new JComponentOperator(panel.getTargetPanel());
+        int xloc = icon.getLocation().x + icon.getSize().width / 2;
+        int yloc = icon.getLocation().y + icon.getSize().height / 2;
+        co.clickMouse(xloc,yloc,1);
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        jf, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
+        // if it's still false after max wait it throws an assert.
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() != Sensor.UNKNOWN;
+        }, "state not still unknown after one click");
+
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
+        // if it's still false after max wait it throws an assert.
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() != Sensor.UNKNOWN;
+        }, "state not still unknown after one click");
 
         Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
 
         // Click icon change state to inactive
-        getHelper().enterClickAndLeave(new MouseEventData(this, icon));
+        co.clickMouse(xloc,yloc,1);
+
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() != Sensor.INACTIVE;
+        }, "state not still inactive after two clicks");
 
         Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
 
-        // if OK to here, close window
-        TestHelper.disposeWindow(panel.getTargetFrame(), this);
-
-        // that pops dialog, find and press Delete
-        List<JDialog> dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
-        JDialog d = dialogList.get(0);
-
-        // Find the button that deletes the panel
-        AbstractButtonFinder bf = new AbstractButtonFinder("Delete Panel");
-        JButton button = (JButton) bf.find(d, 0);
-        Assert.assertNotNull(button);
-
-        // Click button to delete panel and close window
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
-        // that pops dialog, find and press Yes - Delete
-        dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
-        d = dialogList.get(0);
-
-        // Find the button that deletes the panel
-        bf = new AbstractButtonFinder("Yes - Dele");
-        button = (JButton) bf.find(d, 0);
-        Assert.assertNotNull(button);
-
-        // Click button to delete panel and close window
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
-    }
-
-    // from here down is testing infrastructure
-    public SensorIconWindowTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SensorIconWindowTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SensorIconWindowTest.class);
-        return suite;
+        // close the panel editor frame
+        EditorFrameOperator to = new EditorFrameOperator(panel);
+        to.closeFrameWithConfirmations();
     }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initShutDownManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 }

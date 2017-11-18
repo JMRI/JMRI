@@ -87,7 +87,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * @param pName Used as a system/user name to lookup the SignalHead object
      */
     public void setSignalHead(String pName) {
-        SignalHead mHead = (SignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getNamedBean(pName);
+        SignalHead mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getNamedBean(pName);
         if (mHead == null) {
             log.warn("did not find a SignalHead named " + pName);
         } else {
@@ -119,8 +119,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         if (key == null) {
             return false;
         }
-        if (key.equals(rbean.getString("SignalHeadStateDark"))
-                || key.equals(rbean.getString("SignalHeadStateHeld"))) {
+        if (key.equals(Bundle.getMessage("SignalHeadStateDark"))
+                || key.equals(Bundle.getMessage("SignalHeadStateHeld"))) {
             if (log.isDebugEnabled()) {
                 log.debug(key + " is a valid state. ");
             }
@@ -141,9 +141,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * Place icon by its bean state name key found in
-     * jmri.NamedBeanBundle.properties Place icon by its localized bean state
-     * name
+     * Place icon by its localized bean state name.
+     *
+     * @param state the localized state
+     * @param icon  the icon to place
      */
     public void setIcon(String state, NamedIcon icon) {
         if (log.isDebugEnabled()) {
@@ -156,7 +157,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * Get current appearance of the head
+     * Get current appearance of the head.
      *
      * @return An appearance variable from a SignalHead, e.g. SignalHead.RED
      */
@@ -356,7 +357,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
                     super.setText(Bundle.getMessage("Held"));
                 }
                 if (isIcon()) {
-                    super.setIcon(_iconMap.get(rbean.getString("SignalHeadStateHeld")));
+                    super.setIcon(_iconMap.get(Bundle.getMessage("SignalHeadStateHeld")));
                 }
                 return;
             } else if (getLitMode() && !getSignalHead().getLit()) {
@@ -364,7 +365,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
                     super.setText(Bundle.getMessage("Dark"));
                 }
                 if (isIcon()) {
-                    super.setIcon(_iconMap.get(rbean.getString("SignalHeadStateDark")));
+                    super.setIcon(_iconMap.get(Bundle.getMessage("SignalHeadStateDark")));
                 }
                 return;
             }
@@ -443,7 +444,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             setIcons(map2);
         }   // otherwise retain current map
         displayState(getSignalHead().getAppearance());
-//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();
@@ -496,7 +497,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             Entry<String, NamedIcon> entry = it.next();
             String name = entry.getKey();
             NamedIcon icon = entry.getValue();
-            NamedIcon oldIcon = _saveMap.get(name); // setSignalHead() has cleared _iconMap 
+            NamedIcon oldIcon = _saveMap.get(name); // setSignalHead() has cleared _iconMap
             if (log.isDebugEnabled()) {
                 log.debug("key= " + entry.getKey() + ", localKey= " + name
                         + ", newIcon= " + icon + ", oldIcon= " + oldIcon);
@@ -569,8 +570,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * This was added in so that the layout editor can handle the mouseclicked
-     * when zoomed in
+     * Handle mouse clicks when no modifier keys are pressed. Mouse clicks with
+     * modifier keys pressed can be processed by the containing component.
+     *
+     * @param e the mouse click event
      */
     public void performMouseClicked(java.awt.event.MouseEvent e) {
         if (e.isMetaDown() || e.isAltDown()) {
@@ -642,5 +645,5 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadIcon.class);
 }

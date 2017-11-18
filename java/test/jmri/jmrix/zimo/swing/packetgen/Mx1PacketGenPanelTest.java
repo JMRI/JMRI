@@ -1,6 +1,5 @@
 package jmri.jmrix.zimo.swing.packetgen;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,23 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class Mx1PacketGenPanelTest {
+public class Mx1PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testMemoCtor() {
-        Mx1PacketGenPanel action = new Mx1PacketGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        panel = new Mx1PacketGenPanel();
+        helpTarget="package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel";
+        title="MX1_: " + Bundle.getMessage("Title");
     }
 
+    @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

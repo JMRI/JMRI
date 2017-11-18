@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the Marklin system network connection.
+ * Implements NetworkPortAdapter for the Marklin system network connection.
  * <P>
- * This connects an Marklin command station via a UDP connection. Normally
+ * This connects a Marklin command station via a UDP connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
@@ -41,7 +41,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() {
         opened = false;
 
         if (m_HostName == null) {
@@ -113,8 +113,8 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     }
 
     /**
-     * set up all of the other objects to operate with an ECOS command station
-     * connected to this port
+     * Set up all of the other objects to operate with a Marklin command station
+     * connected to this port.
      */
     @Override
     public void configure() {
@@ -131,6 +131,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         return opened;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

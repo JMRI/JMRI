@@ -2,12 +2,13 @@
 package jmri.jmrit.operations.locations;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OpsPropertyChangeListener;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Pool class Last manually cross-checked on ?????
@@ -360,6 +361,7 @@ public class OperationsPoolTest extends OperationsTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
     }
 
     public OperationsPoolTest(String s) {

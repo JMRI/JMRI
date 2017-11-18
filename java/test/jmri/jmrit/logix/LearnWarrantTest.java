@@ -28,9 +28,9 @@ import org.junit.Assert;
  */
 public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
-    OBlockManager _OBlockMgr;
+    private OBlockManager _OBlockMgr;
 //    PortalManager _portalMgr;
-    SensorManager _sensorMgr;
+    private SensorManager _sensorMgr;
 //    TurnoutManager _turnoutMgr;
 
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
@@ -67,14 +67,14 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(frame, Bundle.getMessage("Calculate"));
         flushAWT();
         JUnitUtil.waitFor(() -> {
-            return (frame.getOrders()!=null);
+            return (frame.getOrders() != null);
         }, "Found orders");
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
 
         frame.setTrainInfo("99");
         JUnitUtil.waitFor(() -> {
-            return (frame._speedUtil.getDccAddress()!=null);
+            return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
         jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=99", 99, address.getNumber());
@@ -82,7 +82,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(frame, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
         confirmJOptionPane(frame, Bundle.getMessage("WarningTitle"), "OK");
-//        confirmJOptionPane(frame, Bundle.getMessage("QuestionTitle"), "Yes");
 
         // occupy starting block
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
@@ -90,7 +89,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(frame, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> {
-            return (frame._learnThrottle!=null);
+            return (frame._learnThrottle != null);
         }, "Found throttle");
         Assert.assertNotNull("Throttle not found", frame._learnThrottle.getThrottle());
 
@@ -101,37 +100,41 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         // change address and run
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> {
-            return (frame._speedUtil.getDccAddress()!=null);
+            return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
         address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=111", 111, address.getNumber());
-        
+
         sensor.setState(Sensor.INACTIVE);
 
         sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("ARun"));
-        flushAWT();
 
         final Warrant warrant = w;
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #2.");
-        }, "Train starts to move at 2nd command");
+            return m.endsWith("Cmd #3.");
+        }, "Train starts to move at 3rd command");
 
         sensor = runtimes(route);
+        Assert.assertNotNull("Sensor not null", sensor);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return (warrant.getThrottle()==null);
-        }, "Wait for run to end");
-        String msg = w.getRunModeMessage();
-        Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
+        // wait for done
+        final String name =  w.getDisplayName();
+        jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));}, "warrant not done");
+         
+//        JUnitUtil.waitFor(() -> {
+//            return (warrant.getThrottle() == null);
+ //       }, "Wait for run to end");
+ //       String msg = w.getRunModeMessage();
+//        Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
 //        sensor.setState(Sensor.INACTIVE);
 
         pressButton(frame, Bundle.getMessage("ButtonSave"));
         w = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
         List<ThrottleSetting> commands = w.getThrottleCommands();
-        Assert.assertEquals("11 ThrottleCommands", 11, commands.size());
+        Assert.assertEquals("12 ThrottleCommands", 12, commands.size());
         /*
         for (ThrottleSetting ts: commands) {
             System.out.println(ts.toString());
@@ -145,15 +148,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-//        TestHelper.disposeWindow(panel, this);
-
-        // Dialog has popped up, so handle that. First, locate it.
-//        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
-//        TestHelper.disposeWindow(dialogList.get(0), this);
-
-        flushAWT();
-        // confirm one message logged
-//        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
@@ -168,7 +162,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     private void confirmJOptionPane(java.awt.Container frame, String title, String text) {
         DialogFinder finder = new DialogFinder(title);
         JUnitUtil.waitFor(() -> {
-            return (java.awt.Container)finder.find()!=null;
+            return (java.awt.Container)finder.find() != null;
         }, "Found dialog + \"title\"");
         java.awt.Container pane = (java.awt.Container)finder.find();
         Assert.assertNotNull(title+" JOptionPane not found", pane);
@@ -184,7 +178,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
         flushAWT();
         float speed = 0.1f;
-        if (throttle==null) {
+        if (throttle == null) {
             throw new Exception("recordtimes: No Throttle");
         }
         throttle.setSpeedSetting(speed);
@@ -244,8 +238,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
-         // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -264,9 +256,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,10 +1,10 @@
 package jmri;
 
 import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the ProgrammingMode class
@@ -15,8 +15,8 @@ public class ProgrammingModeTest extends TestCase {
 
     public void testStateCtors() {
         // tests that statics exist, are not equal
-        Assert.assertTrue(DefaultProgrammerManager.PAGEMODE.equals(DefaultProgrammerManager.PAGEMODE));
-        Assert.assertTrue(!DefaultProgrammerManager.REGISTERMODE.equals(DefaultProgrammerManager.PAGEMODE));
+        Assert.assertTrue(ProgrammingMode.PAGEMODE.equals(ProgrammingMode.PAGEMODE));
+        Assert.assertTrue(!ProgrammingMode.REGISTERMODE.equals(ProgrammingMode.PAGEMODE));
     }
 
     // from here down is testing infrastructure

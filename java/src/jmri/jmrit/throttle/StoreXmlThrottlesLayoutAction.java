@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Document;
@@ -76,10 +77,10 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
             java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(5);
 
             // throttle list window
-            children.add(ThrottleFrameManager.instance().getThrottlesListPanel().getXml());
+            children.add(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getXml());
 
             // throttle windows
-            for (Iterator<ThrottleWindow> i = ThrottleFrameManager.instance().getThrottleWindows(); i.hasNext();) {
+            for (Iterator<ThrottleWindow> i = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottleWindows(); i.hasNext();) {
                 ThrottleWindow tw = i.next();
                 Element throttleElement = tw.getXml();
                 children.add(throttleElement);
@@ -106,6 +107,6 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class);
 
 }

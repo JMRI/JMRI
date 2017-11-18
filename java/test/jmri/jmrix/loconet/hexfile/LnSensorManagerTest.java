@@ -2,16 +2,16 @@ package jmri.jmrix.loconet.hexfile;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.loconet.LnSensor;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LnSensor;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.hexfile.LnSensorManagerTurnout class.
@@ -94,14 +94,13 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerTest.class);
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
         Assert.assertNotNull("exists", lnis);
@@ -114,8 +113,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

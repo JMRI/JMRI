@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2010
-  */
+ */
 public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPortController {
 
     // base class. Implementations will provide InputStream and OutputStream
@@ -35,5 +35,3 @@ public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPort
     }
 
 }
-
-

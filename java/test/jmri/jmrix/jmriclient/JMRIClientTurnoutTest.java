@@ -3,10 +3,7 @@ package jmri.jmrix.jmriclient;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JMRIClientTurnoutTest.java
@@ -29,14 +26,12 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "TURNOUT "+ t.getSystemName()+ " CLOSED\n",
                 jcins.outbound.elementAt(jcins.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "TURNOUT "+ t.getSystemName() + " THROWN\n",
                 jcins.outbound.elementAt(jcins.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     @Override

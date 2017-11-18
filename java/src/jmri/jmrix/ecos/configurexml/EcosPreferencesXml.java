@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * opening JMRI or saving the panel file, when connected to an Ecos. It
  * currently serves no other function. The ecos preferences are stored under the
  * connection configuration
- * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
  */
@@ -47,5 +46,5 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosPreferencesXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosPreferencesXml.class);
 }

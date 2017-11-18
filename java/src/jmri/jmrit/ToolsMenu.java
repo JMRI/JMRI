@@ -3,10 +3,11 @@ package jmri.jmrit;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
+import jmri.InstanceManager;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
- * <P>
+ * <p>
  * As a best practice, we are migrating the action names (constructor arguments)
  * out of this class and into the contructors themselves.
  *
@@ -34,13 +35,14 @@ public class ToolsMenu extends JMenu {
         add(programmerMenu);
 
         // disable programmer menu if there's no programmer manager
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null) {
+        if (InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) == null
+                && InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null) {
             programmerMenu.setEnabled(false);
         }
 
         JMenu tableMenu = new JMenu(Bundle.getMessage("MenuTables"));
 
-        tableMenu.add(tableMenu);
+        ///tableMenu.add(tableMenu);    /// <=== WHY?
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLightTable"), "jmri.jmrit.beantable.LightTableTabAction"));
@@ -127,6 +129,6 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // add start web server
         add(new jmri.web.server.WebServerAction());
-
     }
+
 }

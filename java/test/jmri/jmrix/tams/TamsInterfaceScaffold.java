@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  */
-class TamsInterfaceScaffold extends TamsTrafficController {
+public class TamsInterfaceScaffold extends TamsTrafficController {
 
     public TamsInterfaceScaffold() {
     }
@@ -64,6 +64,6 @@ class TamsInterfaceScaffold extends TamsTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsInterfaceScaffold.class);
 
 }

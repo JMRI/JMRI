@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
         suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
         suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
-        suite.addTest(new TestSuite(jmri.jmrix.AbstractThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ConnectionConfigManagerTest.class));
 
@@ -87,7 +88,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ActiveSystemsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCManufacturerListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OtherConnectionTypeListTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.debugthrottle.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMessageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRMessageTest.class));
@@ -99,6 +99,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractThrottleManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JmrixConfigPaneTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ztc.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.libusb.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemConnectionMemoManagerTest.class));
         return suite;
 
     }
@@ -106,12 +108,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

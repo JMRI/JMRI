@@ -1,12 +1,12 @@
 package jmri.jmrix.marklin.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Create a "Systems" menu containing the Jmri Marklin-specific tools.
  *
  * @author Kevin Dickerson
  */
@@ -15,15 +15,11 @@ public class MarklinMenu extends JMenu {
     public MarklinMenu(MarklinSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinBundle");
-        String title;
         if (memo != null) {
-            title = memo.getUserName();
+            setText(memo.getUserName());
         } else {
-            title = rb.getString("MenuMarklin");
+            setText(Bundle.getMessage("MenuMarklin"));
         }
-
-        setText(title);
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
@@ -31,7 +27,7 @@ public class MarklinMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new MarklinNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new MarklinNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
 
@@ -60,5 +56,6 @@ public class MarklinMenu extends JMenu {
         String load;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinMenu.class);
+
 }

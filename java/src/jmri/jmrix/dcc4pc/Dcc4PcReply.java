@@ -152,7 +152,31 @@ public class Dcc4PcReply extends AbstractMRReply {
     public int maxSize() {
         return maxSize;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class.getName());
+    
+    Dcc4PcMessage origMsg;
+    
+    public Dcc4PcMessage getOriginalRequest(){
+        return origMsg;
+    }
+    
+    protected void setOriginalRequest(Dcc4PcMessage msg){
+        origMsg = msg;
+    }
+    
+    
+    public int getBoard() { 
+        if(origMsg!=null){
+            return origMsg.getBoard();
+        }
+        return -1; 
+    }
+    
+    public int getMessageType(){
+        if(origMsg!=null){
+            return origMsg.getMessageType();
+        }
+        return -1;
+    }
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class);
 
 }

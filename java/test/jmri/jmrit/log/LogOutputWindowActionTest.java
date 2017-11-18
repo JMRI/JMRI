@@ -1,12 +1,14 @@
 package jmri.jmrit.log;
 
+import apps.tests.Log4JFixture;
+import java.util.*;
+import jmri.util.JTextPaneAppender;
+import jmri.util.JUnitUtil;
+import org.apache.log4j.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,16 +25,41 @@ public class LogOutputWindowActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
-    }
+        // remove any JTextPaneAppender objects that 
+        // have been added to logging
+        Enumeration<Object> en = LogManager.getCurrentLoggers();
 
-    private final static Logger log = LoggerFactory.getLogger(LogOutputWindowActionTest.class.getName());
+        while (en.hasMoreElements()) {
+            Object o = en.nextElement();
+
+            if (o instanceof Logger) {
+                Logger logger = (Logger) o;
+                Enumeration<Appender> appenders = logger.getAllAppenders();
+                while (appenders.hasMoreElements()) {
+                    Appender a = appenders.nextElement();
+                    if (a instanceof JTextPaneAppender) {
+                        logger.removeAppender(a);
+                    }                        
+                }
+            } // if o instanceof Logger
+
+        } // while ( en )
+
+        Enumeration<Appender> appenders = LogManager.getRootLogger().getAllAppenders();
+        while (appenders.hasMoreElements()) {
+            Appender a = appenders.nextElement();
+            if (a instanceof JTextPaneAppender) {
+                LogManager.getRootLogger().removeAppender(a);
+            }                        
+        }
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
+        Log4JFixture.tearDown();
+    }
 
 }

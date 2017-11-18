@@ -1,9 +1,9 @@
 package jmri.util;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.util.StringUtil class.
@@ -165,30 +165,6 @@ public class StringUtilTest extends TestCase {
         Assert.assertEquals("7th byte", 0xB1, b[7] & 0xFF);
     }
 
-    @SuppressWarnings("null")
-    private boolean compareStringArray(String[] s1, String[] s2) {
-        if (s1 == null && s2 == null) {
-            return true;
-        }
-        if (s1 == null && s2 != null) {
-            return false;
-        }
-        if (s1 != null && s2 == null) {
-            return false;
-        }
-        // s1 and s2 are not null
-        if (s1.length != s2.length) {
-            return false;
-        }
-
-        for (int i = 0; i < s1.length; i++) {
-            if (!s1[i].equals(s2[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void testJoinA1() {
         String input[] = new String[]{"A", "B", "C"};
         String results = StringUtil.join(input, ".");
@@ -199,42 +175,42 @@ public class StringUtilTest extends TestCase {
         String input[] = new String[]{"A", "B", "C"};
         String output[] = new String[]{"A", "B", "C"};
         StringUtil.sort(input);
-        Assert.assertTrue(compareStringArray(input, output));
+        Assert.assertArrayEquals(input, output);
     }
 
     public void testSort2() {
         String input[] = new String[]{"A", "b", "C"};
         String output[] = new String[]{"A", "C", "b"};
         StringUtil.sort(input);
-        Assert.assertTrue(compareStringArray(input, output));
+        Assert.assertArrayEquals(input, output);
     }
 
     public void testSort3() {
         String input[] = new String[]{"B", "C", "A"};
         String output[] = new String[]{"A", "B", "C"};
         StringUtil.sort(input);
-        Assert.assertTrue(compareStringArray(input, output));
+        Assert.assertArrayEquals(input, output);
     }
 
     public void testSort4() {
         String input[] = new String[]{"c", "b", "a"};
         String output[] = new String[]{"a", "b", "c"};
         StringUtil.sort(input);
-        Assert.assertTrue(compareStringArray(input, output));
+        Assert.assertArrayEquals(input, output);
     }
 
     public void testSort5() {
         String input[] = new String[]{"A", "c", "b"};
         String output[] = new String[]{"A", "b", "c"};
         StringUtil.sort(input);
-        Assert.assertTrue(compareStringArray(input, output));
+        Assert.assertArrayEquals(input, output);
     }
 
     public void testSort6() {
         String input[] = new String[]{"A", "A", "b"};
         String output[] = new String[]{"A", "A", "b"};
         StringUtil.sort(input);
-        Assert.assertTrue(compareStringArray(input, output));
+        Assert.assertArrayEquals(input, output);
     }
 
     public void testArraySort() {
@@ -298,10 +274,10 @@ public class StringUtilTest extends TestCase {
 
         sample = null;
         Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
-        
+
         sample = "";
         Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
-        
+
         sample = "abc";
         Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
 

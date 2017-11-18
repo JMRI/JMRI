@@ -32,10 +32,10 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
 
@@ -125,18 +125,18 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (getMode() == DefaultProgrammerManager.PAGEMODE) {
+            if (getMode() == ProgrammingMode.PAGEMODE) {
                 return TamsMessage.getReadPagedCV(cvnum);
-            } else if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE) {
+            } else if (getMode() == ProgrammingMode.DIRECTBYTEMODE) {
                 return TamsMessage.getReadDirectByteCV(cvnum);
             } else {
                 return TamsMessage.getReadRegister(registerFromCV(cvnum));
             }
         } else {
             // write
-            if (getMode() == DefaultProgrammerManager.PAGEMODE) {
+            if (getMode() == ProgrammingMode.PAGEMODE) {
                 return TamsMessage.getWritePagedCV(cvnum, val);
-            } else if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE) {
+            } else if (getMode() == ProgrammingMode.DIRECTBYTEMODE) {
                 return TamsMessage.getWriteDirectByteCV(cvnum, val);
             } else {
                 return TamsMessage.getWriteRegister(registerFromCV(cvnum), val);
@@ -257,6 +257,6 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         temp.programmingOpReply(value, status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsProgrammer.class);
 
 }

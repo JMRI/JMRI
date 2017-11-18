@@ -1,6 +1,3 @@
-/**
- * LIUSBXNetPacketizer.java
- */
 package jmri.jmrix.lenz.liusbserver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -24,9 +21,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
 
     public LIUSBServerXNetPacketizer(jmri.jmrix.lenz.LenzCommandStation pCommandStation) {
         super(pCommandStation);
-        if (log.isDebugEnabled()) {
-            log.debug("Loading LIUSB Server Extension to XNetPacketizer");
-        }
+        log.debug("Loading LIUSB Server Extension to XNetPacketizer");
     }
 
     /**
@@ -37,9 +32,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
 
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [{}]", m);
-        }
+        log.debug("forwardToPort message: [{}]", m);
         // remember who sent this
         mLastSender = reply;
 
@@ -79,14 +72,13 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException e) {
             // start the recovery process if an exception occurs.
             portWarn(e);
             controller.recover();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class);
+
 }
-
-

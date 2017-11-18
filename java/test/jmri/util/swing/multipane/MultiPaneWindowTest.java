@@ -3,6 +3,7 @@ package jmri.util.swing.multipane;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.swing.ButtonTestAction;
 import org.junit.After;
 import org.junit.Assert;
@@ -28,7 +29,7 @@ public class MultiPaneWindowTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("Test of empty Multi Pane Window");
         Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -56,19 +57,18 @@ public class MultiPaneWindowTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("Test of Multi Pane Window function");
         Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

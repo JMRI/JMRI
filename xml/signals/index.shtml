@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>JMRI: Signal System Definitions</title>
 
 <!-- Style -->
@@ -142,6 +141,10 @@ The available definitions include:
 
 <dt><a href="UP-2008/index.shtml">UP-2008</a>
     <dd>Union Pacific Railroad 2008 rule book
+    <br>
+
+<dt><a href="WM-1980/index.shtml">WM-1980</a>
+    <dd>Western Maryland Railroad 1973-1980
     <br>
 
 </dl>

@@ -28,6 +28,8 @@
       <h1>The Warrant List</h1>
 
       <p>The Warrant List is a list of all the recorded warrants.
+      It also temporarily lists NXWarrants during the time they 
+      are in effect.
       For an overview discussion of warrants, see <a href=
       "Warrant.shtml">Warrants</a>.</p>
 
@@ -85,13 +87,16 @@
           When clicked the following commands can be sent:
 
           <ul>
-            <li><b>Halt</b> - Temporarily ramps the train down
-            to a stop and
-            suspends execution of the throttle command script</li>
+            <li><b>Halt</b> - Set the throttle to stop and
+            suspend execution of the throttle command script</li>
 
-            <li><b>Resume</b> - Ramps up the speed of the train to
-            its former setting and restarts the throttle command
+            <li><b>Resume</b> - Ramp the speed of the train up to
+            its former setting and restart the throttle command
             script</li>
+
+            <li><b>Ramp to Stop</b> - Ramp the train down
+            to a stop and
+            suspend execution of the throttle command script</li>
 
             <li><b>Move into Next Block</b> - Repeats the test for
             whether a signal aspect has changed or an occupied
@@ -102,8 +107,8 @@
             due to a short or other hardware malfunction. This
             reset may allow a stopped train to continue.)</li>
 
-			<li><b>Stop</b> - Issues an emergency stop to the train
-			and suspends execution of the throttle command script.
+			<li><b>E-Stop</b> - Issue an emergency stop to the train
+			and suspend execution of the throttle command script.
 			</li>
             <li><b>Abort</b> - Abort the script and deallocate the
             warrant.</li>
@@ -117,8 +122,10 @@
       </ul>
 
       <div style="margin-left: 2em">
-        <b>NOTE:</b> Warrants can only be created if the PanelPro
+        <b>Note:</b> Warrants can only be created if the PanelPro
         configuration has at least two OBlocks defined.
+        <br>Click in the table heading to select columns to be 
+        hidden or visible.
       </div>
 
       <h2>The Warrant List Menus</h2>The following item are under
@@ -146,7 +153,7 @@
 
         <li><b>Open Session Log</b> - Opens a window to name a file
         that records the warrant and train tracking status
-        messages.</li>
+        messages to the file.</li>
       </ul>
 
       <h2>Other Warrant List Features</h2>The following items are
@@ -155,29 +162,48 @@
       <p>The <b>Create NXWarrant</b> button 0pens a window to
       create an eNtry/eXit warrant.</p>
 
-      <p>The <b>Halt all Trains</b> button causes all running
+      <p>The <b>Stop all Trains</b> button causes all running
       warrants to halt their trains.</p>
 
       <p>The <b>Status</b> field contains the last 20 messages from
       warrants. Click in the field to display them.</p>
 
-      <h2>Running Automated Trains</h2>The throttle commands
-      recorded in a warrant can be played back to run the train.
-      When running automated, additional control of the train can
-      done through four choices: <b>Halt</b>, <b>Resume</b> and
-      <b>Abort</b> are commands to halt a running automated train,
-      restart it or stop the train and abort the remaining throttle
-      commands. <b>Move into Next Block</b> is "repair" command
+      <h2>Running Automated Trains</h2>The throttle 
+      commands recorded in a warrant are played back to run the
+      train, but additional control of the train can be 
+      done through the choices provided by the <b>Control/Status</b>
+      down down combobox. Note there are there ways to stop the
+      train: Emergency stop, halt(stop), or ramp down to a stop and one
+      command to restart it, keeping the warrant in effect.
+       <b>Move into Next Block</b> is "repair" command
       should the train overrun a block and become "Lost". This
       command aligns the warrant to the next block and restarts the
-      train.
+      train. The <b>Abort</b> command does an emergency stop and 
+      annuls the warrant.
 
-      <p>Although there are separate operations in the Warrant List
-      table to reserve a Warrant route (Allocate) and set Turnouts
-      and Signals (Set Route) these operations do not have to be
-      done to run an automated train. An <b>AutoRun</b> operation
+      <p>There are separate operations in the Warrant List
+      table to reserve a Warrant route; (<b>Allocate</b>) and 
+      set  turnouts for the route (<b>Set</b>). These operations 
+      do not have to be done to run an automated train. They are
+      used to preview the route. An <b>AutoRun</b> operation
       can begin without them. The train will seek allocation and
-      set turnouts as it proceeds on the route. When confronted
+      set turnouts as it proceeds on the route.</p>
+      
+      <p>As a safety feature, whenever a warranted train has
+      permission to enter the next Block, the turnouts are reset
+      to the route. Having permission from Signals should mean
+       that resetting the
+      turnouts does not interfere with any interlocking logic.
+      "Stop" aspects of Signals, occupancy or allocation to another
+      warrant will deny permission. Only clearing the most
+      restrictive of these conditions will give the auto-run train
+      permission to proceed. When such a denial is cleared, the
+      train will proceed automatically. The only thing that
+      overrides automatically proceeding is if the user has set
+      the control to "Halt". The train will not move until the user
+      sets "Resume".</p>
+
+      <p> When confronted
       with an occupied block, the train will stop and wait until
       the block clears. When the next block is clear but the block
       beyond the next block is occupied, the train will approach at
@@ -185,23 +211,11 @@
       with Signal Heads or Signal Masts protecting the blocks they
       join, the train will modify the speed according to the
       appearance or aspect of the signal. An automated train will
-      attempt to secure allocation of the next two Blocks each time
-      it enters a Block. It also checks whether the Block is
+      attempt to secure allocation of the blocks ahead each time
+      it enters a Block. It also checks whether the block is
       occupied by an unknown train and will not enter if the Block
-      is occupied.</p>
-
-      <p>As a safety feature, whenever a warranted train has
-      permission to enter the next Block, the turnouts are reset.
-      Having permission from Signals means that resetting the
-      turnouts should not interfere with any interlocking logic. In
-      the absence of Signals, occupancy or allocation to another
-      warrant may deny permission. Only clearing the most
-      restrictive of these conditions will give the auto-run train
-      permission to proceed. When such a denial is cleared, the
-      train will proceed automatically. The only thing that
-      overrides having permission to proceed is if the user has set
-      the control to "Halt". The train will not move until the user
-      sets "Resume".</p>
+      is occupied. <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
+      has details about how warrants modify recorded speeds.</p>
 
       <h3>When the Starting block is Unoccupied</h3>If a warrant is
       started and the starting block is not occupied, the warrant
@@ -210,64 +224,7 @@
       set the "Resume" control. Note it is vital that the correct
       train occupies the starting block. The address specified in
       the warrant, is the train that will begin moving.
-
-      <h2>How Signals Aspects and Block Speeds Modify A Train's
-      Speed</h2>When a warrant is running and its train enters a
-      block, it looks ahead to see if any speed changes are coming
-      up. The look ahead distance must be adequate for the train to
-      be able to stop should that be needed. This distance is at
-      least one block and could be several. If a signal or block is
-      encountered within this look ahead distance, and either the
-      aspect of block indicates the speed must be regulated, then
-      the warrant must take action. It needs to inform the engine
-      of the speed changes in a smooth (and hopefully prototypical)
-      fashion and calculate when these speed changes should begin.
-
-      <div style="margin-left: 2em">
-        <b>Note:</b> If signals have not been configured in the
-        Occupancy Block Tables nor have block speeds been
-        configured there, the Speed Profile throttle factors will
-        only be used when generating the ramp-up and ramp-down
-        throttle commands in NXWarrants or when rouge occupancy is
-        detected ahead.
-      </div>The significance of the above note means the default
-      ramp parameters will probably be quite satisfactory if your
-      trains do not respond to signal aspect speeds and block
-      speeds.
-
-      <p>A default throttle factor and the layout scale is
-      configured in <b>Preferences</b> under the warrants tab. The
-      ramp up and ramp down parameters, <b>Ramp Step Time</b> and
-      <b>Ramp Step Throttle Increment</b> are also configured
-      there.</p>
-
-      <p>Once a speed change is noted by reading a signal aspect or
-      specified block speed ahead, the Warrant must calculate when
-      to begin the speed change (ramp down or ramp up). Both the
-      look ahead distance and the time when to begin the speed
-      change require knowing the track speed. Thus to get train to
-      begin and end its speed changes at the proper points, a
-      factors that relate the throttle settings to the actual track
-      speed is needed. Without such throttle factors a fast running
-      engine may overrun the point where a speed change expects to
-      be completed, or a slow running train may stop too far short
-      of where it is expected..</p>
-
-      <p>The throttle factors obviously depend upon the particular
-      engine's power curve. This is a combination of decoder's
-      throttle speed curve and the response of the locomotive motor
-      to the voltage set by the speed curve. It is nearly
-      impossible to set a single throttle factor that will work
-      over the engine's entire speed range in both forward and
-      reverse directions. A complete Speed Profile for every speed
-      step of a decoder can be made with the Roster speed Profiling
-      tool. Alternatively, Speed Profile factors for a selected set
-      of throttle settings for the motive power used in a warrant
-      can be determined by using the NXWarrant <b>Compute Throttle
-      Factor</b> feature. Frequently, calibrating a slow, medium
-      and fast throttle setting for both forward and reverse will
-      be sufficient. See <a href="NXWarrant.shtml">NXWarrants</a>
-      for instructions on how to do this. 
+      
       <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

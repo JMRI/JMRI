@@ -35,10 +35,25 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainByCarTypeFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManifestOptionFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainScriptFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScriptFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsByCarTypeActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsByCarTypeFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScriptFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsTableSetColorActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsTableSetColorFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCopyActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ChangeDepartureTimesActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCopyFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainByCarTypeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ShowCarsInTrainActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintSavedTrainManifestActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintTrainActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintTrainsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintTrainBuildReportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintTrainManifestActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintTrainsByCarTypesActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManifestOptionActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainScriptActionTest.class));
         return suite;
     }
 

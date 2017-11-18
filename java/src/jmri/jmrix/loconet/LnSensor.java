@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
@@ -41,7 +41,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         // store address forms
         a = new LnSensorAddress(systemName, prefix);
         if (log.isDebugEnabled()) {
-            log.debug("create address " + a);
+            log.debug("create address {}", a);
         }
 
         // At construction, register for messages
@@ -49,7 +49,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
     }
 
     /**
-     * request an update on status by sending a loconet message
+     * Request an update on status by sending a loconet message.
      */
     @Override
     public void requestUpdateFromLayout() {
@@ -130,6 +130,6 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensor.class);
 
 }

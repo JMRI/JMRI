@@ -1,5 +1,6 @@
 package jmri;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -86,18 +87,20 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SensorTurnoutOperationTest.class));
         suite.addTest(new JUnit4TestAdapter(TransitManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EntryPointTest.class));
+        suite.addTest(new JUnit4TestAdapter(RunCucumberTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

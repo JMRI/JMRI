@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -51,7 +52,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
     public class SetPhysicalLocationFrame extends OperationsFrame {
 
-        LocationManager locationManager = LocationManager.instance();
+        LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
         Location _location;
 
@@ -63,7 +64,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         JButton closeButton = new JButton(Bundle.getMessage("Close"));
 
         // combo boxes
-        JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+        JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
         // Spinners
         PhysicalLocationPanel physicalLocation;
@@ -215,7 +216,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SetPhysicalLocationAction.class.getName());
+            .getLogger(SetPhysicalLocationAction.class);
 }
 
 

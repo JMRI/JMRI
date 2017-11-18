@@ -1,6 +1,5 @@
 package jmri;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,7 +17,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public interface SignalMastLogic {
+public interface SignalMastLogic extends NamedBean {
 
     /**
      * Constant representing that all the user entered details relating to a
@@ -74,7 +73,7 @@ public interface SignalMastLogic {
      * @param blks A list of Layout Blocks to query against
      * @return whether all supplied blocks are in at least one of the logics
      */
-    public boolean areBlocksIncluded(ArrayList<Block> blks);
+    public boolean areBlocksIncluded(List<Block> blks);
 
     /**
      * Replace the existing source Signal Mast with another signal mast. This is
@@ -139,7 +138,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of Block objects
      */
-    public ArrayList<Block> getAutoBlocks(SignalMast destination);
+    public List<Block> getAutoBlocks(SignalMast destination);
 
     /**
      * Return a list of blocks just that have been detected as being directly
@@ -149,7 +148,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of block objects
      */
-    public ArrayList<Block> getAutoBlocksBetweenMasts(SignalMast destination);
+    public List<Block> getAutoBlocksBetweenMasts(SignalMast destination);
 
     /**
      * Return a list of control masts that have been automatically detected as
@@ -159,7 +158,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of signal mast objects
      */
-    public ArrayList<SignalMast> getAutoMasts(SignalMast destination);
+    public List<SignalMast> getAutoMasts(SignalMast destination);
 
     /**
      * Return the Set State (Aspect) of a control mast as it is configured
@@ -189,7 +188,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of turnout objects
      */
-    public ArrayList<Turnout> getAutoTurnouts(SignalMast destination);
+    public List<Turnout> getAutoTurnouts(SignalMast destination);
 
     /**
      * Return the Set To State of a control block as it is configured between
@@ -208,7 +207,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of Block objects
      */
-    public ArrayList<Block> getBlocks(SignalMast destination);
+    public List<Block> getBlocks(SignalMast destination);
 
     /**
      * Get the comment set on this SML.
@@ -225,7 +224,7 @@ public interface SignalMastLogic {
      *
      * @return A list of Signal Mast objects
      */
-    public ArrayList<SignalMast> getDestinationList();
+    public List<SignalMast> getDestinationList();
 
     /**
      * Get the Maximum Speed set for the destination Signal Mast in this SML.
@@ -260,7 +259,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of Sensor objects
      */
-    public ArrayList<Sensor> getSensors(SignalMast destination);
+    public List<Sensor> getSensors(SignalMast destination);
 
     /**
      * Return the Sensors that have been defined by the user to control the SML
@@ -269,7 +268,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of Sensor NamedBeanHandles
      */
-    public ArrayList<NamedBeanHandle<Sensor>> getNamedSensors(SignalMast destination);
+    public List<NamedBeanHandle<Sensor>> getNamedSensors(SignalMast destination);
 
     /**
      * Return the Set To State (Aspect) of a control Signal Mast as it is
@@ -289,7 +288,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of Signal Mast objects
      */
-    public ArrayList<SignalMast> getSignalMasts(SignalMast destination);
+    public List<SignalMast> getSignalMasts(SignalMast destination);
 
     public SignalMast getSourceMast();
 
@@ -310,7 +309,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of Turnout objects
      */
-    public ArrayList<Turnout> getTurnouts(SignalMast destination);
+    public List<Turnout> getTurnouts(SignalMast destination);
 
     /**
      * Return the Turnouts that have been defined by the user to control the SML
@@ -319,7 +318,7 @@ public interface SignalMastLogic {
      * @param destination controlled signal mast
      * @return A list of Turnout NamedBeanHandles
      */
-    public ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(SignalMast destination);
+    public List<NamedBeanHandle<Turnout>> getNamedTurnouts(SignalMast destination);
 
     /**
      * General method to initialise all SMLs on the source SIgnal Mast using

@@ -1,10 +1,11 @@
 package jmri.jmrix.rfid;
 
+import jmri.Reporter;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import jmri.Reporter;
 
 /**
  * RfidReporterManagerTest.java
@@ -75,8 +76,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new RfidTrafficController(){
            @Override
            public void sendInitString(){
@@ -99,8 +99,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @After
     public void tearDown() {
         tc = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

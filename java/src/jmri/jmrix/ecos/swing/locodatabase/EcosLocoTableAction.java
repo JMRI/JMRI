@@ -48,17 +48,16 @@ public class EcosLocoTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
-     *
      */
     public EcosLocoTableAction(String s) {
         super(s);
     }
 
     public EcosLocoTableAction() {
-        this("Ecos Loco Table");
+        this(Bundle.getMessage("EcosLocoTableTitle"));
     }
 
     public EcosLocoTableAction(String s, EcosSystemConnectionMemo memo) {
@@ -126,7 +125,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
 
             @Override
             public String getValue(String s) {
-                return "Set";
+                return Bundle.getMessage("ButtonSet");
             }
 
             @Override
@@ -188,8 +187,9 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     } else if (value instanceof RosterEntry) {
                         re = (RosterEntry) value;
                         if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
-                            JOptionPane.showMessageDialog(f, ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
-                            log.error(ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
+                            JOptionPane.showMessageDialog(f,
+                                    Bundle.getMessage("EcosEditAssignedDialog", ecosObjectNo));
+                            log.error(ecosObjectNo + " This roster entry already has an ECoS loco assigned to it");
                             return;
                         }
                         String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
@@ -334,25 +334,25 @@ public class EcosLocoTableAction extends AbstractTableAction {
             public String getColumnName(int col) {
                 switch (col) {
                     case SYSNAMECOL:
-                        return "ECoS Object Id";
+                        return Bundle.getMessage("ObjectIdCol");
                     case USERNAMECOL:
-                        return "ECoS Descritpion";
+                        return Bundle.getMessage("DescriptionCol");
                     case VALUECOL:
-                        return "ECoS Address";
+                        return Bundle.getMessage("AddressCol");
                     case COMMENTCOL:
-                        return "JMRI Roster Id";
+                        return Bundle.getMessage("JmriIdCol");
                     case DELETECOL:
-                        return "Delete";
+                        return ""; // no heading on Delete column
                     case PROTOCOL:
-                        return "ECOS Protocol";
+                        return Bundle.getMessage("ProtocolCol");
                     case ADDTOROSTERCOL:
-                        return "Add to Roster";
+                        return ""; // no heading on Add to Roster column
                     case SPEEDDIR:
-                        return "Speed Direction";
+                        return Bundle.getMessage("SpeedCol") + " " + Bundle.getMessage("DirectionCol");
                     case STOP:
-                        return "Stop";
+                        return ""; // no heading on Stop column
                     default:
-                        return "unknown";
+                        return "unknown"; // NOI18N
                 }
             }
 
@@ -361,10 +361,11 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 switch (col) {
                     case SYSNAMECOL:
                     case USERNAMECOL:
-                    case VALUECOL:
                     case PROTOCOL:
                     case SPEEDDIR:
                         return String.class;
+                    case VALUECOL:
+                        return Integer.class;
                     case ADDTOROSTERCOL:
                     case DELETECOL:
                     case STOP:
@@ -397,6 +398,8 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
 
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
             @Override
             public int getPreferredWidth(int col) {
                 switch (col) {
@@ -427,7 +430,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
             public void configureTable(JTable tbl) {
                 table = tbl;
                 setColumnToHoldButton(table, ADDTOROSTERCOL,
-                        new JButton("Add to Roster"));
+                        new JButton(Bundle.getMessage("ButtonAddRoster")));
                 setColumnToHoldButton(table, STOP, stopButton());
                 super.configureTable(table);
                 XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
@@ -468,18 +471,18 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
                 jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
                 final JDialog dialog = new JDialog();
-                dialog.setTitle("Remove Loco From ECOS");
+                dialog.setTitle(Bundle.getMessage("RemoveLocoTitle"));
                 dialog.setLocation(300, 200);
                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                JLabel question = new JLabel("Are you sure that you want to remove loco " + b.getEcosDescription() + " from the ECOS ?");
+                JLabel question = new JLabel(Bundle.getMessage("RemoveLocoXDialog", b.getEcosDescription()));
                 question.setAlignmentX(Component.CENTER_ALIGNMENT);
                 container.add(question);
-                JButton yesButton = new JButton("Yes");
-                JButton noButton = new JButton("No");
+                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                 JPanel button = new JPanel();
                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                 button.add(yesButton);
@@ -551,12 +554,12 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     case ADDTOROSTERCOL:  //
                         b = getByEcosObject(ecosObjectIdList.get(row));
                         if (b.getRosterId() == null || b.getRosterId().equals("")) {
-                            return "Add To Roster";
+                            return Bundle.getMessage("ButtonAddRoster");
                         } else {
                             return " ";
                         }
                     case STOP:
-                        return "Stop";
+                        return Bundle.getMessage("ButtonStop");
                     case SPEEDDIR:
                         b = getByEcosObject(ecosObjectIdList.get(row));
                         return (b != null) ? (b.getDirectionAsString() + " : " + b.getSpeed()) : null;
@@ -570,7 +573,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
 
             @Override
             protected String getBeanType() {
-                return "Ecos Loco";
+                return Bundle.getMessage("EcosLocoTitle");
             }
 
             @Override
@@ -642,14 +645,14 @@ public class EcosLocoTableAction extends AbstractTableAction {
     @Override
     protected void setTitle() {
         if (adaptermemo != null) {
-            f.setTitle(adaptermemo.getUserName() + " Loco Table");
+            f.setTitle(Bundle.getMessage("XLocoTableTitle", adaptermemo.getUserName()));
         }
-        f.setTitle("Ecos Loco Table");
+        f.setTitle(Bundle.getMessage("EcosLocoTableTitle"));
     }
 
     @Override
     protected String helpTarget() {
-        return "package.jmri.jmrix.ecos.ecosLocoTable";
+        return "package.jmri.jmrix.ecos.swing.locodatabase.EcosLocoTable"; // very simple help page
     }
 
     static class RosterBoxRenderer extends GlobalRosterEntryComboBox implements TableCellRenderer {
@@ -699,5 +702,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
         return EcosLocoTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoTableAction.class);
+
 }

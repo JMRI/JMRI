@@ -5,11 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DCCppLight.java
- *
- * Implementation of the Light Object for DCC++ NOTE: This is a
- * simplification of the DCCppTurnout class.
- * <P>
+ * Implementation of the Light Object for DCC++
+ * <p>
+ * NOTE: This is a simplification of the DCCppTurnout class.
+ * <p>
  * Based in part on SerialLight.java
  *
  * @author Paul Bender Copyright (C) 2008-2010
@@ -22,8 +21,12 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in DCCppLightManager
+     *
+     * @param tc         the traffic controller for the connection
+     * @param lm         the managing LightManager for this Light
+     * @param systemName the system name for this Light
      */
     public DCCppLight(DCCppTrafficController tc, DCCppLightManager lm, String systemName) {
         super(systemName);
@@ -35,8 +38,13 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in DCCppLightManager
+     *
+     * @param tc         the traffic controller for the connection
+     * @param lm         the managing LightManager for this Light
+     * @param systemName the system name for this Light
+     * @param userName   the user name for this Light
      */
     public DCCppLight(DCCppTrafficController tc, DCCppLightManager lm, String systemName, String userName) {
         super(systemName, userName);
@@ -46,8 +54,8 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         initializeLight(systemName);
     }
 
-    /*
-     * Dispose of the light object
+    /**
+     * Dispose of the light object.
      */
     @Override
     public void dispose() {
@@ -55,12 +63,10 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         super.dispose();
     }
 
-    /*
-     *  Initilize the light object's parameters
+    /**
+     * Initialize the light object's parameters.
      */
     private synchronized void initializeLight(String systemName) {
-        // Save system name
-        mSystemName = systemName;
         // Extract the Bit from the name
         mAddress = lm.getBitFromSystemName(systemName);
         // Set initial state
@@ -71,14 +77,15 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     }
 
     /**
-     * Sets up system dependent instance variables and sets system independent
-     * instance variables to default values Note: most instance variables are in
-     * AbstractLight.java
+     * Sets up system dependent instance variables and set system independent
+     * instance variables to default values.
+     * <p>
+     * Note: most instance variables are in AbstractLight.java
      */
+
     /**
      * System dependent instance variables
      */
-    String mSystemName = "";     // system name 
     //protected int mState = OFF;  // current state of this light
     //private int mOldState =mState; // save the old state
     int mAddress = 0;            // accessory output address
@@ -90,54 +97,45 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     //private int InternalState = IDLE;
 
     /**
-     * Return the current state of this Light
-     */
-    @Override
-    synchronized public int getState() {
-        return mState;
-    }
-
-    /**
-     * Set the current state of this Light This routine requests the hardware to
-     * change.
+     * Set the current state of this Light.
+     * This routine requests the hardware to change.
      */
     @Override
     synchronized public void setState(int newState) {
         if (newState != ON && newState != OFF) {
             // Unsuported state
-            log.warn("Unsupported state " + newState + " requested for light " + mSystemName);
+            log.warn("Unsupported state {} requested for light {}", newState, getSystemName());
             return;
         }
 
- log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
+        log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
 
         // get the right packet
- if (mAddress > 0) {
-     boolean state = (newState == jmri.Light.ON);
-     DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
-     //InternalState = COMMANDSENT;
-     tc.sendDCCppMessage(msg, this);
+        if (mAddress > 0) {
+            boolean state = (newState == jmri.Light.ON);
+            DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
+            //InternalState = COMMANDSENT;
+            tc.sendDCCppMessage(msg, this);
 
-     if (newState != mState) {
-  int oldState = mState;
-  mState = newState;
-  // notify listeners, if any
-  firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
-     }
- }
+            if (newState != mState) {
+                int oldState = mState;
+                mState = newState;
+                // notify listeners, if any
+                firePropertyChange("KnownState", oldState, newState);
+            }
+        }
     }
 
-    /*
-     *  Handle an incoming message from the DCC++ Base Station
-     *  NOTE: We aren't registered as a listener, so This is only triggered 
-     *  when we send out a message
+    /**
+     * Handle an incoming message from the DCC++ Base Station.
+     * <p>
+     * NOTE: We aren't registered as a listener, so this is only triggered
+     * when we send out a message
      */
     @Override
     synchronized public void message(DCCppReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
-        }
- // We don't expect a reply, so we don't do anything with replies.
+        log.debug("received message: {}", l);
+        // We don't expect a reply, so we don't do anything with replies.
     }
 
     // listen for the messages to the LI100/LI101
@@ -149,11 +147,10 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message {}", msg.toString());
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppLight.class);
+
 }
-
-

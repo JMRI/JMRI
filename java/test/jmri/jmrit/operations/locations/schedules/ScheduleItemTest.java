@@ -2,10 +2,11 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -62,15 +63,10 @@ public class ScheduleItemTest extends OperationsTestCase {
         Assert.assertEquals("Location ScheduleItem set Count", 222, ltsi.getCount());
     }
 
-    // from here down is testing infrastructure
     // Ensure minimal setup for log4J
-    /**
-     * Test-by test initialization. Does log4j for standalone use, and then
-     * creates a set of turnouts, sensors and signals as common background for
-     * testing
-     * @throws Exception 
-     */
+ 
     @Override
+    @Before
     protected void setUp() throws Exception {
         super.setUp();
     }
@@ -91,8 +87,8 @@ public class ScheduleItemTest extends OperationsTestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
+    @After
     protected void tearDown() throws Exception {
         super.tearDown();
     }

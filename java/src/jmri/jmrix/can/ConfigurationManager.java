@@ -17,7 +17,7 @@ abstract public class ConfigurationManager {
 
     final public static String MERGCBUS = "MERG CBUS";
     final public static String OPENLCB = "OpenLCB";
-    final public static String RAWCAN = "Raw CAN";
+    final public static String RAWCAN = "Raw CAN"; // TODO I18N
     final public static String TEST = "Test - do not use";
 
     private static String[] options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
@@ -54,7 +54,7 @@ abstract public class ConfigurationManager {
     abstract public void configureManagers();
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     abstract public boolean provides(Class<?> type);
 
@@ -65,7 +65,6 @@ abstract public class ConfigurationManager {
 
     abstract protected ResourceBundle getActionModelResourceBundle();
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class);
+
 }
-
-

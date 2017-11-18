@@ -112,6 +112,10 @@
         Signal Head will be set to Yellow as the least restrictive
         Aspect.</li>
 
+        <li><b>Restricting Speed</b> If the checkbox is checked, this
+        Signal Head will be set to Flashing Red as the least restrictive
+        Aspect.</li>
+
         <li><b>Is Distant Signal</b> If the checkbox is checked,
         this Signal will be set to the most restrictive aspect of
         either this Signal Head or the next protected Signal

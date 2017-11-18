@@ -360,19 +360,19 @@
 
      
 <li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Read Data">Reading Data </a>
+<a href="">Reading Data </a>
 <ul></ul>
 </li>
 
      
 <li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Write Data">Writing to Decoder </a>
+<a href="">Writing to Decoder </a>
 <ul></ul>
 </li>
 
      
 <li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Save Data">Saving to a File </a>
+<a href="">Saving to a File </a>
 <ul></ul>
 </li>
 
@@ -928,7 +928,19 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml">Add/Edit Conditional </a>
+<a href="package/jmri/jmrit/conditional/ConditionalListEditor.shtml">Add/Edit Conditionals using the List Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml">Add/Edit Conditionals using the Tree Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/conditional/StateVariableActionList.shtml">Conditional State Variable and Action List </a>
 <ul></ul>
 </li>
 
@@ -1297,7 +1309,7 @@
 
    
 <li>
-<a href="">Signal Controlled Warrants </a>
+<a href="package/jmri/jmrit/logix/SpeedChanges.shtml">When Warrant Speeds Are Modified </a>
 <ul></ul>
 </li>
 
@@ -1320,24 +1332,6 @@
 <li>
 <a href="html/tools/uss/index.shtml">USS CTC Tools </a>
 <ul>
-   
-<li>
-<a href="package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">Turnout Lever </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">Signal Lever </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code Button </a>
-<ul></ul>
-</li>
-
    
 <li>
 <a href="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator </a>

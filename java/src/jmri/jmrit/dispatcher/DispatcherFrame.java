@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,6 +25,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.Scale;
 import jmri.Section;
 import jmri.Sensor;
@@ -43,13 +45,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Dispatcher functionality, working with Sections, Transits and ActiveTrain.
- *
- * <P>
+ * <p>
  * Dispatcher serves as the manager for ActiveTrains. All allocation of Sections
  * to ActiveTrains is performed here.
  * <P>
- * Programming Note: public methods may be addressed externally via
- * jmri.jmrit.dispatcher.DispatcherFrame.instance(). ...
+ * Programming Note: Use the managed instance returned by
+ * {@link jmri.InstanceManager#getDefault(java.lang.Class)} to access the
+ * running Dispatcher.
  * <P>
  * Dispatcher listens to fast clock minutes to handle all ActiveTrain items tied
  * to fast clock time.
@@ -69,12 +71,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
-public class DispatcherFrame extends jmri.util.JmriJFrame {
+public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceManagerAutoDefault {
 
-    /**
-     * Get a DispatcherFrame through the instance() method
-     */
-    private DispatcherFrame() {
+    public DispatcherFrame() {
         super(false, true);
         initializeOptions();
         openDispatcherWindow();
@@ -106,7 +105,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         boolean pathsInited = false;
         if (names.length > 0) {
             for (int i = 0; i < names.length; i++) {
-                //read xml data from selected filename and move it into the new train dialog box 
+                //read xml data from selected filename and move it into the new train dialog box
                 TrainInfo info = null;
                 try {
                     info = tif.readTrainInfo(names[i]);
@@ -125,31 +124,26 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     } else if (info.getTrainFromUser()) {
                         tSource = ActiveTrain.USER;
                     }
-                    //block and seq are stored together, split out for use here
-                    String startBlock = info.getStartBlockName().split("-")[0];
-                    int startBlockSeq = Integer.parseInt(info.getStartBlockName().split("-")[1]);
-                    String destinationBlock = info.getDestinationBlockName().split("-")[0];
-                    int destinationBlockSeq = Integer.parseInt(info.getDestinationBlockName().split("-")[1]);
 
                     if (!pathsInited) { //only init the layoutblockpaths once here
                         log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
                     }
-
-                    ActiveTrain at = createActiveTrain(info.getTransitName(), info.getTrainName(), tSource,
-                            startBlock, startBlockSeq, destinationBlock, destinationBlockSeq,
-                            info.getAutoRun(), info.getDCCAddress(), info.getPriority(),
-                            info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null);
+                    ActiveTrain at = createActiveTrain(info.getTransitId(), info.getTrainName(), tSource,
+                            info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(), info.getDestinationBlockSeq(),
+                            info.getAutoRun(), info.getDccAddress(), info.getPriority(),
+                            info.getResetWhenDone(), info.getReverseAtEnd(), true, null, info.getAllocationMethod());
                     if (at != null) {
                         if (tSource == ActiveTrain.ROSTER) {
                             RosterEntry re = Roster.getDefault().getEntryForId(info.getTrainName());
                             at.setRosterEntry(re);
                             at.setDccAddress(re.getDccAddress());
                         }
+                        at.setAllocateMethod(info.getAllocationMethod());
                         at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
                         at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
-                        at.setDelayedReStart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+                        at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setRestartDelay(info.getRestartDelayMin());  //this is number of minutes to delay between runs
                         at.setDelaySensor(info.getDelaySensor());
                         if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) && info.getDelayedStart() != ActiveTrain.SENSORDELAY)
@@ -168,10 +162,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                             aat.setRunInReverse(info.getRunInReverse());
                             aat.setSoundDecoder(info.getSoundDecoder());
                             aat.setMaxTrainLength(info.getMaxTrainLength());
+                            aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
+                            aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
+                            aat.setUseSpeedProfile(info.getUseSpeedProfile());
                             if (!aat.initialize()) {
                                 log.error("ERROR initializing autorunning for train {}", at.getTrainName());
                                 JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
-                                        "Error27", at.getTrainName()), Bundle.getMessage("InformationTitle"),
+                                        "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
                                         JOptionPane.INFORMATION_MESSAGE);
                             }
                             getAutoTrainsFrame().addAutoActiveTrain(aat);
@@ -181,6 +178,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
                     } else {
                         log.warn("failed to create create Active Train {}", info.getTrainName());
+                    }
+                    // give time for throttles to be allocated.
+                    try {
+                        Thread.sleep(500);
+                    }
+                    catch (InterruptedException e) {
+                        log.warn("Sleep Interupted in loading trains, likely being stopped",e);
                     }
                 }
 
@@ -213,14 +217,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     private int _FullRampTime = 10000; //default time (in ms) for RAMP_FAST to go from 0% to 100%
 
     // operational instance variables
-    private final ArrayList<ActiveTrain> activeTrainsList = new ArrayList<>();  // list of ActiveTrain objects
-    private final ArrayList<java.beans.PropertyChangeListener> _atListeners
+    private final List<ActiveTrain> activeTrainsList = new ArrayList<>();  // list of ActiveTrain objects
+    private final List<java.beans.PropertyChangeListener> _atListeners
             = new ArrayList<>();
-    private final ArrayList<ActiveTrain> delayedTrains = new ArrayList<>();  // list of delayed Active Trains
-    private final ArrayList<ActiveTrain> restartingTrainsList = new ArrayList<>();  // list of Active Trains with restart requests
+    private final List<ActiveTrain> delayedTrains = new ArrayList<>();  // list of delayed Active Trains
+    private final List<ActiveTrain> restartingTrainsList = new ArrayList<>();  // list of Active Trains with restart requests
     private final TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
-    private final ArrayList<AllocationRequest> allocationRequests = new ArrayList<>();  // List of AllocatedRequest objects
-    private final ArrayList<AllocatedSection> allocatedSections = new ArrayList<>();  // List of AllocatedSection objects
+    private final List<AllocationRequest> allocationRequests = new ArrayList<>();  // List of AllocatedRequest objects
+    private final List<AllocatedSection> allocatedSections = new ArrayList<>();  // List of AllocatedSection objects
     private boolean optionsRead = false;
     private AutoTurnouts autoTurnouts = null;
     private AutoAllocate autoAllocate = null;
@@ -266,11 +270,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         }
         optionsRead = true;
         try {
-            OptionsFile.instance().readDispatcherOptions(this);
+            InstanceManager.getDefault(OptionsFile.class).readDispatcherOptions(this);
         } catch (org.jdom2.JDOMException jde) {
-            log.error("JDOM Exception when retreiving dispatcher options " + jde);
+            log.error("JDOM Exception when retrieving dispatcher options {}", jde);
         } catch (java.io.IOException ioe) {
-            log.error("I/O Exception when retreiving dispatcher options " + ioe);
+            log.error("I/O Exception when retrieving dispatcher options {}", ioe);
         }
     }
 
@@ -533,7 +537,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     private Container extraPane = null;
     private final JComboBox<String> atSelectBox = new JComboBox<>();
     private final JComboBox<String> extraBox = new JComboBox<>();
-    private final ArrayList<Section> extraBoxList = new ArrayList<>();
+    private final List<Section> extraBoxList = new ArrayList<>();
     private int atSelectedIndex = -1;
 
     public void allocateExtraSection(ActionEvent e, ActiveTrain at) {
@@ -653,8 +657,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         }
         ActiveTrain at = activeTrainsList.get(atSelectedIndex);
         //Transit t = at.getTransit();
-        ArrayList<AllocatedSection> allocatedSectionList = at.getAllocatedSectionList();
-        ArrayList<String> allSections = (ArrayList<String>) InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList();
+        List<AllocatedSection> allocatedSectionList = at.getAllocatedSectionList();
+        List<String> allSections = (List<String>) InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList();
         for (int j = 0; j < allSections.size(); j++) {
             Section s = InstanceManager.getDefault(jmri.SectionManager.class).getSection(allSections.get(j));
             if (s.getState() == Section.FREE) {
@@ -679,8 +683,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
     private boolean connected(Section s1, Section s2) {
         if ((s1 != null) && (s2 != null)) {
-            ArrayList<EntryPoint> s1Entries = (ArrayList<EntryPoint>) s1.getEntryPointList();
-            ArrayList<EntryPoint> s2Entries = (ArrayList<EntryPoint>) s2.getEntryPointList();
+            List<EntryPoint> s1Entries = (List<EntryPoint>) s1.getEntryPointList();
+            List<EntryPoint> s2Entries = (List<EntryPoint>) s2.getEntryPointList();
             for (int i = 0; i < s1Entries.size(); i++) {
                 Block b = s1Entries.get(i).getFromBlock();
                 for (int j = 0; j < s2Entries.size(); j++) {
@@ -728,12 +732,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             } else {
                 // requesting allocation of a section in the Transit, but not the next Section
                 int seq = -99;
-                ArrayList<Integer> seqList = t.getSeqListBySection(s);
+                List<Integer> seqList = t.getSeqListBySection(s);
                 if (seqList.size() > 0) {
                     seq = seqList.get(0);
                 }
                 if (seqList.size() > 1) {
-                    // this section is in the Transit multiple times 
+                    // this section is in the Transit multiple times
                     int test = at.getNextSectionSeqNumber() - 1;
                     int diff = java.lang.Math.abs(seq - test);
                     for (int i = 1; i < seqList.size(); i++) {
@@ -950,13 +954,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * @param reverseAtEnd                    true if train should automatically
      *                                        reverse at end of transit; false
      *                                        otherwise
-     * @param allocateAllTheWay               set to "true" to allow Auto
-     *                                        Allocate to allocate as many
-     *                                        sections as possible between the
-     *                                        start section and the end section.
-     *                                        Set to false Auto Allocate
-     *                                        allocates no more than three
-     *                                        sections ahead.
      * @param showErrorMessages               "true" if error message dialogs
      *                                        are to be displayed for detected
      *                                        errors Set to "false" to suppress
@@ -964,15 +961,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      *                                        method.
      * @param frame                           window request is from, or "null"
      *                                        if not from a window
-     * <P>
+     * @param allocateMethod                  How allocations will be performed.
+     *                                        999 - Allocate as many section from start to finish as it can
+     *                                        0 - Allocate to the next "Safe" section. If it cannot allocate all the way to
+     *                                        the next "safe" section it does not allocate any sections. It will 
+     *                                        not allocate beyond the next safe section until it arrives there. This
+     *                                        is useful for bidirectional single track running.
+     *                                        Any other positive number (in reality thats 1-150 as the create transit
+     *                                        allows a max of 150 sections) allocate the specified number of sections a head.
      * @return a new ActiveTrain or null on failure
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
-            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd, boolean allocateAllTheWay,
-            boolean showErrorMessages, JmriJFrame frame) {
-//        log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
-//                trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
+            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd, 
+            boolean showErrorMessages, JmriJFrame frame, int allocateMethod) {
+        log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
+                trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
         // validate input
         Transit t = transitManager.getTransit(transitID);
         if (t == null) {
@@ -981,7 +985,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error1"), new Object[]{transitID}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Bad Transit name '" + transitID + "' when attempting to create an Active Train");
+            log.error("Bad Transit name '{}' when attempting to create an Active Train", transitID);
             return null;
         }
         if (t.getState() != Transit.IDLE) {
@@ -990,7 +994,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error2"), new Object[]{transitID}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Transit '" + transitID + "' not IDLE, cannot create an Active Train");
+            log.error("Transit '{}' not IDLE, cannot create an Active Train", transitID);
             return null;
         }
         if ((trainID == null) || trainID.equals("")) {
@@ -1007,7 +1011,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 JOptionPane.showMessageDialog(frame, Bundle.getMessage("Error21"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Train source is invalid - " + tSource + " - cannot create an Active Train");
+            log.error("Train source is invalid - {} - cannot create an Active Train", tSource);
             return null;
         }
         Block startBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(startBlockName);
@@ -1017,7 +1021,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error4"), new Object[]{startBlockName}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Bad startBlockName '" + startBlockName + "' when attempting to create an Active Train");
+            log.error("Bad startBlockName '{}' when attempting to create an Active Train", startBlockName);
             return null;
         }
         if (isInAllocatedSection(startBlock)) {
@@ -1026,7 +1030,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error5"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Start block '" + startBlockName + "' in allocated Section, cannot create an Active Train");
+            log.error("Start block '{}' in allocated Section, cannot create an Active Train", startBlockName);
             return null;
         }
         if (_HasOccupancyDetection && (!(startBlock.getState() == Block.OCCUPIED))) {
@@ -1035,7 +1039,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error6"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("No train in start block '" + startBlockName + "', cannot create an Active Train");
+            log.error("No train in start block '{}', cannot create an Active Train", startBlockName);
             return null;
         }
         if (startBlockSectionSequenceNumber <= 0) {
@@ -1049,7 +1053,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error13"), new Object[]{"" + startBlockSectionSequenceNumber}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Invalid sequence number '" + startBlockSectionSequenceNumber + "' when attempting to create an Active Train");
+            log.error("Invalid sequence number '{}' when attempting to create an Active Train", startBlockSectionSequenceNumber);
             return null;
         }
         Block endBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(endBlockName);
@@ -1059,7 +1063,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error7"), new Object[]{endBlockName}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Bad endBlockName '" + endBlockName + "' when attempting to create an Active Train");
+            log.error("Bad endBlockName '{}' when attempting to create an Active Train", endBlockName);
             return null;
         }
         if ((endBlockSectionSequenceNumber <= 0) && (t.getBlockCount(endBlock) > 1)) {
@@ -1071,7 +1075,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error9"), new Object[]{"" + endBlockSectionSequenceNumber}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Invalid sequence number '" + endBlockSectionSequenceNumber + "' when attempting to create an Active Train");
+            log.error("Invalid sequence number '{}' when attempting to create an Active Train", endBlockSectionSequenceNumber);
             return null;
         }
         if ((!reverseAtEnd) && resetWhenDone && (!t.canBeResetWhenDone())) {
@@ -1112,8 +1116,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     }
                 }
             }
-            // check/set Transit specific items for automatic running    
-            // validate connectivity for all Sections in this transit            
+            // check/set Transit specific items for automatic running
+            // validate connectivity for all Sections in this transit
             int numErrors = t.validateConnectivity(_LE);
             if (numErrors != 0) {
                 if (showErrorMessages) {
@@ -1138,10 +1142,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return null;
                 }
             }
-            //TODO: Need to check signalMasts as well
+            // TODO: Need to check signalMasts as well
             // this train is OK, activate the AutoTrains window, if needed
             if (_autoTrainsFrame == null) {
-                _autoTrainsFrame = new AutoTrainsFrame(_instance);
+                _autoTrainsFrame = new AutoTrainsFrame(this);
             } else {
                 _autoTrainsFrame.setVisible(true);
             }
@@ -1162,7 +1166,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
-        // all information checks out - create 
+        // all information checks out - create
         ActiveTrain at = new ActiveTrain(t, trainID, tSource);
         //if (at==null) {
         // if (showErrorMessages) {
@@ -1193,7 +1197,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             restartingTrainsList.add(at);
         }
         at.setReverseAtEnd(reverseAtEnd);
-        at.setAllocateAllTheWay(allocateAllTheWay);
+        at.setAllocateMethod(allocateMethod);
         at.setPriority(priority);
         at.setDccAddress(dccAddress);
         at.setAutoRun(autoRun);
@@ -1261,9 +1265,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 if (at == allocatedSections.get(k - 1).getActiveTrain()) {
                     releaseAllocatedSection(allocatedSections.get(k - 1), true);
                 }
-            } catch (Exception e) {
-                log.warn("releaseAllocatedSection failed - maybe the AllocatedSection was removed due to a terminating train??", e.toString());
-                continue;
+            } catch (RuntimeException e) {
+                log.warn("releaseAllocatedSection failed - maybe the AllocatedSection was removed due to a terminating train?? {}", e.getMessage());
             }
         }
         // remove from restarting trains list, if present
@@ -1306,7 +1309,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * @param direction         direction of travel in the allocated Section
      * @param seqNumber         sequence number of the Section in the Transit of
      *                          the ActiveTrain. If the requested Section is not
-     *                          in the Transit, a sequence number of 99 should
+     *                          in the Transit, a sequence number of -99 should
      *                          be entered.
      * @param showErrorMessages "true" if error message dialogs are to be
      *                          displayed for detected errors Set to "false" to
@@ -1341,7 +1344,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         "Error19"), new Object[]{"" + seqNumber, activeTrain.getActiveTrainName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Out-of-range sequence number *" + seqNumber + "* in allocation request");
+            log.error("Out-of-range sequence number *{}* in allocation request", seqNumber);
             return false;
         }
         if ((direction != Section.FORWARD) && (direction != Section.REVERSE)) {
@@ -1406,11 +1409,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     /**
      * Allocates a Section to an Active Train according to the information in an
      * AllocationRequest.
-     *
+     * <p>
      * If successful, returns an AllocatedSection and removes the
      * AllocationRequest from the queue. If not successful, returns null and
      * leaves the AllocationRequest in the queue.
-     *
+     * <p>
      * To be allocatable, a Section must be FREE and UNOCCUPIED. If a Section is
      * OCCUPIED, the allocation is rejected unless the dispatcher chooses to
      * override this restriction. To be allocatable, the Active Train must not
@@ -1450,7 +1453,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
                         Bundle.getMessage("Question1"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return null;   // return without allocating if "No" response
                 }
@@ -1463,7 +1466,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
                         Bundle.getMessage("Question4"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return null;
                 } else {
@@ -1479,21 +1482,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             if (getSignalType() == SIGNALMAST && checkBlocksNotInAllocatedSection(s, ar) != null) {
                 return null;
             }
-            // Programming Note: if ns is not null, the program will not check for end Block, but will use ns. Calling
-            //  code must do all validity checks on a non-null ns.
+            // Programming
+            // Note: if ns is not null, the program will not check for end Block, but will use ns.
+            // Calling code must do all validity checks on a non-null ns.
             if (ns != null) {
                 nextSection = ns;
             } else if ((ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber() == ar.getSectionSeqNumber())
                     && (!((s == at.getEndBlockSection()) && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())))
                     && (!(at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1)))) {
-                // not at either end - determine the next section 
+                // not at either end - determine the next section
                 int seqNum = ar.getSectionSeqNumber();
                 if (at.isAllocationReversed()) {
                     seqNum -= 1;
                 } else {
                     seqNum += 1;
                 }
-                ArrayList<Section> secList = at.getTransit().getSectionListBySeq(seqNum);
+                List<Section> secList = at.getTransit().getSectionListBySeq(seqNum);
                 if (secList.size() == 1) {
                     nextSection = secList.get(0);
 
@@ -1510,7 +1514,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 // need to reverse Transit direction when train is in the last Section, set next section.
                 nextSectionSeqNo = at.getEndBlockSectionSequenceNumber() - 1;
                 at.setAllocationReversed(true);
-                ArrayList<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
+                List<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
                 if (secList.size() == 1) {
                     nextSection = secList.get(0);
                 } else if (secList.size() > 1) {
@@ -1537,7 +1541,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
             //This might be the location to check to see if we have an intermediate section that we then need to perform extra checks on.
             //Working on the basis that if the nextsection is not null, then we are not at the end of the transit.
-            ArrayList<Section> intermediateSections = new ArrayList<>();
+            List<Section> intermediateSections = new ArrayList<>();
             Section mastHeldAtSection = null;
             if (nextSection != null && ar.getSection().getProperty("intermediateSection") != null && ((Boolean) ar.getSection().getProperty("intermediateSection")).booleanValue()) {
                 String property = "forwardMast";
@@ -1552,7 +1556,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         }
                     }
                 }
-                ArrayList<TransitSection> tsList = ar.getActiveTrain().getTransit().getTransitSectionList();
+                List<TransitSection> tsList = ar.getActiveTrain().getTransit().getTransitSectionList();
                 boolean found = false;
                 if (at.isAllocationReversed()) {
                     for (int i = tsList.size() - 1; i > 0; i--) {
@@ -1593,7 +1597,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         //If the section state is free, we need to look to see if any of the blocks are used else where
                         Section conflict = checkBlocksNotInAllocatedSection(se, null);
                         if (conflict != null) {
-                            //We have a conflicting path 
+                            //We have a conflicting path
                             //We might need to find out if the section which the block is allocated to is one in our transit, and if so is it running in the same direction.
                             return null;
                         } else {
@@ -1620,7 +1624,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
 
             // check/set turnouts if requested or if autorun
-            // Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If 
+            // Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If
             //   turnouts are not set correctly, allocation will not proceed without dispatcher override.
             //   If in addition Auto setting of turnouts is requested, the turnouts are set automatically
             //   if not in the correct position.
@@ -1636,7 +1640,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 for (int i = 1; i < intermediateSections.size(); i++) {
                     Section se = intermediateSections.get(i);
                     if (preSec == mastHeldAtSection) {
-                        log.debug("Section is beyond held mast do not set turnouts " + (tmpcur != null ? tmpcur.getDisplayName() : "null"));
+                        log.debug("Section is beyond held mast do not set turnouts {}", (tmpcur != null ? tmpcur.getDisplayName() : "null"));
                         break;
                     }
                     if (!checkTurnoutStates(tmpcur, tmpSeqNo, se, at, preSec)) {
@@ -1665,7 +1669,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 //The first section in the list will be the same as the nextSection, so we skip that.
                 for (int i = 1; i < intermediateSections.size(); i++) {
                     if (tmpcur == mastHeldAtSection) {
-                        log.debug("Section is beyond held mast do not allocate any more sections " + (tmpcur != null ? tmpcur.getDisplayName() : "null"));
+                        log.debug("Section is beyond held mast do not allocate any more sections {}", (tmpcur != null ? tmpcur.getDisplayName() : "null"));
                         break;
                     }
                     Section se = intermediateSections.get(i);
@@ -1765,7 +1769,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
                         Bundle.getMessage("Question2"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return false;   // return without allocating if "No" response
                 }
@@ -1774,7 +1778,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         return true;
     }
 
-    ArrayList<HeldMastDetails> heldMasts = new ArrayList<>();
+    List<HeldMastDetails> heldMasts = new ArrayList<>();
 
     static class HeldMastDetails {
 
@@ -1805,7 +1809,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     }
 
     private void removeHeldMast(SignalMast sm, ActiveTrain at) {
-        ArrayList<HeldMastDetails> toRemove = new ArrayList<>();
+        List<HeldMastDetails> toRemove = new ArrayList<>();
         for (HeldMastDetails hmd : heldMasts) {
             if (hmd.getActiveTrain() == at) {
                 if (sm == null) {
@@ -1828,20 +1832,20 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
-                ArrayList<Block> blas = as.getSection().getBlockList();
-                // 
-                // When allocating the initial section for an Active Train, 
+                List<Block> blas = as.getSection().getBlockList();
+                //
+                // When allocating the initial section for an Active Train,
                 // we need not be concerned with any blocks in the initial section
                 // which are unoccupied and to the rear of any occupied blocks in
                 // the section as the train is not expected to enter those blocks.
-                // When sections include the OS section these blocks prevented 
+                // When sections include the OS section these blocks prevented
                 // allocation.
                 //
                 // The procedure is to remove those blocks (for the moment) from
                 // the blocklist for the section during the initial allocation.
                 //
 
-                ArrayList<Block> bls = new ArrayList<>();
+                List<Block> bls = new ArrayList<>();
                 if (ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0) {
                     int j;
                     if (ar.getSectionDirection() == Section.FORWARD) {
@@ -1912,7 +1916,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     }
 
     // automatically make a choice of next section
-    private Section autoChoice(ArrayList<Section> sList, AllocationRequest ar) {
+    private Section autoChoice(List<Section> sList, AllocationRequest ar) {
         Section tSection = autoAllocate.autoNextSectionChoice(sList, ar);
         if (tSection != null) {
             return tSection;
@@ -1922,7 +1926,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     }
 
     // manually make a choice of next section
-    private Section dispatcherChoice(ArrayList<Section> sList, AllocationRequest ar) {
+    private Section dispatcherChoice(List<Section> sList, AllocationRequest ar) {
         Object choices[] = new Object[sList.size()];
         for (int i = 0; i < sList.size(); i++) {
             Section s = sList.get(i);
@@ -1934,7 +1938,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             choices[i] = txt;
         }
         Object secName = JOptionPane.showInputDialog(dispatcherFrame,
-                Bundle.getMessage("ExplainChoice") + " " + ar.getSectionName() + ".",
+                Bundle.getMessage("ExplainChoice", ar.getSectionName()),
                 Bundle.getMessage("ChoiceFrameTitle"), JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
         if (secName == null) {
             JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage("WarnCancel"));
@@ -1966,10 +1970,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      */
     private void checkAutoRelease() {
         if ((autoReleaseBox != null) && (autoReleaseBox.isSelected())) {
-            // Auto release of exited sections has been requested - because of possible noise in block detection 
+            // Auto release of exited sections has been requested - because of possible noise in block detection
             //    hardware, allocated sections are automatically released in the order they were allocated only
             // Only unoccupied sections that have been exited are tested.
-            // The next allocated section must be assigned to the same train, and it must have been entered for 
+            // The next allocated section must be assigned to the same train, and it must have been entered for
             //    the exited Section to be released.
             // Extra allocated sections are not automatically released (allocation number = -1).
             boolean foundOne = true;
@@ -2007,11 +2011,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                                         || (at.getStatus() == ActiveTrain.STOPPED)
                                         || (at.getStatus() == ActiveTrain.READY)
                                         || (at.getMode() == ActiveTrain.MANUAL)) {
-                                    // do not autorelease allocated sections from an Active Train that is 
+                                    // do not autorelease allocated sections from an Active Train that is
                                     //    STOPPED, READY, or WORKING, or is in MANUAL mode.
                                     foundOne = false;
                                     //But do so if the active train has reached its restart point
-                                    if (at.reachedRestartPoint()) {
+                                    if (nas != null && at.reachedRestartPoint()) {
                                         foundOne = true;
                                     }
                                 } else {
@@ -2041,8 +2045,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                             }
                         }
                     }
-                } catch (Exception e) {
-                    log.warn("checkAutoRelease failed  - maybe the AllocatedSection was removed due to a terminating train?? " + e.toString());
+                } catch (RuntimeException e) {
+                    log.warn("checkAutoRelease failed  - maybe the AllocatedSection was removed due to a terminating train? {}", e.toString());
                     continue;
                 }
             }
@@ -2063,8 +2067,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame, java.text.MessageFormat.format(
                     Bundle.getMessage("Question5"), new Object[]{as.getSectionName()}), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonYesX"), Bundle.getMessage("ButtonNoX")},
-                    Bundle.getMessage("ButtonNoX"));
+                    new Object[]{Bundle.getMessage("ButtonRelease"), Bundle.getMessage("ButtonNo")},
+                    Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return;   // return without releasing if "No" response
             }
@@ -2108,7 +2112,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             ActiveTrain at = delayedTrains.get(i);
             // check if this Active Train is waiting to start
             if ((!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY) {
-                // is it time to start? 
+                // is it time to start?
                 if (at.getDelayedStart() == ActiveTrain.TIMEDDELAY) {
                     if (isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin())) {
                         // allow this train to start
@@ -2325,11 +2329,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         _LayoutScale = sc;
     }
 
-    public ArrayList<ActiveTrain> getActiveTrainsList() {
+    public List<ActiveTrain> getActiveTrainsList() {
         return activeTrainsList;
     }
 
-    protected ArrayList<AllocatedSection> getAllocatedSectionsList() {
+    protected List<AllocatedSection> getAllocatedSectionsList() {
         return allocatedSections;
     }
 
@@ -2363,8 +2367,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             if (at.getDelayedStart() != ActiveTrain.NODELAY && (!at.getStarted())) {
                 delayedTrains.add(at);
                 fastClockWarn(true);
-            } // djd needs work here    
-            // check for delayed restart      
+            } // djd needs work here
+            // check for delayed restart
             else if (at.getDelayedRestart() == ActiveTrain.TIMEDDELAY) {
                 fastClockWarn(false);
             }
@@ -2407,14 +2411,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         return _autoTrainsFrame;
     }
 
-    static DispatcherFrame _instance = null;
-
+    /**
+     *
+     * @return the managed instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DispatcherFrame instance() {
-        if (_instance == null) {
-            _instance = new DispatcherFrame();
-            jmri.InstanceManager.store(_instance, jmri.jmrit.dispatcher.DispatcherFrame.class);
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DispatcherFrame.class);
     }
 
     /**
@@ -2493,6 +2498,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case TRANSIT_COLUMN:
@@ -2857,6 +2864,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DispatcherFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DispatcherFrame.class);
 
 }

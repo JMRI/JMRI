@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.locostats.swing;
 
-import jmri.jmrix.loconet.locostats.swing.LocoStatsFrameTest;
-import jmri.jmrix.loconet.locostats.swing.LocoStatsPanelTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

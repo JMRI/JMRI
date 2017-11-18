@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -68,9 +69,9 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
 
         // confirm location edit frame creation
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame("Edit Location") != null;
+            return JmriJFrame.getFrame(Bundle.getMessage("TitleLocationEdit")) != null;
         }, "lef not null");
-        JmriJFrame lef = JmriJFrame.getFrame("Edit Location");
+        JmriJFrame lef = JmriJFrame.getFrame(Bundle.getMessage("TitleLocationEdit"));
         Assert.assertNotNull(lef);
 
         // close windows
@@ -79,7 +80,7 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         JFrameOperator jfof = new JFrameOperator(f);
         jfof.close();
 
-        Assert.assertNull(JmriJFrame.getFrame("Edit Location"));
+        Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("TitleLocationEdit")));
 
     }
 
@@ -99,9 +100,9 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
 
         // confirm location add frame creation
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame("Add Location") != null;
+            return JmriJFrame.getFrame(Bundle.getMessage("AddLocation")) != null;
         }, "lef not null");
-        JmriJFrame lef = JmriJFrame.getFrame("Add Location");
+        JmriJFrame lef = JmriJFrame.getFrame(Bundle.getMessage("AddLocation"));
         Assert.assertNotNull(lef);
 
         // close windows
@@ -110,12 +111,12 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         JFrameOperator jfof = new JFrameOperator(f);
         jfof.close();
 
-        Assert.assertNull(JmriJFrame.getFrame("Add Location"));
+        Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("AddLocation")));
     }
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");

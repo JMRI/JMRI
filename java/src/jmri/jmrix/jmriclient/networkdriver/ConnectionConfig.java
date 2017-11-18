@@ -88,10 +88,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
             _details.add(transmitPrefixLabel);
             _details.add(transmitPrefixField);
         }
-        if (_details.getParent() != null && _details.getParent() instanceof javax.swing.JViewport) {
-            javax.swing.JViewport vp = (javax.swing.JViewport) _details.getParent();
-            vp.revalidate();
-            vp.repaint();
+        if (_details.getParent() != null) {
+            _details.getParent().revalidate();
+            _details.getParent().repaint();
         }
 
     }

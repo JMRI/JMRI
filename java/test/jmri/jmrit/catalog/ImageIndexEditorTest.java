@@ -1,6 +1,7 @@
 package jmri.jmrit.catalog;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
@@ -11,9 +12,7 @@ import org.junit.Assert;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
- * LinkingLabelTest.java
- *
- * Description:
+ * ImageIndexEditorTest
  *
  * @author pete cressman
  */
@@ -23,32 +22,33 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return;
         }
-        ImageIndexEditor indexEditor = ImageIndexEditor.instance(null);
+        ImageIndexEditor indexEditor = InstanceManager.getDefault(ImageIndexEditor.class);
         Assert.assertNotNull(JFrameOperator.waitJFrame(Bundle.getMessage("editIndexFrame"), true, true));
-        Assert.assertFalse("Index not changed",ImageIndexEditor.isIndexChanged());
-        
+        Assert.assertFalse("Index not changed", indexEditor.isIndexChanged());
+
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             indexEditor.addNode();
         });
         flushAWT();
-        java.awt.Container pane = findContainer(Bundle.getMessage("info"));
+        java.awt.Container pane = findContainer(Bundle.getMessage("MessageTitle"));
         Assert.assertNotNull("Select node prompt not found", pane);
-        pressButton(pane, "OK");
-        junit.extensions.jfcunit.TestHelper.disposeWindow(indexEditor,this);
+        pressButton(pane, Bundle.getMessage("ButtonOK"));
+        junit.extensions.jfcunit.TestHelper.disposeWindow(indexEditor, this);
     }
-/*
+
+    /*
     public void testOpenDirectory() {
         if (GraphicsEnvironment.isHeadless()) {
             return;
         }
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-            DirectorySearcher.instance().openDirectory();
+            InstanceManager.getDefault(DirectorySearcher.class).openDirectory();
         });
         java.awt.Container pane = findContainer(Bundle.getMessage("openDirMenu"));
         Assert.assertNotNull("FileChooser not found", pane);
         pressButton(pane, "Cancel");
     }
-/*    
+/*
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
         if (GraphicsEnvironment.isHeadless()) {
             return;
@@ -56,7 +56,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         long time = System.currentTimeMillis();
         System.out.println("Start testPreviewDialog: time = "+time+"ms");
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-            DirectorySearcher.instance().searchFS();
+            InstanceManager.getDefault(DirectorySearcher.class).searchFS();
         });
         ComponentFinder finder = new ComponentFinder(JFileChooser.class);
         JUnitUtil.waitFor(() -> {
@@ -74,7 +74,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         pressButton(chooser, "Open");
         flushAWT();
         System.out.println("Mid testPreviewDialog: elapsed time = "+ (System.currentTimeMillis()-time)+"ms");
-        
+
         // search a few directories
         int cnt = 0;
         while (cnt<1) {     // was 5.  not enough memory on Mac test machine?
@@ -98,16 +98,17 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         pressButton(pane, "OK");
         System.out.println("End testPreviewDialog: elapsed time = "+ (System.currentTimeMillis()-time)+"ms");
     }
-*/    
+     */
     java.awt.Container findContainer(String title) {
         DialogFinder finder = new DialogFinder(title);
         JUnitUtil.waitFor(() -> {
-            return (java.awt.Container)finder.find()!=null;
+            return (java.awt.Container) finder.find() != null;
         }, "Found dialog + \"title\"");
-        java.awt.Container pane = (java.awt.Container)finder.find();
+        java.awt.Container pane = (java.awt.Container) finder.find();
         return pane;
-        
+
     }
+
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
         AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
         javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
@@ -115,7 +116,6 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
         return button;
     }
-
 
     // from here down is testing infrastructure
     public ImageIndexEditorTest(String s) {
@@ -137,17 +137,16 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
         super.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initShutDownManager();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class.getName());
-}
+    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class);
 
+}

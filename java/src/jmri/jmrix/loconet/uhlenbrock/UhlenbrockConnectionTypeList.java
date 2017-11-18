@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
+
 /**
  * Returns a list of valid Uhlenbrock Connection Types
  * <P>
@@ -7,6 +10,7 @@ package jmri.jmrix.loconet.uhlenbrock;
  * @author Kevin Dickerson Copyright (C) 2010
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class UhlenbrockConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String UHLEN = "Uhlenbrock";

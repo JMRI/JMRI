@@ -1,5 +1,8 @@
 package jmri.util.swing;
 
+import static jmri.util.swing.GuiUtilBase.rootFromName;
+
+import java.awt.Container;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.annotation.CheckForNull;
@@ -51,7 +54,8 @@ public class JMenuUtil extends GuiUtilBase {
         return retval;
     }
 
-    static @Nonnull JMenu jMenuFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
+    static @Nonnull
+    JMenu jMenuFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         boolean addSep = false;
         String name = "<none>";
         if (main == null) {
@@ -116,7 +120,8 @@ public class JMenuUtil extends GuiUtilBase {
         return menu;
     }
 
-    static @Nonnull JMenu createMenuGroupFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
+    static @Nonnull
+    JMenu createMenuGroupFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         String name = "<none>";
         if (main == null) {
             log.warn("Menu from element called without an element");
@@ -192,5 +197,30 @@ public class JMenuUtil extends GuiUtilBase {
         return kcode;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMenuUtil.class.getName());
-}
+    /**
+     * replace a menu item in its parent with another menu item
+     * <p>
+     * (at the same position in the parent menu)
+     *
+     * @param orginalMenuItem     the original menu item to be replaced
+     * @param replacementMenuItem the menu item to replace it with
+     * @return true if the original menu item was found and replaced
+     */
+    public static boolean replaceMenuItem(
+            @Nonnull JMenuItem orginalMenuItem,
+            @Nonnull JMenuItem replacementMenuItem) {
+        boolean result = false; // assume failure (pessimist!)
+        Container container = orginalMenuItem.getParent();
+        if (container != null) {
+            int index = container.getComponentZOrder(orginalMenuItem);
+            if (index > -1) {
+                container.remove(orginalMenuItem);
+                container.add(replacementMenuItem, index);
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(JMenuUtil.class);
+}   // class JMenuUtil

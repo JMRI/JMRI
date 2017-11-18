@@ -16,7 +16,7 @@ import javax.swing.AbstractAction;
 public class AmpMeterAction extends AbstractAction {
 
     public AmpMeterAction() {
-        this("Track Current Meter");
+        this(Bundle.getMessage("TrackCurrentMeterTitle"));
     }
 
     public AmpMeterAction(String s) {

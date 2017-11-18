@@ -105,7 +105,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                 if (numUr92 > 0) {
                     newvalue = numUr92;
                     thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
-                    InvalidateDataAndQueryDuplexInfo();
+                    invalidateDataAndQueryDuplexInfo();
                 } else {
                     thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
                     thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ErrorNoUR92Found"); // NOI18N
@@ -921,7 +921,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                 dgi));
     }
 
-    private void InvalidateDataAndQueryDuplexInfo() {
+    private void invalidateDataAndQueryDuplexInfo() {
         if (numUr92 > 0) {
             thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ProcessingReadingInfo");
             queryDuplexGroupIdentity();
@@ -1179,6 +1179,6 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImpl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImpl.class);
 
 }

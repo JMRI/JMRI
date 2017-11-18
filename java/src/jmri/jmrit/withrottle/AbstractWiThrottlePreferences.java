@@ -1,9 +1,11 @@
 package jmri.jmrit.withrottle;
 
 import java.io.File;
+import java.io.IOException;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +26,8 @@ abstract public class AbstractWiThrottlePreferences {
         } catch (java.io.FileNotFoundException ea) {
             log.info("Could not find WiThrottle preferences file ({}).  Normal if preferences have not been saved before.", fileName);
             root = null;
-        } catch (Exception eb) {
-            log.error("Exception while loading throttles preferences: " + eb);
+        } catch (IOException | JDOMException eb) {
+            log.error("Exception while loading throttles preferences:", eb);
             root = null;
         }
         if (root != null) {
@@ -50,14 +52,14 @@ abstract public class AbstractWiThrottlePreferences {
             File parentDir = file.getParentFile();
             if (!parentDir.exists()) {
                 if (!parentDir.mkdir()) {
-                    log.warn("Could not create parent directory for prefs file :" + fileName);
+                    log.warn("Could not create parent directory for prefs file :{}", fileName);
                     return;
                 }
             }
             if (file.createNewFile()) {
-                log.debug("Creating new WiThrottle prefs file: " + fileName);
+                log.debug("Creating new WiThrottle prefs file: {}", fileName);
             }
-        } catch (Exception ea) {
+        } catch (IOException ea) {
             log.error("Could not create WiThrottle preferences file.");
         }
 
@@ -66,8 +68,8 @@ abstract public class AbstractWiThrottlePreferences {
             Document doc = XmlFile.newDocument(root);
             root.setContent(store());
             xmlFile.writeXML(file, doc);
-        } catch (Exception eb) {
-            log.warn("Exception in storing WiThrottle xml: " + eb);
+        } catch (IOException eb) {
+            log.warn("Exception in storing WiThrottle xml:", eb);
         }
     }
 
@@ -77,6 +79,6 @@ abstract public class AbstractWiThrottlePreferences {
     public static class AbstractWiThrottlePreferencesXml extends XmlFile {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractWiThrottlePreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractWiThrottlePreferences.class);
 
 }

@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
    MarklinThrottleTest.class,
    MarklinTurnoutManagerTest.class,
    MarklinTurnoutTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin package
@@ -47,7 +48,7 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 
 }

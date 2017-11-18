@@ -29,6 +29,7 @@ import org.junit.runners.Suite;
     SkemeStartEditorTest.class,
     SkipOnTriggerEditorTest.class,
     EditorFrameTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }

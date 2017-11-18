@@ -24,7 +24,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
@@ -46,7 +45,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     boolean showAllCars;
     String locationName;
     String trackName;
-    CarManager carManager = CarManager.instance();
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
     // labels
     JLabel numCars = new JLabel();
@@ -136,7 +135,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         if (Setup.isRfidEnabled()) {
             movep.add(sortByRfid);
         }
-        if (ScheduleManager.instance().numEntries() > 0) {
+        if (InstanceManager.getDefault(ScheduleManager.class).numEntries() > 0) {
             movep.add(sortByWait);
             movep.add(sortByPickup);
         }
@@ -329,7 +328,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         }
     }
 
-    public List<RollingStock> getSortByList() {
+    public List<Car> getSortByList() {
         return carsTableModel.sysList;
     }
 
@@ -402,7 +401,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     private void updateNumCars() {
-        String totalNumber = Integer.toString(CarManager.instance().getNumEntries());
+        String totalNumber = Integer.toString(InstanceManager.getDefault(CarManager.class).getNumEntries());
         if (showAllCars) {
             numCars.setText(totalNumber);
             return;
@@ -411,6 +410,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         numCars.setText(showNumber + "/" + totalNumber);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsTableFrame.class);
 
 }

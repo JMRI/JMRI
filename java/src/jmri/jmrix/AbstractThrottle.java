@@ -424,6 +424,12 @@ abstract public class AbstractThrottle implements DccThrottle {
                 @Override
                 public void notifyThrottleFound(DccThrottle t) {
                 }
+    
+                @Override
+                public void notifyStealThrottleRequired(DccLocoAddress address){
+                    // this is an automatically stealing impelementation.
+                    InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                }
             });
         }
     }
@@ -1427,6 +1433,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractThrottle.class);
 
 }

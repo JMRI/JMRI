@@ -300,7 +300,7 @@ class Diesel3Sound extends EngineSound {
         this.startThread();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Diesel3Sound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Diesel3Sound.class);
 
     private static class D3Notch {
 
@@ -524,7 +524,7 @@ class Diesel3Sound extends EngineSound {
             return (buf);
         }
 
-        private static final Logger log = LoggerFactory.getLogger(D3Notch.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(D3Notch.class);
     }
 
     private static class D3LoopThread extends Thread {
@@ -594,16 +594,16 @@ class Diesel3Sound extends EngineSound {
             _sound.unqueueBuffers();
             // Adjust the current notch to match the throttle setting
             log.debug("Notch = " + _notch.getNotch() + " prev = " + _notch.getPrevNotch() + " next = " + _notch.getNextNotch());
-            if (!_notch.isInLimits(_throttle)) {
-                // We're out of whack. Find the right notch for the current throttle setting.
-                while (!_notch.isInLimits(_throttle)) {
-                    if (_throttle > _notch.getAccelLimit()) {
-                        _notch = _parent.getNotch(_notch.getNextNotch());
-                    } else if (_throttle < _notch.getDecelLimit()) {
-                        _notch = _parent.getNotch(_notch.getPrevNotch());
-                    }
+            
+            // If we're out of whack, find the right notch for the current throttle setting.
+            while (!_notch.isInLimits(_throttle)) {
+                if (_throttle > _notch.getAccelLimit()) {
+                    _notch = _parent.getNotch(_notch.getNextNotch());
+                } else if (_throttle < _notch.getDecelLimit()) {
+                    _notch = _parent.getNotch(_notch.getPrevNotch());
                 }
             }
+            
             // Only queue the start buffer if we know we're in the idle notch.
             // This is indicated by prevNotch == self.
             if (_notch.isIdleNotch()) {
@@ -647,8 +647,9 @@ class Diesel3Sound extends EngineSound {
                             //log.debug("D3Loop"+ _sound.getName() + "Loop: Adding buffer " + b.getSystemName());
                             _sound.queueBuffer(b);
                         }
-                        if (!_sound.isPlaying()) {
+                        if (_sound.getSource().getState() != Audio.STATE_PLAYING) {
                             _sound.play();
+                            log.info("loop sound re-started. Possibly queue underrun or audio shutdown");
                         }
                     } else {
                         // Quietly wait for the sound to get turned on again
@@ -734,7 +735,7 @@ class Diesel3Sound extends EngineSound {
             _notch = null;
             _sound = null;
         }
-        private static final Logger log = LoggerFactory.getLogger(D3LoopThread.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(D3LoopThread.class);
 
     }
 }

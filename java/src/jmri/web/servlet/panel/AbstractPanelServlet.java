@@ -12,6 +12,8 @@ import java.awt.Frame;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -19,14 +21,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
+import jmri.InstanceManager;
+import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.jmrit.display.Editor;
 import jmri.server.json.JSON;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
-import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +42,7 @@ import org.slf4j.LoggerFactory;
 abstract class AbstractPanelServlet extends HttpServlet {
 
     protected ObjectMapper mapper;
-    private final static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class);
 
     abstract protected String getPanelType();
 
@@ -53,7 +56,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
 
     /**
      * Handle a GET request for a panel.
-     *
+     * <p>
      * The request is processed in this order:
      * <ol>
      * <li>If the request contains a parameter {@code name=someValue}, redirect
@@ -77,7 +80,6 @@ abstract class AbstractPanelServlet extends HttpServlet {
      * other formats not listed are treated as {@code xml}.
      * </li>
      * </ol>
-     *
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,9 +89,9 @@ abstract class AbstractPanelServlet extends HttpServlet {
             return;
         }
         if (request.getParameter(JSON.NAME) != null) {
-            String panelName = StringUtil.unescapeString(request.getParameter(JSON.NAME));
+            String panelName = URLDecoder.decode(request.getParameter(JSON.NAME), UTF8);
             if (getEditor(panelName) != null) {
-                response.sendRedirect("/panel/" + StringUtil.escapeString(panelName)); // NOI18N
+                response.sendRedirect("/panel/" + URLEncoder.encode(panelName, UTF8)); // NOI18N
             } else {
                 response.sendRedirect("/panel/"); // NOI18N
             }
@@ -97,35 +99,45 @@ abstract class AbstractPanelServlet extends HttpServlet {
             listPanels(request, response);
         } else {
             String[] path = request.getRequestURI().split("/"); // NOI18N
-            String panelName = StringUtil.unescapeString(path[path.length - 1]);
-            if ("png".equals(request.getParameter("format"))) {
-                BufferedImage panel = getPanelImage(panelName);
-                if (panel == null) {
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "See the JMRI console for details.");
-                } else {
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write(panel, "png", baos);
-                    baos.close();
-                    response.setContentType(IMAGE_PNG);
-                    response.setStatus(HttpServletResponse.SC_OK);
-                    response.setContentLength(baos.size());
-                    response.getOutputStream().write(baos.toByteArray());
-                    response.getOutputStream().close();
-                }
-            } else if ("html".equals(request.getParameter("format")) || null == request.getParameter("format")) {
+            String panelName = URLDecoder.decode(path[path.length - 1], UTF8);
+            String format = request.getParameter("format");
+            if (format == null) {
                 this.listPanels(request, response);
             } else {
-                boolean useXML = (!JSON.JSON.equals(request.getParameter("format")));
-                response.setContentType(UTF8_APPLICATION_JSON);
-                String panel = getPanelText(panelName, useXML);
-                if (panel == null) {
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "See the JMRI console for details.");
-                } else if (panel.startsWith("ERROR")) {
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, panel.substring(5).trim());
-                } else {
-                    response.setStatus(HttpServletResponse.SC_OK);
-                    response.setContentLength(panel.getBytes(UTF8).length);
-                    response.getOutputStream().print(panel);
+                switch (format) {
+                    case "png":
+                        BufferedImage image = getPanelImage(panelName);
+                        if (image == null) {
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "See the JMRI console for details.");
+                        } else {
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            ImageIO.write(image, "png", baos);
+                            baos.close();
+                            response.setContentType(IMAGE_PNG);
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            response.setContentLength(baos.size());
+                            response.getOutputStream().write(baos.toByteArray());
+                            response.getOutputStream().close();
+                        }
+                        break;
+                    case "html":
+                        this.listPanels(request, response);
+                        break;
+                    default: {
+                        boolean useXML = (!JSON.JSON.equals(request.getParameter("format")));
+                        response.setContentType(UTF8_APPLICATION_JSON);
+                        String panel = getPanelText(panelName, useXML);
+                        if (panel == null) {
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "See the JMRI console for details.");
+                        } else if (panel.startsWith("ERROR")) {
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, panel.substring(5).trim());
+                        } else {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            response.setContentLength(panel.getBytes(UTF8).length);
+                            response.getOutputStream().print(panel);
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -134,7 +146,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
     protected void listPanels(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType(UTF8_APPLICATION_JSON);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
             response.getWriter().print(service.getPanels(request.getLocale(), JSON.XML));
         } else {
@@ -143,12 +155,12 @@ abstract class AbstractPanelServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Panel.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
+                            InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "PanelsTitle")
                     ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), "/panel"),
-                    ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), "/panel")
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), "/panel"),
+                    InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), "/panel")
             ));
         }
     }
@@ -200,18 +212,20 @@ abstract class AbstractPanelServlet extends HttpServlet {
     protected void parsePortableURIs(Element element) {
         if (element != null) {
             //loop thru and update attributes of this element if value is a portable filename
-            for (Attribute attr : element.getAttributes()) {
-                if (FileUtil.isPortableFilename(attr.getValue())) {
-                    String url = WebServer.URIforPortablePath(attr.getValue());
-                    if (url != null) {  // if portable path conversion fails, don't change the value
+            element.getAttributes().forEach((attr) -> {
+                String value = attr.getValue();
+                if (FileUtil.isPortableFilename(value)) {
+                    String url = WebServer.URIforPortablePath(value);
+                    if (url != null) {
+                        // if portable path conversion fails, don't change the value
                         attr.setValue(url);
                     }
                 }
-            }
+            });
             //recursively call for each child
-            for (Object child : element.getChildren()) {
-                parsePortableURIs((Element) child);
-            }
+            element.getChildren().forEach((child) -> {
+                parsePortableURIs(child);
+            });
 
         }
     }
@@ -226,42 +240,43 @@ abstract class AbstractPanelServlet extends HttpServlet {
      */
     protected Element getSignalMastIconsElement(String name) {
         Element icons = new Element("icons");
-        jmri.SignalMast signalMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
-        for (String aspect : signalMast.getValidAspects()) {
-            Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
-            String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset
-            if (!url.contains("preference:")) {
-                url = "program:" + url.substring(url.indexOf("resources"));
+        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+        if (signalMast != null) {
+            signalMast.getValidAspects().forEach((aspect) -> {
+                Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
+                String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset
+                if (!url.contains("preference:")) {
+                    url = "program:" + url.substring(url.indexOf("resources"));
+                }
+                ea.setAttribute(JSON.ASPECT, aspect);
+                ea.setAttribute("url", url);
+                icons.addContent(ea);
+            });
+            String url = signalMast.getAppearanceMap().getImageLink("$held", "default");  //add "Held" aspect if defined
+            if (!url.isEmpty()) {
+                if (!url.contains("preference:")) {
+                    url = "program:" + url.substring(url.indexOf("resources"));
+                }
+                Element ea = new Element(JSON.ASPECT_HELD);
+                ea.setAttribute(JSON.ASPECT, JSON.ASPECT_HELD);
+                ea.setAttribute("url", url);
+                icons.addContent(ea);
             }
-            ea.setAttribute(JSON.ASPECT, aspect);
-            ea.setAttribute("url", url);
+            url = signalMast.getAppearanceMap().getImageLink("$dark", "default");  //add "Dark" aspect if defined
+            if (!url.isEmpty()) {
+                if (!url.contains("preference:")) {
+                    url = "program:" + url.substring(url.indexOf("resources"));
+                }
+                Element ea = new Element(JSON.ASPECT_DARK);
+                ea.setAttribute(JSON.ASPECT, JSON.ASPECT_DARK);
+                ea.setAttribute("url", url);
+                icons.addContent(ea);
+            }
+            Element ea = new Element(JSON.ASPECT_UNKNOWN);
+            ea.setAttribute(JSON.ASPECT, JSON.ASPECT_UNKNOWN);
+            ea.setAttribute("url", "program:resources/icons/misc/X-red.gif");  //add icon for unknown state
             icons.addContent(ea);
         }
-        String url = signalMast.getAppearanceMap().getImageLink("$held", "default");  //add "Held" aspect if defined
-        if (!url.isEmpty()) {
-            if (!url.contains("preference:")) {
-                url = "program:" + url.substring(url.indexOf("resources"));
-            }
-            Element ea = new Element(JSON.ASPECT_HELD);
-            ea.setAttribute(JSON.ASPECT, JSON.ASPECT_HELD);
-            ea.setAttribute("url", url);
-            icons.addContent(ea);
-        }
-        url = signalMast.getAppearanceMap().getImageLink("$dark", "default");  //add "Dark" aspect if defined
-        if (!url.isEmpty()) {
-            if (!url.contains("preference:")) {
-                url = "program:" + url.substring(url.indexOf("resources"));
-            }
-            Element ea = new Element(JSON.ASPECT_DARK);
-            ea.setAttribute(JSON.ASPECT, JSON.ASPECT_DARK);
-            ea.setAttribute("url", url);
-            icons.addContent(ea);
-        }
-        Element ea = new Element(JSON.ASPECT_UNKNOWN);
-        ea.setAttribute(JSON.ASPECT, JSON.ASPECT_UNKNOWN);
-        ea.setAttribute("url", "program:resources/icons/misc/X-red.gif");  //add icon for unknown state
-        icons.addContent(ea);
-
         return icons;
     }
 }

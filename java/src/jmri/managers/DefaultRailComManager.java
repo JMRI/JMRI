@@ -1,8 +1,11 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -10,11 +13,6 @@ import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.Reporter;
 import jmri.implementation.DefaultRailCom;
-
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.4
  */
-public class DefaultRailComManager extends AbstractManager
+public class DefaultRailComManager extends AbstractManager<jmri.IdTag>
         implements RailComManager {
 
     public DefaultRailComManager() {
@@ -221,6 +219,6 @@ public class DefaultRailComManager extends AbstractManager
         return Bundle.getMessage("BeanNameReporter");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class);
 
 }

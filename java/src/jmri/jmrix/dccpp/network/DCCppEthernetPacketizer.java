@@ -103,7 +103,7 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
             //xmtException = true;
@@ -113,7 +113,7 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetPacketizer.class);
 }
 
 

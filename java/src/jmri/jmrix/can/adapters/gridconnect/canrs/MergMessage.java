@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class for messages for a MERG CAN-RS hardware adapter.
  * <P>
- * The MERG varient of the GridConnect protocol encodes messages as an ASCII
+ * The MERG variant of the GridConnect protocol encodes messages as an ASCII
  * string of up to 24 characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; hhhh is
  * the two byte (11 useful bits) header The S indicates a standard CAN frame
  * :XhhhhhhhhNd0d1d2d3d4d5d6d7; The X indicates an extended CAN frame Strict
@@ -114,5 +114,5 @@ public class MergMessage extends GridConnectMessage {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergMessage.class);
 }

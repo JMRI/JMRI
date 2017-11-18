@@ -95,7 +95,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 | XNetInterface.INTERFACE,
                 this);
 
-        setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        setMode(ProgrammingMode.DIRECTBYTEMODE);
     }
 
     /**
@@ -104,10 +104,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
 
@@ -130,7 +130,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
             return false;
         }
 
-        if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             switch (controller().getCommandStation().getCommandStationType()) {
                 case XNetConstants.CS_TYPE_LZ100:
                     if (controller().getCommandStation()
@@ -161,7 +161,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }
-        if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             switch (controller().getCommandStation().getCommandStationType()) {
                 case XNetConstants.CS_TYPE_LZ100:
                     if (controller().getCommandStation()
@@ -205,10 +205,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
             restartTimer(XNetProgrammerTimeout);
 
             // format and send message to go to program mode
-            if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV, val);
                 controller().sendXNetMessage(msg, this);
-            } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV, val);
                 controller().sendXNetMessage(msg, this);
             } else { // register mode by elimination 
@@ -247,10 +247,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
             restartTimer(XNetProgrammerTimeout);
 
             // format and send message to go to program mode
-            if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 XNetMessage msg = XNetMessage.getReadPagedCVMsg(CV);
                 controller().sendXNetMessage(msg, this);
-            } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 XNetMessage msg = XNetMessage.getReadDirectCVMsg(CV);
                 controller().sendXNetMessage(msg, this);
             } else { // register mode by elimination    
@@ -508,19 +508,18 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-
-    /*
+    /**
      * Since the Lenz programming sequence requires several 
-     * operations, We want to be able to check and see if we are 
+     * operations, we want to be able to check and see if we are
      * currently programming before allowing the Traffic Controller 
-     * to send a request to exit service mode
+     * to send a request to exit service mode.
      */
     synchronized public boolean programmerBusy() {
         return (progState != NOTPROGRAMMING);
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     @Override
     synchronized protected void timeout() {
@@ -539,7 +538,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-    // internal method to notify of the final result
+    /**
+     * Internal method to notify of the final result
+     */
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
@@ -557,9 +558,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetProgrammer.class);
 
 }
-
-
-

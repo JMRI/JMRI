@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement a feedback message cache for XPressNet sensors and turnouts.
- * <P>
+ * Implement a feedback message cache for XpressNet sensors and turnouts.
  *
  * @author Paul Bender Copyright (C) 2012
   */
@@ -58,10 +57,12 @@ public class XNetFeedbackMessageCache implements XNetListener {
         }
     }
 
-    // requestCachedStateFromLayout
-    // provide any cached state a sensor.  Otherwise, call the sensor's 
-    // requestUpdateFromLayout() method.
-    // @param sensor - the XNetSensor object we are requesting data for.
+    /**
+     * Provide any cached state a sensor. Otherwise, call the sensor's
+     * requestUpdateFromLayout() method.
+     *
+     * @param sensor the XNetSensor object we are requesting data for
+     */
     synchronized public void requestCachedStateFromLayout(XNetSensor sensor) {
         int pNumber = sensor.getNumber();
         if (messagePending[sensor.getBaseAddress()][sensor.getNibble() >> 4]) {
@@ -83,11 +84,13 @@ public class XNetFeedbackMessageCache implements XNetListener {
         }
     }
 
-    // listen for turnouts, creating them as needed
+    /**
+     * Listen for turnouts, creating them as needed.
+     */
     @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
@@ -99,12 +102,16 @@ public class XNetFeedbackMessageCache implements XNetListener {
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
     @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -112,7 +119,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetFeedbackMessageCache.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetFeedbackMessageCache.class);
 
 }
 

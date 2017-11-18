@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id$ -->
-
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Stylesheet to convert a JMRI throttle XML file into displayable HTML -->
 
 <!-- Used by default when the throttle file is displayed in a web browser-->

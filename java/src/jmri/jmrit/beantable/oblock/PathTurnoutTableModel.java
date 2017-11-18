@@ -257,5 +257,5 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModel.class);
 }

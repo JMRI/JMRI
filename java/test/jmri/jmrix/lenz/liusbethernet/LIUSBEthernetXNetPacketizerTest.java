@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.liusbethernet;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,12 +47,6 @@ public class LIUSBEthernetXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketi
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
     }
 
 }

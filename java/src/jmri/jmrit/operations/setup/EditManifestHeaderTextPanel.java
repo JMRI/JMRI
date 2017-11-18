@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
@@ -295,10 +296,10 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         TrainManifestHeaderText.setStringHeader_Model(model_TextField.getText());
         TrainManifestHeaderText.setStringHeader_Consist(consist_TextField.getText());
 
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
 
         // recreate all train manifests
-        TrainManager.instance().setTrainsModified();
+        InstanceManager.getDefault(TrainManager.class).setTrainsModified();
     }
 
     @Override

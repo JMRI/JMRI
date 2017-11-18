@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<!-- UpDated by Blorec Herv&#233; 2016-08-29-->
+<head>
+ <title>
+      JMRI: Sections Documentation
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Dave Duchamp" name="Author">
+    <meta name="keywords" content="JMRI help Sections">
+
+<!--#include virtual="/Style" -->
+</head>
+<body>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+<h1>JMRI: Documentation Sections</h1>
+
+<h2>Qu'est-ce qu'une Section?</h2>
+
+<p>Une <b>Section</b> est un groupe de un ou plusieurs <b>Cantons</b> connect&#233;s qui peuvent &#234;tre
+allou&#233; &#224; un train voyageant dans une direction donn&#233;e. Les sections ont &#233;t&#233; cr&#233;&#233;es pour r&#233;soudre 
+les probl&#232;mes de direction qui peuvent survenir par l'utilisation des Cantons directs. Une section a seulement 
+deux directions, "Avant" et "Inverse". Les sections peuvent &#234;tre travers&#233;es par un train dans n'importe 
+quelle direction. La direction de la section est ind&#233;pendante de la direction r&#233;gl&#233;e pour la locomotive par 
+un r&#233;gulateur. En plus de r&#233;soudre les probl&#232;me de direction, les Sections offrent &#224; l'utilisateur d'autres 
+fonctions utiles.</p>
+<p>Les sections peuvent &#234;tre consid&#233;r&#233;es comme une extensions des Cantons. Beaucoup de Sections contiennent seulement un
+Canton. Tous les Cantons contenus dans une section multi-Canton doivent &#234;tre diff&#233;rents.
+Les Cantons sont gard&#233;s dans l'ordre--le premier canton est connect&#233; au second, le second
+au troisi&#232;me, etc. Cela signifie qu'un Canton dans une section doit &#234;tre connect&#233; au
+Canton avant lui ( s'il y en a un ) et au Canton apr&#232;s ( s'il y en a un ),  
+mais mais peut ne pas &#234;tre reli&#233; &#224; un autre Canton dans la Section. Une Section peut 
+ne pas contenir de boucle de retournement.</p>
+<p>Les Sections et leurs <b><a href="../../package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a></b> associ&#233;s
+sont d&#233;sign&#233;s pour fournir une aide pour le dispatching, soit le dispaching manuel ( par un
+dispatcheur assis &#224; un pupitre ), ou le dispatching automatique par l'ordinateur. Le Dispatching
+est l'allocations temporaire de Sections &#224; l'usage exclusif d'un train, soit
+conduit par un conducteur avec un r&#233;gulateur, et/ou pilot&#233; automatiquement par l'ordinateur. L'aide pour
+le dispatching est fournie par le <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>,
+qui pr&#233;voit &#233;galement la  mise en place et le fonctionnement des trains automatiquement.</p>
+<p>Une <b>direction</b> de Section est d&#233;finie par une s&#233;quence dans laquelle les Cantons sont 
+ajout&#233;s &#224; une section multi-canton. Pour une simple Section Canton la direction est choisi
+arbitrairement quand la section est cr&#233;&#233;e. Un train peut circuler &#224; travers la Section soit dans
+la direction <b>avant</b> ( du premier canton au dernier canton ) ou la direction <b>inverse</b>
+( depuis le dernier canton au premier canton ). Si une Section a seulement un Canton, la
+<b>direction</b> de cette Section est choisi lors du param&#233;trage de ses <b>Points d'Entr&#233;e</b>
+ (voir ci-dessous ).</p>
+
+<p>Par cons&#233;quent, lorsque la mise en place des sections multi-cantons, vous devez choisir les cantons dans le m&#234;me
+ordre &#224; travers le r&#233;seau pour les sections connect&#233;es s&#233;quentiellement. De cette mani&#232;re les directions avant et 
+inverse auront une signification coh&#233;rente pour les Sections sur une base relative.</p>
+
+<p>Une Section a un ou plus <b>Points d'Entr&#233;e</b>. Un Point d'Entr&#233;e d&#233;finit une
+connexion depuis un Canton &#224; l'int&#233;rieur de la Section &#224; un Canton &#224; l'ext&#233;rieur de la Section. les Points 
+d'Entr&#233;e sont d&#233;finis par l'utilisation des Chemins de Cantons dans la Section--les Chemins repr&#233;sentent les connexions
+aux Cantons non contenus dans la Section. Les Points d'Entr&#233;e sont classifi&#233;s selon une des deux m&#233;thodes suivantes:
+		<ol>
+		<li> soit Entrer dans la section &#224; ce point d'entr&#233;e se traduira par un train circulant dans la 
+			 direction "avant". </li>
+		<li> soit Entrer &#224; ce point d'entr&#233;e se traduira par un train circulant dans la 
+			 direction "inverse". </li>
+		</ol>
+</p>
+<p>Les Sections sont destin&#233;es &#224; &#234;tre affect&#233;es &#224; un train &#224; un moment. Si une portion
+de voie connect&#233;e est assez longue pour pouvoir supporter simultan&#233;ment plusieurs trains circulant dans 
+le m&#234;me sens, l'un suivant l'autre, cette voie connect&#233;e peut &#234;tre divis&#233;e en 
+deux ou 3 Sections, si l'utilisateur veux faire circuler des trains se suivant dans cette zone.</p>
+
+<h2>Conditions</h2>
+
+<p>Les Sections peuvent &#234;tre utilis&#233;es avec un &#201;diteur de Panneau, un &#201;diteur de R&#233;seau, avec 
+un appareil CTC, ou directement sans aucun panneau. Les Sections reposent sur la structure Cantons 
+et Chemins de JMRI. Donc avant d'essayer de cr&#233;er des Sections, vous devriez avoir des 
+Cantons et des Chemins enti&#232;rement initialis&#233;s sur votre r&#233;seau. ( Un moyen facile d'initialiser 
+automatiquement vos Cantons et Chemins est d'esquisser un panneau de votre r&#233;seau sur un &#201;diteur de r&#233;seau, 
+avec des blocs attribu&#233;s. Par l'affectation des Cantons &#224; tous les segments de voie, Aiguillages, etc., 
+les chemins seront automatiquement cr&#233;&#233;s pour vous par JMRI. )</p>
+<p> Le Cantonnement du r&#233;seau doit &#234;tre planifi&#233;. Pour un Aiguillage &#224; droite ou &#224; gauche qui oriente la voie principale, 
+par exemple, celui-ci habituellement sera inclus dans le m&#234;me Canton que la voie entrant par la pointe de l'aiguillage, 
+et fournira des Cantons s&#233;par&#233;s pour les voies directe et d&#233;vi&#233;e. Des utilisateurs pr&#233;f&#232;rent avoir les aiguillages dans un 
+Canton s&#233;par&#233;. Dans une perspective de Dispatching, les voies d'un aiguillage sur voie principale qui desservent un 
+embranchement industriel n'ont pas besoin d'&#234;tre cantonn&#233;es s&#233;par&#233;ment, mais le cantonnement est ici acceptable.
+Un sch&#233;ma de cantonnement de r&#233;seau qui fonctionne bien pour la Signalisation, doit bien travailler aussi 
+avec les Sections. </p>
+<p>Les Signaux ne sont obligatoires pour l'utilisation des Sections, mais les Sections travaillent plus finement 
+quand les Signaux sont install&#233;s. Si les Signaux sont install&#233;s, les Capteurs de direction inclus dans les 
+Sections fournissent une m&#233;thode facile pour d&#233;finir une simple signalisation APB  (voir <a href="#SignalMast">ci-dessous</a>).</p>
+
+<h3>Support pour les capteurs Optionnels de Direction et D'arr&#234;t</h3>
+
+<p>Optionnellement chaque Section peut avoir deux <i>capteurs de direction</i> un pour la direction "avant" 
+et un pour la direction "inverse". Ce sont normalement des Capteurs internes, 
+dont les noms syst&#232;mes commencent par IS (Internal Sensor). Ils suivent automatiquement l'&#233;tat de leur 
+Section. Une Section a trois &#233;tats, <b>LIBRE</b> ( non affect&#233;e a un train ), <b>AVANT</b> 
+( allou&#233; pour un trajet dans le sens avant ), et <b>INVERSE</b> ( alloue &#224; un train pour un trajet 
+dans le sans inverse ). Quand l'&#233;tat de la section est <b>LIBRE</b> les 
+deux capteurs de direction sont &#224; l'&#233;tat <b>ACTIF</b>. Quand l'&#233;tat de la section est <b>AVANT</b>, le 
+capteur de direction avant est <b>INACTIF</b> et le capteur de direction inverse est 
+<b>ACTIF</b>. De m&#234;me, quand l'&#233;tat de la Section est <b>INVERSE</b>, le capteur de direction 
+avant est <b>ACTIF</b> et le capteur de direction inverse est <b>INACTIF</b>. 
+Ces capteurs peuvent &#234;tre utilis&#233;s dans la logique signal pour forcer au <b>ROUGE</b> les signaux du trajet dans la 
+direction oppos&#233;e &#224; la direction allou&#233;e. Les outils sont fournis ici dans le tableau 
+Section pour ajouter automatiquement des capteurs de direction &#224; la logique signal ou pour 
+automatiquement supprimer tous les capteurs de direction de la logique M&#226;t de Signalisation 
+( voir les <a href="../../package/jmri/jmrit/beantable/TransitTable.shtml#tools">Outils Tableau de Transit</a> ). 
+Sinon si le <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>est utilis&#233; 
+alors il est possible d'avoir &#233;galement les sections g&#233;n&#233;r&#233;es automatiquement en fonction de la logique
+est utilis&#233;, il peut ajouter des capteurs de direction &#224; la logique signal si n&#233;cessaire.</p> 
+<p>Optionnellement, chaque Section peut avoir deux <i>Capteurs d'Arr&#234;t</i> qui indique 
+quand un train dans une Section a atteint la fin de la Section en circulant dans 
+la direction avant ou la direction inverse. Les Capteurs d'Arr&#234;t devraient &#234;tre des capteurs 
+physiques sur le r&#233;seau, par exemple des d&#233;tecteurs infra-rouge. Pour un dispatching manuel, 
+ces Capteurs peuvent &#234;tre affich&#233;s sur le Panneau pour indiquer au Dispatcher quand un train 
+a atteint la fin de son trajet allou&#233;. Pour une circulation automatique, ces capteurs peuvent 
+&#234;tre utilis&#233;s pour arr&#234;ter le train avant qu'il n'atteigne la fin de la section allou&#233;e, et 
+avant qu'il ne d&#233;passe un signal Rouge, s'il y a des Signaux.
+
+<h3><a name='SignalMast'>Utilisation de Logique M&#226;t de Signalisation avec les Sections</a></h3>
+<p>Si votre signalisation est bas&#233;e sur l'utilisation de <a href="signaling/SignalMasts.shtml">M&#226;ts de Signalisation</a>
+avec la logique associ&#233;e qui a &#233;t&#233; g&#233;n&#233;r&#233;e par l'utilisation de l'&#201;diteur de R&#233;seau, 
+alors il est possible d'avoir &#233;galement les sections g&#233;n&#233;r&#233;es automatiquement en fonction de la logique.
+<p>L'outil peut &#234;tre trouv&#233; dans le <b>Tableau Logique M&#226;t de Signalisation</b> | <b>Outils</b> |<b>G&#233;n&#233;rer Sections</b>. 
+Ex&#233;cuter ceci cr&#233;era automatiquement les Sections qui contiendront chacune tous les Cantons entre les Paires de Mats de 
+Signalisation d&#233;j&#224; g&#233;n&#233;r&#233;es. Il sera &#233;galement mis en place chaque section "Automatiquement G&#233;n&#233;r&#233;e" de sorte qu'elles 
+comprennent les Cantons dans le bon ordre, avec la direction d&#233;finie comme trajet AVANT, allant du M&#226;t de Signalisation source 
+&#224; celui de destination. SVP Notez que le d&#233;tails des Cantons n'est pas sauvegard&#233; quand le Panneau est stock&#233;, mais recr&#233;&#233; quand le 
+fichier est charg&#233;.
+<p>L'outil peut aussi cr&#233;er automatiquement les Capteurs de direction avant et inverse et les placer dans la Section, toutefois 
+la Logique de M&#226;t de Signalisation ne peut pas les utiliser et leurs cr&#233;ation est seulement l&#224; pour permettre la validation de 
+la Section ( ou utilis&#233; par l'utilisateur dans un Logix sans rapport avec si d&#233;sir&#233; ).
+<p>Les Sections g&#233;n&#233;r&#233;es avec l'outil ont seulement une paire de Points d'Entr&#233;e et suit simplement le chemin entre les deux Signaux.
+<p>Les Capteurs de Direction ( Avant et Inverse ) sont cr&#233;&#233;s par l'outil de G&#233;n&#233;ration de Sections, mais Les Capteurs d'Arret ( Avant 
+et Inverse ) doivent &#234;tre ajout&#233;s manuellement par l'utilisateur via la fen&#234;tre Modification Section pour chaque section si d&#233;sir&#233;.
+<p>Les d&#233;tails des Capteurs Optionnels de Direction et d'Arr&#234;t sont sauvegard&#233;s quand le Panneau est stock&#233;.
+<p>Pour utiliser les Sections qui ont &#233;t&#233; construites de cette fa&#231;on vous aurez ensuite besoin de configurer les <a href="../../package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a>,
+apr&#232;s cela, vous devrez &#233;galement configurer le <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a> 
+pour utiliser la Logique M&#226;t de Signalisation via le menu <a href="../../package/jmri/jmrit/dispatcher/Options.shtml"><b>Options</b></a> du Dispatcheur.
+
+<h2>Comment Configurer les Sections</h2>
+
+<h3>Affichage et Cr&#233;ation des Sections</h3>
+<p>Toutes les Sections que JMRI conna&#238;t peuvent &#234;tre visualis&#233;es en utilisant le <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml">Tableau Section</a>.
+S&#233;lectionnez <b>Sections</b> dans le sous-menu <b>Tableau</b> du menu <b>Outils</b>
+de la fen&#234;tre principale du programme JMRI. Les Sections peuvent soit &#234;tre cr&#233;&#233;es manuellement depuis le volet Tableau Section,
+ou elles peuvent &#234;tre cr&#233;&#233;es automatiquement si vous pr&#233;voyez &#233;galement d'utiliser <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml#SignalMast">Logique M&#226;t de Signalisation</a>.
+Il y a huit colonnes dans le tableau Section:</p>
+				<ul>
+				<li><b>Nom Syst&#232;me</b> - Le nom syst&#232;me est affect&#233; &#224; la Section lors de sa cr&#233;ation, 
+				et ne peut pas &#234;tre chang&#233;.</li>
+				<li><b>Nom Utilisateur</b> - si vous &#234;tes int&#233;ress&#233; pour que votre Section ait un nom facilement identifiable
+				vous pouvez cliquer dans la colonne "Nom Utilisateur" et changer cette information 
+				pour ce que vous voulez. </li>
+				<li><b>&#201;tat</b> - L'&#233;tat de la Section affiche si une Section est "allou&#233;e" 
+				ou "utilis&#233;e" par un ou plusieurs trains. L'&#233;tat d'une section nouvellement ajout&#233;e est toujours 
+				<b>LIBRE</b>. Quand une Section est allou&#233;e pour un trajet dans une direction depuis le 
+				"Premier Canton" jusqu'au "Dernier Canton" l'&#233;tat est <b>AVANT</b>. Quand elle est allou&#233;e 
+				pour un trajet en direction oppos&#233;e, l'&#233;tat est <b>INVERSE</b>.</li> 
+				<li><b>Commentaire</b> - Cette colonne est pour votre usage pour enregistrer les commentaires dont vous voulez 
+				garder une trace. C'est seulement &#224; titre d'information.</li>
+				<li>Cliquer le bouton <b>Effacer</b> dans une ligne sp&#233;cifique effacera la Section de cette ligne. 
+				Rappelez vous de supprimer tous les Transits utilisant cette Section. Un transit qui 
+				utilise une Section effac&#233;e sera cass&#233;. Utilisez ce bouton avec pr&#233;caution!</li>
+				<li><b>Premier Canton</b> - Cette colonne affiche le premier canton de la Section. 
+				Puisqu'une section est un groupe d'un ou plusieurs cantons connect&#233;s, il y a toujours une 
+				entr&#233;e.</li>
+				<li><b>Dernier Canton</b> - Cette colonne affiche le dernier canton de la Section.
+				Puisqu'une section peut contenir seulement un canton, le Dernier Canton peut &#234;tre le m&#234;me que le Premier 
+				Canton.</li>
+				<li>Cliquer le bouton <b>Modifier</b> dans une rang&#233;e pour voir ou changer une information entr&#233;e 
+				pour une Section. Le Nom Syst&#232;me ne peut pas &#234;tre chang&#233;, mais le Nom Utilisateur peut l'&#234;tre, 
+				les Cantons peuvent &#234;tre red&#233;finis, les points d'entr&#233;e peuvent &#234;tre reconfigur&#233;s, etc. Une seule Section 
+				peut &#234;tre modifi&#233;e &#224; la fois. Une Section ne peut pas &#234;tre modifi&#233;e si une autre est en cours de cr&#233;ation.</li>
+				</ul>
+
+<h3>Commandes du Tableau Section</h3>
+<p>Au dessous du tableau Section il y a <a href="../../package/jmri/jmrit/beantable/SectionAddEdit.shtml">Ajouter...</a>.</p>
+<p>Le menu  <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml#tools"><b>Outils</b></a> donne acc&#232;s &#224;:
+			<ul>
+			<li>Valider Toutes Les Sections...</li> 
+			<li>Configurer les Capteurs de Direction Situ&#233;s dans la Logique...</li> 
+			<li>Retirer les Capteurs de Direction de la Logique...</li>
+			</ul>
+
+<h3>Cr&#233;ation d'une nouvelle Section</h3>
+<p>Pour cr&#233;er une nouvelle Section cliquez le bouton 
+"<a href="../../package/jmri/jmrit/beantable/SectionAddEdit.shtml">Ajouter..."</a>. Une fen&#234;tre sera mise en place 
+qui vous permettra de d&#233;finir les cantons inclus dans la nouvelle Section, et si 
+n&#233;cessaire, d&#233;signera les points d'entr&#233;e de la section r&#233;sultant des trajets en 
+sens AVANT ou INVERSE.</p>
+<p>Actuellement l'utilisateur doit s&#233;lectionner manuellement <b>AVANT</b> ou <b>INVERSE</b>
+pour chaque 
+Point d'Entr&#233;e apr&#232;s que tous les Cantons ont &#233;t&#233; ajout&#233;s &#224; la Section. Le programme &#233;tablira des directions 
+automatiquement, mais les autres sont laiss&#233;es comme <b>INCONNU</b>. Un Point d'Entr&#233;e doit &#234;tre configur&#233; 
+pour AVANT si un train entrant dans cette Section &#224; ce Point d'Entr&#233;e circulerait 
+dans la direction AVANT. Autrement il serait configur&#233; &#224; INVERSE. Un &#233;ventuel ajout 
+futur sera la configuration automatique de la direction des Points d'Entr&#233;e en fonction de la connectivit&#233; 
+trouv&#233;e dans le panneau &#201;diteur de R&#233;seau.</p>
+<p>Pour les Sections avec plus d'un Canton, le trajet depuis un canton petit num&#233;ro vers 
+un canton grand num&#233;ro est AVANT. Dit d'une mani&#232;re diff&#233;rente, se d&#233;placer d'un 
+canton le plus haut dans la liste de canton vers un canton le plus bas dans cette liste est un trajet AVANT. 
+&#192; l'inverse se d&#233;placer d'un canton grand num&#233;ro vers un canton petit num&#233;ro est un trajet INVERSE. 
+Pour les Sections avec un seul canton, il n'est fait aucune diff&#233;rence quand 
+la direction &#224; travers la Section est d&#233;sign&#233;e AVANT, tant que les direction des 
+Points d'Entr&#233;e du trajet restent coh&#233;rentes. C'est:
+			<ul>
+			<li>Les directions des trajets INVERSE et AVANT doivent &#234;tre oppos&#233;es</li>
+			<li>Entrez &#224; n'importe quel Point d'Entr&#233;e AVANT doit aboutir &#224; un trajet dans le m&#234;me 
+			sens que l'entr&#233;e dans tous les autres Points d'Entr&#233;e AVANT</li>
+			<li>Entrez &#224; n'importe quel Point d'Entr&#233;e INVERSE doit aboutir &#224; un trajet dans le m&#234;me 
+			sens que l'entr&#233;e dans tous les autres Points d'Entr&#233;e INVERSE</li>   
+			</ul>
+<p><b>ATTENTION: Si les Points d'Entr&#233;e ne sont pas coh&#233;rents d'&#233;tranges &#233;v&#233;nements peuvent en r&#233;sulter
+lors de l'utilisation de la Section.</b></p>
+
+<h3>Sauvegarder les Sections sur le disque</h3>
+<p>Utilisez l'&#233;l&#233;ment <b>enregistrer</b> du menu <b>Fichier</b> du Tableau Section ( ou 
+l'&#233;l&#233;ment <b>Sauvegarder Panneaux...</b> dans le menu <b>Panneau</b> de la fen&#234;tre principale 
+du programme JMRI ) pour sauvegarder les informations de la Section sur le disque. Cette information ( et 
+et toute information logique de signal modifi&#233;e) est sauvegard&#233;e avec la configuration et les panneaux dans un 
+fichier XML, ainsi que la configuration du panneau de commande et d'autres choses semblables. Pour stocker vos 
+panneaux dans le m&#234;me fichier ( recommand&#233; ), s&#233;lectionnez <b>Fichier--> Enregistrer-->Enregistrer Configuration et 
+Panneau dans le Fichier...</b> ou s&#233;lectionnez <b>Panneaux-->Sauvegarder le Panneau...</b> dans la fen&#234;tre 
+principale de JMRI.</p>
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>
+
+

@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,24 +13,26 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class StandaloneSystemConnectionMemoTest {
+public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCTor() {
-        Assert.assertNotNull(new StandaloneSystemConnectionMemo());
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        scm=new StandaloneSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

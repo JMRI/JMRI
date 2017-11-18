@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Randall Wood Copyright (C) 2012
+ * @author Randall Wood Copyright (C) 2012, 2017
  */
 public class WebServerPreferences extends PreferencesBean {
 
@@ -74,7 +74,7 @@ public class WebServerPreferences extends PreferencesBean {
      */
     @Deprecated
     public static final String Simple = SIMPLE;
-    public static final String RAILROAD_NAME = "railRoadName"; // NOI18N
+    public static final String RAILROAD_NAME = "railroadName"; // NOI18N
     /**
      * @deprecated since 4.7.1; use {@link #RAILROAD_NAME} instead
      */
@@ -101,13 +101,13 @@ public class WebServerPreferences extends PreferencesBean {
     private boolean useAjax = true;
     private boolean simple = false;
     private final ArrayList<String> disallowedFrames = new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
-    private String railRoadName = Bundle.getMessage("DefaultRailroadName");
+    private String railroadName = Bundle.getMessage("DefaultRailroadName");
     private boolean allowRemoteConfig = false;
     private boolean readonlyPower = true;
     private int port = 12080;
     private boolean disableFrames = true;
     private boolean redirectFramesToPanels = true;
-    private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class);
 
     public WebServerPreferences(String fileName) {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -150,17 +150,24 @@ public class WebServerPreferences extends PreferencesBean {
         this.readPreferences(sharedPreferences);
     }
 
+    /**
+     * Get the current default WebServerPreferences object.
+     *
+     * @return the default WebServerPrefeences instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with an argument
+     * of {@code WebServerPreferences.class} instead
+     */
+    @Deprecated
     public static WebServerPreferences getDefault() {
-        return InstanceManager.getOptionalDefault(WebServerPreferences.class).orElseGet(() -> {
-            return InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
-        });
+        return InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     private void readPreferences(Preferences sharedPreferences) {
         this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);
         this.clickDelay = sharedPreferences.getInt(CLICK_DELAY, this.clickDelay);
         this.simple = sharedPreferences.getBoolean(SIMPLE, this.simple);
-        this.railRoadName = sharedPreferences.get(RAILROAD_NAME, this.railRoadName);
+        this.railroadName = sharedPreferences.get(RAILROAD_NAME, this.railroadName);
         this.readonlyPower = sharedPreferences.getBoolean(READONLY_POWER, this.readonlyPower);
         this.refreshDelay = sharedPreferences.getInt(REFRESH_DELAY, this.refreshDelay);
         this.useAjax = sharedPreferences.getBoolean(USE_AJAX, this.useAjax);
@@ -230,7 +237,7 @@ public class WebServerPreferences extends PreferencesBean {
         }
         a = child.getAttribute(RAILROAD_NAME);
         if (a != null) {
-            setRailRoadName(a.getValue());
+            setRailroadName(a.getValue());
         }
         Element df = child.getChild(DISALLOWED_FRAMES);
         if (df != null) {
@@ -263,7 +270,7 @@ public class WebServerPreferences extends PreferencesBean {
         if (getPort() != prefs.getPort()) {
             return true;
         }
-        return !getRailRoadName().equals(prefs.getRailRoadName());
+        return !getRailroadName().equals(prefs.getRailroadName());
     }
 
     public void apply(WebServerPreferences prefs) {
@@ -274,7 +281,7 @@ public class WebServerPreferences extends PreferencesBean {
         this.setReadonlyPower(prefs.isReadonlyPower());
         setDisallowedFrames(prefs.getDisallowedFrames());
         setPort(prefs.getPort());
-        setRailRoadName(prefs.getRailRoadName());
+        setRailroadName(prefs.getRailroadName());
     }
 
     public final void openFile(String fileName) throws FileNotFoundException {
@@ -304,7 +311,7 @@ public class WebServerPreferences extends PreferencesBean {
         sharedPreferences.putBoolean(SIMPLE, this.isSimple());
         sharedPreferences.putBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig());
         sharedPreferences.putBoolean(READONLY_POWER, this.isReadonlyPower());
-        sharedPreferences.put(RAILROAD_NAME, getRailRoadName());
+        sharedPreferences.put(RAILROAD_NAME, getRailroadName());
         sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
         sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         try {
@@ -425,25 +432,48 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     /**
-     * @return the railRoadName
+     * Get the name of the railroad.
+     *
+     * @return the railroad name
      */
-    public String getRailRoadName() {
-        return railRoadName;
+    public String getRailroadName() {
+        return railroadName;
     }
 
     /**
-     * @param railRoadName the railRoadName to set
+     * @return the railroadName
+     * @deprecated since 4.9.1; use {@link #getRailroadName()} instead
      */
-    public void setRailRoadName(String railRoadName) {
-        String old = this.railRoadName;
-        if ((old != null && !old.equals(railRoadName)) || railRoadName != null) {
-            if (railRoadName != null) {
-                this.railRoadName = railRoadName;
+    @Deprecated
+    public String getRailRoadName() {
+        return this.getRailroadName();
+    }
+
+    /**
+     * Set the railroad name.
+     *
+     * @param railroadName the railroadName to set
+     */
+    public void setRailroadName(String railroadName) {
+        String old = this.railroadName;
+        if ((old != null && !old.equals(railroadName)) || railroadName != null) {
+            if (railroadName != null) {
+                this.railroadName = railroadName;
             } else {
-                this.railRoadName = Bundle.getMessage("DefaultRailroadName");
+                this.railroadName = Bundle.getMessage("DefaultRailroadName");
             }
-            this.firePropertyChange(RAILROAD_NAME, old, this.railRoadName);
+            this.firePropertyChange(RAILROAD_NAME, old, this.railroadName);
         }
+    }
+
+    /**
+     * @param railroadName the railroadName to set
+     * @deprecated since 4.9.1; use {@link #setRailroadName(java.lang.String)}
+     * instead
+     */
+    @Deprecated
+    public void setRailRoadName(String railroadName) {
+        this.setRailroadName(railroadName);
     }
 
     /**
@@ -452,7 +482,7 @@ public class WebServerPreferences extends PreferencesBean {
      * @return true if user has not set the railroad name.
      */
     public boolean isDefaultRailroadName() {
-        return this.getRailRoadName().equals(Bundle.getMessage("DefaultRailroadName"));
+        return this.getRailroadName().equals(Bundle.getMessage("DefaultRailroadName"));
     }
 
     /**

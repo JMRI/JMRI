@@ -59,6 +59,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField sNextSignalField1 = new JTextField(6);
     JTextField sNextSignalField1Alt = new JTextField(6);
     JCheckBox sLimitBox;
+    JCheckBox sRestrictingBox;
     JCheckBox sFlashBox;
     JCheckBox sDistantBox;
 
@@ -73,6 +74,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField tmNextSignalField1 = new JTextField(6);
     JTextField tmNextSignalField1Alt = new JTextField(6);
     JCheckBox tmLimitBox;
+    JCheckBox tmRestrictingBox;
     JCheckBox tmFlashBox;
     JCheckBox tmDistantBox;
 
@@ -87,6 +89,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField tdNextSignalField1 = new JTextField(6);
     JTextField tdNextSignalField1Alt = new JTextField(6);
     JCheckBox tdLimitBox;
+    JCheckBox tdRestrictingBox;
     JCheckBox tdFlashBox;
     JCheckBox tdDistantBox;
 
@@ -107,7 +110,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField fNextSensorField2 = new JTextField(6);
     JTextField fNextSensorField2Alt = new JTextField(6);
     JCheckBox fmLimitBox;
+    JCheckBox fmRestrictingBox;
     JCheckBox fdLimitBox;
+    JCheckBox fdRestrictingBox;
     JCheckBox fFlashBox;
     JCheckBox fDistantBox;
 
@@ -136,6 +141,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
             + rbt.getString("flashing_yellow,_rather_than_green.");
     String limitBoxTooltip = rbt.getString("Limits_the_fastest_aspect_displayed")
             + rbt.getString("to_yellow,_rather_than_green.");
+    String restrictingBoxTooltip = rbt.getString("Limits_the_fastest_aspect_displayed")
+            + rbt.getString("to_flashingred,_rather_than_green.");
     String nextSignalFieldTooltip = rbt.getString("Enter_the_low_speed_signal_head_for_this_track.")
             + rbt.getString("For_dual_head_signals_the_fastest_aspect_is_protected.");
     String highSignalFieldTooltip = rbt.getString("Enter_the_high_speed_signal_head_for_this_track.")
@@ -164,14 +171,22 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         // create GUI items
         sLimitBox = new JCheckBox(rbt.getString("Limited_Speed"));
+        sRestrictingBox = new JCheckBox(rbt.getString("Restricting_Speed"));
         tmLimitBox = new JCheckBox(rbt.getString("Limited_Speed"));
         tmLimitBox.setModel(sLimitBox.getModel());
+        tmRestrictingBox = new JCheckBox(rbt.getString("Restricting_Speed"));
+        tmRestrictingBox.setModel(sRestrictingBox.getModel());
         fmLimitBox = new JCheckBox(rbt.getString("Limited_Speed"));
         fmLimitBox.setModel(sLimitBox.getModel());
+        fmRestrictingBox = new JCheckBox(rbt.getString("Restricting_Speed"));
+        fmRestrictingBox.setModel(sRestrictingBox.getModel());
 
         tdLimitBox = new JCheckBox(rbt.getString("Limited_Speed"));
+        tdRestrictingBox = new JCheckBox(rbt.getString("Restricting_Speed"));
         fdLimitBox = new JCheckBox(rbt.getString("Limited_Speed"));
         fdLimitBox.setModel(tdLimitBox.getModel());
+        fdRestrictingBox = new JCheckBox(rbt.getString("Restricting_Speed"));
+        fdRestrictingBox.setModel(tdRestrictingBox.getModel());
 
         sFlashBox = new JCheckBox(rbt.getString("With_Flashing_Yellow"));
         tmFlashBox = new JCheckBox(rbt.getString("With_Flashing_Yellow"));
@@ -364,8 +379,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeSingle.add(sNextSignalField1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
+        // ??
+        JPanel q = new JPanel();
+        q.setLayout(new FlowLayout());
+        q.add(sLimitBox);
+        q.add(sRestrictingBox);
         sLimitBox.setToolTipText(limitBoxTooltip);
-        modeSingle.add(sLimitBox, constraints);
+        sRestrictingBox.setToolTipText(restrictingBoxTooltip);
+        modeSingle.add(q, constraints);
 
         constraints.gridy = 6;
         constraints.gridx = 1;
@@ -447,8 +468,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailMain.add(tmNextSignalField1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
+        // ??
+        JPanel q = new JPanel();
+        q.setLayout(new FlowLayout());
+        q.add(tmLimitBox);
+        q.add(tmRestrictingBox);
         tmLimitBox.setToolTipText(limitBoxTooltip);
-        modeTrailMain.add(tmLimitBox, constraints);
+        tmRestrictingBox.setToolTipText(restrictingBoxTooltip);
+        modeTrailMain.add(q, constraints);
 
         constraints.gridy = 6;
         constraints.gridx = 1;
@@ -530,8 +557,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailDiv.add(tdNextSignalField1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
+        // ??
+        JPanel q = new JPanel();
+        q.setLayout(new FlowLayout());
+        q.add(tdLimitBox);
+        q.add(tdRestrictingBox);
         tdLimitBox.setToolTipText(limitBoxTooltip);
-        modeTrailDiv.add(tdLimitBox, constraints);
+        tdRestrictingBox.setToolTipText(restrictingBoxTooltip);
+        modeTrailDiv.add(q, constraints);
 
         constraints.gridy = 6;
         constraints.gridx = 1;
@@ -610,8 +643,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(fNextSignalField1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
+        // ??
+        JPanel q = new JPanel();
+        q.setLayout(new FlowLayout());
+        q.add(fmLimitBox);
+        q.add(fmRestrictingBox);
         fmLimitBox.setToolTipText(limitBoxTooltip);
-        modeFacing.add(fmLimitBox, constraints);
+        fmRestrictingBox.setToolTipText(restrictingBoxTooltip);
+        modeFacing.add(q, constraints);
 
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridwidth = 1;
@@ -645,8 +684,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(fNextSignalField2Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
+        // ?? 
+        q = new JPanel();
+        q.setLayout(new FlowLayout());
+        q.add(fdLimitBox);
+        q.add(fdRestrictingBox);
         fdLimitBox.setToolTipText(limitBoxTooltip);
-        modeFacing.add(fdLimitBox, constraints);
+        fdRestrictingBox.setToolTipText(restrictingBoxTooltip);
+        modeFacing.add(q, constraints);
 
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridwidth = 1;
@@ -710,8 +755,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
                 return;
             }
         } catch (Exception e) {
-            log.error("An error occured creating the boss logic " + e.toString());
-            JOptionPane.showMessageDialog(this, "An error occured creating the Simple Signal Logic\nPlease check the console log for more information");
+            log.error("An error occurred creating the boss logic " + e.toString());
+            JOptionPane.showMessageDialog(this, "An error occurred creating the Simple Signal Logic\nPlease check the console log for more information");
         }
     }
 
@@ -726,6 +771,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setWatchedSignal1(sNextSignalField1.getText(), sFlashBox.isSelected());
         b.setWatchedSignal1Alt(sNextSignalField1Alt.getText());
         b.setLimitSpeed1(sLimitBox.isSelected());
+        b.setRestrictingSpeed1(sRestrictingBox.isSelected());
         b.setDistantSignal(sDistantBox.isSelected());
 
         b.setComment(commentField.getText());
@@ -747,6 +793,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setWatchedSignal1(tmNextSignalField1.getText(), tmFlashBox.isSelected());
         b.setWatchedSignal1Alt(tmNextSignalField1Alt.getText());
         b.setLimitSpeed1(tmLimitBox.isSelected());
+        b.setRestrictingSpeed1(tmRestrictingBox.isSelected());
         b.setDistantSignal(tmDistantBox.isSelected());
 
         b.setComment(commentField.getText());
@@ -768,6 +815,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setWatchedSignal1(tdNextSignalField1.getText(), tdFlashBox.isSelected());
         b.setWatchedSignal1Alt(tdNextSignalField1Alt.getText());
         b.setLimitSpeed2(tdLimitBox.isSelected());
+        b.setRestrictingSpeed1(tdRestrictingBox.isSelected());
         b.setDistantSignal(tdDistantBox.isSelected());
 
         b.setComment(commentField.getText());
@@ -795,7 +843,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setWatchedSensor2(fNextSensorField2.getText());
         b.setWatchedSensor2Alt(fNextSensorField2Alt.getText());
         b.setLimitSpeed1(fmLimitBox.isSelected());
+        b.setRestrictingSpeed1(fmRestrictingBox.isSelected());
         b.setLimitSpeed2(fdLimitBox.isSelected());
+        b.setRestrictingSpeed2(fdRestrictingBox.isSelected());
 
         b.setDistantSignal(fDistantBox.isSelected());
 
@@ -846,7 +896,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         fNextSensorField2Alt.setText(b.getWatchedSensor2Alt());
 
         sLimitBox.setSelected(b.getLimitSpeed1());
+        sRestrictingBox.setSelected(b.getRestrictingSpeed1());
         tdLimitBox.setSelected(b.getLimitSpeed2());
+        tdRestrictingBox.setSelected(b.getRestrictingSpeed2());
         sFlashBox.setSelected(b.getUseFlash());
         sDistantBox.setSelected(b.getDistantSignal());
 
@@ -920,5 +972,5 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         activate();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
 }

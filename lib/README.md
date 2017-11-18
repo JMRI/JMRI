@@ -26,6 +26,17 @@ development and release operations:
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 
+On macOS, most of these changes can be affected with:
+```
+find . -type f -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+```
+(you may need to install gsed using [Homebrew](http://brew.sh))
+
+On Linux, these same changes can be affected with:
+```
+find . -type f -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+```
+
 Note that Windows installers don't necessarily remove existing library versions.
 (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion
 on this)  Until that's changed, if you remove a library from here that really
@@ -66,13 +77,12 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 ##### log4j.jar
 - version 1.2.15
 
-##### slf4j-api-1.7.13.jar, slf4j-log4j12-1.7.13.jar, jul-to-slf4j-1.7.13.jar
+##### slf4j-api-1.7.25.jar, slf4j-log4j12-1.7.25.jar, jul-to-slf4j-1.7.25.jar
 - slf4j logging interface to log4j
 - from http://www.slf4j.org
-- updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.14 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.14/openlcb-0.7.14.jar or the maven central repository.
+- 0.7.15 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.15/openlcb-0.7.15.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -89,7 +99,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - (JMRI file)
 
 ##### xercesImpl.jar
-- version Xerces-J 2.9.1
+- version Xerces-J 2.11.0
 - from http://www.apache.org/dist/xerces/j/
 
 ##### jdom.jar
@@ -143,18 +153,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
-
-##### libusb-jar (ch.ntb.usb.jar)
-        http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
-        http://libusb.wiki.sourceforge.net/
-        libusb installers from "TWAIN SANE" http://www.ellert.se/twain-sane/
-
-  version 0.5.7
-  libusbJava.jnilib for MacOS X
-        to get 64-bit, from http://wiki.ztex.de/doku.php?id=en:software:porting#macos_port
-        requires /usr/local/lib/libusb-0.1.4.dylib via MacPorts or Homebrew or an installer from http://www.ellert.se/twain-sane/
-  LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
-  libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
 
 ##### JavaMail 1.4.1
 - mailapi.jar
@@ -320,4 +318,17 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ##### Serialio.jar
 - from <http://serialio.com>
-- No longer uses as of JMRI 4.7.X
+- No longer used as of JMRI 4.7.X
+
+##### libusb-jar (ch.ntb.usb.jar)
+        http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
+        http://libusb.wiki.sourceforge.net/
+        libusb installers from "TWAIN SANE" http://www.ellert.se/twain-sane/
+
+- version 0.5.7
+- libusbJava.jnilib for MacOS X
+        to get 64-bit, from http://wiki.ztex.de/doku.php?id=en:software:porting#macos_port
+        requires /usr/local/lib/libusb-0.1.4.dylib via MacPorts or Homebrew or an installer from http://www.ellert.se/twain-sane/
+- LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
+- libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
+- No longer used as of JMRI 4.9.1

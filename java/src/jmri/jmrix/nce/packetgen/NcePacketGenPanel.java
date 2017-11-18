@@ -1,7 +1,6 @@
 package jmri.jmrix.nce.packetgen;
 
 import java.awt.Dimension;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import jmri.jmrix.nce.NceMessage;
@@ -19,9 +18,6 @@ import jmri.util.StringUtil;
  */
 public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.packetgen.NcePacketGenBundle");
-
-    // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
@@ -34,22 +30,27 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
-            try {
-                initComponents((NceSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            initComponents((NceSystemConnectionMemo) context);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.packetgen.NcePacketGenFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -59,12 +60,15 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             x.append("NCE_");
         }
         x.append(": ");
-        x.append(rb.getString("Title"));
+        x.append(Bundle.getMessage("Title"));
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
 
@@ -139,10 +143,16 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(NceMessage m) {
     }  // ignore replies
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(NceReply r) {
     } // ignore replies

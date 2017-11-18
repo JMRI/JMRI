@@ -295,5 +295,5 @@ public class IBLnPacketizer extends LnPacketizer {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class);
 }

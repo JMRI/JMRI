@@ -44,7 +44,8 @@ import org.junit.runners.Suite;
    SprogConstantsTest.class,
    SprogReplyTest.class,
    jmri.jmrix.sprog.update.PackageTest.class,
-   SprogSlotTest.class
+   SprogSlotTest.class,
+   BundleTest.class
 })
 public class PackageTest {
 }

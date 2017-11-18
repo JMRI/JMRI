@@ -37,7 +37,9 @@
       and patterns, and point to examples of current best
       practices. <a id="namedbeans" name="namedbeans"></a></p>
 
-      <h2>Names, NamedBeans, and Managers</h2>The "NamedBean"
+      <a id="NamedBean" name="NamedBean"></a>
+      <h2>Names, NamedBeans, and Managers</h2>
+      The "NamedBean"
       concept is basic to JMRI. A <a href=
       "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
       is a basic JMRI object that represents something, typically
@@ -80,7 +82,7 @@
       ask (through the InstanceManager) the NamedBeanHandlerManager to give you a 
       NamedBeanHandle:
       <pre><code>
-      NamedBeanHandle&lt;Sensor&gt; handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBean(name, sensor);
+      NamedBeanHandle&lt;Sensor&gt; handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor);
       </code></pre> 
       where <code>name</code> is the String name that the user provided, either a 
       system name or user name, and <code>sensor</code> is the particular <code>Sensor</code> object
@@ -93,99 +95,61 @@
       the <code>NamedBeanHandle</code> will get updated and you're next <code>getBean()</code> call will get the
       right reference.
       
-      <h2>Code Organization</h2>
 
-      <p>At the highest level, we separate test code from
-      distributed code by putting both in separate directories
-      within the development directory: "test" and "src". This
-      makes it easy to compile a version without test code, to
-      apply different tools to the two types of code, etc.</p>
-
-      <p>Within the source code itself, we separate out several
-      types:</p>
-
+      <a id="SPI" name="SPI"></a>
+      <h2>Service Providers</h2>
+      Java provides a capability, using a 
+      "Service Provider Interface", 
+      that allows us to reduce the complexity of our
+      code by having the code itself discover what pieces
+      are available and need to be installed. 
+      For background on this, see the 
+      tutorial
+      sections on
+      "<a href="https://docs.oracle.com/javase/tutorial/ext/basics/spi.html">Creating Extensible Applications</a>"
+      and
+      "<a href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Introduction to the Service Provider Interfaces</a>".
+      
+      <p>
+      For example, by annotating a class with
+      <pre><code>
+      @ServiceProvider(service = PreferencesManager.class)
+      </code></pre> 
+      the 
+      JMRI Preferences System
+      automatically will discover that the class uses the preferences
+      and should be hooked up.  This means that we don't have to 
+      modify the Preferences classes to look up each new class using them, 
+      and that we can (eventually) more incrementally build and distribute JMRI.
+      
+      <p>
+      Available patterns (links are to the JavaDoc for the interface or class 
+      specifying the functionality):
       <dl>
-        <dt>The jmri package</dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">ConnectionTypeList</a></dt>
+      <dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServlet.html">HttpServlet</a></dt>
+        <dd>(Note this is a Java-defined class, not a JMRI-defined interface)</dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
+        <dd>Provides a way for the JMRI InstanceManager to create an instance of the class when one is requested</dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt>
+      </dl>
 
-        <dd>contains the basic interfaces and certain core
-        implementations for the JMRI layout management concepts. It
-        should contain minimal implementation code, and no non-JMRI
-        references, esp. Swing code.</dd>
-
-        <dt>The jmri.jmris package</dt>
-
-        <dd>contains all the code for the server implementation for
-        the JMRI interfaces.</dd>
-
-        <dt>The jmri.jmrit package</dt>
-
-        <dd>contains all the code for various non-system-specific
-        JMRI tools and extensions. Most of the tools are in
-        subpackages, but some appear directly in the package.</dd>
-
-        <dt>The jmri.jmrix package</dt>
-
-        <dd>contains all the code for connecting to specific layout
-        hardware.</dd>
-
-        <dt>The jmri.managers and jmri.implementations
-        packages</dt>
-
-        <dd>These provide default implementations for managers and
-        other classes. This moves code out of the primary jmri
-        package. These should not reply on apps, jmri.jmrix or
-        jmri.jmrit.</dd>
-
-        <dt>The jmri.util package</dt>
-
-        <dd>Other common implementations of general use. Should not
-        depend on jmri.jmrit or jmri.jmrix packages. The
-        jmri.util.swing subpackage provides Swing utilities.</dd>
-
-        <dt>Apps package</dt>
-
-        <dd>For putting together an application, this can depend on
-        anything.</dd>
-
-        <dt>configurexml subdirectories</dt>
-
-        <dd>These contain code for the <a href=
-        "XmlPersistance.shtml">XML configuration system</a>.
-        top-level packages, esp util &amp; dependencies, apps</dd>
-
-        <dt>swing subdirectories</dt>
-
-        <dd>Contain Swing specific tools. Particularly outside the
-        jmri.jmrit package, we are trying to separate Swing code
-        from normal operational code. See the <a href=
-        "Swing.shtml">Swing page</a> for more information.</dd>
-
-        <dt>Help files</dt>
-
-        <dd>The file structure for Help files echos the structure
-        of the code. For more information, see the <a href=
-        "Help.shtml">Help page on JavaHelp pages</a>.</dd>
-
-        <dt>ResourceBundles</dt>
-
-        <dd>
-          We use resource bundles for <a href=
-          "I8N.shtml">internationalization</a>. The are colocated
-          with the code that references them, but we are moving to
-          a new naming convention. To reduce loading burden, we are
-          moving to a pattern where the
-          jmri.foo.FooBundle.properties file is addressed via a
-          static element in the jmri.foo.FooBundle class, separate
-          from the properties file itself. This reduces loading
-          time a lot!
-
-          <p>Note that there are also a few resource bundles that
-          are used for other purposes, indicated in their header
-          comments.</p>
-        </dd>
-      </dl>The "checkdepends.csh" development tool script is meant
-      to check some for inadvertant dependencies, but we're far
-      from clearing it. <!--#include virtual="/Footer" -->
+      <p>
+      Classes provide SPI also have to be registered with the system so they can be found.
+      JMRI does this with entries
+      inside files in the <code>target/classes/META-INF/services/</code> directory.
+      These entries are created automatically during the JMRI build process from 
+      the annotations in the source files.
+      JMRI then packages those into the appropriate level of <code>jmri.jar</code> file, 
+      where they will eventually be found and acted on.
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

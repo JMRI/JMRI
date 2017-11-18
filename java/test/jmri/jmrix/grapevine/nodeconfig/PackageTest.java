@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    NodeConfigActionTest.class,
-   NodeConfigFrameTest.class
+   NodeConfigFrameTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.grapevine.nodeconfig package

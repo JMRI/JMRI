@@ -3,14 +3,16 @@ package jmri.jmrix.loconet.hexfile;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import jmri.GlobalProgrammerManager;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame to inject LocoNet messages from a hex file This is a sample frame that
+ * Frame to inject LocoNet messages from a hex file. This is a sample frame that
  * drives a test App. It controls reading from a .hex file, feeding the
  * information to a LocoMonFrame (monitor) and connecting to a LocoGenFrame (for
  * sending a few commands).
@@ -35,9 +37,11 @@ public class HexFileFrame extends JmriJFrame {
         super();
     }
 
-    //LocoNetSystemConnectionMemo adaptermemo = null;
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         if (port == null) {
             log.error("initComponents called before adapter has been set");
         }
@@ -168,12 +172,15 @@ public class HexFileFrame extends JmriJFrame {
         LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
 
         // Install a debug programmer, replacing the existing LocoNet one
-        jmri.ProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();
+        DefaultProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();
         port.getSystemConnectionMemo().setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
-        jmri.InstanceManager.setProgrammerManager(
-                port.getSystemConnectionMemo().getProgrammerManager());
-        jmri.InstanceManager.deregister(ep, jmri.ProgrammerManager.class);
+        if (port.getSystemConnectionMemo().getProgrammerManager().isAddressedModePossible()) {
+            jmri.InstanceManager.setAddressedProgrammerManager(port.getSystemConnectionMemo().getProgrammerManager());
+        }
+        if (port.getSystemConnectionMemo().getProgrammerManager().isGlobalProgrammerAvailable()) {
+            jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), GlobalProgrammerManager.class);
+        }
         jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
         jmri.InstanceManager.deregister(ep, jmri.GlobalProgrammerManager.class);
 
@@ -188,16 +195,12 @@ public class HexFileFrame extends JmriJFrame {
         sourceThread.start();
     }
 
-    @SuppressWarnings("deprecation")
     public void filePauseButtonActionPerformed(java.awt.event.ActionEvent e) {
         sourceThread.suspend();
-        // sinkThread.suspend(); // allow sink to catch up
     }
 
-    @SuppressWarnings("deprecation")
     public void jButton1ActionPerformed(java.awt.event.ActionEvent e) {  // resume button
         sourceThread.resume();
-        // sinkThread.resume();
     }
 
     public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
@@ -208,7 +211,6 @@ public class HexFileFrame extends JmriJFrame {
     }
 
     private Thread sourceThread;
-    //private Thread sinkThread;
 
     public void setAdapter(LnHexFilePort adapter) {
         port = adapter;
@@ -219,6 +221,6 @@ public class HexFileFrame extends JmriJFrame {
     }
     private LnHexFilePort port = null;
 
-    private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class);
 
 }

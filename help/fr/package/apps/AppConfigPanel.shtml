@@ -1,22 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- UpDated  by Blorec Herv&#233;  2013-10-08 and Egbert Broerse 2016-06-18 -->
-
+<!<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated  by Blorec Herv&#233;  2017-02-10--> 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+ <title>
+      JMRI: Older Preferences Pane
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help preferences">
 
-  <title>JMRI: Fen&ecirc;tre Pr&eacute;f&eacute;rences</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI help preferences">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
@@ -25,265 +20,147 @@
   <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>JMRI: Fen&ecirc;tre Pr&eacute;f&eacute;rences</h1>
+<div id="mainContent">
 
-      <p>La fen&ecirc;tre des pr&eacute;f&eacute;rences est
-      l'endroit o&ugrave; vous configurez le fonctionnement de base
-      de votre application JMRI. Il y a une partie
-      sup&eacute;rieure qui contient les bases, et une section
-      s&eacute;par&eacute;e pour les pr&eacute;f&eacute;rences
-      avanc&eacute;es.</p>
+<H1>JMRI: Ancien Panneau Pr&#233;f&#233;rences </H1>
 
-      <p>Cette page d&eacute;crit un vieux panneau de
-      pr&eacute;f&eacute;rences qui a &eacute;t&eacute;
-      remplac&eacute; par <a href="TabbedPreferences.shtml">un
-      autre</a> dans <a href=
-      "http://jmri.org/releasenotes/jmri2.9.4.shtml">JMRI
-      2.9.4</a>. Les informations sur la nouvelle sont sur <a href=
-      "TabbedPreferences.shtml">un autre page</a>.</p>
+<p class="important">
+	Cette page d&#233;crit un ancien panneau des Pr&#233;f&#233;rences qui a &#233;t&#233; remplac&#233; par
+	<a href="TabbedPreferences.shtml">une nouvelle mise en page</a> dans
+<a href="http://jmri.org/releasenotes/jmri2.9.4.shtml">JMRI 2.9.4</a>. L'Information sur la nouvelle version est sur
+<a href="TabbedPreferences.shtml">cette page</a>.</p>
+<p>
+Le panneau des Pr&#233;f&#233;rences est l'endroit o&#249; vous configurez le fonctionnement de base de votre application JMRI.
+</p>
+<p>
+<a name="basic">
+<h2> Pr&#233;f&#233;rences Basiques</h2></a>
+<p>
+Lorsque le panneau s'ouvre en premier, il affiche les Pr&#233;f&#233;rences de bases.
+<p>
+<a href="../../manual/DecoderPro/images/Preferences.png">
+<img src="../../manual/DecoderPro/images/Preferences.png" height="144" width="252" align="right"></a>
+<dl>
+<dt>Connexion R&#233;seau
+<dd>Vous pouvez s&#233;lectionner l'une des diverses connexions r&#233;seau JMRI ici.
+Pour plus d'informations sur comment la configurer pour votre mat&#233;riel particulier,
+voir la <a href="../../html/hardware/index.shtml">page d'aide Mat&#233;riel</a>.
+<dt>Style Interface Graphique Utilisateur( GUI)
+<dd>Ces bo&#238;tes radio vous permettent de s&#233;lectionner la fa&#231;on dont le programme s'affiche.
+Les choix disponibles d&#233;pendent du type d'ordinateur que vous avez, et
+tous les &#233;l&#233;ments suivants peuvent &#234;tre disponibles:
+    <ul>
+    <li>M&#233;tal - le style par d&#233;faut de Java, utilisable sur tous les ordinateurs
+     <li> CDE/Motif - Une forme Linux/Unix qui fonctionne bien avec les gestionnaires &#233;cran X Windows. Il est &#233;galement disponible sur (presque) tous les types d'ordinateurs.
+     <li> Windows - uniquement disponible sur les syst&#232;mes Microsoft Windows, ce qui rend le
+         programme aussi ressemblant que possible qu'une application normale de Windows.
+     <li> Mac OS X - uniquement disponible sur MacOS, ce qui rend l'apparence du programme ressemblant &#224;
+         une application Macintosh
 
-      <p><a name="basic" id="basic"></a></p>
+    </ul>
+<dt>Programmateur par D&#233;fauts
+<dd>Le programmateur  DecoderPro vous permet de choisir l'affichage de beaucoup ou peu
+de contenu du d&#233;codeur en utilisant un "programmateur" configurable . Vous 
+pouvez en s&#233;lectionner un dans le m&#234;me temps, vous s&#233;lectionnez 
+votre <a href="../../manual/Basic_Programming.shtml"> d&#233;codeur de locomotive </a>, 
+mais cela fournit un endroit commode pour d&#233;finir un d&#233;codeur par d&#233;faut ainsi vous n'avez pas 
+&#224; le s&#233;lectionner &#224; chaque fois que vous ouvrez un d&#233;codeur..
+</dl>
 
-      <h2>Pr&eacute;f&eacute;rences Basiques</h2>
+Sans aucun doute la commande la plus importante se trouve au bas de cette section:
+Le bouton "Enregistrer"!
+          
+<p>
+Soyez s&#251;r de cliquer sur "Enregistrer" lorsque vous quittez cette fen&#234;tre. Vos modifications des pr&#233;f&#233;rences
+ne prendront effet qu'apr&#232;s red&#233;marrage du programme, de sorte que le
+programme vous invite &#224; le faire apr&#232;s avoir sauv&#233; les pr&#233;f&#233;rences.
 
-      <p>Lorsque la fen&ecirc;tre s'ouvre d'abord, elle affiche les
-      pr&eacute;f&eacute;rences de bases.</p>
+<a name="advanced">
+<h2> Pr&#233;f&#233;rences Avanc&#233;es  </h2>
 
-      <p><a href="../../manual/images/Preferences.png"><img src=
-      "../../manual/images/Preferences.png" height="156" width=
-      "256" align="right"></a></p>
+La case "Montrer Pr&#233;f&#233;rences Avanc&#233;es" vous permet de
+personnaliser votre connexion au r&#233;seau. Vous n'avez pas besoin d'utiliser les
+pr&#233;f&#233;rences avanc&#233;es pour obtenir votre premi&#232;re connexion au r&#233;seau et et ex&#233;cuter l'application, et nous
+vous recommandons de les laisser seuls jusqu'&#224; ce que la connexion &#224; votre
+centrale soit op&#233;rationnelle. Pour param&#233;trer vos pr&#233;f&#233;rences avanc&#233;es, cochez 
+la boite "Montrer Pr&#233;f&#233;rences Avanc&#233;es".<br><p>
+<a href="../../manual/images/Preferences2.png">
+<img src="../../manual/images/Preferences2.png" height="150" width="256" align="right"></a>
 
-      <dl>
-        <dt>Connexion R&eacute;seau</dt>
+<dl>
+	<dt>Connexions auxilliaires au r&#233;seau
+	
+	<dd>Les connexions auxiliaires vous permettent d'avoir plus d'une connexion r&#233;seau 
+	active &#224; un moment. La plupart des utilisateurs n'ont besoin que d'une connexion, 
+	donc s&#233;lectionner une connexion auxiliaire seulement si vous avez besoin de plus d'un 
+	raccordement au r&#233;seau. Utilisez la "Connexion R&#233;seau:" en haut du menu 
+	Pr&#233;f&#233;rences de votre connexion principale.
+		
+	<dt>Programmateur par d&#233;faut 
+<dd> Cette section a une case &#224; cocher qui vous permet de d&#233;cider si le programmateur 
+DecoderPro va afficher des volets vide (onglets). Certaines personnes aiment les voir, m&#234;me si elles sont vides, 
+d'autres pr&#233;f&#232;rent ne pas les voir. Nous fournissons cette pr&#233;f&#233;rence afin que vous puissiez choisir.
 
-        <dd>Vous pouvez s&eacute;lectionner l'une des diverses
-        connexions r&eacute;seau JMRI ici. Pour plus d'informations
-        sur comment configurer cela pour votre mat&eacute;riel
-        particulier, voir la <a href=
-        "../../html/hardware/index.shtml">page
-        mat&eacute;riel</a>.</dd>
+<a name="locale">
+<dt>Affichage
+<dd> <a href="../../Acknowledgements.shtml"> Beaucoup de gens </a> ont contribu&#233; &#224; l' "Internationalisation" de JMRI.
+ Nous les remercions d'avoir convertit (beaucoup) de texte &#224; l'&#233;cran pour une autre langue 
+ que l'anglais. Si vous s&#233;lectionnez votre pays ou votre r&#233;gion et votre langue ici, 
+ puis enregistrez et red&#233;marrez les pr&#233;f&#233;rences, JMRI va utiliser une internationalisation 
+pour ce pays et la langue si elle est disponible. Les &#233;l&#233;ments qui n'ont pas &#233;t&#233; traduits 
+continueront &#224; appara&#238;tre en anglais, de sorte que vous ne manquerez rien. Pour 
+plus d'informations sur la fa&#231;on de le mettre en place, et en particulier la fa&#231;on de contribuer ventaire; de nouvelles traductions et les am&#233;lior&#233;es, s'il vous pla&#238;t voir notre
+ <a href="../../html/doc/Technical/I8N.shtml">Page d'internationalisation </a>.
 
-        <dt>Style Interface Graphique Utilisateur( GUI) Style</dt>
+<a name="actions">
+<dt> Actions &#224; faire au d&#233;marrage </a>
+<dd>
+Cette section vous permet d'avoir le programme qui ex&#233;cute automatiquement les s&#233;lections de menu diff&#233;rents au d&#233;marrage. Par exemple, vous pouvez avoir la Table Aiguillage ouvrir automatiquement, ou d'ouvrir automatiquement une fen&#234;tre pour la programmation principal.
+<P>
+Par exemple, pour ouvrir automatiquement la Table Aiguillage, cliquez sur le bouton "Ajouter une action" dans cette section des pr&#233;f&#233;rences avanc&#233;es.
+Dans la liste qui est pr&#233;sent&#233;e, s&#233;lectionnez "Ouvrir Table Aiguillage ".
+N'oubliez pas de sauvegarder vos pr&#233;f&#233;rences avec le bouton Enregistrer au bas de l'&#233;cran!
 
-        <dd>
-          Ces bo&icirc;tes radio vous permettent de
-          s&eacute;lectionner la fa&ccedil;on dont le programme
-          s'affiche. Les choix disponibles d&eacute;pendent du type
-          d'ordinateur que vous avez, et tous les
-          &eacute;l&eacute;ments suivants peuvent &ecirc;tre
-          disponibles:
+<dt> Cr&#233;ez des boutons sur l'&#233;cran principal
+<dd>
+Cela vous permet d'ajouter des boutons suppl&#233;mentaires &#224; la fen&#234;tre principale JMRI qui sont connect&#233;s &#224; des choix de menu sp&#233;cifique.
+<P>
+Par exemple, pour ajouter un bouton qui va ouvrir la commande d'alimentation lorsque vous cliquez dessus,
+cliquez sur le bouton "Ajouter une action" dans cette section des pr&#233;f&#233;rences avanc&#233;es.
+Dans la liste qui est pr&#233;sent&#233;e, s&#233;lectionnez "Ouvrir Tableau Aiguillage ". N'oubliez pas de mettre &#224; jour vos pr&#233;f&#233;rences avec le bouton au bas de l'&#233;cran!
+Dans la liste qui est pr&#233;sent&#233;e, s&#233;lectionnez "Ouvrir Commande Alimentation ".
+N'oubliez pas de mettre &#224; jours vos pr&#233;f&#233;rences avec le bouton au bas de l'&#233;cran!
+Le bouton appara&#238;tra au prochain d&#233;marrage du programme.
 
-          <ul>
-            <li>M&eacute;tal - le style par d&eacute;faut de Java,
-            utilisable sur tous les ordinateurs</li>
+<dt>Chargement des fichiers de panneau au d&#233;marrage
+<dd>
+Cette section vous permet de charger automatiquement les fichiers de panneaux lorsque le programme
+d&#233;marre. Les sections pr&#233;c&#233;dentes ont d&#233;j&#224; &#233;t&#233; ex&#233;cut&#233;es, de sorte que toute action configur&#233;e aura eu lieu
+. Vous pouvez charger autant de fichiers de panneau que vous le souhaitez, chacun sera compl&#232;tement charg&#233; avant le prochain d&#233;marrage.
+<p>
+Cliquez sur "Ajouter un fichier", qui va ouvrir une fen&#234;tre de la section du fichier dans lequel vous pouvez s&#233;lectionner le fichier d&#233;sir&#233;. Si vous souhaitez plus tard arr&#234;ter le chargement du fichier au d&#233;marrage, cliquez sur le bouton "Supprimer" &#224; c&#244;t&#233; de son nom.
 
-            <li>CDE/Motif - Une forme Linux/Unix qui fonctionne
-            bien avec les gestionnaires &eacute;cran X Windows. Il
-            est &eacute;galement disponible sur (presque) tous les
-            types d'ordinateurs.</li>
 
-            <li>Windows - uniquement disponible sur les
-            syst&egrave;mes Microsoft Windows, ce qui rend le
-            programme aussi ressemblant que possible qu'une
-            application normale de Windows.</li>
+<dt>Ex&#233;cuter des scripts au d&#233;marrage
+<dd>
+Cette section vous permet d'ex&#233;cuter automatiquement un fichier de script lorsque le programme d&#233;marre. Les sections pr&#233;c&#233;dentes sont d&#233;j&#224; ex&#233;cut&#233;es, de sorte que toutes les actions configur&#233;es auront eu lieu et tous les fichiers panneaux ont &#233;t&#233; charg&#233;s.
+Vous pouvez ex&#233;cuter les fichiers script que vous  souhaitez, chacun sera &#233;xecut&#233; &#224; la fin du fichier avant le prochain d&#233;marrage
+<p>
+Cliquez sur "Ajouter un fichier", qui va ouvrir une fen&#234;tre de la section du fichier dans lequel vous pouvez s&#233;lectionner le fichier d&#233;sir&#233;. Si vous souhaitez plus tard arr&#234;ter l'ex&#233;cution d'un script particulier au d&#233;marrage, cliquez sur le bouton "Supprimer" &#224; c&#244;t&#233; de nom de fichier.
 
-            <li>Mac OS X - uniquement disponible sur MacOS, ce qui
-            rend l'apparence du programme ressemblant &agrave; une
-            application Macintosh</li>
-          </ul>
-        </dd>
+<a id="roster">
+<dt>D&#233;finissez l'emplacement de l'Inventaire
+<dd>
+Normalement, l'inventaire est stock&#233;e dans un emplacement standard dans le cadre du <a href="../../html/apps/DecoderPro/Files.shtml">r&#233;pertoire preferences </a>.
+Cette option vous permet de le d&#233;placer autre part.
+<p>
+Pour le configurer, cliquez sur le bouton "Param&#233;trer ..."  et suivez les instructions.
+<p>
+Le bouton "R&#233;init" restaure l'emplacement par d&#233;faut. Notez que cela modifie juste o&#249; le programme regarde. Si vous avez stock&#233; des informations I ailleurs et  voulez le faire revenir &#224; l'emplacement par d&#233;faut, vous devez d&#233;placer les fichiers vous-m&#234;me.
+<p>
+Vous pouvez &#233;galement entrer une valeur par d&#233;faut pour le champ "propri&#233;taire" dans les entr&#233;es de registre DecoderPro ici. Ceci remplit avec la valeur les nouvelles entr&#233;es, ce qui peut vous faire &#233;conomiser un peu de frappe. Il n'a aucun effet sur les entr&#233;es existantes, m&#234;me s'il a chang&#233;.
+</dl>
 
-        <dt>Programmateur par D&eacute;fauts</dt>
-
-        <dd>Le programmateur DecoderPro vous permet de choisir
-        l'affichage de beaucoup ou peu de contenu du
-        d&eacute;codeur en utilisant un "programmateur"
-        configurable. Vous pouvez en s&eacute;lectionner un dans le
-        m&ecirc;me temps, vous s&eacute;lectionnez votre <a href=
-        "../../manual/Basic_Programming.shtml">d&eacute;codeur de
-        locomotive</a> , mais cela fournit un endroit commode pour
-        d&eacute;finir un d&eacute;codeur par d&eacute;faut ainsi
-        vous n'avez pas &agrave; le s&eacute;lectionner &agrave;
-        chaque fois que vous ouvrez un d&eacute;codeur.</dd>
-      </dl>Sans aucun doute la commande la plus importante se
-      trouve au bas de cette section: Le bouton "Enregistrer"!
-
-      <p>Soyez s&ucirc;r de cliquer sur "Enregistrer" lorsque vous
-      quittez cette fen&ecirc;tre. Vos modifications des
-      pr&eacute;f&eacute;rences ne prendront effet qu'apr&egrave;s
-      red&eacute;marrage du programme, de sorte que le programme
-      vous invite &agrave; le faire apr&egrave;s avoir sauv&eacute;
-      les pr&eacute;f&eacute;rences. <a name="advanced" id=
-      "advanced"></a></p>
-
-      <h2>Pr&eacute;f&eacute;rences avanc&eacute;es</h2>
-
-      <p>La case "Montrer Pr&eacute;f&eacute;rences
-      avanc&eacute;es" vous permet de personnaliser votre connexion
-      au r&eacute;seau. Vous n'avez pas besoin d'utiliser les
-      pr&eacute;f&eacute;rences avanc&eacute;es pour obtenir votre
-      premi&egrave;re connexion au r&eacute;seau et et
-      ex&eacute;cuter l'application, et nous vous recommandons de
-      les laisser seuls jusqu'&agrave; ce que la connexion &agrave;
-      votre centrale soit op&eacute;rationnelle. Pour
-      param&eacute;trer vos pr&eacute;f&eacute;rences
-      avanc&eacute;es, v&eacute;rifier la boite "Montrer
-      Pr&eacute;f&eacute;rences Avanc&eacute;es".<br></p>
-
-      <p><a href="../../manual/images/Preferences2.png"><img src=
-      "../../manual/images/Preferences2.png" height="150" width=
-      "256" align="right"></a></p>
-
-      <dl>
-        <dt>Connexions auxilliaires au r&eacute;seau</dt>
-
-        <dd>Les connexions auxiliaires vous permettent d'avoir plus
-        d'une connexion r&eacute;seau active &agrave; un moment. La
-        plupart des utilisateurs n'ont besoin que d'une connexion,
-        donc s&eacute;lectionner une connexion auxiliaire seulement
-        si vous avez besoin de plus d'un raccordement au
-        r&eacute;seau. Utilisez la "Connexion R&eacute;seau:" en
-        haut du menu Pr&eacute;f&eacute;rences de votre connexion
-        principale.</dd>
-
-        <dt>Programmateur par d&eacute;faut</dt>
-
-        <dd>Cette section a une case &agrave; cocher qui vous
-        permet de d&eacute;cider si le programmateur DecoderPro va
-        afficher des volets vide (onglets). Certaines personnes
-        aiment les voir, m&ecirc;me si elles sont vides, d'autres
-        pr&eacute;f&egrave;rent ne pas les voir. Nous fournissons
-        cette pr&eacute;f&eacute;rence afin que vous puissiez
-        choisir. <a name="locale" id="locale"></a></dd>
-
-        <dt>Locale</dt>
-
-        <dd><a href="../../Acknowledgements.shtml">Beaucoup de
-        gens</a> ont contribu&eacute; &agrave; l'
-        "Internationalisation" de JMRI. Nous les remercions d'avoir
-        convertit (beaucoup) de texte &agrave; l'&eacute;cran pour
-        une autre langue que l'anglaiss. Si vous
-        s&eacute;lectionnez votre pays ou votre r&eacute;gion et
-        votre langue ici, puis enregistrez et red&eacute;marrez les
-        pr&eacute;f&eacute;rences, JMRI va utiliser une
-        internationalisation de ce pays et la langue si elle est
-        disponible. Les &eacute;l&eacute;ments qui n'ont pas
-        &eacute;t&eacute; traduits continueront &agrave;
-        appara&icirc;tre en anglais, de sorte que vous ne manquerez
-        rien. Pour plus d'informations sur la fa&ccedil;on de le
-        mettre en place, et en particulier la fa&ccedil;on de
-        contribuer &agrave; de nouvelles traductions et les
-        am&eacute;lior&eacute;es, s'il vous pla&icirc;t voir notre
-        <a href="../../html/doc/Technical/I8N.shtml">Page
-        d'internationalisation</a> .</dd>
-
-        <dd><a name="actions" id="actions"></a></dd>
-
-        <dt>Actions &agrave; faire au d&eacute;marrage</dt>
-
-        <dd>Cette section vous permet d'avoir le programme qui
-        ex&eacute;cute automatiquement les s&eacute;lections de
-        menu diff&eacute;rents au d&eacute;marrage. Par exemple,
-        vous pouvez avoir la Table Aiguillage ouvrir
-        automatiquement, ou d'ouvrir automatiquement une
-        fen&ecirc;tre pour la programmation principal.<br>
-        Par exemple, pour ouvrir automatiquement la Table
-        Aiguillage, cliquez sur le bouton "Ajouter une action" dans
-        cette section des pr&eacute;f&eacute;rences
-        avanc&eacute;es. Dans la liste qui est
-        pr&eacute;sent&eacute;e, s&eacute;lectionnez "Ouvrir Table
-        Aiguillage ". N'oubliez pas de sauvegarder vos
-        pr&eacute;f&eacute;rences avec le bouton Enregistrer au bas
-        de l'&eacute;cran!</dd>
-
-        <dt>Cr&eacute;ez des boutons sur l'&eacute;cran
-        principal</dt>
-
-        <dd>Cela vous permet d'ajouter des boutons
-        suppl&eacute;mentaires &agrave; la fen&ecirc;tre principale
-        JMRI qui sont connect&eacute;s &agrave; des choix de menu
-        sp&eacute;cifique.<br>
-        Par exemple, pour ajouter un bouton qui va ouvrir la
-        commande d'alimentation lorsque vous cliquez dessus,
-        cliquez sur le bouton "Ajouter une action" dans cette
-        section des pr&eacute;f&eacute;rences avanc&eacute;es. Dans
-        la liste qui est pr&eacute;sent&eacute;e,
-        s&eacute;lectionnez "Ouvrir Tableau Aiguillage ". N'oubliez
-        pas de mettre &agrave; jour vos pr&eacute;f&eacute;rences
-        avec le bouton au bas de l'&eacute;cran! Dans la liste qui
-        est pr&eacute;sent&eacute;e, s&eacute;lectionnez "Ouvrir
-        Commande Alimentation ". N'oubliez pas de mettre &agrave;
-        jours vos pr&eacute;f&eacute;rences avec le bouton au bas
-        de l'&eacute;cran! Le bouton appara&icirc;tra au prochain
-        d&eacute;marrage du programme.</dd>
-
-        <dt>Chargement des fichiers de panneau au
-        d&eacute;marrage</dt>
-
-        <dd>Cette section vous permet de charger automatiquement
-        les fichiers de panneaux lorsque le programme
-        d&eacute;marre. Les sections pr&eacute;c&eacute;dentes ont
-        d&eacute;j&agrave; &eacute;t&eacute;
-        ex&eacute;cut&eacute;es, de sorte que toute action
-        configur&eacute;e aura eu lieu. Vous pouvez charger autant
-        de fichiers de panneau que vous le souhaitez, chacun sera
-        compl&egrave;tement charg&eacute; avant le prochain
-        d&eacute;marrage.<br>
-        Cliquez sur "Ajouter un fichier", qui va ouvrir une
-        fen&ecirc;tre de la section du fichier dans lequel vous
-        pouvez s&eacute;lectionner le fichier d&eacute;sir&eacute;.
-        Si vous souhaitez plus tard arr&ecirc;ter le chargement du
-        fichier au d&eacute;marrage, cliquez sur le bouton
-        "Supprimer" &agrave; c&ocirc;t&eacute; de son nom.</dd>
-
-        <dt>Ex&eacute;cuter des scripts au d&eacute;marrage</dt>
-
-        <dd>Cette section vous permet d'ex&eacute;cuter
-        automatiquement un fichier de script lorsque le programme
-        d&eacute;marre. Les sections pr&eacute;c&eacute;dentes sont
-        d&eacute;j&agrave; ex&eacute;cut&eacute;es, de sorte que
-        toutes les actions configur&eacute;es auront eu lieu et
-        tous les fichiers panneaux ont &eacute;t&eacute;
-        charg&eacute;s. Vous pouvez ex&eacute;cuter les fichiers
-        script que vous souhaitez, chacun sera
-        &eacute;xecut&eacute; &agrave; la fin du fichier avant le
-        prochain d&eacute;marrage<br>
-        Cliquez sur "Ajouter un fichier", qui va ouvrir une
-        fen&ecirc;tre de la section du fichier dans lequel vous
-        pouvez s&eacute;lectionner le fichier d&eacute;sir&eacute;.
-        Si vous souhaitez plus tard arr&ecirc;ter
-        l'ex&eacute;cution d'un script particulier au
-        d&eacute;marrage, cliquez sur le bouton "Supprimer"
-        &agrave; c&ocirc;t&eacute; de nom de fichier.</dd>
-
-        <dd><a id="roster" name="roster"></a></dd>
-
-        <dt>D&eacute;finissez l'emplacement de la Liste</dt>
-
-        <dd>Normalement, la liste est stock&eacute;e dans un
-        emplacement standard dans le cadre du <a href=
-        "../../html/apps/DecoderPro/Files.shtml">r&eacute;pertoire
-        preferences</a> . Cette option vous permet de le
-        d&eacute;placer autre part.<br>
-        Pour le configurer, cliquez sur le bouton
-        "Param&eacute;trer ..." et suivez les instructions.<br>
-        Le bouton "R&eacute;init" restaure l'emplacement par
-        d&eacute;faut. Notez que cela modifie juste o&ugrave; le
-        programme regarde. Si vous avez stock&eacute; des
-        informations Liste ailleurs et voulez le faire revenir
-        &agrave; l'emplacement par d&eacute;faut, vous devez
-        d&eacute;placer les fichiers vous-m&ecirc;me.<br></dd>
-
-        <dt>Vous pouvez &eacute;galement entrer une valeur par
-        d&eacute;faut pour le champ "propri&eacute;taire" dans les
-        entr&eacute;es de registre DecoderPro ici. Ceci remplit
-        avec la valeur les nouvelles entr&eacute;es, ce qui peut
-        vous faire &eacute;conomiser un peu de frappe. Il n'a aucun
-        effet sur les entr&eacute;es existantes, m&ecirc;me s'il a
-        chang&eacute;.</dt>
-      </dl><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
 </body>
 </html>

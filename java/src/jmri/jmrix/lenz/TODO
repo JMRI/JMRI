@@ -1,9 +1,7 @@
-TODO List for Lenz code (as of 2/9/2009):
+TODO List for Lenz code (as of 2/9/2009, i18n completed 7/2017):
 1) Need to seperate constants for Xpressnet V1 from those for X-Bus V1 
 and V2.
 2) Complete browser for the Command Station Locomotive database 
 (similar to the Digitrax "Slot Manager")
-3) Revise utility programs so they use a properties file for button 
-names/menu titles.
-4) Add a message indicating another device has put the command station 
+3) Add a message indicating another device has put the command station
 in service mode.  This should be displayed in the status message on the main JMRI window.  

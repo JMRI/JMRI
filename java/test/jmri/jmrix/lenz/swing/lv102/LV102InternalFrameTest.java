@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.swing.lv102;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -31,7 +32,7 @@ public class LV102InternalFrameTest {
         Assume.assumeFalse(jmri.util.SystemType.isMacOSX());
         // we are building an LV102Frame here, which automatically contains 
         // an LV102 Internal Frame
-        LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
+        LV102Frame f = new LV102Frame(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
         f.setVisible(true);
         LV102FrameScaffold operator = new LV102FrameScaffold();
         operator.pushResetButton();
@@ -48,7 +49,7 @@ public class LV102InternalFrameTest {
         Assume.assumeFalse(jmri.util.SystemType.isMacOSX());
         // we are building an LV102Frame here, which automatically contains 
         // an LV102 Internal Frame
-        LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
+        LV102Frame f = new LV102Frame(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
         f.setVisible(true);
         LV102FrameScaffold operator = new LV102FrameScaffold();
         operator.pushDefaultButton();
@@ -61,12 +62,12 @@ public class LV102InternalFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

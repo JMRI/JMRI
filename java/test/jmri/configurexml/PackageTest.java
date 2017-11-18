@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -53,18 +54,21 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(StoreXmlConfigActionTest.class));
         suite.addTest(new JUnit4TestAdapter(StoreXmlUserActionTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(ErrorMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(ClassMigrationManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(DefaultClassMigrationTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

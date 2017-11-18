@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -125,7 +126,7 @@ public class SRCPMessageTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkGetReadRegisterIlegalArgument(){
-      SRCPMessage m = SRCPMessage.getReadRegister(2,10);
+      SRCPMessage.getReadRegister(2,10);
     }
 
     @Test
@@ -137,7 +138,7 @@ public class SRCPMessageTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkGetConfirmRegisterIlegalArgument(){
-      SRCPMessage m = SRCPMessage.getConfirmRegister(2,10,5);
+      SRCPMessage.getConfirmRegister(2,10,5);
     }
 
     @Test
@@ -149,7 +150,7 @@ public class SRCPMessageTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkGetWriteRegisterIlegalArgument(){
-      SRCPMessage m = SRCPMessage.getWriteRegister(2,10,5);
+      SRCPMessage.getWriteRegister(2,10,5);
     }
 
     @Test
@@ -157,11 +158,11 @@ public class SRCPMessageTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

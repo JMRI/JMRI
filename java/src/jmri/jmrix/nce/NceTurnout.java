@@ -168,6 +168,12 @@ public class NceTurnout extends AbstractTurnout {
     public boolean canInvert() {
         return true;
     }
+    /**
+     * NCE turnouts can provide both modes when properly configured
+     *
+     * @return Both cab and pushbutton (decoder) modes
+     */
+    public int getPossibleLockModes() { return CABLOCKOUT | PUSHBUTTONLOCKOUT ; }
 
     /**
      * NCE turnouts support two types of lockouts, pushbutton and cab. Cab
@@ -264,5 +270,5 @@ public class NceTurnout extends AbstractTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnout.class);
 }

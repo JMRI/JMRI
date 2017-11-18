@@ -1,0 +1,54 @@
+@startuml
+participant Layout
+participant CodeButton
+participant Station
+participant CodeLine
+participant TurnoutSection
+
+Layout o-> TurnoutSection : Turnout Stat\nCHANGED
+
+activate TurnoutSection
+
+TurnoutSection -> Station : requestIndicationStart()
+activate Station
+Station -> CodeLine : requestIndicationStart()
+activate CodeLine
+CodeLine -> CodeLine : queue then checkForWork()
+activate CodeLine
+deactivate Station
+deactivate TurnoutSection
+...
+CodeLine -> CodeLine : startSendIndication()
+activate CodeLine
+CodeLine -> Station : indicationStart()
+activate Station
+Station -> CodeButton : indicationStart()
+activate CodeButton
+CodeButton ->o Layout : Code Indicator\nON
+deactivate CodeButton
+Station -> TurnoutSection : indicationStart()
+activate TurnoutSection
+deactivate TurnoutSection
+deactivate Station
+deactivate CodeLine
+deactivate CodeLine
+...
+
+Layout o-> CodeLine: indicationComplete()\n    (Timeout)
+activate CodeLine
+CodeLine -> Station : indicationComplete()
+activate Station
+Station -> TurnoutSection : indicationComplete()
+activate TurnoutSection
+TurnoutSection ->o Layout : TO Indicators\nSET
+deactivate TurnoutSection
+Station -> CodeButton : indicationComplete()
+activate CodeButton
+CodeButton ->o Layout : Code Indicator\nOFF
+deactivate CodeButton
+deactivate Station
+deactivate CodeLine
+
+
+@enduml
+

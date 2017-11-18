@@ -1,5 +1,6 @@
 package jmri.jmrix.nce.consist;
 
+import jmri.util.swing.TextFilter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,12 +21,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Restores NCE consists from a text file defined by NCE.
- *
+ * <p>
  * NCE file format:
- *
+ * <p>
  * :F500 (16 bytes per line, grouped as 8 words with space delimiters) :F510 . .
  * :FAF0 :0000
- *
+ * <p>
  * The restore routine checks that each line of the file begins with the
  * appropriate consist address.
  *
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_CONSIST_MEM = 0xF500; // start of NCE CS Consist memory 
+    private static final int CS_CONSIST_MEM = 0xF500; // start of NCE CS Consist memory
     private static final int CONSIST_LNTH = 16;  // 16 bytes per consist line
     private static final int REPLY_1 = 1;   // reply length of 1 byte expected
     private int replyLen = 0;      // expected byte length
@@ -55,7 +56,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
         // Get file to read from
         JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
-        fc.addChoosableFileFilter(new textFilter());
+        fc.addChoosableFileFilter(new TextFilter());
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return; // Canceled
@@ -64,128 +65,118 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             return; // Canceled
         }
         File f = fc.getSelectedFile();
-        BufferedReader in;
-        try {
-            in = new BufferedReader(new FileReader(f));
-        } catch (FileNotFoundException e) {
+        try(BufferedReader in = new BufferedReader(new FileReader(f))) {
+           // create a status frame
+           JPanel ps = new JPanel();
+           jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Consist Restore");
+           fstatus.setLocationRelativeTo(null);
+           fstatus.setSize(200, 100);
+           fstatus.getContentPane().add(ps);
+
+           ps.add(textConsist);
+           ps.add(consistNumber);
+
+           textConsist.setText("Consist line number:");
+           textConsist.setVisible(true);
+           consistNumber.setVisible(true);
+
+           // Now read the file and check the consist address
+           waiting = 0;
+           fileValid = false;     // in case we break out early
+           int consistNum = 0;     // for user status messages
+           int curConsist = CS_CONSIST_MEM; // load the start address of the NCE consist memory
+           byte[] consistData = new byte[CONSIST_LNTH];  // NCE Consist data
+           String line;
+
+           while (true) {
+               line = in.readLine();
+
+               consistNumber.setText(Integer.toString(consistNum++));
+
+               if (line == null) {    // while loop does not break out quick enough
+                   log.error("NCE consist file terminator :0000 not found");
+                   break;
+               }
+               if (log.isDebugEnabled()) {
+                   log.debug("consist " + line);
+               }
+               // check that each line contains the NCE memory address of the consist
+               String consistAddr = ":" + Integer.toHexString(curConsist);
+               String[] consistLine = line.split(" ");
+
+               // check for end of consist terminator
+               if (consistLine[0].equalsIgnoreCase(":0000")) {
+                   fileValid = true; // success!
+                   break;
+               }
+
+               if (!consistAddr.equalsIgnoreCase(consistLine[0])) {
+                   log.error("Restore file selected is not a vaild backup file");
+                   log.error("Consist memory address in restore file should be {} Consist address read {}", consistAddr, consistLine[0]);
+                   break;
+               }
+
+               // consist file found, give the user the choice to continue
+               if (curConsist == CS_CONSIST_MEM) {
+                   if (JOptionPane
+                           .showConfirmDialog(
+                                   null,
+                                   "Restore file found!  Restore can take over a minute, continue?",
+                                   "NCE Consist Restore", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                       break;
+                   }
+               }
+
+               fstatus.setVisible(true);
+
+               // now read the entire line from the file and create NCE message
+               for (int i = 0; i < 8; i++) {
+                   int j = i << 1;    // i = word index, j = byte index
+
+                   byte b[] = StringUtil.bytesFromHexString(consistLine[i + 1]);
+
+                   consistData[j] = b[0];
+                   consistData[j + 1] = b[1];
+               }
+
+               NceMessage m = writeNceConsistMemory(curConsist, consistData);
+               tc.sendNceMessage(m, this);
+
+               curConsist += CONSIST_LNTH;
+
+               // wait for write to NCE CS to complete
+               if (waiting > 0) {
+                   synchronized (this) {
+                       try {
+                           wait(20000);
+                       } catch (InterruptedException e) {
+                           Thread.currentThread().interrupt(); // retain if needed later
+                       }
+                   }
+               }
+               // failed
+               if (waiting > 0) {
+                   log.error("timeout waiting for reply");
+                   break;
+               }
+           }
+           in.close();
+
+           // kill status panel
+           fstatus.dispose();
+
+           if (fileValid) {
+               JOptionPane.showMessageDialog(null, "Successful Restore!",
+                       "NCE Consist", JOptionPane.INFORMATION_MESSAGE);
+           } else {
+               JOptionPane.showMessageDialog(null,
+                       "Restore failed. Check console for error messages. \r\n"
+                       + "If operating at 19,200 baud, try 9600 baud.",
+                       "NCE Consist", JOptionPane.ERROR_MESSAGE);
+           }
+        } catch (IOException e ) {
+            // this is the end of the try-with-resources that opens in.
             return;
-        }
-
-        // create a status frame
-        JPanel ps = new JPanel();
-        jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Consist Restore");
-        fstatus.setLocationRelativeTo(null);
-        fstatus.setSize(200, 100);
-        fstatus.getContentPane().add(ps);
-
-        ps.add(textConsist);
-        ps.add(consistNumber);
-
-        textConsist.setText("Consist line number:");
-        textConsist.setVisible(true);
-        consistNumber.setVisible(true);
-
-        // Now read the file and check the consist address
-        waiting = 0;
-        fileValid = false;     // in case we break out early
-        int consistNum = 0;     // for user status messages
-        int curConsist = CS_CONSIST_MEM; // load the start address of the NCE consist memory
-        byte[] consistData = new byte[CONSIST_LNTH];  // NCE Consist data
-        String line = " ";
-
-        while (true) {
-            try {
-                line = in.readLine();
-            } catch (IOException e) {
-                break;
-            }
-
-            consistNumber.setText(Integer.toString(consistNum++));
-
-            if (line == null) {    // while loop does not break out quick enough
-                log.error("NCE consist file terminator :0000 not found");
-                break;
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("consist " + line);
-            }
-            // check that each line contains the NCE memory address of the consist
-            String consistAddr = ":" + Integer.toHexString(curConsist);
-            String[] consistLine = line.split(" ");
-
-            // check for end of consist terminator
-            if (consistLine[0].equalsIgnoreCase(":0000")) {
-                fileValid = true; // success!
-                break;
-            }
-
-            if (!consistAddr.equalsIgnoreCase(consistLine[0])) {
-                log.error("Restore file selected is not a vaild backup file");
-                log.error("Consist memory address in restore file should be " + consistAddr
-                        + " Consist address read " + consistLine[0]);
-                break;
-            }
-
-            // consist file found, give the user the choice to continue
-            if (curConsist == CS_CONSIST_MEM) {
-                if (JOptionPane
-                        .showConfirmDialog(
-                                null,
-                                "Restore file found!  Restore can take over a minute, continue?",
-                                "NCE Consist Restore", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-                    break;
-                }
-            }
-
-            fstatus.setVisible(true);
-
-            // now read the entire line from the file and create NCE message
-            for (int i = 0; i < 8; i++) {
-                int j = i << 1;    // i = word index, j = byte index
-
-                byte b[] = StringUtil.bytesFromHexString(consistLine[i + 1]);
-
-                consistData[j] = b[0];
-                consistData[j + 1] = b[1];
-            }
-
-            NceMessage m = writeNceConsistMemory(curConsist, consistData);
-            tc.sendNceMessage(m, this);
-
-            curConsist += CONSIST_LNTH;
-
-            // wait for write to NCE CS to complete
-            if (waiting > 0) {
-                synchronized (this) {
-                    try {
-                        wait(20000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                    }
-                }
-            }
-            // failed
-            if (waiting > 0) {
-                log.error("timeout waiting for reply");
-                break;
-            }
-        }
-        try {
-            in.close();
-        } catch (IOException e) {
-        }
-
-        // kill status panel
-        fstatus.dispose();
-
-        if (fileValid) {
-            JOptionPane.showMessageDialog(null, "Successful Restore!",
-                    "NCE Consist", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null,
-                    "Restore failed. Check console for error messages. \r\n"
-                    + "If operating at 19,200 baud, try 9600 baud.",
-                    "NCE Consist", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -241,27 +232,5 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    private static class textFilter extends javax.swing.filechooser.FileFilter {
-
-        @Override
-        public boolean accept(File f) {
-            if (f.isDirectory()) {
-                return true;
-            }
-            String name = f.getName();
-            if (name.matches(".*\\.txt")) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public String getDescription() {
-            return "Text Documents (*.txt)";
-        }
-    }
-
-    private final static Logger log = LoggerFactory
-            .getLogger(NceConsistRestore.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistRestore.class);
 }

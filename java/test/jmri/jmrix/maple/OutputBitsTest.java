@@ -1,10 +1,11 @@
 package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRMessage;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the OutputBits class
@@ -78,7 +79,8 @@ public class OutputBitsTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        obit = null;
+        JUnitUtil.tearDown();
     }
 
 }

@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = JsonServiceFactory.class)
 public class JsonUtilServiceFactory implements JsonServiceFactory {
 
     @Override

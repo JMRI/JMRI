@@ -1,21 +1,22 @@
 package jmri.jmrit.operations.rollingstock;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations RollingStock class Last manually cross-checked on
  * 20090131
- *
+ * <p>
  * Still to do: RollingStock: Location Length change (set) RollingStock:
  * Destination RollingStock: Train, Route
- *
+ * <p>
  * Note: RollingStock: XML read/write is tested in OperationsEnginesTest and
  * OperationsCarsTest
  *
@@ -24,28 +25,28 @@ import junit.framework.TestSuite;
  */
 public class OperationsRollingStockTest extends OperationsTestCase {
 
-     // test constroctors.
-     public void testCtor(){
-       // test the default constructor.
-       RollingStock rs1 = new RollingStock();
-       Assert.assertNotNull("Default Constructor",rs1);
+    // test constroctors.
+    public void testCtor() {
+        // test the default constructor.
+        RollingStock rs1 = new RollingStock();
+        Assert.assertNotNull("Default Constructor", rs1);
     }
-    
+
     public void test2ParmCtor() {
-      // test the constructor with roadname and roadnumer as parameters.
-      RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
-      Assert.assertNotNull("Two parameter Constructor",rs1);
+        // test the constructor with roadname and roadnumer as parameters.
+        RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
+        Assert.assertNotNull("Two parameter Constructor", rs1);
 
-      Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
-      Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
-      Assert.assertEquals("Car ID", "TESTROAD" + "TESTNUMBER1", rs1.getId());
+        Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
+        Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
+        Assert.assertEquals("Car ID", "TESTROAD" + "TESTNUMBER1", rs1.getId());
     }
 
-    public void testXmlConstructor(){
-       // test the constructor loading this car from an XML element.
-       
-       // first, we need to build the XML element.
-       org.jdom2.Element e = new org.jdom2.Element("cars");
+    public void testXmlConstructor() {
+        // test the constructor loading this car from an XML element.
+
+        // first, we need to build the XML element.
+        org.jdom2.Element e = new org.jdom2.Element("cars");
         e.setAttribute(Xml.ID, "TESTID");
         e.setAttribute(Xml.ROAD_NAME, "TESTROAD1");
         e.setAttribute(Xml.ROAD_NUMBER, "TESTNUMBER1");
@@ -55,35 +56,34 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         e.setAttribute(Xml.WEIGHT, "TESTWEIGHT");
         e.setAttribute(Xml.WEIGHT_TONS, "TESTWEIGHTTONS");
         e.setAttribute(Xml.BUILT, "TESTBUILT");
-        e.setAttribute(Xml.LOCATION_ID,"TESTLOCATION");
+        e.setAttribute(Xml.LOCATION_ID, "TESTLOCATION");
         e.setAttribute(Xml.ROUTE_LOCATION_ID, "TESTROUTELOCATION");
         e.setAttribute(Xml.SEC_LOCATION_ID, "TESTTRACK");
         e.setAttribute(Xml.DESTINATION_ID, "TESTDESTINATION");
         e.setAttribute(Xml.ROUTE_DESTINATION_ID, "TESTROUTEDESTINATION");
         e.setAttribute(Xml.SEC_DESTINATION_ID, "TESTDESTINATION");
         e.setAttribute(Xml.LAST_ROUTE_ID, "SAVEDROUTE");
-        e.setAttribute(Xml.MOVES,"5");
+        e.setAttribute(Xml.MOVES, "5");
         e.setAttribute(Xml.DATE, "2015/05/15 15:15:15");
-        e.setAttribute(Xml.SELECTED,Xml.FALSE);
+        e.setAttribute(Xml.SELECTED, Xml.FALSE);
         e.setAttribute(Xml.LAST_LOCATION_ID, "TESTLASTLOCATION");
         e.setAttribute(Xml.TRAIN, "TESTTRAIN");
         e.setAttribute(Xml.OWNER, "TESTOWNER");
         e.setAttribute(Xml.VALUE, "TESTVALUE");
-        e.setAttribute(Xml.RFID,"12345");
-        e.setAttribute(Xml.LOC_UNKNOWN,Xml.FALSE);
+        e.setAttribute(Xml.RFID, "12345");
+        e.setAttribute(Xml.LOC_UNKNOWN, Xml.FALSE);
         e.setAttribute(Xml.OUT_OF_SERVICE, Xml.FALSE);
         e.setAttribute(Xml.BLOCKING, "5");
-        e.setAttribute(Xml.COMMENT,"Test Comment");
+        e.setAttribute(Xml.COMMENT, "Test Comment");
         try {
-           RollingStock rs1 = new RollingStock(e);
-           Assert.assertNotNull("Xml Element Constructor",rs1);
-        } catch(java.lang.NullPointerException npe) {
-           Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
+            RollingStock rs1 = new RollingStock(e);
+            Assert.assertNotNull("Xml Element Constructor", rs1);
+        } catch (java.lang.NullPointerException npe) {
+            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
-        
+
         jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
     }
-
 
     // test creation
     public void testCreate() {
@@ -101,7 +101,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         rs1.setBuilt("TESTBUILT");
         rs1.setOwner("TESTOWNER");
         rs1.setComment("TESTCOMMENT");
-        // make sure the ID tags exist before we 
+        // make sure the ID tags exist before we
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("TESTRFID");
         rs1.setRfid("TESTRFID");
@@ -141,7 +141,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
         Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
         Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
-        
+
         Assert.assertEquals("RollingStock Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", RollingStock.TRACK_CHANGED_PROPERTY);
         Assert.assertEquals("RollingStock Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", RollingStock.DESTINATION_CHANGED_PROPERTY);
         Assert.assertEquals("RollingStock Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", RollingStock.DESTINATION_TRACK_CHANGED_PROPERTY);
@@ -155,7 +155,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         /* Rolling Stock needs a valid type */
         rs1.setTypeName("TESTTYPE");
         /* Type needs to be in CarTypes or EngineTypes */
-        CarTypes.instance().addName("TESTTYPE");
+        InstanceManager.getDefault(CarTypes.class).addName("TESTTYPE");
 
         Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
         Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
@@ -232,10 +232,10 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.deleteRoadName("TESTROAD");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
-        
+
         // Normally logged message
-        jmri.util.JUnitAppender.assertErrorMessage("Loco (TESTROAD TESTNUMBER1) length () is not valid");
-        
+        jmri.util.JUnitAppender.assertErrorMessage("Rolling stock (TESTROAD TESTNUMBER1) length () is not valid");
+
     }
 
     // Ensure minimal setup for log4J

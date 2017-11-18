@@ -1,43 +1,39 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusThrottleManagerTest {
+public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
     public void testCTor() {
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tc);
-        CbusThrottleManager t = new CbusThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        TrafficControllerScaffold tc = new TrafficControllerScaffold();
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tc);
+        tm = new CbusThrottleManager(memo);
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);
 
 }

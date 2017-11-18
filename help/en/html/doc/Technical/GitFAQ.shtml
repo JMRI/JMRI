@@ -40,7 +40,8 @@
       <h1>JMRI: Git FAQ</h1>
 
       <p>This is a list of Frequently Asked Questions for Git,
-      particularly regarding how we use it with JMRI.</p>
+      particularly regarding how we use it with JMRI.
+      Click on a question to open the answer.</p>
 
       <p>There's a <a href="getgitcode.shtml">separate JMRI Help
       page</a> on how to <a href="getgitcode.shtml">get the code
@@ -88,8 +89,10 @@
           from the JMRI master on GitHub and push to your fork
           (also on GitHub):
 
-          <p><img src="/web/images/GitHubWorkflow.png"></p>
-
+          <a href="/web/images/GitHubWorkflow.png">
+            <img src="/web/images/GitHubWorkflow.png" align="right" height="25%" width="25%">
+          </a>
+            
           <p>That horizontal arrow is the "Pull Request" (and
           subsequent pull) that records information about how
           things get into the repository.</p>
@@ -103,28 +106,26 @@
           <p>Via the git command line tool you do this with this
           command:</p>
 
-          <blockquote>
-            <code>$ git remote set-url --push origin
-            https://github.com/<em>username</em>/JMRI.git</code>
-          </blockquote>where <code>username</code> is your github
+<pre style="font-family: monospace;">
+            $ git remote set-url --push origin https://github.com/<em>username</em>/JMRI.git
+</pre>
+          where <code>username</code> is your github
           user name. You can check the current status with of the
           push and pull repositories with:
 
-          <blockquote>
-            <code>$ git remote -v</code><br>
-            <code>origin https://github.com/JMRI/JMRI.git
-            (fetch)</code><br>
-            <code>origin
-            https://github.com/<em>username</em>/JMRI.git
-            (push)</code><br>
-          </blockquote>This says that, by default, fetches and
+<pre style="font-family: monospace;">
+            $ git remote -v
+            origin https://github.com/JMRI/JMRI.git (fetch)
+            origin https://github.com/<em>username</em>/JMRI.git (push)
+</pre>
+          This says that, by default, fetches and
           pulls come from the main JMRI/JMRI repository. When you
           push, on the other hand, it goes to your own repository.
 
           <p>Once you have a copy of your changes on GitHub, it is
           easy to <a href=
           "https://help.github.com/articles/creating-a-pull-request/">
-          generate a pull request</a> (link to GitHub):</p>
+          generate a Pull Request</a> (link to GitHub):</p>
 
           <ul>
             <li>In a browser, navigate to your repository on GitHub
@@ -157,7 +158,7 @@
           been "cloned" from the main repository. If you're making
           individual little changes, you can work directly on the
           default "master" branch within it. If not, see <a href=
-          "#branch">Branching</a>, below.</p>
+          "#branch">Using Branches</a>, below.</p>
 
           <p>To understand Git, it is good to know about the
           various <em>places</em> in your local git repository:</p>
@@ -196,7 +197,7 @@
           cloned things from.</p>
 
           <p>The following reference should get you started using
-          either the git command line or GotHub Desktop:</p>
+          either the git command line or GitHub Desktop:</p>
 
           <ul>
             <li>Log in to GitHub and clone your own copy of the
@@ -209,54 +210,54 @@
                 <li>Clone the JMRI repo to your local system (or
                 update it):
 
-                  <blockquote>
-                    <code>$ git clone
-                    https://github.com/JMRI/JMRI.git</code><br>
-                    or<br>
-                    <code>$ git fetch</code><br>
-                    <code>$ git diff ...origin</code><br>
-                    <code>$ git merge origin/master<br>
-                    Auto-merging ... files ...<br>
-                    CONFLICT (content): Merge conflict in
-                    <em>some_file</em><br>
-                    Automatic merge failed; fix conflicts and then
-                    commit the result.<br>
-                    $ vi <em>some_file</em> # the file has the
-                    conflicts marked, edit to fix...<br>
-                    $ git add <em>some_file</em><br>
-                    $ git commit -m "Merged master fixed
-                    conflict"<br>
-                    $ git merge origin/master</code><br>
-                    or<br>
-                    <code>$ git pull
-                    https://github.com/JMRI/JMRI.git</code><br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                $ git clone https://github.com/JMRI/JMRI.git
+</pre>
+                <p>or</p>
+<pre style="font-family: monospace;">
+                $ git fetch
+</pre>
+                <p>then</p>
+<pre style="font-family: monospace;">
+                $ git diff ...origin
+                $ git merge origin/master
+                Auto-merging ... files ...
+                CONFLICT (content): Merge conflict in <em>some_file</em>
+                Automatic merge failed; fix conflicts and then commit the result.
+                $ vi <em>some_file</em> # the file has the conflicts marked, edit to fix...
+                $ git add <em>some_file</em>
+                $ git commit -m "Merged master fixed conflict"
+                $ git merge origin/master
+</pre>                
+                <p>or</p>
+<pre style="font-family: monospace;">                
+                $ git pull https://github.com/JMRI/JMRI.git</code><br>
+</pre>
                 </li>
 
                 <li>Make your changes locally, test them, etc.
 
-                  <blockquote>
-                    <code>$ git add <i>newfile</i></code><br>
-                    <code>$ git rm <i>newfile</i></code><br>
-                    <code>$ git add .</code><br>
-                    <br>
-                    <code>$ git status</code><br>
-                    <br>
-                    <code>$ git fetch</code><br>
-                    <code>$ git merge</code><br>
-                    <br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    $ git add <i>newfile</i>
+                    $ git rm <i>oldfile</i>
+                    $ git add .
+
+                    $ git status
+
+                    $ git fetch
+                    $ git merge
+</pre>
                 </li>
 
                 <li>Make your changes available to the community
 
-                  <blockquote>
-                    <code>$ git commit -m <i>"commit
-                    message"</i></code><br>
-                    or<br>
-                    <code>$ git commit -a -m <i>"commit
-                    message"</i></code><br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    $ git commit -m <i>"commit message"</i> <i>filename</i>, <i>filename</i>
+</pre>
+                    <p>or</p>
+<pre style="font-family: monospace;">
+                    $ git commit -a -m <i>"commit message"</i>
+</pre>
                 </li>
               </ul>
             </li>
@@ -382,7 +383,91 @@
           </ul>
         </dd>
 
-        <dt id="branch">Branching</dt>
+        <dt id="branchexamples">Branch Examples</dt>
+        
+        <dd>
+        <img src="images/git_branch_baseline.png" align="right">
+        The figure to the right shows a couple examples
+        of how we use branches in Git. 
+        The black line
+        going from left to right is the "master" branch.
+        Each dot on it is a change that somebody made on the 
+        master branch. 
+        <p>At the left, the blue rectangle shows how a 
+        change can be made.
+        <ul>
+        <li>Somebody created a new branch (the colored line)
+        <li>That person made a change on their new branch (colored dot)
+        <li>And then, through the PR process, that was merged back onto
+            the master branch (rightmost black dot).
+        </ul>
+        That basic process is used to make all the changes to the master
+        branch, although for simplicity we haven't shown all the details for
+        all of them.
+        <p>
+        Sometimes, your development work can take a while. Maybe 
+        you do it in several phases, making multiple commits.
+        Before you're finally ready to merge it back into the 
+        common code with via a Pull Request (PR), somebody else
+        can make a change on the master branch.  
+        The green path shows that case.
+        The branch was created, development took some time, and 
+        then a change was made to master (black dot on black line)
+        before the green change was merged back.  The merge process in the
+        green arrowhead took care of this. Generally, this is 
+        straightforward, because most of the code doesn't change very often: 
+        If just a couple changes have been made, they rarely overlap.
+        This motivates our "merge often" philosophy.
+
+        <img src="images/git_branch_merge_master.png" align="right">
+        
+        <p>
+        Sometimes development goes on for such a long time that
+        people made changes to master that matter to you.
+        Perhaps they're new features or bug fixes that you'd like
+        to have in your own development branch.  Or perhaps they're
+        changes that conflict, and you'd like to resolve those conflicts
+        in your own work now, rather than waiting for later. 
+        <p>
+        The 2nd diagram to the right has an example of this.
+        After the programmer created the blue branch for his 
+        own work, changes were made on both his branch 
+        (first three dots on blue line) and on master (three
+        dots on black line).  Sometime after that 3rd change
+        on master, the developer decided to "git merge master" 
+        onto his branch, bringing all those changes in via the 
+        black diagonal arrow.  Both his changes and the changes
+        to master are now present in the blue branch he's working on.
+        <p>
+        Later, he decides to merge his work back onto master
+        via the blue arrow in the middle.  
+        <p>But at that point, he can still continue to work
+        on his branch (next blue dot).  Perhaps he's fixing a 
+        bug that was found by a user once the work was merged to master.
+        Or perhaps he's just working more in the same direction.
+        Either way, when he's ready, he can merge again (right-most blue diagonal),
+        or keep working on his branch (blue line running off to right), or merge
+        other people's work to his branch once it's merged (not shown).
+        <p>
+        By doing your work on your own branch:
+        <ul>
+        <li>You get control over when you want to merge in other 
+        people work.  You can hold off on that as long as you want,
+        even distributing your own version if you want to.
+        <li>At the same time, you can merge your work into the master
+        branch shared by others whenever it's ready, without disrupting 
+        your own work: Your branch is unchanged by merging it with master.
+        </ul>
+        More complicated diagrams are possible, with branches from branches to
+        work collaboratively, etc.  You can see
+        <a href="https://github.com/JMRI/JMRI/network">JMRI's entire branch graph</a>
+        on the GitHub site.
+        <p>The basic idea is important:
+        By working on a branch in your repository, 
+        your work can be kept a part of the overall
+        JMRI effort instead of being isolated and unavailable.
+
+        <dt id="branch">Using Branches</dt>
 
         <dd>
           Always work on a named <em>branch</em>, never on the one
@@ -401,7 +486,10 @@
           <code>"abc-2015-09-14"</code>,
           <code>"abc-next-cool-thing"</code>, and
           <code>"abc-patch-NNNN"</code> are all fine. That way, we
-          know it's you, and you can sort out the rest.</p>
+          know it's you, and you can sort out the rest.
+          Keep the name short &amp; simple enough to easily type (because people
+          will sometimes have to), and limit it to letters, numbers and 
+          use the "-" instead of spaces; that'll make it easier to work with.</p>
 
           <ul>
             <li>Using git:
@@ -410,22 +498,20 @@
                 <li>To create a branch called
                 "<em>branchname</em>", you do<br>
 
-                  <blockquote>
-                    <code>git checkout -b
-                    <em>branchname</em></code><br>
-                  </blockquote>The "-b" says to create the branch.
+<pre style="font-family: monospace;">
+                    git checkout -b <em>branchname</em>
+</pre>
+                  The "-b" says to create the branch.
                   To switch to an existing branch, just leave out
                   that option:<br>
-
-                  <blockquote>
-                    <code>git checkout
-                    <em>branchname</em></code><br>
-                  </blockquote>To see all the current branches,
+<pre style="font-family: monospace;">
+                    git checkout <em>branchname</em>
+</pre>
+                  To see all the current branches,
                   do<br>
-
-                  <blockquote>
-                    <code>git branch</code><br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    git branch
+</pre>
                 </li>
 
                 <li>If other people in the community make changes
@@ -433,39 +519,38 @@
                 to date by merging those changes in with your
                 branch<br>
 
-                  <blockquote>
-                    <code>git checkout <em>branchname</em><br>
-                    git merge -m"merging in current contents of
-                    master" master</code><br>
-                  </blockquote>(If you leave off the message
+<pre style="font-family: monospace;">
+                    git checkout <em>branchname</em>
+                    git merge -m"merging in current contents of master" master
+</pre>
+                (If you leave off the message
                   option, you may be prompted to add one in an
                   editor) If any changes were picked up and merged
                   in, you can then commit them to your branch:
 
-                  <blockquote>
-                    <code>git commit -a</code><br>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    git commit -a
+</pre>
                 </li>
 
                 <li>
                   <p>When you're done, merge your changes back into
                   the common line of development with<br></p>
 
-                  <blockquote>
-                    <code>git checkout master<br>
-                    git merge -m"merging to master"
-                    <em>branchname</em><br>
-                    git commit -a</code>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    git checkout master
+                    git merge -m"merging to master" <em>branchname</em>
+                    git commit -a
+</pre>
                 </li>
 
                 <li>You can then delete your branch (if you're
                 finally done with it) with<br>
 
-                  <blockquote>
-                    <code>git checkout master<br>
-                    git branch -d branchname</code>
-                  </blockquote>
+<pre style="font-family: monospace;">
+                    git checkout master
+                    git branch -d branchname
+</pre>
                 </li>
               </ul>
             </li>
@@ -517,23 +602,22 @@
             <li>Arnie commits it to local repository, and then
             pushes it to his GitHub repository.
 
-              <blockquote>
-                <code>git checkout arnie-great-tool<br>
-                (work on changes)<br>
-                git commit -m"Added support for the Frobnab
-                2000"<br>
-                git push</code>
-              </blockquote>
+<pre style="font-family: monospace;">
+                git checkout arnie-great-tool
+                (work on changes)
+                git commit -m"Added support for the Frobnab 2000"
+                git push
+</pre>
             </li>
 
             <li>Bill can then get that by pulling it from Arnie's
             repository.
 
-              <blockquote>
-                <code>git pull https://github.com/arnie/JMRI.git
-                arnie-great-tool<br>
-                git checkout arnie-great-tool</code>
-              </blockquote>where the 1st part of the "pull" is the
+<pre style="font-family: monospace;">
+                git pull https://github.com/arnie/JMRI.git arnie-great-tool
+                git checkout arnie-great-tool
+</pre>
+              where the 1st part of the "pull" is the
               URL for Arnie's repository.
             </li>
 
@@ -541,23 +625,22 @@
             it as needed. If he makes changes that he wants Arnie
             to have, he does the same process in reverse:
 
-              <blockquote>
-                <code>git commit -m"Fixed a bug in sternerstat
-                handling"<br>
-                git push</code>
-              </blockquote>Then Arnie can merge those changes into
+<pre style="font-family: monospace;">
+                git commit -m"Fixed a bug in sternerstat handling"
+                git push
+</pre>
+              Then Arnie can merge those changes into
               his own copy with:
 
-              <blockquote>
-                <code>git checkout arnie-great-tool<br>
-                git pull https://github.com/bill/JMRI.git
-                arnie-great-tool</code>
-              </blockquote>
+<pre style="font-family: monospace;">
+                git checkout arnie-great-tool
+                git pull https://github.com/bill/JMRI.git arnie-great-tool
+</pre>
             </li>
           </ol>
         </dd>
 
-        <dt id="share">Resolving a Merge Conflict</dt>
+        <dt id="resolve">Resolving a Merge Conflict</dt>
 
         <dd>
           It's not uncommon for two or more people to have ideas
@@ -753,11 +836,10 @@
 
             <li>Next, pull that branch onto your own machine with
             the command:
-              <pre>
-<code>
+<pre style="font-family: monospace;">
         git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
-        </code>
-</pre>where you have to replace each underlined value:
+</pre>
+            where you have to replace each underlined value:
 
               <ul>
                 <li>Change "user" to the correct GitHub user
@@ -781,28 +863,77 @@
 
             <li>The branch now exists in your machine, and you can
             just move to it:
-              <pre>
-<code>
+<pre style="font-family: monospace;">
         git checkout <u>local-branch</u>
-        </code>
-</pre>then compile, test, etc. as you'd like. You can even commit
-and share changes if you'd like, because this is now your own
-development branch: It started at the other person's, but it's now
-your own.
+
+</pre>
+            then compile, test, etc. as you'd like. You can even commit
+            and share changes if you'd like, because this is now your own
+            development branch: It started at the other person's, but it's now
+            your own.
             </li>
           </ul>
         </dd>
 
-        <dt id="SFnetPatches">Handling a SF.net Patch</dt>
+        <dt id="bisect">Using "git bisect" to find the cause of a bug</dt>
 
         <dd>
-          Eventually, we'll move from using the <a href=
+        If you have a reproducible problem that you think was introduced by a change to the
+        code, "git bisect" can help you track down the commit that caused it. 
+        It's very efficient at tracking down repeating problems due to a single change.
+        <p>
+        Let's say that you know <code>v4.9.1</code> does not have the problem, 
+        and commit <code>23482341</code> (made up number) does.  
+        A narrow range is good, but don't spend any time on it; 
+        git bisect does a binary search that's very efficient.
+
+        Then you check out the bad version:
+<pre style="font-family: monospace;">
+        git checkout 23482341
+</pre>
+        You start the bisect process:
+<pre style="font-family: monospace;">
+        git bisect start
+        git bisect bad
+        git bisect good v4.9.1
+</pre>
+        I.e. set up your branch <u>with</u> the problem, start 'git bisect', tell it the 
+        problem is visible here and now, then tell it where there's a good version to search through.
+        Git will sort out the possible revision path(s) where the problem can lie and devise an optimal search.  
+        Then it will checkout some place in the middle and tell you "Bisecting: 6 revisions left to test after this"
+        or something like this.
+        <p>
+        Test that code:
+<pre style="font-family: monospace;">
+        ant clean tests
+</pre>
+        (and whatever you need to recreate).  One you know if it's good or bad, you say
+<pre style="font-family: monospace;">
+        git bisect good
+</pre>
+        <p>or</p>
+<pre style="font-family: monospace;">
+        git bisect bad
+</pre>
+        and repeat.  Git will do a good job of giving you the minimal number of tests to do,
+        and in the end will show you the commit that turned "good" into "bad" - not the PR, the single commit.
+        You can then look at the exact changes in that commit to see what went wrong.
+        
+        <p>After "git bisect" is finished, end the process with 
+<pre style="font-family: monospace;">
+        git bisect reset
+</pre>
+        to get back to where you started.    
+        </dd>
+
+        <dt id="SFnetPatches">Handling a GitHub contributed file or SF.net Patch</dt>
+
+        <dd>
+          Sometimes people contribute files via the <a href=
           "https://sourceforge.net/p/jmri/patches/">SF.net issue
-          tracker</a> to <a href=
+          tracker</a> or a <a href=
           "https://guides.github.com/features/issues/">GitHub
-          issues</a> to handle code that people want to contribute.
-          In the meantime, here's a suggested way to handle a
-          SF.net patch.
+          Issue</a>. This discussion talks about how to handle those.
 
           <ol>
             <li>In your local repository, create a branch to hold
@@ -991,15 +1122,17 @@ your own.
         <dd>
         AppVeyor CI can have transient failures when processing a Pull Request.  When it 
         does, it looks like this:
-        <br><img src="images/AppVeyorRestart1.png"><br>
-        In that case, you can sign on and restart the build to have AppVeyor try again.
-        To do that, click the "Details" link indicated above.  This will take you to:
+        <br><img src="images/AppVeyorRestart1.png">
+        <p>
+        In that case, one of the JMRI Maintainers can sign in and restart the build to have AppVeyor try again.
+        To do that, click the "Details" link indicated above. This will take you to:
         <br><img src="images/AppVeyorRestart2.png"><br>
         Click the indicated sign in link (if you're already signed in, click sign off, then sign in)
-        You'll get choices of methods:
+        You'll get a choice of methods:
         <br><img src="images/AppVeyorRestart3.png"><br>
-        Pick GitHub. You'll get a choice of accounts. DO NOT select your own
-        or anybody elses; select JMRI.
+        Pick GitHub.<br>
+        Registered users with sufficient user priviliges will get a choice of accounts.
+        DO NOT select your own or anybody elses; select &quot;JMRI&quot;.
         <br><img src="images/AppVeyorRestart4.png"><br>
         Then click the "GitHub" bar again to finish the sign in.
         <p>

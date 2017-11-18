@@ -15,7 +15,7 @@ public class FollowerFrame extends jmri.util.JmriJFrame {
     }
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         addHelpMenu("package.jmri.jmrit.ussctc.FollowerFrame", true);
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

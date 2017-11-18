@@ -4,7 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 /**
- * Abstract base for classes representing a CMRI communications port
+ * Abstract base for classes representing an Acela communications port
  *
  * @author Bob Jacobsen Copyright (C) 2001
   *
@@ -35,4 +35,5 @@ public abstract class AcelaPortController extends jmri.jmrix.AbstractSerialPortC
     public AcelaSystemConnectionMemo getSystemConnectionMemo() {
         return (AcelaSystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
 }

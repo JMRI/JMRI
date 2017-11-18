@@ -12,25 +12,18 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class LocoNetSystemConnectionMemoTest {
+public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    private LocoNetSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo); 
-    }
-
+    @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
-       memo = new LocoNetSystemConnectionMemo();
+       JUnitUtil.setUp();
+       scm = new LocoNetSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 }

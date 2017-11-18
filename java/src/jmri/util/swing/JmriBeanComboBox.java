@@ -1,6 +1,7 @@
 package jmri.util.swing;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,42 +11,55 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.CheckReturnValue;
 import javax.swing.ComboBoxEditor;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.JComboBox.KeySelectionManager;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.text.JTextComponent;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.AlphanumComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JComboBox varient for showing and selecting JMRI NamedBeans from a specific
+ * JComboBox variant for showing and selecting JMRI NamedBeans from a specific
  * manager.
  */
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
-    /*
-     * Create a default Jmri Combo box for the given bean manager
-     * @param manager the jmri manager that is used to populate the combo box
+    /**
+     * Create a default Jmri Combo box for the given bean manager.
+     *
+     * @param inManager the jmri manager that is used to populate the combo box
      */
-    public JmriBeanComboBox(jmri.Manager manager) {
-        this(manager, null, DisplayOptions.DISPLAYNAME);
+    public JmriBeanComboBox(Manager inManager) {
+        this(inManager, null, DisplayOptions.DISPLAYNAME);
     }
 
-    /*
-     * Create a Jmri Combo box for the given bean manager, with the Namedbean already selected and the items displayed and ordered
-     * @param manager the jmri manager that is used to populate the combo box
-     * @param nBean the namedBean that should automatically be selected
-     * @param displayOrder the way in which the namedbeans should be displayed
+    /**
+     * Create a Jmri Combo box for the given bean manager, with the Namedbean
+     * nBean already selected and the items displayed and ordered by
+     * displayOrder.
+     *
+     * @param inManager      the jmri manager that is used to populate the combo
+     *                       box
+     * @param inNamedBean    the namedBean that should automatically be selected
+     * @param inDisplayOrder the way in which the namedbeans should be
+     *                       displayed: by System or Display Name
      */
-    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, DisplayOptions displayOrder) {
-        _displayOrder = displayOrder;
-        _manager = manager;
-        setSelectedBean(nBean);
+    public JmriBeanComboBox(Manager inManager, NamedBean inNamedBean, DisplayOptions inDisplayOrder) {
+        _displayOrder = inDisplayOrder;
+        _manager = inManager;
+        setSelectedBean(inNamedBean);
         //setEditable(true);
-        _manager.addPropertyChangeListener(this);
-        setKeySelectionManager(new beanSelectionManager());
+        _manager.addPropertyChangeListener(new DedupingPropertyChangeListener(this));
+        setKeySelectionManager(new BeanSelectionManager());
 
         //fires when drop down list item is selected
         addItemListener((ItemEvent event) -> {
@@ -59,8 +73,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent event) {
-                JTextComponent c = (JTextComponent) event.getSource();
-                JmriBeanComboBox cb = (JmriBeanComboBox) c.getParent();
                 validateText();
             }
         });
@@ -73,20 +85,29 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             _lastSelected = (String) getSelectedItem();
             updateComboBox(_lastSelected);
             log.debug("Update triggered in name list");
+            Object oldValueObject = e.getOldValue();
+            int oldValueInt = (oldValueObject == null) ? 0 : Integer.parseInt(oldValueObject.toString());
+            Object newValueObject = e.getNewValue();
+            int newValueInt = (newValueObject == null) ? 0 : Integer.parseInt(newValueObject.toString());
+            if (oldValueInt < newValueInt) {
+                addSelectionInterval(oldValueInt, newValueInt);
+            } else if (oldValueInt > newValueInt) {
+                removeSelectionInterval(newValueInt, oldValueInt);
+            }
         } else if (e.getPropertyName().equals("DisplayListName")) {
             refreshCombo();
         }
     }
 
-    String _lastSelected = "";
-    DisplayOptions _displayOrder;
-    boolean _firstBlank = false;
+    private String _lastSelected = "";
+    private DisplayOptions _displayOrder;
+    private boolean _firstBlank = false;
 
-    jmri.Manager _manager;
+    private Manager _manager;
 
-    HashMap<String, NamedBean> displayToBean = new HashMap<>();
+    private HashMap<String, NamedBean> displayToBean = new HashMap<>();
 
-    public jmri.Manager getManager() {
+    public Manager getManager() {
         return _manager;
     }
 
@@ -94,7 +115,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         updateComboBox((String) getSelectedItem());
     }
 
-    void updateComboBox(String select) {
+    private void updateComboBox(String inSelect) {
         displayToBean = new HashMap<>();
         removeAllItems();
 
@@ -102,7 +123,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         for (int i = 0; i < displayList.length; i++) {
             addItem(displayList[i]);
-            if ((select != null) && (displayList[i].equals(select))) {
+            if ((inSelect != null) && (displayList[i].equals(inSelect))) {
                 setSelectedIndex(i);
             }
         }
@@ -112,21 +133,20 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 setSelectedIndex(0);
             }
         }
+
     }
 
     /**
-     * Get the display list used by this combo box
+     * Get the display list used by this combo box.
      *
      * @return the display list used by this combo box
      */
     public String[] getDisplayList() {
         ArrayList<String> nameList = new ArrayList<>(Arrays.asList(_manager.getSystemNameArray()));
 
-        for (NamedBean bean : exclude) {
-            if (bean != null) {
-                nameList.remove(bean.getSystemName());
-            }
-        }
+        exclude.stream().filter((bean) -> (bean != null)).forEachOrdered((bean) -> {
+            nameList.remove(bean.getSystemName());
+        });
 
         String[] displayList = new String[nameList.size()];
 
@@ -140,10 +160,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 if (nBean != null) {
                     String uname = nBean.getUserName();
                     switch (_displayOrder) {
-                        case DISPLAYNAME:
-                            displayList[i] = nBean.getDisplayName();
-                            break;
-
                         case USERNAME:
                             if (uname != null && !uname.equals("")) {
                                 displayList[i] = uname;
@@ -168,6 +184,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                             }
                             break;
 
+                        case DISPLAYNAME:
                         default:
                             displayList[i] = nBean.getDisplayName();
                     }
@@ -180,7 +197,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the selected namedBean
+     * Get the selected namedBean.
      *
      * @return the selected bean or null if there is no selection
      */
@@ -190,7 +207,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the User name of the selected namedBean
+     * Get the User Name of the selected namedBean.
      *
      * @return the user name of the selected bean or null if there is no
      *         selection
@@ -205,7 +222,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the system name of the selected namedBean
+     * Get the System Name of the selected namedBean.
      *
      * @return the system name of the selected bean or null if there is no
      *         selection
@@ -220,7 +237,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the display name of the selected namedBean
+     * Get the Display Name of the selected namedBean.
      *
      * @return the display name of the selected bean or null if there is no
      *         selection
@@ -235,7 +252,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the user name of the selection in this JmriBeanComboBox (based on
+     * Get the User Name of the selection in this JmriBeanComboBox (based on
      * typed in text or drop down list).
      *
      * @return the username or null if no selection
@@ -245,8 +262,10 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         NamedBean b;
 
         if (isEditable()) {
-            result = getEditor().getItem().toString();
-            result = (null != result) ? NamedBean.normalizeUserName(result) : "";
+            result = NamedBean.normalizeUserName(getText());
+            if (result == null) {
+                result = "";
+            }
 
             b = getNamedBean();
         } else {
@@ -260,18 +279,20 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     /**
      * Get the display name for the selection in this JmriBeanComboBox (based on
-     * typed in text or drop down list)
+     * typed in text or drop down list).
      *
      * @return the display name or null if no selection
      */
+    @CheckReturnValue
     public String getDisplayName() {
         String result = null;
-        NamedBean b = null;
+        NamedBean b;
 
         if (isEditable()) {
-            result = getEditor().getItem().toString();
-            result = (null != result) ? NamedBean.normalizeUserName(result) : "";
-
+            result = NamedBean.normalizeUserName(getText());
+            if (result == null) {
+                result = "";
+            }
             b = getNamedBean();
         } else {
             b = getSelectedBean();
@@ -283,6 +304,30 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }   //getDisplayName
 
     /**
+     * Get the text from the editor for this JmriBeanComboBox.
+     *
+     * @return the text
+     */
+    public String getText() {
+        return getEditor().getItem().toString();
+    }   // getText
+
+    /**
+     * Set the text from the editor for this JmriBeanComboBox
+     *
+     * @param inText the text to set
+     */
+    public void setText(String inText) {
+        getEditor().setItem(inText);
+        if ((inText != null) && !inText.isEmpty()) {
+            setSelectedBeanByName(inText);
+        } else {
+            setSelectedIndex(-1);
+        }
+        validateText();
+    }   // setText
+
+    /**
      * Get the display order of the combobox.
      *
      * @return the display order of this combobox
@@ -292,7 +337,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Set the display order of the combobox
+     * Set the display order of the combobox.
      *
      * @param inDisplayOrder - the desired display order for this combobox
      */
@@ -306,12 +351,12 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Insert a blank entry at the top of the list
+     * Insert a blank entry at the top of the list.
      *
-     * @param blank true to insert, false to remove
+     * @param inFirstItemBlank true to insert, false to remove
      */
-    public void setFirstItemBlank(boolean blank) {
-        if (_firstBlank == blank) {
+    public void setFirstItemBlank(boolean inFirstItemBlank) {
+        if (_firstBlank == inFirstItemBlank) {
             return; // no Change to make
         }
         if (_firstBlank) {
@@ -322,44 +367,44 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 setSelectedIndex(0);
             }
         }
-        _firstBlank = blank;
+        _firstBlank = inFirstItemBlank;
     }
 
-    public void setSelectedBean(NamedBean nBean) {
+    public void setSelectedBean(NamedBean inNamedBean) {
         String selectedItem = "";
-        if (nBean != null) {
-            String uname = nBean.getUserName();
+        if (inNamedBean != null) {
+            String uname = inNamedBean.getUserName();
             switch (_displayOrder) {
                 case DISPLAYNAME:
-                    selectedItem = nBean.getDisplayName();
+                    selectedItem = inNamedBean.getDisplayName();
                     break;
 
                 case USERNAME:
-                    selectedItem = nBean.getUserName();
+                    selectedItem = inNamedBean.getUserName();
                     break;
 
                 case SYSTEMNAME:
-                    selectedItem = nBean.getSystemName();
+                    selectedItem = inNamedBean.getSystemName();
                     break;
 
                 case USERNAMESYSTEMNAME:
                     if (uname != null && !uname.equals("")) {
-                        selectedItem = uname + " - " + nBean.getSystemName();
+                        selectedItem = uname + " - " + inNamedBean.getSystemName();
                     } else {
-                        selectedItem = nBean.getSystemName();
+                        selectedItem = inNamedBean.getSystemName();
                     }
                     break;
 
                 case SYSTEMNAMEUSERNAME:
                     if (uname != null && !uname.equals("")) {
-                        selectedItem = nBean.getSystemName() + " - " + uname;
+                        selectedItem = inNamedBean.getSystemName() + " - " + uname;
                     } else {
-                        selectedItem = nBean.getSystemName();
+                        selectedItem = inNamedBean.getSystemName();
                     }
                     break;
 
                 default:
-                    selectedItem = nBean.getDisplayName();
+                    selectedItem = inNamedBean.getDisplayName();
             }
         } else if (_firstBlank) {
             _lastSelected = "";
@@ -368,18 +413,18 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         updateComboBox(_lastSelected);
     }
 
-    public void setSelectedBeanByName(String name) {
-        if (name == null) {
+    public void setSelectedBeanByName(String inBeanName) {
+        if (inBeanName == null) {
             return;
         }
-        NamedBean nBean = _manager.getNamedBean(name);
+        NamedBean nBean = _manager.getNamedBean(inBeanName);
         setSelectedBean(nBean);
     }
 
-    List<NamedBean> exclude = new ArrayList<NamedBean>();
+    List<NamedBean> exclude = new ArrayList<>();
 
-    public void excludeItems(List<NamedBean> exclude) {
-        this.exclude = exclude;
+    public void excludeItems(List<NamedBean> inExcludeList) {
+        this.exclude = inExcludeList;
         _lastSelected = getSelectedDisplayName();
         updateComboBox(_lastSelected);
     }
@@ -406,7 +451,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     // this is called to validate that the text in the textfield
     // is a valid member of the managed data.
-    //note:  if _validateMode is true
+    // note:  if _validateMode is true
     //           if text is valid set textfield background to green else red
     //       if _validateMode is false
     //           if text is valid set textfield background to green else yellow
@@ -435,57 +480,59 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * @return the selected bean or null if no selection
      */
     public NamedBean getNamedBean() {
-        NamedBean result = null;
+        NamedBean result;
 
-        jmri.Manager uDaManager = getManager();
+        Manager uDaManager = getManager();
 
-        String comboBoxText = getEditor().getItem().toString();
-        comboBoxText = (null != comboBoxText) ? NamedBean.normalizeUserName(comboBoxText) : "";
+        String comboBoxText = NamedBean.normalizeUserName(getText());
+        if (comboBoxText != null) {
 
-        //try user name
-        result = uDaManager.getBeanByUserName(comboBoxText);
+            //try user name
+            result = uDaManager.getBeanByUserName(comboBoxText);
 
-        if (null == result) {
-            //try system name
-            //note: don't use getBeanBySystemName here
-            //throws an IllegalArgumentException if text is invalid
-            result = uDaManager.getNamedBean(comboBoxText);
-        }
-
-        if (null == result) {
-            //quick search to see if text matches anything in the drop down list
-            String[] displayList = getDisplayList();
-            boolean found = false;  //assume failure (pessimist!)
-
-            for (String item : displayList) {
-                if (item.equals(comboBoxText)) {
-                    found = true;
-                    break;
-                }
+            if (null == result) {
+                //try system name
+                //note: don't use getBeanBySystemName here
+                //throws an IllegalArgumentException if text is invalid
+                result = uDaManager.getNamedBean(comboBoxText);
             }
 
-            if (found) {    //if we found it there then...
-                //walk the namedBeanList...
-                List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
+            if (null == result) {
+                //quick search to see if text matches anything in the drop down list
+                String[] displayList = getDisplayList();
+                boolean found = false;  //assume failure (pessimist!)
 
-                for (NamedBean namedBean : namedBeanList) {
-                    //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
-                    String uname = namedBean.getUserName();
-                    String sname = namedBean.getSystemName();
+                for (String item : displayList) {
+                    if (item.equals(comboBoxText)) {
+                        found = true;
+                        break;
+                    }
+                }
 
-                    if ((null != uname) && (null != sname)) {
-                        String usname = uname + " - " + sname;
-                        String suname = sname + " - " + uname;
+                if (found) {    //if we found it there then...
+                    //walk the namedBeanList...
+                    List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
 
-                        if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
-                            result = namedBean;
-                            break;
+                    for (NamedBean namedBean : namedBeanList) {
+                        //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
+                        String uname = namedBean.getUserName();
+                        String sname = namedBean.getSystemName();
+
+                        if ((null != uname)) {
+                            String usname = uname + " - " + sname;
+                            String suname = sname + " - " + uname;
+
+                            if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
+                                result = namedBean;
+                                break;
+                            }
                         }
                     }
                 }
             }
+            return result;
         }
-        return result;
+        return null;
     }   //getBean
 
     public enum DisplayOptions {
@@ -517,7 +564,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         // following code maps enumsto int and int to enum
         //
         private int value;
-
         private static final Map<Integer, DisplayOptions> enumMap;
 
         private DisplayOptions(int value) {
@@ -534,8 +580,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             enumMap = Collections.unmodifiableMap(map);
         }
 
-        public static DisplayOptions valueOf(int displayOptionInt) {
-            return enumMap.get(displayOptionInt);
+        public static DisplayOptions valueOf(int inDisplayOptionInt) {
+            return enumMap.get(inDisplayOptionInt);
         }
 
         public int getValue() {
@@ -545,16 +591,17 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     public void dispose() {
         _manager.removePropertyChangeListener(this);
+
     }
 
-    static class beanSelectionManager implements KeySelectionManager {
+    static class BeanSelectionManager implements KeySelectionManager {
 
         long lastKeyTime = 0;
         String pattern = "";
 
         // FIXME: What is the correct type for the combo model here? This class may need refactored significantly to fix this?
         @Override
-        public int selectionForKey(char aKey, @SuppressWarnings("rawtypes") javax.swing.ComboBoxModel model) {
+        public int selectionForKey(char inKey, @SuppressWarnings("rawtypes") javax.swing.ComboBoxModel model) {
             // Find index of selected item
             int selIx = 01;
             Object sel = model.getSelectedItem();
@@ -572,9 +619,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
             // If last key was typed less than 300 ms ago, append to current pattern
             if (curTime - lastKeyTime < 300) {
-                pattern += ("" + aKey).toLowerCase();
+                pattern += ("" + inKey).toLowerCase();
             } else {
-                pattern = ("" + aKey).toLowerCase();
+                pattern = ("" + inKey).toLowerCase();
             }
 
             // Save current time
@@ -599,7 +646,203 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
             return -1;
         }
+    }   // BeanSelectionManager
+
+    public void setEnabledItems(ListSelectionModel inEnabledItems) {
+        getEnabledComboBoxRenderer().setEnabledItems(inEnabledItems);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
+    public ListSelectionModel getEnabledItems() {
+        return getEnabledComboBoxRenderer().getEnabledItems();
+    }
+
+    public void addSelectionInterval(int inMinIndex, int inMaxIndex) {
+        ListSelectionModel lsm = getEnabledItems();
+        if (lsm != null) {
+            lsm.addSelectionInterval(inMinIndex, inMaxIndex);
+        }
+    }
+
+    public void removeSelectionInterval(int inMinIndex, int inMaxIndex) {
+        ListSelectionModel lsm = getEnabledItems();
+        if (lsm != null) {
+            lsm.removeSelectionInterval(inMinIndex, inMaxIndex);
+        }
+    }
+
+    public void setItemEnabled(int inIndex, boolean inEnabled) {
+        ListSelectionModel lsm = getEnabledItems();
+        if (lsm != null) {
+            if (inEnabled) {
+                lsm.addSelectionInterval(inIndex, inIndex);
+            } else {
+                lsm.removeSelectionInterval(inIndex, inIndex);
+            }
+        }
+    }
+
+    public boolean isItemEnabled(int inIndex) {
+        boolean result = false;
+        ListSelectionModel lsm = getEnabledItems();
+        if (lsm != null) {
+            result = lsm.isSelectedIndex(inIndex);
+        }
+        return result;
+    }
+
+    public void enableItem(int inIndex) {
+        setItemEnabled(inIndex, true);
+    }
+
+    public void disableItem(int inIndex) {
+        setItemEnabled(inIndex, false);
+    }
+
+    public void setEnabledColor(Color inEnabledColor) {
+        getEnabledComboBoxRenderer().setEnabledColor(inEnabledColor);
+    }
+
+    public Color getEnabledColor() {
+        return getEnabledComboBoxRenderer().getEnabledColor();
+    }
+
+    public void setDisabledColor(Color inDisabledColor) {
+        getEnabledComboBoxRenderer().setDisabledColor(inDisabledColor);
+    }
+
+    public Color getDisabledColor() {
+        return getEnabledComboBoxRenderer().getDisabledColor();
+    }
+
+    public void setEnabledBackgroundColor(Color inEnabledBackgroundColor) {
+        getEnabledComboBoxRenderer().setEnabledBackgroundColor(inEnabledBackgroundColor);
+    }
+
+    public Color getEnabledBackgroundColor() {
+        return getEnabledComboBoxRenderer().getEnabledBackgroundColor();
+    }
+
+    public void setDisabledBackgroundColor(Color inDisabledBackgroundColor) {
+        getEnabledComboBoxRenderer().setDisabledBackgroundColor(inDisabledBackgroundColor);
+    }
+
+    public Color getDisabledBackgroundColor() {
+        return getEnabledComboBoxRenderer().getDisabledBackgroundColor();
+    }
+
+    /**
+     * Use {@link #getEnabledComboBoxRenderer() } exclusively to access this
+     * object.
+     */
+    private EnabledComboBoxRenderer _enableRenderer = null;
+
+    private EnabledComboBoxRenderer getEnabledComboBoxRenderer() {
+        if (_enableRenderer == null) {
+            _enableRenderer = new EnabledComboBoxRenderer();
+            setRenderer(_enableRenderer);
+            ListSelectionModel lsm = _enableRenderer.getEnabledItems();
+            lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
+        }
+        return _enableRenderer;
+    }
+
+    static class EnabledComboBoxRenderer extends BasicComboBoxRenderer {
+
+        private ListSelectionModel _enabledItems;
+        private Color _enabledColor = super.getForeground();
+        private Color _disabledColor = Color.lightGray;
+        private Color _enabledBackgroundColor = super.getBackground();
+        private Color _disabledBackgroundColor = super.getBackground();
+
+        public EnabledComboBoxRenderer() {
+            _enabledItems = new DefaultListSelectionModel();
+        }
+
+        public EnabledComboBoxRenderer(ListSelectionModel inEnabledItems) {
+            super();
+            _enabledItems = inEnabledItems;
+        }
+
+        public void setEnabledItems(ListSelectionModel inEnabledItems) {
+            _enabledItems = inEnabledItems;
+        }
+
+        public ListSelectionModel getEnabledItems() {
+            return _enabledItems;
+        }
+
+        public void setItemEnabled(int inIndex, boolean inEnabled) {
+            if (_enabledItems != null) {
+                if (inEnabled) {
+                    _enabledItems.addSelectionInterval(inIndex, inIndex);
+                } else {
+                    _enabledItems.removeSelectionInterval(inIndex, inIndex);
+                }
+            }
+        }
+
+        public boolean isItemEnabled(int inIndex) {
+            boolean result = false;
+            if (_enabledItems != null) {
+                result = _enabledItems.isSelectedIndex(inIndex);
+            }
+            return result;
+        }
+
+        public void setEnabledColor(Color inEnabledColor) {
+            _enabledColor = inEnabledColor;
+        }
+
+        public Color getEnabledColor() {
+            return _enabledColor;
+        }
+
+        public void setDisabledColor(Color inDisabledColor) {
+            _disabledColor = inDisabledColor;
+        }
+
+        public Color getDisabledColor() {
+            return _disabledColor;
+        }
+
+        public void setEnabledBackgroundColor(Color inEnabledBackgroundColor) {
+            _enabledBackgroundColor = inEnabledBackgroundColor;
+        }
+
+        public Color getEnabledBackgroundColor() {
+            return _enabledBackgroundColor;
+        }
+
+        public void setDisabledBackgroundColor(Color inDisabledBackgroundColor) {
+            _disabledBackgroundColor = inDisabledBackgroundColor;
+        }
+
+        public Color getDisabledBackgroundColor() {
+            return _disabledBackgroundColor;
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList inList, Object inValue,
+                int inIndex, boolean isSelected, boolean inCellHasFocus) {
+
+            Component c = super.getListCellRendererComponent(inList, inValue, inIndex,
+                    isSelected, inCellHasFocus);
+
+            if (_enabledItems.isSelectedIndex(inIndex)) {
+                c.setBackground(_enabledBackgroundColor);
+                c.setForeground(_enabledColor);
+            } else {    // not enabled
+                if (isSelected) {
+                    c.setBackground(UIManager.getColor("ComboBox.background"));
+                } else {
+                    c.setBackground(_disabledBackgroundColor);
+                }
+                c.setForeground(_disabledColor);
+            }
+            return c;
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class);
+
 }

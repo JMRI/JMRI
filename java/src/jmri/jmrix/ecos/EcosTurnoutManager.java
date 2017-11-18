@@ -55,8 +55,8 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     EcosTrafficController tc;
     EcosSystemConnectionMemo adaptermemo;
 
-    //The hash table simply holds the object number against the EcosTurnout ref.
-    private Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>();   // stores known Ecos Object ids to DCC
+    // The hash table simply holds the object number against the EcosTurnout ref.
+    private Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>(); // stores known Ecos Object ids to DCC
 
     String prefix;
 
@@ -71,7 +71,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         try {
             addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
         } catch (java.lang.NumberFormatException e) {
-            log.error("failed to convert systemName " + systemName + " to a turnout address");
+            log.error("failed to convert systemName '{}' to a turnout address", systemName);
             return null;
         }
         Turnout t = new EcosTurnout(addr, getSystemPrefix(), tc, this);
@@ -80,17 +80,22 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     // to listen for status changes from Ecos system
     @Override
     public void reply(EcosReply m) {
-        log.debug("reply "+m);
+        log.debug("reply " + m);
         // is this a list of turnouts?
         EcosTurnout et;
 
         if (m.getResultCode() == 0) {
             int ecosObjectId = m.getEcosObjectId();
             if ((ecosObjectId != 11) && ((ecosObjectId < 20000) || (ecosObjectId > 30000))) {
-                log.debug("message receieved that is not within the valid turnout object range");
+                log.debug("message received that is not within the valid turnout object range");
                 return;
             }
             List<String> headerDetails = m.getReplyHeaderDetails();
@@ -395,25 +400,25 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                     deregister(et);
                 } else if (p.getRemoveTurnoutsFromJMRI() == 0x00) {
                     final JDialog dialog = new JDialog();
-                    dialog.setTitle("Delete Turnout");
+                    dialog.setTitle(Bundle.getMessage("DeleteTurnoutTitle"));
                     dialog.setLocationRelativeTo(null);
                     dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                     JPanel container = new JPanel();
                     container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
-                    JLabel question = new JLabel("A Turnout " + et.getDisplayName() + " has been deleted on the ECOS");
+                    JLabel question = new JLabel(Bundle.getMessage("RemoveTurnoutLine1", et.getDisplayName()));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
-                    question = new JLabel("Do you want to remove this turnout from JMRI");
+                    question = new JLabel(Bundle.getMessage("RemoveTurnoutLine2"));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
-                    final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                    final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                     remember.setFont(remember.getFont().deriveFont(10f));
                     remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                    JButton yesButton = new JButton("Yes");
-                    JButton noButton = new JButton("No");
+                    JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                    JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                     JPanel button = new JPanel();
                     button.setAlignmentX(Component.CENTER_ALIGNMENT);
                     button.add(yesButton);
@@ -449,12 +454,12 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                         new Object[]{et.getSystemName(), "" + count});
                                 // verify deletion
                                 int val = javax.swing.JOptionPane.showOptionDialog(null,
-                                        msg, rb.getString("WarningTitle"),
+                                        msg, Bundle.getMessage("WarningTitle"),
                                         javax.swing.JOptionPane.YES_NO_CANCEL_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE, null,
-                                        new Object[]{rb.getString("ButtonYes"),
+                                        new Object[]{Bundle.getMessage("ButtonYes"),
                                             rb.getString("ButtonYesPlus"),
-                                            rb.getString("ButtonNo")},
-                                        rb.getString("ButtonNo"));
+                                                Bundle.getMessage("ButtonNo")},
+                                        Bundle.getMessage("ButtonNo"));
                                 if (val == 2) {
                                     _tecos.remove(et.getObject());
                                     deregister(et);
@@ -542,22 +547,22 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                     } else {
                         final EcosTurnout etd = et;
                         final JDialog dialog = new JDialog();
-                        dialog.setTitle("Remove Turnout From ECoS?");
+                        dialog.setTitle(Bundle.getMessage("RemoveTurnoutTitle"));
                         dialog.setLocation(300, 200);
                         dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                         JPanel container = new JPanel();
                         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                         container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                        JLabel question = new JLabel("Do you also want to remove turnout " + etd.getSystemName() + " from the Ecos");
+                        JLabel question = new JLabel(Bundle.getMessage("RemoveTurnoutX", etd.getSystemName()));
                         question.setAlignmentX(Component.CENTER_ALIGNMENT);
                         container.add(question);
-                        final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                        final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                         remember.setFont(remember.getFont().deriveFont(10f));
                         remember.setAlignmentX(Component.CENTER_ALIGNMENT);
                         remember.setVisible(true);
-                        JButton yesButton = new JButton("Yes");
-                        JButton noButton = new JButton("No");
+                        JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                        JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                         JPanel button = new JPanel();
                         button.setAlignmentX(Component.CENTER_ALIGNMENT);
                         button.add(yesButton);
@@ -635,7 +640,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             arr[i] = "" + en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(arr[i]);
         }
@@ -674,5 +679,6 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class);
+
 }

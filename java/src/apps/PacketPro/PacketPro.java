@@ -2,7 +2,7 @@ package apps.PacketPro;
 
 import apps.Apps;
 import java.text.MessageFormat;
-import javax.swing.JFrame;
+import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * configuration file. Note that this is just the name, not the path; the file
  * is searched for in the usual way, first in the preferences tree and then in
  * xml/
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -33,8 +32,8 @@ import org.slf4j.LoggerFactory;
  */
 public class PacketPro extends Apps {
 
-    PacketPro(JFrame p) {
-        super(p);
+    PacketPro() {
+        super();
     }
 
     @Override
@@ -52,12 +51,13 @@ public class PacketPro extends Apps {
         Apps.setStartupInfo("PacketPro");
 
         setConfigFilename("PacketProConfig2.xml", args);
-        JFrame f = new JFrame("PacketPro");
-        createFrame(new PacketPro(f), f);
+        PacketPro p = new PacketPro();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
+        createFrame(p, f);
 
         log.debug("main initialization done");
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketPro.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketPro.class);
 }

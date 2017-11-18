@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,7 +8,7 @@ import org.junit.Test;
 
 /**
  * XNetPowerManagerTest.java
- *
+ * <p>
  * Description:	tests for the jmri.jmrix.lenz.XNetPowerManager class
  *
  * @author	Paul Bender
@@ -27,26 +28,26 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Override
     protected void sendOnReply() {
-       // send the reply.
-       XNetReply m = new XNetReply();
-       m.setElement(0, 0x61);
-       m.setElement(1, 0x01);
-       m.setElement(2, 0x60);
-       pm.message(m);
+        // send the reply.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x01);
+        m.setElement(2, 0x60);
+        pm.message(m);
     }
 
     @Override
     protected void sendOffReply() {
-       XNetReply m = new XNetReply();
-       m.setElement(0, 0x61);
-       m.setElement(1, 0x00);
-       m.setElement(2, 0x61);
-       pm.message(m);
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x00);
+        m.setElement(2, 0x61);
+        pm.message(m);
     }
 
     @Override
     protected void hearOff() {
-       sendOffReply();
+        sendOffReply();
     }
 
     @Override
@@ -73,190 +74,189 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Test
     public void testGetUserName() {
-        Assert.assertEquals("User Name","XPressnet",pm.getUserName());
+        Assert.assertEquals("User Name", "XpressNet", pm.getUserName());
     }
 
     @Test
-    public void testGetPower(){
-       Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
+    public void testGetPower() {
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
     }
 
     @Test
-    public void testSetPowerON(){
-      try {
-          pm.setPower(jmri.PowerManager.ON);
-      } catch(jmri.JmriException je){
-          Assert.fail("Failed to set Power ON");
-      }
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
-      // check that we actually sent a message.
-      Assert.assertEquals("Message Sent",2,tc.outbound.size());
-      // send the reply.
-      sendOnReply();
-      // and now verify power is set the right way.
-      Assert.assertEquals("Power",jmri.PowerManager.ON,pm.getPower());
+    public void testSetPowerON() {
+        try {
+            pm.setPower(jmri.PowerManager.ON);
+        } catch (jmri.JmriException je) {
+            Assert.fail("Failed to set Power ON");
+        }
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
+        // check that we actually sent a message.
+        Assert.assertEquals("Message Sent", 2, tc.outbound.size());
+        // send the reply.
+        sendOnReply();
+        // and now verify power is set the right way.
+        Assert.assertEquals("Power", jmri.PowerManager.ON, pm.getPower());
     }
 
     @Test
-    public void testSetPowerOFF(){
-      try {
-          pm.setPower(jmri.PowerManager.OFF);
-      } catch(jmri.JmriException je){
-          Assert.fail("Failed to set Power OFF");
-      }
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
-      // check that we actually sent a message.
-      Assert.assertEquals("Message Sent",2,tc.outbound.size());
-      // send the reply.
-      sendOffReply();
-      // and now verify power is set the right way.
-      Assert.assertEquals("Power",jmri.PowerManager.OFF,pm.getPower());
+    public void testSetPowerOFF() {
+        try {
+            pm.setPower(jmri.PowerManager.OFF);
+        } catch (jmri.JmriException je) {
+            Assert.fail("Failed to set Power OFF");
+        }
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
+        // check that we actually sent a message.
+        Assert.assertEquals("Message Sent", 2, tc.outbound.size());
+        // send the reply.
+        sendOffReply();
+        // and now verify power is set the right way.
+        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
     }
 
     @Test
-    public void testReceiveEmergencyStop(){
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
+    public void testReceiveEmergencyStop() {
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
 
-      // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x81);
-      m.setElement(1, 0x00);
-      m.setElement(2, 0x81);
+        // send the reply.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x81);
+        m.setElement(1, 0x00);
+        m.setElement(2, 0x81);
 
-      pm.message(m);
-      // and now verify power is off.
-      Assert.assertEquals("Power",jmri.PowerManager.OFF,pm.getPower());
+        pm.message(m);
+        // and now verify power is off.
+        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
     }
 
     @Test
-    public void testReceiveServiceModeEntry(){
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
+    public void testReceiveServiceModeEntry() {
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
 
-      // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x61);
-      m.setElement(1, 0x02);
-      m.setElement(2, 0x63);
+        // send the reply.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x02);
+        m.setElement(2, 0x63);
 
-      pm.message(m);
-      // and now verify power is off.
-      Assert.assertEquals("Power",jmri.PowerManager.OFF,pm.getPower());
+        pm.message(m);
+        // and now verify power is off.
+        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
     }
 
     @Test
-    public void testReceiveStatusResponse(){
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
+    public void testReceiveStatusResponse() {
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
 
-      // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x62);
-      m.setElement(1, 0x22);
-      m.setElement(2, 0x00);
-      m.setElement(3, 0x40);
+        // send the reply.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x62);
+        m.setElement(1, 0x22);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x40);
 
-      pm.message(m);
-      // and now verify power is on.
-      Assert.assertEquals("Power",jmri.PowerManager.ON,pm.getPower());
+        pm.message(m);
+        // and now verify power is on.
+        Assert.assertEquals("Power", jmri.PowerManager.ON, pm.getPower());
     }
 
     @Test
-    public void testReceiveStatusResponseInEmergencyOffMode(){
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
+    public void testReceiveStatusResponseInEmergencyOffMode() {
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
 
-      // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x62);
-      m.setElement(1, 0x22);
-      m.setElement(2, 0x01);
-      m.setElement(3, 0x41);
+        // send the reply.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x62);
+        m.setElement(1, 0x22);
+        m.setElement(2, 0x01);
+        m.setElement(3, 0x41);
 
-      pm.message(m);
-      // and now verify power is off.
-      Assert.assertEquals("Power",jmri.PowerManager.OFF,pm.getPower());
+        pm.message(m);
+        // and now verify power is off.
+        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
     }
 
     @Test
-    public void testReceiveStatusResponseInEstopMode(){
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
+    public void testReceiveStatusResponseInEstopMode() {
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
 
-      // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x62);
-      m.setElement(1, 0x22);
-      m.setElement(2, 0x02);
-      m.setElement(3, 0x42);
+        // send the reply.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x62);
+        m.setElement(1, 0x22);
+        m.setElement(2, 0x02);
+        m.setElement(3, 0x42);
 
-      pm.message(m);
-      // and now verify power is off.
-      Assert.assertEquals("Power",jmri.PowerManager.OFF,pm.getPower());
+        pm.message(m);
+        // and now verify power is off.
+        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
     }
 
     @Test
-    public void testReceiveStatusResponseInServiceMode(){
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
+    public void testReceiveStatusResponseInServiceMode() {
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
 
-      // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x62);
-      m.setElement(1, 0x22);
-      m.setElement(2, 0x08);
-      m.setElement(3, 0x48);
+        // send the reply.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x62);
+        m.setElement(1, 0x22);
+        m.setElement(2, 0x08);
+        m.setElement(3, 0x48);
 
-      pm.message(m);
-      // and now verify power is off.
-      Assert.assertEquals("Power",jmri.PowerManager.OFF,pm.getPower());
+        pm.message(m);
+        // and now verify power is off.
+        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
     }
 
     @Test
-    public void testReceiveStatusResponseInPowerUpMode(){
-      // we should still see unknown, until a reply is received.
-      Assert.assertEquals("Power",jmri.PowerManager.UNKNOWN,pm.getPower());
+    public void testReceiveStatusResponseInPowerUpMode() {
+        // we should still see unknown, until a reply is received.
+        Assert.assertEquals("Power", jmri.PowerManager.UNKNOWN, pm.getPower());
 
-      // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x62);
-      m.setElement(1, 0x22);
-      m.setElement(2, 0x40);
-      m.setElement(3, 0x00);
+        // send the reply.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x62);
+        m.setElement(1, 0x22);
+        m.setElement(2, 0x40);
+        m.setElement(3, 0x00);
 
-      pm.message(m);
-      // and now verify power is off.
-      Assert.assertEquals("Power",jmri.PowerManager.OFF,pm.getPower());
+        pm.message(m);
+        // and now verify power is off.
+        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
     }
 
     @Test
-    public void testAddAndRemoveListener(){
-        listener = new java.beans.PropertyChangeListener(){
-          @Override
-          public void propertyChange(java.beans.PropertyChangeEvent event){
-             propertyChangeCount = propertyChangeCount +1; 
-          }
+    public void testAddAndRemoveListener() {
+        listener = new java.beans.PropertyChangeListener() {
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent event) {
+                propertyChangeCount = propertyChangeCount + 1;
+            }
         };
         pm.addPropertyChangeListener(listener);
-        Assert.assertEquals("PropertyChangeCount",0,propertyChangeCount);
+        Assert.assertEquals("PropertyChangeCount", 0, propertyChangeCount);
         // trigger a property change, and make sure the count changes too.
         sendOnReply();
-        Assert.assertEquals("PropertyChangeCount",1,propertyChangeCount);
+        Assert.assertEquals("PropertyChangeCount", 1, propertyChangeCount);
         pm.removePropertyChangeListener(listener);
         // now trigger another change, and make sure the count doesn't change.
         sendOnReply();
-        Assert.assertEquals("PropertyChangeCount",1,propertyChangeCount);
+        Assert.assertEquals("PropertyChangeCount", 1, propertyChangeCount);
     }
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         p = pm = new XNetPowerManager(new XNetSystemConnectionMemo(tc));
@@ -265,8 +265,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     @After
     public void tearDown() {
         p = pm = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

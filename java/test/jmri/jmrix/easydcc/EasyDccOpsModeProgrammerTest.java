@@ -1,12 +1,10 @@
 package jmri.jmrix.easydcc;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,23 +14,27 @@ public class EasyDccOpsModeProgrammerTest {
 
     @Test
     public void testCTor() {
-        EasyDccOpsModeProgrammer t = new EasyDccOpsModeProgrammer(100,false);
-        Assert.assertNotNull("exists",t);
+
+        EasyDccOpsModeProgrammer p = new EasyDccOpsModeProgrammer(100, false, _memo);
+        Assert.assertNotNull("exists",p);
     }
+
+    private EasyDccSystemConnectionMemo _memo;
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        _memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
+        _memo.setEasyDccTrafficController(new EasyDccTrafficControlScaffold(_memo));
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        _memo = null;
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammerTest.class);
 
 }

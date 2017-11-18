@@ -1,9 +1,12 @@
 package jmri.jmrix.easydcc;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -11,61 +14,79 @@ import jmri.ThrottleManager;
  * <p>
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
+ * <p>
+ * Migrated for multiple connections, multi char connection prefix and Simulator.
  *
- * @author Bob Jacobsen Copyright (C) 2010 Kevin Dickerson
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Kevin Dickerson
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
-    public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
-        super("E", "EasyDCC");
-        this.et = et;
-        register();
-        InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
-        /*InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.ComponentFactory(this),
-         jmri.jmrix.swing.ComponentFactory.class);*/
-    }
-
     public EasyDccSystemConnectionMemo() {
-        super("E", "EasyDCC");
-        register(); // registers general type
-        InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
-        //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.ComponentFactory(this),
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        this("E", EasyDccConnectionTypeList.EASYDCC);
     }
 
-    /* Temp until it is refactored to completely for multiple connections*/
-    public EasyDccSystemConnectionMemo(String prefix, String name) {
+    /**
+     * Ctor
+     *
+     * @param et the associated TrafficController
+     */
+    public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
+        super("E", EasyDccConnectionTypeList.EASYDCC);
+        this.et = et;
+        register(); // registers general type
+        log.debug("EasyDCC SystemConnectionMemo with TC");
+        InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
+        // create and register the ComponentFactory for the GUI (menu)
+        InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.EasyDccComponentFactory(this),
+                jmri.jmrix.swing.ComponentFactory.class);
+
+        log.debug("Created EasyDccSystemConnectionMemo");
+    }
+
+    public EasyDccSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name);
         register(); // registers general type
+        log.debug("EasyDCC SystemConnectionMemo prefix={}", prefix);
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
-        //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.ComponentFactory(this),
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        // create and register the ComponentFactory for the GUI (menu)
+        InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.EasyDccComponentFactory(this),
+                jmri.jmrix.swing.ComponentFactory.class);
+
+        log.debug("Created EasyDccSystemConnectionMemo");
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
+    private EasyDccTrafficController et;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      */
     public EasyDccTrafficController getTrafficController() {
+        if (et == null) {
+            setEasyDccTrafficController(new EasyDccTrafficController(this));
+            log.debug("Auto create of EasyDccTrafficController for initial configuration");
+        }
         return et;
     }
 
     public void setEasyDccTrafficController(EasyDccTrafficController et) {
         this.et = et;
+        // in addition to setting the TrafficController in this object,
+        // set the systemConnectionMemo in the traffic controller
+        et.setSystemConnectionMemo(this);
     }
-    private EasyDccTrafficController et;
 
     /**
-     * Configure the common managers for Easy DCC connections. This puts the
+     * Configure the common managers for EasyDCC connections. This puts the
      * common manager config in one place. This method is static so that it can
      * be referenced from classes that don't inherit.
      */
     public void configureManagers() {
 
-        InstanceManager.setProgrammerManager(getProgrammerManager());
+        InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
 
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
@@ -77,19 +98,16 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         commandStation = new jmri.jmrix.easydcc.EasyDccCommandStation(this);
 
-        InstanceManager.setCommandStation(commandStation);
+        InstanceManager.store(commandStation,jmri.CommandStation.class);
     }
 
     /**
-     * Tells which managers this provides by class
+     * {@inheritDoc}
      */
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
@@ -113,17 +131,17 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -147,7 +165,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (T.equals(jmri.CommandStation.class)) {
             return (T) commandStation;
         }
-        return null; // nothing, by default
+        return super.get(T); // nothing, by default
     }
 
     private EasyDccPowerManager powerManager;
@@ -185,7 +203,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return null;
         }
         if (turnoutManager == null) {
-            turnoutManager = jmri.jmrix.easydcc.EasyDccTurnoutManager.instance();
+            turnoutManager = new jmri.jmrix.easydcc.EasyDccTurnoutManager(this);
         }
         return turnoutManager;
     }
@@ -197,21 +215,21 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return null;
         }
         if (consistManager == null) {
-            consistManager = new jmri.jmrix.easydcc.EasyDccConsistManager();
+            consistManager = new jmri.jmrix.easydcc.EasyDccConsistManager(this);
         }
         return consistManager;
     }
 
-    private ProgrammerManager programmerManager;
+    private EasyDccProgrammerManager programmerManager;
 
-    public ProgrammerManager getProgrammerManager() {
+    public EasyDccProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            programmerManager = new EasyDccProgrammerManager(new EasyDccProgrammer(), this);
+            programmerManager = new EasyDccProgrammerManager(new EasyDccProgrammer(this), this);
         }
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(EasyDccProgrammerManager p) {
         programmerManager = p;
     }
 
@@ -243,4 +261,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         }
         super.dispose();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(EasyDccSystemConnectionMemo.class);
+
 }

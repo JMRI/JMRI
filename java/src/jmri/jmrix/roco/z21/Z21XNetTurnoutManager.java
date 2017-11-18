@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager.
- * <P>
+ * <p>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2016 
@@ -30,31 +30,31 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     // listen for turnouts, creating them as needed
     @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.getElement(0)==Z21Constants.LAN_X_TURNOUT_INFO) {
           // bytes 2 and 3 are the address.
           int address = (l.getElement(1) << 8) + l.getElement(2);
+          // the address sent byte the Z21 is one less than what JMRI's 
+          // XpressNet code (and lenz systems) expect.
+          address = address + 1; 
           if(log.isDebugEnabled()) {
                log.debug("message has address: {}",address);
           }
           // make sure we know about this turnout.
           String s = prefix + typeLetter() + address;
-          if (null == getBySystemName(s)) {
-             // need to create a new one, and send the message on 
-             // to the newly created object.
-             ((Z21XNetTurnout) provideTurnout(s)).initmessage(l);
-          } else {
-             // The turnout exists, forward this message to the 
-             // turnout
-             ((Z21XNetTurnout) getBySystemName(s)).message(l);
-          }
+          forwardMessageToTurnout(s,l);
         } else {
-          super.message(l); // the the XPressNetTurnoutManager code 
+          super.message(l); // let the XpressNetTurnoutManager code
                             // handle any other replies.
         }
     }
@@ -62,4 +62,3 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
     private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 
 }
-

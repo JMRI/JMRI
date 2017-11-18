@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,22 +13,25 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright(C) 2016
  */
-public class ConcentratorSystemConnectionMemoTest {
+public class ConcentratorSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCtor() {
-        ConcentratorSystemConnectionMemo memo=new ConcentratorSystemConnectionMemo();
-        Assert.assertNotNull("exists", memo);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
+    @Override
     @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
+        scm =new ConcentratorSystemConnectionMemo();
     }
 
+    @Override
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

@@ -10,11 +10,12 @@ import org.slf4j.LoggerFactory;
 class LnMessageClientPollThread extends Thread {
 
     LnMessageClient parent = null;
-    private final static Logger log = LoggerFactory.getLogger(LnMessageClientPollThread.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageClientPollThread.class);
 
     LnMessageClientPollThread(LnMessageClient lnParent) {
         parent = lnParent;
         this.setDaemon(true);
+        this.setName("LnMessageClientPollThread "+lnParent);
         this.start();
     }
 

@@ -6,7 +6,6 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,6 +31,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import org.slf4j.Logger;
@@ -252,7 +252,7 @@ public class Maintenance {
             String name = iter.next();
             Conditional c = cm.getBySystemName(name);
             if (c != null) {
-                ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
                 if (variableList.size() == 0) {
                     String userName = c.getUserName();
                     display.add(MessageFormat.format(rbm.getString("OrphanName"),
@@ -636,7 +636,7 @@ public class Maintenance {
                         referenceCount++;
                     }
                 }
-                ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
                 for (int k = 0; k < variableList.size(); k++) {
                     ConditionalVariable v = variableList.get(k);
                     line = MessageFormat.format(rbm.getString("VariableReference"),
@@ -646,7 +646,7 @@ public class Maintenance {
                         referenceCount++;
                     }
                 }
-                ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+                List<ConditionalAction> actionList = c.getCopyOfActions();
                 for (int k = 0; k < actionList.size(); k++) {
                     ConditionalAction a = actionList.get(k);
                     line = MessageFormat.format(rbm.getString("ActionReference"),
@@ -798,7 +798,7 @@ public class Maintenance {
             String uName = transit.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
                     new Object[]{" ", Bundle.getMessage("BeanNameTransit"), uName, sName});
-            ArrayList<jmri.TransitSection> sectionList = transit.getTransitSectionList();
+            List<jmri.TransitSection> sectionList = transit.getTransitSectionList();
             for (int i = 0; i < sectionList.size(); i++) {
                 jmri.TransitSection transitSection = sectionList.get(i);
                 jmri.Section section = transitSection.getSection();
@@ -833,7 +833,7 @@ public class Maintenance {
                     found = true;
                     referenceCount++;
                 }
-                ArrayList<jmri.Block> blockList = section.getBlockList();
+                List<jmri.Block> blockList = section.getBlockList();
 
                 for (int k = 0; k < blockList.size(); k++) {
                     jmri.Block block = blockList.get(k);
@@ -894,7 +894,7 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.Transit transit = transitManager.getBySystemName(sName);
             if (transit != null) {
-                ArrayList<jmri.TransitSection> sectionList = transit.getTransitSectionList();
+                List<jmri.TransitSection> sectionList = transit.getTransitSectionList();
                 for (int i = 0; i < sectionList.size(); i++) {
                     jmri.TransitSection transitSection = sectionList.get(i);
                     jmri.Section section = transitSection.getSection();
@@ -941,7 +941,7 @@ public class Maintenance {
                 referenceCount++;
             }
 
-            ArrayList<jmri.Block> blockList = section.getBlockList();
+            List<jmri.Block> blockList = section.getBlockList();
             for (int k = 0; k < blockList.size(); k++) {
                 jmri.Block block = blockList.get(k);
                 sName = block.getSystemName();
@@ -1206,7 +1206,7 @@ public class Maintenance {
                 found = true;
                 //referenceCount++; Don't count, this conditional is orphaned by logix(es)
             }
-            ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+            List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
             for (int k = 0; k < variableList.size(); k++) {
                 ConditionalVariable v = variableList.get(k);
                 String line = MessageFormat.format(rbm.getString("VariableReference"),
@@ -1216,7 +1216,7 @@ public class Maintenance {
                     //referenceCount++; Don't count, this conditional is orphaned by logix(es)
                 }
             }
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction a = actionList.get(k);
                 String line = MessageFormat.format(rbm.getString("ActionReference"),
@@ -1243,7 +1243,7 @@ public class Maintenance {
 
         found = false;
         empty = true;
-        ArrayList<jmri.jmrit.display.Editor> panelList = jmri.jmrit.display.PanelMenu.instance().getEditorPanelList();
+        List<jmri.jmrit.display.Editor> panelList = InstanceManager.getDefault(PanelMenu.class).getEditorPanelList();
         for (int i = 0; i < panelList.size(); i++) {
             jmri.jmrit.display.Editor panelEditor = panelList.get(i);
             name = panelEditor.getTitle();
@@ -1447,5 +1447,5 @@ public class Maintenance {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(Maintenance.class.getName());
+            .getLogger(Maintenance.class);
 }

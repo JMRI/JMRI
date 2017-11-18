@@ -2,6 +2,10 @@ package jmri.jmrit.automat;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -133,6 +137,8 @@ public class AbstractAutomaton implements Runnable {
      * This is invoked on currentThread.
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IMSE_DONT_CATCH_IMSE",
+                justification = "get these when stop() issued against thread doing BlockingQueue.take() in waitChange, should remove when stop() reimplemented")
     public void run() {
         try {
             inThread = true;
@@ -148,9 +154,22 @@ public class AbstractAutomaton implements Runnable {
             currentThread = null;
             done();
         } catch (ThreadDeath e1) {
-            log.debug("Received ThreadDeath, likely due to stop(): " + e1, e1);
-        } catch (Exception e2) {
-            log.warn("Exception ends AbstractAutomaton thread: " + e2, e2);
+            if (currentThread == null) {
+                log.debug("Received ThreadDeath, likely due to stop()");
+            } else {
+                log.warn("Received ThreadDeath while not stopped", e1);
+            }
+        } catch (IllegalMonitorStateException e2) {
+            if (currentThread == null) {
+                log.debug("Received IllegalMonitorStateException, likely due to stop()");
+            } else {
+                log.warn("Received IllegalMonitorStateException while not stopped", e2);
+            }
+        } catch (Exception e3) {
+            log.warn("Unexpected Exception ends AbstractAutomaton thread", e3);
+        } finally {
+            currentThread = null;
+            done();
         }
         running = false;
     }
@@ -160,21 +179,27 @@ public class AbstractAutomaton implements Runnable {
      *
      * Overrides superclass method to handle local accounting.
      */
-    // The stop method on a thread has been deprecated, we need to find another way to deal with this
-    @SuppressWarnings("deprecation")
+    // The stop method on a thread has been deprecated, we need to find another way to deal with this.
+    // AbstractAutomaton objects can be waiting on _lots_ of things....
     public void stop() {
+        log.trace("stop() invoked");
         if (currentThread == null) {
             log.error("Stop with currentThread null!");
             return;
         }
-        try {
-            currentThread.stop();
-        } catch (java.lang.ThreadDeath e) {
-            log.error(e.toString());
-        }
+
+        Thread stoppingThread = currentThread;
         currentThread = null;
+
+        try {
+            stoppingThread.stop();
+        } catch (java.lang.ThreadDeath e) {
+            log.error("Exception while in stop(): {}", e.toString());
+        }
+
         done();
         // note we don't set running = false here.  It's still running until the run() routine thinks it's not.
+        log.trace("stop() completed");
     }
 
     /**
@@ -291,6 +316,25 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
+     * Internal common routine to handle
+     * start-of-wait bookkeeping.
+     */
+    final private void startWait() {
+        waiting = true;
+    }
+
+    /**
+     * Internal common routine to handle
+     * end-of-wait bookkeeping.
+     */
+    final private void endWait() {
+        if (promptOnWait) {
+            debuggingWait();
+        }
+        waiting = false;
+    }
+
+    /**
      * Part of the internal implementation, not intended for users.
      * <P>
      * This handles exceptions internally, so they needn't clutter up the code.
@@ -303,11 +347,8 @@ public class AbstractAutomaton implements Runnable {
      * @param milliseconds the number of milliseconds to wait
      */
     protected void wait(int milliseconds) {
-        if (!inThread) {
-            log.debug("wait invoked from invalid context");
-        }
+        startWait();
         synchronized (this) {
-            waiting = true;
             try {
                 if (milliseconds < 0) {
                     super.wait();
@@ -319,10 +360,7 @@ public class AbstractAutomaton implements Runnable {
                 log.warn("interrupted in wait");
             }
         }
-        if (promptOnWait) {
-            debuggingWait();
-        }
-        waiting = false;
+        endWait();
     }
 
     /**
@@ -355,8 +393,8 @@ public class AbstractAutomaton implements Runnable {
             log.debug("waitSensorChange starts: " + mSensor.getSystemName());
         }
         // register a listener
-        java.beans.PropertyChangeListener l;
-        mSensor.addPropertyChangeListener(l = (java.beans.PropertyChangeEvent e) -> {
+        PropertyChangeListener l;
+        mSensor.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
             synchronized (self) {
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
@@ -421,8 +459,8 @@ public class AbstractAutomaton implements Runnable {
             log.debug("waitSensorState starts: " + mSensor.getSystemName() + " " + state);
         }
         // register a listener
-        java.beans.PropertyChangeListener l;
-        mSensor.addPropertyChangeListener(l = (java.beans.PropertyChangeEvent e) -> {
+        PropertyChangeListener l;
+        mSensor.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
             synchronized (self) {
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
@@ -442,7 +480,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors sensors to wait on
      */
-    public void waitSensorInactive(Sensor[] mSensors) {
+    public void waitSensorInactive(@Nonnull Sensor[] mSensors) {
         log.debug("waitSensorInactive[] starts");
         waitSensorState(mSensors, Sensor.INACTIVE);
     }
@@ -452,7 +490,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors sensors to wait on
      */
-    public void waitSensorActive(Sensor[] mSensors) {
+    public void waitSensorActive(@Nonnull Sensor[] mSensors) {
         log.debug("waitSensorActive[] starts");
         waitSensorState(mSensors, Sensor.ACTIVE);
     }
@@ -467,7 +505,7 @@ public class AbstractAutomaton implements Runnable {
      * @param mSensors Array of sensors to watch
      * @param state    State to check (static value from jmri.Sensors)
      */
-    public synchronized void waitSensorState(Sensor[] mSensors, int state) {
+    public synchronized void waitSensorState(@Nonnull Sensor[] mSensors, int state) {
         if (!inThread) {
             log.warn("waitSensorState invoked from invalid context");
         }
@@ -480,13 +518,13 @@ public class AbstractAutomaton implements Runnable {
         }
         // register listeners
         int i;
-        java.beans.PropertyChangeListener[] listeners
-                = new java.beans.PropertyChangeListener[mSensors.length];
+        PropertyChangeListener[] listeners
+                = new PropertyChangeListener[mSensors.length];
         for (i = 0; i < mSensors.length; i++) {
 
-            mSensors[i].addPropertyChangeListener(listeners[i] = (java.beans.PropertyChangeEvent e) -> {
+            mSensors[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 synchronized (self) {
-                    log.debug("notify waitSensorState[] of property change");
+                    log.trace("notify waitSensorState[] of property change");
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             });
@@ -514,7 +552,7 @@ public class AbstractAutomaton implements Runnable {
      * @param warrant The name of the warrant to watch
      * @param state   State to check (static value from jmri.logix.warrant)
      */
-    public synchronized void waitWarrantRunState(Warrant warrant, int state) {
+    public synchronized void waitWarrantRunState(@Nonnull Warrant warrant, int state) {
         if (!inThread) {
             log.warn("waitWarrantRunState invoked from invalid context");
         }
@@ -528,10 +566,10 @@ public class AbstractAutomaton implements Runnable {
             return;
         }
         // register listener
-        java.beans.PropertyChangeListener listener;
-        warrant.addPropertyChangeListener(listener = (java.beans.PropertyChangeEvent e) -> {
+        PropertyChangeListener listener;
+        warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
             synchronized (self) {
-                log.debug("notify waitWarrantRunState of property change");
+                log.trace("notify waitWarrantRunState of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
         });
@@ -556,7 +594,7 @@ public class AbstractAutomaton implements Runnable {
      * @param occupied Determines whether to wait for the block to become
      *                 occupied or unoccupied
      */
-    public synchronized void waitWarrantBlock(Warrant warrant, String block, boolean occupied) {
+    public synchronized void waitWarrantBlock(@Nonnull Warrant warrant, @Nonnull String block, boolean occupied) {
         if (!inThread) {
             log.warn("waitWarrantBlock invoked from invalid context");
         }
@@ -570,10 +608,10 @@ public class AbstractAutomaton implements Runnable {
             return;
         }
         // register listener
-        java.beans.PropertyChangeListener listener;
-        warrant.addPropertyChangeListener(listener = (java.beans.PropertyChangeEvent e) -> {
+        PropertyChangeListener listener;
+        warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
             synchronized (self) {
-                log.debug("notify waitWarrantBlock of property change");
+                log.trace("notify waitWarrantBlock of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
         });
@@ -587,8 +625,8 @@ public class AbstractAutomaton implements Runnable {
 
     }
 
-    private boolean blockChanged = false;
-    private String blockName = null;
+    private volatile boolean blockChanged = false;
+    private volatile String blockName = null;
 
     /**
      * Wait for a warrant to either enter a new block or to stop running.
@@ -602,7 +640,7 @@ public class AbstractAutomaton implements Runnable {
      * @return The name of the block that was entered or null if the warrant is
      *         no longer running.
      */
-    public synchronized String waitWarrantBlockChange(Warrant warrant) {
+    public synchronized String waitWarrantBlockChange(@Nonnull Warrant warrant) {
         if (!inThread) {
             log.warn("waitWarrantBlockChange invoked from invalid context");
         }
@@ -615,21 +653,22 @@ public class AbstractAutomaton implements Runnable {
             log.debug("waitWarrantBlockChange returns immediately");
             return null;
         }
-        // register listenerod
-        blockChanged = false;
+        // register listeners
         blockName = null;
-        java.beans.PropertyChangeListener listener;
-        warrant.addPropertyChangeListener(listener = (java.beans.PropertyChangeEvent e) -> {
+        blockChanged = false;
+
+        PropertyChangeListener listener;
+        warrant.addPropertyChangeListener(listener = (PropertyChangeEvent e) -> {
+            if (e.getPropertyName().equals("blockChange")) {
+                blockChanged = true;
+                blockName = ((OBlock) e.getNewValue()).getDisplayName();
+            }
+            if (e.getPropertyName().equals("runMode") && ! Integer.valueOf(Warrant.MODE_RUN).equals(e.getNewValue()) ) {
+                blockName = null;
+                blockChanged = true;
+            }
             synchronized (self) {
-                if (e.getPropertyName().equals("blockChange")) {
-                    blockChanged = true;
-                    blockName = ((OBlock) e.getNewValue()).getDisplayName();
-                }
-                if (e.getPropertyName().equals("runMode") && e.getNewValue() != (Integer) Warrant.MODE_RUN) {
-                    blockChanged = true;
-                    blockName = null;
-                }
-                log.debug("notify waitWarrantBlockChange of property change");
+                log.trace("notify waitWarrantBlockChange of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
         });
@@ -653,7 +692,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mTurnouts list of turnouts to watch
      */
-    public synchronized void waitTurnoutConsistent(Turnout[] mTurnouts) {
+    public synchronized void waitTurnoutConsistent(@Nonnull Turnout[] mTurnouts) {
         if (!inThread) {
             log.warn("waitTurnoutConsistent invoked from invalid context");
         }
@@ -668,13 +707,13 @@ public class AbstractAutomaton implements Runnable {
         }
         // register listeners
         int i;
-        java.beans.PropertyChangeListener[] listeners
-                = new java.beans.PropertyChangeListener[mTurnouts.length];
+        PropertyChangeListener[] listeners
+                = new PropertyChangeListener[mTurnouts.length];
         for (i = 0; i < mTurnouts.length; i++) {
 
-            mTurnouts[i].addPropertyChangeListener(listeners[i] = (java.beans.PropertyChangeEvent e) -> {
+            mTurnouts[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 synchronized (self) {
-                    log.debug("notify waitTurnoutConsistent[] of property change");
+                    log.trace("notify waitTurnoutConsistent[] of property change");
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             });
@@ -699,7 +738,7 @@ public class AbstractAutomaton implements Runnable {
      * @param closed turnouts to set to closed state
      * @param thrown turnouts to set to thrown state
      */
-    public void setTurnouts(Turnout[] closed, Turnout[] thrown) {
+    public void setTurnouts(@Nonnull Turnout[] closed, @Nonnull Turnout[] thrown) {
         Turnout[] turnouts = new Turnout[closed.length + thrown.length];
         int ti = 0;
         for (int i = 0; i < closed.length; ++i) {
@@ -715,52 +754,135 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Wait, up to a specified time, for one of a list of NamedBeans (sensors,
-     * signal heads and/or turnouts) to change.
+     * signal heads and/or turnouts) to change their state.
+     * <p>
+     * Registers a listener on each of the NamedBeans listed.
+     * The listener is likely to run in another thread.
+     * Each fired listener then queues a check to the automaton's thread.
      *
      * @param mInputs  Array of NamedBeans to watch
      * @param maxDelay maximum amount of time (milliseconds) to wait before
      *                 continuing anyway. -1 means forever
      */
-    //
-    // This works by registering a listener, which is likely to run in another
-    // thread. That listener then interrupts the automaton's thread, who
-    // then cleans up.
-    //
-    // dboudreau: removed synchronized from the method below.
-    // The synchronized can cause thread lockup when a one thread
-    // is held at the inner synchronized (self)
-    //
-    public void waitChange(NamedBean[] mInputs, int maxDelay) {
+    public void waitChange(@Nonnull NamedBean[] mInputs, int maxDelay) {
         if (!inThread) {
             log.warn("waitChange invoked from invalid context");
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitChange[] starts");
+
+        int i;
+        int[] tempState = waitChangePrecheckStates;
+        // do we need to create it now?
+        boolean recreate = false;
+        if (waitChangePrecheckBeans != null && waitChangePrecheckStates != null ) {
+            // Seems precheck intended, see if done right
+            if (waitChangePrecheckBeans.length != mInputs.length) {
+                log.warn("Precheck ignored because of mismatch in size: before {}, now {}", waitChangePrecheckBeans.length, mInputs.length);
+                recreate = true;
+            }
+            if (waitChangePrecheckBeans.length != waitChangePrecheckStates.length) {
+                log.error("Precheck data inconsistent because of mismatch in size: {}, {}", waitChangePrecheckBeans.length, waitChangePrecheckStates.length);
+                recreate = true;
+            }
+            if (! recreate) { // have to check if the beans are the same, but only check if the above tests pass
+                for (i = 0 ; i < mInputs.length; i++) {
+                    if (waitChangePrecheckBeans[i] != mInputs[i]) {
+                        log.warn("Precheck ignored because of mismatch in bean {}", i);
+                        recreate = true;
+                        break;
+                    }
+                }
+            }
+        } else {
+            recreate = true;
         }
 
-        // register listeners
-        int i;
-        java.beans.PropertyChangeListener[] listeners
-                = new java.beans.PropertyChangeListener[mInputs.length];
-        for (i = 0; i < mInputs.length; i++) {
+        if (recreate) {
+            // here, have to create a new state array
+            log.trace("recreate state array");
+            tempState = new int[mInputs.length];
+            for (i = 0 ; i < mInputs.length; i++) {
+                tempState[i] = mInputs[i].getState();
+            }
+        }
+        waitChangePrecheckBeans = null;
+        waitChangePrecheckStates  = null;
+        final int[] initialState = tempState; // needs to be final for off-thread references
 
-            mInputs[i].addPropertyChangeListener(listeners[i] = (java.beans.PropertyChangeEvent e) -> {
-                synchronized (self) {
-                    log.debug("notify waitChange[] of property change " + e.getPropertyName() + " from " + ((NamedBean) e.getSource()).getSystemName());
-                    self.notifyAll(); // should be only one thread waiting, but just in case
-                }
+        log.debug("waitChange[] starts for {} listeners", mInputs.length);
+        waitChangeQueue.clear();
+
+        // register listeners
+        PropertyChangeListener[] listeners = new PropertyChangeListener[mInputs.length];
+        for (i = 0; i < mInputs.length; i++) {
+            mInputs[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
+                waitChangeQueue.offer(e);
             });
 
         }
 
-        // wait for notify
-        wait(maxDelay);
+        log.trace("waitChange[] listeners registered");
+
+        // queue a check for whether there was a change while registering
+        jmri.util.ThreadingUtil.runOnLayoutEventually(
+            () -> {
+                log.trace("start separate waitChange check");
+                for (int j = 0 ; j < mInputs.length; j++) {
+                    if ( initialState[j] != mInputs[j].getState() ) {
+                        log.trace("notify that input {} changed when initial on-layout check was finally done", j);
+                        waitChangeQueue.offer(new PropertyChangeEvent(mInputs[j], "State", initialState[j], mInputs[j].getState()));
+                        break;
+                    }
+                }
+                log.trace("end separate waitChange check");
+            }
+        );
+
+        // wait for notify from a listener
+        startWait();
+
+        PropertyChangeEvent prompt;
+        try {
+            if (maxDelay < 0) {
+                prompt = waitChangeQueue.take();
+            } else {
+                prompt = waitChangeQueue.poll(maxDelay, TimeUnit.MILLISECONDS);
+            }
+            if (prompt != null) {
+                log.trace("waitChange continues from {}", prompt.getSource());
+            } else {
+                log.trace("waitChange continues");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // retain if needed later
+            log.warn("AbstractAutomaton {} waitChange interrupted", getName());
+        }
 
         // remove the listeners
         for (i = 0; i < mInputs.length; i++) {
             mInputs[i].removePropertyChangeListener(listeners[i]);
         }
+        log.trace("waitChange[] listeners removed");
+        endWait();
+    }
 
+    NamedBean[] waitChangePrecheckBeans = null;
+    int[] waitChangePrecheckStates  = null;
+    java.util.concurrent.BlockingQueue<PropertyChangeEvent> waitChangeQueue =
+            new java.util.concurrent.ArrayBlockingQueue<PropertyChangeEvent>(5);
+
+    /**
+     * Wait forever for one of a list of NamedBeans (sensors, signal heads
+     * and/or turnouts) to change, or for a specific time to pass.
+     *
+     * @param mInputs Array of NamedBeans to watch
+     */
+    public void waitChangePrecheck(NamedBean[] mInputs) {
+        waitChangePrecheckBeans = new NamedBean[mInputs.length];
+        waitChangePrecheckStates = new int[mInputs.length];
+        for (int i = 0 ; i < mInputs.length; i++) {
+            waitChangePrecheckBeans[i] = mInputs[i];
+            waitChangePrecheckStates[i] = mInputs[i].getState();
+        }
     }
 
     /**
@@ -781,7 +903,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors Array of sensors to watch
      */
-    public synchronized void waitSensorChange(Sensor[] mSensors) {
+    public void waitSensorChange(Sensor[] mSensors) {
         waitChange(mSensors);
     }
 
@@ -845,6 +967,12 @@ public class AbstractAutomaton implements Runnable {
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
+            }
+
+            @Override
+            public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+                // this is an automatically stealing impelementation.
+                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
             }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class)
@@ -910,6 +1038,12 @@ public class AbstractAutomaton implements Runnable {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
+
+            @Override
+            public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+                // this is an automatically stealing impelementation.
+                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+            }
         };
         boolean ok = InstanceManager.throttleManagerInstance()
                 .requestThrottle(re, throttleListener);
@@ -949,9 +1083,9 @@ public class AbstractAutomaton implements Runnable {
      * @param value Value 0-255 to be written
      * @return true if completed OK
      */
-    public boolean writeServiceModeCV(int CV, int value) {
+    public boolean writeServiceModeCV(String CV, int value) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        Programmer programmer = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
 
         if (programmer == null) {
@@ -984,9 +1118,9 @@ public class AbstractAutomaton implements Runnable {
      * @param CV Number 1 through 512
      * @return -1 if error, else value
      */
-    public int readServiceModeCV(int CV) {
+    public int readServiceModeCV(String CV) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        Programmer programmer = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
 
         if (programmer == null) {
@@ -1021,9 +1155,9 @@ public class AbstractAutomaton implements Runnable {
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK
      */
-    public boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
+    public boolean writeOpsModeCV(String CV, int value, boolean longAddress, int loco) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        Programmer programmer = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(longAddress, loco);
 
         if (programmer == null) {
@@ -1176,5 +1310,5 @@ public class AbstractAutomaton implements Runnable {
         }
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class);
 }

@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright (C) 2013
  */
-public class DccSignalHeadTest {
+public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @Test
     public void testCtor1() {
@@ -153,11 +153,15 @@ public class DccSignalHeadTest {
 
     // from here down is testing infrastructure
 
+    @Override
+    public SignalHead getHeadToTest() {
+        return new DccSignalHead("IH$1");
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
 
         CommandStation c = new CommandStation() {
@@ -186,7 +190,6 @@ public class DccSignalHeadTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

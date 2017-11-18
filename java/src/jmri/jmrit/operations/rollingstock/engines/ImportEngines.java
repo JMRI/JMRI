@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -27,7 +28,7 @@ public class ImportEngines extends ImportRollingStock {
     private static String defaultEngineType = Bundle.getMessage("engineDefaultType");
     private static String defaultEngineHp = Bundle.getMessage("engineDefaultHp");
 
-    EngineManager manager = EngineManager.instance();
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
     // we use a thread so the status frame will work!
     @Override
@@ -147,7 +148,7 @@ public class ImportEngines extends ImportRollingStock {
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (!EngineModels.instance().containsName(engineModel)) {
+                if (!InstanceManager.getDefault(EngineModels.class).containsName(engineModel)) {
                     int results = JOptionPane.showConfirmDialog(null, Bundle.getMessage("Engine") +
                             " (" +
                             engineRoad +
@@ -159,7 +160,7 @@ public class ImportEngines extends ImportRollingStock {
                                     .format(Bundle.getMessage("modelNameNotExist"), new Object[]{engineModel}),
                             Bundle.getMessage("engineAddModel"), JOptionPane.YES_NO_CANCEL_OPTION);
                     if (results == JOptionPane.YES_OPTION) {
-                        EngineModels.instance().addName(engineModel);
+                        InstanceManager.getDefault(EngineModels.class).addName(engineModel);
                     } else if (results == JOptionPane.CANCEL_OPTION) {
                         break;
                     }
@@ -267,7 +268,7 @@ public class ImportEngines extends ImportRollingStock {
                                 JOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                    Location location = LocationManager.instance().getLocationByName(engineLocation);
+                    Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName(engineLocation);
                     Track track = null;
                     if (location == null && !engineLocation.equals("")) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
@@ -282,7 +283,7 @@ public class ImportEngines extends ImportRollingStock {
                                 JOptionPane.YES_NO_OPTION);
                         if (results == JOptionPane.YES_OPTION) {
                             log.debug("Create location ({})", engineLocation);
-                            location = LocationManager.instance().newLocation(engineLocation);
+                            location = InstanceManager.getDefault(LocationManager.class).newLocation(engineLocation);
                         } else {
                             break;
                         }
@@ -413,5 +414,5 @@ public class ImportEngines extends ImportRollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportEngines.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImportEngines.class);
 }

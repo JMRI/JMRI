@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -8,15 +9,20 @@ import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.finder.ComponentFinder;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.ComponentChooser;
 
 /**
  * MemoryIconTest.java
@@ -25,14 +31,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2007, 2015
  */
-public class MemoryIconTest extends jmri.util.SwingTestCase {
+public class MemoryIconTest {
 
     jmri.jmrit.display.panelEditor.PanelEditor panel = null;
 
+    @Test
     public void testShowContent() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect \"Data Data\" as text");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -45,13 +50,13 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(new javax.swing.JLabel("| Expect \"Data Data\" text"));
 
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("Data Data");
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         to.setMemory("IM1");
 
         jf.pack();
         jf.setVisible(true);
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         int[] colors = getColor("Expect \"Data Data\" as text", "| Expect \"Data Data\" as text", 0, 6, 10);
         int r = ((colors[1] >> 16) & 0xFF) + ((colors[2] >> 16) & 0xFF) + ((colors[3] >> 16) & 0xFF) + ((colors[4] >> 16) & 0xFF);
@@ -62,14 +67,13 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
-            jf.dispose();
+            JUnitUtil.dispose(jf);
         }
     }
 
+    @Test
     public void testShowBlank() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         log.debug("testShowBlank");
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect blank");
@@ -88,7 +92,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         jf.pack();
         jf.setVisible(true);
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         int[] colors = getColor("Expect blank", "| Expect blank", 0, 6, 10);
         //for (int i=0; i< 10; i++) System.out.println("   "+String.format("0x%8s", Integer.toHexString(colors[i])).replace(' ', '0'));
@@ -97,15 +101,14 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
-            jf.dispose();
+            JUnitUtil.dispose(jf);
         }
 
     }
 
+    @Test
     public void testShowEmpty() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect empty");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -118,20 +121,20 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
 
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3");
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         to.setMemory("IM3");
 
         jf.pack();
         jf.setVisible(true);
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         int colors[] = getColor("Expect empty", "| Expect empty", 0, 6, 10);
         Assert.assertTrue("Expect red X", (colors[3] == 0xff800000) || (colors[4] == 0xff800000) || (colors[5] == 0xff800000));
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
-            jf.dispose();
+            JUnitUtil.dispose(jf);
         }
 
     }
@@ -139,19 +142,24 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
     int[] getColor(String frameName, String label, int x, int y, int n) {
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(frameName);
-        Assert.assertNotNull("frame: " + frameName, frame);
 
         // find label within that
-        ComponentFinder finder = new ComponentFinder(MemoryIcon.class);
-        // FIXME: finder.findAll returns an untyped list, so we have issues with casting
-        @SuppressWarnings("rawtypes")
-        java.util.List list = finder.findAll(frame);
-        Assert.assertNotNull("list: " + frameName, list);
-        Assert.assertTrue("length: " + frameName + ": " + list.size(), list.size() > 0);
+        JLabel jl = JLabelOperator.findJLabel(frame,new ComponentChooser(){
+               public boolean checkComponent(Component comp){
+                   if(comp == null){
+                      return false;
+                   } else {
+                     return (comp instanceof JLabel);
+                   }
+               }
+               public String getDescription(){
+                  return "find the first JLabel";
+               }
+        });
 
         // find a point in mid-center of memory icon - location choosen by
         // looking at v4.0.1 on Mac
-        Point p = SwingUtilities.convertPoint(((JComponent) list.get(0)), x, y, frame);
+        Point p = SwingUtilities.convertPoint(jl,x, y, frame);
 
         // check pixel color (from http://stackoverflow.com/questions/13307962/how-to-get-the-color-of-a-point-in-a-jpanel )
         BufferedImage image = new BufferedImage(400, 300, BufferedImage.TYPE_4BYTE_ABGR);
@@ -170,49 +178,30 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         return colors;
     }
 
-    // from here down is testing infrastructure
-    public MemoryIconTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", MemoryIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MemoryIconTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
         }
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         // now close panel window
         if (panel != null) {
             java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            JFrameOperator jfo = new JFrameOperator(panel.getTargetFrame());
+            jfo.requestClose();
         }
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
 }

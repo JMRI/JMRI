@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.swing.eventtable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -17,9 +18,11 @@ import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Frame providing a Cbus event table. Menu code copied from BeanTableFrame
+ * Frame providing a Cbus event table. Menu code copied from BeanTableFrame.
  * <P>
  *
  * @author Andrew Crosland (C) 2009
@@ -34,20 +37,21 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     JScrollPane eventScroll;
 
     protected String[] columnToolTips = {
-        "CANbus ID of event producer",
-        "CBUS Node Number of event producer", // "Last Name" assumed obvious
-        "Event",
-        "Type of Event",
-        "Enter Comments in this column"
-    };
+            Bundle.getMessage("IDColTip"),
+            Bundle.getMessage("NodeColTip"), // "Last Name" assumed obvious
+            Bundle.getMessage("NameColTip"),
+            Bundle.getMessage("EventColTip"),
+            Bundle.getMessage("TypeColTip"),
+            Bundle.getMessage("CommentColTip")
+    }; // Length = number of items in array should (at least) match number of columns
 
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Event table");
+            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemEventTable"));
 
         }
-        return "CBUS Event table";
+        return Bundle.getMessage("MenuItemEventTable");
     }
 
     @Override
@@ -60,7 +64,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     public CbusEventTablePane() {
         super();
-
     }
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
@@ -123,6 +126,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
+        Frame mFrame = new Frame();
 
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
@@ -137,6 +141,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                 eventModel.saveAsTable();
             }
         });
+        saveItem.setEnabled(eventModel.isTableDirty()); // disable menuItem if table was saved and has not changed since
 
         JMenuItem saveAsItem = new JMenuItem(rb.getString("MenuItemSaveAs"));
         fileMenu.add(saveAsItem);
@@ -156,13 +161,13 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             public void actionPerformed(ActionEvent e) {
                 HardcopyWriter writer = null;
                 try {
-                    writer = new HardcopyWriter(getWindowInterface().getFrame(), getTitle(), 10, .8, .5, .5, .5, false);
+                    writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, false);
                 } catch (HardcopyWriter.PrintCanceledException ex) {
-                    //log.debug("Print cancelled");
+                    log.debug("Print cancelled");
                     return;
                 }
                 writer.increaseLineSpacing(20);
-                eventModel.printTable(writer);
+                eventModel.printTable(writer); // close() is taken care of in printTable()
             }
         });
         JMenuItem previewItem = new JMenuItem(rb.getString("PreviewTable"));
@@ -172,13 +177,13 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             public void actionPerformed(ActionEvent e) {
                 HardcopyWriter writer = null;
                 try {
-                    writer = new HardcopyWriter(getWindowInterface().getFrame(), getTitle(), 10, .8, .5, .5, .5, true);
+                    writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, true);
                 } catch (HardcopyWriter.PrintCanceledException ex) {
-                    //log.debug("Print cancelled");
+                    log.debug("Preview cancelled");
                     return;
                 }
                 writer.increaseLineSpacing(20);
-                eventModel.printTable(writer);
+                eventModel.printTable(writer); // close() is taken care of in printTable()
             }
         });
         menuList.add(fileMenu);
@@ -191,7 +196,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     /**
-     * method to find the existing CBUS event table object
+     * Find the existing CBUS event table object.
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
@@ -202,6 +207,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     public void update() {
         eventModel.fireTableDataChanged();
+        // TODO disable menuItem if table was saved and has not changed since
+        // replacing menuItem by a new getMenus(). Note saveItem.setEnabled(eventModel.isTableDirty());
     }
 
     private boolean mShown = false;
@@ -240,10 +247,12 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("CBUS Event table",
+            super(Bundle.getMessage("MenuItemEventTable"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     CbusEventTablePane.class.getName(),
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(CbusEventTablePane.class);
 }

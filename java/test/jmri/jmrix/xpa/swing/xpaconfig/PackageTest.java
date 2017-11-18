@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     XpaConfigureActionTest.class,
-    XpaConfigureFrameTest.class
+    XpaConfigureFrameTest.class,
+    BundleTest.class
 })
 
 /**

@@ -1,19 +1,16 @@
 package jmri.jmrix.openlcb;
 
 import java.util.Timer;
-
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
-import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
@@ -98,7 +95,7 @@ public class OlcbSensor extends AbstractSensor {
      * @return user-visible string to represent this event.
      */
     private String getEventName(boolean isActive) {
-        String name = mUserName;
+        String name = getUserName();
         if (name == null) name = mSystemName;
         String msgName = isActive ? "SensorActiveEventName": "SensorInactiveEventName";
         return Bundle.getMessage(msgName, name);
@@ -140,12 +137,12 @@ public class OlcbSensor extends AbstractSensor {
     public void setKnownState(int s) throws jmri.JmriException {
         setOwnState(s);
         if (s == Sensor.ACTIVE) {
-            sensorListener.setFromOwner(true);
+            sensorListener.setFromOwnerWithForceNotify(true);
             if (addrInactive == null) {
                 setTimeout();
             }
         } else if (s == Sensor.INACTIVE) {
-            sensorListener.setFromOwner(false);
+            sensorListener.setFromOwnerWithForceNotify(false);
         }
     }
 
@@ -165,7 +162,7 @@ public class OlcbSensor extends AbstractSensor {
             }
         }, ON_TIME);
     }
-    
+
     /*
      * since the events that drive a sensor can be whichever state a user
      * wants, the order of the event pair determines what is the 'active' state
@@ -182,6 +179,6 @@ public class OlcbSensor extends AbstractSensor {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class);
 
 }

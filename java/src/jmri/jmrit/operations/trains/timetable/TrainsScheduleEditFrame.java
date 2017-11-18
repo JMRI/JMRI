@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
     public TrainsScheduleEditFrame() {
         super();
 
-        trainScheduleManager = TrainScheduleManager.instance();
+        trainScheduleManager = InstanceManager.getDefault(TrainScheduleManager.class);
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new GridBagLayout());
@@ -119,5 +120,5 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         trainScheduleManager.updateComboBox(comboBox);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsScheduleEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsScheduleEditFrame.class);
 }

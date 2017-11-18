@@ -20,7 +20,9 @@ import org.junit.runners.Suite;
    JoalAudioSourceTest.class,
    NullAudioFactoryTest.class,
    NullAudioSourceTest.class,
-   DefaultAudioManagerTest.class
+   DefaultAudioManagerTest.class,
+   AudioCommandThreadTest.class,
+   AudioCommandTest.class
 })
 /**
  * Invokes complete set of tests in the jmri.jmrit.audio tree

@@ -2,28 +2,32 @@ package jmri.jmrix.easydcc.easydccmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a EasyDccMonFrame object
+ * Swing action to create and register an EasyDccMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class EasyDccMonAction extends AbstractAction {
 
-    public EasyDccMonAction() {
-        this("EasyDCC Command Monitor");
+    private EasyDccSystemConnectionMemo _memo = null;
+
+    public EasyDccMonAction(String s, EasyDccSystemConnectionMemo memo) {
+        super(s);
+        _memo = memo;
     }
 
-    public EasyDccMonAction(String s) {
-        super(s);
+    public EasyDccMonAction() {
+        this(Bundle.getMessage("MonitorXTitle", "EasyDCC"), jmri.InstanceManager.getDefault(EasyDccSystemConnectionMemo.class));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // create a EasyDccMonFrame
-        EasyDccMonFrame f = new EasyDccMonFrame();
+        // create an EasyDccMonFrame
+        EasyDccMonFrame f = new EasyDccMonFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -32,6 +36,6 @@ public class EasyDccMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccMonAction.class);
 
 }

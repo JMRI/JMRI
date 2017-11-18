@@ -36,8 +36,8 @@
       <h1>Description de la Fen&ecirc;tre Decoder Pro 3</h1>
 
       <p>La fen&ecirc;tre d&eacute;codeur Pro 3 est divis&eacute;e
-      en cinq grandes sections de haut en bas.</p><img src=
-      "helpfile_dump1.jpg" width="526" height="266">
+      en cinq grandes sections de haut en bas.</p>
+      <img src="../../images/Dp3Roster.png" width="509" height="265">
 
       <ol>
         <li><a href="#menubar">La barre de menus</a>.</li>
@@ -294,7 +294,8 @@
         <li>--------------</li>
 
         <li>Ex&eacute;cuter Script</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

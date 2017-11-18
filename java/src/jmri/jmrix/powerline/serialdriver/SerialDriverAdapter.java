@@ -33,7 +33,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new SerialSystemConnectionMemo());
-        option1Name = "Adapter";
+        option1Name = "Adapter"; // NOI18N
         options.put(option1Name, new Option("Adapter", stdOption1Values));
         this.manufacturerName = jmri.jmrix.powerline.SerialConnectionTypeList.POWERLINE;
     }
@@ -44,7 +44,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = (SerialPort) portID.open(appName, 2000); // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
@@ -188,7 +188,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {
@@ -277,13 +277,10 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
+        // set RTS high, DTR high
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -309,6 +306,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,18 +12,12 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class Z21SystemConnectionMemoTest {
-
-    @Test
-    public void testCtor() {
-        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
-        Assert.assertNotNull(a);
-    }
+public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Test
     @Ignore("Not Ready Yet")
     public void testConfigureManagers(){
-        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
+        Z21SystemConnectionMemo a = (Z21SystemConnectionMemo)scm;
         a.setTrafficController(new Z21InterfaceScaffold());
         a.configureManagers();
         Assert.assertNotNull(a);
@@ -30,26 +25,44 @@ public class Z21SystemConnectionMemoTest {
 
     @Test
     public void testProvidesReporterManager() {
-        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
+        Z21SystemConnectionMemo a = (Z21SystemConnectionMemo)scm;
         Assert.assertTrue(a.provides(jmri.ReporterManager.class));
     }
 
     @Test
     @Ignore("needs more setup")
-    public void testProvidesProgrammerManager() {
-        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
-        Assert.assertTrue(a.provides(jmri.ProgrammerManager.class));
+    public void testProvidesAddressedProgrammerManager() {
+        Z21SystemConnectionMemo a = (Z21SystemConnectionMemo)scm;
+        Assert.assertTrue(a.provides(jmri.AddressedProgrammerManager.class));
+    }
+
+    @Test
+    @Ignore("needs more setup")
+    public void testProvidesGlobalProgrammerManager() {
+        Z21SystemConnectionMemo a = (Z21SystemConnectionMemo)scm;
+        Assert.assertTrue(a.provides(jmri.GlobalProgrammerManager.class));
+    }
+
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       // there is a consist manager, but it is provided by delegation to 
+       // the XPressNet tunnel, which setUp doesn't currently enable.
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
+        scm = new Z21SystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

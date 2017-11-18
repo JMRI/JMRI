@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -124,7 +125,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     private void updateTrainPane() {
         pTrains.removeAll();
         int y = 0;
-        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
             Route route = train.getRoute();
             if (route == null) {
                 continue;
@@ -203,7 +204,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     private void updateComboBox() {
         log.debug("update combobox");
         typeComboBox.setEnabled(false);
-        CarTypes.instance().updateComboBox(typeComboBox);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(typeComboBox);
         // remove car types not serviced by this location and track
         for (int i = typeComboBox.getItemCount() - 1; i >= 0; i--) {
             String type = typeComboBox.getItemAt(i);
@@ -234,21 +235,21 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         if (_track != null) {
             _track.removePropertyChangeListener(this);
         }
-        CarTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         removePropertyChangeAllTrains();
         super.dispose();
     }
 
     public void addPropertyChangeAllTrains() {
-        TrainManager.instance().addPropertyChangeListener(this);
-        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+        InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(this);
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
             train.addPropertyChangeListener(this);
         }
     }
 
     public void removePropertyChangeAllTrains() {
-        TrainManager.instance().removePropertyChangeListener(this);
-        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+        InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(this);
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
             train.removePropertyChangeListener(this);
             if (train.getRoute() != null) {
                 train.getRoute().removePropertyChangeListener(this);
@@ -282,5 +283,5 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ShowTrainsServingLocationFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ShowTrainsServingLocationFrame.class);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.Version;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -59,7 +60,7 @@ public class PrintDecoderListAction extends AbstractAction {
         String lastMfg = "";
         String lastFamily = "";
 
-        DecoderIndexFile f = DecoderIndexFile.instance();
+        DecoderIndexFile f = InstanceManager.getDefault(DecoderIndexFile.class);
         List<DecoderFile> l = f.matchingDecoderList(null, null, null, null, null, null); // take all
         int i = -1;
         log.debug("Roster list size: " + l.size());
@@ -110,5 +111,5 @@ public class PrintDecoderListAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintDecoderListAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintDecoderListAction.class);
 }
