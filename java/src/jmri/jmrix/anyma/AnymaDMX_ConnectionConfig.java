@@ -1,6 +1,6 @@
 package jmri.jmrix.anyma;
 
-import java.util.Vector;
+import java.util.List;
 import jmri.jmrix.AbstractUsbConnectionConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,9 +79,9 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
     }
 
     @Override
-    protected Vector<String> getPortNames() {
+    protected List<String> getPortNames() {
         log.debug("*	getPortNames()");
-        return new Vector<String>(getAdapter().getPortNames());
+        return getAdapter().getPortNames();
     }
 
     private final static Logger log

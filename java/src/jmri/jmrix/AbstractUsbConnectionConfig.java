@@ -9,8 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
-import java.util.Collections;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -166,22 +167,19 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         return JmrixConfigPane.NONE;
     }
 
-    @SuppressWarnings("UseOfObsoleteCollectionType")
-    Vector<String> v;
-    @SuppressWarnings("UseOfObsoleteCollectionType")
-    Vector<String> originalList;
+    List<String> newList = null;
+    List<String> originalList = null;
     String invalidPort = null;
 
-    @SuppressWarnings("UseOfObsoleteCollectionType")
     public void refreshPortBox() {
         log.debug("*	refreshPortBox()");
         if (!init) {
-            v = getPortNames();
+            newList = getPortNames();
             portBox.setRenderer(new ComboBoxRenderer());
             // Add this line to ensure that the combo box header isn't made too narrow
             portBox.setPrototypeDisplayValue("A fairly long port name of 40 characters"); //NO18N
         } else {
-            Vector<String> v2 = getPortNames();
+            List<String> v2 = getPortNames();
             if (v2.equals(originalList)) {
                 log.debug("List of valid Ports has not changed, therefore we will not refresh the port list");
                 // but we will insist on setting the current value into the port
@@ -189,49 +187,45 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                 return;
             }
             log.debug("List of valid Ports has been changed, therefore we will refresh the port list");
-            v = new Vector<>();
-            v.setSize(v2.size());
-            Collections.copy(v, v2);
+            newList = new ArrayList<>(v2);
         }
 
-        if (v == null) {
-            log.error("port name Vector v is null!");
+        if (newList == null) {
+            log.error("port name List v is null!");
             return;
         }
 
-        /* as we make amendments to the list of port in vector v, we keep a copy of it before
+        /* as we make amendments to the list of port in newList, we keep a copy of it before
          modification, this copy is then used to validate against any changes in the port lists.
          */
-        originalList = new Vector<>();
-        originalList.setSize(v.size());
-        Collections.copy(originalList, v);
+        originalList = new ArrayList<>(newList);
         if (portBox.getActionListeners().length > 0) {
             portBox.removeActionListener(portBox.getActionListeners()[0]);
         }
         portBox.removeAllItems();
         log.debug("getting fresh list of available Serial Ports");
 
-        if (v.isEmpty()) {
-            v.add(0, Bundle.getMessage("noPortsFound"));
+        if (newList.isEmpty()) {
+            newList.add(0, Bundle.getMessage("noPortsFound"));
         }
         String portName = adapter.getCurrentPortName();
         if (portName != null && !portName.equals(Bundle.getMessage("noneSelected")) && !portName.equals(Bundle.getMessage("noPortsFound"))) {
-            if (!v.contains(portName)) {
-                v.add(0, portName);
+            if (!newList.contains(portName)) {
+                newList.add(0, portName);
                 invalidPort = portName;
                 portBox.setForeground(Color.red);
             } else if (invalidPort != null && invalidPort.equals(portName)) {
                 invalidPort = null;
             }
         } else {
-            if (!v.contains(portName)) {
-                v.add(0, Bundle.getMessage("noneSelected"));
+            if (!newList.contains(portName)) {
+                newList.add(0, Bundle.getMessage("noneSelected"));
             } else if (p.getComboBoxLastSelection(adapter.getClass().getName() + ".port") == null) {
-                v.add(0, Bundle.getMessage("noneSelected"));
+                newList.add(0, Bundle.getMessage("noneSelected"));
             }
         }
 
-        updateUsbPortNames(portName, portBox, v);
+        updateUsbPortNames(portName, portBox, newList);
 
         // If there's no name selected, select one that seems most likely
         boolean didSetName = false;
@@ -270,7 +264,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("UseOfObsoleteCollectionType")
     public void loadDetails(final JPanel details) {
         log.debug("*	loadDetails()");
         _details = details;
@@ -295,15 +288,15 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         }
 
         try {
-            v = getPortNames();
+            newList = getPortNames();
             if (log.isDebugEnabled()) {
                 log.debug("loadDetails called in class " + this.getClass().getName());
                 log.debug("adapter class: " + adapter.getClass().getName());
                 log.debug("loadDetails called for " + name());
-                if (v != null) {
-                    log.debug("Found " + v.size() + " ports");
+                if (newList != null) {
+                    log.debug("Found " + newList.size() + " ports");
                 } else {
-                    log.debug("Zero-length port vector");
+                    log.debug("Zero-length port List");
                 }
             }
         } catch (UnsatisfiedLinkError e1) {
@@ -530,8 +523,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
      * @param portCombo The combo box that's displaying the available ports
      * @param portList  The list of valid (unfriendly) port names
      */
-    @SuppressWarnings("UseOfObsoleteCollectionType")
-    protected synchronized static void updateUsbPortNames(String portName, JComboBox<String> portCombo, Vector<String> portList) {
+    protected synchronized static void updateUsbPortNames(String portName, JComboBox<String> portCombo, List<String> portList) {
         for (int i = 0; i < portList.size(); i++) {
             String commPort = portList.elementAt(i);
             portCombo.addItem(commPort);
@@ -541,13 +533,13 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         }
     }
 
-    @SuppressWarnings({"unchecked", "UseOfObsoleteCollectionType"})
-    protected Vector<String> getPortNames() {
+    @Nonnull
+    protected List<String> getPortNames() {
         log.error("getPortNames() called in abstract class; should be overridden.");
-        return new Vector<>();
+        return new ArrayList<>();
     }
 
     private final static Logger log
-        = LoggerFactory.getLogger(AbstractUsbConnectionConfig.class);
+            = LoggerFactory.getLogger(AbstractUsbConnectionConfig.class);
 
 }
