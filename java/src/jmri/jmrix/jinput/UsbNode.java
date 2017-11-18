@@ -123,15 +123,15 @@ public class UsbNode extends DefaultMutableTreeNode {
      *         component, or newly created
      */
     static public UsbNode getNode(String name, Controller controller, Component component) {
-        UsbNode result = NODES.get(controller);
+        UsbNode result = NODES.get(component);
         if (result == null) {
             result = new UsbNode(name, controller, component);
-            NODES.put(controller, result);
+            NODES.put(component, result);
         }
         return result;
     }
 
-    private static final HashMap<Controller, UsbNode> NODES = new HashMap<>();
+    private static final HashMap<Component, UsbNode> NODES = new HashMap<>();
 
     private final static Logger log = LoggerFactory.getLogger(UsbNode.class);
 }
