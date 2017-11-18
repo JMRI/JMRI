@@ -12,6 +12,7 @@
 package jmri.util.usb;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -24,7 +25,6 @@ import javax.usb.UsbDisconnectedException;
 import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
-import javax.usb.UsbPort;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
 import jmri.util.USBUtil;
@@ -90,19 +90,12 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         Object userObject = root.getUserObject();
         if (userObject != null && ((UsbDevice) userObject).isUsbHub()) {
             UsbHub usbHub = (UsbHub) userObject;
-            for (byte portIndex = 0; portIndex <= usbHub.getNumberOfPorts(); portIndex++) {
-                UsbPort usbPort = usbHub.getUsbPort(portIndex);
-                if (usbPort != null) {
-                    if (usbPort.isUsbDeviceAttached()) {
-                        UsbDevice usbDevice = usbPort.getUsbDevice();
-                        UsbTreeNode node = new UsbTreeNode(usbDevice, portIndex);
-                        byte portNumber = usbPort.getPortNumber();
-                        log.debug("*	Adding {} to {} on port #{}/{} (depth = {}",
-                                node, root, portIndex, portNumber, depth);
-                        buildTree(node, depth + 1);
-                        root.add(node);
-                    }
-                }
+            List<UsbDevice> usbDevices = usbHub.getAttachedUsbDevices();
+            for (UsbDevice usbDevice : usbDevices) {
+                UsbTreeNode node = new UsbTreeNode(usbDevice);
+                log.debug("*	Adding {} to {}, depth: {}", node, root, depth);
+                buildTree(node, depth + 1);
+                root.add(node);
             }
         }
         // prevent NPE if called in constructor
@@ -177,23 +170,21 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
     private static class UsbTreeNode extends DefaultMutableTreeNode {
 
         public UsbTreeNode() {
-            this(null, (byte) 0);
+            this(null);
         }
 
-        public UsbTreeNode(UsbDevice usbDevice, byte portIndex) {
+        public UsbTreeNode(UsbDevice usbDevice) {
             super();
 
             if (usbDevice == null) {
                 try {
                     usbDevice = UsbHostManager.getUsbServices().getRootUsbHub();
                     log.debug("Using root usbDevice {}", usbDevice);
-                    usbPortIndex = 0;
                 } catch (UsbException | SecurityException ex) {
                     log.error("Unable to get root USB hub.", ex);
                 }
             } else {
                 log.debug("Description of {} is\n{}", usbDevice, usbDevice.getUsbDeviceDescriptor());
-                usbPortIndex = portIndex;
             }
             userObject = usbDevice;
         }
@@ -204,12 +195,6 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         public void setUsbDevice(UsbDevice usbDevice) {
             userObject = usbDevice;
-        }
-
-        private byte usbPortIndex = 0;
-
-        public byte getUsbPortIndex() {
-            return usbPortIndex;
         }
 
         @Override

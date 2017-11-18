@@ -17,16 +17,27 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionConfigXml {
 
+    /**
+     * constructor
+     */
     public AbstractUsbConnectionConfigXml() {
     }
 
     protected UsbPortAdapter adapter;
 
+    /**
+     * set the usb port adapter
+     * @param usbPortAdapter the usb port adapter to set
+     */
     protected void setAdapter(UsbPortAdapter usbPortAdapter) {
         log.debug("* setAdapter({})", usbPortAdapter);
         adapter = usbPortAdapter;
     }
 
+    /**
+     * get the usb port adapter
+     * @return the usb port adapter
+     */
     protected UsbPortAdapter getAdapter() {
         log.debug("* getAdapter({})");
         return adapter;
@@ -43,11 +54,7 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
     }
 
     /**
-     * Default implementation for storing the static contents of the serial port
-     * implementation
-     *
-     * @param object Object to store, of type AbstractSerialConnectionConfig
-     * @return Element containing the complete info
+     * {@inheritDoc}
      */
     @Override
     public Element store(Object object) {
@@ -79,27 +86,34 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
     }
 
     /**
-     * Customizable method if you need to add anything more
-     *
-     * @param e Element being created, update as needed
+     * {@inheritDoc}
      */
     @Override
     protected void extendElement(Element e) {
         log.debug("* extendElement({})", e);
     }
 
+    /**
+     * load from xml elements
+     * @param shared element
+     * @param perNode element
+     * @return boolean true if successful
+     */
     @Override
     public boolean load(Element shared, Element perNode) {
         log.debug("* load({}, {})", shared, perNode);
-        boolean result = true;
+        boolean result = true;  // assume success (optimist!)
+
         getInstance();
         // configure port name
         String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
 
         loadCommon(shared, perNode, adapter);
+
         // register, so can be picked up next time
         register();
+
         // try to open the port
         if (adapter.getDisabled()) {
             unpackElement(shared, perNode);

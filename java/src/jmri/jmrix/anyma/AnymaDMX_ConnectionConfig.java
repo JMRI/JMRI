@@ -1,15 +1,13 @@
 package jmri.jmrix.anyma;
 
 import java.util.Vector;
-import javax.swing.JPanel;
 import jmri.jmrix.AbstractUsbConnectionConfig;
-import jmri.jmrix.JmrixConfigPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Definition of objects to handle configuring an Anyma DMX layout connection
- * via a SerialDriverAdapter object.
+ * via a AnymaDMX_UsbPortAdapter object.
  * <P>
  * This uses the {@link AnymaDMX_UsbPortAdapter} class to do the actual
  * connection.
@@ -40,33 +38,6 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
     }
 
     /**
-     * Done with this ConnectionConfig object. Invoked in
-     * {@link JmrixConfigPane} when switching away from this particular mode.
-     */
-    public void dispose() {
-        log.debug("*    dispose()");
-        super.dispose();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isDirty() {
-        log.debug("*    isDirty()");
-        return super.isDirty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isRestartRequired() {
-        log.debug("*    isRestartRequired()");
-        return super.isRestartRequired();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -77,33 +48,6 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void showAdvancedItems() {
-        log.debug("*    showAdvancedItems()");
-        super.showAdvancedItems();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void loadDetails(final JPanel details) {
-        log.debug("*    loadDetails()");
-        super.loadDetails(details);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void register() {
-        log.debug("*    register()");
-        super.register();
     }
 
     /**

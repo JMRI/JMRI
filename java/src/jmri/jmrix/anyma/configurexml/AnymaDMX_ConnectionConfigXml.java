@@ -50,15 +50,16 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
     }
 
     /**
-     * get instance
-     *
-     * @param object to get the instance of
+     * {@inheritDoc}
      */
     @Override
     protected void getInstance(Object object) {
         setAdapter((UsbPortAdapter) ((ConnectionConfig) object).getAdapter());
     }
 
+    /**
+     * register
+     */
     @Override
     protected void register() {
         this.register(new AnymaDMX_ConnectionConfig((AnymaDMX_UsbPortAdapter) adapter));

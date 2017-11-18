@@ -30,7 +30,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
         log.debug("*    UsbLight constructor called");
         _memo = memo;
         // Initialize the Light
-        initializeLight(systemName);
+        initializeLight();
     }
 
     /**
@@ -45,19 +45,18 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
         super(systemName, userName);
         log.debug("*    UsbLight constructor called");
         _memo = memo;
-        initializeLight(systemName);
+        initializeLight();
     }
 
     /**
      * Sets up system dependent instance variables and sets system independent
      * instance variables to default values Note: most instance variables are in
      * AbstractLight.java
-     * @param systemName the system name for this light
      */
-    private void initializeLight(String systemName) {
+    private void initializeLight() {
         log.debug("*    UsbLight.initializeLight() called");
         // Extract the Channel from the name
-        mChannel = _memo.getChannelFromSystemName(systemName);
+        mChannel = _memo.getChannelFromSystemName(getSystemName());
         // Set initial state
         setState(OFF);
     }

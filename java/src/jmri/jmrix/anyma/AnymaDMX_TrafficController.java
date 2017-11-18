@@ -84,14 +84,14 @@ public class AnymaDMX_TrafficController {
      *
      * @param from the beginning index (inclusive)
      * @param to   the ending index (inclusive)
-     * @param buf  the data to send
+     * @param buf  the data to send 
      * note: the from/to indexes are 1-512 (inclusive)
      */
     public void setChannelRangeValues(int from, int to, byte buf[]) {
         if ((1 <= from) && (from <= 512) && (1 <= to) && (to <= 512)) {
             int len = to - from + 1;
             if (len == buf.length) {
-                arraycopy(new_data, from, buf, 0, len);
+                arraycopy(new_data, from - 1, buf, 0, len);
             } else {
                 log.error("range does not match buffer size");
             }
@@ -108,16 +108,22 @@ public class AnymaDMX_TrafficController {
      * @param to   the ending index (inclusive)
      * @param buf  the data to send
      * @return true if successful
+     * note: the from/to indexes are 0-511 (inclusive)
      */
     private boolean sendChannelRangeValues(int from, int to, byte buf[]) {
-        from = MathUtil.pin(from, 0, 511);
-        to = MathUtil.pin(to, from, 511);
-        int len = to - from + 1;
-        byte requestType = UsbConst.REQUESTTYPE_TYPE_VENDOR
-                | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE
-                | UsbConst.ENDPOINT_DIRECTION_OUT;
-        byte request = 0x02;    // anyma dmx cmd_SetChannelRange
-        return controller.sendControlTransfer(requestType, request, len, from, buf);
+        boolean result = false; // assume failure (pessimist!)
+        if (controller != null) {
+            from = MathUtil.pin(from, 0, 511);
+            to = MathUtil.pin(to, from, 511);
+            int len = to - from + 1;
+            byte requestType = UsbConst.REQUESTTYPE_TYPE_VENDOR
+                    | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE
+                    | UsbConst.ENDPOINT_DIRECTION_OUT;
+            byte request = 0x02;    // anyma dmx cmd_SetChannelRange
+            result = controller.sendControlTransfer(
+                    requestType, request, len, from, buf);
+        }
+        return result;
     }
 
     private final static Logger log

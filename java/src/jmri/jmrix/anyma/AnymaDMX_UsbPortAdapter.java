@@ -24,12 +24,6 @@ public class AnymaDMX_UsbPortAdapter extends UsbPortAdapter {
         setProductID((short) 0x05DC);
     }
 
-    @Override
-    public void dispose() {
-        log.debug("*    dispose() called.");
-        super.dispose();
-    }
-
     /**
      * {@inheritDoc}
      */

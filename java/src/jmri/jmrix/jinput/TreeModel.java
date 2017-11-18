@@ -35,9 +35,9 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2008, 2010
  */
 public final class TreeModel extends DefaultTreeModel {
-
+    
     private TreeModel() {
-
+        
         super(new DefaultMutableTreeNode("Root"));
         dRoot = (DefaultMutableTreeNode) getRoot();  // this is used because we can't store the DMTN we just made during the super() call
 
@@ -55,6 +55,7 @@ public final class TreeModel extends DefaultTreeModel {
         runner.setName("jinput.TreeModel loader");
         runner.start();
     }
+
     Runner runner;
 
     /**
@@ -66,7 +67,7 @@ public final class TreeModel extends DefaultTreeModel {
      *                where in the tree to insert it.
      * @return node, regardless of whether needed or not
      */
-    DefaultMutableTreeNode insertNode(DefaultMutableTreeNode pChild, DefaultMutableTreeNode pParent) {
+    private DefaultMutableTreeNode insertNode(DefaultMutableTreeNode pChild, DefaultMutableTreeNode pParent) {
         // if already exists, just return it
         int index;
         index = getIndexOfChild(pParent, pChild);
@@ -75,10 +76,14 @@ public final class TreeModel extends DefaultTreeModel {
         }
         // represent this one
         index = pParent.getChildCount();
-        insertNodeInto(pChild, pParent, index);
+        try {
+            insertNodeInto(pChild, pParent, index);
+        } catch (IllegalArgumentException e) {
+            log.debug("Exception " + e);
+        }
         return pChild;
     }
-
+    
     DefaultMutableTreeNode dRoot;
 
     /**
@@ -102,9 +107,9 @@ public final class TreeModel extends DefaultTreeModel {
         runner.interrupt();
         runner.join();
     }
-
+    
     static private TreeModel instanceValue = null;
-
+    
     class Runner extends Thread {
 
         /**
@@ -123,7 +128,7 @@ public final class TreeModel extends DefaultTreeModel {
                     }
                     continue;
                 }
-
+                
                 for (int i = 0; i < controllers.length; i++) {
                     controllers[i].poll();
 
@@ -144,7 +149,7 @@ public final class TreeModel extends DefaultTreeModel {
                     while (queue.getNextEvent(event)) {
                         Component comp = event.getComponent();
                         float value = event.getValue();
-
+                        
                         if (log.isDebugEnabled()) {
                             StringBuffer buffer = new StringBuffer("Name [");
                             buffer.append(controllers[i].getName());
@@ -167,7 +172,7 @@ public final class TreeModel extends DefaultTreeModel {
                         new Report(controllers[i], comp, value);
                     }
                 }
-
+                
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {
@@ -181,7 +186,7 @@ public final class TreeModel extends DefaultTreeModel {
     // we build an array of USB controllers here
     // note they might not arrive for a while
     Controller[] ca;
-
+    
     public Controller[] controllers() {
         return Arrays.copyOf(ca, ca.length);
     }
@@ -190,16 +195,16 @@ public final class TreeModel extends DefaultTreeModel {
      * Carry a single event to the Swing thread for processing
      */
     class Report implements Runnable {
-
+        
         Controller controller;
         Component component;
         float value;
-
+        
         Report(Controller controller, Component component, float value) {
             this.controller = controller;
             this.component = component;
             this.value = value;
-
+            
             SwingUtilities.invokeLater(this);
         }
 
@@ -218,7 +223,7 @@ public final class TreeModel extends DefaultTreeModel {
             String dname = component.getName() + " [" + component.getIdentifier().toString() + "]";
             UsbNode dNode = UsbNode.getNode(dname, controller, component);
             dNode = (UsbNode) insertNode(dNode, cNode);
-
+            
             dNode.setValue(value);
 
             // report change to possible listeners
@@ -241,7 +246,7 @@ public final class TreeModel extends DefaultTreeModel {
             ca = null;
             return false;
         }
-
+        
         for (Controller controller : controllers()) {
             // Get this controllers components (buttons and axis)
             Component[] components = controller.getComponents();
@@ -257,7 +262,7 @@ public final class TreeModel extends DefaultTreeModel {
                     String deviceName = component.getName() + " [" + component.getIdentifier().toString() + "]";
                     UsbNode deviceNode = UsbNode.getNode(deviceName, controller, component);
                     deviceNode = (UsbNode) insertNode(deviceNode, controllerNode);
-
+                    
                     deviceNode.setValue(0.0f);
                 } catch (IllegalStateException e) {
                     // node does not allow children
@@ -272,16 +277,16 @@ public final class TreeModel extends DefaultTreeModel {
         }
         return true;
     }
-
+    
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
+    
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
-
+    
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-
+    
     private final static Logger log = LoggerFactory.getLogger(TreeModel.class);
 }
