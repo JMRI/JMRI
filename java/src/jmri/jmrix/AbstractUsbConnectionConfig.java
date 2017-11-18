@@ -525,7 +525,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
      */
     protected synchronized static void updateUsbPortNames(String portName, JComboBox<String> portCombo, List<String> portList) {
         for (int i = 0; i < portList.size(); i++) {
-            String commPort = portList.elementAt(i);
+            String commPort = portList.get(i);
             portCombo.addItem(commPort);
             if (commPort.equals(portName)) {
                 portCombo.setSelectedIndex(i);

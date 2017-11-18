@@ -66,6 +66,7 @@ abstract public class SystemConnectionMemo extends Bean {
 
     /**
      * Provide access to the system prefix string.
+     * <p>
      * This was previously called the "System letter".
      *
      * @return System prefix
@@ -105,6 +106,7 @@ abstract public class SystemConnectionMemo extends Bean {
 
     /**
      * Provide access to the system user name string.
+     (<p>
      * This was previously fixed at configuration time.
      *
      * @return User name
@@ -147,7 +149,7 @@ abstract public class SystemConnectionMemo extends Bean {
      * @return true if the specified manager is provided
      */
     public boolean provides(Class<?> c) {
-        return (get(c) != null);
+        return false; // nothing, by default
     }
 
     /**

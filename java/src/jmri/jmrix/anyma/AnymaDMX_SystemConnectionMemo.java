@@ -44,6 +44,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * get the traffic controller
+     *
      * @return the traffic controller
      */
     protected AnymaDMX_TrafficController getTrafficController() {
@@ -52,6 +53,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * set the traffic controller
+     *
      * @param trafficController the traffic controller
      */
     protected void setTrafficController(AnymaDMX_TrafficController trafficController) {
@@ -60,6 +62,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * public method to get the user name for a valid system name
+     *
      * @param systemName the system name
      * @return "" (null string) if system name is not valid or does not exist
      */
@@ -314,10 +317,14 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * get the manager for a specified type
-     * @param <T> the type
-     * @param T the manager class
-     * @return the manager for that type
+     * {@inheritDoc}
+     */
+    public boolean provides(Class<?> c) {
+        return (get(c) != null);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -329,7 +336,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 configureManagers();
             }
             if (T.equals(LightManager.class)) {
-                return (T) getLightManager();
+                result = (T) getLightManager();
             }
         }
         return result;
@@ -353,6 +360,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * get the light manager
+     *
      * @return the light manager
      */
     public UsbLightManager getLightManager() {
@@ -370,6 +378,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * get the action model resource bundle
+     *
      * @return the ResourceBundle
      */
     @Override
