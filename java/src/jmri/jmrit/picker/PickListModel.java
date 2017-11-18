@@ -16,8 +16,8 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.*;
 import jmri.jmrit.logix.*;
+import jmri.jmrit.entryexit.*;
 import jmri.jmrit.signalling.*;
-import jmri.jmrit.signalling.entryexit.*;
 import jmri.util.*;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -830,7 +830,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
     static class EntryExitPickModel extends PickListModel<DestinationPoints> {
 
-        EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+        EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
 
         EntryExitPickModel() {
             _name = rb.getString("TitleEntryExitTable");
@@ -838,7 +838,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
         @Override
         public Manager<DestinationPoints> getManager() {
-            manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+            manager = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
             return manager;
         }
 
