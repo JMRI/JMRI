@@ -34,7 +34,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
 
     //This dummy message is used in case we expect a reply from polling
     static private TamsMessage myDummy() {
-        //log.debug("*	** myDummy ***");
+        //log.info("*** myDummy ***");
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.POLLMSG & TamsConstants.MASKFF);
         m.setElement(1, TamsConstants.XEVTSEN & TamsConstants.MASKFF);
@@ -44,7 +44,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         return m;
     }
     static private TamsMessage xSR() {
-        //log.debug("*	** xSR ***");
+        //log.info("*** xSR ***");
         TamsMessage m = new TamsMessage("xSR 1");
         m.setBinary(false);
         m.setReplyOneByte(false);
@@ -247,7 +247,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     // to listen for status changes from Tams system
     @Override
     public void reply(TamsReply r) {
-        //log.debug("*	** TamsReply ***");
+        //log.info("*** TamsReply ***");
         if(tmq.isEmpty()){
             tm = myDummy();
         } else
