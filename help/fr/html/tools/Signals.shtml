@@ -22,7 +22,7 @@
     JMRI: Signal Head Documentation <!-- Style -->
      <!-- /Style -->
 
-    <div id="container">
+    <div id="mBody">
       <!--#include virtual="/Header" -->
 
       <div id="mainContent">
@@ -42,6 +42,5 @@ Toute la documentation au sujet de la Signalisation JMRI est disponible sur la
         </div><!-- closes #mainContent-->
       </div><!-- closes #mBody-->
     </div><!-- closes #container -->
-  </div>
 </body>
 </html>
