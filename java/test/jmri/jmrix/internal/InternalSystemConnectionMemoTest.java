@@ -2,9 +2,7 @@ package jmri.jmrix.internal;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -14,16 +12,17 @@ public class InternalSystemConnectionMemoTest extends jmri.jmrix.SystemConnectio
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         scm = new InternalSystemConnectionMemo();
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(InternalSystemConnectionMemoTest.class);
-
 }

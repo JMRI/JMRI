@@ -2,9 +2,7 @@ package jmri.jmrix.loconet.pr2;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -27,5 +25,4 @@ public class PR2SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PR2SystemConnectionMemoTest.class);
-
 }

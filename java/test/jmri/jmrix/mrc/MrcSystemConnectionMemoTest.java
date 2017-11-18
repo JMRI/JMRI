@@ -2,9 +2,7 @@ package jmri.jmrix.mrc;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of MrcMonPanel
@@ -26,5 +24,7 @@ public class MrcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }
