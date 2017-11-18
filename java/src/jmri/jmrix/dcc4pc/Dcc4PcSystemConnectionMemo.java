@@ -71,7 +71,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
                 return getProgrammerManager().isAddressedModePossible();
             }
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     /**

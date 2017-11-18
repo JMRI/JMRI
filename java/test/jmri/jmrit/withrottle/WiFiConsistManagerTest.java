@@ -15,6 +15,7 @@ public class WiFiConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.initDebugCommandStation();
         cm = new WiFiConsistManager();
     }
     

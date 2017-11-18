@@ -1,10 +1,10 @@
 package jmri.jmrix.ieee802154;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * IEEE802154SystemConnectionMemoTest.java
@@ -14,38 +14,25 @@ import org.junit.Assert;
  *
  * @author	Paul Bender
  */
-public class IEEE802154SystemConnectionMemoTest extends TestCase {
+public class IEEE802154SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    public void testCtor() {
-        IEEE802154SystemConnectionMemo m = new IEEE802154SystemConnectionMemo();
-        Assert.assertNotNull("exists", m);
-    }
-
-    // from here down is testing infrastructure
-    public IEEE802154SystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", IEEE802154SystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IEEE802154SystemConnectionMemoTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        scm = new IEEE802154SystemConnectionMemo();
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
