@@ -54,7 +54,7 @@ abstract public class AbstractEditorTestBase {
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuHelp"));
         Assert.assertNotNull("Help Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 8, jmo.getItemCount());
+        Assert.assertEquals("Menu Item Count", 10, jmo.getItemCount());
     }
 
     @Test
