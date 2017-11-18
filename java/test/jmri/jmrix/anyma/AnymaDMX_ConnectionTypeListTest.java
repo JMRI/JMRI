@@ -1,4 +1,4 @@
-package jmri.jmrix.anyma.configurexml;
+package jmri.jmrix.anyma;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,30 +7,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * UsbLightManagerXmlTest.java
- *
- * Description: tests for the UsbLightManagerXml class
+ * Tests for AnymaDMX_ConnectionTypeList class.
  *
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class UsbLightManagerXmlTest {
+public class AnymaDMX_ConnectionTypeListTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("UsbLightManagerXml constructor",new UsbLightManagerXml());
+    public void ConstructorTest() {
+        Assert.assertNotNull("ConnectionConfig constructor", new AnymaDMX_ConnectionTypeList());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
-

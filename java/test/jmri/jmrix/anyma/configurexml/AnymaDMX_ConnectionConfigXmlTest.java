@@ -7,18 +7,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * UsbLightManagerXmlTest.java
+ * AnymaDMX_ConnectionConfigXmlTest.java
  *
- * Description: tests for the UsbLightManagerXml class
+ * Description: tests for the AnymaDMX_ConnectionConfigXml class
  *
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class UsbLightManagerXmlTest {
+public class AnymaDMX_ConnectionConfigXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("UsbLightManagerXml constructor",new UsbLightManagerXml());
+      Assert.assertNotNull("AnymaDMX_ConnectionConfigXml constructor",new AnymaDMX_ConnectionConfigXml());
     }
 
     // The minimal setup for log4J
