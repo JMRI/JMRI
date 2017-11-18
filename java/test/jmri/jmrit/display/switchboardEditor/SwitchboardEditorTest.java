@@ -2,7 +2,6 @@ package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.AbstractEditorTestBase;
-import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
  * Test simple functioning of SwitchboardEditor
@@ -79,16 +77,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         swe.setDefaultTextColor(ColorUtil.ColorPink);
         Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, swe.getDefaultTextColor());
-    }
-
-    @Test
-    public void checkHelpMenuExists() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e.setVisible(true);
-        EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuHelp"));
-        Assert.assertNotNull("Help Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 8, jmo.getItemCount());
     }
 
     @Before
