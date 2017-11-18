@@ -505,8 +505,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 try {
                     id = item.getAttribute("ident").getValue();
                     log.debug("Load " + id + " for [" + panel.getName() + "] via " + adapterName);
-                } catch (RuntimeException e) {
-                    throw e;
                 } catch (Exception e) {
                     log.debug("Load layout object for [" + panel.getName() + "] via " + adapterName);
                 }

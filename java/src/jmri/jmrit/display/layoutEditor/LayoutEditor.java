@@ -36,6 +36,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
@@ -50,6 +51,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
@@ -176,156 +178,156 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
-public class LayoutEditor extends PanelEditor implements MouseWheelListener {
+public class LayoutEditor extends PanelEditor implements VetoableChangeListener, MouseWheelListener {
 
     //Operational instance variables - not saved to disk
-    private JmriJFrame floatingEditToolBoxFrame = null;
-    private JScrollPane floatingEditContentScrollPane = null;
-    private JPanel floatEditHelpPanel = null;
-    private JPanel editToolBarPanel = null;
-    private JScrollPane editToolBarScrollPane = null;
-    private JPanel editToolBarContainerPanel = null;
-    private JPanel helpBarPanel = null;
-    private JPanel helpBar = new JPanel();
+    private transient JmriJFrame floatingEditToolBoxFrame = null;
+    private transient JScrollPane floatingEditContentScrollPane = null;
+    private transient JPanel floatEditHelpPanel = null;
+    private transient JPanel editToolBarPanel = null;
+    private transient JScrollPane editToolBarScrollPane = null;
+    private transient JPanel editToolBarContainerPanel = null;
+    private transient JPanel helpBarPanel = null;
+    private transient JPanel helpBar = new JPanel();
 
-    private Font toolBarFont = null;
+    private transient Font toolBarFont = null;
 
-    private ButtonGroup itemGroup = null;
+    private transient ButtonGroup itemGroup = null;
 
     //top row of radio buttons
-    private JLabel turnoutLabel = new JLabel();
-    private JRadioButton turnoutRHButton = new JRadioButton(Bundle.getMessage("RightHandAbbreviation"));
-    private JRadioButton turnoutLHButton = new JRadioButton(Bundle.getMessage("LeftHandAbbreviation"));
-    private JRadioButton turnoutWYEButton = new JRadioButton(Bundle.getMessage("WYEAbbreviation"));
-    private JRadioButton doubleXoverButton = new JRadioButton(Bundle.getMessage("DoubleCrossoverAbbreviation"));
-    private JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossover")); //key is also used by Control Panel
+    private transient JLabel turnoutLabel = new JLabel();
+    private transient JRadioButton turnoutRHButton = new JRadioButton(Bundle.getMessage("RightHandAbbreviation"));
+    private transient JRadioButton turnoutLHButton = new JRadioButton(Bundle.getMessage("LeftHandAbbreviation"));
+    private transient JRadioButton turnoutWYEButton = new JRadioButton(Bundle.getMessage("WYEAbbreviation"));
+    private transient JRadioButton doubleXoverButton = new JRadioButton(Bundle.getMessage("DoubleCrossoverAbbreviation"));
+    private transient JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossover")); //key is also used by Control Panel
     //Editor, placed in DisplayBundle
-    private JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossover")); //idem
-    private JRadioButton layoutSingleSlipButton = new JRadioButton(Bundle.getMessage("LayoutSingleSlip"));
-    private JRadioButton layoutDoubleSlipButton = new JRadioButton(Bundle.getMessage("LayoutDoubleSlip"));
+    private transient JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossover")); //idem
+    private transient JRadioButton layoutSingleSlipButton = new JRadioButton(Bundle.getMessage("LayoutSingleSlip"));
+    private transient JRadioButton layoutDoubleSlipButton = new JRadioButton(Bundle.getMessage("LayoutDoubleSlip"));
 
     //Default flow layout definitions for JPanels
-    private FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
-    private FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
-    private FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
+    private transient FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
+    private transient FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
+    private transient FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
 
     //top row of check boxes
-    private JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
+    private transient JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JPanel turnoutNamePanel = new JPanel(leftRowLayout);
-    private JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
-    private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
+    private transient JPanel turnoutNamePanel = new JPanel(leftRowLayout);
+    private transient JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
+    private transient JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JComboBox<String> rotationComboBox = null;
-    private JPanel rotationPanel = new JPanel(leftRowLayout);
+    private transient JComboBox<String> rotationComboBox = null;
+    private transient JPanel rotationPanel = new JPanel(leftRowLayout);
 
     //2nd row of radio buttons
-    private JLabel trackLabel = new JLabel();
-    private JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
-    private JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
+    private transient JLabel trackLabel = new JLabel();
+    private transient JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
+    private transient JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
 
     //2nd row of check boxes
-    private JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
-    private JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
-    private JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
+    private transient JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
+    private transient JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
+    private transient JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
 
-    private JLabel blockNameLabel = new JLabel();
-    private JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
+    private transient JLabel blockNameLabel = new JLabel();
+    private transient JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
+    private transient JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
 
-    private JLabel blockSensorNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
-    private JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
-    private JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
+    private transient JLabel blockSensorNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
+    private transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
+    private transient JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     //3rd row of radio buttons (and any associated text fields)
-    private JLabel nodesLabel = new JLabel();
-    private JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
-    private JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
-    private JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
+    private transient JLabel nodesLabel = new JLabel();
+    private transient JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
+    private transient JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
+    private transient JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
 
-    private JLabel labelsLabel = new JLabel();
-    private JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
-    private JTextField textLabelTextField = new JTextField(12);
+    private transient JLabel labelsLabel = new JLabel();
+    private transient JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
+    private transient JTextField textLabelTextField = new JTextField(12);
 
-    private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
-    private JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
+    private transient JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
+    private transient JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
-    private JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
+    private transient JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
+    private transient JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     //4th row of radio buttons (and any associated text fields)
-    private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
+    private transient JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
-    private JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
-    private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
+    private transient JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
+    private transient JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton sensorButton = new JRadioButton(Bundle.getMessage("SensorIcon"));
-    private JmriBeanComboBox sensorComboBox = new JmriBeanComboBox(
+    private transient JRadioButton sensorButton = new JRadioButton(Bundle.getMessage("SensorIcon"));
+    private transient JmriBeanComboBox sensorComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
-    private JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(
+    private transient JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
+    private transient JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
+    private transient JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
 
-    private JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
+    private transient JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
 
-    public MultiIconEditor sensorIconEditor = null;
-    public JFrame sensorFrame = null;
+    public transient MultiIconEditor sensorIconEditor = null;
+    public transient JFrame sensorFrame = null;
 
-    public MultiIconEditor signalIconEditor = null;
-    public JFrame signalFrame = null;
+    public transient MultiIconEditor signalIconEditor = null;
+    public transient JFrame signalFrame = null;
 
-    private MultiIconEditor iconEditor = null;
-    private JFrame iconFrame = null;
+    private transient MultiIconEditor iconEditor = null;
+    private transient JFrame iconFrame = null;
 
-    private MultiSensorIconFrame multiSensorFrame = null;
+    private transient MultiSensorIconFrame multiSensorFrame = null;
 
-    private JLabel xLabel = new JLabel("00");
-    private JLabel yLabel = new JLabel("00");
+    private transient JLabel xLabel = new JLabel("00");
+    private transient JLabel yLabel = new JLabel("00");
 
-    private JPanel zoomPanel = new JPanel();
-    private JLabel zoomLabel = new JLabel("x1");
+    private transient JPanel zoomPanel = new JPanel();
+    private transient JLabel zoomLabel = new JLabel("x1");
 
-    private JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-    private JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
-    private JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
-    private JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
-    private JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
-    private JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
-    private JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
-    private JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
-    private JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
-    private JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
-    private JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
-    private JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
-    private JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
+    private transient JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+    private transient JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+    private transient JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+    private transient JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+    private transient JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
+    private transient JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+    private transient JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+    private transient JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+    private transient JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+    private transient JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
+    private transient JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
+    private transient JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
+    private transient JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
 
-    private JPanel locationPanel = new JPanel();
+    private transient JPanel locationPanel = new JPanel();
 
     //end of main panel controls
-    private boolean delayedPopupTrigger = false;
-    private Point2D currentPoint = new Point2D.Double(100.0, 100.0);
-    private Point2D dLoc = new Point2D.Double(0.0, 0.0);
+    private transient boolean delayedPopupTrigger = false;
+    private transient Point2D currentPoint = new Point2D.Double(100.0, 100.0);
+    private transient Point2D dLoc = new Point2D.Double(0.0, 0.0);
 
-    private int toolbarHeight = 100;
-    private int toolbarWidth = 100;
+    private transient int toolbarHeight = 100;
+    private transient int toolbarWidth = 100;
 
-    //private int numTurnouts = 0;
-    private TrackSegment newTrack = null;
-    private boolean panelChanged = false;
+    //private transient int numTurnouts = 0;
+    private transient TrackSegment newTrack = null;
+    private transient boolean panelChanged = false;
 
     //grid size in pixels
-    private int gridSize1st = 10;
+    private transient int gridSize1st = 10;
     // secondary grid
-    private int gridSize2nd = 10;
+    private transient int gridSize2nd = 10;
 
     //size of point boxes
     protected static final double SIZE = 3.0;
@@ -383,108 +385,108 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //note: these only change when setTurnoutCircleSize is called
     //using these avoids having to call getTurnoutCircleSize() and
     //the multiply (x2) and the int -> double conversion overhead
-    private double circleRadius = SIZE * getTurnoutCircleSize();
-    private double circleDiameter = 2.0 * circleRadius;
+    private transient double circleRadius = SIZE * getTurnoutCircleSize();
+    private transient double circleDiameter = 2.0 * circleRadius;
 
     //selection variables
-    private boolean selectionActive = false;
-    private double selectionX = 0.0;
-    private double selectionY = 0.0;
-    private double selectionWidth = 0.0;
-    private double selectionHeight = 0.0;
+    private transient boolean selectionActive = false;
+    private transient double selectionX = 0.0;
+    private transient double selectionY = 0.0;
+    private transient double selectionWidth = 0.0;
+    private transient double selectionHeight = 0.0;
 
     //Option menu items
-    private JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
 
-    private JRadioButtonMenuItem toolBarSideTopButton = null;
-    private JRadioButtonMenuItem toolBarSideLeftButton = null;
-    private JRadioButtonMenuItem toolBarSideBottomButton = null;
-    private JRadioButtonMenuItem toolBarSideRightButton = null;
-    private JRadioButtonMenuItem toolBarSideFloatButton = null;
+    private transient JRadioButtonMenuItem toolBarSideTopButton = null;
+    private transient JRadioButtonMenuItem toolBarSideLeftButton = null;
+    private transient JRadioButtonMenuItem toolBarSideBottomButton = null;
+    private transient JRadioButtonMenuItem toolBarSideRightButton = null;
+    private transient JRadioButtonMenuItem toolBarSideFloatButton = null;
 
-    private JMenu toolBarFontSizeMenu = new JMenu(Bundle.getMessage("FontSize"));
-    private JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
-    private JMenu dropDownListsDisplayOrderMenu = new JMenu(Bundle.getMessage("DropDownListsDisplayOrder"));
+    private transient JMenu toolBarFontSizeMenu = new JMenu(Bundle.getMessage("FontSize"));
+    private transient JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
+    private transient JMenu dropDownListsDisplayOrderMenu = new JMenu(Bundle.getMessage("DropDownListsDisplayOrder"));
 
-    private JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem controlCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem animationCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem showHelpCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
-    private JMenu scrollMenu = null;
-    private JRadioButtonMenuItem scrollBothMenuItem = null;
-    private JRadioButtonMenuItem scrollNoneMenuItem = null;
-    private JRadioButtonMenuItem scrollHorizontalMenuItem = null;
-    private JRadioButtonMenuItem scrollVerticalMenuItem = null;
-    private JMenu tooltipMenu = null;
-    private JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
-    private JRadioButtonMenuItem tooltipNoneMenuItem = null;
-    private JRadioButtonMenuItem tooltipInEditMenuItem = null;
-    private JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
+    private transient JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem controlCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem animationCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem showHelpCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
+    private transient JMenu scrollMenu = null;
+    private transient JRadioButtonMenuItem scrollBothMenuItem = null;
+    private transient JRadioButtonMenuItem scrollNoneMenuItem = null;
+    private transient JRadioButtonMenuItem scrollHorizontalMenuItem = null;
+    private transient JRadioButtonMenuItem scrollVerticalMenuItem = null;
+    private transient JMenu tooltipMenu = null;
+    private transient JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipNoneMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipInEditMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
 
-    private JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
-    private ButtonGroup turnoutCircleSizeButtonGroup = null;
+    private transient JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
+    private transient ButtonGroup turnoutCircleSizeButtonGroup = null;
 
-    private boolean turnoutDrawUnselectedLeg = true;
-    private boolean autoAssignBlocks = false;
+    private transient boolean turnoutDrawUnselectedLeg = true;
+    private transient boolean autoAssignBlocks = false;
 
     //Selected point information
-    private Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
-    protected Object selectedObject = null;       //selected object, null if nothing selected
-    protected Object prevSelectedObject = null;   //previous selected object, for undo
-    private int selectedPointType = 0;          //hit point type within the selected object
+    private transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
+    protected transient Object selectedObject = null;       //selected object, null if nothing selected
+    protected transient Object prevSelectedObject = null;   //previous selected object, for undo
+    private transient int selectedPointType = 0;          //hit point type within the selected object
 
-    private LayoutTrack foundObject = null; //found object, null if nothing found
+    private transient LayoutTrack foundObject = null; //found object, null if nothing found
 
-    private Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
+    private transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
 
-    private int foundPointType = 0; //connection type within the found object
+    private transient int foundPointType = 0; //connection type within the found object
 
     @SuppressWarnings("unused")
-    private boolean foundNeedsConnect = false; //true if found point needs a connection
-    private LayoutTrack beginObject = null; //begin track segment connection object, null if
+    private transient boolean foundNeedsConnect = false; //true if found point needs a connection
+    private transient LayoutTrack beginObject = null; //begin track segment connection object, null if
     //none
-    private Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
-    private int beginPointType = LayoutTrack.NONE; //connection type within begin connection object
-    private Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
+    private transient Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
+    private transient int beginPointType = LayoutTrack.NONE; //connection type within begin connection object
+    private transient Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
 
     //Lists of items that describe the Layout, and allow it to be drawn
     //Each of the items must be saved to disk over sessions
-    public List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
-    public List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
-    public List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
-    public List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
-    public List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
-    public List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
-    public List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
+    public transient List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
+    public transient List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
+    public transient List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
+    public transient List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
+    public transient List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
+    public transient List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
+    public transient List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
 
-    private List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
+    private transient List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
 
     // PositionableLabel's
-    public List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
-    public List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
-    public List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
-    public List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
-    public List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
+    public transient List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
+    public transient List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
+    public transient List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
+    public transient List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
+    public transient List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
     // counts used to determine unique internal names
-    private int numAnchors = 0;
-    private int numEndBumpers = 0;
-    private int numEdgeConnectors = 0;
-    private int numTrackSegments = 0;
-    private int numLevelXings = 0;
-    private int numLayoutSlips = 0;
-    private int numLayoutTurnouts = 0;
-    private int numLayoutTurntables = 0;
+    private transient int numAnchors = 0;
+    private transient int numEndBumpers = 0;
+    private transient int numEdgeConnectors = 0;
+    private transient int numTrackSegments = 0;
+    private transient int numLevelXings = 0;
+    private transient int numLayoutSlips = 0;
+    private transient int numLayoutTurnouts = 0;
+    private transient int numLayoutTurntables = 0;
 
-    public LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
     @Nonnull
     public LayoutEditorFindItems getFinder() {
@@ -492,70 +494,70 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //persistent instance variables - saved to disk with Save Panel
-    private int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
-    private int upperLeftY = 0; // (not panel)
+    private transient int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
+    private transient int upperLeftY = 0; // (not panel)
 
-    private int windowWidth = 0;
-    private int windowHeight = 0;
+    private transient int windowWidth = 0;
+    private transient int windowHeight = 0;
 
-    private int panelWidth = 0;
-    private int panelHeight = 0;
+    private transient int panelWidth = 0;
+    private transient int panelHeight = 0;
 
-    private float mainlineTrackWidth = 4.0F;
-    private float sideTrackWidth = 2.0F;
+    private transient float mainlineTrackWidth = 4.0F;
+    private transient float sideTrackWidth = 2.0F;
 
-    private Color defaultTrackColor = Color.black;
-    private Color defaultOccupiedTrackColor = Color.red;
-    private Color defaultAlternativeTrackColor = Color.white;
-    private Color defaultBackgroundColor = Color.lightGray;
-    private Color defaultTextColor = Color.black;
+    private transient Color defaultTrackColor = Color.black;
+    private transient Color defaultOccupiedTrackColor = Color.red;
+    private transient Color defaultAlternativeTrackColor = Color.white;
+    private transient Color defaultBackgroundColor = Color.lightGray;
+    private transient Color defaultTextColor = Color.black;
 
-    private String layoutName = "";
-    private double xScale = 1.0;
-    private double yScale = 1.0;
-    private boolean animatingLayout = true;
-    private boolean showHelpBar = true;
-    private boolean drawGrid = true;
+    private transient String layoutName = "";
+    private transient double xScale = 1.0;
+    private transient double yScale = 1.0;
+    private transient boolean animatingLayout = true;
+    private transient boolean showHelpBar = true;
+    private transient boolean drawGrid = true;
 
-    private boolean snapToGridOnAdd = false;
-    private boolean snapToGridOnMove = false;
-    private boolean snapToGridInvert = false;
+    private transient boolean snapToGridOnAdd = false;
+    private transient boolean snapToGridOnMove = false;
+    private transient boolean snapToGridInvert = false;
 
-    private boolean antialiasingOn = false;
-    private boolean highlightSelectedBlockFlag = false;
+    private transient boolean antialiasingOn = false;
+    private transient boolean highlightSelectedBlockFlag = false;
 
-    private boolean turnoutCirclesWithoutEditMode = false;
-    private boolean tooltipsWithoutEditMode = false;
-    private boolean tooltipsInEditMode = true;
+    private transient boolean turnoutCirclesWithoutEditMode = false;
+    private transient boolean tooltipsWithoutEditMode = false;
+    private transient boolean tooltipsInEditMode = true;
 
     //turnout size parameters - saved with panel
-    private double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
-    private double turnoutCX = LayoutTurnout.turnoutCXDefault;
-    private double turnoutWid = LayoutTurnout.turnoutWidDefault;
-    private double xOverLong = LayoutTurnout.xOverLongDefault; //DOUBLE_XOVER, RH_XOVER, LH_XOVER
-    private double xOverHWid = LayoutTurnout.xOverHWidDefault;
-    private double xOverShort = LayoutTurnout.xOverShortDefault;
-    private boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing.
+    private transient double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
+    private transient double turnoutCX = LayoutTurnout.turnoutCXDefault;
+    private transient double turnoutWid = LayoutTurnout.turnoutWidDefault;
+    private transient double xOverLong = LayoutTurnout.xOverLongDefault; //DOUBLE_XOVER, RH_XOVER, LH_XOVER
+    private transient double xOverHWid = LayoutTurnout.xOverHWidDefault;
+    private transient double xOverShort = LayoutTurnout.xOverShortDefault;
+    private transient boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing.
 
     //saved state of options when panel was loaded or created
-    private boolean savedEditMode = true;
-    private boolean savedPositionable = true;
-    private boolean savedControlLayout = true;
-    private boolean savedAnimatingLayout = true;
-    private boolean savedShowHelpBar = true;
+    private transient boolean savedEditMode = true;
+    private transient boolean savedPositionable = true;
+    private transient boolean savedControlLayout = true;
+    private transient boolean savedAnimatingLayout = true;
+    private transient boolean savedShowHelpBar = true;
 
     //zoom
-    private double minZoom = 0.25;
-    private double maxZoom = 8.0;
+    private transient double minZoom = 0.25;
+    private transient double maxZoom = 8.0;
 
     //Special sub group for color treatment when active
     JPanel blockPropertiesPanel = null;
 
     //A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
-    protected HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    protected transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
     //Antialiasing rendering
-    private static final RenderingHints antialiasing = new RenderingHints(
+    private transient static final RenderingHints antialiasing = new RenderingHints(
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -566,8 +568,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         eRIGHT("right"),
         eFLOAT("float");
 
-        private String name;
-        private static final Map<String, ToolBarSide> ENUM_MAP;
+        private transient String name;
+        private transient static final Map<String, ToolBarSide> ENUM_MAP;
 
         ToolBarSide(String name) {
             this.name = name;
@@ -592,8 +594,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    private ToolBarSide toolBarSide = ToolBarSide.eTOP;
-    private boolean toolBarIsWide = true;
+    private transient ToolBarSide toolBarSide = ToolBarSide.eTOP;
+    private transient boolean toolBarIsWide = true;
 
     public LayoutEditor() {
         this("My Layout");
@@ -2102,7 +2104,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * set the maximum number of rows based on screen size
      *
-     * @param inComboBox the combo box
+     * @param inComboBox
      */
     public static void setupComboBoxMaxRows(@Nonnull JmriBeanComboBox inComboBox) {
         // find the max height of all popup items
@@ -2389,22 +2391,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //if it matches the 1st choice then select it (for now; it will be updated later)
             ddldoChoiceMenuItem.setSelected(ddldoChoice.equals(ddldoChoices[0]));
         }
-        //TODO: update menu item based on focused combobox (if any)
-        //note: commented out to avoid findbug warning
-        //dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
-        //    @Override
-        //    public void menuSelected(MenuEvent event) {
-        //        log.debug("update menu item based on focused combobox");
-        //    }
-        //
-        //    @Override
-        //    public void menuDeselected(MenuEvent event) {
-        //    }
-        //
-        //    @Override
-        //    public void menuCanceled(MenuEvent event) {
-        //    }
-        //});
+        dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent event) {
+                ///TODO: update menu item based on focused combobox (if any)
+                log.debug("update menu item based on focused combobox");
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent event) {
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent event) {
+            }
+        });
         toolBarMenu.add(dropDownListsDisplayOrderMenu);
 
         //
@@ -3014,7 +3015,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     //update drop down menu display order menu
     //
-    private JmriBeanComboBox.DisplayOptions gDDMDO = JmriBeanComboBox.DisplayOptions.DISPLAYNAME;
+    private transient JmriBeanComboBox.DisplayOptions gDDMDO = JmriBeanComboBox.DisplayOptions.DISPLAYNAME;
 
     private void updateDropDownMenuDisplayOrderMenu() {
         Component focusedComponent = getFocusOwner();
@@ -3365,7 +3366,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     } //setupZoomMenu
 
-    private MouseWheelListener[] mouseWheelListeners;
+    private transient MouseWheelListener[] mouseWheelListeners;
 
     // scroll bar listener to update x & y coordinates in toolbar on scroll
     public void scrollBarAdjusted(AdjustmentEvent event) {
@@ -3810,13 +3811,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     |* Dialog box to enter new track widths *|
     \*======================================*/
     //operational variables for enter track width pane
-    private JmriJFrame enterTrackWidthFrame = null;
+    private transient JmriJFrame enterTrackWidthFrame = null;
     private boolean enterTrackWidthOpen = false;
     private boolean trackWidthChange = false;
-    private JTextField sideTrackWidthField = new JTextField(6);
-    private JTextField mainlineTrackWidthField = new JTextField(6);
-    private JButton trackWidthDone;
-    private JButton trackWidthCancel;
+    private transient JTextField sideTrackWidthField = new JTextField(6);
+    private transient JTextField mainlineTrackWidthField = new JTextField(6);
+    private transient JButton trackWidthDone;
+    private transient JButton trackWidthCancel;
 
     //display dialog for entering track widths
     protected void enterTrackWidth() {
@@ -3976,13 +3977,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     |* Dialog box to enter new grid sizes *|
     \*====================================*/
     //operational variables for enter grid sizes pane
-    private JmriJFrame enterGridSizesFrame = null;
+    private transient JmriJFrame enterGridSizesFrame = null;
     private boolean enterGridSizesOpen = false;
     private boolean gridSizesChange = false;
-    private JTextField primaryGridSizeField = new JTextField(6);
-    private JTextField secondaryGridSizeField = new JTextField(6);
-    private JButton gridSizesDone;
-    private JButton gridSizesCancel;
+    private transient JTextField primaryGridSizeField = new JTextField(6);
+    private transient JTextField secondaryGridSizeField = new JTextField(6);
+    private transient JButton gridSizesDone;
+    private transient JButton gridSizesCancel;
 
     //display dialog for entering grid sizes
     protected void enterGridSizes() {
@@ -4145,13 +4146,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     |* Dialog box to enter new reporter info *|
     \*=======================================*/
     //operational variables for enter reporter pane
-    private JmriJFrame enterReporterFrame = null;
+    private transient JmriJFrame enterReporterFrame = null;
     private boolean reporterOpen = false;
-    private JTextField xPositionField = new JTextField(6);
-    private JTextField yPositionField = new JTextField(6);
-    private JTextField reporterNameField = new JTextField(6);
-    private JButton reporterDone;
-    private JButton reporterCancel;
+    private transient JTextField xPositionField = new JTextField(6);
+    private transient JTextField yPositionField = new JTextField(6);
+    private transient JTextField reporterNameField = new JTextField(6);
+    private transient JButton reporterDone;
+    private transient JButton reporterCancel;
 
     //display dialog for entering Reporters
     protected void enterReporter(int defaultX, int defaultY) {
@@ -4336,14 +4337,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     |*  translate track diagram info *|
     \*===============================*/
     //operational variables for scale/translate track diagram pane
-    private JmriJFrame scaleTrackDiagramFrame = null;
+    private transient JmriJFrame scaleTrackDiagramFrame = null;
     private boolean scaleTrackDiagramOpen = false;
-    private JTextField xFactorField = new JTextField(6);
-    private JTextField yFactorField = new JTextField(6);
-    private JTextField xTranslateField = new JTextField(6);
-    private JTextField yTranslateField = new JTextField(6);
-    private JButton scaleTrackDiagramDone;
-    private JButton scaleTrackDiagramCancel;
+    private transient JTextField xFactorField = new JTextField(6);
+    private transient JTextField yFactorField = new JTextField(6);
+    private transient JTextField xTranslateField = new JTextField(6);
+    private transient JTextField yTranslateField = new JTextField(6);
+    private transient JButton scaleTrackDiagramDone;
+    private transient JButton scaleTrackDiagramCancel;
 
     //display dialog for scaling the track diagram
     protected void scaleTrackDiagram() {
@@ -4588,16 +4589,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     |* Dialog box to enter move selection info *|
     \*=========================================*/
     //operational variables for move selection pane
-    private JmriJFrame moveSelectionFrame = null;
+    private transient JmriJFrame moveSelectionFrame = null;
     private boolean moveSelectionOpen = false;
-    private JTextField xMoveField = new JTextField(6);
-    private JTextField yMoveField = new JTextField(6);
-    private JButton moveSelectionDone;
-    private JButton moveSelectionCancel;
+    private transient JTextField xMoveField = new JTextField(6);
+    private transient JTextField yMoveField = new JTextField(6);
+    private transient JButton moveSelectionDone;
+    private transient JButton moveSelectionCancel;
     private boolean canUndoMoveSelection = false;
     private double undoDeltaX = 0.0;
     private double undoDeltaY = 0.0;
-    private Rectangle2D undoRect;
+    private transient Rectangle2D undoRect;
 
     //display dialog for translation a selection
     protected void moveSelection() {
@@ -5198,36 +5199,34 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
     // all matching items are then added to the resulting List
-    //note: currently unused; commented out to avoid findbugs warning
-    //private static List testEachItemInListOfLists(
-    //        @Nonnull List<List> listOfListsOfObjects,
-    //        @Nonnull Predicate<Object> tester) {
-    //    List result = new ArrayList<>();
-    //    for (List<Object> listOfObjects : listOfListsOfObjects) {
-    //        List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
-    //        result.addAll(l);
-    //    }
-    //    return result;
-    //}
+    private static List testEachItemInListOfLists(
+            @Nonnull List<List> listOfListsOfObjects,
+            @Nonnull Predicate<Object> tester) {
+        List result = new ArrayList<>();
+        for (List<Object> listOfObjects : listOfListsOfObjects) {
+            List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
+            result.addAll(l);
+        }
+        return result;
+    }
 
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
     // and return the first one that matches
     //TODO: make this public? (it is useful! ;-)
-    //note: currently unused; commented out to avoid findbugs warning
-    //private static Object findFirstMatchingItemInListOfLists(
-    //        @Nonnull List<List> listOfListsOfObjects,
-    //        @Nonnull Predicate<Object> tester) {
-    //    Object result = null;
-    //    for (List listOfObjects : listOfListsOfObjects) {
-    //        Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
-    //        if (opt.isPresent()) {
-    //            result = opt.get();
-    //            break;
-    //        }
-    //    }
-    //    return result;
-    //}
+    private static Object findFirstMatchingItemInListOfLists(
+            @Nonnull List<List> listOfListsOfObjects,
+            @Nonnull Predicate<Object> tester) {
+        Object result = null;
+        for (List listOfObjects : listOfListsOfObjects) {
+            Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
+            if (opt.isPresent()) {
+                result = opt.get();
+                break;
+            }
+        }
+        return result;
+    }
 
     private boolean checkControls(boolean useRectangles) {
         Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
@@ -6335,8 +6334,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    private List<Positionable> _positionableSelection = new ArrayList<>();
-    private List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
+    private transient List<Positionable> _positionableSelection = new ArrayList<>();
+    private transient List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
 
     private void highLightSelection(Graphics2D g) {
         Stroke stroke = g.getStroke();
@@ -8735,7 +8734,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     // singleton (one per-LayoutEditor) accessors
     //
-    private ConnectivityUtil conTools = null;
+    private transient ConnectivityUtil conTools = null;
 
     public ConnectivityUtil getConnectivityUtil() {
         if (conTools == null) {
@@ -8744,7 +8743,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return conTools;
     } //getConnectivityUtil
 
-    private LayoutEditorTools tools = null;
+    private transient LayoutEditorTools tools = null;
 
     public LayoutEditorTools getLETools() {
         if (tools == null) {
@@ -8753,7 +8752,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return tools;
     } //getLETools
 
-    private LayoutEditorAuxTools auxTools = null;
+    private transient LayoutEditorAuxTools auxTools = null;
 
     public LayoutEditorAuxTools getLEAuxTools() {
         if (auxTools == null) {
@@ -8762,7 +8761,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return auxTools;
     } //getLEAuxTools
 
-    private LayoutTrackEditors layoutTrackEditors = null;
+    private transient LayoutTrackEditors layoutTrackEditors = null;
 
     public LayoutTrackEditors getLayoutTrackEditors() {
         if (layoutTrackEditors == null) {
@@ -8771,7 +8770,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return layoutTrackEditors;
     }   // getLayoutTrackEditors
 
-    private LayoutEditorChecks layoutEditorChecks = null;
+    private transient LayoutEditorChecks layoutEditorChecks = null;
 
     public LayoutEditorChecks getLEChecks() {
         if (layoutEditorChecks == null) {
@@ -9335,7 +9334,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * highlight the specified block
-     *
      * @param inBlock the block
      * @return true if block was highlighted
      */
@@ -9365,11 +9363,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * highlight the specified layout block
-     *
      * @param inLayoutBlock the layout block
      * @return true if layout block was highlighted
      */
-    public boolean highlightLayoutBlock(@Nonnull LayoutBlock inLayoutBlock) {
+    public boolean highlightLayoutBlock(@Nullable LayoutBlock inLayoutBlock) {
         return highlightBlock(inLayoutBlock.getBlock());
     } //highlightLayoutBlock
 
@@ -10343,6 +10340,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //initialize logging
-    private final static Logger log
+    private transient final static Logger log
             = LoggerFactory.getLogger(LayoutEditor.class);
 }
