@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
     AnymaDMX_TrafficControllerTest.class,
     AnymaDMX_UsbLightTest.class,
     AnymaDMX_UsbPortAdapterTest.class,
-    UsbLightManagerTest.class,})
+    UsbLightManagerTest.class,
+    jmri.jmrix.anyma.configurexml.PackageTest.class,
+    })
 
 /**
  * Tests for the jmri.jmrix.acela.configurexml package.

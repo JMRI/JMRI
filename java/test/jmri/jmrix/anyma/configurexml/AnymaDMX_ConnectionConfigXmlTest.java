@@ -31,5 +31,4 @@ public class AnymaDMX_ConnectionConfigXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }

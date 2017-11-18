@@ -31,5 +31,4 @@ public class UsbLightManagerXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
