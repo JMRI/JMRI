@@ -1,25 +1,21 @@
 package jmri.jmrix.xpa;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.xpa.XpaSystemConnectionMemo class.
  *
  * @author Paul Bender
  */
-public class XpaSystemConnectionMemoTest extends TestCase {
+public class XpaSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    public void testCtor() {
-        XpaSystemConnectionMemo t = new XpaSystemConnectionMemo();
-        Assert.assertNotNull(t);
-    }
-
+    @Test
     public void testGetandSetXpaTrafficController() {
-        XpaSystemConnectionMemo t = new XpaSystemConnectionMemo();
+        XpaSystemConnectionMemo t = (XpaSystemConnectionMemo) scm;
         // first, check to see that an exception is
         // thrown when null is passed.
         boolean exceptionThrown = false;
@@ -36,31 +32,23 @@ public class XpaSystemConnectionMemoTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public XpaSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XpaSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XpaSystemConnectionMemoTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        scm = new XpaSystemConnectionMemo();
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

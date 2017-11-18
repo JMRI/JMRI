@@ -11,14 +11,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class MapleSystemConnectionMemoTest {
-
-    MapleSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists", memo);
-    }
+public class MapleSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Test
     public void systemPrefixTest() {
@@ -27,20 +20,28 @@ public class MapleSystemConnectionMemoTest {
         Assert.assertEquals("Special System Prefix", "K9", m.getSystemPrefix());
     }
 
-    @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficController() {
-          @Override
-          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
-          }
-       };
-       memo = new MapleSystemConnectionMemo();
+    @Override
+    @Test
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        SerialTrafficController tc = new SerialTrafficController() {
+            @Override
+            public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+            }
+        };
+        scm = new MapleSystemConnectionMemo();
+    }
+
+    @Override
     @After
-    public void tearDown(){
-        memo = null;
+    public void tearDown() {
+        scm = null;
         JUnitUtil.tearDown();
     }
 

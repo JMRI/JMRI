@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.xpa.XpaTest");  // no tests in this class itself
         suite.addTest(new TestSuite(XpaMessageTest.class));
         suite.addTest(new TestSuite(XpaTrafficControllerTest.class));
-        suite.addTest(new TestSuite(XpaSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XpaSystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaTurnoutManagerTest.class));

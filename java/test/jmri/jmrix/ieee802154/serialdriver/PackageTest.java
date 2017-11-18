@@ -25,7 +25,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.ieee802154.serialdriver.SerialTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(SerialSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialNodeTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialDriverAdapterTest.class));

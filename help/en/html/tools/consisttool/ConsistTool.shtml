@@ -160,10 +160,22 @@
 	<h4>Available JMRI Consist Managers</h4>
 		<ul>
 		<li>
-		      The <i>Generic Consist Manager</i> is used on any system 
+		      The <i>Generic Consist Managers</i> are used on any system 
 		      which does not have it's own consist manager, but supports 
-		      operations mode programming.  This manager is only 
+		      either operations mode programming or a sending raw DCC 
+                      packets.
+
+                    <br>
+                      There are two generic consist managers, one uses
+                      operations mode programming to change CV19, and the 
+                      other sends a special DCC packet to change CV19.  Which 
+                      version is used is dependent on the support the 
+                      associated system provides, and is not user selectable.
+
+                   <br>
+                      The Generic Consist Managers only 
 		      able to manipulate Decoder Assisted Consists.
+
 		   <br>
 		      <i>The Generic Consist Manager bypasses any routines the 
 		      command station has to set the consist address.</i>  The 
@@ -219,7 +231,51 @@
 		      station's memory.  Since the command station is bypassed to create
 		      Advanced Consists, these cannot be read from the command station.
 		</li>
+                <li>
+		      The <i>Internal Consist Manager</i> is a special consist 
+                      manager associated with the Internal JMRI system.  It 
+                      functions like the <i>Generic Consist Managers</i>, but 
+                      it is a available as a user selectable option so that 
+                      users can choose to bypass a system specific consist 
+                      manager.
+                </li>
 		</ul>
+
+	<h4>Selecting a Consist Manager</h4>
+
+        <p>
+        To select the consist manager in use, we first need to open the defaults tab in the preferences. 
+        </p>
+
+	<img src="images/Preferences-ConsistManagerSelection-Annotated.png" alt="Annotated User Preferences window" />
+
+        <p>
+        Once the preferences are loaded, the choices for the consist manager will be selectable in the "Consists" column (inside the box labeled 1 in the figure above).  Here we see two choices, one for a Loconet connection, labeled A and one for the Internal connection labeled B.  If you have more system connections available, other options may be available as well.
+        </p>
+
+        <p>
+        If you choose option A, then you choose to use the consist manager 
+        associated with the system.  This will either be a system specific
+        consist manager or one of the generic consist managers, depending
+        on the support of the system.
+        </p>
+        
+        <p>
+        If you choose option B, then the <i>Internal Consist Manager</i> 
+        manager is used.  In this case, if there is a selection made in the 
+        Command Station column (in the box labeled 2 in the figure) then the
+        consist will be created on the system with the selected command station.
+        This selection will cause consists to be created using a special DCC 
+        packet for creating consists.
+        </p>
+
+        <p>
+        If you choose option B and there is no selection for the command station,
+        consists will be created on the system with an Ops Mode Programmer 
+        selected in Column 3.  This selection will cause consists to be created
+        using Operations Mode Programming.  Note that if the Internal system 
+        is selected in this case, no consists will be created.
+        </p>
 
 	<a name="tool" id="tool">
 	</a><h2>Using the Consist Tool</h2>

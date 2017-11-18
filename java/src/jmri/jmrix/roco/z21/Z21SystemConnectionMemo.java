@@ -97,7 +97,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
         }
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
     /**
