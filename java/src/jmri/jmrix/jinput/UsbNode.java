@@ -55,8 +55,8 @@ public class UsbNode extends DefaultMutableTreeNode {
         if ((a != null) && (a instanceof UsbNode)) {
             UsbNode usbNode = (UsbNode) a;
             result = (name.equals(usbNode.name)
-                && (controller == usbNode.controller)
-                && (component == usbNode.component));
+                    && (controller == usbNode.controller)
+                    && (component == usbNode.component));
         }
         return result;
     }
@@ -119,18 +119,20 @@ public class UsbNode extends DefaultMutableTreeNode {
      * @param name       the node name
      * @param controller the input controller
      * @param component  the input component
-     * @return either an existing node with the same name or newly created
+     * @return the node, either an existing node with the same controller or
+     *         component, or newly created
      */
     static public UsbNode getNode(String name, Controller controller, Component component) {
-        UsbNode result = NODES.get(name);
+        Object key = (component != null) ? component : controller;
+        UsbNode result = NODES.get(key);
         if (result == null) {
             result = new UsbNode(name, controller, component);
-            NODES.put(name, result);
+            NODES.put(key, result);
         }
         return result;
     }
 
-    private static final HashMap<String, UsbNode> NODES = new HashMap<>();
+    private static final HashMap<Object, UsbNode> NODES = new HashMap<>();
 
     private final static Logger log = LoggerFactory.getLogger(UsbNode.class);
 }
