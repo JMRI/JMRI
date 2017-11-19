@@ -63,7 +63,7 @@ import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12118,7 +12118,7 @@ public class LayoutEditorTools {
         BeanDetails(@Nonnull String beanType, @Nonnull Manager manager) {
             beanCombo = new JmriBeanComboBox(manager);
             beanCombo.setFirstItemBlank(true);
-            LayoutEditor.setupComboBoxMaxRows(beanCombo);
+            JComboBoxUtil.setupComboBoxMaxRows(beanCombo);
 
             // I18N translate from type (Sensor) to BeanNameSensor
             // to use NamedBeanBundle property

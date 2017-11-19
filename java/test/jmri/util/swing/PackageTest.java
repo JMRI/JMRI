@@ -39,6 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(GuiUtilBaseTest.class));
         suite.addTest(new JUnit4TestAdapter(JmriBeanComboBoxTest.class));
         suite.addTest(new JUnit4TestAdapter(JMenuUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(JComboBoxUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(JToolBarUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(JTreeUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(JmriPanelTest.class));
