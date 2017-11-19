@@ -81,6 +81,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         javax.swing.JLabel sideRailColorLabel = new javax.swing.JLabel();
         sideRailColorChooserPanel = new jmri.util.swing.ButtonSwatchColorChooserPanel();
         previewPanel = new javax.swing.JPanel();
+        previewLayeredPane = new javax.swing.JLayeredPane();
         presetsLabel = new javax.swing.JLabel();
         presetsComboBox = new javax.swing.JComboBox<>();
         cancelButton = new javax.swing.JButton();
@@ -589,15 +590,31 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         previewPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
 
+        javax.swing.GroupLayout previewLayeredPaneLayout = new javax.swing.GroupLayout(previewLayeredPane);
+        previewLayeredPane.setLayout(previewLayeredPaneLayout);
+        previewLayeredPaneLayout.setHorizontalGroup(
+            previewLayeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        previewLayeredPaneLayout.setVerticalGroup(
+            previewLayeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout previewPanelLayout = new javax.swing.GroupLayout(previewPanel);
         previewPanel.setLayout(previewPanelLayout);
         previewPanelLayout.setHorizontalGroup(
             previewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(previewPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(previewLayeredPane)
+                .addContainerGap())
         );
         previewPanelLayout.setVerticalGroup(
             previewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 110, Short.MAX_VALUE)
+            .addGroup(previewPanelLayout.createSequentialGroup()
+                .addComponent(previewLayeredPane)
+                .addContainerGap())
         );
 
         presetsLabel.setText("Presets:");
@@ -657,7 +674,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                     .addComponent(sidelineTracksPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mainlineTracksPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(previewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(previewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -666,7 +683,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(presetsLabel)
                         .addComponent(presetsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {mainlineTracksPanel, sidelineTracksPanel});
@@ -814,6 +831,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private javax.swing.JButton okButton;
     private javax.swing.JComboBox<String> presetsComboBox;
     private javax.swing.JLabel presetsLabel;
+    private javax.swing.JLayeredPane previewLayeredPane;
     private javax.swing.JPanel previewPanel;
     private jmri.util.swing.ButtonSwatchColorChooserPanel sideBallastColorChooserPanel;
     private javax.swing.JLabel sideBallastWidthLabel;
