@@ -24,6 +24,10 @@ public class AnymaDMX_UsbLightTest extends AbstractLightTestBase {
         Assert.assertNotNull("ConnectionConfig constructor", light);
     }
 
+    public int numListeners() {
+        return 0;
+    }
+
     public void checkOnMsgSent() {
     }
 
