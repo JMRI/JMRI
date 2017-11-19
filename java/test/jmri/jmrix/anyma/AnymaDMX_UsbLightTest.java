@@ -14,10 +14,6 @@ import org.junit.Before;
  */
 public class AnymaDMX_UsbLightTest extends AbstractLightTestBase {
 
-    public AnymaDMX_UsbLightTest(String s) {
-        super(s);
-    }
-
     private AnymaDMX_SystemConnectionMemo _memo = null;
 
     public void testCreate() {
