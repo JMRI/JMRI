@@ -4926,7 +4926,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      */
     public void addTurntable(@Nonnull Point2D pt) {
         //get unique name
-        String name = finder.uniqueName("TUR", numLayoutTurntables++);
+        String name = finder.uniqueName("TUR", ++numLayoutTurntables);
         LayoutTurntable lt = new LayoutTurntable(name, pt, this);
 
         layoutTrackList.add(lt);
@@ -6906,7 +6906,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     protected PositionablePoint addAnchor(@Nonnull Point2D p) {
         //get unique name
-        String name = finder.uniqueName("A", numAnchors++);
+        String name = finder.uniqueName("A", ++numAnchors);
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
@@ -6924,7 +6924,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      */
     public void addEndBumper() {
         //get unique name
-        String name = finder.uniqueName("EB", numEndBumpers++);
+        String name = finder.uniqueName("EB", ++numEndBumpers);
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
@@ -6940,7 +6940,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      */
     public void addEdgeConnector() {
         //get unique name
-        String name = finder.uniqueName("EC", numEdgeConnectors++);
+        String name = finder.uniqueName("EC", ++numEdgeConnectors);
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
@@ -6956,7 +6956,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      */
     public void addTrackSegment() {
         //get unique name
-        String name = finder.uniqueName("T", numTrackSegments++);
+        String name = finder.uniqueName("T", ++numTrackSegments);
 
         //create object
         newTrack = new TrackSegment(name, (LayoutTrack) beginObject, beginPointType,
@@ -6998,7 +6998,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      */
     public void addLevelXing() {
         //get unique name
-        String name = finder.uniqueName("X", numLevelXings++);
+        String name = finder.uniqueName("X", ++numLevelXings);
 
         //create object
         LevelXing o = new LevelXing(name, currentPoint, this);
@@ -7050,7 +7050,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
 
         //get unique name
-        String name = finder.uniqueName("SL", numLayoutSlips++);
+        String name = finder.uniqueName("SL", ++numLayoutSlips);
 
         //create object
         LayoutSlip o = new LayoutSlip(name, currentPoint, rot, this, type);
@@ -7129,7 +7129,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
 
         //get unique name
-        String name = finder.uniqueName("TO", numLayoutTurnouts++);
+        String name = finder.uniqueName("TO", ++numLayoutTurnouts);
 
         //create object
         LayoutTurnout o = new LayoutTurnout(name, type, currentPoint, rot, xScale, yScale, this);
@@ -9634,7 +9634,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //drawHiddenLayoutTracks
 
     private void drawTrackBallast(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(mainlineTrackWidth * 2.F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        g2.setStroke(new BasicStroke(mainlineTrackWidth * 2.F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2.setColor(LayoutTrack.defaultBallastColor);
         for (LayoutTrack tr : layoutTrackList) {
             if (!tr.isHidden()) {

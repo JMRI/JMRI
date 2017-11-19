@@ -187,7 +187,6 @@ public class TrackSegment extends LayoutTrack {
         type2 = connectionType;
     }
 
-
     /**
      * replace old track connection with new track connection
      *
@@ -804,7 +803,8 @@ public class TrackSegment extends LayoutTrack {
             @Override
             public void actionPerformed(ActionEvent e) {
                 splitTrackSegment();
-            };
+            }
+        ;
         });
 
         JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
@@ -879,6 +879,63 @@ public class TrackSegment extends LayoutTrack {
         popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popup;
     }   // showPopup
+
+    /**
+     * split track segment into two track segments with an anchor between
+     */
+    public void splitTrackSegment() {
+        TrackSegment ts_this = TrackSegment.this;
+        // create a new anchor
+        Point2D p = getCentreSeg();
+        PositionablePoint newAnchor = layoutEditor.addAnchor(p);
+        // link it to me
+        layoutEditor.setLink(newAnchor, POS_POINT, ts_this, TRACK);
+
+        //get unique name for a new track segment
+        String name = layoutEditor.getFinder().uniqueName("T", 1);
+
+        //create it between the new anchor and my connect2(/type2)
+        TrackSegment newTrackSegment = new TrackSegment(name,
+                newAnchor, POS_POINT,
+                connect2, type2,
+                isDashed(), isMainline(), layoutEditor);
+        // add it to known tracks
+        layoutEditor.getLayoutTracks().add(newTrackSegment);
+        layoutEditor.setDirty();
+
+        // copy attributes to new track segment
+        newTrackSegment.setArc(ts_this.isArc());
+        newTrackSegment.setCircle(ts_this.isCircle());
+        //newTrackSegment.setBezier(ts_this.isBezier());
+        newTrackSegment.setFlip(ts_this.isFlip());
+
+        // link my connect2 to the new track segment
+        if (connect2 instanceof PositionablePoint) {
+            PositionablePoint pp = (PositionablePoint) connect2;
+            pp.replaceTrackConnection(ts_this, newTrackSegment);
+        } else {
+            layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
+        }
+
+        // link the new anchor to the new track segment
+        layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
+
+        // link me to the new newAnchor
+        connect2 = newAnchor;
+        type2 = POS_POINT;
+
+        //check on layout block
+        LayoutBlock b = ts_this.getLayoutBlock();
+
+        if (b != null) {
+            newTrackSegment.setLayoutBlock(b);
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            newTrackSegment.updateBlockInfo();
+        }
+        layoutEditor.setDirty();
+        layoutEditor.redrawPanel();
+
+    }
 
     /**
      * Display popup menu for information and editing.
