@@ -247,7 +247,8 @@ public final class TreeModel extends DefaultTreeModel {
         try {
             ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
             log.debug("Found " + ca.length + " controllers");
-        } catch (Exception ex) { // this is probably ClassNotFoundException, but that's not part of the interface
+        } catch (Exception ex) {
+            // this is probably ClassNotFoundException, but that's not part of the interface
             // could not load some component(s)
             log.debug("Found no controllers, handled Exception", ex);
             ca = null;
@@ -262,19 +263,22 @@ public final class TreeModel extends DefaultTreeModel {
             log.info("Controller " + controller.getName() + " has " + components.length + " components");
             for (Component component : components) {
                 try {
-                    if (controllerNode == null) 
-                    {
+                    if (controllerNode == null) {
                         // ensure controller node exists directly under root
                         String controllerName = controller.getName() + " [" + controller.getType().toString() + "]";
                         controllerNode = UsbNode.getNode(controllerName, controller, null);
                         controllerNode = (UsbNode) insertNode(controllerNode, dRoot);
                     }
                     // Device (component) node
-                    String deviceName = component.getName() + " [" + component.getIdentifier().toString() + "]";
-                    deviceNode = UsbNode.getNode(deviceName, controller, component);
-                    deviceNode = (UsbNode) insertNode(deviceNode, controllerNode);
-
-                    deviceNode.setValue(0.0f);
+                    String componentName = component.getName();
+                    String componentIdentifierString = component.getIdentifier().toString();
+                    // Skip unknown components
+                    if (!componentName.equals("Unknown") && !componentIdentifierString.equals("Unknown")) {
+                        String deviceName = componentName + " [" + componentIdentifierString + "]";
+                        deviceNode = UsbNode.getNode(deviceName, controller, component);
+                        deviceNode = (UsbNode) insertNode(deviceNode, controllerNode);
+                        deviceNode.setValue(0.0f);
+                    }
                 } catch (IllegalStateException e) {
                     // node does not allow children
                     break;  // skip this controller
@@ -286,7 +290,6 @@ public final class TreeModel extends DefaultTreeModel {
                     log.error("Exception " + e);
                 }
             }
-            log.debug("next controller");
         }
         return true;
     }
