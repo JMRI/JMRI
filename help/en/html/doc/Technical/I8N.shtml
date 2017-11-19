@@ -427,6 +427,40 @@ using the new .properties files.
 <p>If all is well, all the message text will have been translated to UPPER CASE.
 Anything you wrote that remains in lower case has not been completely internationalized.
 
+<a name="bundlekeysreport"></a>
+<h3>Bundle Keys Report</h3>
+<p>BundleKeysReport.py, located in the <strong>scripts</strong> (not jython) directory,
+is used to analyse the bundle keys within a property file.  The primary function is
+to identify unused keys.  The program is run using <strong><em>PanelPro Panels >>
+Run Script...</em></strong>  The output from the script is written to the Script
+Output window.  The run time will vary based on the number of keys to be checked
+along with the position in the source hierarchy.  It will range from several to many
+seconds.</p>
+
+<p>Once a property file, normally the default/English file, is selected, all of the
+classes within the package are scanned for each key in the file.  if there are
+more packages below the initial one, their classes are also scanned.  This
+covers the bundle hierarchy.  <strong>Note:</strong>  It is possible to get false
+positive matches when a class is using a matching key but the class is using a
+private property file.</p>
+
+<p>After the unused key list is built, the entire source tree is scanned for external
+references to the selected property file.  If the class containing the reference uses
+any of the unused keys, those keys are removed from the unused key list.  The jython
+directory is also scanned for external references.</p>
+
+<p>After the scanning is done, a dialog box prompts to save the unused key list.  If
+desired, the list will be written with the selected location and name.
+The default location will be the User Files Location.</p>
+
+<p>The final dialog box asks if the property files should be updated.  If Yes is 
+selected, all of the property files in the bundle set are backed up.  Each file is
+then scanned for the unused keys.  When one is found, the line is updated with
+<strong>#NotUsed</strong> as a comment.  If testing reveals that the key is
+actually required, the comment can be removed.  <strong>Note:</strong>  <em>If
+the source tree is managed by Git, the backups will be included in the current
+branch.  Either move the backups or don't select them when doing a commit</em>.
+
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
