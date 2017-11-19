@@ -19,12 +19,11 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
 
     @Test
     public void ConstructorTest() {
-        Assert.assertNotNull("ConnectionConfig constructor",
-                new UsbLightManager(_memo));
+        Assert.assertNotNull("ConnectionConfig constructor", l);
     }
 
     public String getSystemName(int i) {
-        return null;
+        return "DXL" + i;
     }
 
     @Before
@@ -33,6 +32,7 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
 
         _memo = new AnymaDMX_SystemConnectionMemo();
+        l = _memo.getLightManager();
     }
 
     @After

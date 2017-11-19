@@ -14,17 +14,27 @@ import org.junit.Test;
  * @since 4.9.6
  */
 public class AnymaDMX_SystemConnectionMemoTest extends SystemConnectionMemoTestBase {
+
     @Test
-    public void ConstructorTest() {
-        Assert.assertNotNull("ConnectionConfig constructor", new AnymaDMX_SystemConnectionMemo());
+    public void testDefaultCtor() {
+        Assert.assertNotNull("exists", scm);
     }
 
+    @Override
+    @Test
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+    }
+
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        //AnymaDMX_TrafficController tc = new AnymaDMX_TrafficController();
+        scm = new AnymaDMX_SystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
