@@ -5,7 +5,8 @@
 "http://checkstyle.sourceforge.net/dtds/suppressions_1_1.dtd">
 
 <!--
-  All suppressions in this file should also be in checkstyle-ci-suppressions.xml
+  Some checks that flagged by checkstyle on the command line are ignored on
+  CI servers.
 -->
 
 <suppressions>
@@ -14,4 +15,6 @@
     <suppress files="[/\\]java[/\\]tmp[/\\]" checks=".*"/>
     <!-- ignore private properties from Netbeans (may be empty) -->
     <suppress files="private/private.properties$" checks=".*"/>
+    <!-- ignore trailing whitespace in .xml and .java files -->
+    <suppress files="(?!.*\bproperties\b)" checks="TrailingSpaces"/>
 </suppressions>
