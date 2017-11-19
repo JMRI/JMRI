@@ -8,7 +8,7 @@ import jmri.PowerManager;
 /**
  * PowerManager implementation for controlling layout power.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -58,7 +58,7 @@ public class Mx1PowerManager implements PowerManager, Mx1Listener {
                 tc.sendMx1Message(Mx1Message.setPowerOff(), this);
             }
             if (memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF) {
-                //MXULF doesn't return the correct status of the track power, so we have to assume it has been set                
+                //MXULF doesn't return the correct status of the track power, so we have to assume it has been set
                 power = v;
             } else {
                 tc.sendMx1Message(Mx1Message.getTrackStatus(), this);

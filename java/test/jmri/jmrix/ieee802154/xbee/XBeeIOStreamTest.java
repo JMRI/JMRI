@@ -22,7 +22,7 @@ public class XBeeIOStreamTest {
 
    private static XBeeInterfaceScaffold tc = null; // set in setUp.
    private static XBeeNode node = null; // set in setUp.
-   private XBeeIOStream a = null; // set in initTest 
+   private XBeeIOStream a = null; // set in initTest
 
    @Test
    public void ConstructorTest(){
@@ -57,7 +57,7 @@ public class XBeeIOStreamTest {
    @Before
    public void testInit(){
        a = new XBeeIOStream(node,tc);
-   } 
+   }
 
    @After
    public void testCleanup(){
@@ -70,7 +70,7 @@ public class XBeeIOStreamTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         tc = new XBeeInterfaceScaffold();
         tc.setAdapterMemo(new XBeeConnectionMemo());
-        byte uad[] = {(byte) 0x00, (byte) 0x02};
+        byte[] uad = {(byte) 0x00, (byte) 0x02};
         node = (XBeeNode) tc.getNodeFromAddress(uad);
         Assume.assumeNotNull(tc,node);
     }

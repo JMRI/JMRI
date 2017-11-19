@@ -17,9 +17,9 @@ public class ZTC611XNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
     /* Send an "Off" message to the decoder for this output  */
     @Override
     protected synchronized void sendOffMessage() {
-        // The ZTC611 appears to react send an on DCC packet when the On 
+        // The ZTC611 appears to react send an on DCC packet when the On
         // command is sent and an off DCC packet when the OFF command is
-        // sent.  This causes some decoders to turn off the output 
+        // sent.  This causes some decoders to turn off the output
         // instead of waiting for the time to expire.
         newKnownState(getCommandedState());
         internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;

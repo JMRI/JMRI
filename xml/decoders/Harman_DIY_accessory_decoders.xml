@@ -28,14 +28,14 @@
         <decVal/>
         <label>Low 7 bytes of Address CV1</label>
       </variable>
-      <!-- CV7 and 8 values not yet set 
-		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version"  default="133" >
-				<decVal/>
-			</variable>
-		<variable label="Manufacturer ID" CV="8" readOnly="yes"	item="Manufacturer" default="13" >
-			<decVal/>
-		</variable>
-		-->
+      <!-- CV7 and 8 values not yet set
+        <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version"  default="133" >
+                <decVal/>
+            </variable>
+        <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="13" >
+            <decVal/>
+        </variable>
+ -->
       <variable item="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
         <decVal min="0" max="7"/>
         <label>High 3 bytes of Address CV9</label>
@@ -318,20 +318,20 @@
       <row>
         <column>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Sequential Address Mode" format="offradiobutton" label="Select to use settings shown below"/>
           <label>
             <text>           To turn off, use Output Address Mode pane</text>
           </label>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
         </column>
       </row>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Decoder Address (1-511)"/>
       <label>
@@ -341,7 +341,7 @@
         <text>An offset of 1 is required to work with Lenz/Digitrax systems when compared to Roco/MERG command stations</text>
       </label>
       <label>
-        <text>    </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -358,7 +358,7 @@
         </column>
         <column>
           <label>
-            <text>                  </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -375,11 +375,11 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>Output Duration and Toggle Mode</text>
@@ -409,7 +409,7 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -421,21 +421,21 @@
           <display item="Toggle Mode output 3" format="checkbox" label="5+6"/>
           <display item="Toggle Mode output 4" format="checkbox" label="7+8"/>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
       </row>
       <row>
         <column>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Roco Momentary Mode" format="checkbox"/>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
         </column>
       </row>
@@ -444,7 +444,7 @@
         <text>Output behaviours:</text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -455,7 +455,7 @@
         </column>
         <column>
           <label>
-            <text>   </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -466,7 +466,7 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -477,7 +477,7 @@
         </column>
         <column>
           <label>
-            <text>   </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -488,7 +488,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
     </column>
   </pane>
@@ -498,20 +498,20 @@
       <row>
         <column>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Sequential Address Mode" format="onradiobutton" label="Select to use settings shown below"/>
           <label>
             <text>           To turn off, use Decoder Address Mode pane</text>
           </label>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
         </column>
       </row>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Output Mode Address (1-2047)"/>
       <label>
@@ -521,7 +521,7 @@
         <text>An offset of 4 is required to work with Lenz/Digitrax systems when compared to Roco/MERG command stations</text>
       </label>
       <label>
-        <text>    </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -538,7 +538,7 @@
         </column>
         <column>
           <label>
-            <text>                  </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -555,11 +555,11 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>Output Duration and Toggle Mode</text>
@@ -589,7 +589,7 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -601,21 +601,21 @@
           <display item="Toggle Mode output 3" format="checkbox" label="5+6"/>
           <display item="Toggle Mode output 4" format="checkbox" label="7+8"/>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
       </row>
       <row>
         <column>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Roco Momentary Mode" format="checkbox"/>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
         </column>
       </row>
@@ -624,7 +624,7 @@
         <text>Output behaviours:</text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -635,7 +635,7 @@
         </column>
         <column>
           <label>
-            <text>   </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -646,7 +646,7 @@
         </column>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -657,7 +657,7 @@
         </column>
         <column>
           <label>
-            <text>   </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -668,7 +668,7 @@
         </column>
       </row>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
     </column>
   </pane>

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to hold SPROG type
  *
- * @author	Andrew crosland Copyright (C) 2012
+ * @author Andrew crosland Copyright (C) 2012
  */
 public class SprogType {
 
@@ -79,14 +79,14 @@ public class SprogType {
                 // Value returned is number of ADC steps 0f 3.22mV across 0.47
                 // ohms, or equivalent
                 return 3220.0/470;
-                
+
             default:
                 // Value returned is number of ADC steps 0f 4.88mV across 0.47
                 // ohms, or equivalent
                 return 4880.0/470;
         }
     }
-    
+
     /**
      * Get the Flash memory block Length for bootloader.
      *
@@ -171,7 +171,7 @@ public class SprogType {
                     return true;
                 }
                 break;
-                
+
             case PISPROGONE:
                 if ((addr >= 0x1000) && (addr < 0x3F00)) {
                     return true;

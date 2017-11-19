@@ -113,8 +113,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 SRCPClientVisitor v = new SRCPClientVisitor();
                 e.jjtAccept(v, _memo);
 
-                // we need to re-write the switch below so that it uses the 
-                // SimpleNode values instead of the reply message.            
+                // we need to re-write the switch below so that it uses the
+                // SimpleNode values instead of the reply message.
                 //SRCPReply msg = new SRCPReply((SimpleNode)e.jjtGetChild(1));
                 switch (mCurrentState) {
                     case WAITMSGREPLYSTATE: {
@@ -132,7 +132,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         mCurrentMode = PROGRAMINGMODE;
                         replyInDispatch = false;
 
-                        // check to see if we need to delay to allow decoders 
+                        // check to see if we need to delay to allow decoders
                         // to become responsive
                         int warmUpDelay = enterProgModeDelayTime();
                         if (warmUpDelay != 0) {

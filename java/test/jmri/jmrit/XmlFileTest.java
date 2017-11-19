@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  * and the custom <user.home>/temp/xml directory
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class XmlFileTest extends TestCase {
 
-    // file urls are relative to the 
+    // file urls are relative to the
     // program directory
     final static String testFileDir = "java" + File.separator
             + "test" + File.separator
@@ -34,56 +34,56 @@ public class XmlFileTest extends TestCase {
             + "util" + File.separator
             + "xml" + File.separator;
 
-    // Test cases to make sure schema and DTD validation 
+    // Test cases to make sure schema and DTD validation
     // is properly controlled.  For each of DTD valid, invalid and absent
     // (ditto schema), check with validate on and off that proper result is obtained.
     // That's 3*3*2*2 cases!
     enum Type { ABSENT, VALID, INVALID }
     public void testValidationControl() {
-    
+
         final String docTypeValid = "<!DOCTYPE decoderIndex-config SYSTEM \"decoderIndex-config.dtd\">";
         final String docTypeInvalid = "<!DOCTYPE layout-config SYSTEM \"layout-config-2-5-4.dtd\">";
 
         final String contentSchemaValid = "<decoderIndex-config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/decoder.xsd\">";
         final String contentSchemaInvalid = "<decoderIndex-config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/layout-2-9-6.xsd \">";
         final String contentSchemaAbsent = "<decoderIndex-config>";
-        
+
         final String ending = "<decoderIndex><mfgList nmraListDate=\"\" updated=\"\"><manufacturer mfg=\"\"/></mfgList><familyList><family mfg=\"\" name=\"\" file=\"\"/></familyList></decoderIndex></decoderIndex-config>";
 
         for (XmlFile.Validate validate : XmlFile.Validate.values()) {
             for (Type theDTD : Type.values()) {
                 for (Type theSchema : Type.values()) {
                     boolean passes = true;
-                                     
+
                     boolean checkDTD = (validate == XmlFile.Validate.CheckDtd) || (validate == XmlFile.Validate.CheckDtdThenSchema);
                     boolean checkSchema = (validate == XmlFile.Validate.RequireSchema) || (validate == XmlFile.Validate.CheckDtdThenSchema);
-                           
+
                     if (theSchema == Type.INVALID && checkSchema) passes = false; // Cannot find the declaration of element 'decoderIndex-config'.
                     if (theSchema == Type.ABSENT && checkSchema) passes = false; // Cannot find the declaration of element 'decoderIndex-config'.
-                    
+
                     if (theDTD == Type.INVALID && checkDTD) passes = false; // Document root element "decoderIndex-config", must match DOCTYPE root "layout-config".
-                    
+
                     // but if you're checking both
                     if ( checkDTD  && checkSchema) {
                         // a pass is a pass
-                        if (theDTD == Type.VALID) passes = true; 
-                        if (theSchema == Type.VALID) passes = true;       
-                        
+                        if (theDTD == Type.VALID) passes = true;
+                        if (theSchema == Type.VALID) passes = true;
+
                         // but a DTD fail is a fail
-                        if (theDTD == Type.INVALID) passes = false; 
+                        if (theDTD == Type.INVALID) passes = false;
                     }
-                    
+
                     // create input
-                    
+
                     String content = "";
-                    
+
                     if (theDTD == Type.VALID) content += docTypeValid;
                     if (theDTD == Type.INVALID) content += docTypeInvalid;
 
                     if (theSchema == Type.VALID) content += contentSchemaValid;
                     if (theSchema == Type.INVALID) content += contentSchemaInvalid;
                     if (theSchema == Type.ABSENT) content += contentSchemaAbsent;
-                    
+
                     content += ending;
 
                     boolean result = false;
@@ -107,8 +107,8 @@ public class XmlFileTest extends TestCase {
             }
         }
     }
-    
-    
+
+
     public void testProgIncludeRelative() {
         validateFileAndDtdAccess(new File(testFileDir + "ProgramMainRelative.xml"));
     }
@@ -199,10 +199,10 @@ public class XmlFileTest extends TestCase {
         // try to read
         XmlFile x = new XmlFile() {
         };
-        
+
         // not a real file
         x.setValidate(XmlFile.Validate.None);
-        
+
         Element e = x.rootFromName("temp" + File.separator + "prefs" + File.separator + "test.xml");
         Assert.assertTrue("Element found", e != null);
     }

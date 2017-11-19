@@ -18,7 +18,7 @@ import org.powermock.core.classloader.annotations.MockPolicy;
 /**
  * Test simple functioning of EditNodeFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeEditNodeFrameTest {
 
@@ -27,7 +27,7 @@ public class XBeeEditNodeFrameTest {
     private XBeeConnectionMemo m = null;
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeNodeConfigFrame frame = new XBeeNodeConfigFrame(tc);
         XBeeEditNodeFrame action = new XBeeEditNodeFrame(tc,(XBeeNode)(tc.getNodeFromAddress("00 02")),frame);
         Assert.assertNotNull("exists", action);

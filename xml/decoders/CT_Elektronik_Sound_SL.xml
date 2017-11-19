@@ -2,21 +2,21 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter.Brandenburg@t-online.de" version="2" lastUpdated="2006/11/20"/>
-  <!--	version 1 - recreated from CT_Elektronik_Sound_SL_51.xml by "mark.kasprowicz@traindecoder.com"
-			version="1.0 beta" lastUpdated="20040818" - Peter 06/10/28 -->
-  <!--	version 2 - added new CVs: Auto Uncoupling and Light Effects - Peter -->
+  <!-- version 1 - recreated from CT_Elektronik_Sound_SL_51.xml by "mark.kasprowicz@traindecoder.com"
+            version="1.0 beta" lastUpdated="20040818" - Peter 06/10/28 -->
+  <!-- version 2 - added new CVs: Auto Uncoupling and Light Effects - Peter -->
   <decoder>
     <family name="Sound Decoder SL (v.26 up)" mfg="CT Elektronik">
       <model model="SL 51" numOuts="10" numFns="8">
@@ -149,7 +149,7 @@
         <label>Error Diagnosis</label>
         <label xml:lang="it">Errore Diagnosi</label>
       </variable>
-      <!--	NMRA Function Mapping	-->
+      <!-- NMRA Function Mapping -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
@@ -1358,31 +1358,31 @@
   <pane>
     <column>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Decoder Lock"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Direct Cut Off Function Outputs"/>
       <display item="Fast Cut Off Function Outputs"/>
       <display item="Slow Cut Off Function Outputs"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Direct Cut Off Motor"/>
       <display item="Fast Cut Off Motor"/>
       <display item="Slow Cut Off Motor"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
     </column>
     <name>Lock and Shortcircuit Threshholds</name>
@@ -1396,33 +1396,33 @@
       <display item="No Steamexhaust Downhill" tooltip=":OFF/ON"/>
       <display item="Continuous Sound CV 10, F 1" tooltip=":OFF/ON"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound Loop" tooltip="sound loop see manual"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <row>
         <column>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Strong Time" tooltip="Sets the switch ON dimming of F1"/>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Weak Time" tooltip="Sets the symmetry of F1"/>
         </column>
         <column>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Strong Time" format="hslider" label="" tooltip="Sets the switch ON dimming of F1">
             <label/>
           </display>
           <label>
-            <text>  </text>
+            <text> </text>
           </label>
           <display item="Weak Time" format="hslider" label="" tooltip="Sets the symmetry of F1">
             <label/>
@@ -1435,34 +1435,34 @@
       <display item="Logical Exhaust Interval"/>
       <display item="Time Between Beats"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Random Interval Aux Sounds"/>
       <display item="Random Aux Sound 1 Idling"/>
       <display item="Random Aux Sound 2 Running"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Load Dependant Sound Variation"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
     </column>
     <column>
       <display item="High Frequency Limit"/>
       <display item="Low Frequency Limit"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="F1 strong/normal/weak if CV110 active"/>
       <display item="F2 strong/normal/weak if CV110 active"/>
@@ -1472,42 +1472,42 @@
   <pane>
     <column>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Main Running Sound Level F4"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F5 On/Off"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F5 Number Repetitions Random Bit2"/>
       <display item="Sound F5 Number Repetitions Random Bit3"/>
       <display item="Sound F5 Number Repetitions Random Bit4"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F5 Number Repetitions Manual Bit5"/>
       <display item="Sound F5 Number Repetitions Manual Bit6"/>
       <display item="Sound F5 Number Repetitions Manual Bit7"/>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F6 On/Off"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F6 Number Repetitions Random Bit2"/>
       <display item="Sound F6 Number Repetitions Random Bit3"/>
       <display item="Sound F6 Number Repetitions Random Bit4"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F6 Number Repetitions Manual Bit5"/>
       <display item="Sound F6 Number Repetitions Manual Bit6"/>
@@ -1515,51 +1515,51 @@
     </column>
     <column>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F7 On/Off"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F7 Number Repetitions Random Bit2"/>
       <display item="Sound F7 Number Repetitions Random Bit3"/>
       <display item="Sound F7 Number Repetitions Random Bit4"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F7 Number Repetitions Manual Bit5"/>
       <display item="Sound F7 Number Repetitions Manual Bit6"/>
       <display item="Sound F7 Number Repetitions Manual Bit7"/>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F8 On/Off"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F8 Number Repetitions Random Bit2"/>
       <display item="Sound F8 Number Repetitions Random Bit3"/>
       <display item="Sound F8 Number Repetitions Random Bit4"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F8 Number Repetitions Manual Bit5"/>
       <display item="Sound F8 Number Repetitions Manual Bit6"/>
       <display item="Sound F8 Number Repetitions Manual Bit7"/>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F9 On/Off"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F9 Number Repetitions Random Bit2"/>
       <display item="Sound F9 Number Repetitions Random Bit3"/>
       <display item="Sound F9 Number Repetitions Random Bit4"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F9 Number Repetitions Manual Bit5"/>
       <display item="Sound F9 Number Repetitions Manual Bit6"/>
@@ -1567,34 +1567,34 @@
     </column>
     <column>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F10 On/Off"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F10 Number Repetitions Random Bit2"/>
       <display item="Sound F10 Number Repetitions Random Bit3"/>
       <display item="Sound F10 Number Repetitions Random Bit4"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F10 Number Repetitions Manual Bit5"/>
       <display item="Sound F10 Number Repetitions Manual Bit6"/>
       <display item="Sound F10 Number Repetitions Manual Bit7"/>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F11 On/Off"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F11 Number Repetitions Random Bit2"/>
       <display item="Sound F11 Number Repetitions Random Bit3"/>
       <display item="Sound F11 Number Repetitions Random Bit4"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound F11 Number Repetitions Manual Bit5"/>
       <display item="Sound F11 Number Repetitions Manual Bit6"/>
@@ -1610,7 +1610,7 @@
       <separator/>
       <display item="PWM Function Outputs"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <display item="Dimming Output FL(f)"/>
@@ -1645,10 +1645,10 @@
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <display item="Light Effects FL(f)"/>
@@ -1660,26 +1660,26 @@
       <display item="Light Effects F 5"/>
       <display item="Light Effects F 6"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Sound/Function Assignment"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
     </column>
     <column>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="PWM Light Effects Outputs"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="PWM Light Effects Outputs" format="vslider" label="">
         <label/>
       </display>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
     </column>
     <name>Output Dimming, Effects and Uncoupler</name>
@@ -1690,11 +1690,11 @@
       <display item="ZIMO Signal Controlled Speed U"/>
       <display item="ZIMO Signal Controlled Acc Reaction"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Function selection 8 or 14/MAN Bit"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Zimo address pulse"/>
       <display item="Zimo speed control HLU"/>
@@ -1703,7 +1703,7 @@
     <column>
       <display item="LGB Continuous Manual Sound Bitmask"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Select CV Set 1 or 2" tooltip=" Selects CV Set 1(OFF) or 2(ON)"/>
     </column>

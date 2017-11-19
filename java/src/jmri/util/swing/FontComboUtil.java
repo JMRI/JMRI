@@ -264,10 +264,10 @@ public class FontComboUtil {
                 int index, boolean isSelected, boolean hasFocus) -> {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            
+
             // Opaque only when rendering the actual list items
             p.setOpaque(index > -1);
-            
+
             // Invert colours when item selected in the list
             if (isSelected && index > -1) {
                 p.setBackground(list.getSelectionBackground());

@@ -48,7 +48,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     // text box
     JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
-    
+
     boolean showQuanity = false;
 
     // property change

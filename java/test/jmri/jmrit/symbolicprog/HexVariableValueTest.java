@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * Test the HexVariableValue class
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class HexVariableValueTest extends AbstractVariableValueTestBase {
 

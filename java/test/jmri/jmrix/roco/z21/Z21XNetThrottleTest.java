@@ -1,11 +1,8 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import jmri.jmrix.lenz.XNetThrottleTest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.lenz.z21XNetThrottle class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -390,7 +387,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.setUp();
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(tc);
-        memo.setThrottleManager(new Z21XNetThrottleManager(memo)); 
+        memo.setThrottleManager(new Z21XNetThrottleManager(memo));
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
         instance = new Z21XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
     }

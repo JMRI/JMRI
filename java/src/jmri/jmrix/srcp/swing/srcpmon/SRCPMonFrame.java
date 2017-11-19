@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame displaying (and logging) SRCP command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPListener {
 

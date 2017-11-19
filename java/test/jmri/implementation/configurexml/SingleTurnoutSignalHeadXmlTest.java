@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SingleTurnoutSignalHeadXmlTest.java
+ * Tests for the SingleTurnoutSignalHeadXml class
  *
- * Description: tests for the SingleTurnoutSignalHeadXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SingleTurnoutSignalHeadXmlTest {
 

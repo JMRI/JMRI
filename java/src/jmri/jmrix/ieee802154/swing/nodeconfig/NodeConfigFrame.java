@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user configuration of IEEE 802.15.4 nodes. 
+ * Frame for user configuration of IEEE 802.15.4 nodes.
  * Derived from node configuration for c/mri nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2004
@@ -118,7 +118,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         return panel1;
     }
 
-    
+
     /*
      * Initilaize the notes panel.
      */
@@ -316,7 +316,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
-            // Reset 
+            // Reset
             editMode = false;
             curNode = null;
             // Switch buttons
@@ -373,7 +373,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Method to handle cancel button
      */
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         editMode = false;
         curNode = null;
         // Switch buttons
@@ -434,8 +434,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read node address from the nodeAddressField or nodeAddr64Field 
-     * as appropriate and return as a string.  
+     * Read node address from the nodeAddressField or nodeAddr64Field
+     * as appropriate and return as a string.
      *
      * @return String containing the short (two byte) address of the node.
      *         if the two byte node address is either "FF FF" or "FF FE",

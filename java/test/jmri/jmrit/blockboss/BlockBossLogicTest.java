@@ -13,7 +13,7 @@ import org.junit.Assert;
 /**
  * Tests for the BlockBossLogic class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class BlockBossLogicTest extends TestCase {
 
@@ -34,7 +34,7 @@ public class BlockBossLogicTest extends TestCase {
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.setWatchedSignal1("IH2", false);
     }
-    
+
     // test creation
     public void testCreate() {
         BlockBossLogic p = new BlockBossLogic("IH2");
@@ -46,7 +46,7 @@ public class BlockBossLogicTest extends TestCase {
         setupSimpleBlock();
         startLogic(p);
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
-        
+
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so yellow sets green");  // wait and test
 
@@ -71,7 +71,7 @@ public class BlockBossLogicTest extends TestCase {
         p.setSensor1("IS1");
         startLogic(p);
         JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
-        
+
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "Stuck at "+h1.getAppearance()+" so yellow sets green");  // wait and test
 
@@ -142,7 +142,7 @@ public class BlockBossLogicTest extends TestCase {
         p.setSensor1("IS1");
         p.setRestrictingSpeed1(true);
         startLogic(p);
-        
+
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.FLASHRED == h1.getAppearance();}, "yellow sets flashing red");  // wait and test
 
@@ -157,7 +157,7 @@ public class BlockBossLogicTest extends TestCase {
     // if no next signal, next signal considered green
     public void testSimpleBlockNoNext() throws jmri.JmriException {
         s1.setState(Sensor.INACTIVE);
-        
+
         p = new BlockBossLogic("IH1");
         p.setSensor1("1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
@@ -169,7 +169,7 @@ public class BlockBossLogicTest extends TestCase {
     // if no next signal, next signal is considered green
     public void testSimpleBlockNoNextLimited() throws jmri.JmriException {
         s1.setState(Sensor.INACTIVE);
-        
+
         p = new BlockBossLogic("IH1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.setSensor1("1");
@@ -289,7 +289,7 @@ public class BlockBossLogicTest extends TestCase {
 
         // reset InstanceManager
         JUnitUtil.resetInstanceManager();
-        
+
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSignalHeadManager();
@@ -312,7 +312,7 @@ public class BlockBossLogicTest extends TestCase {
         h1 = new jmri.implementation.VirtualSignalHead("IH1", "1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h1);
         JUnitUtil.setBeanStateAndWait(h1, SignalHead.RED); // ensure starting point
-        
+
         h2 = new jmri.implementation.VirtualSignalHead("IH2", "2");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h2);
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.RED); // ensure starting point

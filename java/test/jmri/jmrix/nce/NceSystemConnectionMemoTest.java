@@ -1,7 +1,6 @@
 package jmri.jmrix.nce;
 
 import jmri.GlobalProgrammerManager;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,56 +9,54 @@ import org.junit.Test;
 /**
  * JUnit tests for the NceSystemConnectionMemo class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     NceSystemConnectionMemo memo;
- 
+
     @Test
     public void testDefaultAccess() {
         // this is checking the "as default ctor built" options, which might not be valid
         Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
         Assert.assertNotNull("global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
-        Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager) memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
     @Test
     public void test_USB_SYSTEM_POWERCAB_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
         memo.setNceCmdGroups(NceTrafficController.CMDS_PROGTRACK);
-        
+
         Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
         Assert.assertNotNull("global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
-        Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager) memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
     @Test
     public void test_USB_SYSTEM_SB3_NO_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
         memo.setNceCmdGroups(0);
-        
+
         Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
         Assert.assertNotNull("global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
-        Assert.assertNull("no global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertNull("no global Programmer exists", ((GlobalProgrammerManager) memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
-
 
     // The minimal setup is for log4J
     @Override
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
-        
         scm = memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
     }
 
     @Override
-    public void tearDown() {        
+    @After
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 
     //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemoTest.class);
-
 }

@@ -15,8 +15,8 @@ import org.junit.runners.Suite;
 /**
  * Invokes complete set of tests in the jmri.web.servlet.operations tree
  *
- * @author	Bob Jacobsen Copyright 2008
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2008
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest {
 }

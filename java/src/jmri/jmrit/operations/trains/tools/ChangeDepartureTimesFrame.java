@@ -83,7 +83,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
             }
         }
     }
-    
+
     private String adjustHour(String time) {
         int hour = Integer.parseInt((String) hourBox.getSelectedItem()) + Integer.parseInt(time);
         if (hour > 23) {

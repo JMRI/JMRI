@@ -102,7 +102,7 @@ abstract public class SerialLight extends AbstractVariableLight {
             log.debug("sendOnOff(" + newState + ") Current: " + mState);
         }
 
-        // figure out command 
+        // figure out command
         int function;
         double newDim;
         if (newState == ON) {

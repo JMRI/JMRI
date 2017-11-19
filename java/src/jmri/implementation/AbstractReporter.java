@@ -30,7 +30,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
     }
-    
+
     // for combo boxes
     @Override
     public String toString() {

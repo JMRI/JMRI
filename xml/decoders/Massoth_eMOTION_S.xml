@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110124"/>
-  <!-- 
+  <!--
       This decoder XML is meant to be used with the "Custom" programmer format.
       The pane definitions are included below the decoder definition.  The Massoth
       decoders seem to fit the description of "weird" as mentioned in that
@@ -65,7 +65,7 @@
       of the XML file and changing all the "model" names in the "model" definition tags. Then
       do a global search-and-replace to change "Sound_01" to the name of sound #1 for your
       loco, e.g. "Whistle".  This will make the decoder definition much more usable!
-      
+
       Any and all feedback on this file would be appreciated.
 
       Version History:

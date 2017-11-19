@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RosterConfigPaneXmlTest.java
+ * Tests for the RosterConfigPaneXml class
  *
- * Description: tests for the RosterConfigPaneXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RosterConfigPaneXmlTest {
 

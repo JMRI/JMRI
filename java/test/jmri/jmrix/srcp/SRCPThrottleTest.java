@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SRCPThrottleTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPThrottle class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPThrottle class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 

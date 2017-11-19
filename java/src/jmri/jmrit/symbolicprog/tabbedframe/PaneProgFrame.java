@@ -980,8 +980,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
-    int defaultCvValues[] = null;
-    String defaultCvNumbers[] = null;
+    int[] defaultCvValues = null;
+    String[] defaultCvNumbers = null;
 
     /**
      * Save all CV values.

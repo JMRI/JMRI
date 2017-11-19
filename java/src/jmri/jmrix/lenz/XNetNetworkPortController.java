@@ -65,7 +65,7 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
     @Override
     public void setTimeSlot(boolean timeslot){
        timeSlot = timeslot;
-    }   
+    }
 
     /**
      * We need a way to say if the output buffer is empty or not.

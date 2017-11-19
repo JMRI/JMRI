@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * Internally, this is done by using a list of all non-Internal managers, plus a
  * separate reference to the internal manager.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
 abstract public class AbstractProxyManager<E extends NamedBean> implements Manager<E> {
 
@@ -122,11 +122,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
      * for the NamedBeans handled by this manager and its submanagers.
      * <p>
      * Attempts to match by system prefix first.
-     * <p> 
+     * <p>
      *
      * @param inputName System name to be normalized
      * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form 
+     * @return A system name in standard normalized form
      */
     @Override
     @CheckReturnValue
@@ -143,7 +143,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
      * Locate via user name, then system name if needed. If that fails, create a
      * new NamedBean: If the name is a valid system name, it will be used for
      * the new NamedBean. Otherwise, the makeSystemName method will attempt to
-     * turn it into a valid system name. Subclasses use this to create provider methods such as 
+     * turn it into a valid system name. Subclasses use this to create provider methods such as
      * getSensor or getTurnout via casts.
      *
      * @param name the user name or system name of the bean

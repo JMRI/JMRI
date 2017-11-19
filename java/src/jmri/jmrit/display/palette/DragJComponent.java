@@ -63,7 +63,7 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
     protected boolean okToDrag() {
         return true;
     }
-    
+
     /**
      * ************** DragGestureListener **************
      */
@@ -73,7 +73,7 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
             log.debug("DragJLabel.dragGestureRecognized ");
         }
         if (okToDrag()) {
-            e.startDrag(DragSource.DefaultCopyDrop, this, this);            
+            e.startDrag(DragSource.DefaultCopyDrop, this, this);
         }
     }
 

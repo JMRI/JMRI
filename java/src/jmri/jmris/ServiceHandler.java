@@ -20,7 +20,7 @@ public class ServiceHandler {
 
     /*
      *  set the powerServer instance
-     *  @param ps is an instance of an AbstractPowerServer 
+     *  @param ps is an instance of an AbstractPowerServer
      *            derived class.
      */
     public void setPowerServer(AbstractPowerServer ps) {
@@ -29,7 +29,7 @@ public class ServiceHandler {
 
     /*
      *  get the powerServer instance
-     *  @return an instance of an AbstractPowerServer 
+     *  @return an instance of an AbstractPowerServer
      *            derived class.
      */
     public AbstractPowerServer getPowerServer() {
@@ -38,7 +38,7 @@ public class ServiceHandler {
 
     /*
      *  set the lightServer instance
-     *  @param ls is an instance of an AbstractLightServer 
+     *  @param ls is an instance of an AbstractLightServer
      *            derived class.
      */
     public void setLightServer(AbstractLightServer ls) {
@@ -47,7 +47,7 @@ public class ServiceHandler {
 
     /*
      *  get the lightServer instance
-     *  @return an instance of an AbstractLightServer 
+     *  @return an instance of an AbstractLightServer
      *            derived class.
      */
     public AbstractLightServer getLightServer() {
@@ -56,7 +56,7 @@ public class ServiceHandler {
 
     /*
      *  set the turnoutServer instance
-     *  @param ts is an instance of an AbstractTurnoutServer 
+     *  @param ts is an instance of an AbstractTurnoutServer
      *            derived class.
      */
     public void setTurnoutServer(AbstractTurnoutServer ts) {
@@ -65,7 +65,7 @@ public class ServiceHandler {
 
     /*
      *  get the turnoutServer instance
-     *  @return an instance of an AbstractTurnoutServer 
+     *  @return an instance of an AbstractTurnoutServer
      *            derived class.
      */
     public AbstractTurnoutServer getTurnoutServer() {
@@ -74,7 +74,7 @@ public class ServiceHandler {
 
     /*
      *  set the sensorServer instance
-     *  @param ss is an instance of an AbstractSensorServer 
+     *  @param ss is an instance of an AbstractSensorServer
      *            derived class.
      */
     public void setSensorServer(AbstractSensorServer ss) {
@@ -83,7 +83,7 @@ public class ServiceHandler {
 
     /*
      *  get the sensorServer instance
-     *  @return an instance of an AbstractSensorServer 
+     *  @return an instance of an AbstractSensorServer
      *            derived class.
      */
     public AbstractSensorServer getSensorServer() {
@@ -92,7 +92,7 @@ public class ServiceHandler {
 
     /*
      *  set the programmerServer instance
-     *  @param ps is an instance of an AbstractProgrammerServer 
+     *  @param ps is an instance of an AbstractProgrammerServer
      *            derived class.
      */
     public void setProgrammerServer(AbstractProgrammerServer ps) {
@@ -101,7 +101,7 @@ public class ServiceHandler {
 
     /*
      *  get the programmerServer instance
-     *  @return an instance of an AbstractProgrammerServer 
+     *  @return an instance of an AbstractProgrammerServer
      *            derived class.
      */
     public AbstractProgrammerServer getProgrammerServer() {
@@ -110,7 +110,7 @@ public class ServiceHandler {
 
     /*
      *  set the timeServer instance
-     *  @param ps is an instance of an AbstractTimeServer 
+     *  @param ps is an instance of an AbstractTimeServer
      *            derived class.
      */
     public void setTimeServer(AbstractTimeServer ps) {
@@ -119,7 +119,7 @@ public class ServiceHandler {
 
     /*
      *  get the timeServer instance
-     *  @return an instance of an AbstractTimeServer 
+     *  @return an instance of an AbstractTimeServer
      *            derived class.
      */
     public AbstractTimeServer getTimeServer() {
@@ -128,7 +128,7 @@ public class ServiceHandler {
 
     /*
      *  set the throttleServer instance
-     *  @param ts is an instance of an AbstractThrottleServer 
+     *  @param ts is an instance of an AbstractThrottleServer
      *            derived class.
      */
     public void setThrottleServer(AbstractThrottleServer ts) {
@@ -137,7 +137,7 @@ public class ServiceHandler {
 
     /*
      *  get the throttleServer instance
-     *  @return an instance of an AbstractThrottleServer 
+     *  @return an instance of an AbstractThrottleServer
      *            derived class.
      */
     public AbstractThrottleServer getThrottleServer() {

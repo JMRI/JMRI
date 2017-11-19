@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of DieselPane
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class DieselPaneTest {
 

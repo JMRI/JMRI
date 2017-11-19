@@ -7,12 +7,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * DCCppProgrammerManagerTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppProgrammerManager class.
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppProgrammerManager class
- *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppProgrammerManagerTest extends TestCase {
 

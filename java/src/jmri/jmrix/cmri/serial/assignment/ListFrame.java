@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Frame for running CMRI assignment list.
  *
  * @author Dave Duchamp Copyright (C) 2006
- * @author  Chuck Catania  Copyright (C) 2016, 2017
+ * @author Chuck Catania Copyright (C) 2016, 2017
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -143,7 +143,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         panel1.add(panel12);
         Border panel1Border = BorderFactory.createEtchedBorder();
         Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,
-                Bundle.getMessage("NodePanelName")+" "+_memo.getUserName());
+                Bundle.getMessage("NodePanelName") + " " + _memo.getUserName());
         panel1.setBorder(panel1Titled);
         contentPane.add(panel1);
 
@@ -174,7 +174,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             userColumn.setResizable(true);
             TableColumn commentColumn = assignmentColumnModel.getColumn(AssignmentTableModel.COMMENT_COLUMN);
             userColumn.setMinWidth(90);
-            userColumn.setMaxWidth(250);			
+            userColumn.setMaxWidth(250);
             userColumn.setResizable(true);
             JScrollPane assignmentScrollPane = new JScrollPane(assignmentTable);
             assignmentPanel.add(assignmentScrollPane, BorderLayout.CENTER);
@@ -281,27 +281,25 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 nodeInfoText.setText("USIC_SUSIC - " + bitsPerCard + Bundle.getMessage("BitsPerCard")
                         + ", " + numInputBits + " " + Bundle.getMessage("InputBitsAnd") + " "
                         + numOutputBits + " " + Bundle.getMessage("OutputBits"));
+            } else if (type == SerialNode.CPNODE) {  //c2
+                int bitsPerCard = selNode.getNumBitsPerCard();
+                int numInputCards = selNode.numInputCards();
+                int numOutputCards = selNode.numOutputCards();
+                numInputBits = bitsPerCard * numInputCards;
+                numOutputBits = bitsPerCard * numOutputCards;
+                nodeInfoText.setText("CPNODE - " + bitsPerCard + " " + Bundle.getMessage("BitsPerCard")
+                        + ", " + numInputBits + " " + Bundle.getMessage("InputBitsAnd") + " "
+                        + numOutputBits + " " + Bundle.getMessage("OutputBits"));
+            } else if (type == SerialNode.CPMEGA) {  //c2
+                int bitsPerCard = selNode.getNumBitsPerCard();
+                int numInputCards = selNode.numInputCards();
+                int numOutputCards = selNode.numOutputCards();
+                numInputBits = bitsPerCard * numInputCards;
+                numOutputBits = bitsPerCard * numOutputCards;
+                nodeInfoText.setText("CPMEGA - " + bitsPerCard + " " + Bundle.getMessage("BitsPerCard")
+                        + ", " + numInputBits + " " + Bundle.getMessage("InputBitsAnd") + " "
+                        + numOutputBits + " " + Bundle.getMessage("OutputBits"));
             }
-            else if (type == SerialNode.CPNODE) {  //c2
-		int bitsPerCard = selNode.getNumBitsPerCard();
-		int numInputCards = selNode.numInputCards();
-		int numOutputCards = selNode.numOutputCards();
-		numInputBits = bitsPerCard*numInputCards;
-		numOutputBits = bitsPerCard*numOutputCards;
-		nodeInfoText.setText("CPNODE - "+bitsPerCard+" "+Bundle.getMessage("BitsPerCard")+
-						", "+numInputBits+" "+Bundle.getMessage("InputBitsAnd")+" "+
-							numOutputBits+" "+Bundle.getMessage("OutputBits"));
-            }
-            else if (type == SerialNode.CPMEGA) {  //c2
-		int bitsPerCard = selNode.getNumBitsPerCard();
-		int numInputCards = selNode.numInputCards();
-		int numOutputCards = selNode.numOutputCards();
-		numInputBits = bitsPerCard*numInputCards;
-		numOutputBits = bitsPerCard*numOutputCards;
-		nodeInfoText.setText("CPMEGA - "+bitsPerCard+" "+Bundle.getMessage("BitsPerCard")+
-						", "+numInputBits+" "+Bundle.getMessage("InputBitsAnd")+" "+
-							numOutputBits+" "+Bundle.getMessage("OutputBits"));
-			}
 
 // here insert code for new types of C/MRI nodes
         }
@@ -420,25 +418,18 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     curRow = r;
                     curRowSysName = sName;
                 }
-            }
-             else if (c==COMMENT_COLUMN) // c2
-                {
-                String  sName = null;
-                if (curRow!=r) 
-                {
-                    if (inputSelected) 
-                    {
-                     sName = _memo.isInputBitFree(selNodeNum,(r+1));
-                    }
-                    else 
-                    {
-                     sName = _memo.isOutputBitFree(selNodeNum,(r+1));
+            } else if (c == COMMENT_COLUMN) // c2
+            {
+                String sName = null;
+                if (curRow != r) {
+                    if (inputSelected) {
+                        sName = _memo.isInputBitFree(selNodeNum, (r + 1));
+                    } else {
+                        sName = _memo.isOutputBitFree(selNodeNum, (r + 1));
                     }
                     curRow = r;
                     curRowSysName = sName;
-                }
-
-                else {
+                } else {
                     sName = curRowSysName;
                 }
                 if (sName == null) {
@@ -447,7 +438,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     return (_memo.getUserNameFromSystemName(sName));
                 }
             }
-            
+
             return "";
         }
 
@@ -467,11 +458,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
          * Print or print preview the assignment table. Printed in
          * proportionately sized columns across the page with headings and
          * vertical lines between each column. Data is word wrapped within a
-         * column. Can only handle 4 columns of data as strings.
-         * Adapted from routines in BeanTableDataModel.java by Bob Jacobsen
-         * and Dennis Miller
+         * column. Can only handle 4 columns of data as strings. Adapted from
+         * routines in BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
          */
-        public void printTable(HardcopyWriter w, int colWidth[]) {
+        public void printTable(HardcopyWriter w, int[] colWidth) {
             // determine the column sizes - proportionately sized, with space between for lines
             int[] columnSize = new int[MAX_COLS];  //c2
             int charPerLine = w.getCharactersPerLine();
@@ -529,7 +519,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+        protected void printColumns(HardcopyWriter w, String[] columnStrings, int[] columnSize) {
             String columnString = "";
             StringBuilder lineString = new StringBuilder();
             StringBuilder[] spaces = new StringBuilder[MAX_COLS];
@@ -602,7 +592,6 @@ public class ListFrame extends jmri.util.JmriJFrame {
         Bundle.getMessage("HeadingSystemName"),
         Bundle.getMessage("HeadingUserName"),
         Bundle.getMessage("HeadingComment") //c2
-
     };
 
     private final static Logger log = LoggerFactory.getLogger(ListFrame.class);

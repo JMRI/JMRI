@@ -27,10 +27,10 @@ import org.slf4j.LoggerFactory;
  * throttle setting was usually done with an ad hoc "throttle factor".  When
  * created, the RosterSpeedProfile provides this needed conversion but
  * generally is not done by users for each of their locos.
- * 
- * Methods to dynamically determine a RosterSpeedProfile for each loco are 
+ *
+ * Methods to dynamically determine a RosterSpeedProfile for each loco are
  * implemented in this class.
- * 
+ *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2017
  *
  */
@@ -47,8 +47,8 @@ public class SpeedUtil {
     private int _stepRampTimeIncrement; // user specified time for ramp step increment
     private RosterSpeedProfile _mergeProfile; // merge of existing Roster speeedProfile and session speeedProfile
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
-    private SignalSpeedMap _signalSpeedMap; 
-    private int _ma;  // milliseconds needed to increase speed by _stepRampThrottleIncrement amount 
+    private SignalSpeedMap _signalSpeedMap;
+    private int _ma;  // milliseconds needed to increase speed by _stepRampThrottleIncrement amount
     private int _md;  // milliseconds needed to decrease speed by _stepRampThrottleIncrement amount
     private int _mp;  // default milliseconds needed to change speed by _stepRampThrottleIncrement amount
 
@@ -59,13 +59,13 @@ public class SpeedUtil {
             _orders = orders;
         }
     }
-    
+
     protected void setOrders(List<BlockOrder> orders) {
         if (orders !=null) {
             _orders = orders;
         }
     }
-    
+
     public RosterEntry getRosterEntry() {
         if (_rosterEntry == null) {
             _rosterEntry = Roster.getDefault().entryFromTitle(_rosterId);
@@ -98,7 +98,7 @@ public class SpeedUtil {
             }
         }
     }
-    
+
     public DccLocoAddress getDccAddress() {
         if (_dccAddress == null) {
             if (_rosterEntry != null) {
@@ -107,16 +107,16 @@ public class SpeedUtil {
                 setDccAddress(_rosterId);
             }
         }
-        return _dccAddress;            
+        return _dccAddress;
     }
-    
+
     public String getAddress() {
         if (_dccAddress != null) {
             return _dccAddress.toString();
         }
         return null;
     }
-    
+
     protected void setDccAddress(DccLocoAddress dccAddr) {
         _dccAddress = dccAddr;
     }
@@ -125,7 +125,7 @@ public class SpeedUtil {
      * Sets dccAddress and will fetch RosterEntry if one exists.
      * If _rosterEntry exists, _rosterId set to RosterEntry Id (which may or not be "id")
      * else _rosterId set to "id" or decoder address.
-     * Called from: 
+     * Called from:
      *    WarrantRoute.setAddress() - whatever is in _dccNumBox.getText()
      *    WarrantRoute.setTrainInfo(name) - whatever = name
      *    WarrantTableModel - whatever address is put into the ADDRESS_COLUMN
@@ -136,7 +136,7 @@ public class SpeedUtil {
         if (log.isTraceEnabled()) log.debug("setDccAddress({}) _rosterId= {}", id, _rosterId);
         if (id == null || id.trim().length()==0) {
             setRosterId(null);   // set _rosterId
-            _dccAddress = null;           
+            _dccAddress = null;
            return false;
         } else if (id.equals(_rosterId)){
             return true;
@@ -165,7 +165,7 @@ public class SpeedUtil {
                         // That should not make us overwrite the _trainId.
                         setRosterId(_rosterEntry.getId());
                     }
-                    _dccAddress = _rosterEntry.getDccLocoAddress();           
+                    _dccAddress = _rosterEntry.getDccLocoAddress();
                 } else {
                     boolean isLong = true;
                     if ((index + 1) < id.length()
@@ -173,7 +173,7 @@ public class SpeedUtil {
                         isLong = false;
                     }
                     _dccAddress = new DccLocoAddress(num, isLong);
-                    setRosterId(_dccAddress.toString()); // not a rosterId, but does identify the  DccLocoAddress                       
+                    setRosterId(_dccAddress.toString()); // not a rosterId, but does identify the  DccLocoAddress
                }
             } catch (NumberFormatException e) {
                 _dccAddress = null;
@@ -199,13 +199,13 @@ public class SpeedUtil {
     }
     protected float getMomentumTime(boolean increasing) {
         if (increasing) {
-            return _ma;            
+            return _ma;
         } else {
             return _md;
         }
     }
 
-    // throttle's minimum speed increase amount 
+    // throttle's minimum speed increase amount
     protected float getThrottleSpeedStepIncrement() {
         return _stepIncrement;
     }
@@ -214,7 +214,7 @@ public class SpeedUtil {
         if (_sessionProfile == null) {
             if (_mergeProfile == null) {
                 makeSpeedTree();
-                makeRampParameters();                
+                makeRampParameters();
             } else {
                 return _mergeProfile;
             }
@@ -223,11 +223,11 @@ public class SpeedUtil {
         }
         return _sessionProfile;
     }
-    
+
     protected RosterSpeedProfile getMergeProfile() {
         if (_mergeProfile == null) {
             makeSpeedTree();
-            makeRampParameters();                
+            makeRampParameters();
         }
         return _mergeProfile;
     }
@@ -244,7 +244,7 @@ public class SpeedUtil {
             _sessionProfile = new RosterSpeedProfile(null);
         }
         if (_mergeProfile == null) {
-            _mergeProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile            
+            _mergeProfile = new RosterSpeedProfile(getRosterEntry());   // will be a copy or an empty profile
             if (_rosterEntry!=null) {
                 if (log.isDebugEnabled()) log.debug("makeSpeedTree - Copy TreeMap");
                 RosterSpeedProfile speedProfile = _rosterEntry.getSpeedProfile();
@@ -262,7 +262,7 @@ public class SpeedUtil {
                 _signalSpeedMap.getDefaultThrottleFactor(), _signalSpeedMap.getLayoutScale(),
                 _signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR);
     }
-    
+
     private void makeRampParameters() {
         WarrantPreferences preferences = WarrantPreferences.getDefault();
         _stepRampTimeIncrement = preferences.getTimeIncrement();
@@ -287,7 +287,7 @@ public class SpeedUtil {
                     return;
                 }
                 root = xmlFile.rootFromFile(file);
-            } catch (NullPointerException npe) { 
+            } catch (NullPointerException npe) {
                 return;
             } catch (IOException | JDOMException eb) {
                 log.error("Exception while loading warrant preferences: " + eb);
@@ -332,7 +332,7 @@ public class SpeedUtil {
                     _rosterId, _mp, _ma, _md, _stepRampThrottleIncrement);
         }
     }
-    
+
     private int getMomentumFactor(Element cv) {
         Attribute attr = cv.getAttribute("value");
         if (attr != null) {
@@ -340,7 +340,7 @@ public class SpeedUtil {
                 int num = Integer.parseInt( attr.getValue());
                 // even with instant speed change, allow some time for new speed to be attained
                 // therefore .896 factor is ignored and 30ms added per 1% of throttle increment
-                return (int) ((num + 1) * _stepRampThrottleIncrement * 896); 
+                return (int) ((num + 1) * _stepRampThrottleIncrement * 896);
             } catch (NumberFormatException nfe) {
                 return _mp;
             }
@@ -348,7 +348,7 @@ public class SpeedUtil {
             return _mp;
         }
     }
-    
+
     protected boolean profileHasSpeedInfo() {
         RosterSpeedProfile speedProfile = getSpeedProfile();
         if (speedProfile == null) {
@@ -382,7 +382,7 @@ public class SpeedUtil {
         _stepIncrement = _throttle.getSpeedIncrement();
         getSpeedProfile();
     }
-    
+
     // return true if the speed named 'speed2' is strictly greater than that of 'speed1'
     protected boolean secondGreaterThanFirst(String speed1, String speed2) {
         if (speed2 == null) {
@@ -466,7 +466,7 @@ public class SpeedUtil {
      * If SpeedProfile has no speed information an estimate is given using the WarrantPreferences
      * throttleFactor.
      * NOTE:  Call profileHasSpeedInfo() first to determine if a reliable speed is known.
-     * for a given throttle setting and direction. 
+     * for a given throttle setting and direction.
      * SpeedProfile returns 0 if it has no speed information
      * @param throttleSetting throttle setting
      * @param isForward direction
@@ -478,7 +478,7 @@ public class SpeedUtil {
         }
         RosterSpeedProfile speedProfile = getSpeedProfile();
         // Note SpeedProfile uses milliseconds per second.
-        float speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;            
+        float speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;
         if (speed <= 0.0f) {
             float factor = _signalSpeedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _signalSpeedMap.getLayoutScale();
             speed = throttleSetting * factor;
@@ -486,7 +486,7 @@ public class SpeedUtil {
                     throttleSetting, speed, factor, _rosterId);
         } else {
             if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, SpeedProfile. train= {}",
-                    throttleSetting, speed, _rosterId);            
+                    throttleSetting, speed, _rosterId);
         }
         return speed;
     }
@@ -505,7 +505,7 @@ public class SpeedUtil {
     }
 
     /**
-     * Get distance traveled at a constant speed. If this is called at 
+     * Get distance traveled at a constant speed. If this is called at
      * a speed change the throttleSetting should be modified to reflect the
      * average speed over the time interval.
      * @param speedSetting Recorded (Normal) throttle setting
@@ -538,7 +538,7 @@ public class SpeedUtil {
     }
 
     /**
-     * Get ramp length needed to change speed using the WarrantPreference deltas for 
+     * Get ramp length needed to change speed using the WarrantPreference deltas for
      * throttle increment and time increment.  This should only be used for ramping down.
      * @param curSetting current throttle setting
      * @param curSpeedType current speed type
@@ -619,7 +619,7 @@ public class SpeedUtil {
                 rampLength, deltaTime*numSteps, fromSpeed, toSpeed);
         return rampLength;
     }
-    
+
     /*************** dynamic calibration ***********************/
 
     long _timeAtSpeed;
@@ -637,7 +637,7 @@ public class SpeedUtil {
      */
     protected void enteredBlock(int lastIdx, int newIdx) {
         speedChange();
-        if (lastIdx > 0) {   // Distance traveled in 1st block unknown 
+        if (lastIdx > 0) {   // Distance traveled in 1st block unknown
             if (!log.isDebugEnabled() && _numchanges > 1) {
                 return;
             }
@@ -655,7 +655,7 @@ public class SpeedUtil {
                         mergeOK = false;
                     }
                     totalLength += length;
-                }                
+                }
             }
             OBlock fromBlock = _orders.get(newIdx).getBlock();
             OBlock toBlock = _orders.get(lastIdx).getBlock();
@@ -683,7 +683,7 @@ public class SpeedUtil {
                 throttle = _settingsTravelled / _timeAtSpeed;
             }
             speed *= 1000;   // SpeedProfile is mm/sec
-            
+
             if (throttle < _stepIncrement || speed <= 0.0f || Math.abs(aveSpeed - speed) < 20) {
                 clearStats();
                 if (log.isDebugEnabled())
@@ -691,8 +691,8 @@ public class SpeedUtil {
                 return;
             }
             RosterSpeedProfile mergeProfile = getMergeProfile();
-            float mergeSpeed = mergeProfile.getSpeed(throttle, isForward);                
-            float profileSpeed = _sessionProfile.getSpeed(throttle, isForward);                
+            float mergeSpeed = mergeProfile.getSpeed(throttle, isForward);
+            float profileSpeed = _sessionProfile.getSpeed(throttle, isForward);
             throttle = _stepIncrement * Math.round(throttle/_stepIncrement);
             if (log.isDebugEnabled()) {
                 log.debug("{} changes between {} and {}. ave speed= {}",
@@ -706,7 +706,7 @@ public class SpeedUtil {
                     _mergeProfile.setForwardSpeed(throttle, mergeSpeed);
                     _sessionProfile.setForwardSpeed(throttle, speed);
                 } else {
-                    _mergeProfile.setReverseSpeed(throttle, mergeSpeed);            
+                    _mergeProfile.setReverseSpeed(throttle, mergeSpeed);
                     _sessionProfile.setReverseSpeed(throttle, speed);
                 }
                 if (log.isDebugEnabled()) log.debug("Set ProfileSpeed throttle= {}, sessionSpeed= {} mergeSpeed={}", throttle, speed, mergeSpeed);
@@ -714,17 +714,17 @@ public class SpeedUtil {
         }
         clearStats();
     }
-    
+
     private void clearStats() {
         _timeAtSpeed = 0;
         _changetime = System.currentTimeMillis();
         _distanceTravelled = 0.0f;
-        _settingsTravelled = 0.0f;            
+        _settingsTravelled = 0.0f;
         _numchanges = 0;
     }
 
     /*
-     * 
+     *
      */
     protected void speedChange() {
         _numchanges++;
@@ -743,11 +743,11 @@ public class SpeedUtil {
             }
             _settingsTravelled += throttleSetting * elapsedTime;
         }
-        _changetime = time;            
+        _changetime = time;
     }
-    
+
     protected float getDistanceTravelled() {
-        return _distanceTravelled;            
+        return _distanceTravelled;
     }
     protected void setDistanceTravelled(float dist) {
         clearStats();

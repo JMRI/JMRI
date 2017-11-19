@@ -604,7 +604,7 @@ public class JUnitUtil {
      */
     static String getTestClassName() {
         StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-        
+
         for (StackTraceElement e : trace) {
             if (e.getClassName().startsWith("jmri") || e.getClassName().startsWith("apps")) {
                 if (!e.getClassName().endsWith("JUnitUtil")) {
@@ -615,7 +615,7 @@ public class JUnitUtil {
 
         return "<unknown class>";
     }
-    
+
     /**
      * Dispose of any disposable windows. This should only be used if there is
      * no ability to actually close windows opened by a test using

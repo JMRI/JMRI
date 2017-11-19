@@ -8,13 +8,13 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class AbstractConsistManagerTestBase {
 
     protected jmri.ConsistManager cm = null;
 
-    // implementing classes should set cm to a valid value in setUp and 
+    // implementing classes should set cm to a valid value in setUp and
     // cleanup in tearDown.
     @Before
     abstract public void setUp();

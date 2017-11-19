@@ -6,7 +6,7 @@ package jmri.jmrix.srcp;
  * <P>
  * The {@link SRCPReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
  */
 public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -32,7 +32,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     // diagnose format
     /**
      *  Detrmine if the message turns off track power
-     *  @return true if the messages is a track power off message,false otherwise 
+     *  @return true if the messages is a track power off message,false otherwise
      */
     public boolean isKillMain() {
         String s = toString();
@@ -41,7 +41,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      *  Detrmine if the message turns on track power
-     *  @return true if the messages is a track power on message,false otherwise 
+     *  @return true if the messages is a track power on message,false otherwise
      */
     public boolean isEnableMain() {
         String s = toString();

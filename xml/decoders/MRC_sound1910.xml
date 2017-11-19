@@ -30,7 +30,7 @@
   <!--             Function label F4 and F12           -->
   <!--             CV50: horn type 0-3                 -->
   <!--             CV52: bell type 0-3                 -->
-  <!--             CV115: brake sound type             -->  
+  <!--             CV115: brake sound type             -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model show="no" model="HO Gauge Diesel - 16 Bit 1910" replacementModel="1910 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="7" numFns="30" maxTotalCurrent="1.0A">

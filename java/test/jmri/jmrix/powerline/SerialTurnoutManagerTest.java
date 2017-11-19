@@ -11,11 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialTurnoutManagerTest.java
+ * Tests for the SerialTurnoutManager class
  *
- * Description:	tests for the SerialTurnoutManager class
- *
- * @author	Bob Jacobsen Copyright 2004, 2008 Converted to multiple connection
+ * @author Bob Jacobsen Copyright 2004, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {

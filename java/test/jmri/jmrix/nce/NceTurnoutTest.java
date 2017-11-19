@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.nce.NceTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
@@ -44,19 +44,19 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
         };
 
         Turnout t1 = new NceTurnout(tcis, "NT", 4);
-        
+
         // by default, none
         Assert.assertTrue( ! t1.canLock(Turnout.PUSHBUTTONLOCKOUT));
         Assert.assertTrue( ! t1.canLock(Turnout.CABLOCKOUT));
         Assert.assertTrue( ! t1.canLock(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT));
-        
+
         t1.setFeedbackMode(Turnout.MONITORING);
 
         // with MONITORING, just CABLOCKOUT
         Assert.assertTrue( ! t1.canLock(Turnout.PUSHBUTTONLOCKOUT));
         Assert.assertTrue( t1.canLock(Turnout.CABLOCKOUT));
         Assert.assertTrue( t1.canLock(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT));
-        
+
         // add a decoder
         t1.setDecoderName(t1.getValidDecoderNames()[1]);  // [0] is the "unknown" NONE entry
         Assert.assertTrue( t1.canLock(Turnout.PUSHBUTTONLOCKOUT));

@@ -208,7 +208,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _itemPalette.setVisible(true);
             }
         }.init(this));
-        
+
         if (SystemType.isMacOSX()) {
             mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
         } else {
@@ -1253,7 +1253,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (isEditable()) {
                 _shapeDrawer.doMouseReleased(selection, event, this);
-                
+
                 if (!_circuitBuilder.doMouseReleased(selection, _dragging)) {
                     if (selection != null) {
                         if (!_dragging) {
@@ -1451,7 +1451,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (g instanceof Graphics2D) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
-                
+
             }
             g.setColor(new Color(150, 150, 255));
             for (Positionable p : _secondSelectionGroup) {

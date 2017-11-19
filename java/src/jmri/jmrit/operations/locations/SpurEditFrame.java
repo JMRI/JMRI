@@ -71,12 +71,12 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         // setup buttons
         addButtonAction(editScheduleButton);
         addComboBoxAction(comboBoxSchedules);
-        
+
         // Select the spur's Schedule
         updateScheduleComboBox();
 
         InstanceManager.getDefault(ScheduleManager.class).addPropertyChangeListener(this);
-        
+
         // finish
         panelOrder.setVisible(false); // Car order out of spurs is not available
         pack();
@@ -90,12 +90,12 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         }
         super.buttonActionPerformed(ae);
     }
-    
+
     @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         updateScheduleButtonText();
     }
-    
+
     private void updateScheduleButtonText() {
         if (comboBoxSchedules.getSelectedItem() == null) {
             editScheduleButton.setText(Bundle.getMessage("Add"));

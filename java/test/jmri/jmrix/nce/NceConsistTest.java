@@ -8,11 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * NceConsistTest.java
+ * Tests for the jmri.jmrix.nce.NceConsist class
  *
- * Description:	tests for the jmri.jmrix.nce.NceConsist class
- *
- * @author	Paul Bender Copyright (C) 2016,2017
+ * @author Paul Bender Copyright (C) 2016,2017
  */
 
 public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase {

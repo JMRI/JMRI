@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * VirtualSignalMastXmlTest.java
+ * Tests for the VirtualSignalMastXml class
  *
- * Description: tests for the VirtualSignalMastXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class VirtualSignalMastXmlTest {
 

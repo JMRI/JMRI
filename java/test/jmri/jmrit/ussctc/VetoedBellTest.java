@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for VetoedBell class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
   */
 public class VetoedBellTest {
 
@@ -15,8 +15,8 @@ public class VetoedBellTest {
     public void testConstruction() {
         new VetoedBell("veto Sensor", new PhysicalBell("Bell output"));
     }
- 
-    @Test 
+
+    @Test
     public void testBellStrokeAllowed() throws JmriException {
         rung = false;
         Bell bell = new Bell(){
@@ -25,14 +25,14 @@ public class VetoedBellTest {
             }
         };
         veto.setState(Sensor.INACTIVE);
-        
+
         Bell vbell = new VetoedBell("veto Sensor", bell);
         vbell.ring();
-        
+
         Assert.assertTrue(rung);
     }
-    
-    @Test 
+
+    @Test
     public void testBellStrokeNotAllowed() throws JmriException  {
         rung = false;
         Bell bell = new Bell(){
@@ -41,17 +41,17 @@ public class VetoedBellTest {
             }
         };
         veto.setState(Sensor.ACTIVE);
-        
+
         Bell vbell = new VetoedBell("veto Sensor", bell);
         vbell.ring();
-        
+
         Assert.assertTrue(!rung);
     }
-    
+
     boolean rung;
     Sensor veto;
     Turnout bellTurnout;
-    
+
     // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
@@ -60,7 +60,7 @@ public class VetoedBellTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initShutDownManager();
         JUnitUtil.resetProfileManager();
-        
+
         veto = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"); veto.setUserName("veto Sensor");
         bellTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); bellTurnout.setUserName("Bell output");
     }

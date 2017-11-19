@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import jmri.ConfigureManager;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -22,7 +21,7 @@ import org.junit.Assert;
 /**
  * Tests for the Warrant creation
  *
- * @author  Pete Cressman 2015
+ * @author Pete Cressman 2015
  *
  * todo - test error conditions
  */
@@ -123,7 +122,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         // wait for done
         final String name =  w.getDisplayName();
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));}, "warrant not done");
-         
+
 //        JUnitUtil.waitFor(() -> {
 //            return (warrant.getThrottle() == null);
  //       }, "Wait for run to end");

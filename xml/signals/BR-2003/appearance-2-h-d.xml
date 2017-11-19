@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
 
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,15 +23,15 @@
         <date>2010-01-18</date>
         <authorinitials>KD</authorinitials>
         <revremark>Initial Version</revremark>
-    </revision>    
+    </revision>
   </revhistory>
-  
+
   <aspecttable>BR</aspecttable>
 
   <name>2 Aspect Signal Home + Distant</name>
   <reference></reference>
   <description>This uses two single heads to control the aspects, this would be used on a semaphore signal with both the home and distance signals located on the same mast</description>
-  
+
   <appearances>
 
     <appearance>
@@ -47,13 +47,13 @@
       <show>yellow</show>
       <reference></reference>
     </appearance>
-    
+
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
       <reference></reference>
     </appearance>
-    
+
   </appearances>
   <specificappearances>
     <danger>
@@ -63,4 +63,4 @@
       <aspect>Danger</aspect>
     </held>
   </specificappearances>
-</appearancetable>  
+</appearancetable>

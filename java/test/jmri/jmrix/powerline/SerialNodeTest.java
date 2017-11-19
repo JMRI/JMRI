@@ -8,8 +8,8 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialNode class
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @author	Dave Duchamp multi-node extensions 2003 Converted to multiple connection
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Dave Duchamp multi-node extensions 2003 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class SerialNodeTest extends TestCase {

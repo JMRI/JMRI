@@ -14,12 +14,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2012
  * @author Andrew Crosland 2008
- * 
+ *
  */
 abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
-    
+
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.

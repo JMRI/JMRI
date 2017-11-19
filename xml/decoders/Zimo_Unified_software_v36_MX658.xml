@@ -14,14 +14,14 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20150412"/>
-  <!-- 1 Creation 
-		File based on Zimo_Unified_Software_v34_MX644.xml by Mark Waters. 
-		Following notes from original file.
+  <!-- 1 Creation
+        File based on Zimo_Unified_Software_v34_MX644.xml by Mark Waters.
+        Following notes from original file.
   -->
-  <!-- Based on the "2010 03 01" English version of the ZIMO MX640            			 -->
+  <!-- Based on the "2010 03 01" English version of the ZIMO MX640 -->
   <!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
-  <!-- for the translations!)with updates from "2010 10 15" German version			 -->
-  <!-- and the decoder software update page of the Zimo website.					 -->
+  <!-- for the translations!)with updates from "2010 10 15" German version -->
+  <!-- and the decoder software update page of the Zimo website. -->
   <!--                                                                                       -->
   <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
@@ -57,7 +57,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-      </variable> 
+      </variable>
      <variable item="Decoder ID 1" CV="250" default="246" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>

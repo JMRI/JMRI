@@ -32,7 +32,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPower.xml"/>
         <label>Power Source Conversion Type</label>
     </variable>
-<!--    <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>    -->
+<!-- <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>    -->
     <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" minFn="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label xml:lang="it">Stato Funzioni in analogico - F1</label>
@@ -183,7 +183,7 @@
     </variable>
     <!-- Consisting Information follows -->
     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-<!--    <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/> -->
+<!-- <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/> -->
   <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label xml:lang="it">Indirizzo Consist Attivo per F1</label>

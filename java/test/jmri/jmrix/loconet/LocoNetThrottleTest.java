@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

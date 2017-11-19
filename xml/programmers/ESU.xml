@@ -39,8 +39,8 @@
         <display item="Analog (DC) Operation"/>
       </column>
       <column>
-        <!--			<display item="Decoder Version"/> -->
-        <!-- 			<display item="Manufacturer"/>    -->
+        <!-- <display item="Decoder Version"/> -->
+        <!-- <display item="Manufacturer"/>    -->
         <label>
           <text> </text>
         </label>
@@ -152,7 +152,7 @@
         <label>
           <text>F-10(r) Key Output Control</text>
           <text xml:lang="it">F-10(r) Controllo Uscita</text>
-		  <text xml:lang="ca">F-10(r) Control Sortides</text>
+          <text xml:lang="ca">F-10(r) Control Sortides</text>
         </label>
         <separator/>
         <display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1"/>
@@ -197,7 +197,7 @@
         <label>
           <text>Will decoder respond to function requests at consist address?</text>
           <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
-		  <text xml:lang="ca">Les funcions del descodificador seran controlades per l'adreça de multi-tracció ?</text>
+          <text xml:lang="ca">Les funcions del descodificador seran controlades per l'adreça de multi-tracció ?</text>
           <text xml:lang="de">Sind Decoderfunktionen steuerbar durch die Mehrfachtrakstionsadresse?</text>
           <text xml:lang="nl">Reageert de decoder op functiecommando's aan het Multitractie-adres?</text>
         </label>
@@ -224,7 +224,7 @@
         <label>
           <text>Analog Mode Functions F1-F8</text>
           <text xml:lang="it">Funzioni in Analogico F1-F8</text>
-		  <text xml:lang="ca">Funcions en analògic F1-F8</text>
+          <text xml:lang="ca">Funcions en analògic F1-F8</text>
           <text xml:lang="de">Analogfunktionen F1-F8</text>
           <text xml:lang="nl">Analoge funkties F1-F8</text>
         </label>
@@ -243,7 +243,7 @@
         <label>
           <text>Analog Mode Functions F0, F9-F12</text>
           <text xml:lang="it">Funzioni in Analogico F0, F9-F12</text>
-		  <text xml:lang="ca">Funcions en analògic F0, F9-F12</text>
+          <text xml:lang="ca">Funcions en analògic F0, F9-F12</text>
           <text xml:lang="de">Analogfunktionen F0, F9-F12</text>
           <text xml:lang="nl">Analoge funkties F0, F9-F12</text>
         </label>

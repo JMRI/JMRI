@@ -1,5 +1,4 @@
 // SerialFilterFrame.java
-
 package jmri.jmrix.cmri.serial.serialmon;
 
 import java.awt.*;
@@ -19,87 +18,88 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame for a message filter for CMRInet network packets.
- * @author	 Chuck Catania   Copyright (C) 2016
+ *
+ * @author Chuck Catania Copyright (C) 2016
  */
 public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
-    ArrayList<SerialNode> monitorNode = new  ArrayList<SerialNode>();
+    ArrayList<SerialNode> monitorNode = new ArrayList<SerialNode>();
 
     // node table pane items
     protected JPanel nodeEnablePanel = null;
     protected Border nodeEableBorder = BorderFactory.createEtchedBorder();
-    protected Border nodeEableBorderTitled = BorderFactory.createTitledBorder(nodeEableBorder,"Monitor Nodes",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+    protected Border nodeEableBorderTitled = BorderFactory.createTitledBorder(nodeEableBorder, "Monitor Nodes", TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 
     protected Border packetTypesBorder = BorderFactory.createEtchedBorder();
-    protected Border packetTypesBorderTitled = BorderFactory.createTitledBorder(packetTypesBorder,"Packet Types",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+    protected Border packetTypesBorderTitled = BorderFactory.createTitledBorder(packetTypesBorder, "Packet Types", TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 
     protected Border enabledBorder = BorderFactory.createEtchedBorder();
-    protected Border enabledBorderTitled = BorderFactory.createTitledBorder(enabledBorder,"Select Nodes",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+    protected Border enabledBorderTitled = BorderFactory.createTitledBorder(enabledBorder, "Select Nodes", TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 
     protected Border packetSelectBorder = BorderFactory.createEtchedBorder();
-    protected Border packetSelectBorderTitled = BorderFactory.createTitledBorder(packetSelectBorder,"Select Packets",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+    protected Border packetSelectBorderTitled = BorderFactory.createTitledBorder(packetSelectBorder, "Select Packets", TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 
     protected Border mainButtonsBorder = BorderFactory.createEtchedBorder();
-    protected Border mainButtonsBorderTitled = BorderFactory.createTitledBorder(mainButtonsBorder,"");
+    protected Border mainButtonsBorderTitled = BorderFactory.createTitledBorder(mainButtonsBorder, "");
 
     protected JTable nodeTable = null;
     protected TableModel nodeTableModel = null;
 
     // button pane items
-    JButton doneButton = new JButton(Bundle.getMessage("DoneButtonText") );
-    JButton haltPollButton = new JButton(Bundle.getMessage("HaltPollButtonText") );
+    JButton doneButton = new JButton(Bundle.getMessage("DoneButtonText"));
+    JButton haltPollButton = new JButton(Bundle.getMessage("HaltPollButtonText"));
 
-    JButton nodeMonitorAll = new JButton(Bundle.getMessage("AllButtonText") );
-    JButton nodeMonitorNone = new JButton(Bundle.getMessage("NoneButtonText") );
+    JButton nodeMonitorAll = new JButton(Bundle.getMessage("AllButtonText"));
+    JButton nodeMonitorNone = new JButton(Bundle.getMessage("NoneButtonText"));
 
-    JButton packetMonitorAll = new JButton(Bundle.getMessage("AllButtonText") );
-    JButton packetMonitorNone = new JButton(Bundle.getMessage("NoneButtonText") );
+    JButton packetMonitorAll = new JButton(Bundle.getMessage("AllButtonText"));
+    JButton packetMonitorNone = new JButton(Bundle.getMessage("NoneButtonText"));
 
     // CMRInet packet monitor variables only persistent when running
     //--------------------------------------------------------------
-    public static final int monPktInit     =  0; // (I) 0x49 Initialize
-    public static final int monPktPoll     =  1; // (P) 0x50 Poll
-    public static final int monPktRead     =  2; // (R) 0x52 Read
-    public static final int monPktTransmit =  3; // (T) 0x54 Transmit
-    public static final int monPktEOT      =  4; // (E) 0x45 EOT
-    public static final int monPktQuery    =  5; // (Q) 0x51 Query
-    public static final int monPktDGread   =  6; // (D) 0x44 Datagram Read
-    public static final int monPktDGwrite  =  7; // (W) 0x57 Datagram Write
-    public static final int monPktDGack    =  8; // (A) 0x41 Datagram Ack
-    public static final int monPktCodeline =  9; // (C) 0x43 Code Line
+    public static final int monPktInit = 0; // (I) 0x49 Initialize
+    public static final int monPktPoll = 1; // (P) 0x50 Poll
+    public static final int monPktRead = 2; // (R) 0x52 Read
+    public static final int monPktTransmit = 3; // (T) 0x54 Transmit
+    public static final int monPktEOT = 4; // (E) 0x45 EOT
+    public static final int monPktQuery = 5; // (Q) 0x51 Query
+    public static final int monPktDGread = 6; // (D) 0x44 Datagram Read
+    public static final int monPktDGwrite = 7; // (W) 0x57 Datagram Write
+    public static final int monPktDGack = 8; // (A) 0x41 Datagram Ack
+    public static final int monPktCodeline = 9; // (C) 0x43 Code Line
     public static final int monPktNMRAmast = 10; // (M) 0x4D NMRA Mast
-    public static final int monPktRFE      = 11; // (?) 0x3F RFE
+    public static final int monPktRFE = 11; // (?) 0x3F RFE
 /*
     public static final int monPktRFE      = 12; // RFE
     public static final int monPktRFE      = 13; // RFE
     public static final int monPktRFE      = 14; // RFE
     public static final int monPktRFE      = 15; // RFE
-*/
-    public static final int numMonPkts     = monPktRFE;
-    public static final int lastStdPkt     = monPktTransmit+1;
+     */
+    public static final int numMonPkts = monPktRFE;
+    public static final int lastStdPkt = monPktTransmit + 1;
     public static final int[] monPktTypeID = {
-                                                0x49, 0x50, 0x52, 0x54, 0x45,
-                                                0x51, 0x44, 0x57, 0x41, 0x43,
-                                                0x4D, 0x3F
-                                              };
+        0x49, 0x50, 0x52, 0x54, 0x45,
+        0x51, 0x44, 0x57, 0x41, 0x43,
+        0x4D, 0x3F
+    };
 
     ArrayList<JCheckBox> packetChkBoxes = new ArrayList<JCheckBox>();
-    String packetChkBoxLabels[] = {
-                                   "(I) Initialize    ",
-                                   "(P) Poll          ",
-                                   "(R) Read          ",
-                                   "(T) Transmit      ",
-                                   "(E) EOT           ",
-                                   "(Q) Query         ",
-                                   "(D) Datagram Read ",
-                                   "(W) Datagram Write",
-                                   "(A) Datagram Ack  ",
-                                   "(C) Code Line     ",
-                                   "(M) NMRA Mast     ",
-                                   "RFE               "
-                                  };
+    String[] packetChkBoxLabels = {
+        "(I) Initialize    ",
+        "(P) Poll          ",
+        "(R) Read          ",
+        "(T) Transmit      ",
+        "(E) EOT           ",
+        "(Q) Query         ",
+        "(D) Datagram Read ",
+        "(W) Datagram Write",
+        "(A) Datagram Ack  ",
+        "(C) Code Line     ",
+        "(M) NMRA Mast     ",
+        "RFE               "
+    };
 
-    protected JPanel packetTypes  = new JPanel();
+    protected JPanel packetTypes = new JPanel();
 
     HandlerClass packetTypeCkBoxHandler = new HandlerClass();
     private CMRISystemConnectionMemo _memo = null;
@@ -109,15 +109,15 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     public void initComponents() {
-	    initializeNodes();
+        initializeNodes();
 
         // For the class
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setPreferredSize(new Dimension(620,375));
+        setPreferredSize(new Dimension(620, 375));
 //        setBackground(Color.LIGHT_GRAY);
 
         // Set up the node filter enable table
@@ -132,7 +132,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         nodeTableModel = new NodeTableModel();
         nodeTable = new JTable(nodeTableModel);
 
-        nodeTable.setPreferredScrollableViewportSize(new Dimension(200,90));
+        nodeTable.setPreferredScrollableViewportSize(new Dimension(200, 90));
         nodeTable.setFillsViewportHeight(true);
         nodeTable.setShowGrid(true);
         nodeTable.setGridColor(Color.WHITE);
@@ -145,7 +145,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         // Monitor node enable selection check boxes
         //------------------------------------------
         JScrollPane nodeTableScrollPane = new JScrollPane(nodeTable);
-        nodeEnablePanel.add(nodeTableScrollPane,BorderLayout.LINE_START);
+        nodeEnablePanel.add(nodeTableScrollPane, BorderLayout.LINE_START);
 
         nodeEnablePanel.setBorder(nodeEableBorderTitled);
 
@@ -168,7 +168,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
         nodeEnablePanel.setBorder(nodeEableBorderTitled);
         nodeEnablePanel.setBackground(Color.WHITE);
-        nodeEnablePanel.setPreferredSize(new Dimension(200,200));
+        nodeEnablePanel.setPreferredSize(new Dimension(200, 200));
 
         nodeTable.setAutoCreateRowSorter(true);
         nodeTable.getRowSorter().toggleSortOrder(NodeTableModel.NODEADDR_COLUMN);
@@ -179,15 +179,14 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         // packet type selection check boxes
         //----------------------------------
         JPanel packetSelectTypes = new JPanel();
-        packetSelectTypes.setLayout(new GridLayout(0,2));
+        packetSelectTypes.setLayout(new GridLayout(0, 2));
         packetSelectTypes.setPreferredSize(new Dimension(400, 200));
         packetSelectTypes.setBorder(packetTypesBorderTitled);
         packetSelectTypes.setBackground(Color.WHITE);
 
         // Losd the packet types filter check boxes
         //-----------------------------------------
-        for (int i=0; i<numMonPkts; i++)
-        {
+        for (int i = 0; i < numMonPkts; i++) {
             JCheckBox ckbox = new JCheckBox(packetChkBoxLabels[i]);
             packetChkBoxes.add(ckbox);
             packetChkBoxes.get(i).addItemListener(packetTypeCkBoxHandler);
@@ -195,8 +194,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
             packetChkBoxes.get(i).setVisible(false);
             packetChkBoxes.get(i).setEnabled(false);
             packetChkBoxes.get(i).setSelected(false);
-            if (i<lastStdPkt)
-            {
+            if (i < lastStdPkt) {
                 packetChkBoxes.get(i).setVisible(true);
                 packetChkBoxes.get(i).setEnabled(true);
                 packetChkBoxes.get(i).setSelected(true);
@@ -217,26 +215,23 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
         enableSelectButtons.add(nodeMonitorAll);
         nodeMonitorAll.setVisible(true);
-        nodeMonitorAll.setToolTipText(Bundle.getMessage("AllButtonTip") );
-	nodeMonitorAll.addActionListener(new java.awt.event.ActionListener()
-        {
+        nodeMonitorAll.setToolTipText(Bundle.getMessage("AllButtonTip"));
+        nodeMonitorAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-					nodeMonitorAllButtonActionPerformed();
-				}
+                nodeMonitorAllButtonActionPerformed();
+            }
         });
 
         enableSelectButtons.add(nodeMonitorNone);
         nodeMonitorNone.setVisible(true);
-        nodeMonitorNone.setToolTipText(Bundle.getMessage("NoneButtonTip") );
-	nodeMonitorNone.addActionListener(new java.awt.event.ActionListener()
-        {
+        nodeMonitorNone.setToolTipText(Bundle.getMessage("NoneButtonTip"));
+        nodeMonitorNone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-					nodeMonitorNoneButtonActionPerformed();
-				}
-	});
+                nodeMonitorNoneButtonActionPerformed();
+            }
+        });
 
         add(enableSelectButtons);
-
 
         // packet select enable button panel
         //----------------------------------
@@ -248,23 +243,21 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
         packetSelectButtons.add(packetMonitorAll);
         packetMonitorAll.setVisible(true);
-        packetMonitorAll.setToolTipText(Bundle.getMessage("AllButtonTip") );
-	packetMonitorAll.addActionListener(new java.awt.event.ActionListener()
-        {
+        packetMonitorAll.setToolTipText(Bundle.getMessage("AllButtonTip"));
+        packetMonitorAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-					packetMonitorAllButtonActionPerformed();
-				}
-	});
+                packetMonitorAllButtonActionPerformed();
+            }
+        });
 
         packetSelectButtons.add(packetMonitorNone);
         packetMonitorNone.setVisible(true);
-        packetMonitorNone.setToolTipText(Bundle.getMessage("NoneButtonTip") );
-	packetMonitorNone.addActionListener(new java.awt.event.ActionListener()
-        {
+        packetMonitorNone.setToolTipText(Bundle.getMessage("NoneButtonTip"));
+        packetMonitorNone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-					packetMonitorNoneButtonActionPerformed();
-				}
-	});
+                packetMonitorNoneButtonActionPerformed();
+            }
+        });
 
         add(packetSelectButtons);
 
@@ -275,26 +268,24 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         mainButtons.setPreferredSize(new Dimension(600, 60));
 
         haltPollButton.setVisible(true);
-        haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip") );
-	haltPollButton.addActionListener(new java.awt.event.ActionListener()
-        {
+        haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip"));
+        haltPollButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-					haltpollButtonActionPerformed(e);
-				}
-			});
-	mainButtons.add(haltPollButton);
+                haltpollButtonActionPerformed(e);
+            }
+        });
+        mainButtons.add(haltPollButton);
 
-        mainButtons.add(Box.createRigidArea(new Dimension(30,0)));
+        mainButtons.add(Box.createRigidArea(new Dimension(30, 0)));
 
         doneButton.setVisible(true);
-        doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip") );
-	doneButton.addActionListener(new java.awt.event.ActionListener()
-        {
+        doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip"));
+        doneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-					doneButtonActionPerformed();
-				}
-			});
-	mainButtons.add(doneButton);
+                doneButtonActionPerformed();
+            }
+        });
+        mainButtons.add(doneButton);
         mainButtons.setVisible(true);
         add(mainButtons);
 
@@ -307,61 +298,51 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to initialize configured nodes and set up the node select combo box
+     * Method to initialize configured nodes and set up the node select combo
+     * box
      */
-    public void initializeNodes()  //c2
+    public void initializeNodes() //c2
     {
-	String str = "";
+        String str = "";
 
-    // get all configured nodes
-//	SerialNode aNode = (SerialNode) SerialTrafficController.instance().getNode(0);
+        // get all configured nodes
         SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
-        while (node != null)
-        {
+        while (node != null) {
             monitorNode.add(node);
-//            aNode = (SerialNode) SerialTrafficController.instance().getNode(index);
             node = (SerialNode) _memo.getTrafficController().getNode(index);
-            index ++;
+            index++;
 
-	}
+        }
     }
 
-    /**setMonitorNodePackets
-    *
-    */
-    public void nodeMonitorAllButtonActionPerformed()
-    {
-     for(int i=0; i<monitorNode.size(); i++)
-     {
-      monitorNode.get(i).setMonitorNodePackets(false);
-      nodeTableModel.setValueAt(monitorNode.get(i).getMonitorNodePackets(), i, NodeTableModel.ENABLED_COLUMN);
-     }
+    /**
+     * setMonitorNodePackets
+     */
+    public void nodeMonitorAllButtonActionPerformed() {
+        for (int i = 0; i < monitorNode.size(); i++) {
+            monitorNode.get(i).setMonitorNodePackets(false);
+            nodeTableModel.setValueAt(monitorNode.get(i).getMonitorNodePackets(), i, NodeTableModel.ENABLED_COLUMN);
+        }
     }
 
-    public void nodeMonitorNoneButtonActionPerformed()
-    {
-     for(int i=0; i<monitorNode.size(); i++)
-     {
-      monitorNode.get(i).setMonitorNodePackets(true);
-      nodeTableModel.setValueAt(monitorNode.get(i).getMonitorNodePackets(), i, NodeTableModel.ENABLED_COLUMN);
-     }
+    public void nodeMonitorNoneButtonActionPerformed() {
+        for (int i = 0; i < monitorNode.size(); i++) {
+            monitorNode.get(i).setMonitorNodePackets(true);
+            nodeTableModel.setValueAt(monitorNode.get(i).getMonitorNodePackets(), i, NodeTableModel.ENABLED_COLUMN);
+        }
     }
 
-    public void packetMonitorAllButtonActionPerformed()
-    {
-     for (int i=0; i<lastStdPkt; i++)
-     {
-      packetChkBoxes.get(i).setSelected(true);
-     }
+    public void packetMonitorAllButtonActionPerformed() {
+        for (int i = 0; i < lastStdPkt; i++) {
+            packetChkBoxes.get(i).setSelected(true);
+        }
     }
 
-    public void packetMonitorNoneButtonActionPerformed()
-    {
-     for (int i=0; i<lastStdPkt; i++)
-     {
-      packetChkBoxes.get(i).setSelected(false);
-     }
+    public void packetMonitorNoneButtonActionPerformed() {
+        for (int i = 0; i < lastStdPkt; i++) {
+            packetChkBoxes.get(i).setSelected(false);
+        }
     }
 
     public void doneButtonActionPerformed() {
@@ -370,55 +351,52 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     }
 
     /* ---------------------------- */
-    /* Halt Poll button handler */
-    /* ---------------------------- */
+ /* Halt Poll button handler */
+ /* ---------------------------- */
     public void haltpollButtonActionPerformed(ActionEvent e) {
-         SerialTrafficController stc = _memo.getTrafficController();
+        SerialTrafficController stc = _memo.getTrafficController();
 //         SerialTrafficController stc = SerialTrafficController._memo();
-         stc.setPollNetwork(!stc.getPollNetwork());
-         if (stc.getPollNetwork())
-            {
-             haltPollButton.setText(Bundle.getMessage("HaltPollingText"));
-            }
-         else
-            {
-             haltPollButton.setText(Bundle.getMessage("StartPollingText"));
-            }
+        stc.setPollNetwork(!stc.getPollNetwork());
+        if (stc.getPollNetwork()) {
+            haltPollButton.setText(Bundle.getMessage("HaltPollingText"));
+        } else {
+            haltPollButton.setText(Bundle.getMessage("StartPollingText"));
+        }
     }
 
     // -------------------------------
     // cpNode options checkbox handler
     // -------------------------------
-    private class HandlerClass implements ItemListener{
-        public void itemStateChanged(ItemEvent e){
+    private class HandlerClass implements ItemListener {
+
+        public void itemStateChanged(ItemEvent e) {
             JCheckBox pktTypeChkBox = (JCheckBox) e.getSource();
-	    int pktTypeIndex = 0;
+            int pktTypeIndex = 0;
             SerialNode aNode = null;
-	    do
-            {
-             if (pktTypeChkBox == packetChkBoxes.get(pktTypeIndex))
- 	      {
-                for (int i=0; i < monitorNode.size(); i++)
-                {
-                 aNode = monitorNode.get(i);
-                 if (aNode != null)
-                 {
-                    aNode.setMonitorPacketBit(pktTypeIndex,(packetChkBoxes.get(pktTypeIndex).isSelected() ? true : false));
-                 }
+            do {
+                if (pktTypeChkBox == packetChkBoxes.get(pktTypeIndex)) {
+                    for (int i = 0; i < monitorNode.size(); i++) {
+                        aNode = monitorNode.get(i);
+                        if (aNode != null) {
+                            aNode.setMonitorPacketBit(pktTypeIndex, (packetChkBoxes.get(pktTypeIndex).isSelected() ? true : false));
+                        }
+                    }
+                    return;
                 }
-                return;
-	      }
-             pktTypeIndex++;
-            }
-            while ( pktTypeIndex < numMonPkts);
+                pktTypeIndex++;
+            } while (pktTypeIndex < numMonPkts);
         }
     }
+
     /**
      * Set up table for displaying bit assignments
      */
-    public class NodeTableModel extends AbstractTableModel
-    {
-        public String getColumnName(int c) {return nodeEnableColumnsNames[c];}
+    public class NodeTableModel extends AbstractTableModel {
+
+        public String getColumnName(int c) {
+            return nodeEnableColumnsNames[c];
+        }
+
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case NODEADDR_COLUMN:
@@ -426,49 +404,54 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
                 default:
                     return Boolean.class;
             }
-        };
-	public boolean isCellEditable(int r,int c) {
-           if(c!=NODEADDR_COLUMN) return true;
-           else return false;
         }
-        public int getColumnCount () {return NUMCOLUMNS;}
-        public int getRowCount () {return monitorNode.size();}
-        public Object getValueAt (int r,int c)
-        {
 
-            if (c==NODEADDR_COLUMN)
-            {
-                 return monitorNode.get(r).getNodeAddress();
-            }
-            else if (c==ENABLED_COLUMN)
-            {
-             if (monitorNode.get(r).getMonitorNodePackets())
-              return true;
-             else
-              return false;
-            }
-            else
-            {
-            return true;
+        public boolean isCellEditable(int r, int c) {
+            if (c != NODEADDR_COLUMN) {
+                return true;
+            } else {
+                return false;
             }
         }
 
-	public void setValueAt(Object value, int r, int c) {
-            if (c==NODEADDR_COLUMN) {
-                monitorNode.get(r).setPollListPosition((Integer)value);
+        public int getColumnCount() {
+            return NUMCOLUMNS;
+        }
+
+        public int getRowCount() {
+            return monitorNode.size();
+        }
+
+        public Object getValueAt(int r, int c) {
+
+            if (c == NODEADDR_COLUMN) {
+                return monitorNode.get(r).getNodeAddress();
+            } else if (c == ENABLED_COLUMN) {
+                if (monitorNode.get(r).getMonitorNodePackets()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
             }
-            else if (c == ENABLED_COLUMN) {
+        }
+
+        public void setValueAt(Object value, int r, int c) {
+            if (c == NODEADDR_COLUMN) {
+                monitorNode.get(r).setPollListPosition((Integer) value);
+            } else if (c == ENABLED_COLUMN) {
                 monitorNode.get(r).setMonitorNodePackets(!monitorNode.get(r).getMonitorNodePackets());
             }
             fireTableDataChanged();
         }
 
         public static final int NODEADDR_COLUMN = 0;
-        public static final int ENABLED_COLUMN  = 1;
-        public static final int NUMCOLUMNS = ENABLED_COLUMN+1;
-}
+        public static final int ENABLED_COLUMN = 1;
+        public static final int NUMCOLUMNS = ENABLED_COLUMN + 1;
+    }
 
-    private String[] nodeEnableColumnsNames = {"Node","Monitor"};
+    private String[] nodeEnableColumnsNames = {"Node", "Monitor"};
 
     private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
 

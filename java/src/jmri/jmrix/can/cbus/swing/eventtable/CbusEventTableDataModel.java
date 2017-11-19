@@ -483,7 +483,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     // [AC] modified to take an array of column widths
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnWidth[]) {
+    protected void printColumns(HardcopyWriter w, String[] columnStrings, int[] columnWidth) {
         String columnString = "";
         String lineString = "";
         String spaces;

@@ -13,13 +13,13 @@ import org.junit.Test;
  * @author Randall Wood
  */
 public class ProfileListCellRendererTest {
-    
+
     @Before
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetProfileManager();
     }
-    
+
     @After
     public void tearDown() {
         Log4JFixture.tearDown();
@@ -56,5 +56,5 @@ public class ProfileListCellRendererTest {
         instance.getListCellRendererComponent(list, ProfileManager.getDefault(), -1, false, false);
         Assert.assertEquals(noProfileMessage, list.getToolTipText());
     }
-    
+
 }

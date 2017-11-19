@@ -259,7 +259,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     public String getComment() {
         return _comment;
     }
-    
+
     public void copyScheduleItem (ScheduleItem si) {
         setComment(si.getComment());
         setCount(si.getCount());

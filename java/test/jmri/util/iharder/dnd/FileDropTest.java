@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,7 @@ import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class FileDropTest {
 
@@ -21,11 +20,11 @@ public class FileDropTest {
     public void testCTor() throws java.io.IOException {
       Assume.assumeFalse(GraphicsEnvironment.isHeadless());
       // this came was modifed from the FileDrop website's example at
-      // http://iharder.sourceforge.net/current/java/filedrop/ 
+      // http://iharder.sourceforge.net/current/java/filedrop/
       JPanel  myPanel = new JPanel();
       FileDrop t = new  FileDrop( myPanel, new FileDrop.Listener()
       {   public void  filesDropped( java.io.File[] files )
-          {   
+          {
               // handle file drop
           }   // end filesDropped
       }); // end FileDrop.Listener

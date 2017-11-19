@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="sulzerbeast@gmail.com" version="2" lastUpdated="20070323"/>
   <version author="sulzerbeast@gmail.com" version="1" lastUpdated="20070321"/>
@@ -907,28 +907,28 @@
             <text xml:lang="de">       B</text>
           </label>
           <display item="Enable output B dimming with F1" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output B dimming with F2" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output B dimming with F3" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output B dimming with F4" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output B dimming with F5" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output B dimming with F6" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output B dimming with F7" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output B dimming with F8" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
         </column>
         <column>
@@ -937,28 +937,28 @@
             <text xml:lang="de">       C</text>
           </label>
           <display item="Enable output C dimming with F1" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output C dimming with F2" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output C dimming with F3" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output C dimming with F4" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output C dimming with F5" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output C dimming with F6" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output C dimming with F7" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output C dimming with F8" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
         </column>
         <column>
@@ -967,28 +967,28 @@
             <text xml:lang="de">       D</text>
           </label>
           <display item="Enable output D dimming with F1" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output D dimming with F2" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output D dimming with F3" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output D dimming with F4" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output D dimming with F5" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output D dimming with F6" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output D dimming with F7" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Enable output D dimming with F8" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
         </column>
       </row>
@@ -1061,28 +1061,28 @@
             <text xml:lang="de">       B</text>
           </label>
           <display item="Toggle effect (output B) with F1" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output B) with F2" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output B) with F3" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output B) with F4" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output B) with F5" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output B) with F6" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output B) with F7" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output B) with F8" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
         </column>
         <column>
@@ -1091,28 +1091,28 @@
             <text xml:lang="de">       C</text>
           </label>
           <display item="Toggle effect (output C) with F1" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output C) with F2" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output C) with F3" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output C) with F4" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output C) with F5" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output C) with F6" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output C) with F7" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output C) with F8" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
         </column>
         <column>
@@ -1121,35 +1121,35 @@
             <text xml:lang="de">       D</text>
           </label>
           <display item="Toggle effect (output D) with F1" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output D) with F2" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output D) with F3" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output D) with F4" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output D) with F5" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output D) with F6" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output D) with F7" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
           <display item="Toggle effect (output D) with F8" format="checkbox" label="   ">
-            <label>   </label>
+            <label> </label>
           </display>
         </column>
       </row>
       <row>
         <column>
           <label>
-            <text>        </text>
+            <text> </text>
           </label>
         </column>
         <column>

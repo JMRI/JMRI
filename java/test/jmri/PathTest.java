@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Tests for the Path class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class PathTest extends TestCase {
 
@@ -39,20 +39,20 @@ public class PathTest extends TestCase {
         TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
         Turnout s1 = sm.provideTurnout("IT12");
         Turnout s2 = sm.provideTurnout("IT14");
-        
+
         Path p1 = new Path();
         Path p2 = new Path();
         Path p3 = new Path();
         Path p4 = new Path();
-        
+
         assertTrue(p1.equals(p2));
 
         p1.addSetting(new BeanSetting(s1, "IT12", Turnout.CLOSED));
         assertFalse(p1.equals(p2));
-        
+
         p2.addSetting(new BeanSetting(s1, "IT12", Turnout.CLOSED));
         assertTrue(p1.equals(p2));
-        
+
         p3.addSetting(new BeanSetting(s1, "IT12", Turnout.THROWN));
         assertFalse(p1.equals(p3));
 
@@ -70,7 +70,7 @@ public class PathTest extends TestCase {
         p1.setBlock(b2);
         assertFalse(p1.equals(p2));
     }
-    
+
     public void testBlockRetrieve() {
         Path p = new Path();
 

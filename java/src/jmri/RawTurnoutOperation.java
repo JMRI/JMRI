@@ -12,7 +12,7 @@ import jmri.implementation.RawTurnoutOperator;
  */
 public class RawTurnoutOperation extends CommonTurnoutOperation {
 
-    // This class should only be used with DIRECT, ONESENSOR or TWOSENSOR 
+    // This class should only be used with DIRECT, ONESENSOR or TWOSENSOR
     // feedback modes.
     final int feedbackModes
             = Turnout.DIRECT | Turnout.EXACT | Turnout.INDIRECT

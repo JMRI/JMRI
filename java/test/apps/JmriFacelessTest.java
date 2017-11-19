@@ -16,8 +16,8 @@ public class JmriFacelessTest {
 
     @Test
     public void testCtor() {
-        String Args[] = {};
-        AppsBase a = new JmriFaceless(Args) {
+        String[] args = {};
+        AppsBase a = new JmriFaceless(args) {
             // force the application to not actually start.
             // Just checking construction.
             @Override

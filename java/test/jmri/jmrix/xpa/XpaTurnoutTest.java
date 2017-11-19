@@ -6,11 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaTurnout class
- * <P>
- * @author	Paul Bender
+ * Tests for the jmri.jmrix.xpa.XpaTurnout class.
+ *
+ * @author Paul Bender
  */
-public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {
+public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     private XpaTrafficControlScaffold xnis;
     private XpaSystemConnectionMemo memo = null;
@@ -47,7 +47,7 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         memo = new XpaSystemConnectionMemo();
         xnis = new XpaTrafficControlScaffold();
         memo.setXpaTrafficController(xnis);
-        t = new XpaTurnout(3,memo);
+        t = new XpaTurnout(3, memo);
     }
 
     @After

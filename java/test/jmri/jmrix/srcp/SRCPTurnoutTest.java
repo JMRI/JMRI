@@ -8,12 +8,10 @@ import org.junit.Test;
 
 
 /**
- * SRCPTurnoutTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPTurnout class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTurnout class
- *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 

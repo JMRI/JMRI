@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test the DebugProgrammer class.
  *
- * @author	Bob Jacobsen Copyright 2013
+ * @author Bob Jacobsen Copyright 2013
  */
 public class DebugProgrammerTest extends TestCase {
 
@@ -38,9 +38,9 @@ public class DebugProgrammerTest extends TestCase {
         Assert.assertEquals("read back", 12, readValue);
     }
 
-    // Test names ending with "String" are for the new writeCV(String, ...) 
-    // etc methods.  If you remove the older writeCV(int, ...) tests, 
-    // you can rename these. Note that not all (int,...) tests may have a 
+    // Test names ending with "String" are for the new writeCV(String, ...)
+    // etc methods.  If you remove the older writeCV(int, ...) tests,
+    // you can rename these. Note that not all (int,...) tests may have a
     // String(String, ...) test defined, in which case you should create those.
     public void testWriteReadString() throws jmri.ProgrammerException, InterruptedException {
         Programmer p = new ProgDebugger();

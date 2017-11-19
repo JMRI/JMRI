@@ -19,14 +19,14 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
 
     private javax.swing.Timer refreshTimer; // Timer used to periodically
     // referesh the RailCom data (this does not appear to happen automatically).
-    private static final int refreshTimeoutValue = 15000; 
+    private static final int refreshTimeoutValue = 15000;
 
-    /**  
+    /**
      * Create a new Z21Reporter.
      *
      * @param systemName the system name of the new reporter.
      * @param userName the user name of the new reporter.
-     * @param memo an instance of Z21SystemConnectionMemo this manager 
+     * @param memo an instance of Z21SystemConnectionMemo this manager
      *             is associated with.
      *
      */

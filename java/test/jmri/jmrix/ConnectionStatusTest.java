@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of ConnectionStatus
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ConnectionStatusTest {
 
@@ -36,7 +36,7 @@ public class ConnectionStatusTest {
     public void testAddAnd2ParameterGetState(){
         ConnectionStatus cs = new ConnectionStatus();
         cs.addConnection("Foo","Bar");
-        // set the status of the new connection so we know we are not 
+        // set the status of the new connection so we know we are not
         // retreiving a new value.
         cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
         Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getConnectionState("Foo","Bar"));
@@ -71,7 +71,7 @@ public class ConnectionStatusTest {
     public void testGetSateForSystemName(){
         ConnectionStatus cs = new ConnectionStatus();
         cs.addConnection("Foo","Bar");
-        // set the status of the new connection so we know we are not 
+        // set the status of the new connection so we know we are not
         // retreiving a new value.
         cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
         Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getSystemState("Foo"));
@@ -79,7 +79,7 @@ public class ConnectionStatusTest {
 
     @Test
     public void testGetState(){
-        // the port only version of getConnectionState is deprecated begining 
+        // the port only version of getConnectionState is deprecated begining
         // with JMRI 4.7.1  This test will need to be removed when the method
         // is removed.
         ConnectionStatus cs = new ConnectionStatus();
@@ -88,12 +88,12 @@ public class ConnectionStatusTest {
 
     @Test
     public void testAddAndGetState(){
-        // the port only version of getConnectionState is deprecated begining 
+        // the port only version of getConnectionState is deprecated begining
         // with JMRI 4.7.1  This test will need to be removed when the method
         // is removed.
         ConnectionStatus cs = new ConnectionStatus();
         cs.addConnection("Foo","Bar");
-        // set the status of the new connection so we know we are not 
+        // set the status of the new connection so we know we are not
         // retreiving a new value.
         cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
         Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getConnectionState("Bar"));
@@ -101,7 +101,7 @@ public class ConnectionStatusTest {
 
     @Test
     public void testSetAndGetState(){
-        // the port only version of setConnectionState and getConnectionState 
+        // the port only version of setConnectionState and getConnectionState
         // are deprecated begining with JMRI 4.7.1  This test will need to be
         // removed when the methods are removed.
         ConnectionStatus cs = new ConnectionStatus();

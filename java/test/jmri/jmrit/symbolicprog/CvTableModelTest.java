@@ -1,14 +1,11 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class CvTableModelTest {
 

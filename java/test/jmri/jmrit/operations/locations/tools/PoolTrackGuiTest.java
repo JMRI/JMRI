@@ -45,69 +45,6 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         l5.setLength(1005);
     }
 
-//	private void AddTestSidings() {
-//		LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-//
-//		Location l1 = lManager.getLocationByName("Test Loc C");
-//		Track t;
-//		t = l1.addTrack("new siding track", "Siding");
-//
-//		t = l1.addTrack("2nd siding track", "Siding");
-//
-//		t = l1.addTrack("3rd siding track", "Siding");
-//	}
-//
-//	private void AddTestInterchanges() {
-//		LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-//		Location l1 = lManager.getLocationByName("Test Loc C");
-//
-//		Track t;
-//		t = l1.addTrack("new interchange track", "Interchange");
-//		// t.setLength(321);
-//
-//		t = l1.addTrack("2nd interchange track", "Interchange");
-//		// t.setLength(4331);
-//
-//	}
-//
-//	private void AddTestYardTracks() {
-//		LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-//		Location l1 = lManager.getLocationByName("Test Loc C");
-//
-//		Track t;
-//		t = l1.addTrack("new yard track", "Yard");
-//		// t.setLength(43);
-//
-//		t = l1.addTrack("2nd yard track", "Yard");
-//		// t.setLength(6543);
-//
-//		t = l1.addTrack("3rd yard track", "Yard");
-//		// t.setLength(1);
-//
-//		t = l1.addTrack("4th yard track", "Yard");
-//		t.setLength(21);
-//
-//	}
-//
-//	private void AddTestStagingTracks() {
-//		LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-//		Location l1 = lManager.getLocationByName("Test Loc A");
-//
-//		Track t;
-//		t = l1.addTrack("new staging track", "Staging");
-//		// t.setLength(43);
-//
-//		t = l1.addTrack("2nd staging track", "Staging");
-//		// t.setLength(6543);
-//
-//		t = l1.addTrack("3rd staging track", "Staging");
-//		// t.setLength(1);
-//
-//		t = l1.addTrack("4th staging track", "Staging");
-//		// t.setLength(21);
-//
-//	}
-
     /*
      * Things to test with this frame:
      *
@@ -258,11 +195,8 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
-// Enter a new minimum length, click save and check that the Track is updated.
+        // Enter a new minimum length, click save and check that the Track is updated.
         Location l = new Location("LOC1", "Location One");
-//		l.addPool("Pool 1");
-//		Pool desiredPool = l.addPool("Pool 2");
-//		l.addPool("Pool 3");
 
         Track t = new Track("ID1", "TestTrack1", "Siding", l);
         Assert.assertEquals("Minimum track length", 0, t.getMinimumLength());
@@ -273,8 +207,6 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 
         f.initComponents();
 
-//		f.comboBoxPools.setSelectedItem(desiredPool);
-//		Assert.assertEquals("ComboBox selection", desiredPool, f.comboBoxPools.getSelectedItem());
         f.trackMinLengthTextField.setText("23");
 
         // Now click the Save button and the Track should be updated with the selected Pool

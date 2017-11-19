@@ -2,9 +2,7 @@ package jmri.jmrix.easydcc;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the EasyDccSystemConnectionMemo class
@@ -15,15 +13,15 @@ public class EasyDccSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
 
     @Override
     @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       scm = new EasyDccSystemConnectionMemo();
+    public void setUp() {
+        JUnitUtil.setUp();
+        scm = new EasyDccSystemConnectionMemo();
     }
 
     @Override
     @After
-    public void tearDown(){
-       JUnitUtil.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SerialTurnoutManagerXmlTest.java
+ * Tests for the SerialTurnoutManagerXml class
  *
- * Description: tests for the SerialTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SerialTurnoutManagerXmlTest {
 

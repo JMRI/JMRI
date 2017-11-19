@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);

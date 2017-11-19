@@ -100,12 +100,12 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         if (_table == null) {
             return;
         }
-        
+
         // Save table column order
         XTableColumnModel tcm = new XTableColumnModel();
         _table.setColumnModel(tcm);
         _table.createDefaultColumnsFromModel();
-        
+
         // Install the button handlers
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 

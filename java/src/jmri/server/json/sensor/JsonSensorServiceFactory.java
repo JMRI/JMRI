@@ -12,7 +12,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Factory for JSON services for {@link jmri.Sensor}s.
- * 
+ *
  * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)

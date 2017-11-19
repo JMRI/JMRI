@@ -13,7 +13,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of ConsistController
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ConsistControllerTest extends TestCase {
 
@@ -47,7 +47,7 @@ public class ConsistControllerTest extends TestCase {
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

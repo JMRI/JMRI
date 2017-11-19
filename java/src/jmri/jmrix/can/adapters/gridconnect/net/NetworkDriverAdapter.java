@@ -54,7 +54,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         tc.connectPort(this);
         this.getSystemConnectionMemo().setProtocol(getOptionState(option2Name));
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         this.getSystemConnectionMemo().configureManagers();
         if (socketConn != null) {
             log.info("Connection complete with " + socketConn.getInetAddress());

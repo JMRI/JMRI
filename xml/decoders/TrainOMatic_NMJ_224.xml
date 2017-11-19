@@ -155,7 +155,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
 
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      
+
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
@@ -227,7 +227,7 @@
       <variable CV="27" mask="XXXXXXVX" item="ASC left" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Constant Braking Distance on left rail</label>
-      </variable>      
+      </variable>
       <variable CV="27" mask="XXXXXVXX" item="ASC DC" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>DC Braking</label>
@@ -257,7 +257,7 @@
       <variable item="Error CV" CV="30" readOnly="yes" default="0">
         <decVal/>
         <label>Read out "1" when an overcurrent has occurred since last reset.</label>
-      </variable>      
+      </variable>
 
 <!-- F0 Forward -->
       <variable item="F0(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" minFn="0" default="1">
@@ -332,7 +332,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(r) controls output 4</label>
       </variable>
-    
+
 <!-- F2 -->
       <variable item="F2 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -547,7 +547,7 @@
         <decVal min="0" max="255" />
         <label>Out 4 Light intensity</label>
       </variable>
- 
+
       <variable item="Function State" CV="56" default="0" comment="Save last Function state if CV value = 1">
         <decVal min="0" max="1" />
         <label>Save Function State</label>
@@ -885,7 +885,7 @@
       </label>
       <display item="FadeOn" />
       <display item="FadeOFF" />
-      
+
     </column>
   </pane>
 
@@ -1025,7 +1025,7 @@
       <label>
         <text> </text>
       </label>
-      <display item="Function State" /> 
+      <display item="Function State" />
 
       <label>
         <text> </text>
@@ -1040,7 +1040,7 @@
       <display item="Enable RailCom" format="checkbox"/>
       <display item="RailCom Address" format="checkbox"/>
       <display item="RailCom Data" format="checkbox"/>
-    
+
       <label>
         <text> </text>
       </label>
@@ -1059,7 +1059,7 @@
       <display item="Penduling / Push-Pull Wait Time" />
       <display item="ABC Breaking Sensitivity" />
       <display item="Brake Distance configuration" />
-      <display item="Brake Delay Configuration" />    
+      <display item="Brake Delay Configuration" />
 
     </column>
   </pane>
@@ -1100,13 +1100,13 @@
         <text> </text>
       </label>
       <display item="Error CV" label="Error information"/>
-     
+
       <label>
         <text>Errors: 0-No error, 1-Motor Short Protection, </text>
       </label>
       <label>
         <text>2-Aux Output Short Protection, 4-Overtemperature</text>
-      </label>  
+      </label>
       <label>
         <text> </text>
       </label>

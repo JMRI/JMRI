@@ -15,40 +15,40 @@
 <!-- Panes to show Logic Cells -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 <name>Setup</name>
-	<column>
-		<row>
-		<column>
-		<label label=" "/>
-		<label label="------ The CSC has several built-in signal arrangements called Setups ------"/>
-		<label label="------ that can be implemented without any custom programming. ------"/>
-		<label label="------ Once the Setup has been programmed, cycle the power to the CSC. ------"/>
-		<label label=" "/>
-		<label label="------ NOTE: Issue with JMRI, if some of the fields do not write, go to. ------"/>
-		<label label="------ the CV tab and write the individual CVs. ------"/>
-		<label label=" "/>
-		</column>
-		</row>
+    <column>
+        <row>
+        <column>
+        <label label=" "/>
+        <label label="------ The CSC has several built-in signal arrangements called Setups ------"/>
+        <label label="------ that can be implemented without any custom programming. ------"/>
+        <label label="------ Once the Setup has been programmed, cycle the power to the CSC. ------"/>
+        <label label=" "/>
+        <label label="------ NOTE: Issue with JMRI, if some of the fields do not write, go to. ------"/>
+        <label label="------ the CV tab and write the individual CVs. ------"/>
+        <label label=" "/>
+        </column>
+        </row>
 
-	<separator/>	
-	<row>
-	<column>	
-			<display item="Setups"/>
-			<separator/>	
-			<display item="Address of first signal head (H1)" tooltip="Same address as SHD2-1"/>	
-			<display item="Address of first block (B1)"/>
-			<display item="Block detectors connected to inputs?" format="radiobuttons"/>
-			<display item="BwSetup1"/>
-			<display item="HwSetup1"/>
-			<display item="HeSetup1"/>
-			<display item="BwSetup4"/>
-			<display item="HwSetup4"/>
-			<display item="HeSetup4"/>
-			<display item="SwSetup2"/>
-			<display item="SwSetup3"/>
-			
+    <separator/>
+    <row>
+    <column>
+            <display item="Setups"/>
+            <separator/>
+            <display item="Address of first signal head (H1)" tooltip="Same address as SHD2-1"/>
+            <display item="Address of first block (B1)"/>
+            <display item="Block detectors connected to inputs?" format="radiobuttons"/>
+            <display item="BwSetup1"/>
+            <display item="HwSetup1"/>
+            <display item="HeSetup1"/>
+            <display item="BwSetup4"/>
+            <display item="HwSetup4"/>
+            <display item="HeSetup4"/>
+            <display item="SwSetup2"/>
+            <display item="SwSetup3"/>
 
-	
-	  </column>
-	  </row>
-	</column>
+
+
+      </column>
+      </row>
+    </column>
 </pane>

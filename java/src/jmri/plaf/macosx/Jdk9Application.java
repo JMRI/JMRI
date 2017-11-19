@@ -46,9 +46,9 @@ class Jdk9Application extends Application {
     private void setHandler(String methodName, String handlerType, Object handler) {
         try {
             Class parameterType = Class.forName(handlerType);
-            Class parameterTypes[] = {parameterType};
+            Class[] parameterTypes = {parameterType};
             Method method = java.awt.Desktop.class.getDeclaredMethod(methodName, parameterTypes);
-            Object parameters[] = {handler};
+            Object[] parameters = {handler};
             method.invoke(Desktop.getDesktop(), parameters);
         } catch (NoClassDefFoundError | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             log.debug("Exception calling {} with {}", methodName, handlerType, ex);

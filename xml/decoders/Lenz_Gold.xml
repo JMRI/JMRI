@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bernd Wisotzki (Ba)" version="7" lastUpdated="20140522"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="6" lastUpdated="20130724"/>
@@ -21,7 +21,7 @@
   <!-- Version 1 - created  "20050228"-->
   <!-- Version 2 - added SUSI pane, fixed CV127 default value-->
   <!-- Version 3 - added versionID range of 60 to 61 for Gold Mini support
-						   - and removed SUSI varible support for Gold Mini-->
+                           - and removed SUSI varible support for Gold Mini-->
   <!-- Version 4 - added factory reset menu items (Paul Bender) -->
   <!-- Version 5 - XInclude (Bob Jacobsen) -->
   <!-- Version 6 - Added GOLD maxi, changed high version for family to 72, removed writeOnly from CV127 (Jeff Schmaltz) -->

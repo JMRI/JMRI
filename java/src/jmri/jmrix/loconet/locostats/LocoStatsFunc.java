@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements functionality to query the LocoNet interface device for status.
- * 
+ *
  * @author Bob Milhaupt Copyright (C) 2017
  */
 public class LocoStatsFunc implements LocoNetListener {
@@ -26,7 +26,7 @@ public class LocoStatsFunc implements LocoNetListener {
     private boolean updatePending;
     private boolean need2ndUpdate;
     private Object ifaceStatus;
-    
+
     /**
      * Request LocoNet interface Status
      */
@@ -37,7 +37,7 @@ public class LocoStatsFunc implements LocoNetListener {
         log.debug("Sent a LocoNet interface status query");
         sendQuery();
     }
-    
+
     private void sendQuery() {
         if (memo == null) {
             return;
@@ -45,10 +45,10 @@ public class LocoStatsFunc implements LocoNetListener {
         LocoNetMessage l = new LocoNetMessage(new int[] {0x81, 0x7f});
         memo.getLnTrafficController().sendLocoNetMessage(l);
     }
-    
+
     /**
      * LocoNet message handler.
-     * 
+     *
      * @param msg - incoming LocoNet message to be interpreted
      */
     @Override
@@ -123,14 +123,14 @@ public class LocoStatsFunc implements LocoNetListener {
             }
             updateListeners();
 
-        } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER) && 
+        } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER) &&
                 (msg.getElement(1) == 0x10) &&
                 updatePending) {
             // Raw mode format
-            // Accept only the first OPC_PEER_XFER of length 0x10 after a request.  
-            // This assumes that the interface device will be the first response 
+            // Accept only the first OPC_PEER_XFER of length 0x10 after a request.
+            // This assumes that the interface device will be the first response
             // after the request, and that the reply will be a "typical" OPC_PEER_XFER
-            // message, and not one of the "alternate" forms with different overall 
+            // message, and not one of the "alternate" forms with different overall
             // length..
             int[] data = msg.getPeerXfrData();
             ifaceStatus = new RawStatus(data[0], data[1], data[2], data[3],
@@ -147,17 +147,17 @@ public class LocoStatsFunc implements LocoNetListener {
             l.notifyChangedInterfaceStatus(ifaceStatus);
         });
     }
-    
+
     /**
      * Get the latest interface status
-     * 
-     * @return the latest interface status; will be null if status has 
+     *
+     * @return the latest interface status; will be null if status has
      *          not been pulled.
      */
     public Object getInterfaceStatus() {
         return ifaceStatus;
     }
-    
+
     /**
      * Free resources when no longer used
      */
@@ -165,14 +165,14 @@ public class LocoStatsFunc implements LocoNetListener {
         listeners.removeAllElements();
         listeners = null;
     }
-    
+
     // The methods to implement adding and removing listeners
     protected Vector<LocoNetInterfaceStatsListener> listeners = new Vector<LocoNetInterfaceStatsListener>();
 
     /**
-     * Add a listener to the list of listeners which will be notified upon receipt 
+     * Add a listener to the list of listeners which will be notified upon receipt
      * a LocoNet message containing interface statistics.
-     * 
+     *
      * @param l - LocoNetInterfaceStatsListener to be added
      */
     public synchronized void addLocoNetInterfaceStatsListener(LocoNetInterfaceStatsListener l) {
@@ -186,9 +186,9 @@ public class LocoStatsFunc implements LocoNetListener {
     }
 
     /**
-     * Remove a listener (if present) from the list of listeners which will be 
+     * Remove a listener (if present) from the list of listeners which will be
      * notified upon receipt LocoNet message containing interface statistics.
-     * 
+     *
      * @param l - LocoNetInterfaceStatsListener to be removed
      */
     public synchronized void removeLocoNetInterfaceStatsListener(LocoNetInterfaceStatsListener l) {

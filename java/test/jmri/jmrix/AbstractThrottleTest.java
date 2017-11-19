@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author Randall Wood 2015
  */
 public class AbstractThrottleTest {
-        
+
     protected AbstractThrottle instance = null;
 
     @Before

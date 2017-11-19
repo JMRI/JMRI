@@ -14,13 +14,13 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20150412"/>
   <!-- 2 Bug fix
-  Railcom toggle now shown. 
+  Railcom toggle now shown.
   -->
   <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20140102"/>
-  <!-- 1 2013/07/24 Creation 
-		This is the first decoder template for the FD-R basic from Tams Elektronik.
-		File is different from FD-R Extended definition because of many
-		differences in functionality for the same CVs.
+  <!-- 1 2013/07/24 Creation
+        This is the first decoder template for the FD-R basic from Tams Elektronik.
+        File is different from FD-R Extended definition because of many
+        differences in functionality for the same CVs.
   -->
   <decoder>
     <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH">
@@ -66,7 +66,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-		    </enumChoice>
+            </enumChoice>
         </enumVal>
         <label>FL(f) controls output 1</label>
       </variable>
@@ -74,7 +74,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(f) controls output 2</label>
       </variable>
@@ -82,7 +82,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(f) controls output 3</label>
       </variable>
@@ -90,7 +90,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(f) controls output 4</label>
       </variable>
@@ -98,7 +98,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(f) controls output 5</label>
       </variable>
@@ -106,7 +106,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(f) controls output 6</label>
       </variable>
@@ -114,7 +114,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(f) controls output 7</label>
       </variable>
@@ -122,7 +122,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(f) controls output 8</label>
       </variable>
@@ -130,7 +130,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(r) controls output 1</label>
       </variable>
@@ -138,7 +138,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(r) controls output 2</label>
       </variable>
@@ -146,7 +146,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(r) controls output 3</label>
       </variable>
@@ -154,7 +154,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(r) controls output 4</label>
       </variable>
@@ -162,7 +162,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(r) controls output 5</label>
       </variable>
@@ -170,7 +170,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(r) controls output 6</label>
       </variable>
@@ -178,7 +178,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(r) controls output 7</label>
       </variable>
@@ -186,7 +186,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>FL(r) controls output 8</label>
       </variable>
@@ -194,7 +194,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F1 controls output 1</label>
       </variable>
@@ -202,7 +202,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
@@ -210,7 +210,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F1 controls output 3</label>
       </variable>
@@ -218,7 +218,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F1 controls output 4</label>
       </variable>
@@ -226,7 +226,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F1 controls output 5</label>
       </variable>
@@ -234,7 +234,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F1 controls output 6</label>
       </variable>
@@ -242,7 +242,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F1 controls output 7</label>
       </variable>
@@ -250,7 +250,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F1 controls output 8</label>
       </variable>
@@ -258,7 +258,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
@@ -266,7 +266,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
@@ -274,7 +274,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F2 controls output 3</label>
       </variable>
@@ -282,7 +282,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F2 controls output 4</label>
       </variable>
@@ -290,7 +290,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F2 controls output 5</label>
       </variable>
@@ -298,7 +298,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F2 controls output 6</label>
       </variable>
@@ -306,7 +306,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F2 controls output 7</label>
       </variable>
@@ -314,7 +314,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F2 controls output 8</label>
       </variable>
@@ -322,7 +322,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F3 controls output 1</label>
       </variable>
@@ -330,7 +330,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F3 controls output 2</label>
       </variable>
@@ -338,7 +338,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F3 controls output 3</label>
       </variable>
@@ -346,7 +346,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F3 controls output 4</label>
       </variable>
@@ -354,7 +354,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F3 controls output 5</label>
       </variable>
@@ -362,7 +362,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F3 controls output 6</label>
       </variable>
@@ -370,7 +370,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F3 controls output 7</label>
       </variable>
@@ -378,7 +378,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F3 controls output 8</label>
       </variable>
@@ -386,7 +386,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F4 controls output 1</label>
       </variable>
@@ -394,7 +394,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F4 controls output 2</label>
       </variable>
@@ -402,7 +402,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F4 controls output 3</label>
       </variable>
@@ -410,7 +410,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F4 controls output 4</label>
       </variable>
@@ -418,7 +418,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F4 controls output 5</label>
       </variable>
@@ -426,7 +426,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F4 controls output 6</label>
       </variable>
@@ -434,7 +434,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F4 controls output 7</label>
       </variable>
@@ -442,7 +442,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F4 controls output 8</label>
       </variable>
@@ -450,7 +450,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F5 controls output 1</label>
       </variable>
@@ -458,7 +458,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F5 controls output 2</label>
       </variable>
@@ -466,7 +466,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F5 controls output 3</label>
       </variable>
@@ -474,7 +474,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F5 controls output 4</label>
       </variable>
@@ -482,7 +482,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F5 controls output 5</label>
       </variable>
@@ -490,7 +490,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F5 controls output 6</label>
       </variable>
@@ -498,7 +498,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F5 controls output 7</label>
       </variable>
@@ -506,7 +506,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F5 controls output 8</label>
       </variable>
@@ -514,7 +514,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F6 controls output 1</label>
       </variable>
@@ -522,7 +522,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F6 controls output 2</label>
       </variable>
@@ -530,7 +530,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F6 controls output 3</label>
       </variable>
@@ -538,7 +538,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F6 controls output 4</label>
       </variable>
@@ -546,7 +546,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F6 controls output 5</label>
       </variable>
@@ -554,7 +554,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F6 controls output 6</label>
       </variable>
@@ -562,7 +562,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F6 controls output 7</label>
       </variable>
@@ -570,7 +570,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F6 controls output 8</label>
       </variable>
@@ -578,7 +578,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F7 controls output 1</label>
       </variable>
@@ -586,7 +586,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F7 controls output 2</label>
       </variable>
@@ -594,7 +594,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F7 controls output 3</label>
       </variable>
@@ -602,7 +602,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F7 controls output 4</label>
       </variable>
@@ -610,7 +610,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F7 controls output 5</label>
       </variable>
@@ -618,7 +618,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F7 controls output 6</label>
       </variable>
@@ -626,7 +626,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F7 controls output 7</label>
       </variable>
@@ -634,7 +634,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F7 controls output 8</label>
       </variable>
@@ -642,7 +642,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F8 controls output 1</label>
       </variable>
@@ -650,7 +650,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F8 controls output 2</label>
       </variable>
@@ -658,7 +658,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F8 controls output 3</label>
       </variable>
@@ -666,7 +666,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F8 controls output 4</label>
       </variable>
@@ -674,7 +674,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F8 controls output 5</label>
       </variable>
@@ -682,7 +682,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F8 controls output 6</label>
       </variable>
@@ -690,7 +690,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F8 controls output 7</label>
       </variable>
@@ -698,7 +698,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F8 controls output 8</label>
       </variable>
@@ -706,7 +706,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F9 controls output 1</label>
       </variable>
@@ -714,7 +714,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F9 controls output 2</label>
       </variable>
@@ -722,7 +722,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F9 controls output 3</label>
       </variable>
@@ -730,7 +730,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F9 controls output 4</label>
       </variable>
@@ -738,7 +738,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F9 controls output 5</label>
       </variable>
@@ -746,7 +746,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F9 controls output 6</label>
       </variable>
@@ -754,7 +754,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F9 controls output 7</label>
       </variable>
@@ -762,7 +762,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F9 controls output 8</label>
       </variable>
@@ -770,7 +770,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F10 controls output 1</label>
       </variable>
@@ -778,7 +778,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F10 controls output 2</label>
       </variable>
@@ -786,7 +786,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F10 controls output 3</label>
       </variable>
@@ -794,7 +794,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F10 controls output 4</label>
       </variable>
@@ -802,7 +802,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F10 controls output 5</label>
       </variable>
@@ -810,7 +810,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F10 controls output 6</label>
       </variable>
@@ -818,7 +818,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F10 controls output 7</label>
       </variable>
@@ -826,7 +826,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F10 controls output 8</label>
       </variable>
@@ -834,7 +834,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F11 controls output 1</label>
       </variable>
@@ -842,7 +842,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F11 controls output 2</label>
       </variable>
@@ -850,7 +850,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F11 controls output 3</label>
       </variable>
@@ -858,7 +858,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F11 controls output 4</label>
       </variable>
@@ -866,7 +866,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F11 controls output 5</label>
       </variable>
@@ -874,7 +874,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F11 controls output 6</label>
       </variable>
@@ -882,7 +882,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F11 controls output 7</label>
       </variable>
@@ -890,7 +890,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F11 controls output 8</label>
       </variable>
@@ -898,7 +898,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F12 controls output 1</label>
       </variable>
@@ -906,7 +906,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F12 controls output 2</label>
       </variable>
@@ -914,7 +914,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F12 controls output 3</label>
       </variable>
@@ -922,7 +922,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F12 controls output 4</label>
       </variable>
@@ -930,7 +930,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F12 controls output 5</label>
       </variable>
@@ -938,7 +938,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F12 controls output 6</label>
       </variable>
@@ -946,7 +946,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F12 controls output 7</label>
       </variable>
@@ -954,7 +954,7 @@
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes">
-			  </enumChoice>
+              </enumChoice>
         </enumVal>
         <label>F12 controls output 8</label>
       </variable>
@@ -1112,7 +1112,7 @@
         <text xml:lang="fr">Pour programmer la section RailCom, activer Railcom.</text>
         <text xml:lang="de">aber mit einer abweichenden Adresse geschaltet.</text>
       </label>
-	  <display item="Enable RailCom" format="checkbox"/>
+      <display item="Enable RailCom" format="checkbox"/>
       <label>
         <text> </text>
       </label>
@@ -1183,7 +1183,7 @@
             </column>
             <column>
               <label>
-                <text>                                          </text>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -1221,7 +1221,7 @@
             </column>
             <column>
               <label>
-                <text>              </text>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -1263,7 +1263,7 @@
             </column>
             <column>
               <label>
-                <text>                                          </text>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -1301,7 +1301,7 @@
             </column>
             <column>
               <label>
-                <text>              </text>
+                <text> </text>
               </label>
             </column>
             <column>

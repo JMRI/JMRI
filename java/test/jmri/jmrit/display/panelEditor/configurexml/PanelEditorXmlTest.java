@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PanelEditorXmlTest.java
+ * Tests for the PanelEditorXml class
  *
- * Description: tests for the PanelEditorXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PanelEditorXmlTest {
 

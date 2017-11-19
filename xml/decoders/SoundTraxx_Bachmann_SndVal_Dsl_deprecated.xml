@@ -27,10 +27,10 @@
   <version author="Alain Le Marchand" version="9.1" lastUpdated="20160522"/>
 
   <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders        -->
-  <!-- version 1	Based on the "Soundtraxx_Tsu_Diesel files.                                      -->
+  <!-- version 1    Based on the "Soundtraxx_Tsu_Diesel files.                                      -->
   <!--              Includes the Alco S4, FA2, and FB2                                                  -->
-  <!-- version 2	Added FX5/6, BEMF. Removed Brake Squeal                                         -->
-  <!-- version 3	Add CV5,6,132 per document on Soundtraxx web                                    -->
+  <!-- version 2    Added FX5/6, BEMF. Removed Brake Squeal                                         -->
+  <!-- version 3    Add CV5,6,132 per document on Soundtraxx web                                    -->
   <!-- version 4    Fixed function mapping (no physical FX5 and FX6 except DD40AX)                      -->
   <!--              Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis -->
   <!--              Factoring in line with most recent Tsunami decoders definition files                -->
@@ -47,7 +47,7 @@
   <!-- version 7.2  CV113 only available for SD70ACe, GEVO and GG1                                      -->
   <!--              Update following publication of datasheet 20150425 for GP7                          -->
   <!-- version 8    Add EMD GP38-2, EMD GP40                                                            -->
-  <!-- version 9    Add EMD SD45 (N scale)                                                      	-->
+  <!-- version 9    Add EMD SD45 (N scale)                                                       -->
   <!-- Version 9.1  Replacement models - renamed family  to "Tsunami Diesel Bachmann Sound Value"       -->
   <!--  ..............................................................................................  -->
   <!--                                                                                                  -->
@@ -76,12 +76,12 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -103,12 +103,12 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -130,12 +130,12 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -157,12 +157,12 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -184,12 +184,12 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -217,8 +217,8 @@
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -245,12 +245,12 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>		<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>		<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>		<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -272,12 +272,12 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>		<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>		<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>		<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -299,12 +299,12 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="7" label="|"/> <!-- Not used for for this decoder -->
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -327,13 +327,13 @@
             <label xml:lang="it">Campana| </label>
         </output>
         <output name="7" label="Dynamic|Brakes">
-			<label xml:lang="it">Freni|dinam</label>
-		</output>
+            <label xml:lang="it">Freni|dinam</label>
+        </output>
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -356,13 +356,13 @@
             <label xml:lang="it">Campana| </label>
         </output>
         <output name="7" label="Dynamic|Brakes">
-			<label xml:lang="it">Freni|dinam</label>
-		</output>
-		<output name="8" label="Short|Horn">
+            <label xml:lang="it">Freni|dinam</label>
+        </output>
+        <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -390,8 +390,8 @@
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -422,8 +422,8 @@
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -454,8 +454,8 @@
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
+        <output name="10" label="|"/> <!-- Not used for for this decoder -->
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
         </output>
@@ -486,7 +486,7 @@
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
-        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="9" label="|"/> <!-- Not used for for this decoder -->
         <output name="10" label="Fans|RPM +"/>
         <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -955,7 +955,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dimming</label>
       </variable>
-	  <!-- begin exchangeable function groups -->
+      <!-- begin exchangeable function groups -->
       <variables>
         <qualifier>
           <variableref>Function Group 2 and 3 Exchange</variableref>

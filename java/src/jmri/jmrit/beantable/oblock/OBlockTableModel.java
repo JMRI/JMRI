@@ -244,7 +244,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     int state = b.getState();
                     int num = Integer.numberOfLeadingZeros(state) - 23;
                     if (num>=0) {
-                        return ZEROS.substring(0, num) + Integer.toBinaryString(state);                        
+                        return ZEROS.substring(0, num) + Integer.toBinaryString(state);
                     }
                 }
                 return ZEROS;
@@ -383,7 +383,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
                     } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     }
                     if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                         block.setLength(len * 10.0f);
@@ -403,7 +403,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     }
                     block.setPermissiveWorking(tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive")));
                     block.setBlockSpeedName(tempRow[SPEEDCOL]);
-                    
+
                     if (tempRow[ERR_SENSORCOL] != null) {
                         if (tempRow[ERR_SENSORCOL].trim().length() > 0) {
                             if (!sensorExists(tempRow[ERR_SENSORCOL])) {
@@ -442,11 +442,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                             _tempLen *= 10f;
                         } else {
-                            _tempLen *= 25.4f;                            
+                            _tempLen *= 25.4f;
                         }
                     } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     }
                     return;
                 case UNITSCOL:
@@ -512,10 +512,10 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     } else {
                         block.setLength(len * 25.4f);
                     }
-                    fireTableRowsUpdated(row, row);                    
+                    fireTableRowsUpdated(row, row);
                 } catch (ParseException e) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", value),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                 }
                 return;
             case UNITSCOL:

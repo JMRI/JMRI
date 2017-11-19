@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Dcc4PcReporterManagerXmlTest.java
+ * Tests for the Dcc4PcReporterManagerXml class
  *
- * Description: tests for the Dcc4PcReporterManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class Dcc4PcReporterManagerXmlTest {
 

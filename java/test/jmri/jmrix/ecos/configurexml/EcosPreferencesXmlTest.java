@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * EcosPreferencesXmlTest.java
+ * Tests for the EcosPreferencesXml class
  *
- * Description: tests for the EcosPreferencesXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class EcosPreferencesXmlTest {
 

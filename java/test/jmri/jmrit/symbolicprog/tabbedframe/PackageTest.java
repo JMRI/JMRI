@@ -27,8 +27,8 @@ import org.junit.runners.Suite;
 /**
  * Invokes complete set of tests in the jmri.jmrit.symbolicprog.tabbedframe tree
  *
- * @author	Bob Jacobsen Copyright 2001, 2003, 2012
- * 
+ * @author Bob Jacobsen Copyright 2001, 2003, 2012
+ *
  */
-public class PackageTest { 
+public class PackageTest {
 }

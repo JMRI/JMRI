@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations CarLoadEditFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class CarLoadEditFrameTest extends OperationsSwingTestCase {
 

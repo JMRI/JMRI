@@ -69,7 +69,7 @@ public class ScheduleManagerTest extends OperationsTestCase {
         // now add a schedule to siding
         t.setScheduleId(sch1.getId());
 
-		// JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
+        // JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
         // LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
         // Assert.assertEquals("Location track pair location", l, ltp.getLocation());
         // Assert.assertEquals("Location track pair track", t, ltp.getTrack());

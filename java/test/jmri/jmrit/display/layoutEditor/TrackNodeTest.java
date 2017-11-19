@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of TrackNode
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class TrackNodeTest {
 
@@ -27,7 +27,7 @@ public class TrackNodeTest {
         TrackSegment ts = new TrackSegment("test", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, true, le);
         TrackNode tn = new TrackNode(lt, LayoutTrack.TURNOUT_A, ts, false, 0);
         Assert.assertNotNull("exists", tn);
-        JUnitUtil.dispose(le); 
+        JUnitUtil.dispose(le);
    }
 
     // from here down is testing infrastructure

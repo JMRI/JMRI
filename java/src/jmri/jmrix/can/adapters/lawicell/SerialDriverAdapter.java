@@ -123,7 +123,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         m.setTranslated(true);
         tc.sendCanMessage(m, null);
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
 
         this.getSystemConnectionMemo().configureManagers();

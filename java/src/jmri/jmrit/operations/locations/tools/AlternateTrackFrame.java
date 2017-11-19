@@ -53,7 +53,7 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
             updateTrackCombobox();
             _track.getLocation().addPropertyChangeListener(this);
         }
-        
+
         JPanel pControls = new JPanel();
         pControls.add(saveButton);
         saveButton.setEnabled(_track != null);
@@ -63,11 +63,11 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
 
         getContentPane().add(pAlternate);
         getContentPane().add(pControls);
-        
+
         initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight100));
-        
+
     }
-    
+
     private void updateTrackCombobox() {
         _track.getLocation().updateComboBox(trackBox);
         trackBox.removeItem(_track); // remove this track from consideration
@@ -84,7 +84,7 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
             }
         }
     }
-    
+
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {

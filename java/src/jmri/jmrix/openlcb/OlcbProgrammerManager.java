@@ -1,9 +1,9 @@
 package jmri.jmrix.openlcb;
 
 import java.util.List;
-import jmri.AddressedProgrammer;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 
@@ -51,7 +51,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
 
 
     public static final ProgrammingMode OPENLCBMODE = new ProgrammingMode("OPENLCBMODE", Bundle.getMessage("OPENLCBMODE"));
-    
+
     /**
      * Gain access to a Addressed Mode Programmer without reservation.
      *

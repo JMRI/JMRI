@@ -25,10 +25,10 @@ public final class DCCppConstants {
     public final static int MAX_MAIN_REGISTERS = 12;
     public final static int REGISTER_UNALLOCATED = -1;
     public final static int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
-    
+
     // DCC++ over TCP Port Number
     public final static int DCCPP_OVER_TCP_PORT = 1235;
-    
+
     // Communications Port Info
     public final static int COMM_TYPE_SERIAL = 0;
     public final static int COMM_TYPE_ENET = 1;
@@ -37,9 +37,9 @@ public final class DCCppConstants {
     // Command Station Types
     public final static int DCCPP_UNO_1_0 = 1;
     public final static int DCCPP_ARDUINO_1_1 = 2;
-    public final static String CommandStationNames[] = {
- "DCCPP Arduino Uno v1.0",
- "DCCPP Arduino V1.1",
+    public final static String[] CommandStationNames = {
+        "DCCPP Arduino Uno v1.0",
+        "DCCPP Arduino V1.1"
     };
 
     // DCC++ Command OpCodes
@@ -70,7 +70,7 @@ public final class DCCppConstants {
     public final static char GET_FREE_MEMORY        = 'F';
     public final static char LIST_REGISTER_CONTENTS = 'L';
     public final static char ENTER_DIAG_MODE_CMD    = 'D'; // Enter Diagnostics mode -- NEW V1.2?
- 
+
     // Message Replies
     public final static char THROTTLE_REPLY   = 'T'; // <T reg speed dir>
     public final static char TURNOUT_REPLY    = 'H'; // <H id throw> or <X>
@@ -112,7 +112,7 @@ public final class DCCppConstants {
 
     public final static String OPS_WRITE_BYTE_REGEX = "\\s*w\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // TODO
     public final static String OPS_WRITE_BIT_REGEX = "\\s*b\\s*(\\d+)\\s+(\\d+)\\s+([0-7])\\s+([01])\\s*"; // TODO
-    
+
     public final static String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
     public final static String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
     public final static String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";

@@ -16,13 +16,13 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     // objects to LnTrafficController classes, who in turn will deal in messages.
 
     private final static Logger log = LoggerFactory.getLogger(DCCppNetworkPortController.class);
-    
+
     protected DCCppNetworkPortController() {
         super(new DCCppSystemConnectionMemo());
         setManufacturer(DCCppConnectionTypeList.DCCPP);
         allowConnectionRecovery = true;
     }
-    
+
     protected DCCppNetworkPortController(DCCppSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
         setManufacturer(DCCppConnectionTypeList.DCCPP);
@@ -37,16 +37,16 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
         DCCppConstants.DCCPP_UNO_1_0,
         DCCppConstants.DCCPP_ARDUINO_1_1
     };
-    
+
     protected String[] commandStationNames;
-    
+
     {
         commandStationNames = new String[commandStationTypes.length];
         for (int i = 0; i < commandStationTypes.length; i++) {
             commandStationNames[i] = DCCppConstants.CommandStationNames[i];
         }
     }
-    
+
     // There are also "PR3 standalone programmer" and "Stand-alone LocoNet"
     // in pr3/PR3Adapter
     /**
@@ -62,7 +62,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
         log.error("CommandStation Type not found: {}", name);
         commandStationType = 0;
     }
-    
+
     /**
      * Set config info from the command station type enum.
      */
@@ -70,7 +70,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
         log.debug("setCommandStationType: {}" + Integer.toString(value));
         commandStationType = value;
     }
-    
+
     @Override
     public DCCppSystemConnectionMemo getSystemConnectionMemo() {
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();

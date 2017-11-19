@@ -5,7 +5,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -13,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -384,7 +383,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testSendFunctionGroup5() {
     }
-        
+
     private static EcosTrafficController tc = null;
 
     @BeforeClass
@@ -397,8 +396,8 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        EcosSystemConnectionMemo memo = null; 
-        if(!GraphicsEnvironment.isHeadless()) { 
+        EcosSystemConnectionMemo memo = null;
+        if(!GraphicsEnvironment.isHeadless()) {
            memo = new EcosSystemConnectionMemo(tc){
               @Override
               public EcosLocoAddressManager getLocoAddressManager(){
@@ -406,7 +405,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
               }
 
               @Override
-              public EcosPreferences getPreferenceManager(){ 
+              public EcosPreferences getPreferenceManager(){
                  return new EcosPreferences(this){
                      @Override
                      public boolean getPreferencesLoaded(){
@@ -424,7 +423,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
               }
 
               @Override
-              public EcosPreferences getPreferenceManager(){ 
+              public EcosPreferences getPreferenceManager(){
                  return new EcosPreferences(this){
                      @Override
                      public boolean getPreferencesLoaded(){

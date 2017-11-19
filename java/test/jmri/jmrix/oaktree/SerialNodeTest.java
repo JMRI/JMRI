@@ -11,8 +11,8 @@ import org.junit.Assert;
 /**
  * JUnit tests for the SerialNode class
  *
- * @author	Bob Jacobsen Copyright 2003
- * @author	Dave Duchamp multi-node extensions 2003
+ * @author Bob Jacobsen Copyright 2003
+ * @author Dave Duchamp multi-node extensions 2003
  */
 public class SerialNodeTest extends TestCase {
 
@@ -64,7 +64,7 @@ public class SerialNodeTest extends TestCase {
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 5, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
-        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'        
+        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'
     }
 
     public void testMarkChanges() {

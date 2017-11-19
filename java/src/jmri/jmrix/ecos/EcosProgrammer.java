@@ -5,7 +5,6 @@ import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +21,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     }
 
     EcosTrafficController tc;
-    
+
     /**
      * @return list of programming modes implemented for ECoS
      */
@@ -92,7 +91,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         m = new EcosMessage("request(5,view)");
         tc.sendEcosMessage(m, this);
     }
-    
+
     private jmri.ProgListener _usingProgrammer = null;
 
     // internal method to remember who's using the programmer
@@ -184,11 +183,11 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
                 _val = GetEcosObjectNumber.getEcosObjectNumber(reply.toString(),",",",ok]");
                 log.debug("read CV "+_cv+" value: "+_val);
             }
-            
+
             // if this was a read, we cached the value earlier.  If its a
             // write, we're to return the original write value
             notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-            
+
         } else {
             log.debug("reply in un-decoded state");
         }

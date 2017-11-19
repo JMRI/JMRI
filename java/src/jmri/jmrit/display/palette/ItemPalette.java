@@ -40,9 +40,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Container for adding items to control panels. Loads and stores icons used in
  * control editor panels. For background colors to work on a particular editor
- * instance, select the 'Item Palette' item under 'Add Items' menu to configure 
+ * instance, select the 'Item Palette' item under 'Add Items' menu to configure
  * ItemPalette for that editor.  Otherwise any item can be dragged and
- * dropped to any editor.  The icons are displayed on the background 
+ * dropped to any editor.  The icons are displayed on the background
  * of the last editor to call the ItemPalette instance.
  *
  * @author Pete Cressman Copyright (c) 2010
@@ -362,7 +362,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         while (iter.hasNext()) {
             Entry<String, ItemPanel> entry = iter.next();
             ItemPanel tab = entry.getValue();
-            tab.setEditor(ed);            
+            tab.setEditor(ed);
         }
         String name = ed.getName();
         if (name == null || name.equals("")) {
@@ -372,17 +372,17 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         // Either of these positioning calls puts the instance on the primary monitor. ???
         java.awt.Point pt = ed.getLocation();
         instance.setLocation(pt.x, pt.y);
-//        instance.setLocationRelativeTo(ed);            
+//        instance.setLocationRelativeTo(ed);
         instance.pack();
         instance.setVisible(true);
         return instance;
     }
-    
+
     private ItemPalette(String title, Editor ed) {
         super(false, false);
         init(title, ed);
     }
-    
+
     private void init(String title, Editor ed) {
         this.setTitle(title);
         loadIcons(ed);
@@ -706,7 +706,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    
+
     static protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
         if (map != null) {

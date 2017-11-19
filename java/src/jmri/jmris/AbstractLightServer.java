@@ -62,7 +62,7 @@ abstract public class AbstractLightServer {
     public Light initLight(String lightName)  throws IllegalArgumentException {
         Light light = InstanceManager.lightManagerInstance().provideLight(lightName);
         this.addLightToList(lightName);
-        return light;        
+        return light;
     }
 
     public void lightOff(String lightName) {

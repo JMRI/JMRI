@@ -1,7 +1,7 @@
 /**
  * Provide a developer tool for sending OpenLCB CAN packets.
  *
- * This is not intended to be a user-level tool. It exposes 
+ * This is not intended to be a user-level tool. It exposes
  * internal details that no user should worry about.
  *
  * <h2>Related Documentation</h2>

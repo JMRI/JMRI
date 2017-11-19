@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -21,8 +20,8 @@ import org.junit.Test;
 /**
  * Tests for the Warrant creation
  *
- * @author  Pete Cressman 2015
- * 
+ * @author Pete Cressman 2015
+ *
  * todo - test error conditions
  */
 public class WarrantTest {
@@ -31,7 +30,7 @@ public class WarrantTest {
     PortalManager _portalMgr;
     SensorManager _sensorMgr;
     TurnoutManager _turnoutMgr;
-    
+
     /**
      * tests depend on the order of execution.
      * So this will be one large test.
@@ -46,17 +45,17 @@ public class WarrantTest {
         OBlock bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
         Assert.assertEquals("OBlock", bNorth, _OBlockMgr.getOBlock("North"));
         Assert.assertEquals("OBlock", bEast, _OBlockMgr.getOBlock("OB2"));
-        
-        _portalMgr = InstanceManager.getDefault(PortalManager.class);        
+
+        _portalMgr = InstanceManager.getDefault(PortalManager.class);
         Portal pNorthWest = _portalMgr.createNewPortal(null, "NorthWest");
         pNorthWest.setToBlock(bWest, false);
         pNorthWest.setFromBlock(bNorth, false);
         Portal pSouthWest = _portalMgr.createNewPortal(null, "SouthWest");
         pSouthWest.setToBlock(bWest, false);
-        pSouthWest.setFromBlock(bSouth, false);        
+        pSouthWest.setFromBlock(bSouth, false);
         Assert.assertEquals("Portal", pNorthWest, _portalMgr.getPortal("NorthWest"));
         Assert.assertEquals("Portal Block", bSouth, _portalMgr.getPortal("SouthWest").getFromBlock());
-        Assert.assertEquals("Portal", pSouthWest, bSouth.getPortalByName("SouthWest"));        
+        Assert.assertEquals("Portal", pSouthWest, bSouth.getPortalByName("SouthWest"));
         Assert.assertEquals("Portal Block", "West", _portalMgr.getPortal("NorthWest").getToBlockName());
         Assert.assertEquals("Portal Block", "North", _portalMgr.getPortal("NorthWest").getFromBlockName());
 
@@ -67,7 +66,7 @@ public class WarrantTest {
         OBlock east = _OBlockMgr.getOBlock("OB2");
         pSouthEast.setToBlock(east, false);
         pSouthEast.setFromBlock(_OBlockMgr.getOBlock("South"), false);
-        
+
         Assert.assertEquals("Portal Block", east, _portalMgr.getPortal("SouthEast").getToBlock());
         Assert.assertEquals("Portal Block", "West", _portalMgr.getPortal("NorthWest").getToBlockName());
         Assert.assertEquals("Portal Block", _OBlockMgr.getOBlock("South"), _portalMgr.getPortal("SouthWest").getFromBlock());
@@ -79,14 +78,14 @@ public class WarrantTest {
         OBlock north = _OBlockMgr.getOBlock("North");
         OPath path = new OPath("NorthToWest", north, null, _portalMgr.getPortal("NorthWest"), settings);
         north.addPath(path);
-        
+
         settings = new ArrayList<BeanSetting>();
         settings.add(new BeanSetting(northSwitch, "NorthSwitch", Turnout.THROWN));
         path = new OPath("NorthToEast", north, null, _portalMgr.getPortal("NorthEast"), settings);
-        north.addPath(path);        
+        north.addPath(path);
         Assert.assertEquals("Path Block", path, north.getPathByName("NorthToEast"));
         Assert.assertEquals("Path Block", "NorthToWest", north.getPathByName("NorthToWest").getName());
-        
+
         Turnout southSwitch = _turnoutMgr.newTurnout("IT2", "SouthSwitch");
         OBlock south = _OBlockMgr.getOBlock("South");
         settings = new ArrayList<BeanSetting>();
@@ -99,8 +98,8 @@ public class WarrantTest {
         south.addPath(path);
         Assert.assertEquals("Path Block", path, south.getPathByName("SouthToWest"));
         Assert.assertEquals("Path Block", "SouthToEast", south.getPathByName("SouthToEast").getName());
-        
-        
+
+
         settings = new ArrayList<BeanSetting>();
         OBlock block =  _OBlockMgr.getOBlock("West");
         path = new OPath("SouthToNorth", block, _portalMgr.getPortal("NorthWest"), _portalMgr.getPortal("SouthWest"), settings);
@@ -111,7 +110,7 @@ public class WarrantTest {
         path = new OPath("NorthToSouth", block, south.getPortalByName("SouthEast"), north.getPortalByName("NorthEast"), settings);
         _OBlockMgr.getOBlock("East").addPath(path);
         Assert.assertEquals("Path Block", path, block.getPathByName("NorthToSouth"));
-   
+
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor sWest = _sensorMgr.newSensor("IS1", "WestSensor");
         Sensor sEast = _sensorMgr.newSensor("IS2", "EastSensor");
@@ -127,7 +126,7 @@ public class WarrantTest {
             sWest.setState(Sensor.INACTIVE);
             sEast.setState(Sensor.ACTIVE);
             sNorth.setState(Sensor.INACTIVE);
-            sSouth.setState(Sensor.ACTIVE);            
+            sSouth.setState(Sensor.ACTIVE);
         } catch (JmriException je) { }
         Assert.assertEquals("Block Detection 1", OBlock.UNOCCUPIED, bWest.getState());
         Assert.assertEquals("Block Detection 2", OBlock.OCCUPIED, bEast.getState());
@@ -138,7 +137,7 @@ public class WarrantTest {
         Assert.assertEquals("Block Detection 4", OBlock.OCCUPIED | OBlock.ALLOCATED, bEast.getState());
         try{
             sEast.setState(Sensor.INACTIVE);
-            sSouth.setState(Sensor.INACTIVE);            
+            sSouth.setState(Sensor.INACTIVE);
             sNorth.setState(Sensor.ACTIVE);     // start block of warrant
         } catch (JmriException je) { }
         bWest.deAllocate(warrant);
@@ -152,16 +151,16 @@ public class WarrantTest {
         orders.add(viaOrder);
         BlockOrder lastOrder = new BlockOrder(_OBlockMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
         orders.add(lastOrder);
-        
+
         warrant.setViaOrder(viaOrder);
         warrant.setBlockOrders(orders);
         Assert.assertEquals("BlockOrder", warrant.getLastOrder().toString(), lastOrder.toString());
         Assert.assertEquals("BlockOrder", warrant.getViaOrder().toString(), viaOrder.toString());
-        
+
         String msg = warrant.allocateRoute(orders);
         Assert.assertNull("allocateRoute - "+msg, msg);
         warrant.deAllocate();
-        
+
         warrant.setThrottleCommands(new ArrayList<ThrottleSetting>());
         warrant.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", "North"));
         warrant.addThrottleCommand(new ThrottleSetting(10, "Speed", "0.4", "North"));
@@ -172,7 +171,7 @@ public class WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
         List<ThrottleSetting> list = warrant.getThrottleCommands();
         Assert.assertEquals("ThrottleCommands", 7, list.size());
-        
+
 //        DccLocoAddress dccAddress = new DccLocoAddress(999, true);
 //        Assert.assertNotNull("dccAddress", dccAddress);
         warrant.getSpeedUtil().setDccAddress("999(L)");
@@ -185,12 +184,12 @@ public class WarrantTest {
         SpeedUtil su = warrant.getSpeedUtil();
         Assert.assertNotNull("SpeedUtil null", su);
         su.setOrders(orders);
-        
+
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
         Assert.assertNotNull("PropertyChangeListener", listener);
         warrant.addPropertyChangeListener(listener);
-        
+
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
 
@@ -216,14 +215,14 @@ public class WarrantTest {
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunningMessage().equals("Idle");}, "warrant not done");
-        
+
         // confirm one message logged
         // jmri.util.JUnitAppender.assertWarnMessage("Block West does not have a length for path SouthToNorth");
     }
-    
-    
+
+
     class WarrantListener implements PropertyChangeListener {
-        
+
         Warrant warrant;
         WarrantListener( Warrant w) {
             warrant = w;
@@ -233,7 +232,7 @@ public class WarrantTest {
 //            String property = e.getPropertyName();
 //            System.out.println("propertyChange \""+property+
 //                    "\" old= "+e.getOldValue()+" new= "+e.getNewValue());
-            Assert.assertEquals("propertyChange", warrant, e.getSource());           
+            Assert.assertEquals("propertyChange", warrant, e.getSource());
 //            System.out.println(warrant.getRunningMessage());
         }
     }

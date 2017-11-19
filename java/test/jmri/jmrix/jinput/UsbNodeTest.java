@@ -4,15 +4,13 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.Timeout;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class UsbNodeTest {
 
@@ -21,8 +19,8 @@ public class UsbNodeTest {
 
     @Test
     public void testCTor() {
-        UsbNode t = new UsbNode("test",null,null);
-        Assert.assertNotNull("exists",t);
+        UsbNode t = new UsbNode("test", null, null);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -37,5 +35,4 @@ public class UsbNodeTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(UsbNodeTest.class);
-
 }

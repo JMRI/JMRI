@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the NceReplyclass
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class NceReplyTest extends TestCase {
 

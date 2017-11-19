@@ -255,7 +255,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
             TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
             table.setRowSorter(sorter);
             // only sort on columns that are String or Integer
-            for (int i =0; i < table.getColumnCount(); i++) {                
+            for (int i =0; i < table.getColumnCount(); i++) {
                 if (table.getColumnClass(i) == String.class || table.getColumnClass(i) == Integer.class) {
                     continue; // allow sorting
                 }
@@ -367,7 +367,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
 
     @Override
     public void ancestorRemoved(AncestorEvent event) {
-//  log.debug("Ancestor Removed"); 
+//  log.debug("Ancestor Removed");
         // do nothing
     }
 

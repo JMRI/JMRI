@@ -6,7 +6,7 @@ import jmri.implementation.AbstractReporter;
 /**
  * Implementation of the InternalReporterManager interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
  * @deprecated As of 4.3.5, use jmri.jmrix.internal classes
  */

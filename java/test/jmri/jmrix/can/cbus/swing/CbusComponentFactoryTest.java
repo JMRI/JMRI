@@ -14,17 +14,17 @@ import org.junit.Test;
 /**
  * Test simple functioning of CbusComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusComponentFactoryTest {
 
 
     private TrafficController tc = null;
     private CanSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusComponentFactory action = new CbusComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

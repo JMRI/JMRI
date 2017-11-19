@@ -9,8 +9,8 @@ import org.junit.Assert;
 /**
  * Tests for the NamedBeanHandleManager class
  *
- * @author	Kevin Dickerson Copyright (C) 2006
- * 
+ * @author Kevin Dickerson Copyright (C) 2006
+ *
  */
 public class NamedBeanHandleManagerTest extends TestCase {
 

@@ -75,7 +75,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
             List<Element> l = root.getChild("appearances").getChildren("appearance");
 
-            // find all appearances, include them by aspect name, 
+            // find all appearances, include them by aspect name,
             log.debug("   reading {} aspectname elements", l.size());
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getChild("aspectname").getText();

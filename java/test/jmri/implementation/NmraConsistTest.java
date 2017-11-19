@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of NmraConsist
  *
- * @author	Paul Copyright (C) 2016
+ * @author Paul Copyright (C) 2016
  */
 public class NmraConsistTest extends AbstractConsistTestBase {
 
@@ -37,7 +37,7 @@ public class NmraConsistTest extends AbstractConsistTestBase {
         jmri.util.JUnitUtil.initDebugCommandStation();
         c = new NmraConsist(new DccLocoAddress(12, true),jmri.InstanceManager.getDefault(jmri.CommandStation.class));
     }
-   
+
     @After
     @Override
     public void tearDown() {

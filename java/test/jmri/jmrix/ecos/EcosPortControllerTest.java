@@ -8,7 +8,7 @@ import org.junit.Before;
  * JUnit tests for the EcosPortController class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class EcosPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 

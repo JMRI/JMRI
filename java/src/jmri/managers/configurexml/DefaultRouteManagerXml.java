@@ -134,7 +134,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
                 // add route control Sensors, if any
                 index = 0;
-                //rSensor = null;	// previous while forces rSensor to null
+                //rSensor = null; // previous while forces rSensor to null
                 while ((rSensor = r.getRouteSensorName(index)) != null) {
                     Element rsElem = new Element("routeSensor")
                             .setAttribute("systemName", rSensor);
@@ -286,7 +286,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 log.debug("create route: (" + sysName + ")("
                         + (userName == null ? "<null>" : userName) + ")");
             }
-            
+
             Route r;
             try {
                 r = tm.provideRoute(sysName, userName);
@@ -385,7 +385,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     } else if (rState.equals("TOGGLE")) {
                         tSetState = Route.TOGGLE;
                     }
-                    // If the Turnout has already been added to the route and is the same as that loaded, 
+                    // If the Turnout has already been added to the route and is the same as that loaded,
                     // we will not re add the turnout.
                     if (!r.isOutputTurnoutIncluded(tSysName)) {
 
@@ -420,8 +420,8 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     } else if (rState.equals("TOGGLE")) {
                         tSetState = Route.TOGGLE;
                     }
-                    // If the Turnout has already been added to the route and is the same as that loaded, 
-                    // we will not re add the turnout.                        
+                    // If the Turnout has already been added to the route and is the same as that loaded,
+                    // we will not re add the turnout.
                     if (r.isOutputSensorIncluded(tSysName)) {
                         break;
                     }

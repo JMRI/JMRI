@@ -232,7 +232,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             return dropCars(local);
         }
     }
-    
+
     private String pickupCars() {
         StringBuilder builder = new StringBuilder();
         RouteLocation location = train.getCurrentLocation();

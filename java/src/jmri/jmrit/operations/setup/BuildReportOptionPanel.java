@@ -18,7 +18,7 @@ import jmri.InstanceManager;
  * Frame for user edit of the build report options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
- * 
+ *
  */
 public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 

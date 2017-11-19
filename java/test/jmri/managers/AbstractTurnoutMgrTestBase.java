@@ -27,7 +27,7 @@ public abstract class AbstractTurnoutMgrTestBase {
     @Before
     abstract public void setUp();
 
-    protected TurnoutManager l = null;	// holds objects under test
+    protected TurnoutManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

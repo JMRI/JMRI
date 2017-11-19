@@ -83,15 +83,15 @@
     </row>
     <row>
       <column>
-		<display item="CV201"/>
-		<display item="CV202"/>
-		<display item="CV203"/>
-		<display item="CV204"/>
+        <display item="CV201"/>
+        <display item="CV202"/>
+        <display item="CV203"/>
+        <display item="CV204"/>
       </column>
     </row>
-	<label>
-	  <text>   </text>
-	</label>
+    <label>
+      <text>   </text>
+    </label>
     <row>
       <column>
         <label>
@@ -116,9 +116,9 @@
           <text>6</text>
         </label>
       </column>
-	  <label>
-		<text>   </text>
-	  </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <label>
           <text>&lt;html&gt;&lt;strong&gt;CV201 (read)&lt;/strong&gt;&lt;/html&gt;</text>
@@ -142,9 +142,9 @@
           <text>106</text>
         </label>
       </column>
-	  <label>
-		<text>   </text>
-	  </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <label>
           <text>&lt;html&gt;&lt;strong&gt;CV202&lt;/strong&gt;&lt;/html&gt;</text>
@@ -168,9 +168,9 @@
           <text>Volume Level</text>
         </label>
       </column>
-	  <label>
-		<text>   </text>
-	  </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <label>
           <text>&lt;html&gt;&lt;strong&gt;CV203&lt;/strong&gt;&lt;/html&gt;</text>
@@ -194,9 +194,9 @@
           <text>0</text>
         </label>
       </column>
-	  <label>
-		<text>   </text>
-	  </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <label>
           <text>&lt;html&gt;&lt;strong&gt;CV204&lt;/strong&gt;&lt;/html&gt;</text>
@@ -220,9 +220,9 @@
           <text>Sound Group</text>
         </label>
       </column>
-	  <label>
-		<text>   </text>
-	  </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <label>
           <text>&lt;html&gt;&lt;strong&gt;Action&lt;/strong&gt;&lt;/html&gt;</text>

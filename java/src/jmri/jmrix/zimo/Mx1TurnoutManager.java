@@ -7,8 +7,8 @@ import jmri.Turnout;
  * <P>
  * System names are "ZTnnn", where nnn is the turnout number without padding.
  *
- * @author	Kevin Dickerson (C) 2014
- * 
+ * @author Kevin Dickerson (C) 2014
+ *
  */
 public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
 

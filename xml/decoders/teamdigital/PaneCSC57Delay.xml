@@ -16,102 +16,102 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 <name>Logic Cells 57-64 delay</name>
    <column>
-   
-	<row>
-		<column>
-		<label label=" " />
-		<label label="------ The delay is the time from a logic cell state change until the output actually changes ------"/>
-		<label label=" " />
-		</column>
-	</row>
+
+    <row>
+        <column>
+        <label label=" " />
+        <label label="------ The delay is the time from a logic cell state change until the output actually changes ------"/>
+        <label label=" " />
+        </column>
+    </row>
     <separator/>
     <separator/>
-	<row>
-	<column>
-			<label label="------ Logic Cell 57 ------"/>
-		<row>
-			<column> <display item="LC delay 1" /> </column>	
-		</row>
-	
-	</column>
-	</row>
+    <row>
+    <column>
+            <label label="------ Logic Cell 57 ------"/>
+        <row>
+            <column> <display item="LC delay 1" /> </column>
+        </row>
+
+    </column>
+    </row>
 
     <separator/>
-	<row>
-	<column>
-			<label label="------ Logic Cell 58 ------"/>
-		<row>
-			<column> <display item="LC delay 2" /> </column>	
-		</row>
-	</column>
-	</row>
-
-    <separator/>
-
-	<row>
-	<column>
-			<label label="------ Logic Cell 59 ------"/>
-		<row>
-			<column> <display item="LC delay 3" /> </column>	
-		</row>
-	</column>
-	</row>
+    <row>
+    <column>
+            <label label="------ Logic Cell 58 ------"/>
+        <row>
+            <column> <display item="LC delay 2" /> </column>
+        </row>
+    </column>
+    </row>
 
     <separator/>
 
-	<row>
-	<column>
-			<label label="------ Logic Cell 60 ------"/>
-		<row>
-			<column> <display item="LC delay 4" /> </column>	
-		</row>
-	</column>
-	</row>	
-	
-	<separator/>
-
-	<row>
-	<column>	
-		<label label="------ Logic Cell 61 ------"/>
-		<row>
-			<column> <display item="LC delay 5" /> </column>
-		</row>	
-	</column>
-	</row>
+    <row>
+    <column>
+            <label label="------ Logic Cell 59 ------"/>
+        <row>
+            <column> <display item="LC delay 3" /> </column>
+        </row>
+    </column>
+    </row>
 
     <separator/>
 
-	<row>
-	<column>
-			<label label="------ Logic Cell 62 ------"/>
-		<row>
-			<column> <display item="LC delay 6" /> </column>	
-		</row>
-	</column>
-	</row>
-	
-    <separator/>
-
-	<row>
-	<column>
-			<label label="------ Logic Cell 63 ------"/>
-		<row>
-			<column> <display item="LC delay 7" /> </column>
-		</row>
-	</column>
-	</row>
+    <row>
+    <column>
+            <label label="------ Logic Cell 60 ------"/>
+        <row>
+            <column> <display item="LC delay 4" /> </column>
+        </row>
+    </column>
+    </row>
 
     <separator/>
 
-	<row>
-	<column>
-			<label label="------ Logic Cell 64 ------"/>
-		<row>
-			<column> <display item="LC delay 8" /> </column>	
-		</row>
-	</column>
-	</row>
+    <row>
+    <column>
+        <label label="------ Logic Cell 61 ------"/>
+        <row>
+            <column> <display item="LC delay 5" /> </column>
+        </row>
+    </column>
+    </row>
 
-	<separator/>
+    <separator/>
+
+    <row>
+    <column>
+            <label label="------ Logic Cell 62 ------"/>
+        <row>
+            <column> <display item="LC delay 6" /> </column>
+        </row>
+    </column>
+    </row>
+
+    <separator/>
+
+    <row>
+    <column>
+            <label label="------ Logic Cell 63 ------"/>
+        <row>
+            <column> <display item="LC delay 7" /> </column>
+        </row>
+    </column>
+    </row>
+
+    <separator/>
+
+    <row>
+    <column>
+            <label label="------ Logic Cell 64 ------"/>
+        <row>
+            <column> <display item="LC delay 8" /> </column>
+        </row>
+    </column>
+    </row>
+
+    <separator/>
    </column>
  </pane>

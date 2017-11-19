@@ -61,12 +61,12 @@ public class SimplePowerServer extends AbstractPowerServer {
               e.jjtAccept(v,this);
               if(v.getOutputString() != null ){
                  sendStatus(v.getOutputString());
-              } 
+              }
            } catch(ParseException pe){
               sendErrorStatus();
            }
         } catch(IOException ioe) {
-          // we should check to see if there is an  
+          // we should check to see if there is an
         }
     }
 

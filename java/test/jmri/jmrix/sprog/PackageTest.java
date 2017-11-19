@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 /**
  * tests for the jmri.jmrix.sprog package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

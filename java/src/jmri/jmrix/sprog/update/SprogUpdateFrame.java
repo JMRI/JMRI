@@ -91,7 +91,7 @@ abstract public class SprogUpdateFrame
         tc.setSprogState(SprogState.NORMAL);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -101,7 +101,7 @@ abstract public class SprogUpdateFrame
         super.dispose();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

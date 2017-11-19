@@ -8,7 +8,7 @@ import org.junit.Before;
  * JUnit tests for the Mx1PortController class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 

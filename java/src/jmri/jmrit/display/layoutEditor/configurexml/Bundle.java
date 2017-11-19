@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @since 3.3.1
  */
 public class Bundle extends jmri.jmrit.display.layoutEditor.Bundle {
- 
+
     @Nullable
     private static final String name = null;
 

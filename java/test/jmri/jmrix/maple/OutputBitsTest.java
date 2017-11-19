@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the OutputBits class
  *
- * @author	Dave Duchamp 2009
+ * @author Dave Duchamp 2009
   */
 public class OutputBitsTest extends TestCase {
 

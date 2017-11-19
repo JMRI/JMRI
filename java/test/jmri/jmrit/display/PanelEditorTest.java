@@ -15,7 +15,7 @@ import org.junit.Test;
  * <p>
  * Description:
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PanelEditorTest {
 

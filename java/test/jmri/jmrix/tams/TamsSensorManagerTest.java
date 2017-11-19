@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -27,7 +27,7 @@ public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);
         l = new TamsSensorManager(memo);
     }
 

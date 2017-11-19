@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author Egbert Broerse Copyright (C) 2017
  */
 public class SwitchboardEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
-        
+
     private SwitchboardEditor swe = null;
 
     @Test

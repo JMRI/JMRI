@@ -13,7 +13,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 /**
  * Abstract Color Chooser extension that presents a swatch sample of the color
- * and a button to set the color. Clicking the button results in a 
+ * and a button to set the color. Clicking the button results in a
  * JColorChooser launching.
  *
  * @author Paul Bender Copyright (C) 2017
@@ -40,7 +40,7 @@ public class ButtonSwatchColorChooserPanel extends AbstractColorChooserPanel {
         g.setColor(Color.black);
         g.drawRect(0, 0, ICON_DIMENSION - 1, ICON_DIMENSION - 1);
 
-        ImageIcon icon = new ImageIcon(image); 
+        ImageIcon icon = new ImageIcon(image);
 
         swatch.setIcon(icon);
     }
@@ -55,7 +55,7 @@ public class ButtonSwatchColorChooserPanel extends AbstractColorChooserPanel {
         g.setColor(getColorFromModel());
         g.fillRect(0, 0, ICON_DIMENSION, ICON_DIMENSION);
 
-        ImageIcon icon = new ImageIcon(image); 
+        ImageIcon icon = new ImageIcon(image);
         swatch = new JLabel(icon);
         add(swatch);
         setButton = new JButton(Bundle.getMessage("SetColor"));

@@ -97,7 +97,7 @@ public class JmriSRCPServer extends JmriServer {
                     log.debug("Parse Exception", pe);
                     jmri.jmris.srcp.parser.Token t = parser.getNextToken();
                     if (t.kind == jmri.jmris.srcp.parser.SRCPParserConstants.EOF) {
-                        // the input ended.  
+                        // the input ended.
                         if (log.isDebugEnabled()) {
                             log.debug("Closing connection due to close of input stream");
                         }
@@ -131,7 +131,7 @@ public class JmriSRCPServer extends JmriServer {
                     log.debug("Parse Exception", pe);
                     jmri.jmris.srcp.parser.Token t = parser.getNextToken();
                     if (t.kind == jmri.jmris.srcp.parser.SRCPParserConstants.EOF) {
-                        // the input ended.  The parser may have prepared 
+                        // the input ended.  The parser may have prepared
                         // an output string to return (if the client issued
                         // a "TERM 0 SESSION" request).
                         //if(v.getOutputString()!=null)

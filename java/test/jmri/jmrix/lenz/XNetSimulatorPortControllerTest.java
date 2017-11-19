@@ -8,7 +8,7 @@ import org.junit.Before;
  * JUnit tests for the XNetSimulatorPortController class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XNetSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
@@ -55,7 +55,7 @@ public class XNetSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialPo
             @Override
             public void setOutputBufferEmpty(boolean s){
             }
-            
+
             @Override
             public boolean okToSend(){
                   return true;

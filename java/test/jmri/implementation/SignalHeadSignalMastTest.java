@@ -9,13 +9,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the SignalHeadSignalMast implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
  */
 public class SignalHeadSignalMastTest {
@@ -65,7 +63,7 @@ public class SignalHeadSignalMastTest {
 
     @Test
     public void testTwoNameSe8cHeadCtorOK() {
-        // create the SE8c heads 
+        // create the SE8c heads
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH:SE8C:\"255\";\"256\"") {
                     @Override
@@ -81,7 +79,7 @@ public class SignalHeadSignalMastTest {
                 }
         );
 
-        // test uses those        
+        // test uses those
         new SignalHeadSignalMast("IF$shsm:AAR-1946:PL-2-high(IH:SE8C:\"255\";\"256\")(IH:SE8C:\"257\";\"258\")", "user");
     }
 

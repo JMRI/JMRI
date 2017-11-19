@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 

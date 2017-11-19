@@ -15,7 +15,7 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Pete</firstname><surname>Cressman</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -24,7 +24,7 @@
         <date>2010-07-14</date>
         <authorinitials>PWC</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <ItemTypes>
@@ -34,12 +34,12 @@
         <TurnoutStateClosed>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif
         </TurnoutStateClosed>
-        <TurnoutStateThrown> 
+        <TurnoutStateThrown>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif
-        </TurnoutStateThrown> 
-        <BeanStateInconsistent> 
+        </TurnoutStateThrown>
+        <BeanStateInconsistent>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif
-        </BeanStateInconsistent> 
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif
         </BeanStateUnknown>
@@ -48,12 +48,12 @@
         <TurnoutStateClosed>
           resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif
         </TurnoutStateClosed>
-        <TurnoutStateThrown> 
+        <TurnoutStateThrown>
           resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif
-        </TurnoutStateThrown> 
-        <BeanStateInconsistent> 
+        </TurnoutStateThrown>
+        <BeanStateInconsistent>
           resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif
-        </BeanStateInconsistent> 
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif
         </BeanStateUnknown>
@@ -62,12 +62,12 @@
         <TurnoutStateClosed>
           resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-closed.gif
         </TurnoutStateClosed>
-        <TurnoutStateThrown> 
+        <TurnoutStateThrown>
           resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-thrown.gif
-        </TurnoutStateThrown> 
-        <BeanStateInconsistent> 
+        </TurnoutStateThrown>
+        <BeanStateInconsistent>
           resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-error.gif
-        </BeanStateInconsistent> 
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-unknown.gif
         </BeanStateUnknown>
@@ -76,12 +76,12 @@
         <TurnoutStateClosed>
           resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-closed.gif
         </TurnoutStateClosed>
-        <TurnoutStateThrown> 
+        <TurnoutStateThrown>
           resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-thrown.gif
-        </TurnoutStateThrown> 
-        <BeanStateInconsistent> 
+        </TurnoutStateThrown>
+        <BeanStateInconsistent>
           resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-error.gif
-        </BeanStateInconsistent> 
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-unknown.gif
         </BeanStateUnknown>
@@ -93,12 +93,12 @@
         <SensorStateActive>
           resources/icons/USS/sensor/green-on.gif
         </SensorStateActive>
-        <SensorStateInactive> 
+        <SensorStateInactive>
           resources/icons/USS/sensor/red-off.gif
-        </SensorStateInactive> 
+        </SensorStateInactive>
         <BeanStateInconsistent>
-          resources/icons/USS/sensor/amber-on.gif 
-        </BeanStateInconsistent> 
+          resources/icons/USS/sensor/amber-on.gif
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/USS/sensor/blue-on.gif
         </BeanStateUnknown>
@@ -107,12 +107,12 @@
         <SensorStateActive>
           resources/icons/smallschematics/tracksegments/circuit-occupied.gif
         </SensorStateActive>
-        <SensorStateInactive> 
+        <SensorStateInactive>
           resources/icons/smallschematics/tracksegments/circuit-empty.gif
-        </SensorStateInactive> 
-        <BeanStateInconsistent> 
+        </SensorStateInactive>
+        <BeanStateInconsistent>
           resources/icons/smallschematics/tracksegments/circuit-error.gif
-        </BeanStateInconsistent> 
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/smallschematics/tracksegments/circuit-error.gif
         </BeanStateUnknown>
@@ -124,9 +124,9 @@
         <SignalHeadStateRed>
           resources/icons/smallschematics/searchlights/left-red-marker.gif
         </SignalHeadStateRed>
-        <SignalHeadStateYellow> 
+        <SignalHeadStateYellow>
           resources/icons/smallschematics/searchlights/left-yellow-marker.gif
-        </SignalHeadStateYellow> 
+        </SignalHeadStateYellow>
         <SignalHeadStateGreen>
           resources/icons/smallschematics/searchlights/left-green-marker.gif
         </SignalHeadStateGreen>
@@ -139,12 +139,12 @@
         <SignalHeadStateLunar>
           resources/icons/smallschematics/searchlights/left-lunar-marker.gif
         </SignalHeadStateLunar>
-        <SignalHeadStateFlashingRed> 
+        <SignalHeadStateFlashingRed>
           resources/icons/smallschematics/searchlights/left-flashred-marker.gif
-        </SignalHeadStateFlashingRed> 
-        <SignalHeadStateFlashingYellow> 
+        </SignalHeadStateFlashingRed>
+        <SignalHeadStateFlashingYellow>
           resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif
-        </SignalHeadStateFlashingYellow> 
+        </SignalHeadStateFlashingYellow>
         <SignalHeadStateFlashingGreen>
           resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif
         </SignalHeadStateFlashingGreen>
@@ -156,9 +156,9 @@
         <SignalHeadStateRed>
           resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_red_dwarf_lt.gif
         </SignalHeadStateRed>
-        <SignalHeadStateYellow> 
+        <SignalHeadStateYellow>
           resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_lt.gif
-        </SignalHeadStateYellow> 
+        </SignalHeadStateYellow>
         <SignalHeadStateGreen>
           resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_grn_dwarf_lt.gif
         </SignalHeadStateGreen>
@@ -171,12 +171,12 @@
         <SignalHeadStateLunar>
           resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_rt.gif
         </SignalHeadStateLunar>
-        <SignalHeadStateFlashingRed> 
+        <SignalHeadStateFlashingRed>
           resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_red_dwarf_rt.gif
-        </SignalHeadStateFlashingRed> 
-        <SignalHeadStateFlashingYellow> 
+        </SignalHeadStateFlashingRed>
+        <SignalHeadStateFlashingYellow>
           resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_rt.gif
-        </SignalHeadStateFlashingYellow> 
+        </SignalHeadStateFlashingYellow>
         <SignalHeadStateFlashingGreen>
           resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_grn_dwarf_rt.gif
         </SignalHeadStateFlashingGreen>
@@ -191,12 +191,12 @@
 
     <MultiSensor>
       <lever>
-        <SensorStateInactive> 
+        <SensorStateInactive>
           resources/icons/USS/plate/levers/l-inactive.gif
-        </SensorStateInactive> 
+        </SensorStateInactive>
         <BeanStateInconsistent>
-          resources/icons/USS/plate/levers/l-inconsistent.gif 
-        </BeanStateInconsistent> 
+          resources/icons/USS/plate/levers/l-inconsistent.gif
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/USS/plate/levers/l-unknown.gif
         </BeanStateUnknown>
@@ -217,12 +217,12 @@
         <LightStateOff>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif
         </LightStateOff>
-        <LightStateOn> 
+        <LightStateOn>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif
-        </LightStateOn> 
-        <BeanStateInconsistent> 
+        </LightStateOn>
+        <BeanStateInconsistent>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif
-        </BeanStateInconsistent> 
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif
         </BeanStateUnknown>
@@ -231,12 +231,12 @@
         <LightStateOff>
           resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif
         </LightStateOff>
-        <LightStateOn> 
+        <LightStateOn>
           resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif
-        </LightStateOn> 
-        <BeanStateInconsistent> 
+        </LightStateOn>
+        <BeanStateInconsistent>
           resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif
-        </BeanStateInconsistent> 
+        </BeanStateInconsistent>
         <BeanStateUnknown>
           resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif
         </BeanStateUnknown>
@@ -253,12 +253,12 @@
         </logo>
       </set>
     </Icon>
-    
+
     <Background>
       <set>
       </set>
     </Background>
-    
+
     <RPSReporter>
       <classic>
         <active>
@@ -269,7 +269,7 @@
         </error>
       </classic>
     </RPSReporter>
-      
+
     <FastClock>
       <set>
         <analog>
@@ -277,27 +277,27 @@
         </analog>
       </set>
     </FastClock>
-    
-	<Portal>
-		<Standard>
+
+    <Portal>
+        <Standard>
           <hidden>
-          	resources/icons/Invisible.gif
+              resources/icons/Invisible.gif
           </hidden>
           <path>
-          	resources/icons/greenSquare.gif
+              resources/icons/greenSquare.gif
           </path>
           <block>
-          	resources/icons/throttles/RoundRedCircle20.png
+              resources/icons/throttles/RoundRedCircle20.png
           </block>
           <fromArrow>
-          	resources/icons/track/fromArrow.gif
+              resources/icons/track/fromArrow.gif
           </fromArrow>
           <toArrow>
-          	resources/icons/track/toArrow.gif
+              resources/icons/track/toArrow.gif
           </toArrow>
         </Standard>
-	</Portal>
-      
+    </Portal>
+
     <IndicatorTrack>
       <BlockSegment>
         <ClearTrack>
@@ -340,19 +340,19 @@
         </ErrorTrack>
       </USS-BlockSegment>
     </IndicatorTrack>
-      
+
     <IndicatorTO>
       <LeftTurnout>
         <ClearTrack>
           <TurnoutStateClosed>
             resources/icons/track/line/LeftTO/os-lefthand-west-closed-black.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/LeftTO/os-lefthand-west-thrown-black.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/LeftTO/os-lefthand-west-error-black.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/LeftTO/os-lefthand-west-unknown-black.gif
           </BeanStateUnknown>
@@ -361,12 +361,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/LeftTO/os-lefthand-west-closed-yellow.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/LeftTO/os-lefthand-west-thrown-yellow.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/LeftTO/os-lefthand-west-error-yellow.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/LeftTO/os-lefthand-west-unknown-yellow.gif
           </BeanStateUnknown>
@@ -375,12 +375,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/LeftTO/os-lefthand-west-closed-green.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/LeftTO/os-lefthand-west-thrown-green.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/LeftTO/os-lefthand-west-error-green.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/LeftTO/os-lefthand-west-unknown-green.gif
           </BeanStateUnknown>
@@ -389,12 +389,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/LeftTO/os-lefthand-west-closed-blue.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/LeftTO/os-lefthand-west-thrown-blue.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/LeftTO/os-lefthand-west-error-blue.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/LeftTO/os-lefthand-west-unknown-blue.gif
           </BeanStateUnknown>
@@ -403,12 +403,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/LeftTO/os-lefthand-west-closed-gray.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/LeftTO/os-lefthand-west-thrown-gray.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/LeftTO/os-lefthand-west-error-gray.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/LeftTO/os-lefthand-west-unknown-gray.gif
           </BeanStateUnknown>
@@ -417,12 +417,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/LeftTO/os-lefthand-west-closed-red.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/LeftTO/os-lefthand-west-thrown-red.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/LeftTO/os-lefthand-west-error-red.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/LeftTO/os-lefthand-west-unknown-red.gif
           </BeanStateUnknown>
@@ -433,12 +433,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/LeftTO/os-lefthand-east-closed-white.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-white.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/LeftTO/os-lefthand-east-error-white.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-white.gif
           </BeanStateUnknown>
@@ -447,12 +447,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/LeftTO/os-lefthand-east-closed-yellow.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-yellow.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/LeftTO/os-lefthand-east-error-yellow.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-yellow.gif
           </BeanStateUnknown>
@@ -461,12 +461,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/LeftTO/os-lefthand-east-closed-green.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-green.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/LeftTO/os-lefthand-east-error-green.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-green.gif
           </BeanStateUnknown>
@@ -475,12 +475,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/LeftTO/os-lefthand-east-closed-blue.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-blue.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/LeftTO/os-lefthand-east-error-blue.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-blue.gif
           </BeanStateUnknown>
@@ -489,12 +489,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/LeftTO/os-lefthand-east-closed-gray.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-gray.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/LeftTO/os-lefthand-east-error-gray.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-gray.gif
           </BeanStateUnknown>
@@ -503,12 +503,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/LeftTO/os-lefthand-east-closed-red.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-red.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/LeftTO/os-lefthand-east-error-red.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-red.gif
           </BeanStateUnknown>
@@ -519,12 +519,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/RightTO/os-righthand-east-closed-black.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/RightTO/os-righthand-east-thrown-black.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/RightTO/os-righthand-east-error-black.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif
           </BeanStateUnknown>
@@ -533,12 +533,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/RightTO/os-righthand-east-closed-yellow.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/RightTO/os-righthand-east-thrown-yellow.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/RightTO/os-righthand-east-error-yellow.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/RightTO/os-righthand-east-unknown-yellow.gif
           </BeanStateUnknown>
@@ -547,12 +547,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/RightTO/os-righthand-east-closed-green.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/RightTO/os-righthand-east-thrown-green.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/RightTO/os-righthand-east-error-green.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/RightTO/os-righthand-east-unknown-green.gif
           </BeanStateUnknown>
@@ -561,12 +561,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/RightTO/os-righthand-east-closed-blue.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/RightTO/os-righthand-east-thrown-blue.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/RightTO/os-righthand-east-error-blue.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/RightTO/os-righthand-east-unknown-blue.gif
           </BeanStateUnknown>
@@ -575,12 +575,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/RightTO/os-righthand-east-closed-gray.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/RightTO/os-righthand-east-thrown-gray.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/RightTO/os-righthand-east-error-gray.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/RightTO/os-righthand-east-unknown-gray.gif
           </BeanStateUnknown>
@@ -589,12 +589,12 @@
           <TurnoutStateClosed>
             resources/icons/track/line/RightTO/os-righthand-east-closed-red.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/line/RightTO/os-righthand-east-thrown-red.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/line/RightTO/os-righthand-east-error-red.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/line/RightTO/os-righthand-east-unknown-red.gif
           </BeanStateUnknown>
@@ -605,12 +605,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/RightTO/os-righthand-east-closed-white.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/RightTO/os-righthand-east-thrown-white.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/RightTO/os-righthand-east-error-white.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/RightTO/os-righthand-east-unknown-white.gif
           </BeanStateUnknown>
@@ -619,12 +619,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/RightTO/os-righthand-east-closed-yellow.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/RightTO/os-righthand-east-thrown-yellow.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/RightTO/os-righthand-east-error-yellow.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/RightTO/os-righthand-east-unknown-yellow.gif
           </BeanStateUnknown>
@@ -633,12 +633,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/RightTO/os-righthand-east-closed-green.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/RightTO/os-righthand-east-thrown-green.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/RightTO/os-righthand-east-error-green.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/RightTO/os-righthand-east-unknown-green.gif
           </BeanStateUnknown>
@@ -647,12 +647,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/RightTO/os-righthand-east-closed-blue.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/RightTO/os-righthand-east-thrown-blue.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/RightTO/os-righthand-east-error-blue.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/RightTO/os-righthand-east-unknown-blue.gif
           </BeanStateUnknown>
@@ -661,12 +661,12 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/RightTO/os-righthand-east-closed-gray.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/RightTO/os-righthand-east-thrown-gray.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/RightTO/os-righthand-east-error-gray.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/RightTO/os-righthand-east-unknown-gray.gif
           </BeanStateUnknown>
@@ -675,18 +675,18 @@
           <TurnoutStateClosed>
             resources/icons/track/USS/RightTO/os-righthand-east-closed-red.gif
           </TurnoutStateClosed>
-          <TurnoutStateThrown> 
+          <TurnoutStateThrown>
             resources/icons/track/USS/RightTO/os-righthand-east-thrown-red.gif
-          </TurnoutStateThrown> 
-          <BeanStateInconsistent> 
+          </TurnoutStateThrown>
+          <BeanStateInconsistent>
             resources/icons/track/USS/RightTO/os-righthand-east-error-red.gif
-          </BeanStateInconsistent> 
+          </BeanStateInconsistent>
           <BeanStateUnknown>
             resources/icons/track/USS/RightTO/os-righthand-east-unknown-red.gif
           </BeanStateUnknown>
         </ErrorTrack>
       </USS-RightTurnout>
     </IndicatorTO>
-      
+
   </ItemTypes>
 </defaultPanelIcons>

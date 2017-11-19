@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of SerialPacketGenAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialPacketGenActionTest {
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction("Maple test Action"); 
+        SerialPacketGenAction action = new SerialPacketGenAction("Maple test Action");
         Assert.assertNotNull("exists", action);
     }
 

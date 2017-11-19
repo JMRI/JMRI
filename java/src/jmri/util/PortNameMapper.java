@@ -46,7 +46,7 @@ public class PortNameMapper {
         if (portsRetrieved) {
             return;
         }
-        /* Retrieving the friendly name is only available to windows clients 
+        /* Retrieving the friendly name is only available to windows clients
          so if the OS is not windows, we make the portsRetrieved as completed
          and exit out.
          */
@@ -93,7 +93,7 @@ public class PortNameMapper {
                                 String pathKey2 = path + regEntry + "\\" + subRegEntries[0] + "\\Device Parameters";
                                 port = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey2, "PortName");
                             } catch (Win32Exception | NullPointerException e) {
-                                // ...\\Device Parameters does not exist for some odd-ball Windows 
+                                // ...\\Device Parameters does not exist for some odd-ball Windows
                                 // serial devices, so cannot get the "PortName" from there.
                                 // Instead, leave port as null and ignore the exception
                             }

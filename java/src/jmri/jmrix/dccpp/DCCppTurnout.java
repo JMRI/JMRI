@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * with unidirectional Stationary Decoder commands, or with bidirectional
  * (predefined) Turnout commands, or with bidirectional (predefined) Output
  * commands.
- * 
+ *
  * DCC++ Has three ways to activate a turnout (output)
  * <ul>
  * <li> Accessory Command "a" : sends a DCC packet to a stationary decoder
@@ -24,26 +24,26 @@ import org.slf4j.LoggerFactory;
  *      the list.
  * </li>
  * <li> Output Command "z" : Looks up a Base Station Arduino Pin number from
- *      an internal lookup table, and sets/toggles the state of that pin.  
+ *      an internal lookup table, and sets/toggles the state of that pin.
  *      Returns a "Y" response indicating the actual state of the pin.  Or "X"
  *      if the indexed pin is not in the list.
  * </li>
  * </ul>
- * 
+ *
  * The DCCppTurnout supports three types of feedback:
  * <ul>
  * <li> DIRECT:  No actual feedback, uses Stationary Decoder command and
  *      fakes the response.
  * </li>
  * <li> MONITORING: Uses the Turnout command, lets the Base Station
- *      fake the response :) 
+ *      fake the response :)
  * </li>
  * <li> EXACT: Uses the Output command to directly address an Arduino pin.
  * </li>
  * </ul>
  *
  * It also supports "NO FEEDBACK" by treating it like "DIRECT".
- * 
+ *
  * Turnout operation on DCC++ based systems goes through the following
  * sequence:
  * <ul>
@@ -52,8 +52,8 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author      Paul Bender Copyright (C) 2003-2010
- * @author      Mark Underwood Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Based on lenz.XNetTurnout by Bob Jacobsen and Paul Bender
  */
@@ -87,16 +87,16 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         // Note DIRECT, ONESENSOR and TWOSENSOR are already OR'ed in.
         _validFeedbackTypes |= MONITORING;   // uses the Turnout command <T...>
         _validFeedbackTypes |= EXACT; // uses the Output command <z...>
-        
+
         // Default feedback mode is DIRECT
         _activeFeedbackType = DIRECT;
-        
+
         setModeInformation(_validFeedbackNames, _validFeedbackModes);
-        
+
         // set the mode names and values based on the static values.
         _validFeedbackNames = getModeNames();
         _validFeedbackModes = getModeValues();
-        
+
         // Register to get property change information from the superclass
         _stateListener = new DCCppTurnoutStateListener(this);
         this.addPropertyChangeListener(_stateListener);
@@ -106,7 +106,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     //Set the mode information for DCC++ Turnouts.
     synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
-        // if it hasn't been done already, create static arrays to hold 
+        // if it hasn't been done already, create static arrays to hold
         // the DCC++ specific feedback information.
         if (modeNames == null) {
             if (feedbackNames.length != feedbackModes.length) {
@@ -139,7 +139,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         return mNumber;
     }
 
-    // Set the Commanded State.   This method overrides setCommandedState in 
+    // Set the Commanded State.   This method overrides setCommandedState in
     // the Abstract Turnout class.
     /*
     //@Override
@@ -217,19 +217,19 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             msg = DCCppMessage.makeAccessoryDecoderMsg(mNumber, newstate);
             internalState = IDLE; // change this!
             break;
-            
+
         }
         log.debug("Sending Message: {}", msg.toString());
         tc.sendDCCppMessage(msg, this);
     }
-    
+
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + _prefix + "T" + mNumber);
         }
     }
-    
+
     /**
      * request an update on status by sending a DCC++ message
      */
@@ -237,7 +237,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         // Yeah, umm... DCC++ doesn't do this... yet.
         // (02/2017) Yes it does... using the <s> command or possibly
         // some others.  TODO: Plumb this in... IFF it is needed.
-        
+
         // To do this, we send an XPressNet Accessory Decoder Information
         // Request.
         // The generated message works for Feedback modules and turnouts
@@ -338,15 +338,15 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      * implements an ACK or OK response later.
      */
     synchronized private void handleDirectModeFeedback(DCCppReply l) {
-        /* If commanded state does not equal known state, we are 
-         going to check to see if one of the following conditions 
+        /* If commanded state does not equal known state, we are
+         going to check to see if one of the following conditions
          applies:
          1) The recieved message is a feedback message for a turnout
-         and one of the two addresses to which it applies is our 
+         and one of the two addresses to which it applies is our
          address
-         2) We recieve an "OK" message, indicating the command was 
+         2) We recieve an "OK" message, indicating the command was
          successfully sent
-           
+
          If either of these two cases occur, we trigger an off message
          */
 
@@ -356,7 +356,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         }
         if (getCommandedState() != getKnownState() || internalState == COMMANDSENT) {
             if (l.isTurnoutReply() && l.getTOIDInt() == mNumber) {
-                // This message includes feedback for this turnout  
+                // This message includes feedback for this turnout
                 if (log.isDebugEnabled()) {
                     log.debug("Turnout " + mNumber + " DIRECT feedback mode - directed reply received.");
                 }
@@ -366,10 +366,10 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     /*
-     *  With Monitoring Mode feedback, if we see a feedback message, we 
-     *  interpret that message and use it to display our feedback. 
-     *  <P> 
-     *  After we send a request to operate a turnout, We ask the command 
+     *  With Monitoring Mode feedback, if we see a feedback message, we
+     *  interpret that message and use it to display our feedback.
+     *  <P>
+     *  After we send a request to operate a turnout, We ask the command
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is recieved.
      *
@@ -377,9 +377,9 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      *
      */
     synchronized private void handleMonitoringModeFeedback(DCCppReply l) {
-        /* In Monitoring Mode, We have two cases to check if CommandedState 
-           does not equal KnownState, otherwise, we only want to check to 
-           see if the messages we recieve indicate this turnout chagned 
+        /* In Monitoring Mode, We have two cases to check if CommandedState
+           does not equal KnownState, otherwise, we only want to check to
+           see if the messages we recieve indicate this turnout chagned
            state
         */
         if (log.isDebugEnabled()) {
@@ -391,7 +391,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             log.debug("In Idle or StatusRequestSent State");
             if (l.isTurnoutReply() && (l.getTOIDInt() == mNumber)) {
                 // This is a feedback message, we need to check and see if it
-                // indicates this turnout is to change state or if it is for 
+                // indicates this turnout is to change state or if it is for
                 // another turnout.
                 log.debug("Turnout " + mNumber + " MONITORING feedback mode - state change from feedback.");
             }
@@ -399,9 +399,9 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                    || internalState == COMMANDSENT) {
             log.debug ("In inconsistent or COMMANDSENT state toID = " + l.getTOIDInt());
             if (l.isTurnoutReply() && (l.getTOIDInt() == mNumber)) {
-                // In Monitoring mode, treat both turnouts with feedback 
-                // and turnouts without feedback as turnouts without 
-                // feedback.  i.e. just interpret the feedback 
+                // In Monitoring mode, treat both turnouts with feedback
+                // and turnouts without feedback as turnouts without
+                // feedback.  i.e. just interpret the feedback
                 // message, don't check to see if the motion is complete
                 if (parseMonitoringFeedbackMessage(l, 0) != -1) {
                     // We need to tell the turnout to shut off the output.
@@ -414,11 +414,11 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         }
         return;
     }
-    
+
     synchronized private void handleExactModeFeedback(DCCppReply l) {
-        /* In Exact Mode, We have two cases to check if CommandedState 
-           does not equal KnownState, otherwise, we only want to check to 
-           see if the messages we recieve indicate this turnout chagned 
+        /* In Exact Mode, We have two cases to check if CommandedState
+           does not equal KnownState, otherwise, we only want to check to
+           see if the messages we recieve indicate this turnout chagned
            state
         */
         if (log.isDebugEnabled()) {
@@ -429,16 +429,16 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         if (internalState == IDLE || internalState == STATUSREQUESTSENT) {
             if (l.isOutputCmdReply() && (l.getOutputNumInt() == mNumber)) {
                 // This is a feedback message, we need to check and see if it
-                // indicates this turnout is to change state or if it is for 
+                // indicates this turnout is to change state or if it is for
                 // another turnout.
                 log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback.");
             }
         } else if (getCommandedState() != getKnownState()
                    || internalState == COMMANDSENT) {
             if (l.isOutputCmdReply() && (l.getOutputNumInt() == mNumber)) {
-                // In Exact mode, treat both turnouts with feedback 
-                // and turnouts without feedback as turnouts without 
-                // feedback.  i.e. just interpret the feedback 
+                // In Exact mode, treat both turnouts with feedback
+                // and turnouts without feedback as turnouts without
+                // feedback.  i.e. just interpret the feedback
                 // message, don't check to see if the motion is complete
                 if (parseExactFeedbackMessage(l, 0) != -1) {
                     // We need to tell the turnout to shut off the output.
@@ -453,12 +453,12 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     /*
-     * parse the feedback message, and set the status of the turnout 
+     * parse the feedback message, and set the status of the turnout
      * accordingly
      *
      * @param l - feedback broadcast message
      * @param startByte - first Byte of message to check (kind of ignored)
-     * 
+     *
      * @return 0 if address matches our turnout -1 otherwise
      */
     synchronized private int parseMonitoringFeedbackMessage(DCCppReply l, int startByte) {
@@ -484,8 +484,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                 return (0);
             } else {
                 log.debug("Turnout is inconsistent. Commanded = " + getCommandedState() + " Known = " + getKnownState());
-                // the state is unknown or inconsistent.  If the command state 
-                // does not equal the known state, and the command repeat the 
+                // the state is unknown or inconsistent.  If the command state
+                // does not equal the known state, and the command repeat the
                 // last command
                 //
                 // This should never happen in the current version of DCC++
@@ -497,9 +497,9 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         }
         return (-1);
     }
-    
+
     /** parseExactFeedbackMessage()
-     * parse the feedback message, and set the status of the turnout 
+     * parse the feedback message, and set the status of the turnout
      * accordingly
      *
      * Note for Outputs (EXACT mode), LOW is THROWN, HIGH is CLOSED
@@ -507,7 +507,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      *
      * @param l - feedback broadcast message
      * @param startByte - first Byte of message to check (kind of ignored)
-     * 
+     *
      * @return 0 if address matches our turnout -1 otherwise
      */
     synchronized private int parseExactFeedbackMessage(DCCppReply l, int startByte) {
@@ -533,8 +533,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                 return (0);
             } else {
                 log.debug("Turnout is inconsistent. Commanded = " + getCommandedState() + " Known = " + getKnownState());
-                // the state is unknown or inconsistent.  If the command state 
-                // does not equal the known state, and the command repeat the 
+                // the state is unknown or inconsistent.  If the command state
+                // does not equal the known state, and the command repeat the
                 // last command
                 //
                 // This should never happen in the current version of DCC++
@@ -546,27 +546,27 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         }
         return (-1);
     }
-    
+
     @Override
     public void dispose() {
         this.removePropertyChangeListener(_stateListener);
         super.dispose();
     }
-    
+
     // Internal class to use for listening to state changes
     private static class DCCppTurnoutStateListener implements java.beans.PropertyChangeListener {
-        
+
         DCCppTurnout _turnout = null;
-        
+
         DCCppTurnoutStateListener(DCCppTurnout turnout) {
             _turnout = turnout;
         }
-        
+
         /*
-         * If we're  not using DIRECT feedback mode, we need to listen for 
-         * state changes to know when to send an OFF message after we set the 
+         * If we're  not using DIRECT feedback mode, we need to listen for
+         * state changes to know when to send an OFF message after we set the
          * known state
-         * If we're using DIRECT mode, all of this is handled from the 
+         * If we're using DIRECT mode, all of this is handled from the
          * XPressNet Messages
          */
         @Override
@@ -580,8 +580,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                     log.debug("propertyChange Not Direct Mode property: " + event.getPropertyName() + " old value " + event.getOldValue() + " new value " + event.getNewValue());
                 }
                 if (event.getPropertyName().equals("KnownState")) {
-                    // Check to see if this is a change in the status 
-                    // triggered by a device on the layout, or a change in 
+                    // Check to see if this is a change in the status
+                    // triggered by a device on the layout, or a change in
                     // status we triggered.
                     int oldKnownState = ((Integer) event.getOldValue()).intValue();
                     int curKnownState = ((Integer) event.getNewValue()).intValue();
@@ -590,16 +590,16 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                     }
                     if (curKnownState != INCONSISTENT
                         && _turnout.getCommandedState() == oldKnownState) {
-                        // This was triggered by feedback on the layout, change 
+                        // This was triggered by feedback on the layout, change
                         // the commanded state to reflect the new Known State
                         if (log.isDebugEnabled()) {
                             log.debug("propertyChange CommandedState: " + _turnout.getCommandedState());
                         }
                         _turnout.newCommandedState(curKnownState);
                     } else {
-                        // Since we always set the KnownState to 
-                        // INCONSISTENT when we send a command, If the old 
-                        // known state is INCONSISTENT, we just want to send 
+                        // Since we always set the KnownState to
+                        // INCONSISTENT when we send a command, If the old
+                        // known state is INCONSISTENT, we just want to send
                         // an off message
                         if (oldKnownState == INCONSISTENT) {
                             if (log.isDebugEnabled()) {
@@ -610,13 +610,13 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                 }
             }
         }
-        
+
     }
-    
+
     // data members
     protected int mNumber;   // XpressNet turnout number
     DCCppTurnoutStateListener _stateListener;  // Internal class object
-    
+
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnout.class);
-    
+
 }

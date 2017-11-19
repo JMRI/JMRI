@@ -545,33 +545,32 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output FX8 / FOR</label>
       </variable>
-      <!--			
-		<variable label="F3 controls output Bell" CV="37" mask="XXXXXXXV" 
-				default="0"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output FX5" CV="37" mask="XXXXXXVX" 
-				item="F3 controls output 3"
-				minOut="3" default="1"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output FX6" CV="37" mask="XXXXXVXX" 
-				item="F3 controls output 4"
-				minOut="4" default="0"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output FX7 / FOF" CV="37" mask="XXXXVXXX" 
-				default="0"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output FX8 / FOR" CV="37" mask="XXXVXXXX" 
-				default="0"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output FX9" CV="37" mask="XXVXXXXX" 
-				default="0"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output FX10" CV="37" mask="XVXXXXXX" 
-				default="0"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output FX11" CV="37" mask="VXXXXXXX" 
-				default="0"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+      <!-- <variable label="F3 controls output Bell" CV="37" mask="XXXXXXXV"
+                default="0"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+        <variable label="F3 controls output FX5" CV="37" mask="XXXXXXVX"
+                item="F3 controls output 3"
+                minOut="3" default="1"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+        <variable label="F3 controls output FX6" CV="37" mask="XXXXXVXX"
+                item="F3 controls output 4"
+                minOut="4" default="0"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+        <variable label="F3 controls output FX7 / FOF" CV="37" mask="XXXXVXXX"
+                default="0"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+        <variable label="F3 controls output FX8 / FOR" CV="37" mask="XXXVXXXX"
+                default="0"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+        <variable label="F3 controls output FX9" CV="37" mask="XXVXXXXX"
+                default="0"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+        <variable label="F3 controls output FX10" CV="37" mask="XVXXXXXX"
+                default="0"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+        <variable label="F3 controls output FX11" CV="37" mask="VXXXXXXX"
+                default="0"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 -->
       <variable item="F4 controls output 4" CV="38" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -797,9 +796,9 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output FX14</label>
       </variable>
-      <!-- <variable label="F10 controls output FX15" CV="44" mask="VXXXXXXX" default="0" minFn="10"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		-->
+      <!-- <variable label="F10 controls output FX15" CV="44" mask="VXXXXXXX" default="0" minFn="10"> <enumVal>
+            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+        -->
       <variable item="F11 controls output FX8 / FOR" CV="45" mask="XXXXXXXV" default="0" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output FX8 / FOR</label>
@@ -1358,14 +1357,14 @@
         <label>Slip Rate Control</label>
       </variable>
       <!--  There are not any articulated engines in the ZTC sound sets !
-		<variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX"
-		    item="Sound Option 4">
-			<enumVal>
-				<enumChoice choice="Normal (Rod Engine)"/>
-				<enumChoice choice="Articulated Engine"/>
-				</enumVal>
-			</variable>
-		-->
+        <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX"
+            item="Sound Option 4">
+            <enumVal>
+                <enumChoice choice="Normal (Rod Engine)"/>
+                <enumChoice choice="Articulated Engine"/>
+                </enumVal>
+            </variable>
+        -->
       <variable CV="112" mask="VXXXXXXX" item="Sound Option 5">
         <enumVal>
           <enumChoice choice="Auto Exhaust Chuff">
@@ -1463,32 +1462,32 @@
         <decVal max="255"/>
         <label>Engine Exhaust Rate</label>
       </variable>
-      <!-- What these parameters (CV120-127) are used for is unclear, so commented out for now. 
-		<variable label="Processor Parameter 0" CV="120" default="0" >
-			<decVal max="255"/>
-		</variable>
-		<variable label="Processor Parameter 1" CV="121" default="0" >
-			<decVal max="255"/>
-		</variable>
-		<variable label="Processor Parameter 2" CV="122" default="0" >
-			<decVal max="255"/>
-		</variable>
-		<variable label="Processor Parameter 3" CV="123" default="0" >
-			<decVal max="255"/>
-		</variable>
-		<variable label="Processor Parameter 4" CV="124" default="0" >
-			<decVal max="255"/>
-		</variable>
-		<variable label="Processor Parameter 5" CV="125" default="0" >
-			<decVal max="255"/>
-		</variable>
-		<variable label="Processor Parameter 6" CV="126" default="0" >
-			<decVal max="255"/>
-		</variable>
-		<variable label="Processor Parameter 7" CV="127" default="0" >
-			<decVal max="255"/>
-		</variable>
-		-->
+      <!-- What these parameters (CV120-127) are used for is unclear, so commented out for now.
+        <variable label="Processor Parameter 0" CV="120" default="0" >
+            <decVal max="255"/>
+        </variable>
+        <variable label="Processor Parameter 1" CV="121" default="0" >
+            <decVal max="255"/>
+        </variable>
+        <variable label="Processor Parameter 2" CV="122" default="0" >
+            <decVal max="255"/>
+        </variable>
+        <variable label="Processor Parameter 3" CV="123" default="0" >
+            <decVal max="255"/>
+        </variable>
+        <variable label="Processor Parameter 4" CV="124" default="0" >
+            <decVal max="255"/>
+        </variable>
+        <variable label="Processor Parameter 5" CV="125" default="0" >
+            <decVal max="255"/>
+        </variable>
+        <variable label="Processor Parameter 6" CV="126" default="0" >
+            <decVal max="255"/>
+        </variable>
+        <variable label="Processor Parameter 7" CV="127" default="0" >
+            <decVal max="255"/>
+        </variable>
+        -->
       <variable CV="128" mask="VVVVVVVV" default="192" item="Sound Setting 3">
         <decVal max="255"/>
         <label>Master Volume</label>
@@ -2554,18 +2553,17 @@
       <label>
         <text> </text>
       </label>
-      <!--
-			<label label= "Processor Parameters (CV120-127)" />
-			<label label= " " />
-			<display item="Processor Parameter 0" />
-			<display item="Processor Parameter 1" />
-			<display item="Processor Parameter 2" />
-			<display item="Processor Parameter 3" />
-			<display item="Processor Parameter 4" />
-			<display item="Processor Parameter 5" />
-			<display item="Processor Parameter 6" />
-			<display item="Processor Parameter 7" />
-			-->
+      <!-- <label label= "Processor Parameters (CV120-127)" />
+            <label label= " " />
+            <display item="Processor Parameter 0" />
+            <display item="Processor Parameter 1" />
+            <display item="Processor Parameter 2" />
+            <display item="Processor Parameter 3" />
+            <display item="Processor Parameter 4" />
+            <display item="Processor Parameter 5" />
+            <display item="Processor Parameter 6" />
+            <display item="Processor Parameter 7" />
+            -->
     </column>
     <name>Lock</name>
   </pane>

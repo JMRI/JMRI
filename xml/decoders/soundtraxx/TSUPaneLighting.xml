@@ -125,31 +125,31 @@
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Brightness 1" layout="above" label=""/>
-			<display item="Brightness 1" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Brightness 1" layout="above" label=""/>
+            <display item="Brightness 1" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Brightness 2" layout="above" label=""/>
-			<display item="Brightness 2" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Brightness 2" layout="above" label=""/>
+            <display item="Brightness 2" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Dimmer" layout="above" label=""/>
-			<display item="Dimmer" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Dimmer" layout="above" label=""/>
+            <display item="Dimmer" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Master Brightness" layout="above" label=""/>
-			<display item="Master Brightness" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Master Brightness" layout="above" label=""/>
+            <display item="Master Brightness" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>

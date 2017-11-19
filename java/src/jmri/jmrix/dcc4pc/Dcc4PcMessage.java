@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Kevin Dickerson Copyright (C) 2012
- * 
+ *
  */
 public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -112,7 +112,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         // space for carriage return if required
         int cr = 0;
 
-        byte msg[] = new byte[len + cr];
+        byte[] msg = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) this.getElement(i);
@@ -139,18 +139,18 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isGetResponse() {
         return isResponse;
     }
-    
+
     int board = -1;
-    
+
     public int getBoard(){
         return board;
     }
-    
+
     int messageType = -1;
     public int getMessageType(){
         return messageType;
     }
-    
+
     static final int INFO = 0x00;
     static final int DESC = 0x01;
     static final int SERIAL = 0x02;
@@ -158,7 +158,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     static final int CHILDRESET = 0x09;
     static final int CHILDPOLL = 0x0a;
     static final int RESPONSE = 0x0c;
-    
+
     static public Dcc4PcMessage getInfo(int address) {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) INFO});
         m.childBoard = true;
@@ -191,7 +191,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         m.messageType = CHILDRESET;
         return m;
     }
-       
+
     static public Dcc4PcMessage pollBoard(int address){
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDPOLL});
         m.childBoard = true;
@@ -233,6 +233,6 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         m.messageType = SERIAL;
         return m;
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class);
 }

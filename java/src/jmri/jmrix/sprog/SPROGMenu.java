@@ -1,6 +1,5 @@
 package jmri.jmrix.sprog;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**

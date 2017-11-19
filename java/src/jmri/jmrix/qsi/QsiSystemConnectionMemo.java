@@ -12,8 +12,8 @@ import jmri.managers.DefaultProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Kevin Dickerson Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

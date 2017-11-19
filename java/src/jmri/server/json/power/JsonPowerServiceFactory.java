@@ -16,11 +16,11 @@ public class JsonPowerServiceFactory implements JsonServiceFactory {
 
     /**
      * Token for type and name for power status messages.
-     * 
+     *
      * {@value #POWER}
      */
     public static final String POWER = "power";
-    
+
     @Override
     public String[] getTypes() {
         String[] types = {POWER};
@@ -36,5 +36,5 @@ public class JsonPowerServiceFactory implements JsonServiceFactory {
     public JsonHttpService getHttpService(ObjectMapper mapper) {
         return new JsonPowerHttpService(mapper);
     }
-    
+
 }

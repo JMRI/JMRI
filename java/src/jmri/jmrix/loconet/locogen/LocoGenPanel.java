@@ -42,12 +42,12 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
-    JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
-    JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
-    JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
+    JTextField[] mPacketField = new JTextField[MAXSEQUENCE];
+    JCheckBox[] mUseField = new JCheckBox[MAXSEQUENCE];
+    JTextField[] mDelayField = new JTextField[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton("Go");
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -55,7 +55,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; // NOI18N
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -63,7 +63,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         return getTitle(Bundle.getMessage("MenuItemSendPacket"));
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -131,7 +131,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         });
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -192,7 +192,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         sendNextItem();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -260,7 +260,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      */
     LocoNetMessage createPacket(String s) {
         // gather bytes in result
-        byte b[] = StringUtil.bytesFromHexString(s);
+        byte[] b = StringUtil.bytesFromHexString(s);
         if (b.length == 0) {
             return null;  // no such thing as a zero-length message
         }

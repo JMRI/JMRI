@@ -167,7 +167,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
             nestNodes(topNode, ops.get(i));
         }
 
-        // don't show the top (single) node, 
+        // don't show the top (single) node,
         // do show all the ones right under that.
         tree.expandPath(new TreePath(topNode));
         tree.setRootVisible(false);

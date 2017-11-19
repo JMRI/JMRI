@@ -9,12 +9,10 @@ import org.junit.Test;
 
 
 /**
- * Z21SimulatorTest.java
- *
- * Description:	tests that determine if the Roco z21 Simulator is functional
+ * Tests that determine if the Roco z21 Simulator is functional
  * after configuration.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21SimulatorTest {
 

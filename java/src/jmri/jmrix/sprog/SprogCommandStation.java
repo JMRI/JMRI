@@ -27,13 +27,13 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Updated by Andrew Crosland February 2012 to allow slots to hold 28 step speed
  * packets</P>
- * 
- * Re-written by Andrew Crosland to send the next packet as soon as a reply is 
- * notified. This removes a race between the old state machine running before 
- * the traffic controller despatches a reply, missing the opportunity to send a 
- * new packet to the layout until the next JVM time slot, which can be 15ms on 
+ *
+ * Re-written by Andrew Crosland to send the next packet as soon as a reply is
+ * notified. This removes a race between the old state machine running before
+ * the traffic controller despatches a reply, missing the opportunity to send a
+ * new packet to the layout until the next JVM time slot, which can be 15ms on
  * Windows platforms.
- * 
+ *
  * May-17 Moved status reply handling to the slot monitor. Monitor messages from
  * other sources and suppress messages from here to prevent queueing messages in
  * the traffic controller.
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 
     private boolean running = false;
-    
+
     protected int currentSlot = 0;
     protected int currentSprogAddress = -1;
 
@@ -161,7 +161,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             }
         if (currentSprogAddress != lastSprogAddress) {
             log.info("Changing currentSprogAddress (for pseudo-idle packets) to "+currentSprogAddress+"(L)");
-        }   
+        }
         tc.sendSprogMessage(new SprogMessage("A " + currentSprogAddress + " 0"), this);
         for (SprogSlot s : slots) {
             if (s.isActiveAddressMatch(address) && s.isSpeedPacket()) {
@@ -362,9 +362,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     @Override
     /**
-     * The run() method will only be called (from SprogSystemconnecionMemo 
+     * The run() method will only be called (from SprogSystemconnecionMemo
      * ConfigureCommandStation()) if the connected SPROG is in OPS mode.
-     * 
+     *
      */
     public void run() {
         log.debug("Slot thread starts");
@@ -407,7 +407,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     private int ignoreReply = 0;
-    
+
     /*
      * Needs to listen to replies
      * Need to implement asynch replies for overload & notify power manager
@@ -427,7 +427,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * The thread will only run when the connected SPROG is in OPS mode.
-     * 
+     *
      * @param m The SprogReply to be handled
      */
     @Override
@@ -446,7 +446,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
                 // *** turn power off
             }
-            
+
             // Is it time to send a status request?
             if (statusDue == 40) {
                 // Ask for status periodically
@@ -484,7 +484,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Provide a count of the slots in use
-     * 
+     *
      * @return the number of slots in use
      */
     public int getInUseCount() {
@@ -514,7 +514,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Get user name
-     * 
+     *
      * @return the user name
      */
     @Override
@@ -527,7 +527,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Get system prefix
-     * 
+     *
      * @return the system prefix
      */
     @Override
@@ -552,7 +552,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts
-     * 
+     *
      * @param delay timer delay
      */
     protected void restartTimer(int delay) {

@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManifestText;
  * Frame for user edit of manifest text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class EditManifestTextPanel extends OperationsPreferencesPanel {
 

@@ -17,7 +17,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.util.SwingTestCase class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class SwingTestCaseTest extends SwingTestCase {
 
@@ -31,7 +31,7 @@ public class SwingTestCaseTest extends SwingTestCase {
         }
         // create a little GUI with a single check box
         JFrame f = new JFrame("SwingTextCaseTest");
-        f.setSize(100, 100);	        // checkbox must be visible for test to work
+        f.setSize(100, 100); // checkbox must be visible for test to work
         JCheckBox b = new JCheckBox("Check");
         b.setName("Check");
         f.add(b);

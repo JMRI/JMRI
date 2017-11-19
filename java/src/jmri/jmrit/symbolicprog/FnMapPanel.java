@@ -372,7 +372,7 @@ public class FnMapPanel extends JPanel {
     // split and load two-line labels
     void loadSplitLabel(int iOut, String theLabel) {
         if (iOut < maxOut) {
-            String itemList[] = theLabel.split("\\|");
+            String[] itemList = theLabel.split("\\|");
 //             log.info("theLabel=\""+theLabel+"\" itemList.length=\""+itemList.length+"\"");
             if (theLabel.equals("|")) {
                 outName[iOut] = "";

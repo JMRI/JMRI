@@ -64,7 +64,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _status = status;
 
         // define just address CV at start, pending some variables
-        // boudreau: not sure why we need the statement below, 
+        // boudreau: not sure why we need the statement below,
         // messes up building CV table for CV #1 when in ops mode.
         //addCV("1", false, false, false);
     }

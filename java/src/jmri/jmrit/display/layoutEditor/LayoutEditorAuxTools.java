@@ -207,7 +207,7 @@ public class LayoutEditorAuxTools {
         }
 
         // Check to see if this connectivity is already in the list
-        // This occurs for the first layout editor panel when there 
+        // This occurs for the first layout editor panel when there
         // are multiple panels connected by edge connectors.
         if (cList.contains(c)) {
             log.debug("checkConnectivity: Duplicate connection: '{}'", c);

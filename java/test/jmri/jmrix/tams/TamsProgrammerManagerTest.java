@@ -8,14 +8,14 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsProgrammerManagerTest {
 
     @Test
     public void testCTor() {
         TamsTrafficController tc = new TamsTrafficController();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);
         TamsProgrammerManager t = new TamsProgrammerManager(new TamsProgrammer(tc),memo);
         Assert.assertNotNull("exists",t);
     }

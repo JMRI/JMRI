@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the QsiReplyclass
  *
- * @author	Bob Jacobsen Copyright 2006, 2007
+ * @author Bob Jacobsen Copyright 2006, 2007
  *
  */
 public class QsiReplyTest extends TestCase {

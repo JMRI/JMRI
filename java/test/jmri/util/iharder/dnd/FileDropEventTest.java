@@ -3,7 +3,6 @@ package jmri.util.iharder.dnd;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,7 @@ import java.io.File;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class FileDropEventTest {
 
@@ -22,7 +21,7 @@ public class FileDropEventTest {
 
     @Test
     public void testCTor() throws java.io.IOException  {
-        File fl[] = new File[3];
+        File[] fl = new File[3];
         fl[0]=folder.newFile();
         fl[1]=folder.newFile();
         fl[2]=folder.newFile();

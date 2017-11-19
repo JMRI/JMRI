@@ -50,7 +50,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.SystemNameComparator());
         sorter.toggleSortOrder(RosterGroupTableModel.IDCOL);
         dataTable = new JTable(dataModel);
-        
+
         dataScroll = new JScrollPane(dataTable);
 
         // configure items for GUI

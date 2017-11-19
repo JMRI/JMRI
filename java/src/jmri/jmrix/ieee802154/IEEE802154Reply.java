@@ -28,8 +28,8 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     }
 
     /*
-     * @return the destination address associated with the reply (need for 
-     * matching to a node ).  The type and position of the sender 
+     * @return the destination address associated with the reply (need for
+     * matching to a node ).  The type and position of the sender
      * address is indicated in the control byte.
      */
     public byte[] getDestinationAddress() {
@@ -65,7 +65,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             }
         }
 
-        byte address[] = new byte[length];
+        byte[] address = new byte[length];
         for (int i = 0; i < length; i++) {
             address[i] = (byte) (0xff & getElement(i + offset));
         }
@@ -73,8 +73,8 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     }
 
     /*
-     * @return the sender address associated with the reply (need for 
-     * matching to a node ).  The type and position of the sender 
+     * @return the sender address associated with the reply (need for
+     * matching to a node ).  The type and position of the sender
      * address is indicated in the control byte.
      */
     public byte[] getSourceAddr() {
@@ -124,7 +124,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             }
         }
 
-        byte address[] = new byte[length];
+        byte[] address = new byte[length];
         for (int i = 0; i < length; i++) {
             address[i] = (byte) (0xff & getElement(i + offset));
         }
@@ -185,7 +185,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
         // the address and ends
         // at the 2 byte checksum.
 
-        byte address[] = new byte[length];
+        byte[] address = new byte[length];
         for (int i = 0; i < length; i++) {
             address[i] = (byte) (0xff & getElement(i + offset));
         }
@@ -197,7 +197,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
      * the start byte.  We are not storing the start byte.
      * <p>
      * NOTE: this does not work correctly for packets received from
-     * an XBee Node.  These devices do not provide raw packet 
+     * an XBee Node.  These devices do not provide raw packet
      * information.
      */
     public int getLength() {
@@ -205,7 +205,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     }
 
     /*
-     * @return control information from the reply.  This is the 3rd and 4th 
+     * @return control information from the reply.  This is the 3rd and 4th
      * byte after the start byte.
      * Format of the frame control field (FCF)
      *  according to IEEE 802.15.4 MAC standard
@@ -219,7 +219,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
      *      10-11 destination addressing mode
      *      12-13 reserved
      *      14-15 source addressing mode
-     * 
+     *
      */
     public int getFrameControl() {
         return (getElement(1) << 8) + getElement(2);
@@ -244,7 +244,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     }
 
     /*
-     * @return the sequence number of the reply.  This is the 4th byte 
+     * @return the sequence number of the reply.  This is the 4th byte
      * after the start byte.
      */
     public byte getSequenceByte() {

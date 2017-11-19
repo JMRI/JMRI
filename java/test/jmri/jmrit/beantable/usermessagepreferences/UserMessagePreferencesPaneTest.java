@@ -9,13 +9,13 @@ import org.junit.Test;
 /**
  * Test simple functioning of UserMessagePreferencesPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class UserMessagePreferencesPaneTest {
 
     @Test
     public void testCtor() {
-        UserMessagePreferencesPane p = new UserMessagePreferencesPane(); 
+        UserMessagePreferencesPane p = new UserMessagePreferencesPane();
         Assert.assertNotNull("exists", p);
     }
 

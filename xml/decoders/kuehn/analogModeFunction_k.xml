@@ -37,7 +37,7 @@
       <date>2016-04-27</date>
       <authorinitials>RK</authorinitials>
       <revremark>Correct German an add F9-F12</revremark>
-    </revision>      
+    </revision>
   </revhistory>
     <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" minFn="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

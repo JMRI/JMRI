@@ -9,11 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LI101FrameTest.java
+ * Tests for the jmri.jmrix.lenz.swing.li101.LI101Frame class
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.li101.LI101Frame class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LI101FrameTest {
 

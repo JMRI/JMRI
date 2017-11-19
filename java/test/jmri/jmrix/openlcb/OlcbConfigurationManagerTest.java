@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OlcbConfigurationManagerTest {
 
@@ -25,7 +25,7 @@ public class OlcbConfigurationManagerTest {
         memo.setTrafficController(tc);
         OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
         // this tet verifies this does not throw an exception
-        t.configureManagers(); 
+        t.configureManagers();
     }
 
     // The minimal setup for log4J

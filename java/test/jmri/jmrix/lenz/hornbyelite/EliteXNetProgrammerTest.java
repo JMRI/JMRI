@@ -1,9 +1,7 @@
 /**
- * EliteXNetProgrammerTest.java
+ * Tests for the EliteXNetProgrammer class
  *
- * Description:	JUnit tests for the EliteXNetProgrammer class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.lenz.hornbyelite;
 

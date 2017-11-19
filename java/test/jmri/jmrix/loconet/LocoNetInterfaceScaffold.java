@@ -5,10 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Test scaffold implementation of LocoNetInterface.
  *
- * Description:	Test scaffold implementation of LocoNetInterface
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  *
  * Use an object of this type as a LnTrafficController in tests
  */

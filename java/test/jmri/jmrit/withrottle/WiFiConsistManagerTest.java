@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of WiFiConsistManager
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class WiFiConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
@@ -18,7 +18,7 @@ public class WiFiConsistManagerTest extends jmri.implementation.AbstractConsistM
         jmri.util.JUnitUtil.initDebugCommandStation();
         cm = new WiFiConsistManager();
     }
-    
+
     @After
     @Override
     public void tearDown() {

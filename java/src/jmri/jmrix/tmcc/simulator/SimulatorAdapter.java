@@ -2,7 +2,6 @@ package jmri.jmrix.tmcc.simulator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.jmrix.tmcc.SerialMessage;

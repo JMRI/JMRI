@@ -12,7 +12,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.util.PropertyChangeEventQueue class.
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class PropertyChangeEventQueueTest extends TestCase {
 

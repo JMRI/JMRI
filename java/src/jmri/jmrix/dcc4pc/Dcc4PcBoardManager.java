@@ -22,10 +22,10 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
             addBoard(x);
         }
     }
-    
+
     private final static int MINRC = 0;
     private final static int MAXRC = 4;
-    
+
     ArrayList<Integer> boardsToDiscover = new ArrayList<>();
 
     Dcc4PcTrafficController tc;
@@ -38,17 +38,17 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
     public void notifyMessage(Dcc4PcMessage m) {
         // messages are ignored
     }
-   
+
     protected void addBoard(int newBoard){
         if(!senManager.isBoardCreated(newBoard) && !boardsToDiscover.contains(newBoard)){
             boardsToDiscover.add(newBoard);
             Dcc4PcMessage m = Dcc4PcMessage.getInfo(newBoard);
             m.setTimeout(1000);
             m.setRetries(2);
-            tc.sendDcc4PcMessage(m, this);  
+            tc.sendDcc4PcMessage(m, this);
         }
     }
-    
+
     @Override
     public void reply(Dcc4PcReply r) {
         if (log.isDebugEnabled()) {
@@ -133,6 +133,6 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
     public void message(Dcc4PcMessage m) {
 
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcBoardManager.class);
 }

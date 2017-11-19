@@ -3,7 +3,6 @@ package jmri.jmrix.lenz.liusbserver;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -35,9 +34,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 
     private java.util.TimerTask keepAliveTimer; // Timer used to periodically
     // send a message to both
-    // ports to keep the ports 
+    // ports to keep the ports
     // open
-    private static final int keepAliveTimeoutValue = 30000; // Interval 
+    private static final int keepAliveTimeoutValue = 30000; // Interval
     // to send a message
     // Must be < 60s.
 
@@ -155,9 +154,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         commThread = new Thread(new Runnable() {
             @Override
             public void run() { // start a new thread
-                // this thread has one task.  It repeatedly reads from the two 
-                // incomming network connections and writes the resulting 
-                // messages from the network ports and writes any data 
+                // this thread has one task.  It repeatedly reads from the two
+                // incomming network connections and writes the resulting
+                // messages from the network ports and writes any data
                 // received to the output pipe.
                 log.debug("Communication Adapter Thread Started");
                 XNetReply r;
@@ -195,9 +194,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         bcastThread = new Thread(new Runnable() {
             @Override
             public void run() { // start a new thread
-                // this thread has one task.  It repeatedly reads from the two 
-                // incomming network connections and writes the resulting 
-                // messages from the network ports and writes any data received 
+                // this thread has one task.  It repeatedly reads from the two
+                // incomming network connections and writes the resulting
+                // messages from the network ports and writes any data received
                 // to the output pipe.
                 log.debug("Broadcast Adapter Thread Started");
                 XNetReply r;
@@ -221,8 +220,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         log.debug("Network Adapter Received Reply: "
                                 + r.toString());
                     }
-                    r.setUnsolicited(); // Anything coming through the 
-                    // broadcast port is an 
+                    r.setUnsolicited(); // Anything coming through the
+                    // broadcast port is an
                     // unsolicited message.
                     writeReply(r);
                 }

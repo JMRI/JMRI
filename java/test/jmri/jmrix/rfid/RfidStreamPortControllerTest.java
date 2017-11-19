@@ -13,11 +13,9 @@ import org.junit.Test;
 
 
 /**
- * RfidStreamPortControllerTest.java
+ * Tests for the jmri.jmrix.rfid.RfidStreamPortController class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidStreamPortController class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 

@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110110"/>
-  <!-- 
+  <!--
       This decoder XML is meant to be used with the "Custom" programmer format.
       The pane definitions are included below the decoder definition.  The LGB
       decoders seem to fit the description of "weird" as mentioned in that
@@ -62,7 +62,7 @@
       Version History:
 
         1.0 - 10 Jan 11
-              Initial release 
+              Initial release
 -->
   <decoder>
     <family name="LGB" mfg="Massoth Elektronik, GmbH">

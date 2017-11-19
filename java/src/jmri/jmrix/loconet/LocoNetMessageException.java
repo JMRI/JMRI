@@ -10,7 +10,7 @@ import jmri.JmriException;
 public class LocoNetMessageException extends JmriException {
     // serialVersionUID used by jmrix.loconet.locormi, please do not remove
     private static final long serialVersionUID = -6472332226397111753L;
-    
+
     public LocoNetMessageException(String s) {
         super(s);
     }

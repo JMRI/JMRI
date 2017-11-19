@@ -80,7 +80,7 @@ public class LenzCommandStation implements jmri.CommandStation {
                     cmdStationSoftwareVersion = (l.getElementBCD(2).floatValue()) / 10;
                 } catch (java.lang.NumberFormatException nfe) {
                     // the number was not in BCD format as expected.
-                    // the upper nibble is the major version and the lower 
+                    // the upper nibble is the major version and the lower
                     // nibble is the minor version.
                     cmdStationSoftwareVersion = ((l.getElement(2) & 0xf0) >> 4) + (l.getElement(2) & 0x0f) / 100.0f;
                 }
@@ -171,7 +171,7 @@ public class LenzCommandStation implements jmri.CommandStation {
         }
     }
 
-    /* To Implement the CommandStation Interface, we have to define the 
+    /* To Implement the CommandStation Interface, we have to define the
      sendPacket function */
 
     /**
@@ -196,7 +196,7 @@ public class LenzCommandStation implements jmri.CommandStation {
     }
 
     /*
-     * For the command station interface, we need to set the traffic 
+     * For the command station interface, we need to set the traffic
      * controller.
      */
     public void setTrafficController(XNetTrafficController tc) {

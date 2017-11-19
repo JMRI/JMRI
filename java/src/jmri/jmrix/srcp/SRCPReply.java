@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Carries the reply to an SRCPMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
  */
 public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 
@@ -101,7 +101,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
     public boolean isUnsolicited() {
         String s = toString();
         try {
-            // Split in 7 is enough for initial handshake 
+            // Split in 7 is enough for initial handshake
             String[] part = s.split("\\s", 7);
             // Test for initial handshake message with key "SRCP".
             if (part[2].equals("SRCP")) {

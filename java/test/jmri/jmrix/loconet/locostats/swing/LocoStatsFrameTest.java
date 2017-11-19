@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the LocoStatsFrame class
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2010
  */
 public class LocoStatsFrameTest {
 

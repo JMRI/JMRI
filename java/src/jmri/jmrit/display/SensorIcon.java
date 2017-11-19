@@ -9,14 +9,12 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.AbstractAction;
-import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -831,7 +829,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     private void setColor(Color desiredColor, int state){
-        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();        
+        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();
         switch (state) {
            case PositionablePopupUtil.FONT_COLOR:
               util.setForeground(desiredColor);
@@ -876,7 +874,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     private Color getColor(int state){
-        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();        
+        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();
         switch (state) {
            case PositionablePopupUtil.FONT_COLOR:
               return util.getForeground();

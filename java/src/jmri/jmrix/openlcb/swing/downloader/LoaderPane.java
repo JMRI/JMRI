@@ -64,7 +64,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         loadButton.setText("Load");
         loadButton.setToolTipText("Start Load Process");
         JPanel p;
-        
+
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(new JLabel("Target Node ID: "));
@@ -79,10 +79,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
 
         p = new JPanel();
-        p.setLayout(new FlowLayout());        
+        p.setLayout(new FlowLayout());
         p.add(lockNode = new JCheckBox("Lock Node"));
         selectorPane.add(p);
-        
+
         // Verify not an option
         verifyButton.setVisible(false);
     }
@@ -115,14 +115,14 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     protected void addOptionsPanel() {
         selectorPane = new JPanel();
         selectorPane.setLayout(new BoxLayout(selectorPane, BoxLayout.Y_AXIS));
-            
+
         add(selectorPane);
     }
 
     @Override
     protected void handleOptionsInFileContent(MemoryContents inputContent){
     }
-            
+
     @Override
     protected void doLoad() {
         super.doLoad();
@@ -177,20 +177,20 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     NodeID destNodeID() {
         return (NodeID) nodeSelector.getSelectedItem();
     }
-    
+
     @Override
     protected void setDefaultFieldValues() {
         // currently, doesn't do anything, as just loading raw hex files.
         log.debug("setDefaultFieldValues leaves fields unchanged");
     }
-    
+
     byte[] fdata;
     public void readFile(String filename) {
         File file = new File(filename);
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);
-            
+
             System.out.println("Total file size to read (in bytes) : "
                                + fis.available());
             fdata = new byte[fis.available()];
@@ -199,7 +199,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             while ((content = fis.read()) != -1) {
                 fdata[i++] = (byte)content;
             }
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -212,7 +212,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
-            
+
     /**
      * Checks the values in the GUI text boxes to determine if any are invalid.
      * Intended for use immediately after reading a firmware file for the
@@ -231,7 +231,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     protected boolean parametersAreValid() {
         return true;
     }
-            
+
 
     /**
      * Nested class to create one of these using old-style defaults

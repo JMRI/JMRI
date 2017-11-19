@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * AcelaSensorManagerXmlTest.java
+ * Tests for the AcelaSensorManagerXml class
  *
- * Description: tests for the AcelaSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class AcelaSensorManagerXmlTest {
 

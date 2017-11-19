@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
 
-    public Z21XNetTurnout(String prefix, int pNumber, XNetTrafficController controller) {  
+    public Z21XNetTurnout(String prefix, int pNumber, XNetTrafficController controller) {
         super(prefix,pNumber,controller);
     }
 
@@ -53,7 +53,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
      */
     @Override
     public void requestUpdateFromLayout() {
-        // On the z21, we send a LAN_X_GET_TURNOUT_INFO message 
+        // On the z21, we send a LAN_X_GET_TURNOUT_INFO message
         // (see section 5.1 of the protocol documenation ).
         XNetMessage msg = Z21XNetMessage.getZ21TurnoutInfoRequestMessage(mNumber);
         synchronized (this) {
@@ -96,9 +96,9 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         if (l.getElement(0)==Z21Constants.LAN_X_TURNOUT_INFO) {
           // bytes 2 and 3 are the address.
           int address = (l.getElement(1) << 8) + l.getElement(2);
-          // the address sent byte the Z21 is one less than what JMRI's 
+          // the address sent byte the Z21 is one less than what JMRI's
           // XpressNet code (and Lenz systems) expect.
-          address = address + 1; 
+          address = address + 1;
           if(log.isDebugEnabled()) {
                log.debug("message has address: {}",address);
           }
@@ -127,7 +127,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
                 internalState = IDLE;
              }
           }
-          
+
         } else {
           super.message(l); // the the XpressNetTurnoutManager code
                             // handle any other replies.

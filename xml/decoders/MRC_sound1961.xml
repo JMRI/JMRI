@@ -21,7 +21,7 @@
       <model model="1961 - N Scale - Model Power Pacific/Mikado" numOuts="2" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="N" connector="unspecified" comment="&lt;html&gt;N-Scale, 16 Bit,&lt;br&gt; with multiple types (10 chuffs, 17 whistles, 8 bells)&lt;/html&gt;">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
-	<size length="29.5" width="10.6" height="5" units="mm"/>
+    <size length="29.5" width="10.6" height="5" units="mm"/>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>

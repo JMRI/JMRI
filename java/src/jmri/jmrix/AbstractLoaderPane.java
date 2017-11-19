@@ -89,7 +89,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         {
-            /* Create panels for displaying a filename and for providing a file 
+            /* Create panels for displaying a filename and for providing a file
              * seleciton pushbutton
              */
             inputFileNamePanel = new JPanel();
@@ -504,7 +504,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             disableDownloadVerifyButtons();
         }
     }
-    
+
     public void clearInputFileName() {
         inputFileName.setText("");
         inputFileName.setToolTipText("");

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MergSD2SignalHeadXmlTest.java
+ * Tests for the MergSD2SignalHeadXml class
  *
- * Description: tests for the MergSD2SignalHeadXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class MergSD2SignalHeadXmlTest {
 

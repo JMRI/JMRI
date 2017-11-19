@@ -74,7 +74,7 @@ public class TabbedPreferences extends AppConfigBase {
     ArrayList<Element> preferencesElements = new ArrayList<>();
 
     JPanel detailpanel = new JPanel();
-    { 
+    {
         // The default panel needs to have a CardLayout
         detailpanel.setLayout(new CardLayout());
     }

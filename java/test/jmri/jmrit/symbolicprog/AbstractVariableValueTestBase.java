@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  *
- * @author	Bob Jacobsen, Copyright 2002
+ * @author Bob Jacobsen, Copyright 2002
  */
 public abstract class AbstractVariableValueTestBase extends TestCase {
 
@@ -197,7 +197,7 @@ public abstract class AbstractVariableValueTestBase extends TestCase {
         variable.readAll();
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()->{return !variable.isBusy();}, "variable.isBusy");
-        
+
         checkValue(variable, "text var value ", "14");
         Assert.assertEquals("var state ", AbstractValue.READ, variable.getState());
         Assert.assertEquals("cv value", 123, cv.getValue());
@@ -220,7 +220,7 @@ public abstract class AbstractVariableValueTestBase extends TestCase {
         variable.writeAll();
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()->{return !variable.isBusy();}, "variable.isBusy");
-        
+
         checkValue(variable, "value ", "5");
         Assert.assertEquals("var state ", AbstractValue.STORED, variable.getState());
         Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
@@ -245,7 +245,7 @@ public abstract class AbstractVariableValueTestBase extends TestCase {
         cv.write(statusLabel);  // JLabel is for reporting status, ignored here
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()->{return !cv.isBusy();}, "cv.isBusy");
-        
+
         checkValue(variable, "value ", "5");
         Assert.assertEquals("variable state ", AbstractValue.STORED, variable.getState());
         Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());

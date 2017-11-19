@@ -84,7 +84,7 @@ public class ShapeDrawer {
             _drawFrame = new DrawEllipse("newShape", "Ellipse", null);
         }
     }
-    
+
     private boolean makeNewShape() {
         if (_drawFrame != null) {
             if (_drawFrame._shape == null) {
@@ -99,7 +99,7 @@ public class ShapeDrawer {
             return true;
         }
     }
-    
+
     protected void closeDrawFrame() {
         _drawFrame = null;
     }
@@ -123,7 +123,7 @@ public class ShapeDrawer {
         if (pos instanceof PositionableShape && _editor.isEditable()) {
             if (!pos.equals(_currentSelection)) {
                 if (_currentSelection != null) {
-                    _currentSelection.removeHandles();                        
+                    _currentSelection.removeHandles();
                 }
                 if (_drawFrame != null && _drawFrame._shape == null) {
                     // creation of a shape is in progress.  Don't change _drawFrame
@@ -136,7 +136,7 @@ public class ShapeDrawer {
             return true;
         }
         if (_currentSelection != null) {
-            _currentSelection.removeHandles();                        
+            _currentSelection.removeHandles();
             _currentSelection = null;
         }
         return false;

@@ -25,8 +25,8 @@
         </programming>
 
         <variables>
-            <variable label="Minor Version Number" CV="56.254.6" readOnly="no" default="0" item="CV56.254.6"> 
-                <decVal/> 
+            <variable label="Minor Version Number" CV="56.254.6" readOnly="no" default="0" item="CV56.254.6">
+                <decVal/>
                 <label>Text in label</label>
                 <label>Other text in label</label>
                 <label xml:lang="kl">Text in label</label>

@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.downloader package.
  *
- * @author	Bob Jacobsen Copyright 2001, 2003, 2006, 2008
+ * @author Bob Jacobsen Copyright 2001, 2003, 2006, 2008
  */
 public class PackageTest extends TestCase {
 

@@ -7,7 +7,7 @@ package jmri.jmrix.marklin;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Kevin Dickerson Copyright (C) 2007
- * 
+ *
  */
 public class MarklinReply extends jmri.jmrix.AbstractMRReply {
 

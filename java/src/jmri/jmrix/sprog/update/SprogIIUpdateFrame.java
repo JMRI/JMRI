@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * Extended to cover SPROG 3 which uses the same bootloader protocol Refactored
  *
- * @author	Andrew Crosland Copyright (C) 2004
+ * @author Andrew Crosland Copyright (C) 2004
  */
 public class SprogIIUpdateFrame
         extends SprogUpdateFrame
@@ -23,7 +23,7 @@ public class SprogIIUpdateFrame
         super(memo);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -39,7 +39,7 @@ public class SprogIIUpdateFrame
 
     int bootVer = 0;
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")

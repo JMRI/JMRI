@@ -5,13 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * Dcc4PcReporterManagerTest.java
+ * Tests for the jmri.jmrix.dcc4pc.Dcc4PcReporterManager class.
  *
- * Description:	tests for the jmri.jmrix.dcc4pc.Dcc4PcReporterManager
- * class
- *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -20,18 +17,17 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
         return "DPR" + i;
     }
 
-
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
-           @Override
-           public void sendDcc4PcMessage(Dcc4PcMessage m,Dcc4PcListener reply) {
-           }
+        Dcc4PcTrafficController tc = new Dcc4PcTrafficController() {
+            @Override
+            public void sendDcc4PcMessage(Dcc4PcMessage m, Dcc4PcListener reply) {
+            }
         };
-        l = new Dcc4PcReporterManager(tc,new Dcc4PcSystemConnectionMemo(tc));
+        l = new Dcc4PcReporterManager(tc, new Dcc4PcSystemConnectionMemo(tc));
     }
 
     @After

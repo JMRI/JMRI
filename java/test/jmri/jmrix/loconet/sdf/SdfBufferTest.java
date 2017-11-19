@@ -57,7 +57,7 @@ public class SdfBufferTest extends TestCase {
         SdfBuffer b = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
         Assert.assertEquals("original lengths", oarray.length, b.getByteArray().length);
 
-        // modify the 1st SDF     
+        // modify the 1st SDF
         SkemeStart first = (SkemeStart) b.getMacroList().get(0);
         int startlength = first.getNumber();
         first.setNumber(23);
@@ -65,7 +65,7 @@ public class SdfBufferTest extends TestCase {
         // recreate buffer; expect same length, different contents in the 1st byte
         b.loadByteArray();
 
-        byte barray[];
+        byte[] barray;
 
         barray = b.getByteArray();
         Assert.assertEquals("updated lengths", oarray.length, barray.length);

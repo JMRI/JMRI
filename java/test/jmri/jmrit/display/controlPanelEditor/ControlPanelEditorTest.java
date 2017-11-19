@@ -11,10 +11,10 @@ import org.junit.Test;
 /**
  * Test simple functioning of the ControlPanelEditor class.
  *
- * @author  Paul Bender Copyright (C) 2017 
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ControlPanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
-        
+
     private ControlPanelEditor frame = null;
 
     @Test

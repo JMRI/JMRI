@@ -8,18 +8,18 @@ import javax.annotation.Nonnull;
  *
  * @see java.util.ArrayList
  * @see java.util.List
- * @author	Bob Jacobsen, Copyright (C) 2017
+ * @author Bob Jacobsen, Copyright (C) 2017
  */
 public class NonNullArrayList<E> extends ArrayList<E> {
 
     @Override
-    public boolean add(@Nonnull E e) { 
+    public boolean add(@Nonnull E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
-        return super.add(e); 
+        return super.add(e);
     }
 
     @Override
-    public void add(int i, @Nonnull E e) { 
+    public void add(int i, @Nonnull E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
         super.add(i, e);
     }
@@ -31,7 +31,7 @@ public class NonNullArrayList<E> extends ArrayList<E> {
         }
         return super.addAll(c);
     }
-    
+
     @Override
     public boolean addAll(int i, Collection<? extends E> c) { // ideally, would be "extends @Nonnull e", but that's not this annotation
         for (E e : c ) {
@@ -39,22 +39,22 @@ public class NonNullArrayList<E> extends ArrayList<E> {
         }
         return super.addAll(i, c);
     }
-    
+
     @Override
     @Nonnull
     public E get(int i) { return super.get(i); }
-    
+
     @Override
     @Nonnull
     public E remove(int i) { return super.remove(i); }
-    
+
     @Override
     @Nonnull
-    public E set(int i, @Nonnull E e) { 
+    public E set(int i, @Nonnull E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot set item null");
         return super.set(i, e);
     }
-    
+
     // test routines for FindBugs checking - protected so you don't see them
     // These should be clean
     protected NonNullArrayList<Integer> testAddAndReturn() {
@@ -69,7 +69,7 @@ public class NonNullArrayList<E> extends ArrayList<E> {
         t.add(100);
         for (Integer s : t) {
             if (s.toString().equals(c)) return true; // FindBugs should not require null check
-        }     
+        }
         return false;
     }
 

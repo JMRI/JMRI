@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
  *
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
  */
 public class LnReporterTest extends TestCase {
 

@@ -392,21 +392,21 @@
   <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="0">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
     <label>2x Function Packets Required</label>
-	<tooltip>Two function packets must be received before changing function state, is using SPROG set to disabled</tooltip>
+    <tooltip>Two function packets must be received before changing function state, is using SPROG set to disabled</tooltip>
   </variable>
   <variable item="Brake Rate 1" CV="183" default="32" tooltip="Larger number longer it will take to stop">
- 	 <decVal/>
+      <decVal/>
   </variable>
   <variable item="Brake Rate 2" CV="184" default="26" tooltip="Larger number longer it will take to stop">
- 	 <decVal/>
+      <decVal/>
   </variable>
   <variable item="Brake Rate 3" CV="185" default="16" tooltip="Larger number longer it will take to stop">
- 	 <decVal/>
+      <decVal/>
   </variable>
   <variable item="Brake Rate 4" CV="186" default="8" tooltip="Larger number longer it will take to stop">
- 	 <decVal/>
+      <decVal/>
   </variable>
   <variable item="Brake Rate 5" CV="187" default="3" tooltip="Larger number longer it will take to stop">
- 	 <decVal/>
+      <decVal/>
   </variable>
 </variables>

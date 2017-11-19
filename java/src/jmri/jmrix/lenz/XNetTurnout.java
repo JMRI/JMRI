@@ -102,7 +102,7 @@ import org.slf4j.LoggerFactory;
  * necessary to poll for the feedback response data.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author      Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2010
  */
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
 

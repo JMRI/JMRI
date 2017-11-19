@@ -2,21 +2,21 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2015 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20150315"/>
   <!-- Version 1.0 - created from DCC_Concepts_Loco.xml version 2
-				   based on DCC Concepts documentation M-CV-Basics-Zen-Decoders-2014.pdf of December 2014
-					 and on correspondence with Richard Johnson of DCC Concepts -->
+                   based on DCC Concepts documentation M-CV-Basics-Zen-Decoders-2014.pdf of December 2014
+                     and on correspondence with Richard Johnson of DCC Concepts -->
   <decoder>
     <family name="DCC Concepts Zen" mfg="DCC Concepts" lowVersionID="34" highVersionID="35">
       <model model="ZBHP Buddha" numOuts="6" numFns="14" maxMotorCurrent="3A (peak=5A)" productID="ZBHP" formFactor="O" connector="other" comment="O-scale, with screw connectors">
@@ -26,10 +26,10 @@
         <output name="4" label="Purple" connection="other" maxcurrent="250 mA"/>
         <output name="5" label="Pink" connection="other" maxcurrent="250 mA"/>
         <output name="6" label="Brown" connection="other" maxcurrent="250 mA"/>
-        <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-        <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-        <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-        <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+        <output name="7" label="Rule 17|Dimming"/> <!-- virtual "output" -->
+        <output name="8" label="Ditch|Blink"/> <!-- virtual "output" -->
+        <output name="9" label="Motor|Control"/> <!-- virtual "output" -->
+        <output name="10" label="BEMF|Control"/> <!-- virtual "output" -->
         <size length="40" width="25" height="10" units="mm"/>
       </model>
       <model model="Z218" numOuts="4" numFns="14" maxMotorCurrent="0.750A (peak=1A)" productID="Z218" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC/NEM652 harness">
@@ -37,10 +37,10 @@
         <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA"/>
         <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA"/>
-        <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-        <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-        <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-        <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+        <output name="7" label="Rule 17|Dimming"/> <!-- virtual "output" -->
+        <output name="8" label="Ditch|Blink"/> <!-- virtual "output" -->
+        <output name="9" label="Motor|Control"/> <!-- virtual "output" -->
+        <output name="10" label="BEMF|Control"/> <!-- virtual "output" -->
         <size length="22" width="16" height="4.5" units="mm"/>
       </model>
       <model model="Z360" numOuts="4" numFns="14" maxMotorCurrent="0.750A (peak=1A)" productID="Z360" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, direct NEM652">
@@ -48,28 +48,28 @@
         <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
         <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA"/>
-        <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-        <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-        <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-        <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+        <output name="7" label="Rule 17|Dimming"/> <!-- virtual "output" -->
+        <output name="8" label="Ditch|Blink"/> <!-- virtual "output" -->
+        <output name="9" label="Motor|Control"/> <!-- virtual "output" -->
+        <output name="10" label="BEMF|Control"/> <!-- virtual "output" -->
         <size length="14.2" width="12.5" height="3.5" units="mm"/>
       </model>
       <model model="ZN6D" numOuts="2" numFns="14" maxMotorCurrent="0.750A (peak=1A)" productID="ZN6D" formFactor="N" connector="NEM651" comment="Nano 6-pin direct NEM651">
         <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA"/>
-        <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-        <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-        <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-        <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+        <output name="7" label="Rule 17|Dimming"/> <!-- virtual "output" -->
+        <output name="8" label="Ditch|Blink"/> <!-- virtual "output" -->
+        <output name="9" label="Motor|Control"/> <!-- virtual "output" -->
+        <output name="10" label="BEMF|Control"/> <!-- virtual "output" -->
         <size length="13.5" width="8.5" height="3" units="mm"/>
       </model>
       <model model="ZN68" numOuts="2" numFns="14" maxMotorCurrent="0.750A (peak=1A)" productID="ZN68" formFactor="N" connector="NEM651" comment="Nano 6-pin universal w/ NEM651/NEM652 harness">
         <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA"/>
-        <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-        <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-        <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-        <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+        <output name="7" label="Rule 17|Dimming"/> <!-- virtual "output" -->
+        <output name="8" label="Ditch|Blink"/> <!-- virtual "output" -->
+        <output name="9" label="Motor|Control"/> <!-- virtual "output" -->
+        <output name="10" label="BEMF|Control"/> <!-- virtual "output" -->
         <size length="13.5" width="8.5" height="3" units="mm"/>
       </model>
       <model model="ZN8D" numOuts="4" numFns="14" maxMotorCurrent="0.750A (peak=1A)" productID="ZN8D" formFactor="N" connector="Wires/NEM652" comment="Nano 8-pin direct NEM652">
@@ -77,19 +77,19 @@
         <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
         <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA"/>
-        <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-        <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-        <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-        <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+        <output name="7" label="Rule 17|Dimming"/> <!-- virtual "output" -->
+        <output name="8" label="Ditch|Blink"/> <!-- virtual "output" -->
+        <output name="9" label="Motor|Control"/> <!-- virtual "output" -->
+        <output name="10" label="BEMF|Control"/> <!-- virtual "output" -->
         <size length="15" width="7" height="2.7" units="mm"/>
       </model>
       <model model="ZN8H" numOuts="2" numFns="14" maxMotorCurrent="0.750A (peak=1A)" productID="ZN8H" formFactor="N" connector="NEM652" comment="Nano 8-pin wired with NEM652 harness">
         <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
-        <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-        <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-        <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-        <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+        <output name="7" label="Rule 17|Dimming"/> <!-- virtual "output" -->
+        <output name="8" label="Ditch|Blink"/> <!-- virtual "output" -->
+        <output name="9" label="Motor|Control"/> <!-- virtual "output" -->
+        <output name="10" label="BEMF|Control"/> <!-- virtual "output" -->
         <size length="15" width="7" height="2.7" units="mm"/>
       </model>
     </family>
@@ -772,13 +772,13 @@
           <label>Button Control Direction</label>
           <tooltip>&lt;html&gt;If motor button control is enabled.&lt;br&gt;Use forward/reverse buttons if "F2 On/Off" selected.&lt;/html&gt;</tooltip>
         </variable>
-	<!-- CV62 not used in Zen decoder CV (Dec.2014) - confirmed by manufacturer -->
+    <!-- CV62 not used in Zen decoder CV (Dec.2014) - confirmed by manufacturer -->
         <variable CV="63" default="64" item="Function 2 effect generated">
           <decVal/>
           <label>Ditch Light Blink Rate Timing</label>
           <tooltip>1 second = about 12 (tbc)</tooltip>
         </variable>
-	<!-- CV64 default and range indicated by manufacturer (not documented) -->
+    <!-- CV64 default and range indicated by manufacturer (not documented) -->
         <variable CV="64" default="10" item="Global lighting option 2">
           <decVal min="1" max="30"/>
           <label>Constant Dimming Light Level</label>
@@ -1049,13 +1049,13 @@
       <label><text> </text></label>
       <row>
         <display item="Accel Rate 2 Start Point" layout="above" label=""/>
-	<label><text> </text></label>
+    <label><text> </text></label>
         <display item="Accel Rate 2 Start Point" layout="above" format="hslider"/>
       </row>
       <label><text> </text></label>
       <row>
         <display item="Accel Rate 3 Start Point" layout="above" label=""/>
-	<label><text> </text></label>
+    <label><text> </text></label>
         <display item="Accel Rate 3 Start Point" layout="above" format="hslider"/>
       </row>
       <label><text> </text></label>

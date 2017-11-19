@@ -190,7 +190,7 @@ public class TurnoutOperationManager {
                 try {
                     Class<?> thisClass = Class.forName(thisClassName);
                     // creating the instance invokes the TurnoutOperation ctor,
-                    // which calls addOperation here, which adds it to the 
+                    // which calls addOperation here, which adds it to the
                     // turnoutOperations map.
                     thisClass.newInstance();
                     log.debug("loaded TurnoutOperation class {}", thisClassName);
@@ -213,10 +213,10 @@ public class TurnoutOperationManager {
         initialize();
         Iterator<TurnoutOperation> iter = operationTypes.iterator();
         TurnoutOperation currentMatch = null;
-        /* The loop below always returns the LAST operation 
-         that matches.  In the standard feedback modes, 
-         This currently results in returning the NoFeedback 
-         operation, since it is the last one added to 
+        /* The loop below always returns the LAST operation
+         that matches.  In the standard feedback modes,
+         This currently results in returning the NoFeedback
+         operation, since it is the last one added to
          operationTypes */
         while (iter.hasNext()) {
             TurnoutOperation oper = iter.next();

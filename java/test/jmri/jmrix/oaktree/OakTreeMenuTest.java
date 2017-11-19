@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of OakTreeMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class OakTreeMenuTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OakTreeMenu action = new OakTreeMenu();
         Assert.assertNotNull("exists", action);
     }

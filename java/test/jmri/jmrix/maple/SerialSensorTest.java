@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the jmri.jmrix.maple.SerialSensor class
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialSensorTest {
 

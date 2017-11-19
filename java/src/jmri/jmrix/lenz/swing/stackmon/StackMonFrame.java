@@ -73,7 +73,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // Set the Previous button to visible.
         previousButton.setVisible(true);
-        // The previous function is not currently implemented on the 
+        // The previous function is not currently implemented on the
         // command station, so we're going to disable the button for now
         previousButton.setEnabled(false);
 
@@ -226,7 +226,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     /**
-     * Request the momentary/continuous status of functions for the 
+     * Request the momentary/continuous status of functions for the
      * current address.
      */
     @SuppressWarnings("unused")

@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.ieee802154 package
  *
- * @author	Paul Bender
+ * @author Paul Bender
   */
 public class PackageTest extends TestCase {
 

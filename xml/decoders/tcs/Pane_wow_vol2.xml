@@ -31,7 +31,7 @@
         <label>
           <text>   </text>
         </label>
-		</column>
+        </column>
     </row>
     <row>
       <column>
@@ -99,8 +99,8 @@
         <display item="Volume 2-61"/>
         <display item="Volume 2-62"/>
         <display item="Volume 2-63"/>
-      </column>               
-      <column>                
+      </column>
+      <column>
         <display item="Volume 2-64"/>
         <display item="Volume 2-65"/>
         <display item="Volume 2-66"/>
@@ -165,8 +165,8 @@
         <display item="Volume 2-125"/>
         <display item="Volume 2-126"/>
         <display item="Volume 2-127"/>
-      </column>               
-      <column>                
+      </column>
+      <column>
         <display item="Volume 2-128"/>
         <display item="Volume 2-129"/>
         <display item="Volume 2-130"/>
@@ -231,8 +231,8 @@
         <display item="Volume 2-189"/>
         <display item="Volume 2-190"/>
         <display item="Volume 2-191"/>
-      </column>               
-      <column>                
+      </column>
+      <column>
         <display item="Volume 2-192"/>
         <display item="Volume 2-193"/>
         <display item="Volume 2-194"/>

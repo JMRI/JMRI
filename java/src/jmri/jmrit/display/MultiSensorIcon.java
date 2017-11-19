@@ -408,7 +408,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
     }
 
-    // Use largest size. If icons are not same size, 
+    // Use largest size. If icons are not same size,
     // this can result in drawing artifacts.
     @Override
     public int maxHeight() {
@@ -425,7 +425,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         return size;
     }
 
-    // Use largest size. If icons are not same size, 
+    // Use largest size. If icons are not same size,
     // this can result in drawing artifacts.
     @Override
     public int maxWidth() {

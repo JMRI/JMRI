@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RfidSensorManagerXmlTest.java
+ * Tests for the RfidSensorManagerXml class
  *
- * Description: tests for the RfidSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RfidSensorManagerXmlTest {
 

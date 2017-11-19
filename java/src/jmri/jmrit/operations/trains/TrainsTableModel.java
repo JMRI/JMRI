@@ -119,7 +119,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         table.setDefaultRenderer(Object.class, new MyTableCellRenderer());
         initTable();
     }
-    
+
     // Train frame table column widths (13), starts with id column and ends with edit
     private int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
 
@@ -128,7 +128,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         XTableColumnModel tcm = new XTableColumnModel();
         _table.setColumnModel(tcm);
         _table.createDefaultColumnsFromModel();
-        
+
         // Install the button handlers
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
@@ -537,7 +537,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 // if there are issues with thread locking here, this needs to
                 // be refactored so the panel holding the table is listening for
                 // this changes so it can instruct the table to scroll
-                // adding "synchronized" to this propertyChange can lock up thread                
+                // adding "synchronized" to this propertyChange can lock up thread
                 _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
                 fireTableRowsUpdated(row, row);
             }

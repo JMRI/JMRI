@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2016 All rights reserved   -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2016 All rights reserved -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
@@ -36,7 +36,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
     </revision>
   </revhistory>
     <!-- version 1 - based on Digirails_DR80010-15.xml -->
-    
+
     <decoder>
         <family name="Stationary" mfg="Digirails" comment="also sold under the Digikeijs label in NL">
             <model model="DR4018" numOuts="16" numFns="0" maxInputVolts="6.5-18V" maxTotalCurrent="2.5A" productID="4018" formFactor="Stationary" comment="Multiprotocol switching decoder">
@@ -72,9 +72,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <size length="102" width="86" height="20" units="mm" />
             </model>
         </family>
-        
+
         <programming direct="yes" paged="no" register="no" ops="no"/>
- 
+
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
             <variable CV="7" readOnly="yes" item="Decoder Version" default="134">
@@ -221,9 +221,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="fr">Préréglages</label>
                 <label xml:lang="de">Voreinstellungen</label>
                 <label xml:lang="nl">Voorinstellingen</label>
-                <label>Presets</label>                    
+                <label>Presets</label>
             </variable>
-            
+
             <variable item="Dark Time" CV="107" default="70" comment="Dark Time" include="4018">
                 <decVal min="1" max="255"/>
                 <label xml:lang="fr">Temps éteint</label>
@@ -235,7 +235,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip xml:lang="nl">Donkertijd tussen de verschillende seinbeeld overgangen (Duits seinbeeld)</tooltip>
                 <tooltip>Dark time between signal transitions (German signal heads)</tooltip>
             </variable>
-            
+
             <variable item="Dim Value" CV="108" default="10" comment="Dim Value" include="4018">
                 <decVal min="1" max="15"/>
                 <label xml:lang="fr">Valeur Dimmer</label>
@@ -247,7 +247,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip xml:lang="nl">Waarde voor het dimmen van de seinen (nachtstand)</tooltip>
                 <tooltip>Value to dim intensity of signal (night mode)</tooltip>
             </variable>
-            
+
             <variable item="PWM period" CV="109" default="14" comment="PWM period" include="4018">
                 <decVal min="1" max="255"/>
                 <label xml:lang="fr">MLI-période</label>
@@ -395,7 +395,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Puls op Uitgang 3</label>
                 <label>Pulse on Out 3</label>
             </variable>
-            
+
             <variable CV="116" mask="XXXXVVVV" item="Light intensity Out 4" default="15" writeOnly="no" comment="Output 4" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
@@ -876,7 +876,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Puls op Uitgang 16</label>
                 <label>Pulse on Out 16</label>
             </variable>
-                        
+
 <!-- start of DR4024 servo configurations CV 113 - 116 -->
             <variable CV="113" mask="XXXXVVVV" item="Servo 1 Step Size" default="2" writeOnly="no" comment="Output 1" include="4024">
                 <decVal min="0" max="15"/>
@@ -970,7 +970,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
                 the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
             </variable>
-            
+
 <!-- start of DR4024 output configurations CV 117 - 120 -->
             <variable CV="117" item="Output 5" default="0" include="4024">
                 <decVal min="0" max="255"/>
@@ -1151,7 +1151,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label>Flashing</label>
                 <tooltip>Output flickers with the frequency set in CV 112 (tab Module)</tooltip>
             </variable>
-            
+
 <!-- start of DR4024 servo position configurations CV 121- 136 -->
             <variable CV="121" item="Servo 1 Position A" default="224" include="4024">
                 <decVal min="0" max="255"/>
@@ -1217,7 +1217,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <decVal min="0" max="255"/>
                 <label>Pos. D</label>
             </variable>
-                                        
+
 <!-- start of DR4024 servo configurations CV 137 - 140 -->
             <variable CV="137" item="Servo 1 Mass Simulation" default="0" writeOnly="no" include="4024">
                 <decVal min="0" max="63"/>
@@ -1274,37 +1274,37 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                         <choice xml:lang="de">Kein Signal</choice>
                         <choice xml:lang="nl">Geen sein</choice>
                         <choice>No Signal</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="1">
                         <choice xml:lang="fr">NS (Pays Bas/Prorail)</choice>
                         <choice xml:lang="de">NS (Niederländisch/Prorail)</choice>
                         <choice xml:lang="nl">NS (Nederlands/Prorail)</choice>
                         <choice>NS (Dutch railways/Prorail)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="2">
                         <choice xml:lang="fr">DB signal principal (HP0, HP1, HP2)</choice>
                         <choice xml:lang="de">DB_HP (Deutsches Hauptsignal)</choice>
                         <choice xml:lang="nl">DB_HP (Duits hoofdsein)</choice>
                         <choice>DB_HP (German main signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="3">
                         <choice xml:lang="fr">DB signaux d'annonce et principal</choice>
                         <choice xml:lang="de">DB_VRHP (Deutsches Vor– und Hauptsignal)</choice>
                         <choice xml:lang="nl">DB_VRHP (Duits voor- en hoofdsein)</choice>
                         <choice>DB_VRHP (German front and main signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="4">
                         <choice xml:lang="fr">DB signal d'annonce (VR0, VR1, VR2)</choice>
                         <choice xml:lang="de">DB_VR (Deutsches Vorsignal)</choice>
                         <choice xml:lang="nl">DB_VR (Duits voorsein)</choice>
                         <choice>DB_VR (German approach signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="5">
                         <choice xml:lang="fr">SNCB (Belgique)</choice>
                         <choice xml:lang="de">NMBS (Belgische Bahn)</choice>
                         <choice xml:lang="nl">NMBS (Belgisch)</choice>
                         <choice>NMBS (Belgium railways)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                 </enumVal>
                 <label xml:lang="fr">Signal n° 1, configuration des sorties 1 à 4</label>
                 <label xml:lang="de">Signal 1, Konfiguration OUT 1 - 4</label>
@@ -1323,37 +1323,37 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                         <choice xml:lang="de">Kein Signal</choice>
                         <choice xml:lang="nl">Geen sein</choice>
                         <choice>No Signal</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="1">
                         <choice xml:lang="fr">NS (Pays Bas/Prorail)</choice>
                         <choice xml:lang="de">NS (Niederländisch/Prorail)</choice>
                         <choice xml:lang="nl">NS (Nederlands/Prorail)</choice>
                         <choice>NS (Dutch railways/Prorail)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="2">
                         <choice xml:lang="fr">DB signal principal (HP0, HP1, HP2)</choice>
                         <choice xml:lang="de">DB_HP (Deutsches Hauptsignal)</choice>
                         <choice xml:lang="nl">DB_HP (Duits hoofdsein)</choice>
                         <choice>DB_HP (German main signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="3">
                         <choice xml:lang="fr">DB signaux d'annonce et principal</choice>
                         <choice xml:lang="de">DB_VRHP (Deutsches Vor– und Hauptsignal)</choice>
                         <choice xml:lang="nl">DB_VRHP (Duits voor- en hoofdsein)</choice>
                         <choice>DB_VRHP (German front and main signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="4">
                         <choice xml:lang="fr">DB signal d'annonce (VR0, VR1, VR2)</choice>
                         <choice xml:lang="de">DB_VR (Deutsches Vorsignal)</choice>
                         <choice xml:lang="nl">DB_VR (Duits voorsein)</choice>
                         <choice>DB_VR (German approach signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="5">
                         <choice xml:lang="fr">SNCB (Belgique)</choice>
                         <choice xml:lang="de">NMBS (Belgische Bahn)</choice>
                         <choice xml:lang="nl">NMBS (Belgisch)</choice>
                         <choice>NMBS (Belgium railways)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                 </enumVal>
                 <label xml:lang="fr">Signal n° 2, configuration des sorties 5 à 8</label>
                 <label xml:lang="de">Signal 2, Konfiguration OUT 5 - 8</label>
@@ -1372,37 +1372,37 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                         <choice xml:lang="de">Kein Signal</choice>
                         <choice xml:lang="nl">Geen sein</choice>
                         <choice>No Signal</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="1">
                         <choice xml:lang="fr">NS (Pays Bas/Prorail)</choice>
                         <choice xml:lang="de">NS (Niederländisch/Prorail)</choice>
                         <choice xml:lang="nl">NS (Nederlands/Prorail)</choice>
                         <choice>NS (Dutch railways/Prorail)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="2">
                         <choice xml:lang="fr">DB signal principal (HP0, HP1, HP2)</choice>
                         <choice xml:lang="de">DB_HP (Deutsches Hauptsignal)</choice>
                         <choice xml:lang="nl">DB_HP (Duits hoofdsein)</choice>
                         <choice>DB_HP (German main signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="3">
                         <choice xml:lang="fr">DB signaux d'annonce et principal</choice>
                         <choice xml:lang="de">DB_VRHP (Deutsches Vor– und Hauptsignal)</choice>
                         <choice xml:lang="nl">DB_VRHP (Duits voor- en hoofdsein)</choice>
                         <choice>DB_VRHP (German front and main signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="4">
                         <choice xml:lang="fr">DB signal d'annonce (VR0, VR1, VR2)</choice>
                         <choice xml:lang="de">DB_VR (Deutsches Vorsignal)</choice>
                         <choice xml:lang="nl">DB_VR (Duits voorsein)</choice>
                         <choice>DB_VR (German approach signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="5">
                         <choice xml:lang="fr">SNCB (Belgique)</choice>
                         <choice xml:lang="de">NMBS (Belgische Bahn)</choice>
                         <choice xml:lang="nl">NMBS (Belgisch)</choice>
                         <choice>NMBS (Belgium railways)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                 </enumVal>
                 <label xml:lang="fr">Signal n° 3, configuration des sorties 9 à 12</label>
                 <label xml:lang="de">Signal 3, Konfiguration OUT 9 - 12</label>
@@ -1413,7 +1413,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip xml:lang="nl">&lt;html&gt;Als deze CV’s een waarde ongelijk aan 0 bevatten&lt;br&gt;schakelen de betreffende uitgangen volgens de seinregels.&lt;br&gt;De andere CV’s die normaal de uitgangen besturen staan buiten werking.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip>&lt;html&gt;If these CVs contain a value equal to 0&lt;br&gt;all outputs will switch according to the signal rules.&lt;br&gt;The other CVs that normally control the outputs will be deactivated.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            
+
             <variable item="Signal 4 configuration" CV="134" default="0" comment="Signal 4, configuration OUT 13 - 16" include="4018">
                 <enumVal>
                     <enumChoice choice="0">
@@ -1421,37 +1421,37 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                         <choice xml:lang="de">Kein Signal</choice>
                         <choice xml:lang="nl">Geen sein</choice>
                         <choice>No Signal</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="1">
                         <choice xml:lang="fr">NS (Pays Bas/Prorail)</choice>
                         <choice xml:lang="de">NS (Niederländisch/Prorail)</choice>
                         <choice xml:lang="nl">NS (Nederlands/Prorail)</choice>
                         <choice>NS (Dutch railways/Prorail)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="2">
                         <choice xml:lang="fr">DB signal principal (HP0, HP1, HP2)</choice>
                         <choice xml:lang="de">DB_HP (Deutsches Hauptsignal)</choice>
                         <choice xml:lang="nl">DB_HP (Duits hoofdsein)</choice>
                         <choice>DB_HP (German main signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="3">
                         <choice xml:lang="fr">DB signaux d'annonce et principal</choice>
                         <choice xml:lang="de">DB_VRHP (Deutsches Vor– und Hauptsignal)</choice>
                         <choice xml:lang="nl">DB_VRHP (Duits voor- en hoofdsein)</choice>
                         <choice>DB_VRHP (German front and main signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="4">
                         <choice xml:lang="fr">DB signal d'annonce (VR0, VR1, VR2)</choice>
                         <choice xml:lang="de">DB_VR (Deutsches Vorsignal)</choice>
                         <choice xml:lang="nl">DB_VR (Duits voorsein)</choice>
                         <choice>DB_VR (German approach signal)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                     <enumChoice choice="5">
                         <choice xml:lang="fr">SNCB (Belgique)</choice>
                         <choice xml:lang="de">NMBS (Belgische Bahn)</choice>
                         <choice xml:lang="nl">NMBS (Belgisch)</choice>
                         <choice>NMBS (Belgium railways)</choice>
-                    </enumChoice> 
+                    </enumChoice>
                 </enumVal>
                 <label xml:lang="fr">Signal n° 4, configuration des sorties 13 à 16</label>
                 <label xml:lang="de">Signal 4, Konfiguration OUT 13 - 16</label>
@@ -1509,7 +1509,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip xml:lang="nl">Seinfunctiemap op uitgangsgroep (EXPERT)</tooltip>
                 <tooltip>Signal function mapping to output group (EXPERT)</tooltip>
             </variable>
-            
+
 <!-- Signal mapping (matrix) -->
             <variable item="Signal 1 Out A" CV="143" mask="XXXXXXXV" default="1" comment="Default" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1575,7 +1575,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>S4-D</label>
             </variable>
-                        
+
 <!-- start of output pulse configurations CV 238 - 253 -->
             <variable CV="238" item="Pulse Duration Out 1" default="128" writeOnly="no" comment="Pulse duration for output 1 if set to pulse by CV113=7 and CV47=13." include="4018">
                 <decVal />
@@ -1705,10 +1705,10 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label>Pulse Duration</label>
                 <tooltip>Configure the pulse duration for Output 16 provided pulse is turned on (CV113=7 and CV47=13).</tooltip>
             </variable>
-            
+
         </variables>
-        
- <!-- reset -->       
+
+ <!-- reset -->
         <resets>
                 <factReset label="HARD RESET Reset all CVs to default values" CV="8" default="8">
                 <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
@@ -1718,7 +1718,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <!-- In Program on Main (OPS) mode, choose Loco Address 9999 and press the Program Button on your decoder (LED blinks). Then select Reset. -->
             </factReset>
         </resets>
-        
+
     </decoder>
 
     <pane>
@@ -1887,7 +1887,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         </griditem>
         <griditem gridx="4" gridy="4">
             <display item="Signal 4 Out D" label="" format="checkbox" />
-        </griditem>        
+        </griditem>
         </grid>
             </row>
         </column>
@@ -1938,7 +1938,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                  </row>
                 </column>
                 </row>
-                
+
                 <row>
                 <column>
                         <separator/>
@@ -2036,7 +2036,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                                     </row>
                 </column>
                 </row>
-                
+
                 <row>
                 <column>
                         <separator/>
@@ -2088,7 +2088,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 </row>
                 </column>
     </pane>
-    
+
     <pane include="4018">
         <name>Outputs</name>
         <name xml:lang="fr">Sorties</name>
@@ -2457,7 +2457,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                     <separator/>
                 </column>
             </row>
-           
+
         </column>
     </pane>
 
@@ -2482,7 +2482,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                         <display item="Output 5 ON B" format="checkbox" />
                         <display item="Output 5 ON AB" format="checkbox" />
                         <display item="Output 5 Flashing" format="checkbox" />
-                        <!-- ToDo: ON when etc. Waiting for requested info from mfg. --> 
+                        <!-- ToDo: ON when etc. Waiting for requested info from mfg. -->
                     <separator/>
                  </column>
                  <separator/>

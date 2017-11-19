@@ -10,12 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * IEEE802154TrafficControllerTest.java
- *
- * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154TrafficController
+ * Tests for the jmri.jmrix.ieee802154.IEEE802154TrafficController
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
@@ -59,10 +57,10 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         // specified as a string to make sure it returns null on failure.
         IEEE802154Node node = (IEEE802154Node) ((IEEE802154TrafficController)tc).newNode();
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         ((IEEE802154TrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((IEEE802154TrafficController)tc).getNodeFromAddress("00 01");
@@ -76,10 +74,10 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         IEEE802154Node node = (IEEE802154Node) ((IEEE802154TrafficController)tc).newNode();
         ((IEEE802154TrafficController)tc).registerNode(node);
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
-        int iad[] = {0x6D, 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
+        int[] iad = {0x6D, 0x97};
         node.setUserAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         IEEE802154Node n = (IEEE802154Node) ((IEEE802154TrafficController)tc).getNodeFromAddress(iad);
         Assert.assertNotNull("node not found", n);
@@ -92,9 +90,9 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         IEEE802154Node node = (IEEE802154Node) ((IEEE802154TrafficController)tc).newNode();
         ((IEEE802154TrafficController)tc).registerNode(node);
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         IEEE802154Node n = (IEEE802154Node) ((IEEE802154TrafficController)tc).getNodeFromAddress(uad);
         Assert.assertNotNull("node not found", n);
@@ -106,10 +104,10 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         // specified as a string.
         IEEE802154Node node = (IEEE802154Node) ((IEEE802154TrafficController)tc).newNode();
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         ((IEEE802154TrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((IEEE802154TrafficController)tc).getNodeFromAddress("6D 97");
@@ -123,10 +121,10 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         IEEE802154Node node = (IEEE802154Node) ((IEEE802154TrafficController)tc).newNode();
         ((IEEE802154TrafficController)tc).registerNode(node);
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         ((IEEE802154TrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((IEEE802154TrafficController)tc).getNodeFromAddress(gad);
@@ -140,11 +138,11 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         IEEE802154Node node = (IEEE802154Node) ((IEEE802154TrafficController)tc).newNode();
         ((IEEE802154TrafficController)tc).registerNode(node);
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
-        int iad[] = {0x00, 0x13, 0xA2, 0x00, 0x40, 0xA0, 0x4D, 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        int[] iad = {0x00, 0x13, 0xA2, 0x00, 0x40, 0xA0, 0x4D, 0x2D};
         node.setGlobalAddress(gad);
         ((IEEE802154TrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((IEEE802154TrafficController)tc).getNodeFromAddress(iad);

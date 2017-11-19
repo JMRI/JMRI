@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.roco.z21.z21Message class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class Z21MessageTest {
 
@@ -160,7 +160,7 @@ public class Z21MessageTest {
         JUnitUtil.setUp();
     }
 
-    @After 
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }

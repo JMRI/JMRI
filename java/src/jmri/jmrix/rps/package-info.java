@@ -1,5 +1,5 @@
 /**
- *        This package contains software specific to the RPS system from 
+ *        This package contains software specific to the RPS system from
  *        <A HREF="http://www.nacservicesinc.com/">NAC Services, Inc</A>.
  *       <P>
  *            Tools are provided to input (and eventually output)
@@ -11,7 +11,7 @@
  *        </UL>
  *        There are several pieces that do the behind the scene operation.
  *        <dl>
- *            <dt>Distributor<dd>There's exactly one of these. It's basic 
+ *            <dt>Distributor<dd>There's exactly one of these. It's basic
  *                function is to handle all the computations.  These include:
  *                <ol>
  *                    <li>Hold the alignment and control information
@@ -21,7 +21,7 @@
  *                    <li>Distribute the Measurements to whoever is interested
  *                </ol>
  *            <dt>ControlPanel<dd>There can be at most one of these, which can
- *                manually update the alignment and control information. 
+ *                manually update the alignment and control information.
  *            <dt>Monitor<dd>Shows the Readings and Measurements as they are produced.
  *            <dt>SerialAdapter<dd>Connect (as configured) to a serial port
  *                and create Readings for the Distributor

@@ -59,7 +59,7 @@ class ChangeTrackFrame extends OperationsFrame {
         addItem(p1, spurRadioButton, 0, 0);
         addItem(p1, yardRadioButton, 1, 0);
         addItem(p1, interchangeRadioButton, 2, 0);
-        
+
         JPanel p2 = new JPanel();
         p2.add(saveButton);
 
@@ -81,10 +81,10 @@ class ChangeTrackFrame extends OperationsFrame {
 
         getContentPane().add(p1);
         getContentPane().add(p2);
-        
+
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_ChangeTrackType", true); // NOI18N
-        
+
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
     }
 

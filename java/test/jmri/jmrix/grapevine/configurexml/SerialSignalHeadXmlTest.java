@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SerialSignalHeadXmlTest.java
+ * Tests for the SerialSignalHeadXml class
  *
- * Description: tests for the SerialSignalHeadXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SerialSignalHeadXmlTest {
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$	-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -36,37 +36,37 @@
   <!-- Specific for Qdecoder accessory decoder -->
   <variable item="Hardware version" CV="1001" readOnly="yes">
     <decVal/>
-		<label xml:lang="de">Hardwareversion</label>
-		<label>Hardware version</label>
+        <label xml:lang="de">Hardwareversion</label>
+        <label>Hardware version</label>
   </variable>
   <variable item="ID decoder type" CV="1002" readOnly="yes">
     <decVal/>
-		<label xml:lang="de">Decoderkl.-ID Nummer</label>
-		<label>Decoder type ID number</label>
+        <label xml:lang="de">Decoderkl.-ID Nummer</label>
+        <label>Decoder type ID number</label>
   </variable>
   <variable item="SW release day" CV="1008" readOnly="yes">
     <decVal/>
-		<label xml:lang="de">Erstellungstag der Software</label>
-		<label>Software release day</label>
+        <label xml:lang="de">Erstellungstag der Software</label>
+        <label>Software release day</label>
   </variable>
-	<variable item="SW release month" CV="1009" readOnly="yes">
+    <variable item="SW release month" CV="1009" readOnly="yes">
     <decVal/>
-		<label xml:lang="de">Erstellungsmonat der Software</label>
-		<label>Software release month</label>
+        <label xml:lang="de">Erstellungsmonat der Software</label>
+        <label>Software release month</label>
   </variable>
-	<variable item="SW release year" CV="1010" readOnly="yes">
+    <variable item="SW release year" CV="1010" readOnly="yes">
     <decVal/>
-		<label xml:lang="de">Erstellungsjahr der Software</label>
-		<label>Software release year</label>
+        <label xml:lang="de">Erstellungsjahr der Software</label>
+        <label>Software release year</label>
   </variable>
-	<variable item="SW main release" CV="1011" readOnly="yes">
+    <variable item="SW main release" CV="1011" readOnly="yes">
     <decVal/>
-		<label xml:lang="de">Software-Hauptversionsnummer</label>
-		<label>Software main revision number</label>
+        <label xml:lang="de">Software-Hauptversionsnummer</label>
+        <label>Software main revision number</label>
   </variable>
-	<variable item="SW subversion" CV="1012" readOnly="yes">
+    <variable item="SW subversion" CV="1012" readOnly="yes">
     <decVal/>
-		<label xml:lang="de">Software-Unterversionsnummer</label>
-		<label>Software subversion number</label>
+        <label xml:lang="de">Software-Unterversionsnummer</label>
+        <label>Software subversion number</label>
   </variable>
 </variables>

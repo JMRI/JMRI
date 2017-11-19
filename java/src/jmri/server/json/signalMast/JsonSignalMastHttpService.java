@@ -43,7 +43,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
         if (signalMast != null) {
             String aspect = signalMast.getAspect();
             if (aspect == null) {
-                aspect = ASPECT_UNKNOWN; //if null, set aspect to "Unknown"   
+                aspect = ASPECT_UNKNOWN; //if null, set aspect to "Unknown"
             }
             data.put(ASPECT, aspect);
             data.put(LIT, signalMast.getLit());

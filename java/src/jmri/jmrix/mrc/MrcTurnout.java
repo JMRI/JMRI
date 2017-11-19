@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
- * 
+ *
  */
 public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
 
@@ -34,8 +34,8 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
         super(p + "T" + number);
         _number = number;
         if (_number < NmraPacket.accIdLowLimit || _number > NmraPacket.accIdHighLimit) {
-            throw new IllegalArgumentException("Turnout value: " + _number 
-                    + " not in the range " + NmraPacket.accIdLowLimit + " to " 
+            throw new IllegalArgumentException("Turnout value: " + _number
+                    + " not in the range " + NmraPacket.accIdLowLimit + " to "
                     + NmraPacket.accIdHighLimit);
         }
         this.tc = tc;

@@ -10,12 +10,10 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CanNamedPaneActionTest {
 
@@ -24,7 +22,7 @@ public class CanNamedPaneActionTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Can Named Pane Test");
         CanNamedPaneAction t = new CanNamedPaneAction("Test Action",jf,"test",m);
         Assert.assertNotNull("exists",t);

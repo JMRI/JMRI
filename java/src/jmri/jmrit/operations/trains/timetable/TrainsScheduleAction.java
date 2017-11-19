@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * @author Daniel Boudreau Copyright (C) 2010
  */
 public class TrainsScheduleAction extends AbstractAction {
-    
+
     public TrainsScheduleAction() {
         super(Bundle.getMessage("TitleTimeTableTrains"));
     }

@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * XpaThrottleManagerTest.java
+ * Tests for the jmri.jmrix.xpa.XpaThrottleManager class
  *
- * Description:	tests for the jmri.jmrix.xpa.XpaThrottleManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XpaThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 

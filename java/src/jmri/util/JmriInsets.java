@@ -217,7 +217,7 @@ public class JmriInsets {
             log.trace("Trying default insets for {}", OS_NAME);
         }
         try {
-            GraphicsDevice gs[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+            GraphicsDevice[] gs = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
             for (GraphicsDevice g : gs) {
                 GraphicsConfiguration[] gc = g.getConfigurations();
                 for (GraphicsConfiguration element : gc) {

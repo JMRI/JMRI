@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.managers.DefaultLogixManager class.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class DefaultLogixManagerTest extends TestCase {
 
@@ -20,16 +20,16 @@ public class DefaultLogixManagerTest extends TestCase {
 
     public void testCreateForms() {
         LogixManager m = new DefaultLogixManager();
-        
+
         Logix l1 = m.createNewLogix("User name 1");
         Logix l2 = m.createNewLogix("User name 2");
 
         Assert.assertNotNull(m.getByUserName("User name 1"));
         Assert.assertNotNull(m.getByUserName("User name 2"));
-        
+
         Assert.assertTrue(l1 != l2);
         Assert.assertTrue(! l1.equals(l2));
-        
+
         Assert.assertNotNull(m.getBySystemName(l1.getSystemName()));
         Assert.assertNotNull(m.getBySystemName(l2.getSystemName()));
 
@@ -42,25 +42,25 @@ public class DefaultLogixManagerTest extends TestCase {
 
         // test of some fails
         Assert.assertNull(m.createNewLogix(l1.getUserName()));
-        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));  
+        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));
     }
 
     public void testEmptyUserName() {
         LogixManager m = new DefaultLogixManager();
-        
+
         Logix l1 = m.createNewLogix("IX01", "");
         Logix l2 = m.createNewLogix("IX02", "");
-        
+
         Assert.assertTrue(l1 != l2);
         Assert.assertTrue(! l1.equals(l2));
-        
+
         Assert.assertNotNull(m.getBySystemName(l1.getSystemName()));
         Assert.assertNotNull(m.getBySystemName(l2.getSystemName()));
 
         m.createNewLogix("IX03", "User name 3");
-        
+
         // test of some fails
-        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));      
+        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));
     }
 
     // from here down is testing infrastructure

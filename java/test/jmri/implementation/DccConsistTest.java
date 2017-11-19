@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of DccConsist
  *
- * @author	Paul Copyright (C) 2011, 2016
+ * @author Paul Copyright (C) 2011, 2016
  */
 public class DccConsistTest extends AbstractConsistTestBase {
 
@@ -35,7 +35,7 @@ public class DccConsistTest extends AbstractConsistTestBase {
         jmri.util.JUnitUtil.initDebugProgrammerManager();
         c = new DccConsist(new DccLocoAddress(12, true), jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
     }
-   
+
     @After
     @Override
     public void tearDown() {

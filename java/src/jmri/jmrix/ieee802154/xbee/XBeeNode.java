@@ -43,7 +43,7 @@ public class XBeeNode extends IEEE802154Node {
     private XBee16BitAddress userAddress = null;
     private XBee64BitAddress globalAddress = null;
 
-    private final static byte DefaultPanID[] = {0x00,0x00};
+    private final static byte[] DefaultPanID = {0x00, 0x00};
 
     /**
      * Creates a new instance of XBeeNode
@@ -54,7 +54,7 @@ public class XBeeNode extends IEEE802154Node {
         isPolled = false;
     }
 
-    public XBeeNode(byte pan[], byte user[], byte global[]) {
+    public XBeeNode(byte[] pan, byte[] user, byte[] global) {
         super(pan, user, global);
         identifier = "";
         if (log.isDebugEnabled()) {
@@ -72,13 +72,13 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
         super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
         identifier = rxd.getNodeID();
-       
+
         try{
            setPANAddress(rxd.getPANID());
         } catch (TimeoutException t) {
           // we dont need the PAN ID for communicaiton,so just continue.
         }
- 
+
         if (log.isDebugEnabled()) {
             log.debug("Created new node from RemoteXBeeDevice: {}",
                     rxd.toString() );
@@ -388,7 +388,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
 
-    private byte PRValue[] = null;
+    private byte[] PRValue = null;
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
     private final Lock readLock = readWriteLock.readLock();
     private final Lock writeLock = readWriteLock.writeLock();
@@ -470,7 +470,7 @@ public class XBeeNode extends IEEE802154Node {
             default:
                 log.warn("Unhandled pin value: {}", pin);
                 break;
-              
+
           }
           device.setParameter("PR",PRValue);
           device.applyChanges();  // force the XBee to start using the new value.
@@ -482,7 +482,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
    /**
-    * Package protected method to check to see if the PR parameter indicates 
+    * Package protected method to check to see if the PR parameter indicates
     * the specified pin has the pull-up resistor enabled.
     *
     * @param pin the pin number
@@ -499,9 +499,9 @@ public class XBeeNode extends IEEE802154Node {
        byte prbyte;
        try {
           readLock.lock();
-          if(PRValue == null){ 
+          if(PRValue == null){
              PRValue = device.getParameter("PR");
-          } 
+          }
           prbyte = PRValue[0];
        } finally {
           readLock.unlock();
@@ -564,7 +564,7 @@ public class XBeeNode extends IEEE802154Node {
               retval = jmri.Sensor.PullResistance.PULL_OFF;
            }
            break;
-       default: 
+       default:
           retval = jmri.Sensor.PullResistance.PULL_OFF;
        }
        return retval;

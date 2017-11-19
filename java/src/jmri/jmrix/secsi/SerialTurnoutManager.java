@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "VTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 

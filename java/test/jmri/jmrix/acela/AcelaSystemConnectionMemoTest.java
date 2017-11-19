@@ -10,33 +10,33 @@ import org.junit.Test;
  * JUnit tests for the AcelaSystemConnectionMemo class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AcelaSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
-     
+
     @Test
-    public void testDefaultCtor(){
-       Assert.assertNotNull("exists",new AcelaSystemConnectionMemo());
+    public void testDefaultCtor() {
+        Assert.assertNotNull("exists", new AcelaSystemConnectionMemo());
     }
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
     @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       AcelaTrafficController tc = new AcelaTrafficControlScaffold();
-       scm = new AcelaSystemConnectionMemo(tc);
+    public void setUp() {
+        JUnitUtil.setUp();
+        AcelaTrafficController tc = new AcelaTrafficControlScaffold();
+        scm = new AcelaSystemConnectionMemo(tc);
     }
 
     @Override
     @After
-    public void tearDown(){
-       JUnitUtil.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

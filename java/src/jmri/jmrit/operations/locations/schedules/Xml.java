@@ -4,7 +4,7 @@ package jmri.jmrit.operations.locations.schedules;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * 
+ *
  *
  */
 public class Xml {

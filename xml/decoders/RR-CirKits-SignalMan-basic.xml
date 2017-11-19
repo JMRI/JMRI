@@ -24,7 +24,7 @@
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>
-      <!--		<variable label="Address" CV="9" item="Extended Address"  -->
+      <!-- <variable label="Address" CV="9" item="Extended Address"  -->
       <variable item="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>
         <label>Primary Address</label>

@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a Z21MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2013
  */
 public class Z21MonAction extends AbstractAction {
 

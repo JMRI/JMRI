@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * OlcbTurnoutManagerXmlTest.java
+ * Tests for the OlcbTurnoutManagerXml class
  *
- * Description: tests for the OlcbTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class OlcbTurnoutManagerXmlTest {
 

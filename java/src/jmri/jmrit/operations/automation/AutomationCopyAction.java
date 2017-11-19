@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
 public class AutomationCopyAction extends AbstractAction {
 
     private Automation _automation;
-    
+
     public AutomationCopyAction() {
         super(Bundle.getMessage("MenuCopyAutomation"));
     }

@@ -36,7 +36,7 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
         setBinary(true);
         setTimeout(5000);
         // gather bytes in result
-        byte b[] = jmri.util.StringUtil.bytesFromHexString(m);
+        byte[] b = jmri.util.StringUtil.bytesFromHexString(m);
         if (b.length == 0) {
             // no such thing as a zero-length message
             _nDataChars = 0;

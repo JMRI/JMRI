@@ -27,7 +27,7 @@
              </label>
           </griditem>
           <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="Lights dimming (normal)"/>
               <label>
                 <text> </text>
@@ -36,7 +36,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="Lights dimming (alternative)"/>
               <label>
                 <text> </text>
@@ -45,7 +45,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 1 dimming"/>
               <label>
                 <text> </text>
@@ -54,7 +54,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 2 dimming"/>
               <label>
                 <text> </text>
@@ -86,7 +86,7 @@
               </label>
           </griditem>
           <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 1 Auto-off timer" label="AUX 1"/>
               <label>
                 <text> </text>
@@ -95,7 +95,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 2 Auto-off timer" label="AUX 2"/>
               <label>
                 <text> </text>
@@ -104,7 +104,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 3 Auto-off timer" label="AUX 3"/>
               <label>
                 <text> </text>
@@ -113,7 +113,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 4 Auto-off timer" label="AUX 4"/>
               <label>
                 <text> </text>
@@ -122,7 +122,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 5 Auto-off timer" label="AUX 5"/>
               <label>
                 <text> </text>
@@ -131,7 +131,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 6 Auto-off timer" label="AUX 6"/>
               <label>
                 <text> </text>

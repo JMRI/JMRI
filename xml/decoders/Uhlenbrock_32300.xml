@@ -37,7 +37,7 @@
         <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
         <parameter name="cvFirst">true</parameter>
       </capability>
-	</programming>
+    </programming>
     <variables>
       <variable item="SUSI-range" CV="897.0" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
         <!-- Note: this is a normal CV, without no need to specify the index. However, setting the index allows resetting it to zero -->
@@ -56,105 +56,105 @@
           </enumChoice>
         </enumVal>
         <label>SUSI-range</label>
-	<label xml:lang="de">SUSI Adressbereich</label>
+    <label xml:lang="de">SUSI Adressbereich</label>
       </variable>
       <!-- Range I variables -->
       <variable item="Range I Manufacturer ID" CV="900.0" readOnly="yes" default="85">
         <decVal/>
         <label>Manufacturer ID</label>
-	<label xml:lang="de">Herstellerkennung</label>
+    <label xml:lang="de">Herstellerkennung</label>
       </variable>
       <variable item="Range I Software version" CV="901.0" readOnly="yes">
         <decVal/>
         <label>Software version</label>
-	<label xml:lang="de">Softwareversion</label>
+    <label xml:lang="de">Softwareversion</label>
       </variable>
       <variable item="Range I Sound Volume" CV="902.0" default="255" tooltip="0-255">
         <decVal/>
         <label>Sound Volume</label>
-	<label xml:lang="de">Lautstärke des Sounds</label>
+    <label xml:lang="de">Lautstärke des Sounds</label>
       </variable>
-	  <!-- Function Mapping -->
+      <!-- Function Mapping -->
       <!-- Speculating that CV 903 is F0, not really clear from manuals -->
       <variable item="Range I F0 activated sound" CV="903.0" default="0">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F0 activated sound</label>
-	<label xml:lang="de">F0 aktiviert Sound</label>
+    <label xml:lang="de">F0 aktiviert Sound</label>
       </variable>
       <variable item="Range I F1 activated sound" CV="904.0" default="3">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F1 activated sound</label>
-	<label xml:lang="de">F1 aktiviert Sound</label>
+    <label xml:lang="de">F1 aktiviert Sound</label>
       </variable>
       <variable item="Range I F2 activated sound" CV="905.0" default="2">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F2 activated sound</label>
-	<label xml:lang="de">F2 aktiviert Sound</label>
+    <label xml:lang="de">F2 aktiviert Sound</label>
       </variable>
       <variable item="Range I F3 activated sound" CV="906.0" default="4">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F3 activated sound</label>
-	<label xml:lang="de">F3 aktiviert Sound</label>
+    <label xml:lang="de">F3 aktiviert Sound</label>
       </variable>
       <variable item="Range I F4 activated sound" CV="907.0" default="1">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F4 activated sound</label>
-	<label xml:lang="de">F4 aktiviert Sound</label>
+    <label xml:lang="de">F4 aktiviert Sound</label>
       </variable>
       <variable item="Range I F5 activated sound" CV="908.0" default="16">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F5 activated sound</label>
-	<label xml:lang="de">F5 aktiviert Sound</label>
+    <label xml:lang="de">F5 aktiviert Sound</label>
       </variable>
       <variable item="Range I F6 activated sound" CV="909.0" default="6">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F6 activated sound</label>
-	<label xml:lang="de">F6 aktiviert Sound</label>
+    <label xml:lang="de">F6 aktiviert Sound</label>
       </variable>
       <variable item="Range I F7 activated sound" CV="910.0" default="0">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F7 activated sound</label>
-	<label xml:lang="de">F7 aktiviert Sound</label>
+    <label xml:lang="de">F7 aktiviert Sound</label>
       </variable>
       <variable item="Range I F8 activated sound" CV="911.0" default="8">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F8 activated sound</label>
-	<label xml:lang="de">F8 aktiviert Sound</label>
+    <label xml:lang="de">F8 aktiviert Sound</label>
       </variable>
       <variable item="Range I F9 activated sound" CV="912.0" default="5">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F9 activated sound</label>
-	<label xml:lang="de">F9 aktiviert Sound</label>
+    <label xml:lang="de">F9 aktiviert Sound</label>
       </variable>
       <variable item="Range I F10 activated sound" CV="913.0" default="0">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F10 activated sound</label>
-	<label xml:lang="de">F10 aktiviert Sound</label>
+    <label xml:lang="de">F10 aktiviert Sound</label>
       </variable>
       <variable item="Range I F11 activated sound" CV="914.0" default="15">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F11 activated sound</label>
-	<label xml:lang="de">F11 aktiviert Sound</label>
+    <label xml:lang="de">F11 aktiviert Sound</label>
       </variable>
       <variable item="Range I F12 activated sound" CV="915.0" default="0">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F12 activated sound</label>
-	<label xml:lang="de">F12 aktiviert Sound</label>
+    <label xml:lang="de">F12 aktiviert Sound</label>
       </variable>
       <variable item="Range I F13 activated sound" CV="916.0" default="11">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F13 activated sound</label>
-	<label xml:lang="de">F13 aktiviert Sound</label>
+    <label xml:lang="de">F13 aktiviert Sound</label>
       </variable>
       <variable item="Range I F14 activated sound" CV="917.0" default="14">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F14 activated sound</label>
         <label xml:lang="de">F14 aktiviert Sound</label>
       </variable>
       <variable item="Range I F15 activated sound" CV="918.0" default="0">
-	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
         <label>F15 activated sound</label>
-	<label xml:lang="de">F15 aktiviert Sound</label>
+    <label xml:lang="de">F15 aktiviert Sound</label>
       </variable>
       <variable item="Range I F16 activated sound" CV="919.0" default="12">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound2.xml"/>
@@ -302,7 +302,7 @@
         <tooltip>0=Idle off, 255=Idle always on</tooltip>
         <tooltip xml:lang="de">0=Leerlauf aus, 255=Leerlauf immer ein</tooltip>
       </variable>
-	  <variable item="Range I Time between two chuffs at max speed" CV="938.0" default="0">
+      <variable item="Range I Time between two chuffs at max speed" CV="938.0" default="0">
         <decVal max="100"/>
         <label>Time between chuffs at max speed</label>
         <label xml:lang="de">Zeit zwischen Auspuffschlägen bei max. Geschw.</label>
@@ -316,7 +316,7 @@
         <tooltip>50-255, Time between two chuffs at min speed</tooltip>
         <tooltip xml:lang="de">50-255, Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
       </variable>
-	  <!-- Bank A CVs (Index CV 1021 = 1) -->
+      <!-- Bank A CVs (Index CV 1021 = 1) -->
       <variable item="Range I Hardware Version" CV="900.1" readOnly="yes" default="0">
         <decVal/>
         <label>Hardware Version</label>
@@ -329,7 +329,7 @@
         <label>Additional version info</label>
         <label xml:lang="de">Zusatzinformationen Version</label>
       </variable>
-	  <!-- Custom sounds - relative volume levels -->
+      <!-- Custom sounds - relative volume levels -->
       <variable item="Range I Volume Custom 1" CV="903.1" default="128">
         <decVal min="25"/>
         <label>Custom Sound 1 Volume</label>
@@ -471,7 +471,7 @@
         <tooltip>0-128, 128=tone change is off</tooltip>
         <tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastabnahme ausgeschaltet</tooltip>
       </variable>
-      <!-- 					   -->
+      <!-- -->
       <!-- Range II variables -->
       <variable item="Range II Manufacturer ID" CV="940.0" readOnly="yes" default="85">
         <decVal/>
@@ -716,7 +716,7 @@
         <tooltip>0=Idle off, 255=Idle always on</tooltip>
         <tooltip xml:lang="de">0=Leerlauf aus, 255=Leerlauf immer ein</tooltip>
       </variable>
-	  <variable item="Range II Time between two chuffs at max speed" CV="978.0" default="0">
+      <variable item="Range II Time between two chuffs at max speed" CV="978.0" default="0">
         <decVal max="100"/>
         <label>Time between chuffs at max speed</label>
         <label xml:lang="de">Zeit zwischen Auspuffschlägen bei max. Geschw.</label>
@@ -885,7 +885,7 @@
         <tooltip>0-128, 128=tone change is off</tooltip>
         <tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastabnahme ausgeschaltet</tooltip>
       </variable>
-      <!-- 					   -->
+      <!-- -->
       <!-- Range III variables -->
      <variable item="Range III Manufacturer ID" CV="980.0" readOnly="yes" default="85">
         <decVal/>
@@ -1130,7 +1130,7 @@
         <tooltip>0=Idle off, 255=Idle always on</tooltip>
         <tooltip xml:lang="de">0=Leerlauf aus, 255=Leerlauf immer ein</tooltip>
       </variable>
-	  <variable item="Range III Time between two chuffs at max speed" CV="1018.0" default="0">
+      <variable item="Range III Time between two chuffs at max speed" CV="1018.0" default="0">
         <decVal max="100"/>
         <label>Time between chuffs at max speed</label>
         <label xml:lang="de">Zeit zwischen Auspuffschlägen bei max. Geschw.</label>
@@ -1313,12 +1313,12 @@
         </enumVal>
         <label>Chuff Control</label>
         <label xml:lang="de">Auspuffschlag Dampflok</label>
-      </variable>      
+      </variable>
     </variables>
   </decoder>
   <pane>
     <name>Function Map</name>
-	<name xml:lang="de">Funktionszuordnung</name>
+    <name xml:lang="de">Funktionszuordnung</name>
     <column>
         <row>
           <column>
@@ -1556,7 +1556,7 @@
   </pane>
   <pane>
     <name>IntelliSound</name>
-	<name xml:lang="de">IntelliSound</name>
+    <name xml:lang="de">IntelliSound</name>
     <column>
         <row>
           <column>

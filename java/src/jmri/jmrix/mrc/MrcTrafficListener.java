@@ -15,7 +15,7 @@ import java.util.Date;
  * Based upon the LocoNet TrafficListener
  *
  * @author Matthias Keil Copyright (C) 2013
- * 
+ *
  *
  */
 public interface MrcTrafficListener {

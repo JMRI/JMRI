@@ -11,7 +11,7 @@ import org.junit.Assert;
  *
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class KernelTest extends OperationsTestCase {
 

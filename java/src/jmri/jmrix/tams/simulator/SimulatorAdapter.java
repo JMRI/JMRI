@@ -2,7 +2,6 @@ package jmri.jmrix.tams.simulator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.jmrix.tams.TamsMessage;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
- * 
+ *
  */
 public class SimulatorAdapter extends TamsPortController implements
         jmri.jmrix.SerialPortAdapter, Runnable {
@@ -197,7 +196,7 @@ public class SimulatorAdapter extends TamsPortController implements
         return msg;
     }
 
-    // generateReply is the heart of the simulation.  It translates an 
+    // generateReply is the heart of the simulation.  It translates an
     // incoming TamsMessage into an outgoing TamsReply.
     private TamsReply generateReply(TamsMessage m) {
         TamsReply reply = new TamsReply();

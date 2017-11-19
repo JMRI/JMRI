@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Z21XNetTurnoutManagerXml.java
+ * Tests for the Z21XNetTurnoutManagerXml class
  *
- * Description: tests for the Z21XNetTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class Z21XNetTurnoutManagerXmlTest {
 

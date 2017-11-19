@@ -127,7 +127,7 @@ import org.slf4j.LoggerFactory;
  * executeRead -> readAll
  * activate readAll
  * readAll -> Programmer
- * activate Programmer 
+ * activate Programmer
  * readAll --> executeRead
  * deactivate readAll
  * executeRead --> nextRead
@@ -139,10 +139,10 @@ import org.slf4j.LoggerFactory;
  * Programmer -> propertyChange
  * activate propertyChange
  * note over propertyChange
- * if the first read failed, 
- * setup a second read of 
+ * if the first read failed,
+ * setup a second read of
  * the same value.
- * otherwise, setup a read of 
+ * otherwise, setup a read of
  * the next value.
  * end note
  * deactivate Programmer
@@ -158,7 +158,7 @@ import org.slf4j.LoggerFactory;
  * executeRead -> readAll
  * activate readAll
  * readAll -> Programmer
- * activate Programmer 
+ * activate Programmer
  * readAll --> executeRead
  * deactivate readAll
  * executeRead -> nextRead
@@ -169,10 +169,10 @@ import org.slf4j.LoggerFactory;
  * deactivate restartProgramming
  * replyWhileProgrammingVar --> propertyChange
  * deactivate replyWhileProgrammingVar
- * deactivate propertyChange 
+ * deactivate propertyChange
  * deactivate Programmer
  * == Callback triggered repeat occurs until no more values ==
- * @enduml 
+ * @enduml
  */
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
@@ -1202,7 +1202,7 @@ public class PaneProgPane extends javax.swing.JPanel
                         // to read again.
                     } else {
                         _programmingVar.setToWrite(true); // set the variable
-                        // to attempt another 
+                        // to attempt another
                         // write.
                     }
                 } else {
@@ -2778,7 +2778,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     speedWindow.getContentPane().setLayout(null);
                     // in preparation for display, extract the speed table values into an array
                     StringTokenizer valueTokens = new StringTokenizer(originalValue, ",", false);
-                    int speedVals[] = new int[28];
+                    int[] speedVals = new int[28];
                     int k = 0;
                     while (valueTokens.hasMoreTokens()) {
                         speedVals[k] = Integer.parseInt(valueTokens.nextToken());

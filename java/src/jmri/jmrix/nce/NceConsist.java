@@ -33,7 +33,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     private byte _consistNum = 0;    // consist number (short address of consist)
 
     // Initialize a consist for the specific address
-    // the Default consist type is an advanced consist 
+    // the Default consist type is an advanced consist
     public NceConsist(int address, NceSystemConnectionMemo m) {
         super(address);
         tc = m.getNceTrafficController();
@@ -41,7 +41,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     }
 
     // Initialize a consist for the specific address
-    // the Default consist type is an advanced consist 
+    // the Default consist type is an advanced consist
     public NceConsist(DccLocoAddress locoAddress, NceSystemConnectionMemo m) {
         super(locoAddress);
         tc = m.getNceTrafficController();
@@ -459,7 +459,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
          */
         private boolean addLocoConsist(NceReply r, int index, int position) {
             int address = getLocoAddrText(r, index);
-            boolean isLong = getLocoAddressType(r, index); // Long (true) or short (false) address?   
+            boolean isLong = getLocoAddressType(r, index); // Long (true) or short (false) address?
             if (address != 0) {
                 log.debug("Add loco address " + address + " to consist " + _consistNum);
                 restore(new DccLocoAddress(address, isLong), true, position); // we don't know the direction of the loco

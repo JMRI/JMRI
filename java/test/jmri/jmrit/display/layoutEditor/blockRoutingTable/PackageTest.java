@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmrit.display.layoutEditor.blockRouingTable package
  *
- * @author	Bob Jacobsen Copyright 2008, 2009, 2010
+ * @author Bob Jacobsen Copyright 2008, 2009, 2010
  */
 public class PackageTest {
 }

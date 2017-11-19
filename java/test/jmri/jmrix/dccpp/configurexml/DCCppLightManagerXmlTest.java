@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DCCppLightManagerXmlTest.java
+ * Tests for the DCCppLightManagerXml class
  *
- * Description: tests for the DCCppLightManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class DCCppLightManagerXmlTest {
 

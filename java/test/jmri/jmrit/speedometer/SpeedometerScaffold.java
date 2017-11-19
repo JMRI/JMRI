@@ -33,7 +33,7 @@ public class SpeedometerScaffold extends JFrameOperator {
    public void pushClearButton(){
         new JButtonOperator(this,Bundle.getMessage("ButtonClear")).push();
    }
-   
+
    public void pushSaveButton(){
         new JButtonOperator(this,Bundle.getMessage("ButtonSave")).push();
    }

@@ -14,17 +14,17 @@ import org.junit.Test;
 /**
  * Test simple functioning of CanMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CanMenuTest {
 
 
     private TrafficController tc = null;
     private CanSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CanMenu action = new CanMenu(m);
         Assert.assertNotNull("exists", action);
     }

@@ -63,7 +63,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         element.setAttribute("yd", "" + coords.getY());
         element.setAttribute("ver", "" + p.getVersion());
         element.setAttribute("class", getClass().getName());
- 
+
         if (!p.getTurnoutName().isEmpty()) {
             element.setAttribute("turnoutname", p.getTurnoutName());
         }
@@ -256,7 +256,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         if (a != null) {
             l.connectDName = a.getValue();
         }
-        
+
         a = element.getAttribute("signala1name");
         if (a != null) {
             l.setSignalA1Name(a.getValue());

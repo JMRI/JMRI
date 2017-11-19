@@ -57,12 +57,12 @@ public class PositionableCircle extends PositionableShape {
         });
         return true;
     }
-    
+
     private void makeEditFrame() {
         if (_editFrame == null) {
             _editFrame = new DrawCircle("editShape", "Circle", this);
             setEditParams();
         }
     }
-        
+
 }

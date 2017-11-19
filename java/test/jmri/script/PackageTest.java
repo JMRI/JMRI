@@ -1,9 +1,7 @@
 /**
- * PackageTest.java
+ * Tests for the jmri.script package
  *
- * Description:	tests for the jmri.script package
- *
- * @author	Bob Jacobsen 2009
+ * @author Bob Jacobsen 2009
  */
 package jmri.script;
 

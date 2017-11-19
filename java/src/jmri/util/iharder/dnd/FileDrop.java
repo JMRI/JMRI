@@ -273,7 +273,7 @@ public class FileDrop {
                             log(out, "FileDrop: normal border saved.");
                             jc.setBorder(dragBorder);
                             log(out, "FileDrop: drag border set.");
-                        }   // end if: JComponent   
+                        }   // end if: JComponent
 
                         // Acknowledge that it's okay to enter
                         //evt.acceptDrag( java.awt.dnd.DnDConstants.ACTION_COPY_OR_MOVE );

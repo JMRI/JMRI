@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @author Paul Bender Copyright: Copyright (c) 2015 
+ * @author Paul Bender Copyright: Copyright (c) 2015
  */
 public class JMRIClientReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
@@ -32,7 +32,7 @@ public class JMRIClientReporterManagerXml extends jmri.managers.configurexml.Abs
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // load individual reporters 
+        // load individual reporters
         return loadReporters(shared);
     }
 

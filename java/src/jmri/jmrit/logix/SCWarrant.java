@@ -11,11 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An SCWarrant is a warrant that is controlled by the signals on a layout. 
+ * An SCWarrant is a warrant that is controlled by the signals on a layout.
  * It will not run unless you have your layout fully covered with sensors and
  * signals.
- * 
- * @author  Karl Johan Lisby Copyright (C) 2016
+ *
+ * @author Karl Johan Lisby Copyright (C) 2016
  */
 public class SCWarrant extends Warrant {
 
@@ -25,7 +25,7 @@ public class SCWarrant extends Warrant {
     public static final float SPEED_UNSIGNALLED = 0.4f;
     private long timeToPlatform = 500;
     private boolean forward = true;
-    
+
     /**
      * Create an object with no route defined. The list of BlockOrders is the
      * route from an Origin to a Destination
@@ -39,7 +39,7 @@ public class SCWarrant extends Warrant {
     public long getTimeToPlatform() {
         return timeToPlatform;
     }
-    
+
     public void setTimeToPlatform(long TTP) {
         timeToPlatform = TTP;
     }
@@ -47,7 +47,7 @@ public class SCWarrant extends Warrant {
     public void setForward(boolean set) {
         forward = set;
     }
-    
+
     public boolean getForward() {
         return forward;
     }
@@ -87,7 +87,7 @@ public class SCWarrant extends Warrant {
             return;
         }
         log.debug(_trainName+" notifyThrottleFound address= " + throttle.getLocoAddress().toString() + " _runMode= " + _runMode);
-        
+
         startupWarrant();
         getSpeedUtil().setThrottle(throttle);
         getSpeedUtil().setOrders(getBlockOrders());
@@ -143,7 +143,7 @@ public class SCWarrant extends Warrant {
         SCTrainRunner thread = new SCTrainRunner(this);
         new Thread(thread).start();
     }
-    
+
     /**
      * wait until there is a train in the start block.
      */
@@ -166,7 +166,7 @@ public class SCWarrant extends Warrant {
             }
         }
     }
-    
+
     /**
      * Set this train to run backwards or forwards as specified in the command list.
      */
@@ -244,9 +244,9 @@ public class SCWarrant extends Warrant {
             _engineer.setSpeed(speed_f);
         }
     }
-    
+
      /**
-     * Do what the title says. But make sure not to set the turnouts if already done, since that 
+     * Do what the title says. But make sure not to set the turnouts if already done, since that
      * would just cause all signals to go to Stop aspects and thus cause a jerky train movement.
      */
     protected void allocateBlocksAndSetTurnouts(int startIndex) {
@@ -291,7 +291,7 @@ public class SCWarrant extends Warrant {
             }
         }
     }
-    
+
     /**
      * Block in the route going active.
      * Make sure to allocate the rest of the route, update our present location and then tell
@@ -336,7 +336,7 @@ public class SCWarrant extends Warrant {
     }
 
     /**
-     * Block in the route is going Inactive. 
+     * Block in the route is going Inactive.
      * Release the blocks that we have left.
      * Check if current block has been left (i.e. we have left our route) and stop the train in that case.
      */
@@ -358,7 +358,7 @@ public class SCWarrant extends Warrant {
 //            firePropertyChange("blockChange", block, null);
             if (_engineer != null) {
                 _engineer.setSpeed(SPEED_STOP);
-            } 
+            }
 //            controlRunTrain(ABORT);
         }
         // now let the main loop stop our train if this means that the train is now entirely within the last block.
@@ -367,7 +367,7 @@ public class SCWarrant extends Warrant {
             notify();
         }
     }
-    
+
     /**
      * Deallocate all blocks up to and including idx, but only on these conditions in order to ensure that only a consecutive list of blocks are allocated at any time:
      *     1. Only if our train has left not only this block, but also all previous blocks.
@@ -454,8 +454,8 @@ public class SCWarrant extends Warrant {
             }
         }
     }
-    
-    
+
+
     /**
      * Make sure to free up additional resources for a running SCWarrant.
      */
@@ -467,7 +467,7 @@ public class SCWarrant extends Warrant {
         super.stopWarrant(abort);
     }
 
-    
+
     /*******************************************************************************************************************************
      * The waiting for event must happen in a separate thread.
      * Therefore the main code of runSignalControlledTrain is put in this class.
@@ -477,7 +477,7 @@ public class SCWarrant extends Warrant {
         SCTrainRunner(Warrant warrant) {
             _warrant = warrant;
         }
-        
+
         public void run() {
             synchronized(_warrant) {
                 // Do not include the stopping block in this while loop. It will be handled after the loop.
@@ -547,10 +547,10 @@ public class SCWarrant extends Warrant {
             }
         }
     }
-    
-    
+
+
     /**
-     * 
+     *
      */
     private final static Logger log = LoggerFactory.getLogger(SCWarrant.class);
 }

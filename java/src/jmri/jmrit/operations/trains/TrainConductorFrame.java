@@ -11,7 +11,7 @@ import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
  * Conductor Frame. Shows work for a train one location at a time.
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
- * 
+ *
  */
 public class TrainConductorFrame extends OperationsFrame {
 

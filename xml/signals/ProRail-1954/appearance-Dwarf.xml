@@ -72,7 +72,7 @@
       <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-DD.gif</imagelink>
     </appearance>
   </appearances>
-  
+
   <specificappearances>
     <danger>
       <aspect>Restricting</aspect>
@@ -87,7 +87,7 @@
       <aspect>Not Lit</aspect>
     </dark>
   </specificappearances>
-  
+
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>

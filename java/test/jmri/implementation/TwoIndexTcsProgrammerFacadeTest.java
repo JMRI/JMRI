@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2014
- * 
+ * @author Bob Jacobsen Copyright 2014
+ *
  */
 public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
 

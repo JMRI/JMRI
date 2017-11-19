@@ -46,12 +46,12 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
                 log.debug("result " + result);
             }
         } catch (NullPointerException ex) {
-            // If the standard configuration fails, try the original 
+            // If the standard configuration fails, try the original
             // original configurations method for XnTcp which used a
             // string name as the port name to designate automatic or
-            // manual configuration.  
+            // manual configuration.
             // If manual was manual, option 1 contained the host name
-            // and option 2 contained the port.  We now use option 1 to 
+            // and option 2 contained the port.  We now use option 1 to
             // designate the manual option.
             if (log.isDebugEnabled()) {
                 log.debug("Null Pointer Exception Occured");
@@ -60,7 +60,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
                 String manualOption = shared.getAttribute("port").getValue();
                 adapter.configureOption1(manualOption);
             } catch (NullPointerException e1) {
-                // it is considered normal if this fails when the 
+                // it is considered normal if this fails when the
                 //attributes are not present.
             }
 
@@ -68,7 +68,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
                 String hostName = shared.getAttribute("option1").getValue();
                 adapter.setHostName(hostName);
             } catch (NullPointerException e1) {
-                // it is considered normal if this fails when the 
+                // it is considered normal if this fails when the
                 //attributes are not present.
             }
 
@@ -78,7 +78,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             } catch (org.jdom2.DataConversionException e2) {
                 log.warn("Could not parse port attribute");
             } catch (NullPointerException e1) {
-                // it is considered normal if this fails when the 
+                // it is considered normal if this fails when the
                 //attributes are not present.
             }
 

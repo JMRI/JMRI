@@ -1,7 +1,3 @@
-/**
- * @(#)MenuScroller.java	1.5.0 04/02/12
- */
-//package darrylbu.util;
 package jmri.util;
 
 import java.awt.Color;
@@ -741,4 +737,4 @@ public class MenuScroller
     }   // enum MenuScrollerIcon
 
     private final static Logger log = LoggerFactory.getLogger(MenuScroller.class);
-}   // class MenuScroller
+}

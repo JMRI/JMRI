@@ -40,7 +40,7 @@ public class SerialAddress {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || ((systemName.charAt(prefix.length()) != 'L')
                 && (systemName.charAt(prefix.length()) != 'S') && (systemName.charAt(prefix.length()) != 'T'))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.debug("invalid character in header field of system name: {}", systemName);
             return (0);
         }
@@ -178,13 +178,13 @@ public class SerialAddress {
         String nName = "";
         // check the type character
         if ((!type.equals("S")) && (!type.equals("L")) && (!type.equals("T"))) {
-            // here if an illegal type character 
+            // here if an illegal type character
             log.error("illegal type character proposed for system name - {}", type);
             return (nName);
         }
         // check the bit number
         if ((bitNum < 1) || ((type.equals("S")) && (bitNum > 1000)) || (bitNum > 8000)) {
-            // here if an illegal bit number 
+            // here if an illegal bit number
             log.warn("illegal address range proposed for system name - {}", bitNum);
             return (nName);
         }
@@ -207,7 +207,7 @@ public class SerialAddress {
         }
         // check the bit number
         if ((bitNum < 1) || (bitNum > 8000)) {
-            // here if an illegal bit number 
+            // here if an illegal bit number
             log.error("illegal bit number in free bit test - {}", bitNum);
             return ("");
         }
@@ -256,7 +256,7 @@ public class SerialAddress {
         }
         // check the bit number
         if ((bitNum < 1) || (bitNum > 1000)) {
-            // here if an illegal bit number 
+            // here if an illegal bit number
             log.error("illegal bit number in free bit test");
             return ("");
         }

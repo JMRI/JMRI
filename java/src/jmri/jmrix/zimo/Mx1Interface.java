@@ -22,7 +22,7 @@ package jmri.jmrix.zimo;
  * that messages will be returned in any particular thread. See the Mx1Listener
  * doc for more background.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrix.zimo.Mx1Listener
  * @see jmri.jmrix.zimo.Mx1TrafficController
  *

@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DCCppSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppSystemConnectionMemo class
- *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -22,7 +20,7 @@ public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
         DCCppSystemConnectionMemo t = (DCCppSystemConnectionMemo) scm;  
         Assert.assertNotNull(t);
         Assert.assertNotNull(t.getDCCppTrafficController());
-        // While we are constructing the memo, we should also set the 
+        // While we are constructing the memo, we should also set the
         // SystemMemo parameter in the traffic controller.
         Assert.assertNotNull(t.getDCCppTrafficController().getSystemConnectionMemo());
     }
@@ -39,7 +37,7 @@ public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
         // so we need to do this ourselves.
         t.setDCCppTrafficController(tc);
         Assert.assertNotNull(t.getDCCppTrafficController());
-        // and while we're doing that, we should also set the SystemMemo 
+        // and while we're doing that, we should also set the SystemMemo
         // parameter in the traffic controller.
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }

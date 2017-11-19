@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EcosLocoAddressManagerTest {
 
@@ -20,7 +20,7 @@ public class EcosLocoAddressManagerTest {
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc){
            @Override
-           public EcosPreferences getPreferenceManager(){ 
+           public EcosPreferences getPreferenceManager(){
               return new EcosPreferences(this){
                   @Override
                   public boolean getPreferencesLoaded(){
@@ -38,7 +38,7 @@ public class EcosLocoAddressManagerTest {
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc){
            @Override
-           public EcosPreferences getPreferenceManager(){ 
+           public EcosPreferences getPreferenceManager(){
               return new EcosPreferences(this){
                   @Override
                   public boolean getPreferencesLoaded(){

@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * IEEE802154SystemConnectionMemoTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 

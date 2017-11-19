@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Intended use is as an input format for new program code to be sent to a
  * hardware device via some bootloading process.
  *
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
 
@@ -29,7 +29,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     private int address = 0;
     private int type;
     private int len;
-    private int data[];
+    private int[] data;
     private boolean read;
     private int lineNo = 0;
     private int charIn;
@@ -127,7 +127,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     // False positive
     public int read() {
         // Make space for the the maximum size record to be read
-        int record[] = new int[MAX_LEN];
+        int[] record = new int[MAX_LEN];
         do {
             record = readLine();
             if (type == EXT_ADDR) {
@@ -154,7 +154,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      */
     public int[] readLine() {
         // Make space for the the maximum size record to be read
-        int record[] = new int[MAX_LEN];
+        int[] record = new int[MAX_LEN];
         int checksum = 0;
         // Read ":"
         try {
@@ -259,7 +259,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      */
     public void write(int addr, byte type, byte[] data) {
         // Make space for the record to be written
-        byte record[] = new byte[data.length + 1 + 2 + 1];
+        byte[] record = new byte[data.length + 1 + 2 + 1];
         if (addr / 0x10000 != address / 0x10000) {
             // write an extended address record
             byte[] extAddr = {

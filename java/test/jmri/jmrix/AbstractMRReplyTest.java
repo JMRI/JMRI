@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for AbstractMRReply
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class AbstractMRReplyTest extends TestCase {
 

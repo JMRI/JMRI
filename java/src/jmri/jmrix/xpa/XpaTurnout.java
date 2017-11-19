@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Xpa+Modem implementation of the Turnout interface.
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public class XpaTurnout extends AbstractTurnout {
 

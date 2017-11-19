@@ -67,7 +67,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
     @Override
     public boolean isUnsolicited() {
         String s = toString();
-        // Split in 7 is enough for initial handshake 
+        // Split in 7 is enough for initial handshake
         String[] part = s.split("\\s", 7);
         // Test for initial handshake message with key "JMRIClient".
         if (part[2].equals("JMRIClient")) {

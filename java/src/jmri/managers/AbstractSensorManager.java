@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base implementation of the SensorManager interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public abstract class AbstractSensorManager extends AbstractManager<Sensor> implements SensorManager {
 
@@ -63,7 +63,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     public Sensor getBeanBySystemName(String key) {
         return this.getBySystemName(key);
     }
-    
+
     @Override
     public Sensor getBySystemName(String key) {
         if (isNumber(key)) {
@@ -98,7 +98,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
             throw new IllegalArgumentException("systemName null in newSensor");
         }
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.debug("Invalid system name for sensor: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());

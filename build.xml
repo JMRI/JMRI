@@ -869,7 +869,7 @@
         </java>
     </target>
 
-	<!-- see comment just above -->
+    <!-- see comment just above -->
     <target name="-debug-jmri-application"
             if="debugger"
             depends="runtime-library-selection">
@@ -1204,6 +1204,18 @@
             **/TODO
             **/.classpath
         " />
+    </target>
+
+    <target name="trimlineends" description="Strip trailing whitespace from lines">
+        <replaceregexp byline="true">
+            <fileset dir=".">
+                <include name="**/*.properties"/>
+                <include name="**/*.java"/>
+                <include name="**/*.xml"/>
+            </fileset>
+            <regexp pattern="\s+$"/>
+            <substitution expression=""/>
+        </replaceregexp>
     </target>
 
     <!-- ============================================================================= -->
@@ -2358,24 +2370,24 @@
         </parallel>
     </target>
 
-	<!-- - - - - - - - - - - - - - - - - -
-          target: lockMetaFiles
-         - - - - - - - - - - - - - - - - - -->
+    <!-- - - - - - - - - - - - - - - - - -
+     target: lockMetaFiles
+    - - - - - - - - - - - - - - - - - -->
     <target name="lockMetaFiles" description="Lock META-INT files">
-    	<echo>locking META-INT files</echo>
-    	<chmod perm="ugo+rx">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
+        <echo>locking META-INT files</echo>
+        <chmod perm="ugo+rx">
+            <fileset dir="${target/classes/META-INF}"/>
+        </chmod>
     </target>
 
-	<!-- - - - - - - - - - - - - - - - - -
-          target: unlockMetaFiles
-         - - - - - - - - - - - - - - - - - -->
+    <!-- - - - - - - - - - - - - - - - - -
+     target: unlockMetaFiles
+    - - - - - - - - - - - - - - - - - -->
     <target name="unlockMetaFiles" description="Unlock META-INT files">
-    	<echo>unlocking META-INT files</echo>
-    	<chmod perm="ugo+rx+w">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
+        <echo>unlocking META-INT files</echo>
+        <chmod perm="ugo+rx+w">
+            <fileset dir="${target/classes/META-INF}"/>
+        </chmod>
     </target>
 
 </project>

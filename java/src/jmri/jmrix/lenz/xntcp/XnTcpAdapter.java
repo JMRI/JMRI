@@ -76,7 +76,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
     String[] getInterfaces() {
         Vector<String> v = getInterfaceNames();
-        String a[] = new String[v.size() + 1];
+        String[] a = new String[v.size() + 1];
         for (int i = 0; i < v.size(); i++) {
             a[i + 1] = v.elementAt(i);
         }
@@ -245,7 +245,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         outName, ConnectionStatus.CONNECTION_DOWN);
-            // Clear open status, in order to avoid issuing the error 
+            // Clear open status, in order to avoid issuing the error
             // message more than than once.
             opened = false;
             log.debug("XnTcpError: TCP/IP communication dropped");
@@ -367,7 +367,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
         @Override
         public void write(byte[] b, int off, int len) throws java.io.IOException {
-            // Make sure that we don't mix bytes of different packets, 
+            // Make sure that we don't mix bytes of different packets,
             // if called at the same time by different threads
             synchronized (tcpOut) {
                 while (len-- > 0) {

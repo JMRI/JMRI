@@ -93,7 +93,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                     + sName + ", refers to an unconfigured input bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
         }
-        // register this sensor 
+        // register this sensor
         InputBits.instance().registerSensor(s, bit - 1);
         return s;
     }

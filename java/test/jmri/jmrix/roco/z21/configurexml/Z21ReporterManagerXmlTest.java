@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Z21ReporterManagerXml.java
+ * Tests for the Z21ReporterManagerXml class
  *
- * Description: tests for the Z21ReporterManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class Z21ReporterManagerXmlTest {
 

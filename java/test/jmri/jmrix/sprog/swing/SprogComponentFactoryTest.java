@@ -11,16 +11,16 @@ import org.junit.Test;
 /**
  * Test simple functioning of SprogComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SprogComponentFactoryTest {
 
 
     private jmri.jmrix.sprog.SprogSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SprogComponentFactory action = new SprogComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

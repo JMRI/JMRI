@@ -37,40 +37,40 @@
     </row>
     <row>
       <column>
-		<row>
-			<display item="Accel 2 Starting Point" layout="above" label=""/>
-			<display item="Accel 2 Starting Point" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Accel 2 Starting Point" layout="above" label=""/>
+            <display item="Accel 2 Starting Point" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Accel 3 Starting Point" layout="above" label=""/>
-			<display item="Accel 3 Starting Point" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Accel 3 Starting Point" layout="above" label=""/>
+            <display item="Accel 3 Starting Point" layout="above" format="hslider"/>
+        </row>
       </column>
       <label>
-		<text>  </text>
+        <text>  </text>
       </label>
       <column>
-		<row>
-			<display item="Accel 1 Rate" layout="above" label=""/>
-			<display item="Accel 1 Rate" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Accel 1 Rate" layout="above" label=""/>
+            <display item="Accel 1 Rate" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Accel 2 Rate" layout="above" label=""/>
-			<display item="Accel 2 Rate" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Accel 2 Rate" layout="above" label=""/>
+            <display item="Accel 2 Rate" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Accel 3 Rate" layout="above" label=""/>
-			<display item="Accel 3 Rate" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Accel 3 Rate" layout="above" label=""/>
+            <display item="Accel 3 Rate" layout="above" format="hslider"/>
+        </row>
       </column>
     </row>
     <label>
@@ -82,40 +82,40 @@
     </label>
     <row>
       <column>
-		<row>
-			<display item="Decel 3 Ending Point" layout="above" label=""/>
-			<display item="Decel 3 Ending Point" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Decel 3 Ending Point" layout="above" label=""/>
+            <display item="Decel 3 Ending Point" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Decel 2 Ending Point" layout="above" label=""/>
-			<display item="Decel 2 Ending Point" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Decel 2 Ending Point" layout="above" label=""/>
+            <display item="Decel 2 Ending Point" layout="above" format="hslider"/>
+        </row>
       </column>
       <label>
-		<text>  </text>
+        <text>  </text>
       </label>
       <column>
-		<row>
-			<display item="Decel 3 Rate" layout="above" label=""/>
-			<display item="Decel 3 Rate" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Decel 3 Rate" layout="above" label=""/>
+            <display item="Decel 3 Rate" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Decel 2 Rate" layout="above" label=""/>
-			<display item="Decel 2 Rate" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Decel 2 Rate" layout="above" label=""/>
+            <display item="Decel 2 Rate" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Decel 1 Rate" layout="above" label=""/>
-			<display item="Decel 1 Rate" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Decel 1 Rate" layout="above" label=""/>
+            <display item="Decel 1 Rate" layout="above" format="hslider"/>
+        </row>
       </column>
     </row>
     <label>
@@ -127,31 +127,31 @@
     </label>
     <row>
       <column>
-		<row>
-			<display item="Switch mode acceleration" layout="above" label=""/>
-			<display item="Switch mode acceleration" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Switch mode acceleration" layout="above" label=""/>
+            <display item="Switch mode acceleration" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Switch mode deceleration" layout="above" label=""/>
-			<display item="Switch mode deceleration" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Switch mode deceleration" layout="above" label=""/>
+            <display item="Switch mode deceleration" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Main line mode acceleration" layout="above" label=""/>
-			<display item="Main line mode acceleration" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Main line mode acceleration" layout="above" label=""/>
+            <display item="Main line mode acceleration" layout="above" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-		<row>
-			<display item="Main line mode deceleration" layout="above" label=""/>
-			<display item="Main line mode deceleration" layout="above" format="hslider"/>
-		</row>
+        <row>
+            <display item="Main line mode deceleration" layout="above" label=""/>
+            <display item="Main line mode deceleration" layout="above" format="hslider"/>
+        </row>
       </column>
     </row>
   </column>

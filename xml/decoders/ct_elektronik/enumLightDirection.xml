@@ -14,15 +14,15 @@
 <!-- version 1 - new include file for CT Elektronik (Alain Le Marchand) -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Both">
-	<choice>Both</choice>
-    <choice xml:lang="de">beide Richtungen</choice>  	
+    <choice>Both</choice>
+    <choice xml:lang="de">beide Richtungen</choice>
   </enumChoice>
   <enumChoice choice="Forward">
-	<choice>Forward</choice>
-    <choice xml:lang="de">Vorwärts</choice>  	
+    <choice>Forward</choice>
+    <choice xml:lang="de">Vorwärts</choice>
   </enumChoice>
   <enumChoice choice="Reverse">
-	<choice>Reverse</choice>
-    <choice xml:lang="de">Rückwärts</choice>	
+    <choice>Reverse</choice>
+    <choice xml:lang="de">Rückwärts</choice>
   </enumChoice>
 </enumVal>

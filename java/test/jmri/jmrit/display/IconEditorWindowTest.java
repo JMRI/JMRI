@@ -26,7 +26,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Swing tests for the SensorIcon
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public class IconEditorWindowTest {
 

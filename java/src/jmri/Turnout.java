@@ -443,8 +443,8 @@ public interface Turnout extends NamedBean {
     public boolean canLock(int turnoutLockout);
 
     /**
-     * Provide the possible locking modes for a turnout.  
-     * These may require additional configuration, e.g. 
+     * Provide the possible locking modes for a turnout.
+     * These may require additional configuration, e.g.
      * setting of a decoder definition for PUSHBUTTONLOCKOUT,
      * before {@link #canLock(int)} will return true.
      *

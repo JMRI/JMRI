@@ -12,14 +12,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of AcelaMonFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AcelaMonFrameTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AcelaMonFrame f = new AcelaMonFrame(new AcelaSystemConnectionMemo());
         Assert.assertNotNull("exists", f);
     }

@@ -7,12 +7,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * HornbyEliteCommandStationTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.lenz.hornbyelite.HornbyEliteCommandStation class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class HornbyEliteCommandStationTest extends TestCase {
 

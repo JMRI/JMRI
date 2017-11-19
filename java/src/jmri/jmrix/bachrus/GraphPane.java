@@ -121,7 +121,7 @@ public class GraphPane extends JPanel implements Printable {
         FontRenderContext frc = g2.getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("0", frc);
 
-        float dash1[] = {1.0f};
+        float[] dash1 = {1.0f};
         BasicStroke dashed = new BasicStroke(1.0f,
                 BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER,
@@ -269,7 +269,7 @@ public class GraphPane extends JPanel implements Printable {
         if (!(g instanceof Graphics2D) ) {
               throw new IllegalArgumentException("Graphics object passed is not the correct type");
         }
-           
+
         Graphics2D g2 = (Graphics2D) g;
         /* User (0,0) is typically outside the imageable area, so we must
          * translate by the X and Y values in the PageFormat to avoid clipping.

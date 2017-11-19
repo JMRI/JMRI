@@ -16,9 +16,9 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  */
-public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase // jmri.util.SwingTestCase 
+public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase // jmri.util.SwingTestCase
 {
 
     static final ResourceBundle rbx = ResourceBundle
@@ -59,7 +59,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
      public void testPrompt() {
      assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
      _lRouteTable.addPressed(null);
-     _lRouteTable._userName.setText("TestLRoute2");    
+     _lRouteTable._userName.setText("TestLRoute2");
      _lRouteTable._systemName.setText("T2");
      for (int i=0; i<25; i++)
      {
@@ -74,10 +74,10 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
      JButton updateButton = ( JButton ) finder.find( _lRouteTable._addFrame, 0);
      Assert.assertNotNull( "Could not find the updateButton", updateButton );
      //getHelper().enterClickAndLeave( new MouseEventData( this, updateButton ) );
-        
+
      // now close window
      TestHelper.disposeWindow(_lRouteTable._addFrame,this);
-        
+
      // cancel the Reminder dialog
      DialogFinder dFinder = new DialogFinder( "Reminder" );
      java.util.List<JDialog> showingDialogs = dFinder.findAll();
@@ -85,7 +85,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
      JDialog dialog = showingDialogs.get( 0 );
      Assert.assertEquals( "Wrong dialog showing up", "Reminder", dialog.getTitle( ) );
      getHelper().disposeWindow( dialog, this );
-        
+
      }
      */
     // from here down is testing infrastructure

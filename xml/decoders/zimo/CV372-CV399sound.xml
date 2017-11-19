@@ -17,9 +17,9 @@
 <!-- Added CVs from Nigel Cliffe's 'CV372-CV399sound_v34.xml' file, using qualifiers to combine them into a single file -->
 <!-- version 1.2 - Ronald Kuhn - add german translation 06 Jun 2016 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  
-  
-  
+
+
+
   <!--  CV372/373 are for electric locos -->
 <variables>
         <qualifier>
@@ -38,8 +38,8 @@
     <label xml:lang="cs">Závislost hlasitosti na brždění</label>
   </variable>
 </variables>
-  
-  
+
+
   <variable item="Function Key for Coasting" CV="374" default="0">
     <enumVal>
       <enumChoice choice="Off">
@@ -184,7 +184,7 @@
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
           <value>34</value>
-        </qualifier>  
+        </qualifier>
   <variable item="Percentage Reduction of Driving Sound Volume" CV="376" default="0" tooltip="CV376">
     <decVal />
     <label xml:lang="de">Fahrsound Lautstärke</label>
@@ -195,7 +195,7 @@
     <label xml:lang="de">Lichtblitzen Beschleunigen</label>
     <label xml:lang="cs">Pravděpodobnost jiskření kontroleru</label>
   </variable>
-  
+
   <variable item="Electric brake function key" CV="380" default="0" tooltip="CV380">
     <enumVal>
       <enumChoice choice="No key assigned">
@@ -340,7 +340,7 @@
     <tooltip xml:lang="de">Am Ende Sound Loop beenden und Sample bis Ende abspielen statt Sound ausblenden</tooltip>
     <label xml:lang="cs">Elektrodynamická brzda ukončení smyčky</label>
   </variable>
-  
+
   <variable item="Influence of Acceleration on Diesel Sound Steps" CV="387" default="0" tooltip="CV387">
     <decVal />
     <label xml:lang="de">Beschleunigen Diesel-Sound</label>
@@ -356,7 +356,7 @@
     <label xml:lang="de">Diesel Stufe Beschleunigungslimit</label>
     <label xml:lang="cs">Omezení zrychlení na zvuk spalovacího motoru</label>
   </variable>
-  
+
   <variable item="Momentum reduction when driving solo" CV="390" default="0" tooltip="CV390">
     <decVal />
     <label xml:lang="de">Reduzierung Verzögerungszeiten</label>
@@ -367,9 +367,9 @@
     <label xml:lang="de">Gescchwindigkeitsschwelle anheben</label>
     <label xml:lang="cs">Mez rychlostního kroku pro zvuk volnoběhu</label>
   </variable>
-  
-  
-  
+
+
+
   <variable item="Lights flash with switchgear sound" CV="394" mask="XXXXXXXV" default="0" tooltip="CV394 bit 0">
     <enumVal>
         <enumChoice choice="0">
@@ -584,7 +584,7 @@
     <label xml:lang="de">Lauter Taste</label>
     <label xml:lang="cs">Funkční klávesa pro snížení hlasitosti</label>
   </variable>
-  
+
   <variable item="Automatic Coasting Speed Steps"  CV="398"  default="0">
     <decVal />
     <label xml:lang="de">Automatische Coasting-Wirkung</label>
@@ -594,7 +594,7 @@
     <tooltip xml:lang="cs">Počet rychlostích kroků snížených za 0,5 vteřiny pro automatické spuštění výběhu</tooltip>
   </variable>
 </variables>
-  
-  
-  
+
+
+
 </variables>

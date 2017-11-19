@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * EcosTurnoutManagerXmlTest.java
+ * Tests for the EcosTurnoutManagerXml class
  *
- * Description: tests for the EcosTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class EcosTurnoutManagerXmlTest {
 

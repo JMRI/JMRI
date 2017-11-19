@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * 
+ *
  *
  */
 public class Xml {
@@ -38,7 +38,7 @@ public class Xml {
     static final String MAX_LEN_STRING_ROUTE_NAME = "max_len_string_route_name"; // NOI18N
     static final String MAX_LEN_STRING_AUTOMATION_NAME = "max_len_string_automation_name"; // NOI18N
     static final String REPORTS = "reports"; // NOI18N
-    
+
     static final String ACTIONS = "actions"; // NOI18N
     static final String EXCEL_WAIT_TIME = "excelWaitTime"; // NOI18N
 
@@ -48,7 +48,7 @@ public class Xml {
     static final String USE_JMRI_RAILROAD_NAME = "useJmriRailroadName"; // NOI18N
     static final String SETTINGS = "settings"; // NOI18N
     static final String MAIN_MENU = "mainMenu"; // NOI18N
-    static final String CLOSE_ON_SAVE = "closeOnSave"; // NOI18N 
+    static final String CLOSE_ON_SAVE = "closeOnSave"; // NOI18N
     static final String AUTO_SAVE = "autoSave"; // NOI18N
     static final String AUTO_BACKUP = "autoBackup"; // NOI18N
     static final String TRAIN_DIRECTION = "trainDirection"; // NOI18N
@@ -57,7 +57,7 @@ public class Xml {
     static final String HPT = "hpt"; // NOI18N
     static final String SCALE = "scale"; // NOI18N
     static final String CAR_TYPES = "carTypes"; // NOI18N
-    static final String SWITCH_TIME = "switchTime"; // NOI18N 
+    static final String SWITCH_TIME = "switchTime"; // NOI18N
     static final String TRAVEL_TIME = "travelTime"; // NOI18N
     static final String SHOW_VALUE = "showValue"; // NOI18N
     static final String VALUE_LABEL = "valueLabel"; // NOI18N
@@ -77,7 +77,7 @@ public class Xml {
     static final String CAR_LOGGER = "carLogger"; // NOI18N
     static final String ENGINE_LOGGER = "engineLogger"; // NOI18N
     static final String TRAIN_LOGGER = "trainLogger"; // NOI18N
-    
+
     static final String MANIFEST_FILE_OPTIONS = "manifestFileOptions"; // NOI18N
     static final String MANIFEST_SAVE = "manifestSave"; // NOI18N
 
@@ -91,7 +91,7 @@ public class Xml {
     static final String PRINT_HEADERS = "printHeaders"; // NOI18N
     static final String PRINT_CABOOSE_LOAD = "printCabooseLoad"; // NOI18N
     static final String PRINT_PASSENGER_LOAD = "printPassengerLoad"; // NOI18N
-    
+
     static final String LENGTH_UNIT = "lengthUnit"; // NOI18N
     static final String YEAR_MODELED = "yearModeled"; // NOI18N
 
@@ -192,7 +192,7 @@ public class Xml {
 
     static final String COMMENTS = "comments"; // NOI18N
     static final String MISPLACED_CARS = "misplacedCars"; // NOI18N
-    
+
     static final String DISPLAY = "display"; // NOI18N
     static final String SHOW_TRACK_MOVES = "showTrackMoves"; // NOI18N
 

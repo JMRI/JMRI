@@ -11,16 +11,16 @@ import javax.swing.JTextField;
  * Provide GUI to configure Roster defaults.
  *
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
- * @author      Matthew Harris  Copyright (C) 2008, 2010
+ * @author Bob Jacobsen   Copyright (C) 2001, 2003, 2007
+ * @author Matthew Harris  Copyright (C) 2008, 2010
  */
 public class RosterConfigPane extends JPanel {
 
     JLabel filename;
     JTextField owner = new JTextField(20);
-    
+
     public RosterConfigPane() {
-        
+
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 /**
  * ItemPanel for the various item types that come from tool Tables - e.g.
  * Sensors, Turnouts, etc.
- * 
+ *
 * @author Pete Cressman Copyright (c) 2010, 2011
  */
 public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
@@ -59,7 +59,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
      * @param family family
      * @param model model
      * @param editor editor
-     * 
+     *
      */
     public TableItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, editor);
@@ -73,7 +73,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public void init() {
         if (!_initialized) {
             super.init();
-            add(initTablePanel(_model, _editor), 0);      // top of Panel      
+            add(initTablePanel(_model, _editor), 0);      // top of Panel
             _buttonPosition = 1;
         }
     }
@@ -275,7 +275,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             super(flavor, icon);
             iMap = map;
         }
-        
+
         @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
@@ -296,7 +296,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             if (bean == null) {
                 return null;
             }
-            
+
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 if (_itemType.equals("Turnout")) {
                     TurnoutIcon t = new TurnoutIcon(_editor);
@@ -338,7 +338,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 sb.append("\"");
                 return  sb.toString();
             }
-            return null;                
+            return null;
         }
     }
 

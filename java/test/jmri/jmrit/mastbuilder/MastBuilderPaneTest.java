@@ -12,7 +12,7 @@ import org.junit.Test;
  * Tests for the jmrit.mastbuilder.MastBuilderPane class.
  * Note MastBuilder for now is only a demo.
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MastBuilderPaneTest {
 

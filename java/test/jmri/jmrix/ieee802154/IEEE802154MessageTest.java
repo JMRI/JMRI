@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * IEEE802154MessageTest.java
+ * Tests for the jmri.jmrix.ieee802154.IEEE802154Message class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154Message class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154MessageTest extends TestCase {
 

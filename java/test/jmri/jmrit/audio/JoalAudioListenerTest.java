@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of JoalAudioListener
  *
- * @author	Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JoalAudioListenerTest {
 

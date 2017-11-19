@@ -37,8 +37,8 @@
       <authorinitials>PB</authorinitials>
       <revremark>
         This file contains only variables that are common to D&amp;H decoders released
-		after around 2012. Those CVs don't seem to be able applicable to older decoders,
-		even with the latest firmware upgrades.
+        after around 2012. Those CVs don't seem to be able applicable to older decoders,
+        even with the latest firmware upgrades.
       </revremark>
     </revision>
   </revhistory>

@@ -3,17 +3,14 @@ package jmri.jmrit.symbolicprog;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import jmri.progdebugger.ProgDebugger;
 import javax.swing.JLabel;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ComboOnRadioButtonTest {
 
@@ -51,7 +48,7 @@ public class ComboOnRadioButtonTest {
         CvValue cv = new CvValue("81", p);
         v.put("81", cv);
         EnumVariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        String testArray[] = new String[2];
+        String[] testArray = new String[2];
         testArray[0]="";
         testArray[1]="";
         ComboOnRadioButton t = new ComboOnRadioButton(new javax.swing.JComboBox<String>(testArray),variable);

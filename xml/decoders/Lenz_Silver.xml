@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Ronald Kuhn" version="8" lastUpdated="20171022"/>
   <version author="Alain Carasso" version="7" lastUpdated="20170112"/>
@@ -22,9 +22,9 @@
   <!-- Version 2 - removed SUSI & motor timeout CV's as they are not supported "20060114"-->
   <!-- Version 3 - added factory reset menu items (Paul Bender) -->
   <!-- Version 4 - high version now 75, as reported in DCC_UK group by Ken Weiss -->
-  <!-- Version 5 - Add Silver Direct to decoder family.  
+  <!-- Version 5 - Add Silver Direct to decoder family.
                      Change high version for family to 78. (Paul Bender -->
-  <!-- Version 6 - Add Silver 21 Pin to decoder family.  
+  <!-- Version 6 - Add Silver 21 Pin to decoder family.
                      Change high version for family to 82. (Nigel Cliffe) -->
   <!-- Version 7 - Add the missing Function map pane (Alain Carasso) -->
   <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
@@ -400,7 +400,7 @@
         </column>
         <column>
           <label>
-            <text>           </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -458,8 +458,8 @@
     </column>
   </pane>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/> 
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/>
   <!-- duplicated Pane deactivated (Klb4ever)
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
-  -->
+ -->
   </decoder-config>

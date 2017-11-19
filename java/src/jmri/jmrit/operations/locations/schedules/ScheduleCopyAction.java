@@ -15,9 +15,9 @@ public class ScheduleCopyAction extends AbstractAction {
     public ScheduleCopyAction() {
         super(Bundle.getMessage("MenuItemCopySchedule"));
     }
-    
+
     Schedule schedule = null;
-    
+
     public ScheduleCopyAction(Schedule schedule) {
         this();
         this.schedule = schedule;

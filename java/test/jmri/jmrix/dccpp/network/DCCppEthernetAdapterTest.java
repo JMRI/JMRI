@@ -7,13 +7,11 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * DCCppEthernetAdapterTest.java
- *
- * Description:	tests for the jmri.jmrix.dccpp.network.DCCppEthernetAdapter
+ * Tests for the jmri.jmrix.dccpp.network.DCCppEthernetAdapter
  * class
  *
- * @author	Paul Bender
- * @author      Mark Underwood Copyright (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppEthernetAdapterTest extends TestCase {
 

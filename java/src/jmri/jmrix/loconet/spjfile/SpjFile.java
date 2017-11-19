@@ -363,7 +363,7 @@ public class SpjFile {
         // associated with this header is found
         int recordStart;
 
-        // Offset in overall buffer where the data part of the 
+        // Offset in overall buffer where the data part of the
         // record associated with this header is found
         int dataStart;
 

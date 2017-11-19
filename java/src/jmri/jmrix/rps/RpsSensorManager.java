@@ -7,7 +7,7 @@ import jmri.Sensor;
  * <P>
  * System names are "RSpppp", where ppp is a CSV representation of the region.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
   */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 

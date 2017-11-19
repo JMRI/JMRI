@@ -10,7 +10,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 

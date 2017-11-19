@@ -34,7 +34,7 @@
         <output name="14" label="A13"/>
         <output name="15" label="A14"/>
         <output name="16" label="A15"/>
-			</model>
+            </model>
       <model model="Z2-8N" numOuts="8" numFns="14" productID="Basic" comment="Accessory Decoder (turnouts) - 8 outputs">
         <versionCV lowVersionID="8" highVersionID="8"/>
         <output name="1" label="A0"/>
@@ -45,27 +45,27 @@
         <output name="6" label="A5"/>
         <output name="7" label="A6"/>
         <output name="8" label="A7"/>
-			</model>
+            </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/address1-accessory.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/addresses.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/functionOnTime.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/address1-accessory.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/addresses.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/functionOnTime.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/mfgVersionId.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/mfgVersionId.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/modesZBasic.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/modesZBasic.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/qDecoderInfo.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/qDecoderInfo.xml"/>
     </variables>
     <resets>
       <factReset label="Clears over-current events" CV="8" default="7"/>
       <factReset label="Reset All CVs" CV="8" default="8"/>
-			<factReset label="Fast Reset to Mode 20" CV="7" default="20"/>
+            <factReset label="Fast Reset to Mode 20" CV="7" default="20"/>
     </resets>
   </decoder>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAddressesModesBasic.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAdvanced.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneqDecoderInfo.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAddressesModesBasic.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAdvanced.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/paneqDecoderInfo.xml"/>
 </decoder-config>

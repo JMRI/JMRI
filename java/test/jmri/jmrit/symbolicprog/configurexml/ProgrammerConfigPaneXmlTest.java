@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ProgrammerConfigPaneXmlTest.java
+ * Tests for the ProgrammerConfigPaneXml class
  *
- * Description: tests for the ProgrammerConfigPaneXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class ProgrammerConfigPaneXmlTest {
 

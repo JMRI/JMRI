@@ -34,7 +34,7 @@
         <output name="14" label="A13"/>
         <output name="15" label="A14"/>
         <output name="16" label="A15"/>
-			</model>
+            </model>
       <model model="Z2-8" numOuts="8" numFns="14" productID="Standard" comment="Accessory Decoder (motors, turnouts, signals) - 8 outputs">
         <versionCV lowVersionID="8" highVersionID="8"/>
         <output name="1" label="A0"/>
@@ -44,52 +44,52 @@
         <output name="5" label="A4"/>
         <output name="6" label="A5"/>
         <output name="7" label="A6"/>
-			</model>
+            </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/address1-accessory.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/addresses.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/functionOnTime.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/address1-accessory.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/addresses.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/functionOnTime.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/mfgVersionId.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/shortAndLongAddress.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/mfgVersionId.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/shortAndLongAddress.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv21.22.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv28bidirectional.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/cv21.22.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/cv28bidirectional.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29analog.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29bidirectional.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29decodertype.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/functionmap.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29analog.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29bidirectional.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29decodertype.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/functionmap.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv56.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv57.58.60decoderConfig.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/cv56.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/cv57.58.60decoderConfig.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/lights.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/functionOutputProperties.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/modesZStandard.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/lights.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/functionOutputProperties.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/modesZStandard.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/qDecoderInfo.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv64-67debugCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/qDecoderInfo.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qdecoder/cv64-67debugCVs.xml"/>
     </variables>
     <resets>
       <factReset label="Clears over-current events" CV="8" default="7"/>
       <factReset label="Reset All CVs" CV="8" default="8"/>
       <factReset label="Fast Reset to Mode 1" CV="7" default="1"/>
-			<factReset label="Fast Reset to Mode 2" CV="7" default="2"/>
-			<factReset label="Fast Reset to Mode 20" CV="7" default="20"/>
+            <factReset label="Fast Reset to Mode 2" CV="7" default="2"/>
+            <factReset label="Fast Reset to Mode 20" CV="7" default="20"/>
     </resets>
   </decoder>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAddressesModes.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneLights.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAdvanced.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneqDecoderInfo.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneqDecoderDebug.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAddressesModes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/paneLights.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAdvanced.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/paneqDecoderInfo.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/qdecoder/paneqDecoderDebug.xml"/>
 </decoder-config>

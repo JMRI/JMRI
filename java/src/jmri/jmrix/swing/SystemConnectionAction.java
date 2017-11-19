@@ -15,7 +15,7 @@ public interface SystemConnectionAction {
 
     /**
      * Get the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
-     * 
+     *
      * @return the SystemConnectionMemo or null if not bound.
      */
     @CheckForNull

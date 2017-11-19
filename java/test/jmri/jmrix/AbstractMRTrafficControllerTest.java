@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  */
 public class AbstractMRTrafficControllerTest {
-    
+
     // derived classes should set the value of tc appropriately.
     protected AbstractMRTrafficController tc;
 
@@ -55,7 +55,7 @@ public class AbstractMRTrafficControllerTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRTrafficController(){
            @Override
@@ -83,7 +83,7 @@ public class AbstractMRTrafficControllerTest {
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.tearDown();
     }
 
 }

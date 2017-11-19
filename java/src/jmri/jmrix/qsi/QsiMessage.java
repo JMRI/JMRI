@@ -8,7 +8,7 @@ import jmri.util.StringUtil;
  * <P>
  * The {@link QsiReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -297,7 +297,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
             l = l + (8 - l % 8);
         }
         // and data padded with erased condition
-        int padded[] = new int[l];
+        int[] padded = new int[l];
         for (int i = 0; i < l; i++) {
             if (i < data.length) {
                 padded[i] = data[i];

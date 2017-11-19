@@ -9,40 +9,40 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-	<author>
-    	<personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
-    	<email>dcc2@ebroerse.nl</email>
-		</author>    
+    <author>
+        <personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
+        <email>dcc2@ebroerse.nl</email>
+        </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-		<revnumber>1</revnumber>
-		<date>2013-01-28</date>
-		<authorinitials>EBR</authorinitials>
-		<revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
-    </revision>   
-	<revision>
-		<revnumber>2</revnumber>
-		<date>2013-01-29</date>
-		<authorinitials>EBR</authorinitials>
-		<revremark>imagelink path for rule-282 corrected</revremark>
-	</revision>
+        <revnumber>1</revnumber>
+        <date>2013-01-28</date>
+        <authorinitials>EBR</authorinitials>
+        <revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2013-01-29</date>
+        <authorinitials>EBR</authorinitials>
+        <revremark>imagelink path for rule-282 corrected</revremark>
+    </revision>
 <revision>
-	<revnumber>3</revnumber>
-	<date>2013-01-31</date>
-	<authorinitials>EBR</authorinitials>
-	<revremark>image link pointing to jmri.org, description corrected (color light)</revremark>
+    <revnumber>3</revnumber>
+    <date>2013-01-31</date>
+    <authorinitials>EBR</authorinitials>
+    <revremark>image link pointing to jmri.org, description corrected (color light)</revremark>
 </revision>
-	</revhistory> 
+    </revhistory>
 
   <aspecttable>RG-1965</aspecttable>
   <name>Single head dwarf permissive signal</name>
   <reference>As described in the 1965 version of the RG publication "Rio Grande Rules of Operating Department".</reference>
   <description>Appearances for a permissive color light dwarf signal with number plate</description>
-  
+
   <appearances>
 
     <appearance>
@@ -65,14 +65,14 @@
       <reference>Rule 285</reference>
       <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-285.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
       <reference>Rule 290</reference>
       <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-290.gif</imagelink>
     </appearance>
-    
+
 
     <appearance>
       <aspectname>Stop and Proceed</aspectname>
@@ -140,4 +140,4 @@
 
   </aspectMappings>
 
-</appearancetable>  
+</appearancetable>

@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations Locations GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
@@ -30,7 +30,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         }
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one interchange track
@@ -55,7 +55,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         }
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one interchange tracks
@@ -85,7 +85,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         }
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one interchange tracks
@@ -116,7 +116,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         }
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create two interchange tracks
@@ -184,7 +184,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
-       
+
     }
 
     // The minimal setup for log4J

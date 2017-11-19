@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of track loads
  *
  * @author Dan Boudreau Copyright (C) 2013, 2014, 2015
- * 
+ *
  */
 public class TrackLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -204,7 +204,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         shipLoadGroup.add(shipLoadNameAll);
         shipLoadGroup.add(shipLoadNameInclude);
         shipLoadGroup.add(shipLoadNameExclude);
-        
+
         JPanel pOptions = new JPanel();
         pOptions.setLayout(new GridBagLayout());
         pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
@@ -283,7 +283,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         loadAndTypeCheckBox.setSelected(loadAndType);
         shipLoadAndTypeCheckBox.setSelected(shipLoadAndType);
-        
+
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_LoadOptions", true); // NOI18N
 

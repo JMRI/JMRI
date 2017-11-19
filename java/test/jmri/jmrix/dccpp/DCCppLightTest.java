@@ -6,8 +6,8 @@ import org.junit.Assert;
 /**
  * Tests for the {@link jmri.jmrix.dccpp.DCCppLight} class.
  *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
 

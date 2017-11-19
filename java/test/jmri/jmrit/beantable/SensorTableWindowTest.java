@@ -19,7 +19,7 @@ import org.junit.Assert;
  * Swing jfcUnit tests for the sensor table. Do not convert to JUnit4 (no
  * support for enterClickAndLeave() etc.)
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 

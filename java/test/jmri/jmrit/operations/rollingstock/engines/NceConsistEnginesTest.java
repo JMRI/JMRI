@@ -16,7 +16,7 @@ import org.junit.Assert;
  * Everything Consist: Everything Import: Everything EngineManager: Engine
  * register/deregister EngineManager: Consists
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class NceConsistEnginesTest extends OperationsTestCase {
 
@@ -62,16 +62,16 @@ public class NceConsistEnginesTest extends OperationsTestCase {
         tempengines = c1.getEngines();
         Assert.assertTrue("Consist Engine 2 after 4c", tempengines.contains(e2));
         Assert.assertFalse("Consist Engine 4 after 4c", tempengines.contains(e4));
-     
+
         c1.delete(e2);
         Assert.assertEquals("Consist Engine Delete 2 Length", 56 + 4 + 45 + 4, c1.getTotalLength());
-        
+
         c1.delete(e1);
         Assert.assertEquals("Consist Engine Delete 1 Length", 45 + 4, c1.getTotalLength());
-        
+
         c1.delete(e3);
         Assert.assertEquals("Consist Engine Delete 3 Length", 0, c1.getTotalLength());
-        
+
     }
 
     public void testEngineConsist() {

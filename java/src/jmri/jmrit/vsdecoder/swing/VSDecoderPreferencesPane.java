@@ -26,19 +26,19 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
- * 
+ * @author Mark Underwood Copyright (C) 2011
+ *
  */
 class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
 
@@ -262,7 +262,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
     }
 
     private void jbPathBrowseActionPerformed(java.awt.event.ActionEvent evt) {
-        // Browse for a path.  Update the UI 
+        // Browse for a path.  Update the UI
         // use the path currently in the window text field, if possible.
         String path;
         if (tfDefaultVSDFilePath.getText() != null) {

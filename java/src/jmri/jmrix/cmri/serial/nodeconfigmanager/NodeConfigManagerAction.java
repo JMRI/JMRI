@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
  * NodeConfigManagerAction object
  * Derived from the original NodeConfig class
  *
- * @author	Chuck Catania    Copyright (C) 2014,2017
+ * @author Chuck Catania    Copyright (C) 2014,2017
  */
 
 public class NodeConfigManagerAction extends AbstractAction {
-    
+
     CMRISystemConnectionMemo _memo = null;
 
-    public NodeConfigManagerAction(String s, CMRISystemConnectionMemo memo) { 
+    public NodeConfigManagerAction(String s, CMRISystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
@@ -28,7 +28,7 @@ public class NodeConfigManagerAction extends AbstractAction {
     public NodeConfigManagerAction(CMRISystemConnectionMemo memo) {
         this(Bundle.getMessage("WindowTitle"), memo);
     }
-    
+
   @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigManagerFrame f = new NodeConfigManagerFrame(_memo);

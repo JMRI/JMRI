@@ -10,10 +10,10 @@ import org.junit.Test;
  * JUnit tests for the Mx1SystemConnectionMemo class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Mx1SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
-     
+
     @Override
     @Test
     public void testProvidesConsistManager(){

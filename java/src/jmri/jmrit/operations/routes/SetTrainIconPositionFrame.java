@@ -58,7 +58,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     // combo boxes
     JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
-    //Spinners  
+    //Spinners
     JSpinner spinTrainIconEastX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconEastY = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconWestX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
@@ -170,7 +170,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-        // check to see if a location has been selected 
+        // check to see if a location has been selected
         if (locationBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToEdit"), Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
             return;

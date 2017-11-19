@@ -17,7 +17,7 @@
 <author>
     <personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
     <email>dcc2@ebroerse.nl</email>
-</author>    
+</author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -26,7 +26,7 @@
         <date>2013-01-28</date>
         <authorinitials>EJB</authorinitials>
         <revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
@@ -135,6 +135,6 @@
     <appearancefile href="appearance-SL-3-high-abs.xml"/>
     <appearancefile href="appearance-SL-3-high-pbs.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

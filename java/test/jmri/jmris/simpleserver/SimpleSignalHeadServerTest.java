@@ -37,7 +37,7 @@ public class SimpleSignalHeadServerTest {
                     public void write(int b) throws java.io.IOException {
                     }
                 });
-        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);        
+        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(jcs);
         Assert.assertNotNull(a);
     }
@@ -52,7 +52,7 @@ public class SimpleSignalHeadServerTest {
                         sb.append((char)b);
                     }
                 });
-        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);        
+        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(jcs);
         // NOTE: this test uses reflection to test a private method.
         java.lang.reflect.Method sendMessageMethod=null;

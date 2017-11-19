@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
  */
 public class DateUtil {
 
-    // return a GregorianCalendar representation of the given julian date 
+    // return a GregorianCalendar representation of the given julian date
     // for reference, see:
     // http://aa.usno.navy.mil/faq/docs/JD_Formula.php
     // @param long julianDay number of days since January 1,4713BC.
@@ -32,7 +32,7 @@ public class DateUtil {
         return (returnCal);
     }
 
-    // return a julian date representation of the given GregorianCalendar date 
+    // return a julian date representation of the given GregorianCalendar date
     // for reference, see:
     // http://aa.usno.navy.mil/faq/docs/JD_Formula.php
     // @param {@link java.util.GregorianCalendar} cal i

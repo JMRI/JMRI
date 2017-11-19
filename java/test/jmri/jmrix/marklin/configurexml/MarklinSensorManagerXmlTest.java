@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MarklinSensorManagerXmlTest.java
+ * Tests for the MarklinSensorManagerXml class
  *
- * Description: tests for the MarklinSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class MarklinSensorManagerXmlTest {
 

@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class LocoNetMessageTest extends TestCase {
 

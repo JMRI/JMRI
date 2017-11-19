@@ -9,12 +9,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * EliteXNetInitializationManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetInitializationManager
+ * Tests for the jmri.jmrix.lenz.EliteXNetInitializationManager
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetInitializationManagerTest extends TestCase {
 

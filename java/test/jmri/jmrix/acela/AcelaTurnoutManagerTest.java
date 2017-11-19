@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
  *
- * @author	Bob Coleman Copyright 2008
+ * @author Bob Coleman Copyright 2008
  */
 public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    private AcelaTrafficControlScaffold tcis = null; 
-    private AcelaSystemConnectionMemo memo = null; 
+    private AcelaTrafficControlScaffold tcis = null;
+    private AcelaSystemConnectionMemo memo = null;
 
     @Override
     public String getSystemName(int i) {
@@ -65,7 +65,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     @Before
     public void setUp() {
         JUnitUtil.setUp();
- 
+
         tcis = new AcelaTrafficControlScaffold();
         memo = new AcelaSystemConnectionMemo(tcis);
 

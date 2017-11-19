@@ -14,7 +14,7 @@ import jmri.util.StringUtil;
  * Frame for user input of Powerline messages
  *
  * @author Ken Cameron Copyright (C) 2010 derived from:
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePanel implements SerialListener {
@@ -81,7 +81,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
     public void initComponents(SerialSystemConnectionMemo memo) {
         this.memo = memo;
         tc = memo.getTrafficController();
-        
+
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");
@@ -121,7 +121,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
 
     SerialMessage createPacket(String s) {
         // gather bytes in result
-        byte b[] = StringUtil.bytesFromHexString(s);
+        byte[] b = StringUtil.bytesFromHexString(s);
         SerialMessage m = memo.getTrafficController().getSerialMessage(b.length);
         for (int i = 0; i < b.length; i++) {
             m.setElement(i, b[i]);

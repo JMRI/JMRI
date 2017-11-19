@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
 
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -29,15 +29,15 @@
         <date>2011-08-04</date>
         <authorinitials>KD</authorinitials>
         <revremark>Addition of Specific Appearances and aspect mapping</revremark>
-    </revision>  
+    </revision>
   </revhistory>
-  
+
   <aspecttable>BR</aspecttable>
 
   <name>3 Aspect Signal Head(individual aspects)</name>
-  
+
   <description>This uses 3 single state signal heads</description>
-  
+
   <appearances>
 
     <appearance>
@@ -57,7 +57,7 @@
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Caution.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Flash Caution</aspectname>
       <show>dark</show>
@@ -66,7 +66,7 @@
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3FlashCaution.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashCaution.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Danger</aspectname>
       <show>dark</show>
@@ -77,7 +77,7 @@
     </appearance>
 
   </appearances>
-  
+
   <specificappearances>
     <danger>
       <aspect>Danger</aspect>
@@ -89,46 +89,46 @@
       <aspect>Danger</aspect>
     </held>
   </specificappearances>
-  
+
   <aspectMappings>
    <aspectMapping>
      <advancedAspect>Danger</advancedAspect>
      <ourAspect>Caution</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Caution</advancedAspect>
      <ourAspect>Proceed</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Proceed</advancedAspect>
      <ourAspect>Proceed</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Flash Caution</advancedAspect>
      <ourAspect>Proceed</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Preliminary Caution</advancedAspect>
      <ourAspect>Proceed</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Flash Preliminary Caution</advancedAspect>
      <ourAspect>Proceed</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Off</advancedAspect>
      <ourAspect>Caution</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>On</advancedAspect>
      <ourAspect>Caution</ourAspect>
    </aspectMapping>
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

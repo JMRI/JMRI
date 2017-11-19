@@ -29,7 +29,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.jmrix.ieee802154.xbee package
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class PackageTest {
 }

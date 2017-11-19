@@ -34,7 +34,7 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
 
     // combo boxes
     JComboBox<Schedule> scheduleBox = scheduleManager.getComboBox();
-    
+
     public ScheduleCopyFrame() {
         this(null);
     }
@@ -76,9 +76,9 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
 
         // setup buttons
         addButtonAction(copyButton);
- 
+
         scheduleBox.setSelectedItem(schedule);
-        
+
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight250));
     }
 

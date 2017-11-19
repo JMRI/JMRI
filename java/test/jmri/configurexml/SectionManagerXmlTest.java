@@ -67,7 +67,7 @@ public class SectionManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("West"));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("WestSiding"));
 
-        // check existance of a couple of blocks just to be sure 
+        // check existance of a couple of blocks just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
@@ -88,7 +88,7 @@ public class SectionManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT2"));
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT8"));
 
-        // check existance of a couple of memories just to be sure        
+        // check existance of a couple of memories just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0001"));

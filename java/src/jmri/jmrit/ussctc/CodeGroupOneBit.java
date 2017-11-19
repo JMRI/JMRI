@@ -7,6 +7,6 @@ package jmri.jmrit.ussctc;
  */
 
 enum CodeGroupOneBit {
-    Single0, 
+    Single0,
     Single1
 }

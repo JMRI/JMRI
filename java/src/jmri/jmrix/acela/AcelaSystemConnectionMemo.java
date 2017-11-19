@@ -29,7 +29,7 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, AcelaSystemConnectionMemo.class); // also register as specific type
 
         // create and register the AcelaComponentFactory for the GUI
-        InstanceManager.store(cf = new jmri.jmrix.acela.swing.AcelaComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.acela.swing.AcelaComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
         log.debug("Created AcelaSystemConnectionMemo");
     }

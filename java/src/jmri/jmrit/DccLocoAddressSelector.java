@@ -244,7 +244,7 @@ public class DccLocoAddressSelector extends JPanel {
 
     /*
      * Get the text field for entering the number as a separate
-     * component.  
+     * component.
      * <P>
      * Because Swing only allows a component to be inserted in one
      * container, this can only be done once

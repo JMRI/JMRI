@@ -56,7 +56,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
                 enableOpt4(options.get(adapter.getOption3Name()).getItem());
             }
         });
-        
+
         enableOpt2(options.get(adapter.getOption1Name()).getItem());
         enableOpt3(options.get(adapter.getOption1Name()).getItem());
         enableOpt4(options.get(adapter.getOption3Name()).getItem());

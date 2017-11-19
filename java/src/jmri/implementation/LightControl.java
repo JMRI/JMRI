@@ -169,7 +169,7 @@ public class LightControl {
     }
 
     // operational instance variables - not saved between runs
-    protected Light _parentLight = null;        // Light that is being controlled   
+    protected Light _parentLight = null;        // Light that is being controlled
     private boolean _active = false;
     protected NamedBeanHandle<Sensor> _namedControlSensor = null;
     private java.beans.PropertyChangeListener _sensorListener = null;
@@ -297,7 +297,7 @@ public class LightControl {
                                 + " is linked to a Turnout that does not exist: " + _controlSensorName);
                         return;
                     }
-                    
+
                     // set light based on current turnout state if known
                     int tState = _controlTurnout.getKnownState();
                     if (tState == Turnout.CLOSED) {

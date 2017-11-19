@@ -13,7 +13,7 @@ import jmri.util.JUnitUtil;
 /**
  * Demo for exploring operation of the PickSinglePanel class
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class PickSinglePanelDemo implements ListSelectionListener {
 

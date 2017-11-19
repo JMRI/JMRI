@@ -49,7 +49,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
 //            makeDragIconPanel();
             initIconFamiliesPanel();
-            add(_iconFamilyPanel, 1);            
+            add(_iconFamilyPanel, 1);
         }
     }
 
@@ -170,7 +170,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _family = null;
             return;
         }
-        
+
         try {
             _mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(bean.getDisplayName());
         } catch (IllegalArgumentException ex) {
@@ -190,7 +190,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                     s = s.substring(s.indexOf("resources"));
                 }
                 NamedIcon n = new NamedIcon(s, s);
-                _currentIconMap.put(aspect, n);                
+                _currentIconMap.put(aspect, n);
             }
         }
         if (log.isDebugEnabled()) {
@@ -299,7 +299,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                 sb.append("\"");
                 return  sb.toString();
             }
-            return null;                
+            return null;
         }
     }
 

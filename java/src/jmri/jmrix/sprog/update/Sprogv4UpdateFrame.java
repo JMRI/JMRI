@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * Refactored
  *
- * @author	Andrew Crosland Copyright (C) 2004
+ * @author Andrew Crosland Copyright (C) 2004
   */
 public class Sprogv4UpdateFrame
         extends SprogUpdateFrame
@@ -22,7 +22,7 @@ public class Sprogv4UpdateFrame
         super(memo);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -38,7 +38,7 @@ public class Sprogv4UpdateFrame
         _memo.getSprogVersionQuery().requestVersion(this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

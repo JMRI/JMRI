@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.console;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,14 +10,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of CbusConsolePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
 
     jmri.jmrix.can.CanSystemConnectionMemo memo = null;
     jmri.jmrix.can.TrafficController tc = null;
 
-    @Override 
+    @Override
     @Test
     public void testInitComponents() throws Exception{
         // for now, just makes ure there isn't an exception.

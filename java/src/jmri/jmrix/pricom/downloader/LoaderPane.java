@@ -20,15 +20,12 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
 import purejavacomm.*;
 
 /**
  * Pane for downloading software updates to PRICOM products
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -191,7 +188,7 @@ public class LoaderPane extends javax.swing.JPanel {
         }
 
         static final int maxMsg = 80;
-        byte inBuffer[];
+        byte[] inBuffer;
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
                                             justification="this is for skip-chars while loop: no matter how many, we're skipping")
@@ -418,7 +415,7 @@ public class LoaderPane extends javax.swing.JPanel {
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -453,8 +450,8 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true); // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -640,7 +637,7 @@ public class LoaderPane extends javax.swing.JPanel {
         long crc = 0;
 
         for (int r = 0; r < buffer.length - 2; r++) {
-            crc = CRC_char(crc, buffer[r]);	// do this character
+            crc = CRC_char(crc, buffer[r]); // do this character
         }
 
         // store into buffer

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JMRIClientSensorManagerXmlTest.java
+ * Tests for the JMRIClientSensorManagerXml class
  *
- * Description: tests for the JMRIClientSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class JMRIClientSensorManagerXmlTest {
 

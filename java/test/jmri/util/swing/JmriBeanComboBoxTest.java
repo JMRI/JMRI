@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Bob Jacobsen Copyright (C) 2017	
+ * @author Bob Jacobsen Copyright (C) 2017
  */
 public class JmriBeanComboBoxTest {
 

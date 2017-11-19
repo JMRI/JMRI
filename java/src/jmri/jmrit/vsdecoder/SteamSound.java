@@ -4,18 +4,18 @@ package jmri.jmrit.vsdecoder;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -239,7 +239,7 @@ class SteamSound extends EngineSound {
             num_cylinders = Integer.parseInt(n);
             //log.debug("Num Cylinders: " + num_cylinders);
         }
-        // For now, num_rpms is not used.  
+        // For now, num_rpms is not used.
  /*
          n = e.getChild("rpm-steps").getValue();
          if (n != null) {
@@ -281,7 +281,7 @@ class SteamSound extends EngineSound {
          if (el != null) {
          fn = el.getChild("file").getValue();
          log.debug("Start sound: " + fn);
-         start_sound = new SoundBite(vf, fn, "Engine_start", 
+         start_sound = new SoundBite(vf, fn, "Engine_start",
          "Engine_Start");
          // Handle gain
          start_sound.setGain(setXMLGain(el));

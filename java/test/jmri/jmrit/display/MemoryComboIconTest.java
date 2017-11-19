@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of MemoryComboIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MemoryComboIconTest {
 
@@ -19,7 +19,7 @@ public class MemoryComboIconTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor ef = new EditorScaffold();
-        String args[] = {"foo","bar"};
+        String[] args = {"foo","bar"};
         MemoryComboIcon bci = new MemoryComboIcon(ef,args);
         Assert.assertNotNull("MemoryComboIcon Constructor",bci);
     }

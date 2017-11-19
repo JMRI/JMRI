@@ -11,7 +11,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Only supports the DCC single-number address space.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2007, 2013
  */
 public class ProgDebugger implements AddressedProgrammer {
 

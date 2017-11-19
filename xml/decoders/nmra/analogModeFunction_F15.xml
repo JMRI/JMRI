@@ -27,7 +27,7 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Created from analogModeFunction.xml - Added CV14 for F0 and F9-F15 (Trix)</revremark>
     </revision>
-    <revision>    
+    <revision>
       <revnumber>7</revnumber>
       <date>2013-07-29</date>
       <authorinitials>PB</authorinitials>
@@ -253,5 +253,5 @@
       <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F15 když jednotka je provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F15 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F15 te activeren tijdens Analoog rijden</tooltip>
-    </variable>            
+    </variable>
 </variables>

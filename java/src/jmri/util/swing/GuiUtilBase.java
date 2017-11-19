@@ -123,7 +123,7 @@ public class GuiUtilBase {
             String reference = child.getChild("help").getText();
             return jmri.util.HelpUtil.getHelpAction(name, icon, reference);
         } else if (child.getChild("current") != null) {
-            String method[] = {child.getChild("current").getText()};
+            String[] method = {child.getChild("current").getText()};
             return createActionInCallingWindow(context, method, name, icon);
             //Relates to the instance that has called it
         } else { // make from icon or text without associated function
@@ -142,7 +142,7 @@ public class GuiUtilBase {
      * @param icon icon for the action
      * @return the action for obj or an empty action with name and icon
      */
-    static Action createActionInCallingWindow(Object obj, final String args[], String name, Icon icon) {
+    static Action createActionInCallingWindow(Object obj, final String[] args, String name, Icon icon) {
         Method method = null;
         try {
             method = obj.getClass().getDeclaredMethod("remoteCalls", String[].class);
@@ -176,7 +176,7 @@ public class GuiUtilBase {
         Object obj;
         Object args;
 
-        public void setArgs(Object args[]) {
+        public void setArgs(Object[] args) {
             //args = stringArgs.getClass();
             this.args = args;
         }

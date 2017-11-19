@@ -12,7 +12,7 @@ public class AbstractPortControllerScaffold extends AbstractPortController {
 
     DataOutputStream tistream; // tests write to this
     DataInputStream istream;  // so the traffic controller can read from this
-   
+
     @Override
     public void configure() {
     }

@@ -68,7 +68,7 @@ import org.junit.runners.Suite;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class PackageTest {
 }

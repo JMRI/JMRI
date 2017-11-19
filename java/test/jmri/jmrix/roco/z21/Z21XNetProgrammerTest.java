@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * Tests for the z21XNetProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 
@@ -46,8 +46,8 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         t.sendTestMessage(mr1);
 
         // At this point, the z21XpressNetProgrammer
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -86,8 +86,8 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         t.sendTestMessage(mr1);
 
         // At this point, the z21XpressNetProgrammer
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -97,7 +97,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     }
 
     // this test is the same as the testWriteCvSequence test, but
-    // it checks the sequence for CVs greater than 256, which use 
+    // it checks the sequence for CVs greater than 256, which use
     // different XpressNet commands.
     @Override
     public void testWriteHighCvSequence() throws JmriException {
@@ -128,8 +128,8 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         t.sendTestMessage(mr1);
 
         // At this point, the z21XpressNetProgrammer
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
@@ -139,7 +139,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     }
 
     // this test is the same as the testReadCvSequence test, but
-    // it checks the sequence for CVs greater than 256, which use 
+    // it checks the sequence for CVs greater than 256, which use
     // different XpressNet commands.
     @Override
     public void testReadCvHighSequence() throws JmriException {
@@ -171,8 +171,8 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         t.sendTestMessage(mr1);
 
         // At this point, the Z21XNetProgrammer
-        // should send a result to the programmer listeners, and 
-        // wait for either the next read/write request or for the 
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.

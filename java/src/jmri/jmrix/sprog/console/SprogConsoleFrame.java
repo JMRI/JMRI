@@ -24,17 +24,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame for Sprog Console
- *
+ * <p>
  * Updated Jan 2010 by Andrew Berridge - fixed errors caused by trying to send
  * some commands while slot manager is active
- * 
+ * <p>
  * Updated April 2016 by Andrew Crosland remove the checks on slot manager
  * status, implement a timeout and look for the correct replies which may be
  * delayed by replies for slot manager.
- *
+ * <p>
  * Refactored
  *
- * @author	Andrew Crosland Copyright (C) 2008, 2016
+ * @author Andrew Crosland Copyright (C) 2008, 2016
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener, SprogVersionListener {
 
@@ -76,7 +76,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         MODEQUERYSENT, // awaiting reply to "M"
         CURRENTSENT, // awaiting reply to "I xxx"
         MODESENT, // awaiting reply to "M xxx"
-        WRITESENT   		// awaiting reply to "W"
+        WRITESENT // awaiting reply to "W"
     }
 
     /*static final int IDLE = 0;
@@ -339,7 +339,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         if (isCurrentLimitPossible()) {
             validateCurrent();
             // Value written is scaled from mA to hardware units
-            currentLimitForHardware = (int) (currentLimit * (1/sv.sprogType.getCurrentMultiplier()));
+            currentLimitForHardware = (int) (currentLimit * (1 / sv.sprogType.getCurrentMultiplier()));
             if (sv.sprogType.sprogType < SprogType.SPROGIIv3) {
                 // Hack for SPROG bug where MSbyte of value must be non-zero
                 currentLimitForHardware += 256;
@@ -396,7 +396,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             JOptionPane.showMessageDialog(null, "SPROG prompt not found",
                     "SPROG Console", JOptionPane.ERROR_MESSAGE);
         } else {
-            if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) &&(sv.sprogType.sprogType < SprogType.NANO)) {
+            if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) && (sv.sprogType.sprogType < SprogType.NANO)) {
                 currentTextField.setToolTipText("Enter new current limit in milliAmps (less than 2500)");
             }
             // We know what we're connected to
@@ -491,7 +491,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                         return;
                     }
                     // Value written is scaled from hardware units to mA
-                    currentLimit = (int)(currentLimitFromHardware * sv.sprogType.getCurrentMultiplier());
+                    currentLimit = (int) (currentLimitFromHardware * sv.sprogType.getCurrentMultiplier());
                     log.debug("Current limit scale factor: " + sv.sprogType.getCurrentMultiplier());
                     log.debug("Current limit from hardware: " + currentLimitFromHardware + " scaled to: " + currentLimit + "mA");
                     currentTextField.setText(String.valueOf(currentLimit));
@@ -622,6 +622,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts
+     *
      * @param delay milliseconds to delay
      */
     protected void restartTimer(int delay) {

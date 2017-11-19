@@ -191,7 +191,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("train requirements 3", Train.CABOOSE, t.getRequirements());
         Assert.assertEquals("caboose road 1", "", t.getCabooseRoad());
         // shouldn't change until Save
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
         trainEditFrame.roadCabooseBox.setSelectedItem(roadNames[2]);
         Assert.assertEquals("caboose road 2", "", t.getCabooseRoad());
         enterClickAndLeave(trainEditFrame.saveTrainButton);
@@ -403,7 +403,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.modify1Caboose);
 
         f.routePickup1Box.setSelectedIndex(0);
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
         f.roadCaboose1Box.setSelectedItem(roadNames[2]);
         enterClickAndLeave(f.saveTrainButton);
 
@@ -564,11 +564,11 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
 
         // TODO add test for combo box
-        //		enterClickAndLeave(f.switchListPageComboBox);
-        //		enterClickAndLeave(f.saveButton);
-        //		Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
-        //		Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
-        //		Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
+        // enterClickAndLeave(f.switchListPageComboBox);
+        // enterClickAndLeave(f.saveButton);
+        // Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        // Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
+        // Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
         ThreadingUtil.runOnGUI(() -> {
             JUnitUtil.dispose(f);
         });
@@ -650,7 +650,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     private void loadTrains() {
         // Add some cars for the various tests in this suite
         CarManager cm = InstanceManager.getDefault(CarManager.class);
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        String[] roadNames = Bundle.getMessage("carRoadNames").split(",");
         // add caboose to the roster
         Car c = cm.newCar(roadNames[2], "687");
         c.setCaboose(true);

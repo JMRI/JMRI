@@ -17,7 +17,7 @@
   <version author="jsalemi@speakeasy.net" version="1.1" lastUpdated="20041213"/>
   <!-- Version 1 - made from TCS A1 file. - joe -->
   <!-- Version 1.1 - Completed new F-key re-mapping pane to work with the new non-standard
-			 way TCS does it. - joe -->
+             way TCS does it. - joe -->
   <!-- Version 1.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <!-- Version 1.2- 2013_06_09 Added Translation lines and use of xi:include (Enzo Fortuna) -->
   <!-- Version 2 - DEPRECATED FILE !                    -->
@@ -196,8 +196,8 @@
         <label xml:lang="it">Tabella Velocità</label>
       </variable>
       <!-- TCS has changed how their mapping function works - they now assign a particular output
-	to a control CV, rather than a particular function key like other vendors. The standard
-	mapping table doesn't work; I've created a TCS-specific mapping pane - joe -->
+    to a control CV, rather than a particular function key like other vendors. The standard
+    mapping table doesn't work; I've created a TCS-specific mapping pane - joe -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>

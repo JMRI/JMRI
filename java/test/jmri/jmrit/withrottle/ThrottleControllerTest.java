@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of ThrottleController
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ThrottleControllerTest extends TestCase {
 
@@ -40,7 +40,7 @@ public class ThrottleControllerTest extends TestCase {
         super.setUp();
         JUnitUtil.setUp();
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

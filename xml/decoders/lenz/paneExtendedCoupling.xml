@@ -26,7 +26,7 @@
         <surname>Jacobsen</surname>
       </personname>
     </author>
-	<author>
+    <author>
       <personname>
         <firstname>Bernd (Ba)</firstname>
         <surname>Wisotzki</surname>
@@ -65,7 +65,7 @@
         <text>F1 Forward/backward mapping.               </text>
         <text xml:lang="de">F1 Vorwärts/Rückwärts Zuordnung.               </text>
         <text xml:lang="cs">F1 přiřazení vpřed/vzad.                       </text>
-		<text xml:lang="ca">Mapejat de F1 Davant/Darrere.               </text>
+        <text xml:lang="ca">Mapejat de F1 Davant/Darrere.               </text>
       </label>
       <label>
         <text> </text>
@@ -214,8 +214,8 @@
             <label>
               <text>H</text>
               <text xml:lang="de">H</text>
-			  <text xml:lang="cs">H</text>
-			  <text xml:lang="ca">H</text>
+              <text xml:lang="cs">H</text>
+              <text xml:lang="ca">H</text>
             </label>
           </row>
           <row>
@@ -285,5 +285,5 @@
       </label>
       <display item="CMOVE"/>
     </column>
-  
+
 </pane>

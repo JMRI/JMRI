@@ -21,7 +21,7 @@
   <decoder>
     <family name="Minitrix" mfg="Trix Modelleisenbahn">
       <model model="66838" numOuts="0" numFns="0" highVersionID="65" lowVersionID="65" comment="Trix Selectrix &amp; DCC decoder">
-		</model>
+        </model>
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>

@@ -12,7 +12,7 @@ import jmri.jmrix.nce.NceTrafficController;
 /**
  * Test simple functioning of NcePacketMonitorPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
 

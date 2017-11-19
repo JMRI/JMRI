@@ -91,7 +91,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         pColor.setLayout(new GridBagLayout());
         pColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColor")));
         addItem(pColor, colorBox, 0, 0);
-        
+
         pColorReset = new JPanel();
         pColorReset.setLayout(new GridBagLayout());
         pColorReset.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorReset")));
@@ -152,7 +152,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         addButtonAction(saveButton);
         addRadioButtonAction(manualRadioButton);
         addRadioButtonAction(autoRadioButton);
-        
+
         addComboBoxAction(trainBox);
 
         makePanelsVisible();
@@ -206,7 +206,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         pColorTrainEnRoute.setVisible(!manualRadioButton.isSelected());
         pColorTerminated.setVisible(!manualRadioButton.isSelected());
     }
-    
+
     @Override
     public void comboBoxActionPerformed(ActionEvent ae) {
         Train train = (Train) trainBox.getSelectedItem();

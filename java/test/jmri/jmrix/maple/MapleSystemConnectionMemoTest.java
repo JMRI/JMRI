@@ -9,10 +9,10 @@ import org.junit.Test;
 /**
  * JUnit tests for the MapleSystemConnectionMemo class
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MapleSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
-     
+
     @Test
     public void systemPrefixTest() {
         // default values would be changed to K2 as there is already a connection with prefix [K] active
@@ -22,25 +22,25 @@ public class MapleSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
     @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficController() {
-          @Override
-          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
-          }
-       };
-       scm = new MapleSystemConnectionMemo();
+    public void setUp() {
+        JUnitUtil.setUp();
+        SerialTrafficController tc = new SerialTrafficController() {
+            @Override
+            public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+            }
+        };
+        scm = new MapleSystemConnectionMemo();
     }
 
     @Override
     @After
-    public void tearDown(){
+    public void tearDown() {
         scm = null;
         JUnitUtil.tearDown();
     }

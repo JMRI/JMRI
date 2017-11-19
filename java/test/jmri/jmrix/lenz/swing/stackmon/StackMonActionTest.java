@@ -13,7 +13,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonAction class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class StackMonActionTest {
 
@@ -31,7 +31,7 @@ public class StackMonActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         StackMonAction action = new StackMonAction(Bundle.getMessage("MenuItemCSDatabaseManager"),memo);
         action.actionPerformed(null);
-        // wait for frame with the value of "StackMonitortitle" (from the 
+        // wait for frame with the value of "StackMonitortitle" (from the
         // resource bundle ) in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match

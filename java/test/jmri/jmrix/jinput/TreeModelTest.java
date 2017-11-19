@@ -13,7 +13,7 @@ import org.junit.rules.Timeout;
 /**
  * Test simple functioning of TreeModel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class TreeModelTest {
 

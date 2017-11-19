@@ -18,7 +18,7 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     @Test
     public void testInitSequence() {
         EasyDccConsistManager m = (EasyDccConsistManager) cm;
-        // we need to call requestUpdateFromLayout() to trigger the 
+        // we need to call requestUpdateFromLayout() to trigger the
         // init sequence.
         m.requestUpdateFromLayout();
 
@@ -57,7 +57,7 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
                 r.setElement(14, '1');
                 r.setElement(15, 0x0D);
             } else if (i < 254) {
-                // for the rest of the first 254 consists, reply with 
+                // for the rest of the first 254 consists, reply with
                 // an empty consist
                 r.setElement(3, ' ');
                 r.setElement(4, '0');

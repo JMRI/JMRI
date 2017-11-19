@@ -13,7 +13,7 @@ import org.junit.Assert;
 /**
  * Tests for the roster.swing.attributetable.AttributeTableModel class.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class AttributeTableModelTest extends TestCase {
 

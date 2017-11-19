@@ -7,8 +7,8 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottleManager class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
- * @author      Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Paul Bender Copyright (C) 2016
  */
 public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 

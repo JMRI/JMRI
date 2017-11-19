@@ -10,7 +10,7 @@ import org.junit.Test;
  * JUnit tests for the GrapevineSystemConnectionMemo class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class GrapevineSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -19,7 +19,7 @@ public class GrapevineSystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
     public void testProvidesConsistManager(){
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
-     
+
     @Override
     @Before
     public void setUp(){

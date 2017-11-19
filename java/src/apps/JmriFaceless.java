@@ -39,7 +39,7 @@ public class JmriFaceless extends apps.AppsBase {
     }
 
     // Main entry point
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         System.setProperty("java.awt.headless", "true");
         JmriFaceless app = new JmriFaceless(args);
         app.start();

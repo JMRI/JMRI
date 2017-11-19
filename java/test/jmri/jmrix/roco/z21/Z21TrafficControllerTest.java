@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.roco.z21.z21TrafficController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 

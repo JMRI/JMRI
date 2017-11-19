@@ -6,7 +6,6 @@ import javax.annotation.Nonnull;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +31,9 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
     static protected final int DCCppProgrammerTimeout = 90000;
 
-    // keep track of whether or not the command station is in service 
-    // mode.  Used for determining if "OK" message is an aproriate 
-    // response to a request to a programming request. 
+    // keep track of whether or not the command station is in service
+    // mode.  Used for determining if "OK" message is an aproriate
+    // response to a request to a programming request.
     protected boolean _service_mode = false;  // TODO: Is this even meaningful for DCC++?
 
     public DCCppProgrammer(DCCppTrafficController tc) {
@@ -106,7 +105,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     }
 
     /**
-     * 
+     *
      */
     @Nonnull
     @Override
@@ -146,7 +145,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 DCCppMessage msg = DCCppMessage.makeWriteDirectCVMsg(CV, val);
                 controller().sendDCCppMessage(msg, this);
-            } else { // register mode by elimination 
+            } else { // register mode by elimination
                 //DCCppMessage msg = DCCppMessage.getWriteRegisterMsg(registerFromCV(CV), val);
                 //controller().sendDCCppessage(msg, this);
             }
@@ -188,7 +187,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 DCCppMessage msg = DCCppMessage.makeReadDirectCVMsg(CV);
                 controller().sendDCCppMessage(msg, this);
-            } else { // register mode by elimination    
+            } else { // register mode by elimination
                 //DCCppMessage msg = DCCppMessage.getReadRegisterMsg(registerFromCV(CV));
                 //controller().sendDCCppMessage(msg, this);
             }

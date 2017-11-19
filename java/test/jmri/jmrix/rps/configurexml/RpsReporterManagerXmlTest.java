@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RpsReporterManagerXmlTest.java
+ * Tests for the RpsReporterManagerXml class
  *
- * Description: tests for the RpsReporterManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RpsReporterManagerXmlTest {
 

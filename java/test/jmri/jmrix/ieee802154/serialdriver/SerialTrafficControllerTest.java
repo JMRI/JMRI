@@ -8,12 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SerialTrafficControllerTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.ieee802154.serialdriver.SerialTrafficController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154TrafficControllerTest {
 
@@ -39,10 +37,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         // specified as a string to make sure it returns null on failure.
         IEEE802154Node node = ((SerialTrafficController)tc).newNode();
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         ((SerialTrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((SerialTrafficController)tc).getNodeFromAddress("00 01");
@@ -57,10 +55,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         IEEE802154Node node = ((SerialTrafficController)tc).newNode();
         ((SerialTrafficController)tc).registerNode(node);
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
-        int iad[] = {0x6D, 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
+        int[] iad = {0x6D, 0x97};
         node.setUserAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         IEEE802154Node n = (IEEE802154Node) ((SerialTrafficController)tc).getNodeFromAddress(iad);
         Assert.assertNotNull("node not found", n);
@@ -74,9 +72,9 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         IEEE802154Node node = ((SerialTrafficController)tc).newNode();
         ((SerialTrafficController)tc).registerNode(node);
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         IEEE802154Node n = (IEEE802154Node) ((SerialTrafficController)tc).getNodeFromAddress(uad);
         Assert.assertNotNull("node not found", n);
@@ -90,10 +88,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         IEEE802154Node node = ((SerialTrafficController)tc).newNode();
         ((SerialTrafficController)tc).registerNode(node);
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         ((SerialTrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((SerialTrafficController)tc).getNodeFromAddress("6D 97");
@@ -108,10 +106,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         IEEE802154Node node = ((SerialTrafficController)tc).newNode();
         ((SerialTrafficController)tc).registerNode(node);
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         ((SerialTrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((SerialTrafficController)tc).getNodeFromAddress(gad);
@@ -125,11 +123,11 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         // specified as an integer array.
         IEEE802154Node node = ((SerialTrafficController)tc).newNode();
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
-        int iad[] = {0x00, 0x13, 0xA2, 0x00, 0x40, 0xA0, 0x4D, 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        int[] iad = {0x00, 0x13, 0xA2, 0x00, 0x40, 0xA0, 0x4D, 0x2D};
         node.setGlobalAddress(gad);
         ((SerialTrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((SerialTrafficController)tc).getNodeFromAddress(iad);
@@ -142,10 +140,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         // specified as a string.
         IEEE802154Node node = ((SerialTrafficController)tc).newNode();
         node.setNodeAddress(28055);
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte[] uad = {(byte) 0x6D, (byte) 0x97};
         node.setUserAddress(uad);
         node.setPANAddress(uad);
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         ((SerialTrafficController)tc).registerNode(node);
         IEEE802154Node n = (IEEE802154Node) ((SerialTrafficController)tc).getNodeFromAddress("00 13 A2 00 40 A0 4D 2D");

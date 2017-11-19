@@ -36,7 +36,7 @@
         <size length="0.500" width="0.375" height="0.125" units="inches"/>
       </model>
       <model show="no" model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37" replacementModel="M1P-UK" replacementFamily="Jan 2000">
-    		</model>
+            </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

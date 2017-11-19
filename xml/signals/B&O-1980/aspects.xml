@@ -25,9 +25,9 @@
         <revremark>Initial version</revremark>
     </revision>
   </revhistory>
-  
+
   <aspects>
-  
+
     <aspect>
       <name>Clear</name>
       <rule>Rule B-281</rule>
@@ -38,7 +38,7 @@
       <route>Normal</route>
       <dccAspect>15</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Approach Limited</name>
       <rule>Rule B-282</rule>
@@ -50,7 +50,7 @@
       <route>Normal</route>
       <dccAspect>14</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Approach Medium</name>
       <rule>Rule B-282-A</rule>
@@ -61,7 +61,7 @@
       <route>Normal</route>
       <dccAspect>12</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Limited Clear</name>
       <rule>Rule B-283</rule>
@@ -73,7 +73,7 @@
       <route>Diverging</route>
       <dccAspect>13</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Medium Clear</name>
       <rule>Rule B-283-A</rule>
@@ -84,7 +84,7 @@
       <route>Diverging</route>
       <dccAspect>11</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Medium Approach Medium</name>
       <rule>Rule B-283-B</rule>
@@ -95,7 +95,7 @@
       <route>Diverging</route>
       <dccAspect>10</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Medium Approach Slow</name>
       <rule>Rule B-283-C</rule>
@@ -106,7 +106,7 @@
       <route>Diverging</route>
       <dccAspect>9</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Approach Slow</name>
       <rule>Rule B-284</rule>
@@ -117,7 +117,7 @@
       <route>Normal</route>
       <dccAspect>8</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Approach</name>
       <rule>Rule B-285</rule>
@@ -128,7 +128,7 @@
       <route>Normal</route>
       <dccAspect>7</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Medium Approach</name>
       <rule>Rule B-286</rule>
@@ -139,7 +139,7 @@
       <route>Diverging</route>
       <dccAspect>6</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Slow Approach Slow</name>
       <rule>Rule B-287</rule>
@@ -150,7 +150,7 @@
       <route>Either</route>
       <dccAspect>4</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Slow Approach</name>
       <rule>Rule B-288</rule>
@@ -161,7 +161,7 @@
       <route>Either</route>
       <dccAspect>3</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Restricting</name>
       <rule>Rule B-290</rule>
@@ -172,7 +172,7 @@
       <route>Either</route>
       <dccAspect>2</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Stop and Proceed</name>
       <rule>Rule B-291</rule>
@@ -183,7 +183,7 @@
       <route>Normal</route>
       <dccAspect>1</dccAspect>
     </aspect>
-	
+
     <aspect>
       <name>Stop and Proceed Medium</name>
       <rule>Rule B-291-medium</rule>
@@ -194,7 +194,7 @@
       <speed2>Stop</speed2>
       <route>Diverging</route>
     </aspect>
-	
+
     <aspect>
       <name>Stop</name>
       <rule>Rule B-292</rule>
@@ -205,18 +205,18 @@
       <route>Either</route>
       <dccAspect>0</dccAspect>
     </aspect>
-	
+
   </aspects>
-  
+
   <appearancefiles>
     <appearancefile href="appearance-CPL-High.xml"/>
-	<appearancefile href="appearance-CPL-High-permissive.xml"/>
-	<appearancefile href="appearance-CPL-Dwarf.xml"/>
-	<appearancefile href="appearance-Semaphore-3Arm.xml"/>
-	<appearancefile href="appearance-Semaphore-2Arm.xml"/>
-	<appearancefile href="appearance-Semaphore-1Arm.xml"/>
-	<appearancefile href="appearance-Semaphore-1Armwithmarker.xml"/>
-	<appearancefile href="appearance-Semaphore-1ArmDwarf.xml"/>
-	<appearancefile href="appearance-CPL-High-NJInternational.xml"/>
+    <appearancefile href="appearance-CPL-High-permissive.xml"/>
+    <appearancefile href="appearance-CPL-Dwarf.xml"/>
+    <appearancefile href="appearance-Semaphore-3Arm.xml"/>
+    <appearancefile href="appearance-Semaphore-2Arm.xml"/>
+    <appearancefile href="appearance-Semaphore-1Arm.xml"/>
+    <appearancefile href="appearance-Semaphore-1Armwithmarker.xml"/>
+    <appearancefile href="appearance-Semaphore-1ArmDwarf.xml"/>
+    <appearancefile href="appearance-CPL-High-NJInternational.xml"/>
   </appearancefiles>
 </aspecttable>

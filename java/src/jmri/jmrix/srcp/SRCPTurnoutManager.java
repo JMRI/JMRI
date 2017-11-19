@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "DTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 

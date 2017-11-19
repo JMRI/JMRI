@@ -69,7 +69,7 @@
        CV 170-177, 183, 184 - removed as 640 has only 2 servos, also servo pane
        CV 185 - removed, for live steam
        CV 343 - removed, 640 has only 2 switch inputs (I think), also pane
-              
+
 -->
   <decoder>
     <family name="Zimo MX69 MX690" mfg="Zimo" lowVersionID="1" highVersionID="30">

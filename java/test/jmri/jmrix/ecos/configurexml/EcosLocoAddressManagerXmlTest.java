@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * EcosLocoAddressManagerXmlTest.java
+ * Tests for the EcosLocoAddressManagerXml class
  *
- * Description: tests for the EcosLocoAddressManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class EcosLocoAddressManagerXmlTest {
 

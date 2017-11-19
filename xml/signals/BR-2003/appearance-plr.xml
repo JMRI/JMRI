@@ -9,11 +9,11 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -42,19 +42,19 @@
         <revremark>Addition of Aspect Mapping</revremark>
     </revision>
   </revhistory>
-  
+
   <aspecttable>BR</aspecttable>
 
   <name>Position Light Signal Red/White</name>
-  
+
   <description>This uses a single head to control the appearance</description>
-  
+
   <appearances>
 
     <appearance>
       <aspectname>Off</aspectname>
       <show>lunar</show>
-      
+
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLOff.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLOff.gif</imagelink>
     </appearance>
@@ -62,7 +62,7 @@
     <appearance>
       <aspectname>On</aspectname>
       <show>red</show>
-      
+
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLROn.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLROn.gif</imagelink>
     </appearance>
@@ -79,46 +79,46 @@
         <aspect>On</aspect>
     </held>
   </specificappearances>
-  
+
   <aspectMappings>
    <aspectMapping>
      <advancedAspect>Danger</advancedAspect>
      <ourAspect>On</ourAspect>
    </aspectMapping>
-  
+
    <aspectMapping>
      <advancedAspect>Caution</advancedAspect>
       <ourAspect>On</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Preliminary Caution</advancedAspect>
      <ourAspect>On</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Proceed</advancedAspect>
      <ourAspect>On</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Flash Caution</advancedAspect>
      <ourAspect>On</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Flash Preliminary Caution</advancedAspect>
      <ourAspect>On</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Off</advancedAspect>
      <ourAspect>On</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>On</advancedAspect>
      <ourAspect>On</ourAspect>
    </aspectMapping>
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

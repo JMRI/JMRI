@@ -8,7 +8,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of ThrottleCreationAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ThrottleCreationActionTest extends TestCase {
 
@@ -39,7 +39,7 @@ public class ThrottleCreationActionTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

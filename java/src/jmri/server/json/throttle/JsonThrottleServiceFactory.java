@@ -13,7 +13,7 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @ServiceProvider(service = JsonServiceFactory.class)
 public class JsonThrottleServiceFactory implements JsonServiceFactory {
-    
+
     @Override
     public String[] getTypes() {
         String[] types = {JsonThrottle.THROTTLE};
@@ -29,5 +29,5 @@ public class JsonThrottleServiceFactory implements JsonServiceFactory {
     public JsonHttpService getHttpService(ObjectMapper mapper) {
         return null;
     }
-    
+
 }

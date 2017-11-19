@@ -12,7 +12,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the SerialAddress utility class.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007, 2008
   */
 public class SerialAddressTest extends TestCase {
@@ -144,7 +144,7 @@ public class SerialAddressTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        JUnitUtil.setUp();        
+        JUnitUtil.setUp();
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         // prepare an interface, register
         tc = new SerialTrafficControlScaffold();

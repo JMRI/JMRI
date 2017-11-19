@@ -14,18 +14,16 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**
- * XBeeSensorManagerTest.java
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
 public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private static final String NODE_ID = "id";
-        
-    private XBeeDevice localDevice;	
+
+    private XBeeDevice localDevice;
     private RemoteXBeeDevice remoteDevice1;
 
     @Override
@@ -62,7 +60,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t2 = l.provideSensor("ABCS2:" + getNumToTest2());
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
@@ -79,7 +77,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     // The minimal setup for log4J
     @Override
-    @Before 
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.resetInstanceManager();
 
@@ -91,9 +89,9 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         tc.setAdapterMemo(m);
         l = new XBeeSensorManager(tc, "ABC");
         m.setSensorManager(l);
-        byte pan[] = {(byte) 0x00, (byte) 0x42};
-        byte uad[] = {(byte) 0x00, (byte) 0x02};
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] pan = {(byte) 0x00, (byte) 0x42};
+        byte[] uad = {(byte) 0x00, (byte) 0x02};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         XBeeNode node = new XBeeNode(pan,uad,gad);
         node.setXBee(((XBeeInterfaceScaffold)tc).getRemoteDevice1());
         tc.registerNode(node);

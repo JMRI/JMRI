@@ -7,12 +7,12 @@ package jmri;
  * being able to get the default instance of each other to be managed
  * successfully.
  * <p>
- * More specifically, the constructors or code called by the constructors 
- * of classes implementing the {@link InstanceManagerAutoDefault} interface 
+ * More specifically, the constructors or code called by the constructors
+ * of classes implementing the {@link InstanceManagerAutoDefault} interface
  * (i.e. that have the InstanceManager automatically
  * create their objects) should never ask the InstanceManager for reference to other
  * automatically-created types. They may ask the InstanceManager for references in their
- * {@link #initialize()} method, but they can only store those; they can't assume 
+ * {@link #initialize()} method, but they can only store those; they can't assume
  * that the objects referred to have completed their initialization and are operational.
  * See the diagram below for why.
  * <p>

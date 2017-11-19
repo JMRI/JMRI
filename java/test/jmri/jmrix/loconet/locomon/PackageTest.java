@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locomon package
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2007
+ * @author Bob Jacobsen Copyright (C) 2002, 2007
  */
 public class PackageTest extends TestCase {
 

@@ -158,7 +158,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
             name = element.getChild("occupancysensor");
             if (name != null) {
                 l.setOccSensor(name.getText());
-            }            
+            }
         }
 
         l.setShowTrain(false);

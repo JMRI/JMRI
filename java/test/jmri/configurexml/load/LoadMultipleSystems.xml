@@ -120,7 +120,7 @@
       <turnoutname defines="input1">IT0</turnoutname>
       <turnoutname defines="input2">IT0</turnoutname>
       <turnoutname defines="input3">IT0</turnoutname>
-    </signalhead> 
+    </signalhead>
     <signalhead class="jmri.implementation.configurexml.QuadOutputSignalHeadXml" systemName="IH6" userName="Quad">
       <systemName>IH6</systemName>
       <userName>Quad</userName>

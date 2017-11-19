@@ -24,7 +24,7 @@ public class Ib1Throttle extends LocoNetThrottle {
     protected void sendFunctionGroup3() {
         // Special LocoNet messages for Uhlenbrock Intellibox-I version 2.x implementation
         // Intellibox-II uses another implementation for these functions
-        // Functions F9 to F11            
+        // Functions F9 to F11
         int new_IB1_F9_F11 = ((getF11() ? LnConstants.RE_IB1_F11_MASK : 0)
                 | (getF10() ? LnConstants.RE_IB1_F10_MASK : 0)
                 | (getF9() ? LnConstants.RE_IB1_F9_MASK : 0));
@@ -68,7 +68,7 @@ public class Ib1Throttle extends LocoNetThrottle {
         msg.setElement(4, new_IB2_F13_F19);
         network.sendLocoNetMessage(msg);
 
-        // Function F20 (and F28) 
+        // Function F20 (and F28)
         // F12 is also controlled from this message though IB-II uses RE_OPC_IB2_F9_F12 OPS code for F12 - needed to avoid overridding F12 value
         int new_IB2_F20_F28 = ((getF12() ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
                 | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)

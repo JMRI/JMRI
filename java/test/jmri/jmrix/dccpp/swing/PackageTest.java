@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.dccpp.swing package
  *
- * @author	Bob Jacobsen
- * @author  Paul Bender	Copyright (C) 2016
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest{
 

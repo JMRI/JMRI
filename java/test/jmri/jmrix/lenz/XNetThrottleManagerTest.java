@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * XNetThrottleManagerTest.java
+ * Tests for the jmri.jmrix.lenz.XNetThrottleManager class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetThrottleManager class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 

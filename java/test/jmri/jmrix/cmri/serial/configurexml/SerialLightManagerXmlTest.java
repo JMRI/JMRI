@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SerialLightManagerXmlTest.java
+ * Tests for the SerialLightManagerXml class
  *
- * Description: tests for the SerialLightManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SerialLightManagerXmlTest {
 

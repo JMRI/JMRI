@@ -13,10 +13,10 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.SystemInfoAction class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  */
 public class SystemInfoActionTest {
-        
+
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
     @Test

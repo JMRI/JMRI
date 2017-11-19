@@ -2,7 +2,6 @@ package jmri.jmrit.simplelightctrl;
 
 import java.awt.Dimension;
 import java.text.DecimalFormat;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
@@ -276,7 +275,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 
             } catch (IllegalArgumentException ex) {
                 log.error(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
-            } 
+            }
             light.addPropertyChangeListener(this);
             if (log.isDebugEnabled()) {
                 log.debug("about to command ON"); // NOI18N
@@ -332,7 +331,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
             } catch (IllegalArgumentException ex) {
                 nowStateTextField.setText(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
             }
-            
+
             double min = Double.parseDouble(intensityMinTextField.getText()) / 100.;
             double max = Double.parseDouble(intensityMaxTextField.getText()) / 100.;
             double time = Double.parseDouble(transitionTimeTextField.getText());

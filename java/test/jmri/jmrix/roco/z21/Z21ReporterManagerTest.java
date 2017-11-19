@@ -37,7 +37,7 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
 
     @Override
     protected int maxN() { return 1; }
-    
+
     @Override
     protected String getNameToTest1() {
         return "1";

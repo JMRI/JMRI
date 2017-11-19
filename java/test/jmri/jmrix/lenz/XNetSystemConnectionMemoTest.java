@@ -8,11 +8,9 @@ import org.junit.Test;
 
 
 /**
- * XNetSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -22,7 +20,7 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         XNetSystemConnectionMemo t = (XNetSystemConnectionMemo)scm;
         Assert.assertNotNull(t);
         Assert.assertNotNull(t.getXNetTrafficController());
-        // While we are constructing the memo, we should also set the 
+        // While we are constructing the memo, we should also set the
         // SystemMemo parameter in the traffic controller.
         Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
     }
@@ -39,7 +37,7 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         // so we need to do this ourselves.
         t.setXNetTrafficController(tc);
         Assert.assertNotNull(t.getXNetTrafficController());
-        // and while we're doing that, we should also set the SystemMemo 
+        // and while we're doing that, we should also set the SystemMemo
         // parameter in the traffic controller.
         Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
     }

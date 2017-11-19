@@ -71,7 +71,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints15.anchor = GridBagConstraints.WEST;
         gridBagConstraints15.gridy = 11;
-        
+
         GridBagConstraints gridBagConstraints14 = new GridBagConstraints();
         gridBagConstraints14.gridx = 0;
         gridBagConstraints14.insets = new Insets(2, 23, 2, 2);
@@ -193,8 +193,8 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
 
         setLayout(new GridBagLayout());
 
-        this.add(cbUseExThrottle, gridBagConstraints1);        
-        this.add(cbSaveThrottleOnLayoutSave, gridBagConstraints2);        
+        this.add(cbUseExThrottle, gridBagConstraints1);
+        this.add(cbSaveThrottleOnLayoutSave, gridBagConstraints2);
         this.add(cbUseRosterImage, gridBagConstraints3);
         this.add(cbResizeWinImg, gridBagConstraints4);
         this.add(cbEnableRosterSearch, gridBagConstraints5);

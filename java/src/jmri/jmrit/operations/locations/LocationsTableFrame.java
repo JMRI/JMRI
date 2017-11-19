@@ -137,7 +137,7 @@ public class LocationsTableFrame extends OperationsFrame {
             f.setTitle(Bundle.getMessage("TitleLocationAdd"));
         }
     }
-    
+
     @Override
     public void dispose() {
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {

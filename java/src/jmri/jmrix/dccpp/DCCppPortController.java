@@ -5,7 +5,7 @@ package jmri.jmrix.dccpp;
  * <p>
  *
  * @author Paul Bender Copyright (C) 2010
- * @author      Mark Underwood Copyright (C) 2015
+ * @author Mark Underwood Copyright (C) 2015
   *
  * Based on XNetPortController by Paul Bender
  */

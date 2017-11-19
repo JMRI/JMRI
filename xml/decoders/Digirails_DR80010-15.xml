@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved   -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
     <version author="Alain Le Marchand" version="2.1" lastUpdated="20150502"/>
     <version author="Alain Le Marchand" version="2" lastUpdated="20150429"/>
     <version author="Ron30" version="1" lastUpdated="20140923"/>
-    <!-- version 1 - made from Arnold.xml example                                   -->
-    <!-- version 2 - Added 3 functions decoder DR80015                              -->
-    <!--             Renamed file to Digirails_DR80010-15.xml                       -->
-    <!--             Used new format for output display on function map             -->
-    <!--             and removed "Alt Function Map" pane                            -->
-    <!--             Added tooltips and localised in NL, DE and FR (as per manual)  -->
-    <!-- version 2.1 Default values adjusted for Fade in/out effect                 -->
+    <!-- version 1 - made from Arnold.xml example -->
+    <!-- version 2 - Added 3 functions decoder DR80015 -->
+    <!--             Renamed file to Digirails_DR80010-15.xml -->
+    <!--             Used new format for output display on function map -->
+    <!--             and removed "Alt Function Map" pane -->
+    <!--             Added tooltips and localised in NL, DE and FR (as per manual) -->
+    <!-- version 2.1 Default values adjusted for Fade in/out effect -->
     <decoder>
         <family name="Locomotive lighting" mfg="Digirails">
             <model model="DR80010" numOuts="8" numFns="18" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" productID="80010" formFactor="HO" comment="Warm white LED strip with integrated function decoder">
@@ -1728,7 +1728,7 @@
                 </row>
             </column>
         </pane>
-    -->
+ -->
     <pane>
         <name>Output Configuration</name>
         <name xml:lang="de">Ausgangskonfiguration</name>

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XBeeTurnoutManagerXmlTest.java
+ * Tests for the XBeeTurnoutManagerXml class
  *
- * Description: tests for the XBeeTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class XBeeTurnoutManagerXmlTest {
 

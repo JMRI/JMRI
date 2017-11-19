@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * InternalTurnoutManagerXmlTest.java
+ * Tests for the InternalTurnoutManagerXml class
  *
- * Description: tests for the InternalTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class InternalTurnoutManagerXmlTest {
 

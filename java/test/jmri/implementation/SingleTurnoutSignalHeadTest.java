@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the SingleTurnoutSignalHead implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class SingleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
 
@@ -120,7 +120,7 @@ public class SingleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
                         new jmri.NamedBeanHandle<Turnout>("IT1", t),
                         SignalHead.GREEN, SignalHead.DARK);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

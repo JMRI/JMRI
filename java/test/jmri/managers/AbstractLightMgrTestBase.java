@@ -17,19 +17,19 @@ import org.junit.Test;
  * Instead, this forms the base for test classes, including providing some
  * common tests
  *
- * @author	Bob Jacobsen 2003, 2006, 2008
- * @author      Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen 2003, 2006, 2008
+ * @author Paul Bender Copyright (C) 2016
  */
 public abstract class AbstractLightMgrTestBase {
 
     // implementing classes must provide these abstract members:
     //
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
 
-    protected LightManager l = null;	// holds objects under test
+    protected LightManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

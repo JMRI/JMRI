@@ -66,8 +66,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * software version" command.
      */
     static public SerialMessage getPoll(int addr) {
-        // eventually this will have to include logic for reading 
-        // various bytes on the card, but our supported 
+        // eventually this will have to include logic for reading
+        // various bytes on the card, but our supported
         // cards don't require that yet
         SerialMessage m = new SerialMessage();
         m.setElement(0, addr | 0x80);
@@ -211,7 +211,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         } else if ((b2 == 0x71) && ((b4 & 0xF0) == 0x00)) {
             result += "Initialize ASD sensors";
             return result;
-        } else // check various bank forms 
+        } else // check various bank forms
         if ((b4 & 0xF0) <= 0x30) {
             // Bank 0-3 - signal command
             result += "bank " + ((b4 & 0xF0) >> 4) + " signal " + ((b2 & 0x78) >> 3);

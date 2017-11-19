@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MemoryInputIconXmlTest.java
+ * Tests for the MemoryInputIconXml class
  *
- * Description: tests for the MemoryInputIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class MemoryInputIconXmlTest {
 

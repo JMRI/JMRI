@@ -8,7 +8,7 @@ package jmri.jmrix.sprog;
  * This is a very light-weight class, carrying only the flag, so as to limit the
  * number of unneeded class loading.
  *
- * @author	Andrew Crosland Copyright (C) 2006
+ * @author Andrew Crosland Copyright (C) 2006
  * @deprecated since 4.5.1
  */
 @Deprecated

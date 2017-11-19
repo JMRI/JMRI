@@ -3,7 +3,7 @@ package jmri.jmrix.rfid;
 /**
  * Abstract base for classes representing a communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */

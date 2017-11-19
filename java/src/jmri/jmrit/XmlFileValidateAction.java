@@ -53,7 +53,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     Component _who;
 
     XmlFile xmlfile = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {

@@ -100,13 +100,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     // listen for sensors, creating them as needed
     @Override
     public void reply(CanReply l) {
-        // doesn't do anything, because for now 
+        // doesn't do anything, because for now
         // we want you to create manually
     }
 
     @Override
     public void message(CanMessage l) {
-        // doesn't do anything, because 
+        // doesn't do anything, because
         // messages come from us
     }
 

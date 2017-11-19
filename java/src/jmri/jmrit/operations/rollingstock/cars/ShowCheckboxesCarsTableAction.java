@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014
- * 
+ *
  */
 public class ShowCheckboxesCarsTableAction extends AbstractAction {
 

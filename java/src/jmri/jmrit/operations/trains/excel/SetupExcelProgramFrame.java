@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of the file name and setup of an Excel program.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class SetupExcelProgramFrame extends OperationsFrame {
 

@@ -131,7 +131,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
             temp.programmingOpReply(value, status);
             return;
         }
-        
+
         if (_usingProgrammer == null) {
             log.error("No listener to notify, reset and ignore");
             state = ProgState.NOTPROGRAMMING;

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RaspberryPiTurnoutManagerXmlTest.java
+ * Tests for the RaspberryPiTurnoutManagerXml class
  *
- * Description: tests for the RaspberryPiTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class RaspberryPiTurnoutManagerXmlTest {
 

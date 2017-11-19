@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test scaffold implementation of XNetInterface
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
   *
  * Use an object of this type as a XNetTrafficController in tests
  */
@@ -90,7 +90,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     /**
      * This is normal, don't log at ERROR level
      */
-    @Override 
+    @Override
     protected void reportReceiveLoopException(Exception e) {
         log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);

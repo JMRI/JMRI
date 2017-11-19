@@ -77,7 +77,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return b.handleGetMessage(locale, key, subs);
     }
 
-    
+
     private final static Bundle b = new Bundle();
 
     @Override

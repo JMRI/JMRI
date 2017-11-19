@@ -110,7 +110,7 @@ public class JsonLightHttpServiceTest extends TestCase {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -129,7 +129,7 @@ public class JsonLightHttpServiceTest extends TestCase {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     public void testDelete() {
         try {
             (new JsonLightHttpService(new ObjectMapper())).doDelete(JsonLight.LIGHT, null, Locale.ENGLISH);
@@ -139,7 +139,7 @@ public class JsonLightHttpServiceTest extends TestCase {
         }
         Assert.fail("Did not throw expected error.");
     }
-    
+
     // from here down is testing infrastructure
     public JsonLightHttpServiceTest(String s) {
         super(s);

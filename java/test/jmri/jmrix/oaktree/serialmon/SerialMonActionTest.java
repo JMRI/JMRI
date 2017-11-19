@@ -11,21 +11,21 @@ import org.junit.Test;
 /**
  * Test simple functioning of SerialMonAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialMonActionTest {
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction("OakTree test Action"); 
+        SerialMonAction action = new SerialMonAction("OakTree test Action");
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction(); 
+        SerialMonAction action = new SerialMonAction();
         Assert.assertNotNull("exists", action);
     }
 

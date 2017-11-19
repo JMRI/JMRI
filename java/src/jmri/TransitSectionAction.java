@@ -25,7 +25,7 @@ public class TransitSectionAction {
     /**
      * Constants representing the "when" (when the action is to be initiated) of
      * the Action.
-     * 
+     *
      * TODO: Convert to ENUM
      */
     public static final int NUM_WHENS = 8; // Must correspond to the number of entries below
@@ -34,14 +34,14 @@ public class TransitSectionAction {
     public static final int BLOCKENTRY = 3; // On entry to specified Block in the Section
     public static final int BLOCKEXIT = 4; // On exit from specified Block in the Section
     public static final int TRAINSTOP = 5;  // When train stops
-    public static final int TRAINSTART = 6; // When train starts 
+    public static final int TRAINSTART = 6; // When train starts
     public static final int SENSORACTIVE = 7; // When specified Sensor changes to Active
     public static final int SENSORINACTIVE = 8; // When specified Sensor changtes to Inactive
     // other action 'whens" may be defined here
 
     /**
      * Constants designating the "what" (the action to be taken) of the Action.
-     * 
+     *
      * TODO: Convert to ENUM
      */
     public static final int PAUSE = 1;    // pause for the number of fast minutes in mDataWhat (e.g. station stop)
@@ -52,7 +52,7 @@ public class TransitSectionAction {
     public static final int SETLIGHT = 6; // set light on or off
     public static final int STARTBELL = 7;  // start bell (only works with sound decoder, function 1 ON)
     public static final int STOPBELL = 8;   // stop bell (only works with sound decoder, function 1 OFF)
-    public static final int SOUNDHORN = 9;  // sound horn for specified number of milliseconds 
+    public static final int SOUNDHORN = 9;  // sound horn for specified number of milliseconds
     // (only works with sound decoder, function 2)
     public static final int SOUNDHORNPATTERN = 10; // sound horn according to specified pattern
     // (only works with sound decoder, function 2)
@@ -61,7 +61,7 @@ public class TransitSectionAction {
     public static final int SETSENSORINACTIVE = 13; // set specified sensor inactive
     public static final int HOLDSIGNAL = 14;    // set specified signalhead or signalmast to HELD
     public static final int RELEASESIGNAL = 15; // set specified signalhead or signalmast to NOT HELD
-    public static final int NUM_WHATS = 15; // Must correspond to the number of entries above 
+    public static final int NUM_WHATS = 15; // Must correspond to the number of entries above
     // other action 'whats" may be defined here, increment NUM_WHATS to match
 
     /**
@@ -104,9 +104,9 @@ public class TransitSectionAction {
     // instance variables
     private int mWhen = 0;
     private int mWhat = 0;
-    private int mDataWhen = -1; // negative number signified no data 
-    private int mDataWhat1 = -1;    // negative number signified no data 
-    private int mDataWhat2 = -1;    // negative number signified no data 
+    private int mDataWhen = -1; // negative number signified no data
+    private int mDataWhat1 = -1;    // negative number signified no data
+    private int mDataWhat2 = -1;    // negative number signified no data
     private String mStringWhen = "";
     private String mStringWhat = "";
 

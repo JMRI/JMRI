@@ -11,11 +11,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**
- * XBeeTurnoutTest.java
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 @RunWith(PowerMockRunner.class)
 public class XBeeTurnoutTest {
@@ -46,7 +44,7 @@ public class XBeeTurnoutTest {
         XBeeTurnout s = new XBeeTurnout("ABCT0002:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
-    
+
     @Test
     public void testCtor16BitHexNodeAddress2pin() {
         XBeeTurnout s = new XBeeTurnout("ABCT0002:4:5", "XBee Turnout Test", tc);

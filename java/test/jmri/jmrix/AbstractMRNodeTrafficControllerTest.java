@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  */
 public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficControllerTest {
-    
+
     @Test
     @Override
     public void testCtor() {
@@ -26,7 +26,7 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRNodeTrafficController(){
            @Override
@@ -55,7 +55,7 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
     @Override
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import jmri.PowerManager;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -19,7 +18,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of ManagerDefaultSelector
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ManagerDefaultSelectorTest {
 

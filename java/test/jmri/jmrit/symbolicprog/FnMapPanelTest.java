@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Base for tests of classes inheriting from FnMapPanel abstract class
  *
- * @author	Bob Jacobsen, Copyright 2009
+ * @author Bob Jacobsen, Copyright 2009
  */
 public class FnMapPanelTest {
 

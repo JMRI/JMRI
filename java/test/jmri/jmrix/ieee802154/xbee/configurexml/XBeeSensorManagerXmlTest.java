@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XBeeSensorManagerXmlTest.java
+ * Tests for the XBeeSensorManagerXml class
  *
- * Description: tests for the XBeeSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class XBeeSensorManagerXmlTest {
 

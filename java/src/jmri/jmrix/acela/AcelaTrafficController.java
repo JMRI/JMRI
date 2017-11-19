@@ -68,7 +68,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     // Corresponds to next available sensor address in nodeArray
     // Start at -1 to avoid issues with bit address 0
 
-    private boolean acelaTrafficControllerState = false;    //  Flag to indicate which state we are in: 
+    private boolean acelaTrafficControllerState = false;    //  Flag to indicate which state we are in:
     //  false == Initializing Acela Network
     //  true == Polling Sensors
     private boolean reallyReadyToPoll = false;   //  Flag to indicate that we are really ready to poll nodes
@@ -79,7 +79,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     //      Set Acela Network Online
     //      Poll for Acela Nodes (and create and register the nodes)
 
-    private boolean acelaSensorsState = false;    //  Flag to indicate whether we have an active sensor and therefore need to poll: 
+    private boolean acelaSensorsState = false;    //  Flag to indicate whether we have an active sensor and therefore need to poll:
     //  false == No active sensor
     //  true == Active sensor, need to poll sensors
 
@@ -373,7 +373,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     @Override
     protected synchronized void handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         // don't use super behavior, as timeout to init, transmit message is normal
-        // inform node, and if it resets then reinitialize        
+        // inform node, and if it resets then reinitialize
         if (getNode(curAcelaNodeIndex).handleTimeout(m, l)) {
             setMustInit(curAcelaNodeIndex, true);
         }
@@ -450,14 +450,14 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             if ((char1 == 0x81) || (char1 == 0x82)) {
                 //  0x81 means that a sensor has changed.
                 //  0x82 means that communications has been lost
-                //  For now we will check for these two 
+                //  For now we will check for these two
                 //  conditions since they do represent
                 //  runtime errors at the risk that in a very very
                 //  large Acela network the checking may mess
                 //  up the polling replies.
                 msg.setElement(0, char1);
             } else {
-                //  We have a reply to a poll (either pollnodes 
+                //  We have a reply to a poll (either pollnodes
                 //  or pollsensors).  The first byte will be the
                 //  length of the reply followed by the
                 //  indicated number of bytes.

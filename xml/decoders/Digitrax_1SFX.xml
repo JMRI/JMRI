@@ -2,30 +2,30 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="2" lastUpdated="20140427"/>
   <version author="Steve Lowens" version="1" lastUpdated="20120703"/>
-  <!--    Added Con-cor Zephyr & MP54 decoders                                    -->
-  <!--    See Digitrax_0SFX.xml for other attribution                             -->
-  <!--                                       Steve Lowens  07/03/2012             -->
-  <!--                                                                            -->
+  <!--    Added Con-cor Zephyr & MP54 decoders -->
+  <!--    See Digitrax_0SFX.xml for other attribution -->
+  <!--                                       Steve Lowens  07/03/2012 -->
+  <!-- -->
   <!--    Version 2 (Alain Le Marchand) - fix decoders dimensions and definitions -->
-  <!--    Refactored with fragment files - creating new ones for Digitrax  -->
-  <!--    Changed productIDs to Con-cor ref.                                      -->
-  <!--    Added missing read-only variables CV121 to 128, CV160                   -->
+  <!--    Refactored with fragment files - creating new ones for Digitrax -->
+  <!--    Changed productIDs to Con-cor ref. -->
+  <!--    Added missing read-only variables CV121 to 128, CV160 -->
   <!--               and created a new pane "Digitrax Sound Info" to display them -->
-  <!--    Added function labels                                                   -->
-  <!--    Added several Con-cor models H0 and N                                   -->
+  <!--    Added function labels -->
+  <!--    Added several Con-cor models H0 and N -->
   <decoder>
     <family name="Digitrax/Con-cor Sound" mfg="Digitrax">
       <model model="Con-cor Aero-Train - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6004" comment="SDH164D Con-Cor #0001-006004">
@@ -210,7 +210,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
-      <!-- The following code sets the Con-con Zephyr N scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
+      <!-- The following code sets the Con-con Zephyr N scale decoder to defaults as programmed by Con-cor, not Digitrax -->
       <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="0" include="6014">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 3</label>
@@ -229,7 +229,7 @@
         <label>Function 1 behavior</label>
         <label xml:lang="it">Funzione 1 comportamento</label>
       </variable>
-      <!-- The following code sets the Con-con Zephyr HO scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
+      <!-- The following code sets the Con-con Zephyr HO scale decoder to defaults as programmed by Con-cor, not Digitrax -->
       <variable item="Function 3 effect generated" CV="113" mask="XXXXVVVV" default="2" minOut="5" include="6002">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 3 effect generated</label>

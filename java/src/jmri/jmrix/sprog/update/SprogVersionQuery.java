@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * not be the very next message after a query is sent, due to slot manager
  * traffic. Add Pi-SPROG version decoding.
  *
- * @author	Andrew Crosland Copyright (C) 2012, 2016
+ * @author Andrew Crosland Copyright (C) 2012, 2016
  */
 public class SprogVersionQuery implements SprogListener {
 
@@ -183,7 +183,7 @@ public class SprogVersionQuery implements SprogListener {
                                 }
                                 v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
                                 break;
-                        }                
+                        }
                     } else if (splits[0].contains("SPROG")) {
                         log.debug("Found a SPROG " + splits[index]);
                         switch (splits[index]) {
@@ -300,7 +300,7 @@ public class SprogVersionQuery implements SprogListener {
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts.
-     * 
+     *
      * @param delay timer delay
      */
     protected void restartTimer(int delay) {

@@ -7,15 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Z21SimulatorLocoDataTest.java
- * 
- * Description:	tests for the jmri.jmrix.roco.z21.simulator.z21SimulatorLocoData
+ * Tests for the jmri.jmrix.roco.z21.simulator.z21SimulatorLocoData
  * class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21SimulatorLocoDataTest {
-        
+
     @Test
     public void testCtor() {
         Z21SimulatorLocoData a = new Z21SimulatorLocoData((byte)0x00,(byte)0x02,(byte)0x03);

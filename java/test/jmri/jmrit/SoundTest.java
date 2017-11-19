@@ -28,7 +28,7 @@ public class SoundTest {
     public void tearDown() {
         Log4JFixture.tearDown();
     }
-    
+
     /**
      * Test of play method, of class Sound.
      */

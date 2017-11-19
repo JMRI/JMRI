@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.lenz.hornbyelite.EliteXNetTurnout} class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
 

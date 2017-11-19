@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  *
- * @author	Paul Bender Copyright 2004
+ * @author Paul Bender Copyright 2004
  */
 public class XNetSensorTest extends TestCase {
 

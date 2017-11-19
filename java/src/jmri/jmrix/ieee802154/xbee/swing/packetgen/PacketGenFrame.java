@@ -23,7 +23,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     public void initComponents() {
         super.initComponents();
 
-        // all we need to do is set the title 
+        // all we need to do is set the title
         setTitle(rb.getString("jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction"));
 
         // pack to cause display
@@ -36,7 +36,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         String packetString = packetTextField.getSelectedItem().toString();
-        byte packetByteArray[] = jmri.util.StringUtil.bytesFromHexString(packetString);
+        byte[] packetByteArray = jmri.util.StringUtil.bytesFromHexString(packetString);
         XBeeAPIPacket packet = GenericXBeePacket.createPacket(packetByteArray);
         try {
             tc.getXBee().sendPacketAsync(packet);

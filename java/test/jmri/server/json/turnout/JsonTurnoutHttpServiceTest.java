@@ -112,7 +112,7 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -131,7 +131,7 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     public void testDelete() {
         try {
             (new JsonTurnoutHttpService(new ObjectMapper())).doDelete(JsonTurnoutServiceFactory.TURNOUT, null, Locale.ENGLISH);
@@ -141,7 +141,7 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
         }
         Assert.fail("Did not throw expected error.");
     }
-    
+
     // from here down is testing infrastructure
     public JsonTurnoutHttpServiceTest(String s) {
         super(s);

@@ -68,7 +68,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         boolean result = true;
         getInstance();
         // simulator has fewer options in the XML, so implement
-        // just needed ones       
+        // just needed ones
         if (adapter.getSystemConnectionMemo() != null) {
             if (shared.getAttribute("userName") != null) {
                 adapter.getSystemConnectionMemo().setUserName(shared.getAttribute("userName").getValue());

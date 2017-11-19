@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SprogIIUpdateFrame object.
  *
- * @author	Andrew crosland Copyright (C) 2004
+ * @author Andrew crosland Copyright (C) 2004
  */
 public class SprogIIUpdateAction extends SprogUpdateAction {
 

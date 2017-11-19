@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * SRCPTrafficControllerTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPTrafficController class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTrafficController class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 

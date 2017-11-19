@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * ConcentratorReporterManagerTest.java
+ * Tests for the ConcentratorReporterManager class
  *
- * Description:	tests for the ConcentratorReporterManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -20,7 +18,7 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
 
     @Override
     protected int maxN() { return 1; }
-    
+
     @Override
     protected String getNameToTest1() {
         return "A";

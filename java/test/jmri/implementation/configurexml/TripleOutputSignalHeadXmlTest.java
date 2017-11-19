@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TripleOutputSignalHeadXmlTest.java
+ * Tests for the TripleOutputSignalHeadXml class
  *
- * Description: tests for the TripleOutputSignalHeadXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class TripleOutputSignalHeadXmlTest {
 

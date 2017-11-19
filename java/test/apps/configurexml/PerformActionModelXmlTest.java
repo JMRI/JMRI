@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PerformActionModelXmlTest.java
+ * Tests for the PerformActionModelXml class
  *
- * Description: tests for the PerformActionModelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PerformActionModelXmlTest {
 

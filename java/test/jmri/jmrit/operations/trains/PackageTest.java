@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.operations.trains package
  *
- * @author	Bob Coleman
+ * @author Bob Coleman
  */
 public class PackageTest extends TestCase {
 
@@ -37,7 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.operations.trains.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsTrainsGuiTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BuildFailedExceptionTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainConductorPanelTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainConductorPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCsvCommonTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCsvSwitchListsTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainEditBuildOptionsFrameTest.class));

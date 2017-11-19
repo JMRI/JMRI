@@ -105,31 +105,30 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Advanced Consist Function 0 Override</label>
       </variable>
-      <!--
-		<variable label="Advanced Consist Function 9 Override" CV="22" mask="XXXVXXXX" item="Consist Address Active For F9" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable label="Advanced Consist Function 10 Override" CV="22" mask="XXVXXXXX" item="Consist Address Active For F10" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable label="Advanced Consist Function 11 Override" CV="22" mask="XVXXXXXX" item="Consist Address Active For F11" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable label="Advanced Consist Function 12 Override" CV="22" mask="VXXXXXXX" item="Consist Address Active For F12" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
+      <!-- <variable label="Advanced Consist Function 9 Override" CV="22" mask="XXXVXXXX" item="Consist Address Active For F9" default="0">
+            <enumVal>
+                <enumChoice choice="No"/>
+                <enumChoice choice="Yes"/>
+                </enumVal>
+            </variable>
+        <variable label="Advanced Consist Function 10 Override" CV="22" mask="XXVXXXXX" item="Consist Address Active For F10" default="0">
+            <enumVal>
+                <enumChoice choice="No"/>
+                <enumChoice choice="Yes"/>
+                </enumVal>
+            </variable>
+        <variable label="Advanced Consist Function 11 Override" CV="22" mask="XVXXXXXX" item="Consist Address Active For F11" default="0">
+            <enumVal>
+                <enumChoice choice="No"/>
+                <enumChoice choice="Yes"/>
+                </enumVal>
+            </variable>
+        <variable label="Advanced Consist Function 12 Override" CV="22" mask="VXXXXXXX" item="Consist Address Active For F12" default="0">
+            <enumVal>
+                <enumChoice choice="No"/>
+                <enumChoice choice="Yes"/>
+                </enumVal>
+            </variable>
 -->
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>

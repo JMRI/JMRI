@@ -397,7 +397,7 @@ public class TurnoutEditAction extends BeanEditAction {
         }
         bei.add(lock);
         return lock;
-    }   // lock() 
+    }   // lock()
 
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
@@ -510,4 +510,4 @@ public class TurnoutEditAction extends BeanEditAction {
         bei.add(speed);
         return speed;
     }
-} 
+}

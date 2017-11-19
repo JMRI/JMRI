@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  */
 public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
-   
+
     @Test
     public void testGetCanid(){
         Assert.assertEquals("default canid value",120,((TrafficController)tc).getCanid());
@@ -25,11 +25,11 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
         ((TrafficController)tc).setCanId(240);
         Assert.assertEquals("canid value after set",240,((TrafficController)tc).getCanid());
     }
- 
+
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new TrafficController(){
            @Override
@@ -72,7 +72,7 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.tearDown();
     }
 
 }

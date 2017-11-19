@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of GrapevineMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class GrapevineMenuTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         GrapevineMenu action = new GrapevineMenu();
         Assert.assertNotNull("exists", action);
     }

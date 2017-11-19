@@ -51,22 +51,22 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     NamedIcon scaledIcon;
     NamedIcon clockIcon;
 
-    int hourX[] = {
+    int[] hourX = {
         -12, -11, -25, -10, -10, 0, 10, 10, 25, 11, 12};
-    int hourY[] = {
+    int[] hourY = {
         -31, -163, -170, -211, -276, -285, -276, -211, -170, -163, -31};
-    int minuteX[] = {
+    int[] minuteX = {
         -12, -11, -24, -11, -11, 0, 11, 11, 24, 11, 12};
-    int minuteY[] = {
+    int[] minuteY = {
         -31, -261, -266, -314, -381, -391, -381, -314, -266, -261, -31};
-    int scaledHourX[] = new int[hourX.length];
-    int scaledHourY[] = new int[hourY.length];
-    int scaledMinuteX[] = new int[minuteX.length];
-    int scaledMinuteY[] = new int[minuteY.length];
-    int rotatedHourX[] = new int[hourX.length];
-    int rotatedHourY[] = new int[hourY.length];
-    int rotatedMinuteX[] = new int[minuteX.length];
-    int rotatedMinuteY[] = new int[minuteY.length];
+    int[] scaledHourX = new int[hourX.length];
+    int[] scaledHourY = new int[hourY.length];
+    int[] scaledMinuteX = new int[minuteX.length];
+    int[] scaledMinuteY = new int[minuteY.length];
+    int[] rotatedHourX = new int[hourX.length];
+    int[] rotatedHourY = new int[hourY.length];
+    int[] rotatedMinuteX = new int[minuteX.length];
+    int[] rotatedMinuteY = new int[minuteY.length];
 
     Polygon hourHand;
     Polygon scaledHourHand;

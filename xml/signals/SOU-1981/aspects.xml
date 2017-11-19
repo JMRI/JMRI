@@ -17,7 +17,7 @@
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -26,7 +26,7 @@
         <date>2017-03-07</date>
         <authorinitials>GPM</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
@@ -37,82 +37,82 @@
       <indication>Proceed.</indication>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
-	  <route>Normal</route>
+      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Approach Diverging</name>
       <rule>Rule 302</rule>
       <indication>Proceed, approaching next signal prepared to take diverging route.</indication>
       <speed>Normal</speed>
       <speed2>Medium</speed2>
-	  <route>Normal</route>
+      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Advance Approach</name>
       <rule>Rule 303</rule>
       <indication>Proceed, preparing to stop at second signal.</indication>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
-	  <route>Normal</route>
+      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Diverging Route Clear (Medium)</name>
       <rule>Rule 304</rule>
       <indication>Proceed through diverging route, observing authorized speed through turnout(s) or crossover(s).</indication>
       <speed>Medium</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
-	</aspect>
-	
-	<aspect>
+    </aspect>
+
+    <aspect>
       <name>Diverging Route Clear (Slow)</name>
       <rule>Rule 304</rule>
       <indication>Proceed through diverging route, observing authorized speed through turnout(s) or crossover(s).</indication>
       <speed>Slow</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
-	</aspect> 
-	
-	<aspect>
+    </aspect>
+
+    <aspect>
       <name>Approach Slow</name>
       <rule>Rule 306</rule>
       <indication>Proceed, approaching next signal at Slow Speed.  Train exceeding Medium Speed must at once reduce to that speed.</indication>
       <speed>Normal</speed>
       <speed2>Slow</speed2>
-	  <route>Normal</route>
+      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Diverging Route Approach Slow (Medium)</name>
       <rule>Rule 306.1</rule>
       <indication>Proceed through diverging route, observing authorized speed through turnout(s) or crossover(s), then not exceeding Medium Speed, approach next signal at Slow Speed.</indication>
       <speed>Medium</speed>
       <speed2>Slow</speed2>
-	  <route>Diverging</route>
+      <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Diverging Route Approach Slow (Slow)</name>
       <rule>Rule 306.1</rule>
       <indication>Proceed through diverging route, observing authorized speed through turnout(s) or crossover(s), then not exceeding Medium Speed, approach next signal at Slow Speed.</indication>
       <speed>Slow</speed>
       <speed2>Slow</speed2>
-	  <route>Diverging</route>
+      <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Approach</name>
       <rule>Rule 307</rule>
       <indication>Proceed, preparing to stop at next signal.  Train exceeding Medium Speed must at once reduce to that speed.</indication>
       <speed>Normal</speed>
       <speed2>Stop</speed2>
-	  <route>Normal</route>
+      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Diverging Route Approach (Medium)</name>
       <rule>Rule 308</rule>
       <indication>Proceed through diverging route, observing authorized speed through turnout(s) or crossover(s) preparing to stop at next signal.  Train exceeding Medium Speed must at once reduce to that speed.</indication>
@@ -120,8 +120,8 @@
       <speed2>Stop</speed2>
       <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Diverging Route Approach (Slow)</name>
       <rule>Rule 308</rule>
       <indication>Proceed through diverging route, observing authorized speed through turnout(s) or crossover(s) preparing to stop at next signal.  Train exceeding Medium Speed must at once reduce to that speed.</indication>
@@ -129,8 +129,8 @@
       <speed2>Stop</speed2>
       <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Restricted Proceed</name>
       <rule>Rule 309</rule>
       <indication>Proceed at Restricted Speed.</indication>
@@ -138,8 +138,8 @@
       <speed2>Restricted</speed2>
       <route>Either</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Stop</name>
       <rule>Rule 310</rule>
       <indication>Stop.</indication>
@@ -149,17 +149,17 @@
     </aspect>
 
   </aspects>
-  
-  <appearancefiles>    
+
+  <appearancefiles>
     <appearancefile href="appearance-CL-3-arm-absolute.xml"/>
-	<appearancefile href="appearance-CL-2-arm-absolute.xml"/>
-	<appearancefile href="appearance-CL-2-arm-highspace-absolute.xml"/>
-	<appearancefile href="appearance-CL-2-arm-permissive.xml"/>
-	<appearancefile href="appearance-CL-1-arm-absolute.xml"/>
-	<appearancefile href="appearance-CL-1-arm-permissive.xml"/>
-	<appearancefile href="appearance-2-light-dwarf.xml"/>
-	<appearancefile href="appearance-1-light-dwarf.xml"/>
-	<appearancefile href="appearance-1-light-dwarf-permissive.xml"/>
+    <appearancefile href="appearance-CL-2-arm-absolute.xml"/>
+    <appearancefile href="appearance-CL-2-arm-highspace-absolute.xml"/>
+    <appearancefile href="appearance-CL-2-arm-permissive.xml"/>
+    <appearancefile href="appearance-CL-1-arm-absolute.xml"/>
+    <appearancefile href="appearance-CL-1-arm-permissive.xml"/>
+    <appearancefile href="appearance-2-light-dwarf.xml"/>
+    <appearancefile href="appearance-1-light-dwarf.xml"/>
+    <appearancefile href="appearance-1-light-dwarf-permissive.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>

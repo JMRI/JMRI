@@ -55,7 +55,7 @@ public class Ib2Throttle extends LocoNetThrottle {
         msg.setElement(4, new_IB2_F13_F19);
         network.sendLocoNetMessage(msg);
 
-        // Function F20 (and F28) 
+        // Function F20 (and F28)
         // F12 is also controlled from this message though IB-II uses RE_OPC_IB2_F9_F12 OPS code for F12 - needed to avoid overridding F12 value
         int new_IB2_F20_F28 = ((getF12() ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
                 | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)

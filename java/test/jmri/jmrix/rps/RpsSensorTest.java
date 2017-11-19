@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the RPS Sensor class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
   */
 public class RpsSensorTest extends TestCase {
 

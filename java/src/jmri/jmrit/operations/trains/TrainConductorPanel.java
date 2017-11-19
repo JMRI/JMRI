@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Conductor Panel. Shows work for a train one location at a time.
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
- * 
+ *
  */
 public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
@@ -149,7 +149,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         }
         super.buttonActionPerformed(ae);
     }
-    
+
     private boolean queued = false;
 
     @Override
@@ -191,9 +191,9 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                         moveButton.setEnabled(false);
                         modifyButton.setEnabled(false);
                     }
-                    
+
                     textStatus.setText(getStatus(rl, IS_MANIFEST));
-                    
+
                     // adjust move button text
                     if (rl == _train.getTrainTerminatesRouteLocation()) {
                         moveButton.setText(Bundle.getMessage("Terminate"));
@@ -201,7 +201,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                         moveButton.setText(Bundle.getMessage("Move"));
                     }
                     updateComplete();
-                    
+
                 }
             }
         });

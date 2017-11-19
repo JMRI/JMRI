@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of CoordinateEdit
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CoordinateEditTest {
 
@@ -34,7 +34,7 @@ public class CoordinateEditTest {
            frame.init("foo",i,false);
         } catch( Exception e) {
             Assert.fail("Exception " + e + " Thrown during init call ");
-        } 
+        }
     }
 
     @Before

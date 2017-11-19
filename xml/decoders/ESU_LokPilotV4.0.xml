@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <!-- based on the ESU software LokProgrammer V4.1.5 and the ESU manuals: -->
     <!-- 51981 LokPilot_V40 Betriebsanleitung_Auflage_3 -->
@@ -28,13 +28,13 @@
     <version author="Dave Heap" version="2" lastUpdated="20130105"/>
     <!-- ver3 fixed range and default values CVs 5 and 6 -->
     <version author="Dave Heap" version="3" lastUpdated="20130127"/>
-    <!-- ver4 created new xi:include /xml/decoders/esu/v4standardCVs.xml 
-    moved all non-indexed CVs to v4standardCVs.xml 
-    created new xi:include /xml/decoders/esu/v4cv21.22.xml 
-    created new pane xi:include /xml/decoders/esu/v4extraPane.xml 
-    added new items to /xml/programmers/parts/AnalogControlsPane.xml 
-    corrected minor problem in /xml/programmers/parts/ConsistPane.xml 
-    moved many items to more appropriate panes 
+    <!-- ver4 created new xi:include /xml/decoders/esu/v4standardCVs.xml
+    moved all non-indexed CVs to v4standardCVs.xml
+    created new xi:include /xml/decoders/esu/v4cv21.22.xml
+    created new pane xi:include /xml/decoders/esu/v4extraPane.xml
+    added new items to /xml/programmers/parts/AnalogControlsPane.xml
+    corrected minor problem in /xml/programmers/parts/ConsistPane.xml
+    moved many items to more appropriate panes
     updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
     <version author="Dave Heap" version="4" lastUpdated="20130429"/>
     <!-- ver5 indexed CV fixes -->
@@ -288,7 +288,7 @@
             </factReset>
         </resets>
     </decoder>
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+    <!-- <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>

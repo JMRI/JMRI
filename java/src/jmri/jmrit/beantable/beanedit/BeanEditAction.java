@@ -482,7 +482,7 @@ abstract class BeanEditAction extends AbstractAction {
     private static class BeanPropertiesTableModel extends AbstractTableModel {
 
         Vector<KeyValueModel> attributes;
-        String titles[];
+        String[] titles;
         boolean wasModified;
 
         private static class KeyValueModel {

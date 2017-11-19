@@ -68,7 +68,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
         ignoreTrainCheckBox.setSelected(ignoreTrainCheckBoxSelected);
 
         // first car in the list becomes the master
-        int rows[] = _carsTable.getSelectedRows();
+        int[] rows = _carsTable.getSelectedRows();
         if (rows.length > 0) {
             Car car = _carsTableModel.getCarAtIndex(_carsTable.convertRowIndexToModel(rows[0]));
             super.loadCar(car);
@@ -113,7 +113,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 
         // need to get selected cars before they are modified their location in the table can change
         List<Car> cars = new ArrayList<Car>();
-        int rows[] = _carsTable.getSelectedRows();
+        int[] rows = _carsTable.getSelectedRows();
         for (int row : rows) {
             Car car = _carsTableModel.getCarAtIndex(_carsTable.convertRowIndexToModel(row));
             log.debug("Adding selected car {} to change list", car.toString());

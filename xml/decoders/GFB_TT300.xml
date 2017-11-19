@@ -2,12 +2,12 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--  TT300 turnout decoder, responds to Programming Track and Ops Mode Accessory Instructions. 
-	     NB; most command stations cannot do Ops-Mode Accessory Instructions, only Loco Instructions !
+  <!--  TT300 turnout decoder, responds to Programming Track and Ops Mode Accessory Instructions.
+         NB; most command stations cannot do Ops-Mode Accessory Instructions, only Loco Instructions !
 
-		 Note over-loading of standard default naming to get basic features in CV2 onto the Basic pane. 
+         Note over-loading of standard default naming to get basic features in CV2 onto the Basic pane.
 
-	-->
+ -->
   <version author="ncliffe@btinternet.com" version="1" lastUpdated="20101906"/>
   <decoder>
     <family name="Turnouts" mfg="GFB Designs" comment="TT300 is a turnout motor with integral decoder, programmable by service mode or ops-mode for accessories">
@@ -595,7 +595,7 @@
         <text>In addition to the Primary Address (Basic Tab), the TT300 can respond handle up to 48 Routes. </text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>Routes are turnout addresses which take values from 1 to 127.  Optionally, the Route address can cause the </text>
@@ -607,7 +607,7 @@
         <text>If any Route Address is set to Zero, then all other after that Route Address are ignored.   </text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <row>
@@ -619,7 +619,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -630,7 +630,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -649,7 +649,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -660,7 +660,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -679,7 +679,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -690,7 +690,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -709,7 +709,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -720,7 +720,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -733,7 +733,7 @@
       <row>
         <column>
           <label>
-            <text>     </text>
+            <text> </text>
           </label>
         </column>
       </row>
@@ -746,7 +746,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -757,7 +757,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -776,7 +776,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -787,7 +787,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -806,7 +806,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -817,7 +817,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -836,7 +836,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -847,7 +847,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -860,7 +860,7 @@
       <row>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
       </row>
@@ -873,7 +873,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -884,7 +884,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -903,7 +903,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -914,7 +914,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -933,7 +933,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -944,7 +944,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -963,7 +963,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -974,7 +974,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -987,7 +987,7 @@
       <row>
         <column>
           <label>
-            <text>         </text>
+            <text> </text>
           </label>
         </column>
       </row>
@@ -1000,7 +1000,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -1011,7 +1011,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -1030,7 +1030,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -1041,7 +1041,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -1060,7 +1060,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -1071,7 +1071,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -1090,7 +1090,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -1101,7 +1101,7 @@
         </column>
         <column>
           <label>
-            <text>              </text>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -1114,7 +1114,7 @@
       <row>
         <column>
           <label>
-            <text>    </text>
+            <text> </text>
           </label>
         </column>
       </row>

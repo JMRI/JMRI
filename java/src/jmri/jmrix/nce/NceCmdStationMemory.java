@@ -5,7 +5,7 @@ package jmri.jmrix.nce;
  * Contains the map for the command station and memory parts
  *
  * @author Ken Cameron Copyright (C) 2013
- * 
+ *
  */
 public class NceCmdStationMemory {
 
@@ -24,7 +24,7 @@ public class NceCmdStationMemory {
         public final static int CS_CON_MEM_MID = 0xF700;  // start of mid consist locos
         public final static int CS_CON_MIN = 1;
         public final static int CS_CON_MAX = 127;
-        public final static int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory 
+        public final static int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory
         public final static int CS_MAX_MACRO = 255;  // there are 256 possible macros
         public final static int CS_MACRO_SIZE = 20;  // 20 bytes per macro
 

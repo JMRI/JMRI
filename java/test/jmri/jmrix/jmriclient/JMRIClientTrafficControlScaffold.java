@@ -1,9 +1,7 @@
 /**
- * JMRIClientInterfaceScaffold.java
+ * Stands in for the JMRIClientTrafficController class.
  *
- * Description:	Stands in for the JMRIClientTrafficController class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.jmriclient;
 
@@ -59,7 +57,7 @@ public class JMRIClientTrafficControlScaffold extends JMRIClientTrafficControlle
         if (log.isDebugEnabled()) {
             log.debug("sendTestReply [" + m + "]");
         }
-        notifyReply(m,null);
+        notifyReply(m, null);
         return;
     }
 

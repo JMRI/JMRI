@@ -1,6 +1,6 @@
 // SerialFilterAction.java
-
 package jmri.jmrix.cmri.serial.serialmon;
+
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * CMRInet Serial monitor packet filter
  *
- * @author                      Chuck Catania  2016
+ * @author Chuck Catania 2016
  */
 public class SerialFilterAction extends AbstractAction {
 
@@ -27,18 +27,17 @@ public class SerialFilterAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-		// create a SerialMonFrame
-		SerialFilterFrame f = new SerialFilterFrame(_memo);
-		try {
-			f.initComponents();
-			}
-		catch (Exception ex) {
-			log.warn("SerialFilterAction starting SerialFilterFrame: Exception: "+ex.toString());
-			}
-		f.setVisible(true);
-	}
+        // create a SerialMonFrame
+        SerialFilterFrame f = new SerialFilterFrame(_memo);
+        try {
+            f.initComponents();
+        } catch (Exception ex) {
+            log.warn("SerialFilterAction starting SerialFilterFrame: Exception: " + ex.toString());
+        }
+        f.setVisible(true);
+    }
 
-	private final static Logger log = LoggerFactory.getLogger(SerialFilterAction.class);
+    private final static Logger log = LoggerFactory.getLogger(SerialFilterAction.class);
 
 }
 

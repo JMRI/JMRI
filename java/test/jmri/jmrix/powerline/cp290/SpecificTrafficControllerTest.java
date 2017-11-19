@@ -11,7 +11,7 @@ import org.junit.Before;
  **/
 
 public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTrafficControllerTest {
-        
+
    private SpecificSystemConnectionMemo memo = null;
 
    @Override

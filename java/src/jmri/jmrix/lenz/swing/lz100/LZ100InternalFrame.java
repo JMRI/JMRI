@@ -33,7 +33,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     static final private int ONSENT = 1;
     static final private int OFFSENT = 2;
 
-    private int sendCount = 0; // count the number of times the on/off 
+    private int sendCount = 0; // count the number of times the on/off
     // sequence for F4 has been sent during a reset
 
     protected XNetTrafficController tc = null;
@@ -173,8 +173,8 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     synchronized public void message(XNetReply l) {
         if (l.isOkMessage()) {
             /* this was an "OK" message
-             We're only paying attention to it if we're 
-             resetting the command station 
+             We're only paying attention to it if we're
+             resetting the command station
              */
             if (status.getText().equals(Bundle.getMessage("LZ100StatusSetMode"))) {
                 status.setText(Bundle.getMessage("StatusOK"));

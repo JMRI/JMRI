@@ -1,12 +1,11 @@
 package jmri.jmrix.sprog;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
  * Create a Systems menu containing the Jmri SPROG-specific tools.
  *
- * @author	Andrew Crosland Copyright 2006
+ * @author Andrew Crosland Copyright 2006
  */
 
 public class SPROGCSMenu extends JMenu {

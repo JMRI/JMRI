@@ -831,7 +831,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (restartingTrainsList.size() == 1) {
             at = restartingTrainsList.get(0);
         } else if (restartingTrainsList.size() > 1) {
-            Object choices[] = new Object[restartingTrainsList.size()];
+            Object[] choices = new Object[restartingTrainsList.size()];
             for (int i = 0; i < restartingTrainsList.size(); i++) {
                 if (_ShortActiveTrainNames) {
                     choices[i] = restartingTrainsList.get(i).getTrainName();
@@ -868,7 +868,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (activeTrainsList.size() == 1) {
             at = activeTrainsList.get(0);
         } else if (activeTrainsList.size() > 1) {
-            Object choices[] = new Object[activeTrainsList.size()];
+            Object[] choices = new Object[activeTrainsList.size()];
             for (int i = 0; i < activeTrainsList.size(); i++) {
                 if (_ShortActiveTrainNames) {
                     choices[i] = activeTrainsList.get(i).getTrainName();
@@ -964,7 +964,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param allocateMethod                  How allocations will be performed.
      *                                        999 - Allocate as many section from start to finish as it can
      *                                        0 - Allocate to the next "Safe" section. If it cannot allocate all the way to
-     *                                        the next "safe" section it does not allocate any sections. It will 
+     *                                        the next "safe" section it does not allocate any sections. It will
      *                                        not allocate beyond the next safe section until it arrives there. This
      *                                        is useful for bidirectional single track running.
      *                                        Any other positive number (in reality thats 1-150 as the create transit
@@ -973,7 +973,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
-            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd, 
+            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd,
             boolean showErrorMessages, JmriJFrame frame, int allocateMethod) {
         log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
                 trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
@@ -1927,7 +1927,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     // manually make a choice of next section
     private Section dispatcherChoice(List<Section> sList, AllocationRequest ar) {
-        Object choices[] = new Object[sList.size()];
+        Object[] choices = new Object[sList.size()];
         for (int i = 0; i < sList.size(); i++) {
             Section s = sList.get(i);
             String txt = s.getSystemName();

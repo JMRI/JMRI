@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SerialSensorManagerXmlTest.java
+ * Tests for the SerialSensorManagerXml class
  *
- * Description: tests for the SerialSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SerialSensorManagerXmlTest {
 

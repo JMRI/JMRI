@@ -31,7 +31,7 @@
       <authorinitials>PB</authorinitials>
       <revremark>
         This file containts only variables that are common to ALL normal D&amp;H decoders,
-		EXCEPT the low current DH06A that has different default values.
+        EXCEPT the low current DH06A that has different default values.
       </revremark>
     </revision>
     <revision>

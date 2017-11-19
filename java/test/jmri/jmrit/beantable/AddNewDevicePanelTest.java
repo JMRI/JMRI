@@ -3,21 +3,14 @@ package jmri.jmrit.beantable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AddNewDevicePanelTest {
 
@@ -31,7 +24,7 @@ public class AddNewDevicePanelTest {
             @Override
             public void actionPerformed(ActionEvent e) { }
         };
-        AddNewDevicePanel t = new AddNewDevicePanel(new JTextField(), new JTextField(), "ButtonOK", oklistener, cancellistener);    
+        AddNewDevicePanel t = new AddNewDevicePanel(new JTextField(), new JTextField(), "ButtonOK", oklistener, cancellistener);
         Assert.assertNotNull("exists",t);
     }
 

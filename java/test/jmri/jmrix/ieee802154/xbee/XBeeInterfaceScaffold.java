@@ -15,12 +15,10 @@ import org.slf4j.LoggerFactory;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**
- * XBeeInterfaceScaffold.java
+ * Test scaffold implementation of XBeeInterface
  *
- * Description:	Test scaffold implementation of XBeeInterface
- *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Paul Bender Copyright (C) 2016
  *
  * Use an object of this type as a XBeeTrafficController in tests
  */
@@ -47,9 +45,9 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
         Mockito.when(remoteDevice1.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
         Mockito.when(remoteDevice1.get16BitAddress()).thenReturn(new XBee16BitAddress("0002"));
 
-        byte pan[] = {(byte) 0x00, (byte) 0x42};
-        byte uad[] = {(byte) 0x00, (byte) 0x02};
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        byte[] pan = {(byte) 0x00, (byte) 0x42};
+        byte[] uad = {(byte) 0x00, (byte) 0x02};
+        byte[] gad = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         XBeeNode node = new XBeeNode(pan,uad,gad);
         node.setXBee(remoteDevice1);
         registerNode(node);
@@ -77,7 +75,7 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
      * record XBee messages sent, provide access for making sure they are OK
      */
     public Vector<XBeeMessage> outbound = new Vector<XBeeMessage>();  // public OK here, so long as this is a test class
- 
+
     @Override
     public void sendXBeeMessage(XBeeMessage m, XBeeListener replyTo) {
         if (log.isDebugEnabled()) {

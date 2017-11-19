@@ -182,13 +182,13 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         Element e = new Element("test");
         Assert.assertEquals(null, x.getUserName(e));
-        
+
         e = new Element("test");
         Element e2 = new Element("userName");
         e2.addContent("foo");
         e.addContent(e2);
         Assert.assertEquals("foo", x.getUserName(e));
-        
+
         e = new Element("test");
         e.setAttribute("userName", "bar");
         Assert.assertEquals("bar", x.getUserName(e));
@@ -207,13 +207,13 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         Element e = new Element("test");
         Assert.assertEquals(null, x.getSystemName(e));
-        
+
         e = new Element("test");
         Element e2 = new Element("systemName");
         e2.addContent("foo");
         e.addContent(e2);
         Assert.assertEquals("foo", x.getSystemName(e));
-        
+
         e = new Element("test");
         e.setAttribute("systemName", "bar");
         Assert.assertEquals("bar", x.getSystemName(e));
@@ -226,7 +226,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         Assert.assertEquals("foo", x.getSystemName(e));
 
     }
-    
+
     public void testCheckedNamedBeanName() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
@@ -238,7 +238,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         Assert.assertEquals(null, x.checkedNamedBeanName("", t, tm));
         Assert.assertEquals(null, x.checkedNamedBeanName("bar", t, tm));
         Assert.assertEquals("IT01", x.checkedNamedBeanName("IT01", t, tm));
-        Assert.assertEquals("foo", x.checkedNamedBeanName("foo", t, tm));        
+        Assert.assertEquals("foo", x.checkedNamedBeanName("foo", t, tm));
     }
 
     public void testCheckedNamedBeanReference() {
@@ -253,24 +253,24 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         Assert.assertEquals(null, x.checkedNamedBeanReference("", t, tm));
         Assert.assertEquals(null, x.checkedNamedBeanReference("bar", t, tm));
         Assert.assertEquals(nb, x.checkedNamedBeanReference("IT01", t, tm));
-        Assert.assertEquals(nb, x.checkedNamedBeanReference("foo", t, tm));        
+        Assert.assertEquals(nb, x.checkedNamedBeanReference("foo", t, tm));
     }
 
     public void testCheckedNamedBeanHandle() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
         jmri.util.JUnitUtil.resetInstanceManager();
-        
+
         jmri.Turnout t = null;
         jmri.TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
         jmri.Turnout nb = tm.provideTurnout("IT01");
         nb.setUserName("foo");
-        
+
 
         Assert.assertEquals(null, x.checkedNamedBeanHandle(null, t, tm));
         Assert.assertEquals(null, x.checkedNamedBeanHandle("", t, tm));
         Assert.assertEquals(null, x.checkedNamedBeanHandle("bar", t, tm));
         Assert.assertEquals(new jmri.NamedBeanHandle<jmri.Turnout>("IT01", nb), x.checkedNamedBeanHandle("IT01", t, tm));
-        Assert.assertEquals(new jmri.NamedBeanHandle<jmri.Turnout>("foo", nb), x.checkedNamedBeanHandle("foo", t, tm));        
+        Assert.assertEquals(new jmri.NamedBeanHandle<jmri.Turnout>("foo", nb), x.checkedNamedBeanHandle("foo", t, tm));
     }
 
     // from here down is testing infrastructure

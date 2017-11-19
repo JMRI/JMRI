@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of MrcMonPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -61,7 +61,7 @@ public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
         panel = pane = new MrcMonPanel();
         ((MrcMonPanel)pane).initContext(memo);
         helpTarget = "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel";
-        title = "Open MRC Monitor"; 
+        title = "Open MRC Monitor";
     }
 
     @Override

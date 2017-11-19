@@ -12,21 +12,21 @@ import org.junit.Test;
 /**
  * Test simple functioning of CMRInetManagerAction
  * Copied from Diagnostic
- * @author	Chuck Catania Copyright (C) 2017
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class CMRInetManagerActionTest {
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetManagerAction action = new CMRInetManagerAction("CMRI test Action",new CMRISystemConnectionMemo()); 
+        CMRInetManagerAction action = new CMRInetManagerAction("CMRI test Action",new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetManagerAction action = new CMRInetManagerAction(new CMRISystemConnectionMemo()); 
+        CMRInetManagerAction action = new CMRInetManagerAction(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

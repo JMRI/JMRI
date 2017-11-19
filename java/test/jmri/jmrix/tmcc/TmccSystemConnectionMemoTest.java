@@ -15,26 +15,26 @@ public class TmccSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
     @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo();
-       SerialTrafficController tc = new SerialTrafficController(memo) {
-          @Override
-          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
-          }
-       };
-       scm = memo;
+    public void setUp() {
+        JUnitUtil.setUp();
+        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficController(memo) {
+            @Override
+            public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+            }
+        };
+        scm = memo;
     }
 
     @Override
     @After
-    public void tearDown(){
+    public void tearDown() {
         scm = null;
         JUnitUtil.tearDown();
     }

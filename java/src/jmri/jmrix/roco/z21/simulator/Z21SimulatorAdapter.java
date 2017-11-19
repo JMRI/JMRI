@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * NOTE: Some material in this file was modified from other portions of the
  * support infrastructure.
  *
- * @author	Paul Bender, Copyright (C) 2015
+ * @author Paul Bender, Copyright (C) 2015
  */
 public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
@@ -31,7 +31,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     private Z21XNetSimulatorAdapter xnetadapter = null;
 
     // simulation state variables
-    private int flags[]={0x00,0x00,0x00,0x00}; // holds the flags sent by the client.
+    private int[] flags={0x00,0x00,0x00,0x00}; // holds the flags sent by the client.
 
     public Z21SimulatorAdapter() {
         super();
@@ -92,12 +92,12 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             }
         }
     }
-    
+
     volatile boolean threadStopRequest;
     volatile DatagramSocket socket;
-    
+
     static class LogoffException extends JmriException {}
-    
+
     /**
      * {@inheritDoc}
      */
@@ -122,7 +122,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     // and wait for the data to arrive.
                     s.receive(receivePacket);
                     if (threadStopRequest) return;
-                    
+
                     Z21Message msg = new Z21Message(receivePacket.getLength());
                     for(int i=0;i< receivePacket.getLength();i++)
                         msg.setElement(i,receivePacket.getData()[i]);
@@ -146,7 +146,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     if(reply != null) {
                        // only attempt to send a reply if there was actually
                        // a reply generated, since some messages don't do that.
-                       byte ba[] = jmri.util.StringUtil.bytesFromHexString(reply.toString());
+                       byte[] ba = jmri.util.StringUtil.bytesFromHexString(reply.toString());
                        DatagramPacket sendPacket = new DatagramPacket(ba,ba.length,IPAddress,port);
                        // and send it back using our socket
                        s.send(sendPacket);
@@ -296,11 +296,11 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 6, LocoAddress lsb.
             reply.setElement(offset++,0x00);// bytes 7-10,32 bit reception counter.
             reply.setElement(offset++,0x00);
-            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x00);
             reply.setElement(offset++,0x01);
             reply.setElement(offset++,0x00);// bytes 11-14,32 bit error counter.
             reply.setElement(offset++,0x00);
-            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x00);
             reply.setElement(offset++,0x00);
             reply.setElement(offset++,xnetadapter.locoData[i].getSpeed());//currently reserved.Speed in firmware<=1.12
             reply.setElement(offset++,0x00);//currently reserved.Options in firmware<=1.12

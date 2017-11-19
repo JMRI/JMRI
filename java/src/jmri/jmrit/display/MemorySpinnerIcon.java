@@ -30,7 +30,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     int _max = 100;
     JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, _min, _max, 1));
     // the associated Memory object
-    //Memory memory = null;    
+    //Memory memory = null;
     private NamedBeanHandle<Memory> namedMemory;
 
     public MemorySpinnerIcon(Editor editor) {

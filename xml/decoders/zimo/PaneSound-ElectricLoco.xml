@@ -91,12 +91,12 @@
       <!--label>Dependence of the pitch on speed</label-->
       <!--label xml:lang="it">Dipendenza del pitch da velocità</label-->
     </display>
-    
+
     <display item="Volume dependent on Speed">
     </display>
     <display item="Volume dependent on Braking">
     </display>
-    
+
     <label>
       <text> </text>
     </label>
@@ -156,7 +156,7 @@
       <!--label>Switchgear noise Distribution of speed in Switching stages</label-->
       <!--label xml:lang="it">Distribuzione Marce nelle velocità di manovra</label-->
     </display>
-    
+
     <display item="Likeihood of switchgear sparks">
       <!--label>Likeihood of switchgear sparks</label-->
     </display>

@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Tests for the jmri.jmris.ServiceHandler class 
+ * Tests for the jmri.jmris.ServiceHandler class
  *
  * @author Paul Bender
  */

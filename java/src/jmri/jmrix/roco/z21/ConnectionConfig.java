@@ -7,7 +7,7 @@ import javax.swing.JPanel;
  * <P>
  * This uses the {@link Z21Adapter} class to do the actual connection.
  *
- * @author	Paul Bender Copyright (C) 2011
+ * @author Paul Bender Copyright (C) 2011
  *
  * @see Z21Adapter
  */

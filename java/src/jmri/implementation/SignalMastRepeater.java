@@ -35,22 +35,22 @@ public class SignalMastRepeater {
         _slave = nbhm.getNamedBeanHandle(slave, slaveMast);
     }
 
-    @Nonnull 
+    @Nonnull
     public SignalMast getMasterMast() {
         return _master.getBean();
     }
 
-    @Nonnull 
+    @Nonnull
     public SignalMast getSlaveMast() {
         return _slave.getBean();
     }
 
-    @Nonnull 
+    @Nonnull
     public String getMasterMastName() {
         return _master.getName();
     }
 
-    @Nonnull 
+    @Nonnull
     public String getSlaveMastName() {
         return _slave.getName();
     }

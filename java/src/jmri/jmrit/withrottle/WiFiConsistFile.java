@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2011
- * 
+ *
  */
 public class WiFiConsistFile extends ConsistFile {
 

@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
   */
 public class RosterEntryPaneTest extends TestCase {
 

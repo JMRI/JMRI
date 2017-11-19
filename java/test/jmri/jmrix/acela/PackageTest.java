@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.acela package
  *
- * @author	Bob Coleman
+ * @author Bob Coleman
  */
 public class PackageTest extends TestCase {
 

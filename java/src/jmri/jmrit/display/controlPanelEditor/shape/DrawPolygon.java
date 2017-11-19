@@ -41,14 +41,14 @@ public class DrawPolygon extends DrawFrame {
                 iter.currentSegment(coord);
                 _vertices.add(new Point(x + Math.round(coord[0]), y + Math.round(coord[1])));
                 iter.next();
-            }            
+            }
         }
         _shape.editing(true);
         _shape.drawHandles();
         return panel;
     }
 
-    // double click was made - 
+    // double click was made -
     protected void makeShape(MouseEvent event, Editor ed) {
 /*        Point pt = new Point(event.getX(), event.getY());
         boolean closed;           Do this later
@@ -129,7 +129,7 @@ public class DrawPolygon extends DrawFrame {
         p.x += pt.x;
         p.y += pt.y;
         if (_editing) {
-            _shape.setShape(makePath(getStartPoint()));            
+            _shape.setShape(makePath(getStartPoint()));
         }
         return false;
     }
@@ -144,7 +144,7 @@ public class DrawPolygon extends DrawFrame {
             path.lineTo(_vertices.get(i).x - pt.x, _vertices.get(i).y - pt.y);
         }
 //        if (closed) {
-//            path.lineTo(_vertices.get(0).x - pt.x, _vertices.get(0).y - pt.y);            
+//            path.lineTo(_vertices.get(0).x - pt.x, _vertices.get(0).y - pt.y);
 //        }
         return path;
     }

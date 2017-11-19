@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DCCppSensorManagerXmlTest.java
+ * Tests for the DCCppSensorManagerXml class
  *
- * Description: tests for the DCCppSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class DCCppSensorManagerXmlTest {
 

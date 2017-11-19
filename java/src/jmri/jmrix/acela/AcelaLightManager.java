@@ -2,7 +2,6 @@ package jmri.jmrix.acela;
 
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import jmri.Manager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +117,7 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Deprecated
     static public AcelaLightManager instance() {
-        return null; 
+        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class);

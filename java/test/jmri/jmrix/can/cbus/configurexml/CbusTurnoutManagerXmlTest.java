@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * CbusTurnoutManagerXmlTest.java
+ * Tests for the CbusTurnoutManagerXml class
  *
- * Description: tests for the CbusTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class CbusTurnoutManagerXmlTest {
 

@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract partial implementation of a TurnoutManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         implements TurnoutManager, java.beans.VetoableChangeListener {
 
     public AbstractTurnoutManager() {
         //super(Manager.TURNOUTS);
-        TurnoutOperationManager.getInstance();		// force creation of an instance
+        TurnoutOperationManager.getInstance(); // force creation of an instance
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
@@ -220,7 +220,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * turnouts in numerical order eg 10 to 30.
      *
      * @param systemName configured system connection name
-     * @return false as default, unless overridden by implementations as supported
+     * @return false as default, unless overridden by implementations as
+     *         supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {

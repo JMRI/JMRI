@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
@@ -42,7 +42,7 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     public void setUp() {
         JUnitUtil.setUp();
         tnis = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tnis);  
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tnis);
         t = new TamsTurnout(5,memo.getSystemPrefix(),tnis);
     }
 

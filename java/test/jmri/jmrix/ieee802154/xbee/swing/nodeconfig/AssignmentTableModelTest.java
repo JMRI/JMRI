@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of AssignmentTableModel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AssignmentTableModelTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AssignmentTableModel action = new AssignmentTableModel();
         Assert.assertNotNull("exists", action);
     }

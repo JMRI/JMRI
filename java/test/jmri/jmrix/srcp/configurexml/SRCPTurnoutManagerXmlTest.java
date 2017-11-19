@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SRCPTurnoutManagerXmlTest.java
+ * Tests for the SRCPTurnoutManagerXml class
  *
- * Description: tests for the SRCPTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SRCPTurnoutManagerXmlTest {
 

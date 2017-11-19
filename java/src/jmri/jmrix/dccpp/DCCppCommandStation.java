@@ -34,7 +34,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     public void setBaseStationType(String s) {
  baseStationType = s;
     }
-    
+
     public String getBaseStationType() {
  return baseStationType;
     }
@@ -64,10 +64,10 @@ public class DCCppCommandStation implements jmri.CommandStation {
         // Changes from v1.1: space between "DCC++" and "BASE", and "BUILD" is removed.
         // V1.0/V1.1/V1.2 Simplified
         // String syntax = "iDCC\\+\\+\\s?(.*):\\s?(?:BUILD)? (.*)";
-        
+
         baseStationType = l.getStatusVersionString();
         codeBuildDate = l.getStatusBuildDateString();
-        
+
     }
 
     /**
@@ -130,7 +130,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     }
 
-    /* To Implement the CommandStation Interface, we have to define the 
+    /* To Implement the CommandStation Interface, we have to define the
      sendPacket function */
     /**
      * Send a specific packet to the rails.
@@ -156,7 +156,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /*
-     * For the command station interface, we need to set the traffic 
+     * For the command station interface, we need to set the traffic
      * controller.
      */
     public void setTrafficController(DCCppTrafficController tc) {

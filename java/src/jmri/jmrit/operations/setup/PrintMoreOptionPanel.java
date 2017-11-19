@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of additional manifest print options
  *
  * @author Dan Boudreau Copyright (C) 2012
- * 
+ *
  */
 public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 

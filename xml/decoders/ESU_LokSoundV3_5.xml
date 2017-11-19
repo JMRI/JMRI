@@ -2,22 +2,22 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- made from the ESU_LokSoundV3_0.file -->
   <!-- ver2 CV213 defined multiple times, fixed to 219,222,225,228,231,234 -->
   <!-- also added CV52,121,122,123,124 -->
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="2" lastUpdated="20060413"/>
-  <!-- ver3 added Rule 17 lighting options from 4th ed of manual (dated 8/2005) & additional button assignments  -->
+  <!-- ver3 added Rule 17 lighting options from 4th ed of manual (dated 8/2005) & additional button assignments -->
   <!-- Also removed LS XL V3.5 due to due to LS V3.5 now using Aux5 & Aux6 mapping to diesel notch up and down, XL has own file -->
   <!-- Added 21 pin version that has 6 functions - Michael Mosher -->
   <version author="Michael Mosher mjmx@comcast.net" version="3"/>

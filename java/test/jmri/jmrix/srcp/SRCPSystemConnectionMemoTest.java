@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SRCPSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 

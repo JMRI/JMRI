@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Provide access to Zimo's MX-1 on an attached serial comm port. Normally
  * controlled by the zimo.mxulf.mxulfFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  *
  * Adapted for use with Zimo MXULF by Kevin Dickerson
  *

@@ -64,16 +64,16 @@ public class JynstrumentPopupMenu extends JPopupMenu {
          //   if (!java.awt.Desktop.isDesktopSupported()) //TODO: Need Java 6
          //        return;
          log.debug("Not implemented");
-         } 
+         }
          } );
          editMenuItem.setEnabled(false);
-         add(editMenuItem);    
+         add(editMenuItem);
          // Reload option
          JMenuItem reloadMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuReload"));
          reloadMenuItem.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
          log.debug("Not implemented"); // TODO
-         } 
+         }
          } );
          reloadMenuItem.setEnabled(false);
          add(reloadMenuItem);*/

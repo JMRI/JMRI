@@ -21,7 +21,7 @@ public class AcelaAddress {
 
     public AcelaAddress() {
     }
-    
+
     static final int MINSENSORADDRESS = 0;
     static final int MAXSENSORADDRESS = 1023;   //  Artifical limit but OK until someone has
     //  more than 64 sensor modules (at 16 sensors each).
@@ -118,7 +118,7 @@ public class AcelaAddress {
     public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix + type )) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
@@ -243,24 +243,24 @@ public class AcelaAddress {
         String nName = "";
         // check the type character
         if (!type.equalsIgnoreCase("S") && !type.equalsIgnoreCase("L") && !type.equalsIgnoreCase("T")) {
-            // here if an illegal type character 
+            // here if an illegal type character
             log.error("invalid type character proposed for system name");
             return (nName);
         }
         // check the node address
         if ((nAddress < memo.getTrafficController().getMinimumNodeAddress()) || (nAddress > memo.getTrafficController().getMaximumNumberOfNodes())) {
-            // here if an illegal node address 
+            // here if an illegal node address
             log.warn("invalid node adddress proposed for system name");
             return (nName);
         }
         // check the bit number
         if (type.equalsIgnoreCase("S") && ((bitNum < 0) || (bitNum > MAXSENSORADDRESS))) {
-            // here if an illegal bit number 
+            // here if an illegal bit number
             log.warn("invalid bit number proposed for Acela Sensor");
             return (nName);
         }
         if ((type.equalsIgnoreCase("L") || type.equalsIgnoreCase("T")) && ((bitNum < 0) || (bitNum > MAXOUTPUTADDRESS))) {
-            // here if an illegal bit number 
+            // here if an illegal bit number
             log.warn("invalid bit number proposed for Acela Turnout or Light");
             return (nName);
         }

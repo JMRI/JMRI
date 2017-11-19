@@ -8,7 +8,7 @@ import org.junit.Test;
 
 
 /**
- * Tests for the jmri.jmris.srcp.JmriSRCPServerManager class 
+ * Tests for the jmri.jmris.srcp.JmriSRCPServerManager class
  *
  * @author Paul Bender Copyright (C) 2016
  */

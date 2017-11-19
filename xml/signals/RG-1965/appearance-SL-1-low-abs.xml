@@ -9,28 +9,28 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-	<author>
-    	<personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
-    	<email>dcc2@ebroerse.nl</email>
-		</author>    
+    <author>
+        <personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
+        <email>dcc2@ebroerse.nl</email>
+        </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-		<revnumber>1</revnumber>
-		<date>2013-01-28</date>
-		<authorinitials>EBR</authorinitials>
-		<revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
-    </revision>   
-  </revhistory> 
-  
+        <revnumber>1</revnumber>
+        <date>2013-01-28</date>
+        <authorinitials>EBR</authorinitials>
+        <revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
+    </revision>
+  </revhistory>
+
   <aspecttable>RG-1965</aspecttable>
   <name>Single head dwarf absolute signal</name>
   <reference>As described in the 1965 version of the RG publication "Rio Grande Rules of Operating Department".</reference>
   <description>Appearances for an absolute (RG: Positive) one-searchlight dwarf signal with (P)-badging</description>
-  
+
   <appearances>
 
     <appearance>
@@ -53,14 +53,14 @@
       <reference>Rule 285</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-285.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
       <reference>Rule 290</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-290.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
@@ -127,4 +127,4 @@
 
   </aspectMappings>
 
-</appearancetable>  
+</appearancetable>

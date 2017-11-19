@@ -13,17 +13,17 @@ import org.junit.Test;
 /**
  * Test simple functioning of JMRIClientComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientComponentFactoryTest {
 
 
     private JMRIClientTrafficController tc = null;
     private JMRIClientSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMRIClientComponentFactory action = new JMRIClientComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

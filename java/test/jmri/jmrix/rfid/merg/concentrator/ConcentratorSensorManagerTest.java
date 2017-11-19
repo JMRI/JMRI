@@ -8,11 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ConcentratorSensorManagerTest.java
+ * Tests for the ConcentratorSensorManager class
  *
- * Description:	tests for the ConcentratorSensorManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorSensorManagerTest {
 

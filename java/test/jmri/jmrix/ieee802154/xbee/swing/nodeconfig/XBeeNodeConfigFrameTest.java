@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeInterfaceScaffold;
-import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -15,7 +14,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of XBeeNodeConfigFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeNodeConfigFrameTest {
 
@@ -23,7 +22,7 @@ public class XBeeNodeConfigFrameTest {
     private XBeeTrafficController tc = null;
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeNodeConfigFrame action = new XBeeNodeConfigFrame(tc);
         Assert.assertNotNull("exists", action);
         action.dispose();
@@ -31,7 +30,7 @@ public class XBeeNodeConfigFrameTest {
 
     @Test
     public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeNodeConfigFrame t = new XBeeNodeConfigFrame(tc);
         // for now, just makes ure there isn't an exception.
         t.initComponents();
@@ -40,7 +39,7 @@ public class XBeeNodeConfigFrameTest {
 
     @Test
     public void testGetTitle(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeNodeConfigFrame t = new XBeeNodeConfigFrame(tc);
         t.initComponents();
         Assert.assertEquals("title","Configure XBee Nodes",t.getTitle());

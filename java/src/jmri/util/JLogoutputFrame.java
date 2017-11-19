@@ -145,7 +145,7 @@ public class JLogoutputFrame {
     public JTextPaneAppender createAppender(JTextPane aTextPane) {
         JTextPaneAppender result = new JTextPaneAppender(myLayout, "Debug", myFilters.toArray(new Filter[0]), aTextPane);
 
-        // TODO: This a simple approach to add the new appender to all yet known Loggers. 
+        // TODO: This a simple approach to add the new appender to all yet known Loggers.
         // If Loggers are created dynamically later on or the the additivity flag of
         // a logger changes, these Loggers probably wouldn't log to this appender. Solution is to
         // override the DefaultLoggerFactory and the Logger's setAdditivity().

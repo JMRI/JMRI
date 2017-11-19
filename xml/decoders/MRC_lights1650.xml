@@ -14,11 +14,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Marc N Fournier" version="3" lastUpdated="20170323"/>
-  <version author="Alain Le Marchand" version="2" lastUpdated="20150501"/>  
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150501"/>
   <version author="Bill Chown" version="1" lastUpdated="20080226"/>
   <!-- made from the MRC_1656 (Pete Cesaro) file by Bill Chown orrrbrit2004@yahoo.com -->
   <!-- version 2: Regular CV21 on Consist pane - removed MRC pane                     -->
-  <!-- version 3: Added MRC 1651 decoder modelm cv112, cv113										  -->
+  <!-- version 3: Added MRC 1651 decoder modelm cv112, cv113 -->
   <decoder>
     <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes" productID="1650">
@@ -141,55 +141,55 @@
       </variable>
       <!-- CV 105-106 -->
 <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-	  <!-- CV 112-113  ACC1, ACC2 lght control -->
-	  <variable CV="112" item="Function 1 effect generated" default="0" include="1651" tooltip="ACC1 light type control (green wire)">
-		<enumVal>
+      <!-- CV 112-113  ACC1, ACC2 lght control -->
+      <variable CV="112" item="Function 1 effect generated" default="0" include="1651" tooltip="ACC1 light type control (green wire)">
+        <enumVal>
           <enumChoice choice="Ditch" value="0">
             <choice>Ditch</choice>
           </enumChoice>
           <enumChoice choice="Gyra" value="1">
             <choice>Gyra</choice>
-		  </enumChoice>
-		  <enumChoice choice="Mars" value="2">
+          </enumChoice>
+          <enumChoice choice="Mars" value="2">
             <choice>Mars</choice>
-		  </enumChoice>
-		  <enumChoice choice="Prime Strato" value="3">
+          </enumChoice>
+          <enumChoice choice="Prime Strato" value="3">
             <choice>Prime Strato</choice>
-		  </enumChoice>
-		  <enumChoice choice="Single Strobe" value="4">
+          </enumChoice>
+          <enumChoice choice="Single Strobe" value="4">
             <choice>Single Strobe</choice>
-		  </enumChoice>
-		  <enumChoice choice="Double Strobe" value="5">
+          </enumChoice>
+          <enumChoice choice="Double Strobe" value="5">
             <choice>Double Strobe</choice>
           </enumChoice>
         </enumVal>
-		<label>ACC1 Light type Control</label>
+        <label>ACC1 Light type Control</label>
       </variable>
-	  
-	  <variable CV="113" item="Function 2 effect generated" default="0" include="1651" tooltip="ACC2 light type control (pink wire)">
-	    <enumVal>
+
+      <variable CV="113" item="Function 2 effect generated" default="0" include="1651" tooltip="ACC2 light type control (pink wire)">
+        <enumVal>
           <enumChoice choice="Ditch" value="0">
             <choice>Ditch</choice>
           </enumChoice>
           <enumChoice choice="Gyra" value="1">
             <choice>Gyra</choice>
-		  </enumChoice>
-		  <enumChoice choice="Mars" value="2">
+          </enumChoice>
+          <enumChoice choice="Mars" value="2">
             <choice>Mars</choice>
-		  </enumChoice>
-		  <enumChoice choice="Prime Strato" value="3">
+          </enumChoice>
+          <enumChoice choice="Prime Strato" value="3">
             <choice>Prime Strato</choice>
-		  </enumChoice>
-		  <enumChoice choice="Single Strobe" value="4">
+          </enumChoice>
+          <enumChoice choice="Single Strobe" value="4">
             <choice>Single Strobe</choice>
-		  </enumChoice>
-		  <enumChoice choice="Double Strobe" value="5">
+          </enumChoice>
+          <enumChoice choice="Double Strobe" value="5">
             <choice>Double Strobe</choice>
           </enumChoice>
         </enumVal>
-		<label>ACC2 Light type Control</label>
-	  </variable>	
-		
+        <label>ACC2 Light type Control</label>
+      </variable>
+
       <variable CV="123" item="EMF Static Config" default="0" tooltip="default Back EMF is Off">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Load Control Back emf</label>

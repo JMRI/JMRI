@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of SerialMonFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialMonFrameTest {
 
@@ -21,7 +21,7 @@ public class SerialMonFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SerialMonFrame action = new SerialMonFrame(tc);
         Assert.assertNotNull("exists", action);
     }

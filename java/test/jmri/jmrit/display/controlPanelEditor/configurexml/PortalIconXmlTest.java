@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PortalIconXmlTest.java
+ * Tests for the PortalIconXml class
  *
- * Description: tests for the PortalIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PortalIconXmlTest {
 

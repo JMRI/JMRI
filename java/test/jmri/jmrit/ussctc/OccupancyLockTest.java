@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Tests for OccupancyLock classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class OccupancyLockTest {
 
@@ -53,7 +53,7 @@ public class OccupancyLockTest {
 
     @Test
     public void testOneFailStringArrayCtor() throws JmriException {
-    
+
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
 
         OccupancyLock lock = new OccupancyLock(new String[]{"IS1"});

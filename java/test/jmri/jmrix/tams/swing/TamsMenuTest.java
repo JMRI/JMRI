@@ -11,15 +11,15 @@ import org.junit.Test;
 /**
  * Test simple functioning of TamsMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class TamsMenuTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        // the constructor looks for the default ListedTableFrame class, 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // the constructor looks for the default ListedTableFrame class,
         // which is set by the ListedTableFrame constructor.
         new jmri.jmrit.beantable.ListedTableFrame();
         TamsMenu action = new TamsMenu(new jmri.jmrix.tams.TamsSystemConnectionMemo());

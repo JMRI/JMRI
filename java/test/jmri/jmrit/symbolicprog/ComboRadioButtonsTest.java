@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * ComboRadioButtonsTest.java
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class ComboRadioButtonsTest extends TestCase {
 

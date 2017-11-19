@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.internal.InternalSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -28,7 +28,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
         // ask for a Sensor, and check type
         SensorManager lm = jmri.InstanceManager.sensorManagerInstance();
-        
+
         Sensor tl = lm.newSensor("IS21", "my name");
 
         if (log.isDebugEnabled()) {
@@ -54,11 +54,11 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
         // confirm default
         Assert.assertEquals("starting mode", Sensor.UNKNOWN, InternalSensorManager.getDefaultStateForNewSensors() );
-        
+
         // set and retrieve
         InternalSensorManager.setDefaultStateForNewSensors(Sensor.INACTIVE);
         Assert.assertEquals("updated mode", Sensor.INACTIVE, InternalSensorManager.getDefaultStateForNewSensors() );
-               
+
     }
 
     // from here down is testing infrastructure

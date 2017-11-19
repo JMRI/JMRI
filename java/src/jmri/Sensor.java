@@ -146,7 +146,7 @@ public interface Sensor extends NamedBean {
      */
     @Deprecated
     public void useDefaultTimerSettings(boolean flag);
-    
+
     /**
      * @deprecated Since JMRI 4.9.2, use {@link #setUseDefaultTimerSettings(boolean)}
      * @return true if using default debounce values from the
@@ -173,7 +173,7 @@ public interface Sensor extends NamedBean {
     public Reporter getReporter();
 
     /*
-     * Some sensor types allow us to configure a pull up and/or pull down 
+     * Some sensor types allow us to configure a pull up and/or pull down
      * resistor at runtime.  The PullResistance enum provides valid values
      * for the pull resistance.  The short name is used in xml files.
      */
@@ -215,7 +215,7 @@ public interface Sensor extends NamedBean {
             }
             throw new java.lang.IllegalArgumentException("argument value " + pName + " not valid");
         }
- 
+
        @Override
        public String toString(){
           return( peopleName );

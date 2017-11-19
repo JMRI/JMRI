@@ -168,7 +168,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     }
 
     @Override
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, 
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String,
             NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, map, icon);
     }
@@ -177,7 +177,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
 
         HashMap<String, NamedIcon> iMap;
 
-        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, 
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map,
                 NamedIcon icon) {
             super(flavor, icon);
             iMap = map;

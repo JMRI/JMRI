@@ -25,14 +25,14 @@ import org.slf4j.LoggerFactory;
  * class, relying on implementation here to load the individual CatalogTree objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009
- * 
+ *
  */
 public class WarrantManagerXml //extends XmlFile
                     extends jmri.configurexml.AbstractXmlAdapter {
 
     public WarrantManagerXml() {
     }
-    
+
     /**
      * Store the contents of a WarrantManager.
      *
@@ -70,12 +70,12 @@ public class WarrantManagerXml //extends XmlFile
                 c.addContent(comment);
                 elem.addContent(c);
             }
-            
+
             List <BlockOrder> orders = warrant.getBlockOrders();
             for (int j=0; j<orders.size(); j++) {
                 elem.addContent(storeOrder(orders.get(j), "blockOrder"));
             }
-            
+
             BlockOrder viaOrder = warrant.getViaOrder();
             if (viaOrder!=null) {
                 elem.addContent(storeOrder(viaOrder, "viaOrder"));
@@ -117,7 +117,7 @@ public class WarrantManagerXml //extends XmlFile
         str = warrant.getTrainName();
         if (str==null) str = "";
         elem.setAttribute("trainName", str);
-        
+
         return elem;
     }
 
@@ -181,21 +181,21 @@ public class WarrantManagerXml //extends XmlFile
         float speed = command.getSpeed();
         if (speed > 0.0f) {
             // ignore attribute to allow loading into pre-4.9.2 versions
-            elem.setAttribute("speed", Float.toString(speed));            
+            elem.setAttribute("speed", Float.toString(speed));
         }
 
         return elem;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        
+
         if (shared.getChildren().isEmpty()) {
             return true;
         }
-        
+
         List<Element> warrantList = shared.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found {} Warrant objects", warrantList.size());
         for (int i=0; i<warrantList.size(); i++) {
@@ -211,7 +211,7 @@ public class WarrantManagerXml //extends XmlFile
             String userName = null;
             if (elem.getAttribute("userName") != null)
                 userName = elem.getAttribute("userName").getValue();
-            
+
             boolean SCWa = true;
             log.debug("loading warrant {}", sysName);
             Attribute wType = elem.getAttribute("wtype");
@@ -222,7 +222,7 @@ public class WarrantManagerXml //extends XmlFile
                 log.debug("wtype is {} for {}", wType.getValue(), sysName);
                 SCWa = false;
             }
-            
+
             long timeToPlatform = 500;
             Attribute TTP = elem.getAttribute("timeToPlatform");
             if (TTP != null) {
@@ -257,14 +257,14 @@ public class WarrantManagerXml //extends XmlFile
             if (c != null) {
                 warrant.setComment(c);
             }
-            
+
             Element order = elem.getChild("viaOrder");
             if (order!=null) {
-                warrant.setViaOrder(loadBlockOrder(order));             
+                warrant.setViaOrder(loadBlockOrder(order));
             }
             order = elem.getChild("avoidOrder");
             if (order!=null) {
-                warrant.setAvoidOrder(loadBlockOrder(order));               
+                warrant.setAvoidOrder(loadBlockOrder(order));
             }
 
             boolean forward =true;
@@ -276,7 +276,7 @@ public class WarrantManagerXml //extends XmlFile
                     if (ts.getCommand().toUpperCase().equals("FORWARD")) {
                         forward = ts.getValue().toUpperCase().equals("TRUE");
                     }
-                }                
+                }
             }
             if (SCWa) {
                 if (elem.getAttribute("forward") != null) {
@@ -365,7 +365,7 @@ public class WarrantManagerXml //extends XmlFile
 
         return new BlockOrder(block, pathName, entryName, exitName);
     }
-    
+
     static ThrottleSetting loadThrottleCommand(Element elem) {
         long time = 0;
         try {
@@ -397,15 +397,15 @@ public class WarrantManagerXml //extends XmlFile
                 log.error("Unable to read speed of command.", ex);
             }
         }
-        
+
         return new ThrottleSetting(time, command, value, block, speed);
     }
-    
+
     @Override
     public int loadOrder(){
         return InstanceManager.getDefault(WarrantManager.class).getXMLOrder();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class);
 }
 

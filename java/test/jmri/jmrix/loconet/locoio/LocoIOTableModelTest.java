@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class LocoIOTableModelTest extends TestCase {
 
@@ -131,7 +131,7 @@ public class LocoIOTableModelTest extends TestCase {
     /*      * @param addrlow value returned for the low address read */
     /*      * @param addrhigh value returned for the high address read */
     /*      * @param lnis Test interface for loconet i/o */
-//      */ 
+//      */
 /*     void read3Sequence(int channel, int cv, int addrlow, int addrhigh, */
     /*                        LocoNetInterfaceScaffold lnis, boolean pre133 ) { */
     /*         int src; */

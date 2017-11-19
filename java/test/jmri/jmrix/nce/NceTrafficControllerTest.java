@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the NceTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2003, 2007
+ * @author Bob Jacobsen Copyright 2003, 2007
  */
 public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
@@ -168,7 +168,7 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         m.setElement(1, '1');
         m.setElement(2, '2');
         c.sendNceMessage(m, l);
-		// that's already tested, so don't do here.
+        // that's already tested, so don't do here.
 
         // now send reply
         tistream.write('R');

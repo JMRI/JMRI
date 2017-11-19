@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the NcePowerManager class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
 

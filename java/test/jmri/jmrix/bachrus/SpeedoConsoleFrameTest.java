@@ -10,13 +10,13 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedoConsoleFrameTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedoSystemConnectionMemo m = new SpeedoSystemConnectionMemo();
         SpeedoConsoleFrame t = new SpeedoConsoleFrame(m);
         Assert.assertNotNull("exists",t);

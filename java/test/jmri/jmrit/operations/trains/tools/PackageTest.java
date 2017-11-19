@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.operations.trains.tools package
  *
- * @author	Bob Coleman
+ * @author Bob Coleman
  */
 public class PackageTest extends TestCase {
 

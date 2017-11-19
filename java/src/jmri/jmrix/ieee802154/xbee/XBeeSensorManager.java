@@ -127,9 +127,9 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                        mode = remoteDevice.getIOConfiguration(IOLine.getDIO(i));
                    } catch (TimeoutException toe) {
                       log.debug("Timeout retrieving IO line mode for {} on {}",IOLine.getDIO(i),remoteDevice);
-                      // is this a hidden terminal?  This was triggered by an 
+                      // is this a hidden terminal?  This was triggered by an
                       // IO Sample, so we know we can hear the other node, but
-                      // it may not hear us.  In this case, assume we are 
+                      // it may not hear us.  In this case, assume we are
                       // working with an input pin.
                       mode = IOMode.DIGITAL_IN;
                    } catch (InterfaceNotOpenException ino) {
@@ -137,7 +137,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                    } catch (XBeeException xbe) {
                       log.error("Error retrieving IO line mode for {} on {}",IOLine.getDIO(i),remoteDevice);
                    }
-               
+
                    if(mode == IOMode.DIGITAL_IN ) {
                         // thisis an input, check to see if it exists as a sensor.
                         node = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);

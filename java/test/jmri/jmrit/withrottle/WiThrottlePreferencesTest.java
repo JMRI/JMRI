@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of WiThrottlePreferences
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class WiThrottlePreferencesTest extends TestCase {
 
@@ -40,7 +40,7 @@ public class WiThrottlePreferencesTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

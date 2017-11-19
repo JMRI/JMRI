@@ -8,11 +8,9 @@ import org.junit.Test;
 
 
 /**
- * XBeeReplyTest.java
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeReply class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeReply class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeReplyTest {
 
@@ -38,7 +36,7 @@ public class XBeeReplyTest {
     @Test
     public void testXBeeResponseCtor(){
         String s = new String("000A8300072B00010011001028");
-        byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
+        byte[] ba = jmri.util.StringUtil.bytesFromHexString(s);
         com.digi.xbee.api.packet.UnknownXBeePacket xbresponse = com.digi.xbee.api.packet.UnknownXBeePacket.createPacket(ba);
         XBeeReply m = new XBeeReply(xbresponse);
         Assert.assertNotNull("exists", m);
@@ -56,7 +54,7 @@ public class XBeeReplyTest {
     @Test
     public void testToMonitorString(){
         XBeeReply m = new XBeeReply("000A8300072B00010011001028");
-        // since we're letting the XBee API generate the monitor string, just 
+        // since we're letting the XBee API generate the monitor string, just
         // check to make sure the monitor string is not null.
         Assert.assertNotNull("ToMonitorString Return",m.toMonitorString());
     }
@@ -72,11 +70,11 @@ public class XBeeReplyTest {
     public void testSetXBeeResponse(){
         XBeeReply m = new XBeeReply();
         String s = new String("000A8300072B00010011001028");
-        byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
+        byte[] ba = jmri.util.StringUtil.bytesFromHexString(s);
         com.digi.xbee.api.packet.UnknownXBeePacket xbresponse = com.digi.xbee.api.packet.UnknownXBeePacket.createPacket(ba);
-       
+
         m.setXBeeResponse(xbresponse);
- 
+
         // make sure the XBeeResponse is not null.
         Assert.assertNotNull("getXBeeRsponse after Set",m.getXBeeResponse());
         Assert.assertEquals("xbee response after set",xbresponse,m.getXBeeResponse());

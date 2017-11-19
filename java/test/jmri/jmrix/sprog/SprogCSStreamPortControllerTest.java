@@ -12,11 +12,9 @@ import org.junit.Test;
 
 
 /**
- * SprogCSStreamPortControllerTest.java
+ * Tests for the jmri.jmrix.sprog.SprogCSStreamPortController class
  *
- * Description:	tests for the jmri.jmrix.sprog.SprogCSStreamPortController class
- *
- * @author	Paul Bender Copyright (C) 2014-2016
+ * @author Paul Bender Copyright (C) 2014-2016
  */
 public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 

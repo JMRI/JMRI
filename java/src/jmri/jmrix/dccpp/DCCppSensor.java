@@ -18,19 +18,19 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private boolean statusRequested = false;
 
     private int address; // NOTE: For DCC++ this is the Base Station index #
-    //private int baseaddress; /* The result of integer division of the 
+    //private int baseaddress; /* The result of integer division of the
     // sensor address by 8 */
-    
+
     private int pin;
     private boolean pullup;
 
-    //private int nibble;      /* Is this sensor in the upper or lower 
+    //private int nibble;      /* Is this sensor in the upper or lower
      //nibble for the feedback encoder */
 
     private String systemName;
 
     protected DCCppTrafficController tc = null;
-    
+
     public DCCppSensor(String systemName, String userName, DCCppTrafficController controller) {
         super(systemName, userName);
         tc = controller;
@@ -42,7 +42,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         tc = controller;
         init(systemName);
     }
-    
+
     public boolean getPullup() { return(pullup); }
     public int getPin() { return(pin); }
     public int getIndex() { return(address); }
@@ -72,11 +72,11 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     public void requestUpdateFromLayout() {
  // Yeah... this isn't really supported.  Yet.
  //
-        // To do this, we send an DCC++ Accessory Decoder Information 
+        // To do this, we send an DCC++ Accessory Decoder Information
         // Request.
-        // The generated message works for Feedback modules and turnouts 
-        // with feedback, but the address passed is translated as though it 
-        // is a turnout address.  As a result, we substitute our base 
+        // The generated message works for Feedback modules and turnouts
+        // with feedback, but the address passed is translated as though it
+        // is a turnout address.  As a result, we substitute our base
         // address in for the address. after the message is returned.
  /*
         DCCppMessage msg = DCCppMessage.getFeedbackRequestMsg(baseaddress,

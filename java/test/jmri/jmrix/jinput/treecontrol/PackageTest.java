@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.jmrix.jinput.treecontrol package
  *
- * @author  Paul Bender	Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest{
 }

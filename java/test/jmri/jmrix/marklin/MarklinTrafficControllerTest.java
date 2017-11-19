@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * MarklinTrafficControllerTest.java
+ * Tests for the jmri.jmrix.marklin.MarklinTrafficController class
  *
- * Description:	tests for the jmri.jmrix.marklin.MarklinTrafficController class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class MarklinTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
@@ -20,7 +18,7 @@ public class MarklinTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         apps.tests.Log4JFixture.setUp();
         tc = new MarklinTrafficController();
     }
-    
+
     @Override
     @After
     public void tearDown() {

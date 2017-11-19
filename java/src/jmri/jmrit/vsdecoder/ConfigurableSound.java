@@ -4,19 +4,19 @@ package jmri.jmrit.vsdecoder;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
- * 
+ * @author Mark Underwood Copyright (C) 2011
+ *
  */
 // JMRI and Java stuff
 import java.awt.event.ActionEvent;
@@ -343,7 +343,7 @@ class ConfigurableSound extends VSDSound {
         }
 
         /*
-         log.debug("Use:  start = " + use_start_sound + 
+         log.debug("Use:  start = " + use_start_sound +
          "mid = " + use_mid_sound +
          "end = " + use_end_sound +
          "short = " + use_short_sound);

@@ -146,7 +146,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         }
         super.enableButtons(enabled);
     }
-    
+
     @Override
     protected void updateTrainComboBox() {
         super.updateTrainComboBox();
@@ -169,7 +169,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
             }
         }
     }
-    
+
     @Override
     protected void updateRouteComboBox() {
         super.updateRouteComboBox();

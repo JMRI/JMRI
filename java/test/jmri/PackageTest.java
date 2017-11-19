@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the Jmri package
  *
- * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
+ * @author Bob Jacobsen, Copyright (C) 2001, 2002, 2007
  */
 public class PackageTest extends TestCase {
 

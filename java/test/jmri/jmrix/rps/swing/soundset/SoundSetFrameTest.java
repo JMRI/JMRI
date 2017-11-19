@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of SoundSetFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SoundSetFrameTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SoundSetFrame action = new SoundSetFrame();
         Assert.assertNotNull("exists", action);
     }

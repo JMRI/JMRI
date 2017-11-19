@@ -5,14 +5,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class BusyGlassPaneTest {
 
@@ -20,10 +17,10 @@ public class BusyGlassPaneTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame f = new JmriJFrame("BusyGlassPane ConstructorTest");
-        java.awt.Component comp[] = f.getComponents();
+        java.awt.Component[] comp = f.getComponents();
         java.util.ArrayList<javax.swing.JComponent> cal = new java.util.ArrayList<javax.swing.JComponent>();
         java.util.ArrayList<java.awt.Rectangle> ral = new java.util.ArrayList<java.awt.Rectangle>();
-        java.util.Arrays.stream(comp).forEach(i -> { 
+        java.util.Arrays.stream(comp).forEach(i -> {
                if(i instanceof javax.swing.JComponent ) {
                   ral.add(i.getBounds(null));
                   cal.add((javax.swing.JComponent)i);

@@ -7,7 +7,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -29,7 +28,7 @@ import org.netbeans.jemmy.ComponentChooser;
  *
  * Description:
  *
- * @author	Bob Jacobsen Copyright 2007, 2015
+ * @author Bob Jacobsen Copyright 2007, 2015
  */
 public class MemoryIconTest {
 
@@ -129,7 +128,7 @@ public class MemoryIconTest {
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
-        int colors[] = getColor("Expect empty", "| Expect empty", 0, 6, 10);
+        int[] colors = getColor("Expect empty", "| Expect empty", 0, 6, 10);
         Assert.assertTrue("Expect red X", (colors[3] == 0xff800000) || (colors[4] == 0xff800000) || (colors[5] == 0xff800000));
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {

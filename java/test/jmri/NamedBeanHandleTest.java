@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NamedBeanHandleTest {
 
@@ -17,7 +17,7 @@ public class NamedBeanHandleTest {
         Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
         NamedBeanHandle<Turnout> t = new NamedBeanHandle<>("test handle",it);
         Assert.assertNotNull("exists",t);
-       
+
     }
 
     // The minimal setup for log4J

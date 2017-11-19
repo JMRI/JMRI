@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.roco.RocoConnectionTypeList class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RocoConnectionTypeListTest extends TestCase {
 

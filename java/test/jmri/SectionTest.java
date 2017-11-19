@@ -41,7 +41,7 @@ public class SectionTest {
     jmri.util.JUnitAppender.assertWarnMessage("Block IB1 does not have a user name, may not work correctly in Section TS1");
     Assert.assertEquals(1, s.getBlockList().size());
    }
-   
+
    @Before
    public void setUp() {
         JUnitUtil.setUp();

@@ -17,7 +17,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     public void initComponents() {
         super.initComponents();
 
-        // all we need to do is set the title 
+        // all we need to do is set the title
         setTitle(Bundle.getMessage("PacketGenFrameTitle"));
 
         // pack to cause display

@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * OlcbProgrammerTest.java
+ * Tests for the jmri.jmrix.openlcb.OlcbProgrammer class
  *
- * Description:	tests for the jmri.jmrix.openlcb.OlcbProgrammer class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class OlcbProgrammerTest extends TestCase {
 

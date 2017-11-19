@@ -2,16 +2,13 @@ package jmri.jmrix.loconet.hexfile;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
-
 
     // The minimal setup for log4J
     @Override
@@ -20,7 +17,7 @@ public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
         JUnitUtil.setUp();
         scm = new LocoNetSystemConnectionMemo();
     }
-   
+
     @Override
     @After
     public void tearDown() {
@@ -28,5 +25,4 @@ public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemoTest.class);
-
 }

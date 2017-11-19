@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
@@ -93,7 +93,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
          ( f2 ? 0x02 : 0) |
          ( f3 ? 0x04 : 0) |
          ( f4 ? 0x08 : 0);
-        
+
          data = data + 0x80;*/
  /*Mx1Message m = Mx1Message.getSendFunction(1, addressLo, addressHi, data);
          if(m!=null)
@@ -109,10 +109,10 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         // Always need speed command before function group command to reset consist pointer
         /*int data = 0x00 |
          (f8 ? 0x08 : 0) |
-         (f7 ? 0x04 : 0)	|
+         (f7 ? 0x04 : 0) |
          (f6 ? 0x02 : 0) |
          (f5 ? 0x01 : 0);
-        
+
          data = data + 0xB0;*/
     }
 
@@ -127,7 +127,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
          ( f10 ? 0x02 : 0) |
          ( f11 ? 0x04 : 0) |
          ( f12 ? 0x08 : 0);
-        
+
          data = data + 0xA0;*/
     }
 
@@ -144,7 +144,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 //                 | (f15 ? 0x04 : 0)
 //                 | (f14 ? 0x02 : 0)
 //                 | (f13 ? 0x01 : 0);
-// 
+//
 //         data = data + 0xD0;
 
         /*Mx1Message m = Mx1Message.getSendFunction(4, addressLo, addressHi, data);
@@ -231,7 +231,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
                 value = 2; // emergency stop
             }
             int speedC = (value & 0x1F) >> 1;
-            int c = (value & 0x01) << 4;	// intermediate speed step
+            int c = (value & 0x01) << 4; // intermediate speed step
 
             speedC = speedC + c;
             value = (isForward ? 0x60 : 0x40) | speedC;

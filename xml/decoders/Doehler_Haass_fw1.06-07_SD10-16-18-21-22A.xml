@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version version="1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
-  <!-- 1 2016/07/10 Creation 
+  <!-- 1 2016/07/10 Creation
         Decoder template for the Doehler & Haass combo sound decoder
         with Firmware v1.06 and 1.07.
-  -->
+ -->
   <decoder>
     <family name="Sound Decoders (2016)" mfg="Doehler und Haass">
     <!--family name="Combo sound decoders" mfg="Doehler und Haass"-->
@@ -381,17 +381,17 @@
     <variables>
         <!-- START Common D&H variable files -->
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
-            <!-- Standard variables with defaults for regular decoders  -->
+            <!-- Standard variables with defaults for regular decoders -->
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
-            <!-- Standard variables for decoders released after around 2012  -->
+            <!-- Standard variables for decoders released after around 2012 -->
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_95.xml"/>
-            <!-- Analog functions  -->
+            <!-- Analog functions -->
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
-            <!-- Railcom feedback  -->
+            <!-- Railcom feedback -->
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
             <!-- SECTION 5    - Extra Railcom feedback options as of fw3.06 -->
             <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_144_railcom_fw3.06.xml"/>
@@ -435,7 +435,7 @@
      </factReset>
     </resets>
   </decoder>
-    <!-- Common pane(s)  -->
+    <!-- Common pane(s) -->
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_StartBrakeShunt.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_function_fw3.06.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
@@ -444,6 +444,6 @@
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom_fw3.06.xml"/>
     <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/-->
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
-    <!-- Pane(s) valid for some decoders only  -->
+    <!-- Pane(s) valid for some decoders only -->
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
 </decoder-config>

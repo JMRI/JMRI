@@ -1,7 +1,7 @@
 /**
  * Frame for configuring an XPA using a modem.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 package jmri.jmrix.xpa.swing.xpaconfig;
 
@@ -21,13 +21,13 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
     javax.swing.JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
     javax.swing.JButton setAddr = new javax.swing.JButton();
 
-    // Buttons to set the function of the phone's zero button (is it 
+    // Buttons to set the function of the phone's zero button (is it
     // emergency stop or emenrgency off?
     javax.swing.JRadioButton zeroEmergencyOff = new javax.swing.JRadioButton();
     javax.swing.JRadioButton zeroEmergencyStop = new javax.swing.JRadioButton();
     javax.swing.JButton setZero = new javax.swing.JButton();
 
-    // Drop down box and button to set duration of a momentary 
+    // Drop down box and button to set duration of a momentary
     // function
     javax.swing.JComboBox<String> functionBox = new javax.swing.JComboBox<String>();
     javax.swing.JButton setFunction = new javax.swing.JButton();
@@ -59,7 +59,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
 
-        // Next, set up the pane that determines what the zero 
+        // Next, set up the pane that determines what the zero
         // button does
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
@@ -101,7 +101,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         }
         addrBox.setSelectedIndex(0);
 
-        // Initilize the function buttons for the zero key 
+        // Initilize the function buttons for the zero key
         // settings.
         zeroEmergencyOff.setText(Bundle.getMessage("XNetCSStatusEmergencyOff"));
         zeroEmergencyOff.setSelected(true);
@@ -166,7 +166,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
     }
 
     public void setAddrActionPerformed(java.awt.event.ActionEvent e) {
-        // The first address available for the XPA is 1, so we 
+        // The first address available for the XPA is 1, so we
         // have to add 1 to the selected index to get the correct value.
         XpaMessage m = XpaMessage.getDeviceSettingMsg(addrBox.getSelectedIndex() + 1);
         memo.getXpaTrafficController().sendXpaMessage(m, this);

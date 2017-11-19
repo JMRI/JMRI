@@ -1,7 +1,7 @@
 package apps;
 
-/** 
- * Check how the Checker Framework and annotations interact.  
+/**
+ * Check how the Checker Framework and annotations interact.
  * <p>
  * Note: This deliberately causes FindBugs warnings!  Do not remove or annotate them!
  *       Instead, when past its useful point, just comment out the body of the
@@ -12,10 +12,10 @@ package apps;
  * Comments indicate observed (and unobserved) warnings from the Checker Framework nullness processor
  * <p>
  * This has no main() because it's not expected to run:  It will certainly
- * throw a NullPointerException right away.  The idea is for the CheckerFramework to 
+ * throw a NullPointerException right away.  The idea is for the CheckerFramework to
  * find those in static analysis
  * <p>
- * Types are explicitly qualified (instead of using 'import') to make it 
+ * Types are explicitly qualified (instead of using 'import') to make it
  * completely clear which is being used at each point.  That makes this the
  * code less readable, so it's not recommended for general use.
  * <p>
@@ -23,7 +23,7 @@ package apps;
  * @author Bob Jacobsen 2016
  */
 public class CheckerFrameworkCheck {
-    
+
     void test() { // something that has to be executed on an object
         System.out.println("test "+this.getClass());
     }
@@ -42,7 +42,7 @@ public class CheckerFrameworkCheck {
 
         noAnnotationParm(this);
         noAnnotationParm(null);                     // error: [argument.type.incompatible] incompatible types in argument. required: @Initialized @NonNull CheckerFrameworkCheck
-        
+
         noAnnotationParm(noAnnotationReturn());
         noAnnotationParm(jaNonnullReturn());
         noAnnotationParm(jaNullableReturn());       // error: [argument.type.incompatible] incompatible types in argument. required: @Initialized @NonNull CheckerFrameworkCheck
@@ -50,7 +50,7 @@ public class CheckerFrameworkCheck {
     }
 
     // Test Nonnull
-    
+
     Nonnull public CheckerFrameworkCheck jaNonnullReturn() {
         return null;                                // error: [return.type.incompatible] incompatible types in return. required: @Initialized @NonNull CheckerFrameworkCheck
     }
@@ -62,7 +62,7 @@ public class CheckerFrameworkCheck {
 
         jaNonNullParm(this);
         jaNonNullParm(null);                        // error: [argument.type.incompatible] incompatible types in argument. required: @Initialized @NonNull CheckerFrameworkCheck
-        
+
         jaNonNullParm(noAnnotationReturn());
         jaNonNullParm(jaNonnullReturn());
         jaNonNullParm(jaNullableReturn());          // error: [argument.type.incompatible] incompatible types in argument. required: @Initialized @NonNull CheckerFrameworkCheck
@@ -70,7 +70,7 @@ public class CheckerFrameworkCheck {
     }
 
     // Test Nullable
-    
+
     Nullable public CheckerFrameworkCheck jaNullableReturn() {
         return null;
     }
@@ -82,7 +82,7 @@ public class CheckerFrameworkCheck {
 
         jaNullableParm(this);
         jaNullableParm(null);
-        
+
         jaNullableParm(noAnnotationReturn());
         jaNullableParm(jaNonnullReturn());
         jaNullableParm(jaNullableReturn());
@@ -99,10 +99,10 @@ public class CheckerFrameworkCheck {
     }
     public void jaTestCheckForNull() {
         jaCheckForNullReturn().test();              // error: [dereference.of.nullable] dereference of possibly-null reference jaNullableReturn()
-        
+
         jaCheckForNullParm(this);
         jaCheckForNullParm(null);
-        
+
         jaCheckForNullParm(noAnnotationReturn());
         jaCheckForNullParm(jaNonnullReturn());
         jaCheckForNullParm(jaNullableReturn());

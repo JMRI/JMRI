@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  */
 public class JmriServerTokenizerTest extends TestCase {
 
-    // numeric values 
+    // numeric values
     public void testTokenizeAddr() {
         String cmd = "1234\n\r";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
@@ -110,7 +110,7 @@ public class JmriServerTokenizerTest extends TestCase {
         Token t = stm.getNextToken();
         assertTrue("Wrong token kind for TRAIN", JmriServerParserConstants.TRAIN == t.kind);
     }
-    
+
     public void testTokenizeTrains() {
         String cmd = "TRAINS\n\r";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));

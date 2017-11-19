@@ -3,7 +3,6 @@ package apps.startup.configurexml;
 import apps.StartupActionsManager;
 import apps.startup.TriggerRouteModel;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence for {@link apps.startup.TriggerRouteModel} objects
- * and set the defined {@link jmri.Route} during application start. 
+ * and set the defined {@link jmri.Route} during application start.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)

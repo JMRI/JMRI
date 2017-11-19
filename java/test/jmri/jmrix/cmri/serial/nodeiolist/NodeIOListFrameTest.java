@@ -12,15 +12,15 @@ import org.junit.Test;
 /**
  * Test simple functioning of NodeIOListFrame
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Bob Jacobsen Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2016
  */
 public class NodeIOListFrameTest {
 
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeIOListFrame action = new NodeIOListFrame(new CMRISystemConnectionMemo()); 
+        NodeIOListFrame action = new NodeIOListFrame(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

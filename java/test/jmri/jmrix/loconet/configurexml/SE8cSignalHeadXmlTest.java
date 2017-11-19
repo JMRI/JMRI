@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SE8cSignalHeadXmlTest.java
+ * Tests for the SE8cSignalHeadXml class
  *
- * Description: tests for the SE8cSignalHeadXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SE8cSignalHeadXmlTest {
 

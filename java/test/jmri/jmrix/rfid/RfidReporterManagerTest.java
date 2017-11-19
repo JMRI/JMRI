@@ -8,11 +8,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * RfidReporterManagerTest.java
+ * Tests for the jmri.jmrix.rfid.RfidReporterManager class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidReporterManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 

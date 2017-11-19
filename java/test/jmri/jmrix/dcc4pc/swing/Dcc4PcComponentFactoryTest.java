@@ -16,7 +16,7 @@ import org.junit.Test;
  **/
 
 public class Dcc4PcComponentFactoryTest {
-        
+
    private Dcc4PcSystemConnectionMemo memo = null;
 
    @Test

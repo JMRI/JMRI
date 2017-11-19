@@ -12,21 +12,21 @@ import org.junit.Test;
 /**
  * Test simple functioning of ListAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ListActionTest {
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListAction action = new ListAction("CMRI test Action",new CMRISystemConnectionMemo()); 
+        ListAction action = new ListAction("CMRI test Action",new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListAction action = new ListAction(new CMRISystemConnectionMemo()); 
+        ListAction action = new ListAction(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

@@ -10,7 +10,7 @@ import jmri.ThrottleListener;
  * The "ID" is used to identify this transmitter in RPS. The "rosterName" is the
  * name (ID) of the roster entry this was originally created from.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class Transmitter implements ThrottleListener {
 

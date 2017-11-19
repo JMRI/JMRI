@@ -56,7 +56,7 @@ public class JsonLayoutBlockHttpService extends JsonHttpService {
         data.put(EXTRA_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockExtraColor()));
         data.put(OCCUPANCY_SENSOR, layoutBlock.getOccupancySensorName());
         data.put(OCCUPIED_SENSE, layoutBlock.getOccupiedSense());
-        
+
         return root;
     }
 

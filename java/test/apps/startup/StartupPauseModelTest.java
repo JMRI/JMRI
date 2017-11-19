@@ -13,23 +13,23 @@ import org.junit.Test;
  * @author Randall Wood (C) 2016
  */
 public class StartupPauseModelTest {
-    
+
     public StartupPauseModelTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         Log4JFixture.setUp();
     }
-    
+
     @After
     public void tearDown() {
         Log4JFixture.tearDown();
@@ -98,5 +98,5 @@ public class StartupPauseModelTest {
         model.setDelay(-1);
         Assert.assertEquals(-1, model.getDelay());
     }
-    
+
 }

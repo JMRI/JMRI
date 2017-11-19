@@ -4,7 +4,6 @@ import jmri.util.swing.TextFilter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -133,7 +132,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                for (int i = 0; i < 8; i++) {
                    int j = i << 1;    // i = word index, j = byte index
 
-                   byte b[] = StringUtil.bytesFromHexString(consistLine[i + 1]);
+                   byte[] b = StringUtil.bytesFromHexString(consistLine[i + 1]);
 
                    consistData[j] = b[0];
                    consistData[j + 1] = b[1];

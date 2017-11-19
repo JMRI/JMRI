@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
  * Swing action to launch the SetupExcelProgramFrame.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class SetupExcelProgramFrameAction extends AbstractAction {
 

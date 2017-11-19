@@ -11,11 +11,11 @@ import org.junit.Test;
 /**
  * Test simple functioning of CbusEventTableDataModel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusEventTableDataModelTest {
-        
- 
+
+
     jmri.jmrix.can.TrafficControllerScaffold tcs = null;
     jmri.jmrix.can.CanSystemConnectionMemo memo = null;
 

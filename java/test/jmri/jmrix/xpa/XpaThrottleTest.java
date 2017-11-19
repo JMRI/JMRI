@@ -1,17 +1,15 @@
 package jmri.jmrix.xpa;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaThrottle class
- * <P>
- * @author	Paul Bender
+ * Tests for the jmri.jmrix.xpa.XpaThrottle class.
+ *
+ * @author Paul Bender
  */
 public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -204,9 +202,9 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         tc = new XpaTrafficController();
-        instance = new XpaThrottle(new jmri.DccLocoAddress(3, false),tc);
+        instance = new XpaThrottle(new jmri.DccLocoAddress(3, false), tc);
         XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new XpaThrottleManager(memo));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new XpaThrottleManager(memo));
     }
 
     @Override

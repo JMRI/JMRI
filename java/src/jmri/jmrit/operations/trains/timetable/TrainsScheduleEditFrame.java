@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Used to edit train timetable (Schedule).
  *
  * @author Daniel Boudreau Copyright (C)
- * 
+ *
  *
  */
 public class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -66,7 +66,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         addItem(comboBox, 2, 3);
         addItem(deleteButton, 3, 3);
 
-        // row 4 
+        // row 4
         addItem(replaceButton, 3, 4);
 
         // row 5

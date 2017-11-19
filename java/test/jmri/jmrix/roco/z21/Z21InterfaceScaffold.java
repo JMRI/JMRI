@@ -5,11 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Z21InterfaceScaffold.java
+ * Test scaffold implementation of Z21Interface
  *
- * Description:	Test scaffold implementation of Z21Interface
- *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  *
  * Use an object of this type as a Z21TrafficController in tests
  */
@@ -80,7 +78,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     /**
      * This is normal, don't log at ERROR level
      */
-    @Override 
+    @Override
     protected void reportReceiveLoopException(Exception e) {
         log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
@@ -88,7 +86,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
             portWarnTCP(e);
         }
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(Z21InterfaceScaffold.class);
 
 }

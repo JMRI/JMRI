@@ -8,7 +8,7 @@ import org.junit.Before;
  * JUnit tests for the DCCppSimulatorPortController class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DCCppSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
@@ -55,7 +55,7 @@ public class DCCppSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialP
             @Override
             public void setOutputBufferEmpty(boolean s){
             }
-            
+
             @Override
             public boolean okToSend(){
                   return true;

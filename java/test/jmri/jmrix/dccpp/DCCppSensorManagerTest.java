@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppSensorManager class.
  *
- * @author	Paul Bender Copyright (c) 2003,2016
- * @author	Mark Underwood Copyright (c) 2015
+ * @author Paul Bender Copyright (c) 2003,2016
+ * @author Mark Underwood Copyright (c) 2015
  */
 public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 

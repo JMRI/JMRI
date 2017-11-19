@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet;
 
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_ACTIVE;
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_BUSY;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -13,7 +11,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -156,7 +153,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * This is declared final because we never need to modify the array itself,
      * just its contents.
      */
-    final protected LocoNetSlot _slots[] = new LocoNetSlot[NUM_SLOTS];
+    final protected LocoNetSlot[] _slots = new LocoNetSlot[NUM_SLOTS];
 
     /**
      * Access the information in a specific slot. Note that this is a mutable
@@ -261,7 +258,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (log.isDebugEnabled()) {
             log.debug("notify " + v.size() // NOI18N
                     + " SlotListeners about slot " // NOI18N
-                    + s.getSlot()); 
+                    + s.getSlot());
         }
         // forward to all listeners
         int cnt = v.size();
@@ -327,7 +324,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 found = true;
             }
             if (!found) {
-                // rats! Slot not loaded since program start.  Request it be 
+                // rats! Slot not loaded since program start.  Request it be
                 // reloaded for later, but that'll be too late
                 // for this one.
                 LocoNetMessage mo = new LocoNetMessage(4);
@@ -544,7 +541,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     progState = 0;
                     // notify user ProgListener
                     stopTimer();
-                    // have to send this in a little while to 
+                    // have to send this in a little while to
                     // allow command station time to execute
                     javax.swing.Timer timer = new javax.swing.Timer(postProgDelay, new java.awt.event.ActionListener() {
                         @Override
@@ -590,13 +587,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     protected void respondToAddrRequest(LocoNetMessage m, int i) {
         // is called any time a LocoNet message is received.  Note that we do _NOT_ know why a given message happens!
-        
+
         // if this is OPC_SL_RD_DATA
         if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
             // yes, see if request exists
             // note that the appropriate _slots[] entry has already been updated
             // to reflect the content of the LocoNet message, so _slots[i]
-            // has the locomotive address of this request 
+            // has the locomotive address of this request
             int addr = _slots[i].locoAddr();
             log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
@@ -758,11 +755,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     synchronized protected void timeout() {
         log.debug("timeout fires in state {}", progState); // NOI18N
-        
+
         if (progState != 0) {
             // we're programming, time to stop
             log.debug("timeout while programming"); // NOI18N
-            
+
             // perhaps no communications present? Fail back to end of programming
             progState = 0;
             // and send the notification; error code depends on state
@@ -944,7 +941,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-                
+
             log.info("programmer already in use by {}", _usingProgrammer); // NOI18N
 
             throw new jmri.ProgrammerException("programmer in use"); // NOI18N
@@ -1032,7 +1029,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (!mServiceMode) {
             delay = 100;  // value in ops mode
         }
-        
+
         // delay and run on GUI thread
         javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
             @Override

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of WiThrottlePrefsPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class WiThrottlePrefsPanelTest {
 
@@ -28,7 +28,7 @@ public class WiThrottlePrefsPanelTest {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initStartupActionsManager();
     }
-    
+
     @After
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();

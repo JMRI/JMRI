@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1 Ronald Kuhn --> 
+<!-- version 1 Ronald Kuhn -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <variable item="Decoder ID 1" CV="250" default="228" readOnly="yes" exclude="226,232,235,247,MX689_v30">
         <decVal/>

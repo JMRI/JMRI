@@ -14,7 +14,7 @@ public class TrainsScheduleEditAction extends AbstractAction {
     public TrainsScheduleEditAction() {
         super(Bundle.getMessage("MenuItemEditSchedule"));
     }
-    
+
     TrainsScheduleEditFrame frame;
 
     @Override

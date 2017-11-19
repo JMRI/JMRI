@@ -272,7 +272,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     }
 
                     if (version == 1) {
-                        String parseArray[];
+                        String[] parseArray;
                         // If you only have a systemname then its everything before the dash
                         tInfo.setStartBlockId(tInfo.getStartBlockName().split("-")[0]);
                         // If you have a systemname and username you want everything before the open bracket

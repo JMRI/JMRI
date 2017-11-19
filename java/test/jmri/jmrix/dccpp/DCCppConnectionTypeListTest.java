@@ -7,12 +7,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * DCCppConnectionTypeListTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppConnectionTypeList class.
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppConnectionTypeList class
- *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppConnectionTypeListTest extends TestCase {
 

@@ -11,15 +11,15 @@ import org.junit.Test;
 /**
  * Test simple functioning of SPROGMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SPROGMenuTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        // the constructor looks for the default ListedTableFrame class, 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // the constructor looks for the default ListedTableFrame class,
         // which is set by the ListedTableFrame constructor.
         new jmri.jmrit.beantable.ListedTableFrame();
         SPROGMenu action = new SPROGMenu(new jmri.jmrix.sprog.SprogSystemConnectionMemo());

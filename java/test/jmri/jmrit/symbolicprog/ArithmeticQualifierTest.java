@@ -7,12 +7,11 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  *
- * @author	Bob Jacobsen, Copyright 2014
+ * @author Bob Jacobsen, Copyright 2014
  */
 public class ArithmeticQualifierTest {
 
@@ -138,7 +137,7 @@ public class ArithmeticQualifierTest {
     }
 
     // The minimal setup for log4J
-    @Before 
+    @Before
     public void setUp() {
         JUnitUtil.setUp();
     }

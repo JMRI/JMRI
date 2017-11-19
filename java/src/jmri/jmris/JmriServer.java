@@ -218,7 +218,7 @@ public class JmriServer {
     // Handle communication to a client through inStream and outStream
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         // Listen for commands from the client until the connection closes
-        byte cmd[] = new byte[100];
+        byte[] cmd = new byte[100];
         int count;
         while (true) {
             // Read the command from the client

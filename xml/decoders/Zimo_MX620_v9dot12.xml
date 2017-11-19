@@ -15,14 +15,14 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090626"/>
   <version author="Nigel Cliffe ncliffe@btinternet.com and Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20090222"/>
-  <!-- 
+  <!--
      This decoder configuration file is based the Zimo_MX620_v9.xml V 1.01 file, dated 20090222.
-     With CV147 to CV150 added to the Motor pane.  
+     With CV147 to CV150 added to the Motor pane.
 
      Based on the "SW-Version 9.1 2008 10 18" English version of the ZIMO MX620
      decoder manual (with thanks to Art Luescher of ZIMO Agency of North America
      for the translations!)and the decoder software update page of the Zimo website.
-     
+
      This decoder XML is meant to be used with the "Comprehensive" programmer format.
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.

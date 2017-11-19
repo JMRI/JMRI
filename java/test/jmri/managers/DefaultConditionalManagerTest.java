@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class DefaultConditionalManagerTest extends TestCase {
 
@@ -23,7 +23,7 @@ public class DefaultConditionalManagerTest extends TestCase {
     public void testCreate() {
         ConditionalManager m = new DefaultConditionalManager();
 
-        Conditional c1 = m.createNewConditional("IX01C01", "");        
+        Conditional c1 = m.createNewConditional("IX01C01", "");
         Conditional c2 = m.createNewConditional("IX01C02", "");
 
         Assert.assertFalse(c1 == c2);
@@ -33,7 +33,7 @@ public class DefaultConditionalManagerTest extends TestCase {
     public void testUserNameOverlap() {
         ConditionalManager m = new DefaultConditionalManager();
 
-        Conditional c1 = m.createNewConditional("IX02C01", "Foo");        
+        Conditional c1 = m.createNewConditional("IX02C01", "Foo");
         Conditional c2 = m.createNewConditional("IX02C02", "Foo");
 
         Assert.assertTrue(c1.getUserName().equals("Foo"));

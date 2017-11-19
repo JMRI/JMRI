@@ -20,8 +20,8 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
             watchedVal.addPropertyChangeListener(this);
         }
 
-        // subclass ctors are required to qualify on initial value of variable   
-        // to get initial qualification state right after listener was added.   
+        // subclass ctors are required to qualify on initial value of variable
+        // to get initial qualification state right after listener was added.
     }
 
     VariableValue watchedVal;

@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.nce.NceTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     private NceInterfaceScaffold nis = null;
 
-    @After 
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }

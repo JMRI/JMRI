@@ -12,14 +12,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of ListFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ListFrameTest {
 
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListFrame action = new ListFrame(new CMRISystemConnectionMemo()); 
+        ListFrame action = new ListFrame(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

@@ -39,7 +39,7 @@ public class Paned extends apps.gui3.Apps3 {
     }
 
     // Main entry point
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         new Paned(args);
     }
 

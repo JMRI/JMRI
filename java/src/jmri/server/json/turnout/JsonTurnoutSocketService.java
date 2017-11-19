@@ -31,7 +31,7 @@ public class JsonTurnoutSocketService extends JsonSocketService {
 
     private final JsonTurnoutHttpService service;
     private final HashMap<String, TurnoutListener> turnoutListeners = new HashMap<>();
-    private final TurnoutsListener turnoutsListener = new TurnoutsListener();   
+    private final TurnoutsListener turnoutsListener = new TurnoutsListener();
     private Locale locale;
     private final static Logger log = LoggerFactory.getLogger(JsonTurnoutSocketService.class);
 
@@ -68,7 +68,7 @@ public class JsonTurnoutSocketService extends JsonSocketService {
 
         InstanceManager.getDefault(TurnoutManager.class).addPropertyChangeListener(turnoutsListener); //add parent listener
         addListenersToChildren();
-        
+
     }
 
     private void addListenersToChildren() {
@@ -108,7 +108,7 @@ public class JsonTurnoutSocketService extends JsonSocketService {
             if (evt.getPropertyName().equals("KnownState")  //only send changes for values which are sent
                     || evt.getPropertyName().equals("inverted")
                     || evt.getPropertyName().equals("UserName")
-                    || evt.getPropertyName().equals("Comment")) { 
+                    || evt.getPropertyName().equals("Comment")) {
                 try {
                     try {
                         connection.sendMessage(service.doGet(TURNOUT, this.turnout.getSystemName(), locale));
@@ -131,9 +131,9 @@ public class JsonTurnoutSocketService extends JsonSocketService {
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(TURNOUTS, locale)); 
+                    connection.sendMessage(service.doGetList(TURNOUTS, locale));
                     //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();
                     }
                 } catch (JsonException ex) {

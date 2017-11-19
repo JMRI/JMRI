@@ -18,7 +18,7 @@ import org.junit.BeforeClass;
  * To override those in ant, run:<br/>
  * JAVA_OPTIONS='-Dcucumber.options="..."' ant target
  * </p>
- * @author	Paul Bender Copyright 2017
+ * @author Paul Bender Copyright 2017
  */
 
 
@@ -27,7 +27,7 @@ import org.junit.BeforeClass;
                  features="java/acceptancetest/features",
                  tags = {"~@webtest"})
 public class RunCucumberTest {
-   
+
    @BeforeClass
    public static void beforeTests(){
       apps.tests.Log4JFixture.setUp();

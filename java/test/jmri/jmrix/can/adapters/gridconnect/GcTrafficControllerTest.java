@@ -9,11 +9,11 @@ import org.junit.Before;
  * @author Paul Bender Copyright (C) 2016
  */
 public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTest {
-   
+
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new GcTrafficController();
     }
@@ -22,7 +22,7 @@ public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTes
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.tearDown();
     }
 
 }

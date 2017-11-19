@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * EliteAdapterTest.java
+ * Tests for the jmri.jmrix.lenz.hornbyelite.EliteAdapter class
  *
- * Description:	tests for the jmri.jmrix.lenz.hornbyelite.EliteAdapter class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteAdapterTest extends TestCase {
 

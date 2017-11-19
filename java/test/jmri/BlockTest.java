@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the Block class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class BlockTest extends TestCase {
 
@@ -24,36 +24,36 @@ public class BlockTest extends TestCase {
     public void testEquals() {
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
-        
+
         //multiple Block objects with same SystemName are really the same
         Block b1a = new Block("SystemName1");
-        
+
         Assert.assertTrue(b1.equals(b1)); // identity
         Assert.assertFalse(b1.equals(b2)); // blocks are named objects
 
         Assert.assertTrue(b1a.equals(b1));
         Assert.assertTrue(b1.equals(b1a)); // commutes
-        
+
         // check null
         Assert.assertFalse(b1.equals(null));
 
         // check another type
-        Assert.assertFalse(b1.equals(new StringBuffer("foo")));        
+        Assert.assertFalse(b1.equals(new StringBuffer("foo")));
     }
 
     public void testHashCode() {
         Block b1 = new Block("SystemName1");
-        
+
         //multiple Block objects with same SystemName are really the same
         Block b1a = new Block("SystemName1");
-        
+
         Assert.assertTrue(b1.hashCode() == b1a.hashCode());
 
         b1a.setLength(120);
         b1a.setCurvature(21);
         Assert.assertTrue(b1.hashCode() == b1a.hashCode());
     }
-    
+
     public void testSensorAdd() {
         Block b = new Block("SystemName");
         b.setSensor("IS12");
@@ -173,7 +173,7 @@ public class BlockTest extends TestCase {
     }
 
     // Test going active with two neighbors, both active.
-    // b2 is between b1 and b3. 
+    // b2 is between b1 and b3.
     public void testTwoOfTwoGoesActive() throws JmriException {
         SensorManager sm = new jmri.managers.InternalSensorManager();
 
@@ -208,7 +208,7 @@ public class BlockTest extends TestCase {
         p23.setFromBlockDirection(Path.LEFT);
         p23.setToBlockDirection(Path.RIGHT);
         b2.addPath(p23);
-        
+
         // actual test
         b2.goingActive();
         Assert.assertEquals("State", Block.OCCUPIED, b2.getState());
@@ -218,7 +218,7 @@ public class BlockTest extends TestCase {
     }
 
     // Test going active with two neighbors, both active, where FROM is a combination direction.
-    // b2 is between b1 and b3. 
+    // b2 is between b1 and b3.
     public void testTwoOfTwoGoesActiveCombination() throws JmriException {
         SensorManager sm = new jmri.managers.InternalSensorManager();
 
@@ -253,7 +253,7 @@ public class BlockTest extends TestCase {
         p23.setFromBlockDirection(Path.EAST);
         p23.setToBlockDirection(Path.NORTH);
         b2.addPath(p23);
-        
+
         // actual test
         b2.goingActive();
         Assert.assertEquals("State", Block.OCCUPIED, b2.getState());

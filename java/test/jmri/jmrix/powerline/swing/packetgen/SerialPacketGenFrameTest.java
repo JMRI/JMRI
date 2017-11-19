@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of SerialPacketGenFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialPacketGenFrameTest {
 
@@ -21,7 +21,7 @@ public class SerialPacketGenFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SerialPacketGenFrame action = new SerialPacketGenFrame(tc);
         Assert.assertNotNull("exists", action);
     }

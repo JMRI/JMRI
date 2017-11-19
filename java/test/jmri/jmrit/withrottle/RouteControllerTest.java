@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of RouteController
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class RouteControllerTest extends TestCase {
 
@@ -43,7 +43,7 @@ public class RouteControllerTest extends TestCase {
         JUnitUtil.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

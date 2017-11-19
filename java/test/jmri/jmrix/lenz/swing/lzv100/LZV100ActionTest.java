@@ -13,7 +13,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.LZV100Action class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  */
 public class LZV100ActionTest {
 
@@ -38,7 +38,7 @@ public class LZV100ActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LZV100Action action = new LZV100Action("LZV100 Configuration Utility",memo);
         action.actionPerformed(null);
-        // wait for frame with "LZV100 Configuration Manager" in title, case 
+        // wait for frame with "LZV100 Configuration Manager" in title, case
         // insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match

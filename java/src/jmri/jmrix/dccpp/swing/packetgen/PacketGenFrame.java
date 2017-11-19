@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user input of XpressNet messages
  *
  * @author Bob Jacobsen Copyright (C) 2001,2002
- * @author      Mark Underwood Copyright (C) 2015
+ * @author Mark Underwood Copyright (C) 2015
   */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
@@ -22,7 +22,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     public void initComponents() {
         super.initComponents();
 
-        // all we need to do is set the title 
+        // all we need to do is set the title
         setTitle(rb.getString("PacketGenFrameTitle"));
         packetTextField.setToolTipText("Enter packet as a text string without the < > brackets");
 
@@ -62,7 +62,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     // private data
     private DCCppTrafficController tc = null;
-    
+
     private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class);
 
 }

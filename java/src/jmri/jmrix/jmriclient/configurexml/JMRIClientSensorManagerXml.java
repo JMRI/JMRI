@@ -32,7 +32,7 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
 
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        // load individual sensors 
+        // load individual sensors
         return loadSensors(shared);
     }
 

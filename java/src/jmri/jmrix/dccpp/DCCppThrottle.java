@@ -20,14 +20,14 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
-    protected boolean isAvailable;  // Flag  stating if the throttle is in 
+    protected boolean isAvailable;  // Flag  stating if the throttle is in
     // use or not.
-    protected java.util.TimerTask statusTask; // Timer Task used to 
-    // periodically get 
-    // current status of the 
-    // throttle when throttle 
+    protected java.util.TimerTask statusTask; // Timer Task used to
+    // periodically get
+    // current status of the
+    // throttle when throttle
     // not available.
-    protected static final int statTimeoutValue = 1000; // Interval to check the 
+    protected static final int statTimeoutValue = 1000; // Interval to check the
     protected DCCppTrafficController tc = null;
 
     // status of the throttle
@@ -226,7 +226,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         queueMessage(msg, THROTTLEIDLE);
     }
 
-    /* 
+    /*
      * setSpeedSetting - notify listeners and send the new speed to the
      * command station.
      */
@@ -334,7 +334,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     // Handle incoming messages for This throttle.
     @Override
     public void message(DCCppReply l) {
-        // First, we want to see if this throttle is waiting for a message 
+        // First, we want to see if this throttle is waiting for a message
         //or not.
         if (log.isDebugEnabled()) {
             log.debug("Throttle " + getDccAddress() + " - recieved message " + l.toString());
@@ -343,7 +343,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             if (log.isDebugEnabled()) {
                 log.debug("Current throttle status is THROTTLEIDLE");
             }
-            // We haven't sent anything, but we might be told someone else 
+            // We haven't sent anything, but we might be told someone else
             // has taken over this address
      // For now, do nothing.
         } else if ((requestState & THROTTLESPEEDSENT) == THROTTLESPEEDSENT) {
@@ -362,7 +362,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      setIsAvailable(true);
      requestState = THROTTLEIDLE;
      sendQueuedMessage();
-  
+
  }
  if ((requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
             if (log.isDebugEnabled()) {
@@ -391,7 +391,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      // Or the assigned address doesn't match mine.
      return;
  } else {
-     // The assigned address matches mine.  Update my info 
+     // The assigned address matches mine.  Update my info
      // to match the returned register info.
      if (speed < 0) {
   //this.setSpeedSetting(0.0f);
@@ -403,10 +403,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      }
      this.isForward = (dir == 1 ? true : false);
  }
- 
+
     }
 
- 
+
     // listen for the messages to the LI100/LI101
     @Override
     public void message(DCCppMessage l) {
@@ -419,7 +419,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             log.debug("Notified of timeout on message" + msg.toString() + " , " + msg.getRetries() + " retries available.");
         }
         if (msg.getRetries() > 0) {
-            // If the message still has retries available, send it back to 
+            // If the message still has retries available, send it back to
             // the traffic controller.
             tc.sendDCCppMessage(msg, this);
         } else {
@@ -465,7 +465,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         statusTask = new java.util.TimerTask() {
             @Override
             public void run() {
-                /* If the timer times out, just send a status 
+                /* If the timer times out, just send a status
                  request message */
   // TODO: how to do this for DCC++?
                 //sendStatusInformationRequest();
@@ -475,7 +475,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /*
-     * Stop the Status Timer 
+     * Stop the Status Timer
      */
     protected void stopStatusTimer() {
         if (log.isDebugEnabled()) {
@@ -505,7 +505,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
                 log.debug("sending message to traffic controller");
             }
             // if the queue is not empty, remove the first message
-            // from the queue, send the message, and set the state machine 
+            // from the queue, send the message, and set the state machine
             // to the requried state.
             try {
                 msg = requestList.take();

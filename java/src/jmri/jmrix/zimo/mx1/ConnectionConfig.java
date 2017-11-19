@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
-    
+
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.

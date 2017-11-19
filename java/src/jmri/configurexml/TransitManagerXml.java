@@ -59,7 +59,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                     elem.setAttribute("systemName", sname);
                     String uname = x.getUserName();
                     if (uname!=null && !uname.equals("")) elem.setAttribute("userName", uname);
-                            
+
                     // store common part
                     storeCommon(x, elem);
 
@@ -161,7 +161,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         for (int i = 0; i < transitList.size(); i++) {
             String sysName = getSystemName(transitList.get(i));
             String userName = getUserName(transitList.get(i));
-            
+
             Transit x = tm.createNewTransit(sysName, userName);
             if (x != null) {
                 // load common part

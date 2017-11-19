@@ -12,7 +12,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
- * 
+ *
  */
 public class MrcProgrammerManager extends DefaultProgrammerManager {
 

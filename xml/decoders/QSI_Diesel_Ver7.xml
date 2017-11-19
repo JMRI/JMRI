@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jacobsen@mac.com" version="21" lastUpdated="20150628"/>
   <!-- Version 21  Using regular variable elements intead of ivariables -->
-  <version author="Alain Le Marchand" version="20" lastUpdated="20150531"/>    
+  <version author="Alain Le Marchand" version="20" lastUpdated="20150531"/>
   <version author="Michael Mosher" version="19" lastUpdated="20130813"/>
   <version author="Michael Mosher" version="18" lastUpdated="2011003"/>
   <version author="Michael Mosher" version="17" lastUpdated="20110922"/>
@@ -55,7 +55,7 @@
   <!-- version 17 - add models 175,186,1048,1049 -->
   <!-- version 18 - removed factor="256" from paired vars -->
   <!-- version 19 - update from latest QSI info & more use of x:includes -->
-  <!-- version 20 - update for Atlas B27-3 (ProductID=127), based on real model testing - no ditch lights (55.84.x) nor separate board light(55.100.X)  -->  
+  <!-- version 20 - update for Atlas B27-3 (ProductID=127), based on real model testing - no ditch lights (55.84.x) nor separate board light(55.100.X)  -->
   <decoder>
     <family name="QSI Diesel Ver. 7" mfg="QSIndustries" lowVersionID="7">
       <model model="QSI Revolution Diesel" numFns="14" numOuts="0" productID="1050">

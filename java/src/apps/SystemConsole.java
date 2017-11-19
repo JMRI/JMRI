@@ -371,7 +371,7 @@ public final class SystemConsole extends JTextArea {
         // As append method is thread safe, we don't need to run this on
         // the Swing dispatch thread
         console.append(text);
-        
+
         // but we do have to run this on the Swing thread
         jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ truncateTextArea(); } );
     }
@@ -443,7 +443,7 @@ public final class SystemConsole extends JTextArea {
             }
         }
     }
-    
+
     /**
      * Set the console wrapping style to one of the following:
      *
@@ -608,11 +608,11 @@ public final class SystemConsole extends JTextArea {
     public PrintStream getOutputStream() {
         return this.outputStream;
     }
-    
+
     public PrintStream getErrorStream() {
         return this.errorStream;
     }
-    
+
     /**
      * Retrieve the current console colour scheme
      *

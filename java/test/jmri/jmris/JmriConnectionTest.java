@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Tests for the jmri.jmris.JmriConnection class 
+ * Tests for the jmri.jmris.JmriConnection class
  *
  * @author Paul Bender
  */

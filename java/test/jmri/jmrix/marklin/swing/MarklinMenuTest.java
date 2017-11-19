@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of MarklinMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MarklinMenuTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MarklinMenu action = new MarklinMenu(new jmri.jmrix.marklin.MarklinSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }

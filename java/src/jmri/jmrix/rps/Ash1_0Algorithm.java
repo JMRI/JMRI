@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
   */
 public class Ash1_0Algorithm implements Calculator {
 
@@ -119,38 +119,38 @@ public class Ash1_0Algorithm implements Calculator {
     }
 
     // Sensor position objects
-    Point3d sensors[];
+    Point3d[] sensors;
 
     /**
      * The following is the original algorithm, as provided by Ash as a C
      * routine
      */
-//	RPS  POSITION  SOLVER	Version 1.0	by R. C. Ashenfelter   11-17-06
+    // RPS POSITION SOLVER Version 1.0by R. C. Ashenfelter   11-17-06
 
-    /*							                           *
+    /*                                                     *
      *  This algorithm was provided by Robert Ashenfelter  *
-     *  who provides no guarantee as to its usability,	   *
-     *  correctness nor intellectual property status.	   *
-     *  Use it at your own risk.				           *
-     *							                           */
-    static int OFFSET = 0;			//  Offset (usec), add to delay
-    static int TMAX = 35000;			//  Max. allowable delay (usec)
-    static final int NMAX = 15;			//  Max. no. of receivers used
+     *  who provides no guarantee as to its usability,     *
+     *  correctness nor intellectual property status.      *
+     *  Use it at your own risk.                           *
+     *                                                     */
+    static int OFFSET = 0;      //  Offset (usec), add to delay
+    static int TMAX = 35000;    //  Max. allowable delay (usec)
+    static final int NMAX = 15; //  Max. no. of receivers used
 
     double x, y, z, x0, y0, z0, x1, y1, z1, x2, y2, z2, Rmax;
     double xi, yi, zi, ri, xj, yj, zj, rj, xk, yk, zk, rk;
 
     //  Compute RPS Position using
     @SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
-    RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
+    RetVal RPSpos(int nr, double[] Tr, double[] Xr, double[] Yr, double[] Zr,// many
             double Vs, double Xt, double Yt, double Zt) {//         receivers
 
         int i, j, k, ns;
         double Rq;
-        double Rs[] = new double[NMAX];
-        double Xs[] = new double[NMAX];
-        double Ys[] = new double[NMAX];
-        double Zs[] = new double[NMAX];
+        double[] Rs = new double[NMAX];
+        double[] Xs = new double[NMAX];
+        double[] Ys = new double[NMAX];
+        double[] Zs = new double[NMAX];
         double d, da, db, d11, d12, d21, d22;
         double x1a = 0, y1a = 0, z1a = 0, x1b = 0, y1b = 0, z1b = 0;
         double x2a = 0, y2a = 0, z2a = 0, x2b = 0, y2b = 0, z2b = 0;
@@ -326,14 +326,14 @@ public class Ash1_0Algorithm implements Calculator {
     double wgt() {// Weighting Function
         double w;
 
-        w = (1 - ri / Rmax) * (1 - rj / Rmax) * (1 - rk / Rmax);//			 Ranges
+        w = (1 - ri / Rmax) * (1 - rj / Rmax) * (1 - rk / Rmax);//  Ranges
         w *= 1.0 - Math.pow(((x - xi) * (x - xj) + (y - yi) * (y - yj) + (z - zi) * (z - zj)) / ri / rj, 2);//Angles
         w *= 1.0 - Math.pow(((x - xi) * (x - xk) + (y - yi) * (y - yk) + (z - zi) * (z - zk)) / ri / rk, 2);
         w *= 1.0 - Math.pow(((x - xj) * (x - xk) + (y - yj) * (y - yk) + (z - zj) * (z - zk)) / rj / rk, 2);
-        w *= 0.05 + Math.abs((zi + zj + zk - 3 * z) / (ri + rj + rk));//		    Verticality
+        w *= 0.05 + Math.abs((zi + zj + zk - 3 * z) / (ri + rj + rk));//    Verticality
         w *= (((yk - yi) * (zj - zi) - (yj - yi) * (zk - zi)) * (x - xi)
                 + ((zk - zi) * (xj - xi) - (zj - zi) * (xk - xi)) * (y - yi)
-                + ((xk - xi) * (yj - yi) - (xj - xi) * (yk - yi)) * (z - zi)) / (ri * rj * rk);//	 Volume
+                + ((xk - xi) * (yj - yi) - (xj - xi) * (yk - yi)) * (z - zi)) / (ri * rj * rk);// Volume
         w = Math.abs(w);
         if ((w > 0.5) || (w < .0000005)) {
             w = 0.0;
@@ -349,8 +349,8 @@ public class Ash1_0Algorithm implements Calculator {
         double Ax, Ay, Az, Bx, By, Bz, Dx, Dy, Dz;//     sat. position, range:
         @SuppressWarnings("unused")
         double Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;//  xi, yi, zi, ri
-        double e1, e2;//	   xj, yj, zj, rj
-        //	   xk, yk, zk, rk
+        double e1, e2;//   xj, yj, zj, rj
+        //   xk, yk, zk, rk
 
         xik = xi - xk;
         yik = yi - yk;

@@ -1,12 +1,9 @@
 package jmri.implementation;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
@@ -24,7 +21,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  * @author Balazs Racz Copyright (C) 2017
  */
 public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
@@ -173,8 +170,8 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         waitForTimer();
         verifyNoMoreInteractions(l.m);
         Assert.assertEquals(SignalHead.FLASHRED, mHead.getAppearance()); // hasn't changed
-    }    
-    
+    }
+
     @Override
     public SignalHead getHeadToTest() {
         createHead();

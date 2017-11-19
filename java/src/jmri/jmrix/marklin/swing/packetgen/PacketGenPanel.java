@@ -36,7 +36,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -83,7 +83,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         });
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -91,7 +91,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         return "package.jmri.jmrix.marklin.swing.packetgen.PacketGenFrame";
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -99,7 +99,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         return Bundle.getMessage("SendCommandTitle");
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -136,7 +136,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
 
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignore messages
      */
@@ -144,7 +144,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
     public void message(MarklinMessage m) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignore replies
      */

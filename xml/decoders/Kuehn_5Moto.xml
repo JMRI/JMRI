@@ -2,21 +2,21 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="peter.brandenburg@t-online.de" version="1" lastUpdated="2006/01/30"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="2014/03/02"/>
-  <version author="Alain Le Marchand" version="3" lastUpdated="2014/07/20"/>  
-  <version author="ronald@wirkuhns.de" version="4" lastUpdated="2016/05/07"/>  
+  <version author="Alain Le Marchand" version="3" lastUpdated="2014/07/20"/>
+  <version author="ronald@wirkuhns.de" version="4" lastUpdated="2016/05/07"/>
   <!-- Version 2 - Fixed manufacturer label from "Kuehn" to "Kuehn Ing." as per current decoderIndex.xml file (Alain Le Marchand) -->
   <!-- Version 3 - Refactoring (xinclude and standard panes) + fix CV55 interpretation (Alain Le Marchand) -->
   <!-- Version 3.1 - add translation (Enzo Fortuna) -->
@@ -527,7 +527,7 @@
         <comment>Effects Output C Green</comment>
         <comment xml:lang="it">Effetti uscita C (verde)</comment>
       </variable>
-      <variable CV="51" mask="XXXXXVXX" default="0" minOut="4" item="C Blink Phase B">      
+      <variable CV="51" mask="XXXXXVXX" default="0" minOut="4" item="C Blink Phase B">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>C Blink Phase B</label>
         <label xml:lang="it">Uscita C-Luce Lampeggiante fase B</label>
@@ -610,7 +610,7 @@
           <enumChoice choice="Blink Phase A" value="8">
             <choice>Blink Phase A</choice>
             <choice xml:lang="it">Lampeggiante fase A</choice>
-            <choice xml:lang="de">Blinken Phase A</choice>    
+            <choice xml:lang="de">Blinken Phase A</choice>
             <choice xml:lang="cs">Blikající fáze A</choice>
           </enumChoice>
         </enumVal>
@@ -625,7 +625,7 @@
       </variable>
       <!--variable CV="52" mask="XXXXXXXV" default="0" minOut="4" item="D Pulsing Light">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>D Pulsing Light</label>        
+        <label>D Pulsing Light</label>
         <label xml:lang="de">Effects Output D Violett</label>
         <label xml:lang="it">Effetti uscita D (viola)</label>
       </variable>
@@ -638,7 +638,7 @@
       </variable>
       <variable CV="52" mask="XXXXXVXX" default="0" minOut="4" item="D Blink Phase B">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>D Blink Phase B</label>        
+        <label>D Blink Phase B</label>
         <label xml:lang="it">Uscita D-Luce Lampeggiante fase B</label>
         <comment>Effects Output D Violet</comment>
         <comment xml:lang="it">Effetti uscita D (viola)</comment>
@@ -958,7 +958,7 @@
         <label xml:lang="it">Tabella velocità</label>
         <label xml:lang="de">Geschwindigkeitstabelle</label>
         <label xml:lang="cs">Rychlostní tabulka</label>
-      </variable>      
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
@@ -1023,8 +1023,8 @@
     </column>
     <name>Output Handling</name>
   </pane>
-  -->
-  <!-- panel no more in use = all information now on standard Lights and Motor panels  
+ -->
+  <!-- panel no more in use = all information now on standard Lights and Motor panels
   <pane>
     <column>
       <label>
@@ -1050,5 +1050,5 @@
     </column>
     <name>Light Effects and Userconfig</name>
   </pane>
-  -->
+ -->
 </decoder-config>

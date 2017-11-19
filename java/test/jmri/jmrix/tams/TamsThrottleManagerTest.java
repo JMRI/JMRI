@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase{
 
@@ -22,7 +22,7 @@ public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);
         tm = new TamsThrottleManager(memo);
     }
 

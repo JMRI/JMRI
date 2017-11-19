@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.Icon;
@@ -53,7 +52,7 @@ public class ButtonGroupColorChooserPanel extends AbstractColorChooserPanel {
         // build the combo box.
         colorButtonGroup  = new ButtonGroup();
         for (int i = 0; i < numColors; i++) {
-            addButton(colorButtonGroup,colorCode[i],Bundle.getMessage(colorText[i]));   
+            addButton(colorButtonGroup,colorCode[i],Bundle.getMessage(colorText[i]));
         }
     }
 

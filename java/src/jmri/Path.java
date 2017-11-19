@@ -419,7 +419,7 @@ public class Path {
         int octant = (int) Math.round(angleDEG / 45.0);
 
         // use the octant index to lookup its direction
-        int dirs[] = {SOUTH, SOUTH_EAST, EAST, NORTH_EAST,
+        int[] dirs = {SOUTH, SOUTH_EAST, EAST, NORTH_EAST,
             NORTH, NORTH_WEST, WEST, SOUTH_WEST, SOUTH};
         return dirs[octant];
     }   // computeOctagonalDirection

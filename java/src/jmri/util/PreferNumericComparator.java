@@ -6,7 +6,7 @@ import java.util.Comparator;
  * If the two objects are Strings that can be made into integers, compare like
  * that otherwise as Strings.
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  */
 public class PreferNumericComparator implements Comparator<Object> {
 

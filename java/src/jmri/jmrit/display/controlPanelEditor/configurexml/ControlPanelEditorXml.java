@@ -250,7 +250,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (ClassNotFoundException | InstantiationException 
+            } catch (ClassNotFoundException | InstantiationException
                     | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
                     | RuntimeException e) {
                 log.error("Exception while loading {}: {}", item.getName(), e.getMessage(), e);

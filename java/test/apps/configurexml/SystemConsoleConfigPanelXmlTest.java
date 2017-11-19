@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SystemConsoleConfigPanelXmlTest.java
+ * Tests for the SystemConsoleConfigPanelXml class
  *
- * Description: tests for the SystemConsoleConfigPanelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SystemConsoleConfigPanelXmlTest {
 

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of DCC packet contents
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
   */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -203,7 +203,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
             index = keys.indexOf(key);
             fireTableRowsInserted(index, index);
         } else {
-            // index has been set, update  
+            // index has been set, update
             keys.setElementAt(key, index);
             addresses.setElementAt(address, index);
             types.setElementAt(type, index);

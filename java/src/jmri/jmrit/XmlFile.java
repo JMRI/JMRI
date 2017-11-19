@@ -765,7 +765,7 @@ public abstract class XmlFile {
         boolean verifyDTD = (validate == Validate.CheckDtd) || (validate == Validate.CheckDtdThenSchema);
         boolean verifySchema = (validate == Validate.RequireSchema) || (validate == Validate.CheckDtdThenSchema);
 
-        // old style 
+        // old style
         builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", verifyDTD);  // argument controls DTD validation
 
         // insert local resolver for includes, schema, DTDs

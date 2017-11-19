@@ -21,7 +21,7 @@ public class RouteLock implements Lock {
         this.list = list;
         this.beans = null;
     }
-    
+
     /**
      * @param list SignalHeads that cover this route
      * @param beans Defines the specific route
@@ -30,7 +30,7 @@ public class RouteLock implements Lock {
         this.list = list;
         this.beans = beans;
     }
-    
+
     /**
      * @param array User or system names of SignalHeads that cover this route
      */
@@ -65,13 +65,13 @@ public class RouteLock implements Lock {
             }
         }
         this.list = q1;
-        
+
         ArrayDeque<BeanSetting> q2 = new ArrayDeque<>();
         for (BeanSetting bean : beans) {
             q2.add(bean);
         }
         this.beans = q2;
-        
+
     }
 
     /**
@@ -81,9 +81,9 @@ public class RouteLock implements Lock {
         this(new String[]{head});
     }
 
-    Iterable<NamedBeanHandle<SignalHead>> list; 
+    Iterable<NamedBeanHandle<SignalHead>> list;
     Iterable<BeanSetting> beans;
-    
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
@@ -96,7 +96,7 @@ public class RouteLock implements Lock {
                 if ( ! bean.check()) return true;
             }
         }
-        
+
         for (NamedBeanHandle<SignalHead> handle : list) {
             if ( isSignalClear(handle) ) {
                 InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
@@ -106,7 +106,7 @@ public class RouteLock implements Lock {
         }
         return true;
     }
-    
+
     boolean isSignalClear(@Nonnull NamedBeanHandle<SignalHead> handle) {
         return handle.getBean().getState() != SignalHead.RED;
     }

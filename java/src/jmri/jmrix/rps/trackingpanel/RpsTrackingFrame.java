@@ -13,7 +13,7 @@ import javax.swing.JSeparator;
 /**
  * Frame containing the entire display tool
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
 
@@ -99,7 +99,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         panel.setSize(440, 240);
         panel.setPreferredSize(new Dimension(440, 240));
 
-        scale.set(-10., -10., 50., 50.);  // lower left X, Y, then upper right 
+        scale.set(-10., -10., 50., 50.);  // lower left X, Y, then upper right
         scale.update();
 
         // combine

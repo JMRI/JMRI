@@ -4,18 +4,18 @@ package jmri.jmrit.vsdecoder;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -232,7 +232,7 @@ public class VSDecoderManager implements PropertyChangeListener {
      // First, translate the string into a DccLocoAddress
      // no object if no address
      if (sa.equals("")) return null;
-        
+
      DccLocoAddress da = null;
      // ask the Throttle Manager to handle this!
      LocoAddress.Protocol protocol;
@@ -246,7 +246,7 @@ public class VSDecoderManager implements PropertyChangeListener {
      return getVSDecoderByAddress(da);
      }
      return(null);
- 
+
      }
      */
     public void setDefaultVSDecoder(VSDecoder d) {
@@ -502,7 +502,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             blockPropertyChange(evt);
         } else if (evt.getSource() instanceof VSDManagerFrame) {
             if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.REMOVE_DECODER))) {
-                // Shut down the requested decoder and remove it from the manager's hash maps. 
+                // Shut down the requested decoder and remove it from the manager's hash maps.
                 // Unless there are "illegal" handles, this should put the decoder on the garbage heap.  I think.
                 String sa = (String) evt.getNewValue();
                 VSDecoder d = this.getVSDecoderByAddress(sa);
@@ -596,7 +596,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 }
             } else if (event.getNewValue() instanceof IdTag) {
                 // newValue is of IdTag type.
-                // Dcc4Pc, Ecos, 
+                // Dcc4Pc, Ecos,
                 // Assume Reporter "arp" is the most recent seen location
                 IdTag newValue = (IdTag) event.getNewValue();
                 setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), arp.getPhysicalLocation(null));

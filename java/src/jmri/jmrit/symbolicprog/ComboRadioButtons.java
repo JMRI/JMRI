@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
- * @author   Bob Jacobsen   Copyright (C) 2001
+ * @author Bob Jacobsen   Copyright (C) 2001
  */
 public class ComboRadioButtons extends JPanel {
 
@@ -123,8 +123,8 @@ public class ComboRadioButtons extends JPanel {
         }
     }
 
-    JRadioButton b1[];
-    transient ActionListener l1[];
+    JRadioButton[] b1;
+    transient ActionListener[] l1;
     transient ActionListener l2;
     transient PropertyChangeListener p1;
 

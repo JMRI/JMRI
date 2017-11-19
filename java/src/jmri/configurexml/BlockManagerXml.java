@@ -74,14 +74,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             // reference blocks that haven't yet been loaded. In the past the
             // workaround was to write all the blocks out twice: once with just
             // the system and user names and then again with everything so that
-            // at load time the first set of (minimum) blocks would create all 
+            // at load time the first set of (minimum) blocks would create all
             // the blocks before the second pass loaded the path information.
             // To remove the necessity of doing this (and having duplicate
-            // blocks in the saved file) we've changed the load routine to make 
-            // two passes: once only creating the blocks (with system & user 
-            // names) and then a second pass with everything (including the 
-            // paths). At some point in the future (after a major release?) we 
-            // can remove writing the first set of blocks without contents 
+            // blocks in the saved file) we've changed the load routine to make
+            // two passes: once only creating the blocks (with system & user
+            // names) and then a second pass with everything (including the
+            // paths). At some point in the future (after a major release?) we
+            // can remove writing the first set of blocks without contents
             // (and this (now way overly verbose) comment).
             if (true) {
                 // write out first set of blocks without contents

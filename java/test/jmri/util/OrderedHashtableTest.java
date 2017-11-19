@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.util.OrderedHashtable class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class OrderedHashtableTest extends TestCase {
 
@@ -141,17 +141,17 @@ public class OrderedHashtableTest extends TestCase {
 
         oht1.put("1", t1);
         oht1.put("2", t2);
-        
+
         @SuppressWarnings("unchecked")
         OrderedHashtable<String, Turnout> oht2 = (OrderedHashtable<String, Turnout>)oht1.clone();
-        
+
         Assert.assertTrue("content equals", oht1.equals(oht2));
         Assert.assertFalse("different object", oht1 == oht2);
-        
+
         oht1.put("4", t4);
         Assert.assertFalse("content no longer equals", oht1.equals(oht2));
     }
-    
+
     // from here down is testing infrastructure
     public OrderedHashtableTest(String s) {
         super(s);

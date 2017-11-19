@@ -1,19 +1,16 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DCCppThrottleTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppThrottle class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppThrottle class
- *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -395,7 +392,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc); 
+        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new DCCppThrottleManager(memo));
         instance = new DCCppThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
     }

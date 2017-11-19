@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * StandaloneTrafficControllerTest.java
+ * Tests for the StandaloneTrafficController class
  *
- * Description:	tests for the StandaloneTrafficController class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class StandaloneTrafficControllerTest extends jmri.jmrix.rfid.RfidTrafficControllerTest {
 

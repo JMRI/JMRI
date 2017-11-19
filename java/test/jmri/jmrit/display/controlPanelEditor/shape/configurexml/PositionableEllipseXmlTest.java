@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PositionableEllipseXmlTest.java
+ * Tests for the PositionableEllipseXml class
  *
- * Description: tests for the PositionableEllipseXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PositionableEllipseXmlTest {
 

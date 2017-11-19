@@ -29,7 +29,7 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Initial version of the signal set.</revremark>
     </revision>
-    
+
   </revhistory>
 
   <aspects>
@@ -41,7 +41,7 @@
       <reference>Page 142</reference>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
-	  <route>Either</route>
+      <route>Either</route>
     </aspect>
 
     <aspect>
@@ -51,7 +51,7 @@
       <reference>Page 142</reference>
       <speed>Normal</speed>
       <speed2>Medium</speed2>
-	  <route>Either</route>
+      <route>Either</route>
     </aspect>
 
     <aspect>
@@ -71,7 +71,7 @@
       <reference>Page 143</reference>
       <speed>Normal</speed>
       <speed2>Stop</speed2>
-	  <route>Either</route>
+      <route>Either</route>
     </aspect>
 
     <aspect>
@@ -99,7 +99,7 @@
       <rule>Rule W-288</rule>
       <indication>Slow speed through crossovers, turnouts, sidings, interlocking limits, and over power switches; then proceed at not exceeding medium speed prepared to stop at next signal.</indication>
       <reference>Page 144</reference>
-	  <comment>The mast signal shown here is a non-standard indication.  The rule book shows this as an approach indication.  Yet based on David Hughes' article in the WMHS Magazine show it was called Slow Approach and used at Emory Grove for west bound trains crossing over from track 2 to track 1 and entering the Hanover Subdivision.  Interestingly westbound trains on track 1 would receive a standard Approach when routed for the Hanover Subdivision.</comment>
+      <comment>The mast signal shown here is a non-standard indication.  The rule book shows this as an approach indication.  Yet based on David Hughes' article in the WMHS Magazine show it was called Slow Approach and used at Emory Grove for west bound trains crossing over from track 2 to track 1 and entering the Hanover Subdivision.  Interestingly westbound trains on track 1 would receive a standard Approach when routed for the Hanover Subdivision.</comment>
       <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
@@ -122,7 +122,7 @@
       <reference>Page 145</reference>
       <speed>Stop</speed>
       <speed2>Restricted</speed2>
-	  <route>Either</route>
+      <route>Either</route>
     </aspect>
 
     <aspect>
@@ -134,8 +134,8 @@
       <speed2>Stop</speed2>
       <route>Either</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Stop-Throw Switch</name>
       <rule>Rule W-293</rule>
       <indication>Stop. Throw the switch.</indication>
@@ -149,12 +149,12 @@
 
   <appearancefiles>
     <appearancefile href="appearance-USS-R2-2-arm-absolute.xml"/>
-	<appearancefile href="appearance-USS-R2-1-arm-high-marker-absolute.xml"/>
-	<appearancefile href="appearance-USS-R2-1-arm-low-marker-absolute.xml"/>
-	<appearancefile href="appearance-USS-R2-1-arm-absolute.xml"/>
-	<appearancefile href="appearance-USS-R2-1-arm-low-marker-permissive.xml"/>
-	<appearancefile href="appearance-USS-R2-1-arm-permissive.xml"/>
-	<appearancefile href="appearance-WM-Dwarf-absolute.xml"/>
+    <appearancefile href="appearance-USS-R2-1-arm-high-marker-absolute.xml"/>
+    <appearancefile href="appearance-USS-R2-1-arm-low-marker-absolute.xml"/>
+    <appearancefile href="appearance-USS-R2-1-arm-absolute.xml"/>
+    <appearancefile href="appearance-USS-R2-1-arm-low-marker-permissive.xml"/>
+    <appearancefile href="appearance-USS-R2-1-arm-permissive.xml"/>
+    <appearancefile href="appearance-WM-Dwarf-absolute.xml"/>
   </appearancefiles>
 
 </aspecttable>

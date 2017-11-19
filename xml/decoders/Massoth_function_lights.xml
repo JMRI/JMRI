@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090218"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080127"/>
-  <!-- 
+  <!--
       This decoder XML is meant to be used with the "Custom" programmer format.
       The pane definitions are included below the decoder definition.  The Massoth
       decoders seem to fit the description of "weird" as mentioned in that
@@ -42,7 +42,7 @@
       eMOTION XL:      193 (according to 1.2 manual), 200
       eMOTION XLS:     202 (according to 1.3 manual), 203
       eMOTION 8FL:     204 (according to 1.2 manual)
-      LED Light:       204 
+      LED Light:       204
 
       This definition was based on the Massoth document eMOTION 8FL, Version 1.3
       - 01/08, English version, and LED-Coach Lighting, Version 1.0 - 01/08,

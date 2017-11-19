@@ -3,7 +3,7 @@
  *
  * Description:
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri;
 

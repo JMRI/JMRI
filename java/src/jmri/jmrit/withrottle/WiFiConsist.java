@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * 
+ *
  */
 public class WiFiConsist extends NmraConsist {
 
@@ -42,7 +42,7 @@ public class WiFiConsist extends NmraConsist {
             conAddr = getConsistAddress().getNumber();
         }
         //  Use NMRA consist command to set consist address
-        byte packet[] = jmri.NmraPacket.consistControl(loco.getNumber(),
+        byte[] packet = jmri.NmraPacket.consistControl(loco.getNumber(),
                 loco.isLongAddress(),
                 conAddr,
                 dirNorm);

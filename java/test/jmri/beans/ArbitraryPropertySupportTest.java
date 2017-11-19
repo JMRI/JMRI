@@ -163,7 +163,7 @@ public class ArbitraryPropertySupportTest extends TestCase {
         }
 
         /*
-         * Throws IndexOutOfBoundsException if index > size. 
+         * Throws IndexOutOfBoundsException if index > size.
          */
         public void setIndexedProperty(int index, String string) {
             if (index < this.indexedProperty.size()) {
@@ -172,7 +172,7 @@ public class ArbitraryPropertySupportTest extends TestCase {
                 this.indexedProperty.add(index, string);
             }
         }
-        
+
         // do not use get* pattern so this is not considered a property
         public ArbitraryPropertySupport aps() {
             return this.arbitraryPropertySupport;

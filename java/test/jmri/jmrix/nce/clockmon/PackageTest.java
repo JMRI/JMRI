@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
 /**
  * tests for the jmri.jmrix.nce.clockmon package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PackageTest {
 }

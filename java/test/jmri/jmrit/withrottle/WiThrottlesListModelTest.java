@@ -8,12 +8,12 @@ import org.junit.Assert;
 /**
  * Test simple functioning of WiThrottlesListModel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class WiThrottlesListModelTest extends TestCase {
 
     public void testCtor() {
-        java.util.ArrayList<DeviceServer> al = new java.util.ArrayList<DeviceServer>(); 
+        java.util.ArrayList<DeviceServer> al = new java.util.ArrayList<DeviceServer>();
         WiThrottlesListModel panel = new WiThrottlesListModel(al);
         Assert.assertNotNull("exists", panel );
     }
@@ -40,7 +40,7 @@ public class WiThrottlesListModelTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

@@ -17,19 +17,19 @@ import org.junit.Test;
  * is not itself a test class, e.g. should not be added to a suite. Instead,
  * this forms the base for test classes, including providing some common tests
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2016
- * @author      Paul Bender Copyright(C) 2016
+ * @author Bob Jacobsen 2003, 2006, 2008, 2016
+ * @author Paul Bender Copyright(C) 2016
  */
 public abstract class AbstractSensorMgrTestBase {
 
     // implementing classes must provide these abstract members:
     //
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
 
-    protected SensorManager l = null;	// holds objects under test
+    protected SensorManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

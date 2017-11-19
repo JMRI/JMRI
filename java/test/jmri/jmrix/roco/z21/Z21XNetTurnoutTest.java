@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.roco.z21.Z21XNetTurnout} class.
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
@@ -60,7 +60,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         ((jmri.jmrix.roco.z21.Z21XNetTurnout) t).message(m);
 
         while (n == lnis.outbound.size()) {
-        } // busy loop.  Wait for 
+        } // busy loop.  Wait for
         // outbound size to change.
         Assert.assertEquals("off message sent", "53 00 14 80 C7",
                 lnis.outbound.elementAt(n).toString());
@@ -75,13 +75,13 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
         ((jmri.jmrix.roco.z21.Z21XNetTurnout) t).message(m);
 
-        // no wait here.  The last reply should cause the turnout to 
+        // no wait here.  The last reply should cause the turnout to
         // set it's state, but it will not cause another reply.
         Assert.assertTrue(t.getKnownState() == jmri.Turnout.CLOSED);
     }
 
     // Test that property change events are properly sent from the parent
-    // to the propertyChange listener (this handles events for one sensor 
+    // to the propertyChange listener (this handles events for one sensor
     // and twosensor feedback).
     @Test
     @Override

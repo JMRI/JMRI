@@ -9,7 +9,7 @@ import org.junit.Test;
  * Copied from nodeconfig
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @author Chuck Catania Copyright (C) 2017 
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class BundleTest  {
 

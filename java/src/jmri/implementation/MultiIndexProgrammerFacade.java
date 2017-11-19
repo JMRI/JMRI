@@ -7,29 +7,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Programmer facade for accessing CVs that require one or more "index CVs" 
+ * Programmer facade for accessing CVs that require one or more "index CVs"
  * to have specific values before doing the final read or write operation.
  * <p>
  * Currently supports direct access to CVs (the usual style), operations where
  * one index CV (called PI, for primary index) must have a specific value first,
  * and operations where two index CVs (called PI and SI, for secondary index)
- * must have a specific value first. 
+ * must have a specific value first.
  * <p>
- * Accepts two different address formats so that the CV addresses can be 
+ * Accepts two different address formats so that the CV addresses can be
  * written in the same style as the decoder manufacturer's documentation:
  * <ul>
  * <li>If cvFirst is true:
  * <ul>
  *   <li> 123 Do read or write directly to CV 123; this allows unindexed CVs to go through
  *   <li> 123.11 Writes 11 to PI, the index CV, then does the final read or write to CV 123
- *   <li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index CV, 
+ *   <li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index CV,
  *                    then does the final read or write to CV 123
  * </ul>
  * <li>If cvFirst is false:
  * <ul>
  *   <li> 123 Do read or write directly to CV 123; this allows unindexed CVs to go through
  *   <li> 11.123 Writes 11 to the first index CV, then does the final read or write to CV 123
- *   <li> 11.12.123 Writes 11 to the first index CV, then 12 to the second index CV, 
+ *   <li> 11.12.123 Writes 11 to the first index CV, then 12 to the second index CV,
  *              then does the final read or write to CV 123
  * </ul>
  * </ul>
@@ -51,10 +51,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2013
  */
- 
+
 /*
  * @startuml jmri/implementation/doc-files/MultiIndexProgrammerFacade-State-Diagram.png
- * [*] --> NOTPROGRAMMING 
+ * [*] --> NOTPROGRAMMING
  * NOTPROGRAMMING --> PROGRAMMING: readCV() & & PI==-1\n(read CV)
  * NOTPROGRAMMING --> FINISHREAD: readCV() & PI!=-1\n(write PI)
  * NOTPROGRAMMING --> PROGRAMMING: writeCV() & single CV\n(write CV)

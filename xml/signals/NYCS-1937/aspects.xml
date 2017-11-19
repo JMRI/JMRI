@@ -16,7 +16,7 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -31,7 +31,7 @@
         <date>2010-01-11</date>
         <authorinitials>DB</authorinitials>
         <revremark>Typo Correction</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
@@ -255,6 +255,6 @@
     <appearancefile href="appearance-SL-2-low.xml"/>
     <appearancefile href="appearance-SL-3-high.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

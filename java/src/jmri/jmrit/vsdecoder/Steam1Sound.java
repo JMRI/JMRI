@@ -18,14 +18,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
+ * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
@@ -234,17 +234,17 @@ class Steam1Sound extends EngineSound {
             for (Element fe : elist) {
                 fn = fe.getText();
                 log.debug("notch: {}, file: {}", nn, fn);
-                AudioBuffer b = S1Notch.getBuffer(vf, fn, _soundName + 
-                        "_NOTCH_" + i + "_" + j + "_", _soundName + "_NOTCH_" + 
+                AudioBuffer b = S1Notch.getBuffer(vf, fn, _soundName +
+                        "_NOTCH_" + i + "_" + j + "_", _soundName + "_NOTCH_" +
                         i + "_" + j + "_");
-                log.debug("buffer created: {}, name: {}, format: {}", b, 
+                log.debug("buffer created: {}, name: {}, format: {}", b,
                         b.getSystemName(), b.getFormat());
                 sb.addChuffBuffer(b);
                 if (fmt == 0) {
                     // Get the format of the (first) WAV file.
                     // Since all WAV files of the notches MUST have the same format,
                     // I asume this format for all WAV files for now.
-                    fmt = AudioUtil.getWavFormat(S1Notch.getWavStream(vf, fn)); 
+                    fmt = AudioUtil.getWavFormat(S1Notch.getWavStream(vf, fn));
                     log.debug("fmt: {}", fmt);
                 }
                 ByteBuffer data = AudioUtil.getWavData(S1Notch.getWavStream(vf, fn));
@@ -257,8 +257,8 @@ class Steam1Sound extends EngineSound {
             fn = el.getChildText("notchfiller-file");
             if (fn != null) {
                 log.debug("notch filler file: {}", fn);
-                AudioBuffer bnf = S1Notch.getBuffer(vf, 
-                        el.getChildText("notchfiller-file"), _soundName + 
+                AudioBuffer bnf = S1Notch.getBuffer(vf,
+                        el.getChildText("notchfiller-file"), _soundName +
                         "_NOTCHFILLER_" + i + "_", _soundName + "_NOTCHFILLER_" + i + "_");
                 log.debug("buffer created: {}, name: {}, format: {}", bnf, bnf.getSystemName(), bnf.getFormat());
                 sb.setNotchFillerBuffer(bnf);
@@ -277,9 +277,9 @@ class Steam1Sound extends EngineSound {
                 for (Element fe : elistc) {
                     fn = fe.getText();
                     log.debug("coasting file: {}", fn);
-                    AudioBuffer bc = S1Notch.getBuffer(vf, fn, _soundName + 
+                    AudioBuffer bc = S1Notch.getBuffer(vf, fn, _soundName +
                             "_COAST_" + j + "_", _soundName + "_COAST_" + j + "_");
-                    log.debug("buffer created: {}, name: {}, format: {}", 
+                    log.debug("buffer created: {}, name: {}, format: {}",
                             bc, bc.getSystemName(), bc.getFormat());
                     sb.addCoastBuffer(bc); // WAV in Buffer for queueing.
                     ByteBuffer datac = AudioUtil.getWavData(S1Notch.getWavStream(vf, fn));
@@ -294,7 +294,7 @@ class Steam1Sound extends EngineSound {
                     log.debug("coasting filler file: {}", fn);
                     AudioBuffer bcf = S1Notch.getBuffer(vf, fn, _soundName +
                             "_COASTFILLER_", _soundName + "_COASTFILLER_");
-                    log.debug("buffer created: {}, name: {}, format: {}", bcf, 
+                    log.debug("buffer created: {}, name: {}, format: {}", bcf,
                             bcf.getSystemName(), bcf.getFormat());
                     sb.setCoastFillerBuffer(bcf);
                     sb.setCoastFillerData(AudioUtil.getWavData(S1Notch.getWavStream(vf, fn)));
@@ -307,7 +307,7 @@ class Steam1Sound extends EngineSound {
                 // variable sound clips in length. Ten helper buffers should
                 // serve well for that purpose. These buffers are bound to notch 1.
                 for (int jk = 0; jk < 10; jk++) {
-                    AudioBuffer bh = S1Notch.getBufferHelper(_soundName + 
+                    AudioBuffer bh = S1Notch.getBufferHelper(_soundName +
                             "_BUFFERHELPER_" + jk, _soundName + "_BUFFERHELPER_" + jk);
                     log.debug("buffer helper created: {}, name: {}", bh, bh.getSystemName());
                     sb.addHelper(bh);
@@ -363,7 +363,7 @@ class Steam1Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
             log.debug("pre-arrival sound: {}", fn);
-            pre_arrival_sound = new SoundBite(vf, fn, _soundName + "Pre-arrival", 
+            pre_arrival_sound = new SoundBite(vf, fn, _soundName + "Pre-arrival",
                     _soundName + "Pre-arrival");
             pre_arrival_sound.setGain(setXMLGain(el));
             log.debug("pre-arrival sound gain: {}", pre_arrival_sound.getGain());
@@ -403,7 +403,7 @@ class Steam1Sound extends EngineSound {
             this(notch, null, null, null, null);
         }
 
-        public S1Notch(int notch, AudioBuffer notchfiller, AudioBuffer coastfiller, 
+        public S1Notch(int notch, AudioBuffer notchfiller, AudioBuffer coastfiller,
                 List<AudioBuffer> chuff, List<AudioBuffer> coast) {
             my_notch = notch;
             filler_bufn = notchfiller;
@@ -504,7 +504,7 @@ class Steam1Sound extends EngineSound {
             bufs_helper.add(b);
         }
 
-        static public AudioBuffer getBuffer(VSDFile vf, String filename, 
+        static public AudioBuffer getBuffer(VSDFile vf, String filename,
                     String sname, String uname) {
             AudioBuffer b = null;
             AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
@@ -528,7 +528,7 @@ class Steam1Sound extends EngineSound {
                 return null;
             }
 
-            log.debug("buffer created: {}, name: {}, format: {}", 
+            log.debug("buffer created: {}, name: {}, format: {}",
                     b, b.getSystemName(), b.getFormat());
             return b;
         }
@@ -611,7 +611,7 @@ class Steam1Sound extends EngineSound {
             _throttle = 0.0f;
         }
 
-        public S1LoopThread(Steam1Sound d, String s, int ts, float dd, 
+        public S1LoopThread(Steam1Sound d, String s, int ts, float dd,
                 int nc, float e, int dtr, boolean r) {
             super();
             is_running = r;
@@ -664,7 +664,7 @@ class Steam1Sound extends EngineSound {
                     _sound.stop();
                     is_running = false;
                     log.info("emergency Stop");
-                    return; // k: This will tear down VSD. 
+                    return; // k: This will tear down VSD.
                     // probably should do something. Not sure what.
                 } else {
                     _throttle = t;
@@ -681,7 +681,7 @@ class Steam1Sound extends EngineSound {
                     //
                     is_decelerating = true;
 
-                    if ((getRpmNominal() < 23) && is_auto_coasting && (count_pre_arrival > 0) && 
+                    if ((getRpmNominal() < 23) && is_auto_coasting && (count_pre_arrival > 0) &&
                             _parent.trigger_sounds.containsKey("pre_arrival")) {
                         _parent.trigger_sounds.get("pre_arrival").fadeIn();
                         count_pre_arrival--;
@@ -860,7 +860,7 @@ class Steam1Sound extends EngineSound {
 
         private void changeNotch() {
             int new_notch = _notch.getNotch();
-            log.debug("changing notch ... rpm: {}, notch: {}, chuff index: {}", 
+            log.debug("changing notch ... rpm: {}, notch: {}, chuff index: {}",
                     getRpm(), _notch.getNotch(), chuffIndex());
             if ((getRpm() > _notch.getMaxLimit()) && (new_notch < _parent.notch_sounds.size())) {
                 // Too fast. Need to go to next notch up.
@@ -902,7 +902,7 @@ class Steam1Sound extends EngineSound {
                         setRpm(getRpm() + 1);
                     } else {
                         log.debug("actual rpm not increased. Value: {}", getRpm());
-                    } 
+                    }
                     log.debug("accel - nominal RPM: {}, actual RPM: {}", getRpmNominal(), getRpm());
                 }
             } else if (getRpmNominal() < getRpm()) {
@@ -927,7 +927,7 @@ class Steam1Sound extends EngineSound {
                     setWait(0);
                     log.debug("change from chuff or coast to idle.");
                     stopAutoCoasting(); // Automatic coasting is stopped here.
-                    stopBraking(); 
+                    stopBraking();
                     startIdling();
                 }
             } else {
@@ -1020,7 +1020,7 @@ class Steam1Sound extends EngineSound {
         private int calcChuffInterval(int revpm) {
             //  chuff interval will be calculated based on revolutions per minute (revpm)
             //  note: interval time includes the sound duration!
-            //  chuffInterval = time in msec per revolution of the driver wheel: 
+            //  chuffInterval = time in msec per revolution of the driver wheel:
             //      60,000 msec / revpm / number of cylinders / number of driver wheels (here always 2)
             return (int) Math.round(60000.0 / revpm / _num_cylinders / 2.0);
         }
@@ -1029,7 +1029,7 @@ class Steam1Sound extends EngineSound {
             int interval = calcChuffInterval(getRpm()); // Time in msec from chuff start up to begin of next chuff.
             int sbl = (int)SoundBite.calcLength(b); // Length of WAV file in msec.
             // Look if a filler is pending.
-            if (waitForFiller) { 
+            if (waitForFiller) {
                 // Filler waiting time is over. Go to queue the filler sound now.
                 setFiller(sbl_fill);
                 waitForFiller = false; // Done.
@@ -1051,8 +1051,8 @@ class Steam1Sound extends EngineSound {
                 // To avoid queue underrun, interval should be a bit longer than SLEEP_INTERVAL.
                 // SLEEP_INTERVAL + 10 should be lower than interval of max_rpm (e.g. max_rpm=214 -> interval=70)
                 if (interval > (SLEEP_INTERVAL + 10)) {
-                    log.debug("need to cut sound clip from {} to length {}", 
-                            (int)SoundBite.calcLength(b), interval); 
+                    log.debug("need to cut sound clip from {} to length {}",
+                            (int)SoundBite.calcLength(b), interval);
                     setWait( ((interval - SLEEP_INTERVAL * 8) / SLEEP_INTERVAL));
                     if (getWait() < 4) {
                         setWait(0);
@@ -1098,18 +1098,18 @@ class Steam1Sound extends EngineSound {
             if (fill_buf != null) {
                 int filler_length = (int)SoundBite.calcLength(fill_buf);
                 int interv_wo_chuff = calcChuffInterval(getRpm()) - lenx;
-                log.debug("filler length: {}, sound clip length: {}, interval: {}", 
+                log.debug("filler length: {}, sound clip length: {}, interval: {}",
                         filler_length, lenx, calcChuffInterval(getRpm()));
                 int im = interv_wo_chuff / filler_length; // How many fill_buf do we need?
                 int imrest = interv_wo_chuff - (im * filler_length); // Calculate rest.
-                log.debug("interval without sound clip: {}, #buffers needed: {}, rest: {}", 
+                log.debug("interval without sound clip: {}, #buffers needed: {}, rest: {}",
                         interv_wo_chuff, im, imrest);
                 int k = 0;
                 for (int i = 0; i < im; i++) {
                     _sound.queueBuffer(fill_buf);
                     k++;
                 }
-                log.debug("{} new buffers queued. Total buffers queued now: {}", 
+                log.debug("{} new buffers queued. Total buffers queued now: {}",
                         k, _sound.getSource().numQueuedBuffers());
                 // Create a buffer to queue rest of the filling time. Ignore small sound bites.
                 if (imrest > (SLEEP_INTERVAL + 10)) {

@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenPanel class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NcePacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 

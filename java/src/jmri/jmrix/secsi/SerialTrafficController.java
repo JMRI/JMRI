@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -114,7 +114,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         if (curSerialNodeIndex >= getNumNodes()) {
             curSerialNodeIndex = 0;
         }
-        // ensure that each node is initialized        
+        // ensure that each node is initialized
         if (getMustInit(curSerialNodeIndex)) {
             setMustInit(curSerialNodeIndex, false);
             AbstractMRMessage m = getNode(curSerialNodeIndex).createInitPacket();
@@ -149,7 +149,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     synchronized protected void handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
-        // inform node, and if it resets then reinitialize 
+        // inform node, and if it resets then reinitialize
         if (getNode(curSerialNodeIndex) != null) {
             if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
                 setMustInit(curSerialNodeIndex, true);

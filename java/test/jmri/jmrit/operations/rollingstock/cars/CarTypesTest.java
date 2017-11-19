@@ -3,8 +3,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.util.Locale;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
-import jmri.util.JUnitUtil;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +18,7 @@ import org.junit.Test;
  * Derived from previous "OperationsCarTest" to include only the tests related
  * to CarTypes.
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarTypesTest {
 
@@ -26,19 +26,19 @@ public class CarTypesTest {
 
     @Test
     public void testDefaultCarTypes() {
-        String carTypes[]=Bundle.getMessage("carTypeNames").split(","); 
+        String[] carTypes=Bundle.getMessage("carTypeNames").split(",");
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
-        ct1.getNames();	//Load predefined car types
+        ct1.getNames(); //Load predefined car types
 
         Assert.assertTrue("Predefined Car Type 1", ct1.containsName(carTypes[1]));
         Assert.assertTrue("Predefined Car Type 2", ct1.containsName(carTypes[2]));
     }
-    
+
     @Test
     public void testAddAndDeleteCarTypes() {
-        String carTypes[]=Bundle.getMessage("carTypeNames").split(","); 
+        String[] carTypes=Bundle.getMessage("carTypeNames").split(",");
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
-        ct1.getNames();	//Load predefined car types
+        ct1.getNames(); //Load predefined car types
 
         ct1.addName("Type New1");
         Assert.assertTrue("Car Types Add New1", ct1.containsName("Type New1"));
@@ -64,10 +64,10 @@ public class CarTypesTest {
     @Test
     @Ignore("locale set is not having the desired effect")
     public void defaultNameChangetest(){
-        Locale.setDefault(Locale.US); // set the locale to US English 
+        Locale.setDefault(Locale.US); // set the locale to US English
                                            // for this test.
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
-        ct1.getNames();	//Load predefined car types
+        ct1.getNames(); //Load predefined car types
         // change default names produces an error message if the
         // number of items in carTypeNames and carTypeCovert don't match
         // when the local is set to US english, this should not occur.
@@ -77,10 +77,10 @@ public class CarTypesTest {
     @Test
     @Ignore("locale set is not having the desired effect")
     public void defaultNameChangetestGB(){
-        Locale.setDefault(Locale.UK); // set the locale to UK english 
+        Locale.setDefault(Locale.UK); // set the locale to UK english
                                            // for this test.
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
-        ct1.getNames();	//Load predefined car types
+        ct1.getNames(); //Load predefined car types
         // change default names produces an error message if the
         // number of items in carTypeNames and carTypeCovert don't match
         // when the local is set to US english, this should not occur.

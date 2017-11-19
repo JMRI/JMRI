@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.cmri.CMRISystemConnectionMemo class.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CMRISystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -31,7 +31,7 @@ public class CMRISystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B1",'S'));
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B001",'S'));
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B1024",'S'));
-          
+
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B1",'S'));
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B001",'S'));
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B1024",'S'));
@@ -73,7 +73,7 @@ public class CMRISystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         jmri.util.JUnitUtil.resetInstanceManager();
         scm = new CMRISystemConnectionMemo();
     }
-   
+
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();

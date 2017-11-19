@@ -72,6 +72,6 @@ public class GenericImportAction extends AbstractAction {
     boolean launchImporter(File file, CvTableModel tableModel) {
         return false;
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(GenericImportAction.class);
 }

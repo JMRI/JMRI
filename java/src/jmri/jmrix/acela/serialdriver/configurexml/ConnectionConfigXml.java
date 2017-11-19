@@ -30,7 +30,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public ConnectionConfigXml() {
         super();
     }
- 
+
     /**
      * Write out the SerialNode objects too
      *

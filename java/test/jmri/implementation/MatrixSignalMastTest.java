@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the MatrixSignalMast implementation
  *
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author Egbert Broerse Copyright (C) 2016
  */
 public class MatrixSignalMastTest {
 

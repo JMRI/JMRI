@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 /**
  * Abstract action to create and register a swing object for XpressNet systems.
  *
- * @author Paul Bender Copyright (C) 2016 
+ * @author Paul Bender Copyright (C) 2016
  */
 abstract public class AbstractXPressNetAction extends AbstractAction implements jmri.jmrix.swing.SystemConnectionAction {
 
@@ -53,7 +53,7 @@ abstract public class AbstractXPressNetAction extends AbstractAction implements 
             throw new IllegalArgumentException("Attempt to set null system connection");
          }
          if(!(memo instanceof XNetSystemConnectionMemo)){
-            throw new IllegalArgumentException("Attempt to set null system connection"); 
+            throw new IllegalArgumentException("Attempt to set null system connection");
          }
          _memo = (XNetSystemConnectionMemo) memo;
     }

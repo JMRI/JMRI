@@ -35,7 +35,7 @@ import jmri.jmrit.catalog.CatalogTreeNode;
 public interface CatalogTree extends NamedBean, TreeModel {
 
     public static final char IMAGE = 'I';    // letter to filter for images/icons
-    public static final char SOUND = 'S';    // letter to filter for sounds 
+    public static final char SOUND = 'S';    // letter to filter for sounds
     public static final char SCRIPT = 'T';    // letter to filter for scripts
     public static final char NOFILTER = 'N';    // letter for unfiltered
     public static final char FILESYS = 'F';    // typeLetter for tree based on file system

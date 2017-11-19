@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
  */
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-    
+
     private static final boolean IS_SAVE = true;
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
@@ -129,11 +129,11 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         fillWeightButton.setToolTipText(Bundle.getMessage("TipCalculateCarWeight"));
         builtTextField.setToolTipText(Bundle.getMessage("TipBuildDate"));
         valueTextField.setToolTipText(Bundle.getMessage("TipValue"));
-        
+
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
-        
+
         // disable delete and save buttons
         deleteButton.setEnabled(false);
         saveButton.setEnabled(false);
@@ -187,14 +187,14 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         pType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
         addItem(pType, typeComboBox, 0, 0);
         addItem(pType, editTypeButton, 1, 0);
-        
-        JPanel pTypeOptions = new JPanel();   
+
+        JPanel pTypeOptions = new JPanel();
         addItem(pTypeOptions, passengerCheckBox, 0, 1);
         addItem(pTypeOptions, cabooseCheckBox, 1, 1);
         addItem(pTypeOptions, fredCheckBox, 2, 1);
         addItem(pTypeOptions, utilityCheckBox, 3, 1);
         addItem(pTypeOptions, hazardousCheckBox, 4, 1);
-        addItemWidth(pType, pTypeOptions, 3, 0, 1);     
+        addItemWidth(pType, pTypeOptions, 3, 0, 1);
         pPanel.add(pType);
 
         // row 3a
@@ -288,7 +288,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             addItem(pValue, valueTextField, 1, 0);
             pOptional.add(pValue);
         }
-    
+
         // row 22
         if (Setup.isRfidEnabled() && jmri.InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
@@ -370,7 +370,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
     public void loadCar(Car car) {
         _car = car;
-        
+
         // enable delete and save buttons
         deleteButton.setEnabled(true);
         saveButton.setEnabled(true);
@@ -551,11 +551,11 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             if (!checkCar(null)) {
                 return;
             }
-            
+
             // enable delete and save buttons
             deleteButton.setEnabled(true);
             saveButton.setEnabled(true);
-            
+
             saveCar(!IS_SAVE);
             // save car file
             writeFiles();

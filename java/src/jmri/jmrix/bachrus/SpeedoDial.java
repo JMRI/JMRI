@@ -34,12 +34,12 @@ public class SpeedoDial extends JPanel {
     Image scaledLogo;
     NamedIcon jmriIcon;
     NamedIcon scaledIcon;
-    int minuteX[] = {-12, -11, -24, -11, -11, 0, 11, 11, 24, 11, 12};
-    int minuteY[] = {-31, -261, -266, -314, -381, -391, -381, -314, -266, -261, -31};
-    int scaledMinuteX[] = new int[minuteX.length];
-    int scaledMinuteY[] = new int[minuteY.length];
-    int rotatedMinuteX[] = new int[minuteX.length];
-    int rotatedMinuteY[] = new int[minuteY.length];
+    int[] minuteX = {-12, -11, -24, -11, -11, 0, 11, 11, 24, 11, 12};
+    int[] minuteY = {-31, -261, -266, -314, -381, -391, -381, -314, -266, -261, -31};
+    int[] scaledMinuteX = new int[minuteX.length];
+    int[] scaledMinuteY = new int[minuteY.length];
+    int[] rotatedMinuteX = new int[minuteX.length];
+    int[] rotatedMinuteY = new int[minuteY.length];
 
     Polygon minuteHand;
     Polygon scaledMinuteHand;

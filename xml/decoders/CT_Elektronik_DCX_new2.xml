@@ -2,18 +2,18 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Nigel Cliffe" version="1.9" lastUpdated="2017/6/16"/> 
+  <version author="Nigel Cliffe" version="1.9" lastUpdated="2017/6/16"/>
 
   <!-- <version author="ronald@wirkuhns.de" version="1.8" lastUpdated="2016/5/12"/> -->
   <!-- <version author="ncliffe@btinternet.com" version="1.7" lastUpdated="2009/9/01"/> -->
@@ -29,32 +29,32 @@
   <!--        information on CT website implies V27 to 56 reflect current versions -->
   <!--            Nigel Cliffe 2008/12/01; -->
   <!-- version 1.4  altered prompts and drop-downs for -->
-  <!-- automatic un-coupling tools and extended versions to v66  -->
+  <!-- automatic un-coupling tools and extended versions to v66 -->
   <!--            Nigel Cliffe 2008/12/09; -->
-  <!-- version 1.5, Nigel Cliffe, 2009/03/12  -->
-  <!--     based on German language manuals for DCX74 and 75.  -->
+  <!-- version 1.5, Nigel Cliffe, 2009/03/12 -->
+  <!--     based on German language manuals for DCX74 and 75. -->
   <!--     Modified CV9 so appears in motor panel, and extended comment range -->
   <!--     CV137 added for 32kHz mode. Using similar technique to Zimo MX620 definition, -->
-  <!--     unused "item" labels to put items on correct panels of comprehensive programmer  -->
+  <!--     unused "item" labels to put items on correct panels of comprehensive programmer -->
   <!--       CV137 bit 7 uses [item="DC Brake Momentum"] to force to motor panel -->
   <!--     Added Decoder Reset option (CV1 = 0) -->
   <!--     CV's sorted to numeric order -->
   <!--     CV's 163-166 added for "shunt mode", for completeness of shunt mode options -->
-  <!--     lighting effects pane extensively revised  -->
-  <!-- version 1.6, Nigel Cliffe 2009/04/02  -->
-  <!-- Note that V66 decoders are now in "CT_Elektronic_DCX_V60_plus"  -->
+  <!--     lighting effects pane extensively revised -->
+  <!-- version 1.6, Nigel Cliffe 2009/04/02 -->
+  <!-- Note that V66 decoders are now in "CT_Elektronic_DCX_V60_plus" -->
   <!--     Splitting files to pre-v66 and post-v66 due to change in values with CV152/153 -->
   <!--     v56 DCX74 / v59 DCX75 mapping of white/yellow is white=2, yellow=1 , but yellow will "flash" in non-direction momentarily -->
   <!--     Noted in v66 DCX74 that mapping has changed to white=1, yellow=2 and works correctly -->
   <!--     Require more user observations of if any decoders exist between v59 and v66, and any -->
-  <!--     four-output wire decoders.  -->
-  <!-- Version 1.7, Nigel Cliffe, 2009/09/01  -->
-  <!--    Improved function mapping, in line with Tran (CT) documentation  -->
+  <!--     four-output wire decoders. -->
+  <!-- Version 1.7, Nigel Cliffe, 2009/09/01 -->
+  <!--    Improved function mapping, in line with Tran (CT) documentation -->
   <!--    Subsequent changes to a few screens to move features to function map -->
-  <!-- Version 1.8, Ronald Kuhn, 2016/05/12  -->
-  <!--    translation to german  -->
+  <!-- Version 1.8, Ronald Kuhn, 2016/05/12 -->
+  <!--    translation to german -->
   <!-- Version 1.9, Nigel Cliffe, 2016/06/16 -->
-  <!--    Re-instated meaningful labels on CV116 which had been deleted in version 1.8  -->
+  <!--    Re-instated meaningful labels on CV116 which had been deleted in version 1.8 -->
   <decoder>
     <family name="DCX Series (v.27 and higher)" mfg="CT Elektronik" lowVersionID="27" highVersionID="59" comment="DCX74, DCX75, with variants">
       <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
@@ -1203,9 +1203,9 @@
         <tooltip>Functions 1 to 12 possible</tooltip>
         <tooltip xml:lang="de">Auswahl der Taste für die Abkuppel-Automatik</tooltip>
       </variable>
-      <!--  NC comment, version 56 and version 66 decoders seem different.  
-      In Version 56 and documentation, the increments in values appear to be 2, 4, etc.. 
-      In Version 66, the increments appear to be 1, 2 (and presumably 3, 4)  -->
+      <!--  NC comment, version 56 and version 66 decoders seem different.
+      In Version 56 and documentation, the increments in values appear to be 2, 4, etc..
+      In Version 66, the increments appear to be 1, 2 (and presumably 3, 4) -->
       <variable CV="152" default="8" item="Engine FWD, Uncoupling BWD">
         <decVal/>
         <label>Engine FWD, Uncoupling BWD</label>
@@ -1336,7 +1336,7 @@
         <tooltip>select output wire for uncoupler action</tooltip>
         <tooltip xml:lang="de">Auswahl der zu verwendenden Funktion</tooltip>
       </variable>
-      <!-- Tran Light Effects  -->
+      <!-- Tran Light Effects -->
       <variable CV="154" default="0" item="Light Effects FL(f)">
         <decVal/>
         <label>Light Effects FL(f)</label>
@@ -1619,18 +1619,18 @@
       <display item="Switching 1"/>
       <display item="Switching 2"/>
        <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>Forward/Reverse speed ratio</text>
       </label>
-	  <display item="Switching 3"/>
-     
+      <display item="Switching 3"/>
+
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>Uncoupler Assignment</text>
@@ -1650,7 +1650,7 @@
         <text xml:lang="de">Kupplungswalzer legen auf F-Taste.</text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <display item="Uncoupler Holding Current"/>
@@ -1680,7 +1680,7 @@
         <text xml:lang="de">Die F-Taste sollte als Momentauslösung eingestellt sein</text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Speed Step Coupling Release"/>
       <display item="Speed Step Uncoupled"/>
@@ -1688,7 +1688,7 @@
       <display item="Time Driving Forwards"/>
       <display item="F-Button Used For Auto-Uncoupling"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>Uncoupler outputs with movement</text>
@@ -1702,7 +1702,7 @@
       <display item="Loco travel FWD, rear coupler"/>
       <display item="Loco travel BWD, front coupler"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>Read Only information</text>
@@ -1724,11 +1724,11 @@
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Dimming Output"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Dimming Output FL(f)" format="checkbox"/>
       <display item="Dimming Output FL(r)" format="checkbox"/>
@@ -1757,15 +1757,15 @@
         <text xml:lang="de">wird die Dimmung (CV 54/57) abgeschaltet.</text>
       </label>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="F-Button Used For Dimming"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="PWM Dimming"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Dim FL(f)" format="checkbox"/>
       <display item="Dim FL(r)" format="checkbox"/>
@@ -1798,30 +1798,30 @@
       <label label="  "/>
       <display item="Sound/Function Assignment"/>
       <label label="  "/>
-      -->
+ -->
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="PWM Light Effects Outputs"/>
       <display item="Time Between Effects"/>
       <display item="Time Effect ON"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Light Effects F0F"/>
       <display item="Light Effects Direction F0F"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Light Effects F0R"/>
       <display item="Light Effects Direction F0R"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Light Effects F1"/>
       <display item="Light Effects Direction F1"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Light Effects F2"/>
       <display item="Light Effects Direction F2"/>
@@ -1832,31 +1832,31 @@
     <name xml:lang="de">Decoder Lock / Kurzschluß</name>
     <column>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Advanced Group 1 Option 12"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Direct Cut Off Function Outputs"/>
       <display item="Fast Cut Off Function Outputs"/>
       <display item="Slow Cut Off Function Outputs"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <separator/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Direct Cut Off Motor"/>
       <display item="Fast Cut Off Motor"/>
       <display item="Slow Cut Off Motor"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
     </column>
   </pane>
@@ -1871,7 +1871,7 @@
       <display item="ZIMO Signal Controlled Speed U"/>
       <display item="ZIMO Signal Controlled Acc Reaction"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <display item="Function selection 8 or 14/MAN Bit"/>
       <!-- NC v1.5 comment - CV137 bit 1 appears incorrect according to CT documentation -->
@@ -1879,7 +1879,7 @@
       <display item="Zimo speed control HLU"/>
       <display item="ZIMO Brake Time HLU"/>
       <label>
-        <text>  </text>
+        <text> </text>
       </label>
       <label>
         <text>LGB</text>

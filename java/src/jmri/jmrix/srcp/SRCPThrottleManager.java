@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on early NCE code.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2005, 2008
  * @author Modified by Kelly Loyd
  */
 public class SRCPThrottleManager extends AbstractThrottleManager {
@@ -33,11 +33,11 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
         // Notify ready to go (without waiting for OK?)
         if(address instanceof DccLocoAddress) {
            notifyThrottleKnown(new SRCPThrottle((SRCPBusConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
-        } else { 
+        } else {
           // we need to notify that the request failed, because the
           // address is not a DccLocoAddress, but that notification also
           // requires a DccLocoAddress.
-          throw new java.lang.IllegalArgumentException("Request for throttle for unsupported non-DCC address.");          
+          throw new java.lang.IllegalArgumentException("Request for throttle for unsupported non-DCC address.");
         }
     }
 

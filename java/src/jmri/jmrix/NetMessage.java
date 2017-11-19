@@ -116,7 +116,7 @@ public abstract class NetMessage implements Serializable {
      * separate
      */
     private int mNDataBytes = 0;
-    private int mDataBytes[] = null;
+    private int[] mDataBytes = null;
     private int mOpCode = 0;
 
     // initialize logging

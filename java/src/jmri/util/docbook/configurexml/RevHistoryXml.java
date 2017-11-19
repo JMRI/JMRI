@@ -18,7 +18,7 @@ import org.jdom2.Namespace;
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
     private static final String NAMESPACE = "http://docbook.org/ns/docbook"; // NOI18N
-    
+
     /**
      * Usual configurexml method, this one doesn't do anything because the
      * content is explicitly loaded from the file

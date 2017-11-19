@@ -64,7 +64,7 @@ public class ScheduleItemTest extends OperationsTestCase {
     }
 
     // Ensure minimal setup for log4J
- 
+
     @Override
     @Before
     protected void setUp() throws Exception {

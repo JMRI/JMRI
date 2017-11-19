@@ -1,6 +1,5 @@
 package jmri.jmrit.operations;
 
-import java.util.Locale;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import junit.framework.TestCase;
@@ -9,7 +8,7 @@ import junit.framework.TestCase;
  * Common setup and tear down for operation tests.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * 
+ *
  */
 public class OperationsTestCase extends TestCase {
 

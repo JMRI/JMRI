@@ -9,16 +9,16 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><year>2011</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
         <email>dick@rr-cirkits.com</email>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,7 +27,7 @@
         <date>2011-06-23</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial Version</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspecttable>CSX</aspecttable>
@@ -247,4 +247,4 @@
     </aspectMapping>
 
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

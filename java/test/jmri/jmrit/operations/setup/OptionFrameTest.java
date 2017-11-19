@@ -13,7 +13,7 @@ import org.junit.Test;
  * Tests for the OptionFrame class
  *
  * @author Dan Boudreau Copyright (C) 2009
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OptionFrameTest extends OperationsSwingTestCase {
 

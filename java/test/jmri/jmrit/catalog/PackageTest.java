@@ -1,9 +1,7 @@
 /**
- * PackageTest.java
+ * Tests for the jmri.jmrit.catalog package.
  *
- * Description:	tests for the jmri.jmrit.catalog package
- *
- * @author	Bob Jacobsen 2009
+ * @author Bob Jacobsen 2009
  */
 package jmri.jmrit.catalog;
 
@@ -14,7 +12,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     CatalogTreeFSTest.class,
     CatalogTreeIndexTest.class,
-    ImageIndexEditorTest.class,     
+    ImageIndexEditorTest.class,
     BundleTest.class,
     jmri.jmrit.catalog.configurexml.PackageTest.class,
     CatalogPaneTest.class,

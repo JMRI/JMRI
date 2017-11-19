@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the cm11.SpecficReply class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010 Converted to multiple
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2010 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
   */

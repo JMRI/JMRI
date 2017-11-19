@@ -496,7 +496,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     @Override
-    protected JLabel getDragger(DataFlavor flavor, 
+    protected JLabel getDragger(DataFlavor flavor,
             HashMap<String, NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, icon);
     }
@@ -559,7 +559,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                     }
                 }
                 t.setLevel(Editor.TURNOUTS);
-                return t;                
+                return t;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" icons for \"");

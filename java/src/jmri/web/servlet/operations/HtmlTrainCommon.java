@@ -262,10 +262,10 @@ public class HtmlTrainCommon extends TrainCommon {
             }
             return "";
         } else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal) {
-            return ""; // we don't have the car's origin, so nothing to return
-// Note that the JSON database does have the car's origin, so this could be fixed.
-//			return String.format(locale, strings.getProperty("FromLocation"), StringEscapeUtils.escapeHtml4(rs
-//					.getLocationName()));
+            return "";
+            // we don't have the car's origin, so nothing to return
+            // Note that the JSON database does have the car's origin, so this could be fixed.
+            // return String.format(locale, strings.getProperty("FromLocation"), StringEscapeUtils.escapeHtml4(rs.getLocationName()));
         } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
             return String.format(locale, strings.getProperty("ToLocation"), StringEscapeUtils
                     .escapeHtml4(splitString(rs.getDestinationName())));

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TamsSensorManagerXmlTest.java
+ * Tests for the TamsSensorManagerXml class
  *
- * Description: tests for the TamsSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class TamsSensorManagerXmlTest {
 

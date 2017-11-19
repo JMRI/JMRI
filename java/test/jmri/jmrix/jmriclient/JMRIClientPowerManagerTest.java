@@ -6,12 +6,10 @@ import org.junit.Before;
 
 
 /**
- * JMRIClientPowerManagerTest.java
+ * Tests for the jmri.jmrix.jmriclient.JMRIClientPowerManager class
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientPowerManager class
- *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 

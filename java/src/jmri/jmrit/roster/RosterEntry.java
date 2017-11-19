@@ -782,7 +782,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *               source is the roster entry itself
      */
     public void loadFunctions(Element e3, String source) {
-        /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed 
+        /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed
          ie those saved in the roster file, rather than those being left blank
          rather than being over-written by the defaults linked to the decoder def*/
         if (loadedOnce) {
@@ -851,7 +851,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *               source is the roster entry itself
      */
     public void loadSounds(Element e3, String source) {
-        /*Load flag once, means that when the roster entry is edited only the first set of sound labels are displayed 
+        /*Load flag once, means that when the roster entry is edited only the first set of sound labels are displayed
          ie those saved in the roster file, rather than those being left blank
          rather than being over-written by the defaults linked to the decoder def*/
         if (soundLoadedOnce) {
@@ -1305,7 +1305,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // do backup
             df.makeBackupFile(LocoFile.getFileLocation() + getFileName());
 
-            // changed 
+            // changed
             changeDateUpdated();
 
             // and finally write the file
@@ -1689,7 +1689,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static RosterEntry fromFile(@Nonnull File file) throws JDOMException, IOException {
         Element loco = (new LocoFile()).rootFromFile(file).getChild("locomotive");
         if (loco == null) {
-          throw new JDOMException("missing expected element");   
+          throw new JDOMException("missing expected element");
         }
         RosterEntry re = new RosterEntry(loco);
         re.setFileName(file.getName());

@@ -61,7 +61,7 @@ public class DefaultRailComManager extends AbstractManager<jmri.IdTag>
                     + ((userName == null) ? "null" : userName));
         }
     }
-    
+
     @Override
     public RailCom newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
         if (log.isDebugEnabled()) {
@@ -70,7 +70,7 @@ public class DefaultRailComManager extends AbstractManager<jmri.IdTag>
                     + ";" + ((userName == null) ? "null" : userName));
         }
         checkSystemName(systemName, userName);
-        
+
         // return existing if there is one
         RailCom s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {

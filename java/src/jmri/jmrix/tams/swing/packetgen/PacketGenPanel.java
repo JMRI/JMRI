@@ -13,7 +13,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of Tams messages Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author	Jan Boen
+ * @author Jan Boen
  */
 public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
@@ -28,7 +28,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -140,7 +140,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
 
     TamsMessage createPacket(String s) {
         // gather bytes in result
-        byte b[];
+        byte[] b;
         try {
             b = StringUtil.bytesFromHexString(s);
         } catch (NumberFormatException e) {

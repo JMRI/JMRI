@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a train's load options
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

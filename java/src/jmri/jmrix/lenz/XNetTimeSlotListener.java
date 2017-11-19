@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
  * <li>"Command Station is providing a timeslot for communications again." (01 07 06)</li>
  * </ol>
  * <p>
- * when the first message is received, the associated port controller's 
- * setTimeSlot methodis called with a "false" parameter.  When the second 
+ * when the first message is received, the associated port controller's
+ * setTimeSlot methodis called with a "false" parameter.  When the second
  * is true, it is called with a "true paramter.
  *
  * @author Paul Bender Copyright (C) 2017

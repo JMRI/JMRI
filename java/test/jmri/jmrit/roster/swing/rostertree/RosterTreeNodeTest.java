@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of RosterTreeNode
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class RosterTreeNodeTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        RosterTreeNode p = new RosterTreeNode(); 
+        RosterTreeNode p = new RosterTreeNode();
         Assert.assertNotNull("exists", p);
     }
 

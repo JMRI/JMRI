@@ -140,7 +140,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
         // Delete the node from the node list
         numNodes--;
         if (index < numNodes) {
-            // did not delete the last node, shift 
+            // did not delete the last node, shift
             for (int j = index; j < numNodes; j++) {
                 nodeArray[j] = nodeArray[j + 1];
             }

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * MRC implementation of a ThrottleManager.
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001
- * 
+ *
  */
 public class MrcThrottleManager extends AbstractThrottleManager {
 

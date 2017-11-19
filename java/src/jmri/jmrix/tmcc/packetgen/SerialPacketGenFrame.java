@@ -5,14 +5,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JSeparator;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
-import jmri.jmrix.tmcc.SerialTrafficController;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
  * Frame for user input of serial messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.tmcc.SerialListener {
 
@@ -27,7 +26,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -75,7 +74,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
     SerialMessage createPacket(String s) {
         // gather bytes in result
-        byte b[] = StringUtil.bytesFromHexString(s);
+        byte[] b = StringUtil.bytesFromHexString(s);
         if (b.length != 3) {
             return null;  // no such thing as message of other than 3 bytes
         }

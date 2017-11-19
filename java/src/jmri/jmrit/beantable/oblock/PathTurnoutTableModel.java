@@ -197,7 +197,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                     //bs.setSetting(Turnout.CLOSED);  - This was the form before BeanSetting was returned to Immutable
                     _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.CLOSED));
                 } else if (setting.equals(thrown)) {
-                    //bs.setSetting(Turnout.THROWN); 
+                    //bs.setSetting(Turnout.THROWN);
                     _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.THROWN));
                 } else {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("TurnoutMustBeSet", closed, thrown),

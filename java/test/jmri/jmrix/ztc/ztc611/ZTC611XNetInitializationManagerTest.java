@@ -10,12 +10,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * ZTC611XNetInitializationManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.ztc.ztc611.ZTC611XNetInitializationManager
+ * Tests for the jmri.jmrix.ztc.ztc611.ZTC611XNetInitializationManager
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class ZTC611XNetInitializationManagerTest extends TestCase {
 

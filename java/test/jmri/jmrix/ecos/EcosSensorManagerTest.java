@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * EcosSensorManagerTest.java
+ * Tests for the EcosSensorManager class
  *
- * Description:	tests for the EcosSensorManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 

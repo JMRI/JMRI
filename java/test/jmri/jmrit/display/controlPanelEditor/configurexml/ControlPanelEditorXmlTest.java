@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ControlPanelEditorXmlTest.java
+ * Tests for the ControlPanelEditorXml class
  *
- * Description: tests for the ControlPanelEditorXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class ControlPanelEditorXmlTest {
 

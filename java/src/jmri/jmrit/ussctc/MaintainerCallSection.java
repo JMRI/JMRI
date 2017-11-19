@@ -15,8 +15,8 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
      *  Anonymous object only for testing
      */
     MaintainerCallSection() {}
-    
-    
+
+
     /**
      * Create and configure.
      *
@@ -35,18 +35,18 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
 
         hInputSensor = hm.getNamedBeanHandle(inputSensor, sm.provideSensor(inputSensor));
         hLayoutOutput = hm.getNamedBeanHandle(layoutOutput, tm.provideTurnout(layoutOutput));
-        
+
         // aligns at start
         codeValueDelivered(codeSendStart());
     }
 
     NamedBeanHandle<Sensor> hInputSensor;
     NamedBeanHandle<Turnout> hLayoutOutput;
-    
+
     Station station;
     public Station getStation() { return station; }
     public String getName() { return "MC for "+hLayoutOutput.getBean().getDisplayName(); }
- 
+
      /**
      * Start of sending code operation.
      * @return code line value to transmit
@@ -64,7 +64,7 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
      */
     @Override
     public void indicationComplete(CodeGroupNoBits value) {
-    } 
+    }
 
     /**
      * Notification that code has arrived in the field. Sets the turnout on the layout.
@@ -90,6 +90,6 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
         return CodeGroupNoBits.None;
     }
 
-     
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MaintainerCallSection.class);
 }

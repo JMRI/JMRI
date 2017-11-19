@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of PricomMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PricomMenuTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PricomMenu action = new PricomMenu();
         Assert.assertNotNull("exists", action);
     }

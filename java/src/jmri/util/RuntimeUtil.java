@@ -18,7 +18,7 @@ public class RuntimeUtil {
         try {
             java.lang.Runtime.getRuntime().addShutdownHook(Hook);
         } catch (Throwable e) {
-            // if addShutdownHook() doesn't exist in this 
+            // if addShutdownHook() doesn't exist in this
             // version of the JVM, we'll just ignore this.
         }
     }

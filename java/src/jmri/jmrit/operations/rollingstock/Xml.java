@@ -4,7 +4,7 @@ package jmri.jmrit.operations.rollingstock;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * 
+ *
  *
  */
 public class Xml {
@@ -85,8 +85,8 @@ public class Xml {
 
  // Track.java
 // static final String LOC_TYPE = "locType"; // NOI18N
-// 
-// 
+//
+//
 // static final String CAR_ROAD_OPERATION = "carRoadOperation"; //  misspelled should have been carRoadOption // NOI18N
 // static final String CAR_ROADS = "carRoads"; // NOI18N
 // static final String CAR_LOAD_OPTION = "carLoadOption"; // NOI18N

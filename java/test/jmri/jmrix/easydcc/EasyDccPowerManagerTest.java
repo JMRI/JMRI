@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the EasyDccPowerManager class
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
 
@@ -72,7 +72,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     EasyDccTrafficControlScaffold controller;  // holds dummy EasyDccTrafficController for testing
 
     // replace some standard tests, as there's no unsolicted message from the
-    // master saying power has changed.  Instead, these test the 
+    // master saying power has changed.  Instead, these test the
     // state readback by sending messages & getting a reply
     @Override
     @Test
@@ -87,7 +87,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     // The minimal setup for log4J
-    @After 
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }

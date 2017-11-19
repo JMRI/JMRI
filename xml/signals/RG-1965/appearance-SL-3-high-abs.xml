@@ -9,28 +9,28 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-	<author>
-    	<personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
-    	<email>dcc2@ebroerse.nl</email>
-		</author>    
+    <author>
+        <personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
+        <email>dcc2@ebroerse.nl</email>
+        </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-		<revnumber>1</revnumber>
-		<date>2013-01-28</date>
-		<authorinitials>EBR</authorinitials>
-		<revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
-    </revision>   
-  </revhistory> 
+        <revnumber>1</revnumber>
+        <date>2013-01-28</date>
+        <authorinitials>EBR</authorinitials>
+        <revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
+    </revision>
+  </revhistory>
 
   <aspecttable>RG-1965</aspecttable>
   <name>Triple searchlight high absolute signal</name>
   <reference>As described in the 1965 version of the RG publication "Rio Grande Rules of Operating Department".</reference>
   <description>Appearances for an absolute (RG: Positive) three-searchlight signal with (P)-badge.</description>
-  
+
   <appearances>
 
     <appearance>
@@ -106,7 +106,7 @@
     </appearance>
 
   </appearances>
-  
+
   <specificappearances>
     <danger>
       <aspect>Stop</aspect>
@@ -140,7 +140,7 @@
       <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
-    
+
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
@@ -158,7 +158,7 @@
       <ourAspect>Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
-    
+
      <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -166,11 +166,11 @@
     </aspectMapping>
 
     <aspectMapping>
-  	  <advancedAspect>Stop and Proceed</advancedAspect>
-  	  <ourAspect>Approach</ourAspect>
+        <advancedAspect>Stop and Proceed</advancedAspect>
+        <ourAspect>Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>
-	
+    </aspectMapping>
+
   </aspectMappings>
-  
-</appearancetable>  
+
+</appearancetable>

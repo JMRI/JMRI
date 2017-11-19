@@ -6,7 +6,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * Provide access to Swing components for the LocoNet subsystem.
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * 
+ *
  * @since 2.99.2
  */
 public class CanComponentFactory extends jmri.jmrix.swing.ComponentFactory {

@@ -16,8 +16,8 @@ import org.junit.Test;
  * Instead, this forms the base for test classes, including providing some
  * common tests
  *
- * @author   Bob Jacobsen 
- * @author   Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2016
  */
 public abstract class AbstractThrottleManagerTestBase {
 
@@ -25,7 +25,7 @@ public abstract class AbstractThrottleManagerTestBase {
      * Overload to load l with actual object; create scaffolds as needed
      */
     @Before
-    abstract public void setUp(); 
+    abstract public void setUp();
 
     protected ThrottleManager tm = null; // holds objects under test
 

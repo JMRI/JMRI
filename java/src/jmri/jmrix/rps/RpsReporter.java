@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * RPS implementation of the Reporter interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {

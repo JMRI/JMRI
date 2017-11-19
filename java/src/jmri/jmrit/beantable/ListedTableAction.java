@@ -59,7 +59,7 @@ public class ListedTableAction extends AbstractAction {
 
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
-        /* create the frame outside of swing so that we do not 
+        /* create the frame outside of swing so that we do not
          hog Swing/AWT execution, then finally display on Swing */
         Runnable r = new Runnable() {
             @Override
@@ -80,7 +80,7 @@ public class ListedTableAction extends AbstractAction {
                 } catch (InterruptedException ex) {
                     log.error("interrupted while setting ListedTable visible", ex );
                 }
-                
+
             }
         };
         Thread thr = new Thread(r, "Listed Table Generation");

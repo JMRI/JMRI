@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$	-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,7 +34,7 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
-	  <variable item="HiLo Switch For F1" CV="53" mask="XXXXXXXV" default="0">
+      <variable item="HiLo Switch For F1" CV="53" mask="XXXXXXXV" default="0">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label xml:lang="de">High/Low gemeinsam param. für F1</label>
     <label>High/Low Switch For F1</label>

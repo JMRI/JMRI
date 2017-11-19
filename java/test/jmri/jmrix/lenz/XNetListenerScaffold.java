@@ -1,9 +1,7 @@
 /**
- * XNetListenerScaffold.java
+ * Test implementation of XNetListener
  *
- * Description:	test implementation of XNetListener
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.lenz;
 
@@ -40,7 +38,7 @@ public class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
 
     // required for access outside of package.
     public XNetReply getRcvdRply() {
-       return rcvdRply; 
+       return rcvdRply;
     }
 
     public void setRcvdRply(XNetReply r){

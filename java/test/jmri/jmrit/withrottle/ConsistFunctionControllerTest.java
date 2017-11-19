@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * Test simple functioning of ConsistFunctionController
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ConsistFunctionControllerTest extends TestCase {
 
@@ -43,7 +43,7 @@ public class ConsistFunctionControllerTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
-    
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * <LI> (everything else)
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -83,7 +83,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
      */
     @Override
     public void sendMx1Message(Mx1Message m, Mx1Listener reply) {
-        byte msg[];
+        byte[] msg;
         if (protocol) {
             processPacketForSending(m);
             msg = m.getRawPacket();
@@ -147,7 +147,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         }
         //Add EOT
         msgFormat.add((byte) EOT);
-        byte msg[] = new byte[msgFormat.size()];
+        byte[] msg = new byte[msgFormat.size()];
         for (int i = 0; i < msgFormat.size(); i++) {
             msg[i] = msgFormat.get(i);
         }
@@ -418,7 +418,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
             nack.setElement(2, 0x00);
             //ack.setElement(2, 3);
             processPacketForSending(nack);
-            byte msg[] = nack.getRawPacket();
+            byte[] msg = nack.getRawPacket();
             notify(nack, null);
             //notifyLater(ack, null);
             synchronized (xmtHandler) {
@@ -453,7 +453,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         //ack.setElement(2, 3);
         ack.setElement(3, m.getElement(0) & 0xff);
         processPacketForSending(ack);
-        byte msg[] = ack.getRawPacket();
+        byte[] msg = ack.getRawPacket();
         notify(ack, null);
         //notifyLater(ack, null);
         synchronized (xmtHandler) {
@@ -470,7 +470,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         //ack.setElement(2, 3);
         ack.setElement(3, m.getElement(0) & 0xff);
         processPacketForSending(ack);
-        byte msg[] = ack.getRawPacket();
+        byte[] msg = ack.getRawPacket();
         notify(ack, null);
         //notifyLater(ack, null);
         synchronized (xmtHandler) {
@@ -493,7 +493,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                 try {
                     // get content; failure is a NoSuchElementException
                     log.debug("check for input");
-                    byte msg[] = null;
+                    byte[] msg = null;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }
@@ -575,7 +575,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 xmtHandler.notify();
                             }
                         } else {
-                            //Using a linked list, so if the first packet we come too isn't 
+                            //Using a linked list, so if the first packet we come too isn't
                             break;
                         }
                     }
@@ -674,7 +674,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         return (byte) (checksum & 0xff);
     }
 
-    final int crc8bit_table[] = new int[]{
+    final int[] crc8bit_table = new int[]{
         0x00, 0x5e, 0xbc, 0xe2, 0x61, 0x3f, 0xdd, 0x83, 0xc2, 0x9c, 0x7e, 0x20, 0xa3, 0xfd, 0x1f,
         0x41, 0x9d, 0xc3, 0x21, 0x7f, 0xfc, 0xa2, 0x40, 0x1e, 0x5f, 0x01, 0xe3, 0xbd, 0x3e, 0x60,
         0x82, 0xdc, 0x23, 0x7d, 0x9f, 0xc1, 0x42, 0x1c, 0xfe, 0xa0, 0xe1, 0xbf, 0x5d, 0x03, 0x80,

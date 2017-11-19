@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SignalMastIconXmlTest.java
+ * Tests for the SignalMastIconXml class
  *
- * Description: tests for the SignalMastIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class SignalMastIconXmlTest {
 

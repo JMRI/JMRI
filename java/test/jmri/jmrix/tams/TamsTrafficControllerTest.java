@@ -5,12 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * TamsTrafficControllerTest.java
- *
- * Description:	tests for the jmri.jmrix.tams.TamsTrafficController
+ * Tests for the jmri.jmrix.tams.TamsTrafficController
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class TamsTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 

@@ -15,17 +15,17 @@ import org.junit.Test;
 /**
  * Test simple functioning of XNetComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XNetComponentFactoryTest {
 
 
     private XNetTrafficController tc = null;
     private XNetSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XNetComponentFactory action = new XNetComponentFactory(m);
         Assert.assertNotNull("exists", action);
     }

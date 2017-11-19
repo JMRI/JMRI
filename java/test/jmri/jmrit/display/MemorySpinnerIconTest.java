@@ -15,7 +15,7 @@ import org.junit.Assert;
  * <p>
  * Description:
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 

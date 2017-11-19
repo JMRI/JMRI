@@ -14,22 +14,22 @@ import org.junit.Test;
  * Instead, this forms the base for test classes, including providing some
  * common tests.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public abstract class AbstractTurnoutTestBase {
 
     // implementing classes must provide these abstract members:
     //
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
-    abstract public int numListeners();	// return number of listeners registered with the TrafficController
+    abstract public int numListeners(); // return number of listeners registered with the TrafficController
 
     abstract public void checkThrownMsgSent() throws InterruptedException;
 
     abstract public void checkClosedMsgSent() throws InterruptedException;
 
-    protected Turnout t = null;	// holds objects under test
+    protected Turnout t = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -76,7 +76,7 @@ public abstract class AbstractTurnoutTestBase {
 
     @Test
     public void testDispose() {
-        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController
+        t.setCommandedState(Turnout.CLOSED); // in case registration with TrafficController
         //is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());

@@ -79,8 +79,8 @@
       <reference>Page 146</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_R-GYR_Absolute/Rule-W292.gif</imagelink>
     </appearance>
-	
-	<appearance>
+
+    <appearance>
       <aspectname>Stop-Throw Switch</aspectname>
       <show>red</show>
       <show>flashred</show>
@@ -119,8 +119,8 @@
       <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
-	
-	<aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Diverging Clear</advancedAspect>
       <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
@@ -130,8 +130,8 @@
       <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
-	
-	<aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Diverging Approach</advancedAspect>
       <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
@@ -165,8 +165,8 @@
       <ourAspect>Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
-	
-	<aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Stop-Throw Switch</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>

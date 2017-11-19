@@ -31,10 +31,10 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         // Not sure if EasyDcc requires feedback. May need to extend this.
         /* It appears that the first command sent to the Queue in EasyDcc
-         is 'lost' - so it may be beneficial to send a 'Send' command 
+         is 'lost' - so it may be beneficial to send a 'Send' command
          just to wake up the command station.
          This was tested on v418 - also appears as an issue with the
-         radio throttles. 
+         radio throttles.
          */
         log.debug("new EasyDccThrottle for {}", address);
         notifyThrottleKnown(new EasyDccThrottle((EasyDccSystemConnectionMemo) _memo, (DccLocoAddress) address), address);

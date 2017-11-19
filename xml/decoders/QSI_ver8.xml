@@ -1169,13 +1169,13 @@
       </variable>
       <!-- in pdf manual, no FW uses it yet
       <ivariable label="Truck Lights Initial State" CVname="55.134.0" CV="55" PI="134" SI="0" default="1" item="CV55.134.0 Truck" mask="XXXXXXXV" include="2105">
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Engine Room Light Initial State" CVname="55.135.0" CV="55" PI="135" SI="0" default="1" item="CV55.135.0 Engine" mask="XXXXXXXV" >
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Engine Room2 Light Initial State" CVname="55.135.0" CV="55" PI="135" SI="0" default="1" item="CV55.135.0 Engine2" mask="XXXXXXVX" >
-			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </ivariable>
 -->
       <variable label="Firebox Light Initial State" CV="55.135.0" mask="XXXVXXXX" default="1" item="CV55.135.0 Firebox" include="3100,3101,3106,3107,4100,4101,4102">
@@ -1895,19 +1895,19 @@
         <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Motor Exhaust Idle Balance Sign" CVname="116.58" CV="116" PI="58" default="0" item="CV116.58 Sign" mask="VXXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Motor Labored Exhaust Min Balance" CVname="116.60" CV="116" PI="60" default="0" item="CV116.60 Value" mask="XVVVVVVV">
         <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Motor Labored Exhaust Min Balance Sign" CVname="116.60" CV="116" PI="60" default="0" item="CV116.60 Sign" mask="VXXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Motor Rod Knock Balance" CVname="116.62" CV="116" PI="62" default="0" item="CV116.62 Value" mask="XVVVVVVV">
         <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Motor Rod Knock Balance Sign" CVname="116.62" CV="116" PI="62" default="0" item="CV116.62 Sign" mask="VXXXXXXX">
-			<xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
       </ivariable>
 -->
       <!--  CV117 Select sounds -->

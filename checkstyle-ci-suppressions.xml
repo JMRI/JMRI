@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+"-//Puppy Crawl//DTD Suppressions 1.1//EN"
+"http://checkstyle.sourceforge.net/dtds/suppressions_1_1.dtd">
+
+<!--
+  Some checks that flagged by checkstyle on the command line are ignored on
+  CI servers.
+-->
+
+<suppressions>
+    <!-- do not check generated code -->
+    <suppress files="[/\\]target[/\\]" checks=".*"/>
+    <suppress files="[/\\]java[/\\]tmp[/\\]" checks=".*"/>
+    <!-- ignore private properties from Netbeans (may be empty) -->
+    <suppress files="private/private.properties$" checks=".*"/>
+    <!-- ignore trailing whitespace in .xml and .java files -->
+    <suppress files="(?!.*\bproperties\b)" checks="TrailingSpaces"/>
+</suppressions>

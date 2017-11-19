@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of MemoryIconCoordinateEdit
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MemoryIconCoordinateEditTest {
 
@@ -34,7 +34,7 @@ public class MemoryIconCoordinateEditTest {
            frame.init("foo",i,false);
         } catch( Exception e) {
             Assert.fail("Exception " + e + " Thrown during init call ");
-        } 
+        }
     }
 
     @Before

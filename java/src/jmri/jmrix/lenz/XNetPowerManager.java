@@ -102,7 +102,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
             power = OFF;
             firePropertyChange("Power", null, null);
         } // Then, we check for an "Emergency Stop" message
-        // This indicates the track power is ON, but all 
+        // This indicates the track power is ON, but all
         // locomotives are stopped
         else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.BC_EMERGENCY_STOP
                 && m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
@@ -114,7 +114,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
                 && m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_SERVICE_MODE_ENTRY) {
             power = OFF;
             firePropertyChange("Power", null, null);
-        } // Finally, we look at for the response to a Command 
+        } // Finally, we look at for the response to a Command
         // Station Status Request
         else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_REQUEST_RESPONSE
                 && m.getElement(1) == jmri.jmrix.lenz.XNetConstants.CS_STATUS_RESPONSE) {
@@ -128,7 +128,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
                 power = OFF;
                 firePropertyChange("Power", null, null);
             } else if ((statusByte & 0x08) == 0x08) {
-                // Command station is in Service Mode, power to the 
+                // Command station is in Service Mode, power to the
                 // track is off
                 power = OFF;
                 firePropertyChange("Power", null, null);

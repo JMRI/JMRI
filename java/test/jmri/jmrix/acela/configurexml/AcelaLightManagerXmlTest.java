@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * AcelaLightManagerXmlTest.java
+ * Tests for the AcelaLightManagerXml class
  *
- * Description: tests for the AcelaLightManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class AcelaLightManagerXmlTest {
 

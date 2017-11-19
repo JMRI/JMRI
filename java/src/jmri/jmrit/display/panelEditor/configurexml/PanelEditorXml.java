@@ -209,7 +209,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                     result = false;
                 }
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                        | jmri.configurexml.JmriConfigureXmlException 
+                        | jmri.configurexml.JmriConfigureXmlException
                         | RuntimeException e) {
                 log.error("Exception while loading " + item.getName() + ":" + e);
                 result = false;

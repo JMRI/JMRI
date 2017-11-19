@@ -23,13 +23,13 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
     javax.swing.JTextArea value;
 
     javax.swing.JComboBox<String> idBox;
-    String IDValues[] = {"-", "0", "1", "2", "3", "4", "5", "6", "7"};
+    String[] idValues = {"-", "0", "1", "2", "3", "4", "5", "6", "7"};
 
     public LocoIdPanel() {
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -40,7 +40,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         // Create our UI elements, two buttons and a drop-down.
         setButton = new javax.swing.JButton(rb.getString("ButtonSet"));
         readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
-        idBox = new javax.swing.JComboBox<String>(IDValues);
+        idBox = new javax.swing.JComboBox<String>(idValues);
 
         // Do our layout, two buttons side by side, drop down below.
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -74,7 +74,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         });
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -82,7 +82,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; // NOI18N
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -90,7 +90,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -201,7 +201,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         t.addLocoNetListener(~0, this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

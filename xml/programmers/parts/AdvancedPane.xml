@@ -11,7 +11,7 @@
     <display item="Advanced Ack" tooltip="Enable advanced acknowledgment">
       <tooltip xml:lang="it">Abilita Riconoscimento Avanzato</tooltip>
       <tooltip xml:lang="de">Erweitertes Acknowledgment einschalten</tooltip>
-	  <tooltip xml:lang="ca">Habilita Reconeixement Avançat</tooltip>
+      <tooltip xml:lang="ca">Habilita Reconeixement Avançat</tooltip>
       <tooltip xml:lang="cs">Povolit pokročilé potvrzování</tooltip>
       <tooltip xml:lang="nl">Uitgebreide bevestiging inschakelen</tooltip>
     </display>

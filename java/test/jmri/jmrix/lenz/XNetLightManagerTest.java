@@ -93,7 +93,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // create and register the manager object
         l = new XNetLightManager(xnis, "X"); // l is defined in AbstractLightMgrTestBase.
         jmri.InstanceManager.setLightManager(l);
-        
+
     }
 
     @After

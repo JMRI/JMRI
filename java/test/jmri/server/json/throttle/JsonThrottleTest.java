@@ -8,12 +8,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JsonThrottleTest {
 
@@ -31,7 +29,7 @@ public class JsonThrottleTest {
         jmri.server.json.JsonMockConnection mc = new jmri.server.json.JsonMockConnection(output);
         ObjectMapper m = new ObjectMapper();
         JsonNode jn = m.readTree("");
-        
+
         JsonThrottleSocketService ts = new JsonThrottleSocketService(mc);
         JsonThrottle t = JsonThrottle.getThrottle("42",jn,ts);
         Assert.assertNotNull("exists",t);

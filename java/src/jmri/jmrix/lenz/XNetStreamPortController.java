@@ -80,7 +80,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
     @Override
     public void setTimeSlot(boolean timeslot){
        timeSlot = timeslot;
-    }  
+    }
 
     /**
      * We need a way to say if the output buffer is empty or full this should

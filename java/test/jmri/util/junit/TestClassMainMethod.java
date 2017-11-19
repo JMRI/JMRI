@@ -5,7 +5,7 @@ import java.lang.reflect.*;
 /**
  * Main method to launch a JUnit test class
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class TestClassMainMethod {
 
@@ -13,7 +13,7 @@ public class TestClassMainMethod {
     static public void main(String[] args) {
         String className = args[0];
         // as a convenience, allow e.g. jmri/BundleTest in addition to jmri.BundleTest
-        className = className.replace('/','.');    
+        className = className.replace('/','.');
         try {
             // first try to find a main in the class
             Class<?> cl = Class.forName(className);

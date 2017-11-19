@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.nce.cab package
  *
- * @author  Paul Bender	Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest{
 

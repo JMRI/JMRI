@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMRTrafficController {
 
-    private Thread shutdownHook = null; // retain shutdown hook for 
+    private Thread shutdownHook = null; // retain shutdown hook for
                                         // possible removal.
 
     public AbstractMRTrafficController() {
@@ -45,8 +45,8 @@ abstract public class AbstractMRTrafficController {
 
         // We use a shutdown hook here to make sure the connection is left
         // in a clean state prior to exiting.  This is required on systems
-        // which have a service mode to ensure we don't leave the system 
-        // in an unusable state (This code predates the ShutdownTask 
+        // which have a service mode to ensure we don't leave the system
+        // in an unusable state (This code predates the ShutdownTask
         // mechanisim).  Once the shutdown hook executes, the connection
         // must be considered closed.
         shutdownHook = new Thread(new CleanupHook(this));
@@ -54,7 +54,7 @@ abstract public class AbstractMRTrafficController {
     }
 
     private boolean synchronizeRx = true;
-    
+
     protected void setSynchronizeRx(boolean val) {
         synchronizeRx = val;
     }
@@ -562,7 +562,7 @@ abstract public class AbstractMRTrafficController {
         SwingUtilities.invokeLater(r);
 
         // stream to port in single write, as that's needed by serial
-        byte msg[] = new byte[lengthOfByteStream(m)];
+        byte[] msg = new byte[lengthOfByteStream(m)];
         // add header
         int offset = addHeaderToOutput(msg, m);
 
@@ -676,7 +676,7 @@ abstract public class AbstractMRTrafficController {
                     }
                 }
             });
-            
+
             String[] packages = this.getClass().getName().split("\\.");
             xmtThread.setName(
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
@@ -701,7 +701,7 @@ abstract public class AbstractMRTrafficController {
             rcvThread.setPriority(Thread.MAX_PRIORITY);      //bump up the priority
             rcvThread.setDaemon(true);
             rcvThread.start();
-            
+
         } catch (RuntimeException e) {
             log.error("Failed to start up communications. Error was {}", e.toString());
             log.debug("Full trace:", e);
@@ -938,7 +938,7 @@ abstract public class AbstractMRTrafficController {
         loadChars(msg, istream);
 
         if (threadStopRequest) return;
-        
+
         // message is complete, dispatch it !!
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
@@ -1159,7 +1159,7 @@ abstract public class AbstractMRTrafficController {
                 // interrupted durring cleanup.
             }
         }
-        
+
         if (rcvThread != null) {
             rcvThread.interrupt();
             try {
@@ -1167,17 +1167,17 @@ abstract public class AbstractMRTrafficController {
             } catch (InterruptedException ie){
                 // interrupted durring cleanup.
             }
-        }    
+        }
 
-        // we also need to remove the shutdown hook. 
+        // we also need to remove the shutdown hook.
         Runtime.getRuntime().removeShutdownHook(shutdownHook);
     }
-    
+
     /**
      * Flag that threads should terminate as soon as they can.
      */
     protected volatile boolean threadStopRequest = false;
-    
+
     /**
      * Internal class to handle traffic controller cleanup. the primary task of
      * this thread is to make sure the DCC system has exited service mode when

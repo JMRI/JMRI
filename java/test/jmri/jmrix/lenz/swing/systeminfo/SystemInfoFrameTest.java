@@ -9,12 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SystemInfoFrameTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.swing.systeminfo.SystemInfoFrame
+ * Tests for the jmri.jmrix.lenz.swing.systeminfo.SystemInfoFrame
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SystemInfoFrameTest {
 

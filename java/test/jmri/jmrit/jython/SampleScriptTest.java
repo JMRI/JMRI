@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Invokes Python-language scripts in jython/tests
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  * @since JMRI 4.3.6
  */
 public class SampleScriptTest extends TestCase {
@@ -40,7 +40,7 @@ public class SampleScriptTest extends TestCase {
      */
     static protected class CheckOneScript extends TestCase {
         File file;
-        
+
         public CheckOneScript(File file) {
             super("Test script: " + file);
             this.file = file;
@@ -50,12 +50,12 @@ public class SampleScriptTest extends TestCase {
         public void runTest() throws javax.script.ScriptException, java.io.IOException {
             jmri.script.JmriScriptEngineManager.getDefault().eval(file);
         }
-        
+
         @Override
         protected void setUp() throws Exception {
             apps.tests.Log4JFixture.setUp();
             super.setUp();
-        
+
             jmri.util.JUnitUtil.resetInstanceManager();
             jmri.util.JUnitUtil.initConfigureManager();
             jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -63,7 +63,7 @@ public class SampleScriptTest extends TestCase {
             jmri.util.JUnitUtil.initInternalSensorManager();
             jmri.util.JUnitUtil.initInternalTurnoutManager();
         }
-        
+
         @Override
         protected void tearDown() throws Exception {
             jmri.util.JUnitUtil.tearDown();
@@ -94,7 +94,7 @@ public class SampleScriptTest extends TestCase {
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
-        
+
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }

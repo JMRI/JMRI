@@ -35,23 +35,23 @@
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-	  <show>dark</show>
+      <show>dark</show>
       <reference>Page 142</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-G_Permissive/Rule-W281.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Approach Diverging</aspectname>
       <show>yellow</show>
-	  <show>green</show>
+      <show>green</show>
       <reference>Page 142</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-G_Permissive/Rule-W282.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-	  <show>dark</show>
+      <show>dark</show>
       <reference>Page 143</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-G_Permissive/Rule-W285.gif</imagelink>
     </appearance>
@@ -59,7 +59,7 @@
     <appearance>
       <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
-	  <show>dark</show>
+      <show>dark</show>
       <reference>Page 145</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG-G_Permissive/Rule-W291.gif</imagelink>
     </appearance>

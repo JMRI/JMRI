@@ -10,26 +10,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides a swing object, for use by the Ds64TabbedPanel tool, which allows 
+ * Provides a swing object, for use by the Ds64TabbedPanel tool, which allows
  * display and configuration of turnout number and position.
  * <P>
- * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
+ * Turnout numbering is the same as seen on a Digitrax throttle display; Tools
  * using values from objects of this type must provide the appropriate transform
  * to create turnout numbering which is suitable for use within LocoNet messaging.
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
- * @author      B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2017
+ * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2017
  */
 public class SimpleTurnoutStateEntry extends SimpleTurnout {
     private JPanel entryPanel = null;
@@ -37,7 +37,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
     /**
      * tracks the "user-friendly" turnout address.
      * <P>
-     * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
+     * Turnout numbering is the same as seen on a Digitrax throttle display; Tools
      * using values from objects of this type must provide the appropriate transform
      * to create turnout numbering which is suitable for use within LocoNet messaging.
      */
@@ -64,7 +64,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      * is assumed that the turnout address is 1, that the turnout is "closed", and
      * that the turnout is "valid".
      * <P>
-     * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
+     * Turnout numbering is the same as seen on a Digitrax throttle display; Tools
      * using values from objects of this type must provide the appropriate transform
      * to create turnout numbering which is suitable for use within LocoNet messaging.
      */
@@ -76,10 +76,10 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      * Constructor used when the current address and position are known.  Turnout
      * "validity" is assumed to be "valid".
      * <P>
-     * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
+     * Turnout numbering is the same as seen on a Digitrax throttle display; Tools
      * using values from objects of this type must provide the appropriate transform
      * to create turnout numbering which is suitable for use within LocoNet messaging.
-     * 
+     *
      * @param address turnout address
      * @param isClosed  true if turnout is closed, else false
      */
@@ -127,15 +127,15 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         });
 
     }
-    
+
     /**
-     * Constructor used when the current address, position, and "validity" 
+     * Constructor used when the current address, position, and "validity"
      * state are known.
      * <P>
-     * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
+     * Turnout numbering is the same as seen on a Digitrax throttle display; Tools
      * using values from objects of this type must provide the appropriate transform
      * to create turnout numbering which is suitable for use within LocoNet messaging.
-     * 
+     *
      * @param address turnout address
      * @param closed  true if turnout is closed, else false
      * @param unused  true if turnout is unused, else false
@@ -163,7 +163,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
             unusedRadioButton.setSelected(false);
             closedRadioButton.setSelected(false);
         }
-        
+
         thrownRadioButton.addFocusListener(new java.awt.event.FocusListener() {
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
@@ -202,7 +202,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         });
 
     }
-    
+
     /**
      *
      * @return the JPanel related to this object
@@ -210,12 +210,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
     public JPanel getEntryPanel() { return this.entryPanel; }
 
     /**
-     * Creates a GUI Panel for managing the address and position of a turnout, 
+     * Creates a GUI Panel for managing the address and position of a turnout,
      * as used in configuring the turnout address of a DS64 output.
      *
-     * @param label a text string to be displayed in the JPanel with the turnout 
-     *              address and position 
-     * @return a JPanel containing the label, the turnout address text field, and 
+     * @param label a text string to be displayed in the JPanel with the turnout
+     *              address and position
+     * @return a JPanel containing the label, the turnout address text field, and
      *              position GUI elements
      */
     public JPanel createEntryPanel(String label) {
@@ -227,7 +227,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2,BoxLayout.X_AXIS));
         ButtonGroup g = new ButtonGroup();
-        
+
         if (addressField.getText().length() == 0) {
             closedRadioButton.setSelected(false);
             thrownRadioButton.setSelected(false);
@@ -258,7 +258,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         if (unusedRadioButton != null) {
             g.add(unusedRadioButton);
             p2.add(unusedRadioButton);
-        } 
+        }
         entryPanel.add(p2);
         return entryPanel;
     }
@@ -282,11 +282,11 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         }
         addressField.updateUI();
     }
-    
+
     /**
-     * Establish the most recent value known to be found in the hardware.  
+     * Establish the most recent value known to be found in the hardware.
      * Value is used to help determine colorization of the swing GUI text field.
-     * 
+     *
      * @param addr Turnout address
      */
     final public void setAddressLastQueriedValue(Integer addr) {

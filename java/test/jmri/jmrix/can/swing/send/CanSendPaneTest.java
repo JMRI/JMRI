@@ -2,14 +2,13 @@ package jmri.jmrix.can.swing.send;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Test simple functioning of CanSendPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CanSendPaneTest extends jmri.util.swing.JmriPanelTest {
 

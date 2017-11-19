@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.operations.rollingstock package
  *
- * @author	Bob Coleman
+ * @author Bob Coleman
  */
 public class PackageTest extends TestCase {
 
@@ -45,8 +45,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEnginesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConsistTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ExportEngineRosterActionTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(DeleteEngineRosterActionTest.class)); 
-        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEngineActionTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DeleteEngineRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEngineActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEngineActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistEngineActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ResetEngineMovesActionTest.class));

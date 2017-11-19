@@ -30,7 +30,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -101,7 +101,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
     SerialMessage createPacket(String s) {
         // gather bytes in result
-        byte b[] = StringUtil.bytesFromHexString(s);
+        byte[] b = StringUtil.bytesFromHexString(s);
         if ((b.length < 4) || (b.length > 5)) {
             return null;  // no such thing as message with other than 4 or 5 bytes
         }
@@ -112,7 +112,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignores messages.
      */
@@ -120,7 +120,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     public void message(SerialMessage m) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Ignore replies.
      */

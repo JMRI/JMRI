@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of NodeConfigFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NodeConfigFrameTest {
 
@@ -24,7 +24,7 @@ public class NodeConfigFrameTest {
 
     @Test
     public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame t = new NodeConfigFrame();
         // for now, just makes ure there isn't an exception.
         t.initComponents();
@@ -33,7 +33,7 @@ public class NodeConfigFrameTest {
 
     @Test
     public void testGetTitle(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame t = new NodeConfigFrame();
         t.initComponents();
         Assert.assertEquals("title","Configure Nodes",t.getTitle());

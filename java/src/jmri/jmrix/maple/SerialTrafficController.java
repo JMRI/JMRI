@@ -115,7 +115,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return false;
     }
 
-    // With the Maple Systems Protocol, output packets are limited to 99 bits.  If there are more than 
+    // With the Maple Systems Protocol, output packets are limited to 99 bits.  If there are more than
     // 99 bits configured, multiple output packets must be sent.  The following cycle through that
     // process.
     private boolean mNeedSend = true;

@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Swing jfcUnit tests for dispatcher train info
  *
- * @author	Dave Duchamp
+ * @author Dave Duchamp
  */
 public class DispatcherTrainInfoTest extends TestCase {
 

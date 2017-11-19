@@ -2,33 +2,33 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2005, 2007 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Howard G. Penny" version="1" lastUpdated="20051108"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="2" lastUpdated="20080412"/>
   <version author="Matt Harris - matthew.john.harris@gmail.com" version="3" lastUpdated="20080724"/>
   <version author="Matt Harris - matthew.john.harris@gmail.com" version="3.1" lastUpdated="20080728"/>
   <version author="Alain Le Marchand" version="3.2" lastUpdated="20140607"/>
-  <!-- Version 3.2                                                    -->
+  <!-- Version 3.2 -->
   <!-- CV62 and CV63 - put a note on pane that values are opposite to -->
-  <!-- what Digitrax documentation writes. CV63 inoperative in fact   -->
-  <!-- Version 3.1                                                    -->
+  <!-- what Digitrax documentation writes. CV63 inoperative in fact -->
+  <!-- Version 3.1 -->
   <!-- Modified CV29 by removing mask settings which had been causing -->
-  <!-- problems. Initial tests using constant values did not work.    -->
-  <!-- Version 3:                                                     -->
-  <!-- Based on input from Bob Grosh:                                 -->
-  <!--  * Modified CV masking on function outputs                     -->
-  <!--  * Corrected CV29 definition                                   -->
-  <!--  * Added Decoder Lock pane                                     -->
+  <!-- problems. Initial tests using constant values did not work. -->
+  <!-- Version 3: -->
+  <!-- Based on input from Bob Grosh: -->
+  <!--  * Modified CV masking on function outputs -->
+  <!--  * Corrected CV29 definition -->
+  <!--  * Added Decoder Lock pane -->
   <decoder>
     <family name="Function Only, with transponding" mfg="Digitrax">
       <!-- <model model="TL1" numOuts="1" lowVersionID="250"/> -->
@@ -300,7 +300,7 @@
               <text>CV64</text>
             </label>
           </row>
-          <separator/>          
+          <separator/>
           <row>
             <label>
               <text>0</text>
@@ -353,19 +353,19 @@
           </row>
         </column>
         <label>
-          <text>   </text>
+          <text> </text>
         </label>
         <separator/>
         <label>
-          <text>   </text>
-        </label>        
+          <text> </text>
+        </label>
         <column>
           <row>
             <label>
               <text>CV61</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>0</text>
@@ -418,12 +418,12 @@
           </row>
         </column>
         <label>
-          <text>   </text>
+          <text> </text>
         </label>
-        <separator/> 
+        <separator/>
         <label>
-          <text>   </text>
-        </label>               
+          <text> </text>
+        </label>
         <column>
           <row>
             <label>
@@ -431,7 +431,7 @@
               <text xml:lang="it">Bianco</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>F1</text>
@@ -484,8 +484,8 @@
           </row>
         </column>
         <label>
-          <text>   </text>
-        </label>   
+          <text> </text>
+        </label>
         <column>
           <row>
             <label>
@@ -493,7 +493,7 @@
               <text xml:lang="it">Giallo</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>F2</text>
@@ -546,8 +546,8 @@
           </row>
         </column>
         <label>
-          <text>   </text>
-        </label>    
+          <text> </text>
+        </label>
         <column>
           <row>
             <label>
@@ -555,7 +555,7 @@
               <text xml:lang="it">Verde</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>F3</text>
@@ -608,8 +608,8 @@
           </row>
         </column>
         <label>
-          <text>   </text>
-        </label>      
+          <text> </text>
+        </label>
         <column>
           <row>
             <label>
@@ -617,7 +617,7 @@
               <text xml:lang="it">Viola</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>F4</text>
@@ -670,12 +670,12 @@
           </row>
         </column>
         <label>
-          <text>   </text>
+          <text> </text>
         </label>
-        <separator/>  
+        <separator/>
         <label>
-          <text>   </text>
-        </label>              
+          <text> </text>
+        </label>
         <column>
           <row>
             <label>
@@ -683,7 +683,7 @@
               <text xml:lang="it">Transponding</text>
             </label>
           </row>
-          <separator/>              
+          <separator/>
           <row>
             <label>
               <text>OFF</text>
@@ -746,7 +746,7 @@
           </row>
         </column>
         <label>
-          <text>   </text>
+          <text> </text>
         </label>
         <column>
           <row>
@@ -767,7 +767,7 @@
       </label>
       <label>
         <text> </text>
-      </label>           
+      </label>
       <display item="Transponding" format="radiobuttons"/>
       <label>
         <text> </text>
@@ -775,7 +775,7 @@
       <display item="ControlFn">
         <tooltip>Refer to table above for full function mapping</tooltip>
         <tooltip xml:lang="it">Refer to table above for full function mapping</tooltip>
-      </display>      
+      </display>
       <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0 or F1' is not selected above">
         <tooltip>Do not check this box if 'F0 or F1' is not selected above</tooltip>
         <tooltip xml:lang="it">Non spuntare questo box se 'F0 o F1' non è stato selezionato</tooltip>
@@ -798,11 +798,11 @@
       </display>
       <label>
         <text> </text>
-      </label>        
+      </label>
       <display item="Effect Rate Y">
           <label>Effect Rate Yellow Lead (deprecated)</label>
           <tooltip>Ineffective in recent versions of this decoder - Digitrax doc. not up-to-date</tooltip>
-      </display>  
+      </display>
     </column>
     <name>Function Output</name>
     <name xml:lang="it">Uscita Funzione</name>

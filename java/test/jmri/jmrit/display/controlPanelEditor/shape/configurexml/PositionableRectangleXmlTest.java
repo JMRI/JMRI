@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PositionableRectangleXmlTest.java
+ * Tests for the PositionableRectangleXml class
  *
- * Description: tests for the PositionableRectangleXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PositionableRectangleXmlTest {
 

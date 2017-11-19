@@ -220,7 +220,7 @@ public class LoaderEngine {
             transferStart = false;
             transferIndex = 0;
 
-            // first transfer, send DataHeader info            
+            // first transfer, send DataHeader info
             byte[] header = new byte[40];
             header[0] = (byte) transferHandle;
             header[1] = (byte) (transferContents.length & 0xFF);

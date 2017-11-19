@@ -3,14 +3,13 @@ package jmri.util.zeroconf;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
 import javax.jmdns.JmDNS;
- 
+
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ZeroConfServiceEventTest {
 
@@ -19,7 +18,7 @@ public class ZeroConfServiceEventTest {
     @Test
     public void testCTor() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        JmDNS jmdns[] = ZeroConfService.netServices().values().toArray(new JmDNS[0]);
+        JmDNS[] jmdns = ZeroConfService.netServices().values().toArray(new JmDNS[0]);
         ZeroConfServiceEvent t = new ZeroConfServiceEvent(instance,jmdns[0]);
         Assert.assertNotNull("exists",t);
     }

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JMRIClientLightManagerXmlTest.java
+ * Tests for the JMRIClientLightManagerXml class
  *
- * Description: tests for the JMRIClientLightManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class JMRIClientLightManagerXmlTest {
 

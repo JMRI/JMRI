@@ -16,10 +16,10 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
-    </author>    
+    </author>
     <author>
         <personname><firstname>Paul</firstname><surname>Bender</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -28,19 +28,19 @@
         <date>2010-01-01</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2010-01-12</date>
         <authorinitials>PAB</authorinitials>
         <revremark>Adapted from 1937 NYCS</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2013-07-09</date>
         <authorinitials>PAB</authorinitials>
         <revremark>Add speed information</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
@@ -64,7 +64,7 @@
       <speed2>Normal</speed2>
       <route>Normal</route>
     </aspect>
-  
+
     <aspect>
       <name>Approach Limited</name>
       <rule>Rule 283</rule>
@@ -74,7 +74,7 @@
       <speed2>Normal</speed2>
       <route>Normal</route>
     </aspect>
- 
+
     <aspect>
       <name>Approach Medium</name>
       <rule>Rule 284</rule>
@@ -168,6 +168,6 @@
     <appearancefile href="appearance-SL-3.xml"/>
     <appearancefile href="appearance-SL-3-triangle.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

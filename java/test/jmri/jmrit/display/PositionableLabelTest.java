@@ -10,9 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -565,8 +563,8 @@ public class PositionableLabelTest {
         JUnitUtil.tearDown();
     }
 
-    // All of the Pixel enum, and related methods, below was copied from 
-    // jmri.util.SwingTestCase.  The tests above use Pixel values extensively. 
+    // All of the Pixel enum, and related methods, below was copied from
+    // jmri.util.SwingTestCase.  The tests above use Pixel values extensively.
     protected enum Pixel { // protected to limit leakage outside Swing tests
 
         TRANSPARENT(0x00000000),

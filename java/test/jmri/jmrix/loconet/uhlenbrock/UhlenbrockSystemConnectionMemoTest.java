@@ -2,13 +2,11 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class UhlenbrockSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -27,5 +25,4 @@ public class UhlenbrockSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
     }
 
     // private final static Logger log = LoggerFactory.getLogger(UhlenbrockSystemConnectionMemoTest.class);
-
 }

@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XNetInitializationManagerTest.java
+ * Tests for the jmri.jmrix.lenz.XNetInitializationManager class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetInitializationManager class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetInitializationManagerTest {
 

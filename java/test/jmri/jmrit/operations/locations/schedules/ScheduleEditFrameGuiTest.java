@@ -19,7 +19,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations Locations GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
@@ -48,7 +48,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertNotNull("Test Schedule A exists", s);
 
         // now add some car types to the schedule
-        String carTypes[]=Bundle.getMessage("carTypeNames").split(",");
+        String[] carTypes=Bundle.getMessage("carTypeNames").split(",");
         f.typeBox.setSelectedItem(carTypes[1]);
         enterClickAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem(carTypes[2]);
@@ -65,7 +65,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of items", 4, list.size());
 
         // since this test is internationalized, and the non-english
-        // lists are internationalized, we can just check if each of 
+        // lists are internationalized, we can just check if each of
         // the types is in the list.
         for( ScheduleItem si: list) {
            boolean flag = false;

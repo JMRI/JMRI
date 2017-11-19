@@ -8,7 +8,7 @@ import javax.swing.JTextArea;
  * Small service class to read characters from a pipe and post them to a
  * JTextArea for display
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class PipeListener extends Thread {
 

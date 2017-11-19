@@ -109,7 +109,7 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
                 if ((secondChar >= '0') && (secondChar <= '9')) {  // Assumes 0 to 9 are sequential in character set
                     secondChar = secondChar - '0';
                 } else {
-                    if ((secondChar >= 'a') && (secondChar <= 'f')) {  // Assumes a to f are sequential in character set 
+                    if ((secondChar >= 'a') && (secondChar <= 'f')) {  // Assumes a to f are sequential in character set
                         secondChar = secondChar - 'a' + 10;
                     } else {
                         if ((secondChar >= 'A') && (secondChar <= 'F')) {  // Assumes A to F are sequential in character set

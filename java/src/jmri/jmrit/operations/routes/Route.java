@@ -97,7 +97,7 @@ public class Route implements java.beans.PropertyChangeListener {
 
     /**
      * Adds a location to the end of this route
-     * 
+     *
      * @param location The Location.
      *
      * @return RouteLocation created for the location added
@@ -121,7 +121,7 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Add a location at a specific place (sequence) in the route Allowable
      * sequence numbers are 1 to max size of route. 1 = start of route, or Route.START
-     * 
+     *
      * @param location The Location to add.
      * @param sequence Where in the route to add the location.
      *
@@ -383,7 +383,7 @@ public class Route implements java.beans.PropertyChangeListener {
         }
         return ORPHAN;
     }
-    
+
     private void addTrainListeners() {
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             if (train.getRoute() == this) {
@@ -391,7 +391,7 @@ public class Route implements java.beans.PropertyChangeListener {
             }
         }
     }
-    
+
     private void removeTrainListeners() {
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             train.removePropertyChangeListener(this);
@@ -400,7 +400,7 @@ public class Route implements java.beans.PropertyChangeListener {
 
     /**
      * Gets the shortest train length specified in the route.
-     * 
+     *
      * @return the minimum scale train length for this route.
      */
     public int getRouteMinimumTrainLength() {
@@ -414,7 +414,7 @@ public class Route implements java.beans.PropertyChangeListener {
 
     /**
      * Gets the longest train length specified in the route.
-     * 
+     *
      * @return the maximum scale train length for this route.
      */
     public int getRouteMaximumTrainLength() {

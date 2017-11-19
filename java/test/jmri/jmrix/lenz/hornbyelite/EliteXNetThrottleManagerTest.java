@@ -6,11 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * EliteXNetThrottleManagerTest.java
- * <p>
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottleManager class
+ * Tests for the jmri.jmrix.lenz.EliteXNetThrottleManager class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetThrottleManagerTest extends jmri.jmrix.lenz.XNetThrottleManagerTest {
 

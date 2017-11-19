@@ -117,7 +117,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         register(result);
 
         return result;
-    }	//createNewLayoutBlock
+    } //createNewLayoutBlock
 
     @CheckReturnValue
     @Nullable
@@ -139,7 +139,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             blkNum++;
         }
         return null;
-    }	//createNewLayoutBlock
+    } //createNewLayoutBlock
 
     /**
      * Remove an existing LayoutBlock.
@@ -162,7 +162,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return block;
         }
         return getBySystemName(name);
-    }	//getLayoutBlock
+    } //getLayoutBlock
 
     @CheckReturnValue
     @Nullable
@@ -184,14 +184,14 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return result;
-    }	//getLayoutBlock
+    } //getLayoutBlock
 
     @CheckReturnValue
     @Nullable
     public LayoutBlock getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
         return _tsys.get(key);
-    }	//getBySystemName
+    } //getBySystemName
 
     @CheckReturnValue
     @Nullable
@@ -236,7 +236,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return result;
-    }	//getBlockWithSensorAssigned
+    } //getBlockWithSensorAssigned
 
     /**
      * Method to find a LayoutBlock with a specified Memory assigned as its
@@ -265,7 +265,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return result;
-    }	//getBlockWithMemoryAssigned
+    } //getBlockWithMemoryAssigned
 
     /**
      * Initializes/checks the Paths of all Blocks associated with LayoutBlocks.
@@ -332,7 +332,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         log.debug("start initializeLayoutBlockRouting");
         initializeLayoutBlockRouting();
         log.debug("end initializeLayoutBlockRouting and initializeLayoutBlockPaths");
-    }	//initializeLayoutBlockPaths
+    } //initializeLayoutBlockPaths
 
     private boolean initialized = false;
     private int badBeanErrors = 0;
@@ -455,10 +455,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
                 case LayoutConnectivity.XOVER_BOUNDARY_AC: {
                     if (facingIsBlock1) {
-                        if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) {	//there is no signal head for diverging (crossed
+                        if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) { //there is no signal head for diverging (crossed
                             //over)
                             return lt.getSignalHead(LayoutTurnout.POINTA);
-                        } else {	//there is a diverging (crossed over) signal head, return it
+                        } else { //there is a diverging (crossed over) signal head, return it
                             return lt.getSignalHead(LayoutTurnout.POINTA2);
                         }
                     } else {
@@ -472,10 +472,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
                 case LayoutConnectivity.XOVER_BOUNDARY_BD: {
                     if (facingIsBlock1) {
-                        if (lt.getSignalHead(LayoutTurnout.POINTB2) == null) {	//there is no signal head for diverging (crossed
+                        if (lt.getSignalHead(LayoutTurnout.POINTB2) == null) { //there is no signal head for diverging (crossed
                             //over)
                             return lt.getSignalHead(LayoutTurnout.POINTB);
-                        } else {	//there is a diverging (crossed over) signal head, return it
+                        } else { //there is a diverging (crossed over) signal head, return it
                             return lt.getSignalHead(LayoutTurnout.POINTB2);
                         }
                     } else {
@@ -491,7 +491,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     log.error("Unhandled crossover connection type: {}", cType);
                     break;
                 }
-            }	//switch
+            } //switch
 
             //should never reach here, but ...
             log.error("crossover turnout block boundary not found in getFacingSignal");
@@ -531,7 +531,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if (lt.getLinkType() == LayoutTurnout.NO_LINK) {
                 //standard turnout or A connection of a crossover turnout
                 if (facingIsBlock1) {
-                    if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) {	//there is no signal head for diverging
+                    if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) { //there is no signal head for diverging
                         return lt.getSignalHead(LayoutTurnout.POINTA);
                     } else {
                         //check if track segments at B or C are in protected block (block 2)
@@ -549,10 +549,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                                 int state = lt.getTurnout().getKnownState();
 
                                 if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                        || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) {	//continuing
+                                        || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
                                     return lt.getSignalHead(LayoutTurnout.POINTA);
                                 } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                        || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) {	//diverging
+                                        || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) { //diverging
                                     return lt.getSignalHead(LayoutTurnout.POINTA2);
                                 } else {
                                     //turnout state is UNKNOWN or INCONSISTENT
@@ -594,7 +594,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             int state = lt.getTurnout().getKnownState();
 
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) {	//continuing
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
                                 return lt.getSignalHead(LayoutTurnout.POINTB);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
                                     || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) {
@@ -703,7 +703,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if (((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                     || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER))) {
                 if (facingIsBlock1) {
-                    if (lt.getSignalHead(LayoutTurnout.POINTB2) == null) {	//there is only one signal at B, return it
+                    if (lt.getSignalHead(LayoutTurnout.POINTB2) == null) { //there is only one signal at B, return it
                         return lt.getSignalHead(LayoutTurnout.POINTB);
                     }
 
@@ -718,10 +718,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             int state = lt.getTurnout().getKnownState();
 
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) {	//continuing
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
                                 return lt.getSignalHead(LayoutTurnout.POINTB);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) {	//diverging
+                                    || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) { //diverging
                                 //(crossed
 
                                 //over)
@@ -737,7 +737,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
 
                     //track segment connected at A is not in block 2
-                    if ((((TrackSegment) lt.getConnectD()).getBlockName().equals(protectedBlock.getUserName()))) {	//track segment
+                    if ((((TrackSegment) lt.getConnectD()).getBlockName().equals(protectedBlock.getUserName()))) { //track segment
                         //connected at D
                         //is in block 2,
                         //return
@@ -766,7 +766,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             int state = lt.getTurnout().getKnownState();
 
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) {	//continuing
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
                                 return lt.getSignalHead(LayoutTurnout.POINTA);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
                                     || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) {
@@ -854,7 +854,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     } else {
                         return lt.getSignalHead(LayoutTurnout.POINTC2);
                     }
-                } else {	//should never get here - linked turnout state is UNKNOWN or INCONSISTENT
+                } else { //should never get here - linked turnout state is UNKNOWN or INCONSISTENT
                     log.error("Cannot choose signal head to return because turnout " + tLinked.getTurnout().getDisplayName()
                             + " is in an UNKNOWN or INCONSISTENT state.");
                 }
@@ -895,7 +895,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if ((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                     || (lt.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
                 if (facingIsBlock1) {
-                    if (lt.getSignalHead(LayoutTurnout.POINTC2) == null) {	//there is only one head at C, return it
+                    if (lt.getSignalHead(LayoutTurnout.POINTC2) == null) { //there is only one head at C, return it
                         return lt.getSignalHead(LayoutTurnout.POINTC);
                     }
 
@@ -910,10 +910,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             int state = lt.getTurnout().getKnownState();
 
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) {	//continuing
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
                                 return lt.getSignalHead(LayoutTurnout.POINTC);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) {	//diverging
+                                    || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) { //diverging
                                 //(crossed
 
                                 //over)
@@ -953,7 +953,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             int state = lt.getTurnout().getKnownState();
 
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) {	//continuing
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
                                 return lt.getSignalHead(LayoutTurnout.POINTD);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
                                     || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) {
@@ -997,13 +997,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if ((lt.getLinkType() == LayoutTurnout.NO_LINK) && (lt.getContinuingSense() == Turnout.CLOSED)) {
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.POINTC);
-                } else if (lt.getTurnoutType() == LayoutTurnout.LH_XOVER) {	//LH turnout - this is continuing track for D connection
+                } else if (lt.getTurnoutType() == LayoutTurnout.LH_XOVER) { //LH turnout - this is continuing track for D connection
                     return lt.getSignalHead(LayoutTurnout.POINTD);
                 } else {
                     //RH, LH or WYE turnout, this is diverging track for A connection
-                    if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) {	//there is no signal head at the throat for diverging
+                    if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) { //there is no signal head at the throat for diverging
                         return lt.getSignalHead(LayoutTurnout.POINTA);
-                    } else {	//there is a diverging head at the throat, return it
+                    } else { //there is a diverging head at the throat, return it
                         return lt.getSignalHead(LayoutTurnout.POINTA2);
                     }
                 }
@@ -1103,7 +1103,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
 
             if (facingIsBlock1) {
-                if (lt.getSignalHead(LayoutTurnout.POINTD2) == null) {	//there is no signal head for diverging
+                if (lt.getSignalHead(LayoutTurnout.POINTD2) == null) { //there is no signal head for diverging
                     return lt.getSignalHead(LayoutTurnout.POINTD);
                 } else {
                     //check if track segments at C or B are in protected block (block 2)
@@ -1117,10 +1117,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             int state = lt.getTurnout().getKnownState();
 
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) {	//continuing
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
                                 return lt.getSignalHead(LayoutTurnout.POINTD);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) {	//diverging
+                                    || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) { //diverging
                                 return lt.getSignalHead(LayoutTurnout.POINTD2);
                             } else {
                                 //turnout state is UNKNOWN or INCONSISTENT
@@ -1158,7 +1158,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                         int state = lt.getTurnout().getKnownState();
 
                         if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) {	//continuing
+                                || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
                             return lt.getSignalHead(LayoutTurnout.POINTC);
                         } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
                                 || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) {
@@ -1249,7 +1249,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 default: {
                     break;
                 }
-            }	//switch
+            } //switch
         }
 
         //block boundary must be at a level crossing
@@ -1301,9 +1301,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             default: {
                 break;
             }
-        }	//switch
+        } //switch
         return null;
-    }	//getFacingSignalHead
+    } //getFacingSignalHead
 
     /**
      * Method to return the named bean of either a Sensor or signalmast facing
@@ -1323,7 +1323,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         } else {
             return getSensorAtEndBumper(facingBlock, panel);
         }
-    }	//getNamedBeanAtEndBumper
+    } //getNamedBeanAtEndBumper
 
     /**
      * Method to return a Signal Mast that is assigned to a block which has an
@@ -1389,7 +1389,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return null;
-    }	//getSignalMastAtEndBumper
+    } //getSignalMastAtEndBumper
 
     /**
      * Method to return a Sensor facing into a specific Block. This is used for
@@ -1455,7 +1455,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return null;
-    }	//getSensorAtEndBumper
+    } //getSensorAtEndBumper
 
     /**
      * Method to return the named bean of either a Sensor or signalmast facing
@@ -1479,7 +1479,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return bean;
         }
         return getFacingSignalHead(facingBlock, protectedBlock);
-    }	//getFacingNamedBean
+    } //getFacingNamedBean
 
     @CheckReturnValue
     @Nullable
@@ -1840,7 +1840,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         /* We don't allow signal masts on the block outward facing from the level
-		   xing, nor do we consider the signal mast, that is protecting the in block on the xing */
+           xing, nor do we consider the signal mast, that is protecting the in block on the xing */
         LevelXing xing = (LevelXing) connected;
 
         if (cType == LayoutTrack.LEVEL_XING_A) {
@@ -1878,7 +1878,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return null;
-    }	//getFacingBean
+    } //getFacingBean
 
     /**
      * Returns in the first instance a Signal Mast or if none exists a Signal
@@ -1901,7 +1901,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         sig = getFacingSignalHead(facingBlock, protectedBlock);
 
         return sig;
-    }	//getFacingSignalObject
+    } //getFacingSignalObject
 
     /**
      * Method to return the block that a given bean object (Sensor, SignalMast
@@ -1925,7 +1925,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
         return proBlocks.get(0);
-    }	//getProtectedBlockByNamedBean
+    } //getProtectedBlockByNamedBean
 
     @CheckReturnValue
     @Nullable
@@ -1939,7 +1939,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return ret;
         }
         return getProtectingBlocksByBean(nb, panel);
-    }	//getProtectingBlocksByNamedBean
+    } //getProtectingBlocksByNamedBean
 
     /**
      * If the panel variable is null, search all LE panels.
@@ -2054,7 +2054,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return t.getProtectedBlocks(bean);
         }
         return protectingBlocks;
-    }	//getProtectingBlocksByBean
+    } //getProtectingBlocksByBean
 
     @CheckReturnValue
     @Nullable
@@ -2067,7 +2067,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
         return proBlocks.get(0);
-    }	//getProtectedBlockByMast
+    } //getProtectedBlockByMast
 
     /**
      * Method to return the LayoutBlock that a given sensor is protecting.
@@ -2080,7 +2080,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
 
         return getProtectedBlockBySensor(sensor, panel);
-    }	//getProtectedBlockBySensor
+    } //getProtectedBlockBySensor
 
     @Nonnull
     public List<LayoutBlock> getProtectingBlocksBySensor(
@@ -2152,7 +2152,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return t.getProtectedBlocks(sensor);
         }
         return result;
-    }	//getProtectingBlocksBySensorOld
+    } //getProtectingBlocksBySensorOld
 
     /**
      * Method to return the LayoutBlock that a given sensor is protecting.
@@ -2167,7 +2167,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
         return proBlocks.get(0);
-    }	//getProtectedBlockBySensor
+    } //getProtectedBlockBySensor
 
     /**
      * Method to return the block facing a given bean object (Sensor, SignalMast
@@ -2185,7 +2185,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return getFacingBlock((SignalHead) nb, panel);
         }
         return getFacingBlockByBean(nb, panel);
-    }	//getFacingBlockByNamedBean
+    } //getFacingBlockByNamedBean
 
     /**
      * Method to return the LayoutBlock that a given sensor is facing.
@@ -2196,7 +2196,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nullable LayoutEditor panel) {
         Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         return (sensor == null) ? null : getFacingBlockBySensor(sensor, panel);
-    }	//getFacingBlockBySensor
+    } //getFacingBlockBySensor
 
     /**
      * Method to return the LayoutBlock that a given signal is facing.
@@ -2381,7 +2381,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return null;
-    }	//getFacingBlockByBean
+    } //getFacingBlockByBean
 
     /**
      * Method to return the LayoutBlock that a given sensor is facing.
@@ -2405,7 +2405,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             protect = getProtectedBlock(signalHead.getSystemName(), panel);
         }
         return protect;
-    }	//getProtectedBlock
+    } //getProtectedBlock
 
     /**
      * Method to return the LayoutBlock that a given signal is protecting.
@@ -2434,7 +2434,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
         return tr.getLayoutBlock();
-    }	//getProtectedBlock
+    } //getProtectedBlock
 
     @CheckReturnValue
     @Nullable
@@ -2446,7 +2446,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             facing = getFacingBlock(signalHead.getSystemName(), panel);
         }
         return facing;
-    }	//getFacingBlock
+    } //getFacingBlock
 
     /**
      * Method to return the LayoutBlock that a given signal is facing.
@@ -2474,7 +2474,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
         return tr.getLayoutBlock();
-    }	//getFacingBlock
+    } //getFacingBlock
 
     private boolean warnConnectivity = true;
 
@@ -2521,7 +2521,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             initializeLayoutBlockRouting();
         }
         firePropertyChange("advancedRoutingEnabled", !enableAdvancedRouting, enableAdvancedRouting);
-    }	//enableAdvancedRouting
+    } //enableAdvancedRouting
 
     private void initializeLayoutBlockRouting() {
         if (!enableAdvancedRouting || !initialized) {
@@ -2537,7 +2537,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         while (en.hasMoreElements()) {
             en.nextElement().initializeLayoutBlockRouting();
         }
-    }	//initializeLayoutBlockRouting
+    } //initializeLayoutBlockRouting
 
     @Nonnull
     public LayoutBlockConnectivityTools getLayoutBlockConnectivityTools() {
@@ -2553,7 +2553,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         lastRoutingChange = System.nanoTime();
         stabilised = false;
         setRoutingStabilised();
-    }	//setLastRoutingChange
+    } //setLastRoutingChange
 
     boolean checking = false;
     boolean stabilised = false;
@@ -2578,7 +2578,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 long oldvalue = lastRoutingChange;
 
                 while (!stabilised) {
-                    Thread.sleep(2000L);	//two seconds
+                    Thread.sleep(2000L); // two seconds
 
                     if (oldvalue == lastRoutingChange) {
                         log.debug("routing table has now been stable for 2 seconds");
@@ -2619,7 +2619,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         };
         thr = new Thread(r, "Routing stabilising timer");
         thr.start();
-    }	//setRoutingStabilised
+    } //setRoutingStabilised
 
     private Thread thr = null;
 
@@ -2653,7 +2653,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             log.error("No SensorManager for this protocol");
             throw new jmri.JmriException("No Sensor Manager Found");
         }
-    }	//setStabilisedSensor
+    } //setStabilisedSensor
 
     /**
      * Return the sensor used to indicate if the routing protocol has stabilised
@@ -2664,7 +2664,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
         return namedStabilisedIndicator.getBean();
-    }	//getStabilisedSensor
+    } //getStabilisedSensor
 
     /**
      * Get the sensor used for the stability indication
@@ -2722,7 +2722,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return result;
-    }	//getLayoutBlocksOccupiedByRosterEntry
+    } //getLayoutBlocksOccupiedByRosterEntry
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class);
 

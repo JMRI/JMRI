@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * bit number of the input or output bit (1-2048) examples: VT0B2 (node address
  * 0, bit 2), VS1B3 (node address 1, bit 3), VL11B234 (node address 11, bit234)
  *
- * @author	Dave Duchamp, Copyright (C) 2004
+ * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  */
 public class SerialAddress {
@@ -36,7 +36,7 @@ public class SerialAddress {
         // validate the system Name leader characters
         if ((systemName.charAt(0) != 'V') || ((systemName.charAt(1) != 'L')
                 && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T'))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal character in header field of system name: " + systemName);
             return (null);
         }
@@ -84,7 +84,7 @@ public class SerialAddress {
         // validate the system Name leader characters
         if ((systemName.charAt(0) != 'V') || ((systemName.charAt(1) != 'L')
                 && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T'))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: " + systemName);
             return (0);
         }
@@ -134,7 +134,7 @@ public class SerialAddress {
     public static NameValidity validSystemNameFormat(String systemName, char type) {
         // validate the system Name leader characters
         if ((systemName.charAt(0) != 'V') || (systemName.charAt(1) != type)) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal character in header field system name: "
                     + systemName);
             return NameValidity.INVALID;
@@ -280,7 +280,7 @@ public class SerialAddress {
             altName = systemName.substring(0, 2) + Integer.toString(nAddress) + "B"
                     + Integer.toString(bitNum);
         } else {
-            // This is a VLnnnBxxxx address 
+            // This is a VLnnnBxxxx address
             int nAddress = Integer.valueOf(s).intValue();
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             if (bitNum > 999) {
@@ -327,7 +327,7 @@ public class SerialAddress {
             int bitNum = num - (nAddress * 1000);
             nName = systemName.substring(0, 2) + Integer.toString((nAddress * 1000) + bitNum);
         } else {
-            // This is a VLnnnBxxxx address 
+            // This is a VLnnnBxxxx address
             int nAddress = Integer.valueOf(s).intValue();
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             nName = systemName.substring(0, 2) + Integer.toString(nAddress) + "B"

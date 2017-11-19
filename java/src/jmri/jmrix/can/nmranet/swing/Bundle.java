@@ -15,11 +15,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Provides standard access for resource bundles in a package.
- * 
+ *
  * Convention is to provide a subclass of this name
  * in each package, working off the local resource bundle name.
  *
- * @author      Bob Jacobsen  Copyright (C) 2012
+ * @author Bob Jacobsen  Copyright (C) 2012
  * @since       3.7.2
  */
 public class Bundle extends jmri.jmrix.can.nmranet.Bundle {
@@ -29,15 +29,15 @@ public class Bundle extends jmri.jmrix.can.nmranet.Bundle {
     //
     // below here is boilerplate to be copied exactly
     //
-    
+
     /**
-     * Provides a translated string for a given 
-     * key from the package resource bundle or 
+     * Provides a translated string for a given
+     * key from the package resource bundle or
      * parent.
      *<p>
      * Note that this is intentionally package-local
      * access.
-     * 
+     *
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
@@ -45,11 +45,11 @@ public class Bundle extends jmri.jmrix.can.nmranet.Bundle {
         return b.handleGetMessage(key);
     }
     /**
-     * Merges user data with a translated string for a given 
-     * key from the package resource bundle or 
+     * Merges user data with a translated string for a given
+     * key from the package resource bundle or
      * parent.
      *<p>
-     * Uses the transformation conventions of 
+     * Uses the transformation conventions of
      * the Java MessageFormat utility.
      *<p>
      * Note that this is intentionally package-local
@@ -81,14 +81,14 @@ public class Bundle extends jmri.jmrix.can.nmranet.Bundle {
     static String getMessage(Locale locale, String key, Object... subs) {
         return b.handleGetMessage(locale, key, subs);
     }
-   
+
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }
 
-    @Override 
-    protected String retry(Locale locale,String key) { 
-        return super.getBundle().handleGetMessage(locale,key); 
+    @Override
+    protected String retry(Locale locale,String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
 
 }

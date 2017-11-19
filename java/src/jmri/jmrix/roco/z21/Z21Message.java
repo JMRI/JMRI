@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
  *
  * Carries a sequence of characters, with accessors.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Paul Bender Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Paul Bender Copyright (C) 2014
  */
 public class Z21Message extends AbstractMRMessage {
 
@@ -53,7 +53,7 @@ public class Z21Message extends AbstractMRMessage {
         super(m);
         setBinary(true);
         // gather bytes in result
-        byte b[] = jmri.util.StringUtil.bytesFromHexString(m);
+        byte[] b = jmri.util.StringUtil.bytesFromHexString(m);
         if (b.length == 0) {
             // no such thing as a zero-length message
             _nDataChars = 0;
@@ -99,11 +99,11 @@ public class Z21Message extends AbstractMRMessage {
 
     /*
      * package protected method to get the _dataChars buffer as bytes.
-     * @return byte array containing the low order bits of the  integer 
+     * @return byte array containing the low order bits of the  integer
      *         values in _dataChars.
      */
     byte[] getBuffer() {
-        byte byteData[] = new byte[_dataChars.length];
+        byte[] byteData = new byte[_dataChars.length];
         for (int i = 0; i < _dataChars.length; i++) {
             byteData[i] = (byte) (0x00ff & _dataChars[i]);
         }
@@ -143,7 +143,7 @@ public class Z21Message extends AbstractMRMessage {
      */
     public static Z21Message getLanLogoffRequestMessage() {
         Z21Message retval = new Z21Message(4){
-           @Override 
+           @Override
            public boolean replyExpected() {
                return false; // Loging off generates no reply.
            }
@@ -168,25 +168,25 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     /**
-     * Set the broadcast flags as described in section 2.16 of the 
+     * Set the broadcast flags as described in section 2.16 of the
      * Roco Z21 Protocol Manual.
      * <P>
-     * Brief descriptions of the flags are as follows (losely 
+     * Brief descriptions of the flags are as follows (losely
      * translated from German with the aid of google translate).
      * <UL>
      * <LI>0x00000001 send XpressNet related information (track
-     * power on/off, programming mode, short circuit, broadcast stop, 
+     * power on/off, programming mode, short circuit, broadcast stop,
      * locomotive information, turnout information).</LI>
      * <LI>0x00000002 send data changes that occur on the RMBUS.</LI>
      * <LI>0x00000004 (deprecated by Roco) send Railcom Data</LI>
      * <LI>0x00000100 send changes in system state (such as track voltage)
      * <LI>0x00010000 send changes to locomotives on XpressNet (must also have
      * 0x00000001 set.</LI>
-     * <LI>0x01000000 forward LocoNet data to the client.  Does not send 
+     * <LI>0x01000000 forward LocoNet data to the client.  Does not send
      * Locomotive or turnout data.</LI>
      * <LI>0x02000000 send Locomotive specific LocoNet data to the client.</LI>
      * <LI>0x04000000 send Turnout specific LocoNet data to the client.</LI>
-     * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI> 
+     * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI>
      * </UL>
      * <P>
      * @param flags integer representing the flags (32 bits).
@@ -194,9 +194,9 @@ public class Z21Message extends AbstractMRMessage {
      */
     public static Z21Message getLanSetBroadcastFlagsRequestMessage(int flags) {
         Z21Message retval = new Z21Message(8){
-           @Override 
+           @Override
            public boolean replyExpected() {
-               return false; // setting the broadcast flags generates 
+               return false; // setting the broadcast flags generates
                              // no reply.
            }
         };

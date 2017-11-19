@@ -10,11 +10,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * ConnectionConfigXmlTest.java
+ * Tests for the ConnectionConfigXml class
  *
- * Description: tests for the ConnectionConfigXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest {
 

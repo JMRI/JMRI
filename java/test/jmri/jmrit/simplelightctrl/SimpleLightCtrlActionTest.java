@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of SimpleLightCtrlAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SimpleLightCtrlActionTest {
 
@@ -25,7 +25,7 @@ public class SimpleLightCtrlActionTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SimpleLightCtrlAction action = new SimpleLightCtrlAction(); 
+        SimpleLightCtrlAction action = new SimpleLightCtrlAction();
         Assert.assertNotNull("exists", action);
     }
 

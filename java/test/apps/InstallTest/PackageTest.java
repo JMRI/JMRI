@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
 /**
  * Invoke complete set of tests for the apps.InstallTest package
  *
- * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
+ * @author Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
  */
 public class PackageTest {
 }

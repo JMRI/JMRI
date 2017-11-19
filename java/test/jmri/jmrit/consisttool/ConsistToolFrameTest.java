@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of ConsistToolFrame
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class ConsistToolFrameTest {
 

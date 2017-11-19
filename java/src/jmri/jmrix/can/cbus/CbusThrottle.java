@@ -553,7 +553,7 @@ public class CbusThrottle extends AbstractThrottle {
             mRefreshTimer.stop();
             mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
             mRefreshTimer.start();
-        } 
+        }
     }
 
     @Override

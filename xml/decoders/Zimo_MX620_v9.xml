@@ -15,15 +15,15 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.02" lastUpdated="20090626"/>
   <version author="Nigel Cliffe ncliffe@btinternet.com and Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090222"/>
-  <!-- 
+  <!--
      This decoder configuration file is based the Zimo_MX620_v6.xml V 1.01 file, dated 20080328.
      With the following changes, Re-instating CV 116 (bug fixed by Zimo in v7), Modified CV124, Extended CV 161,
-     Added CV146, Extended CVs 125-132 and CVs 181-2.  
+     Added CV146, Extended CVs 125-132 and CVs 181-2.
 
      Based on the "SW-Version 9.1 2008 10 18" English version of the ZIMO MX620
      decoder manual (with thanks to Art Luescher of ZIMO Agency of North America
      for the translations!).
-     
+
      This decoder XML is meant to be used with the "Comprehensive" programmer format.
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
@@ -1075,7 +1075,7 @@
       <variable CV="112" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Non directional DC braking</label>
-        
+
       </variable>
       <variable item="Pulse Chain Generation" CV="112" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

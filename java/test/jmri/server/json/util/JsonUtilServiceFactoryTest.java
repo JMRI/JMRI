@@ -19,22 +19,22 @@ import org.junit.Test;
  * @author rhwood
  */
 public class JsonUtilServiceFactoryTest {
-    
+
     public JsonUtilServiceFactoryTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -81,5 +81,5 @@ public class JsonUtilServiceFactoryTest {
         JsonUtilHttpService result = instance.getHttpService(mapper);
         assertNotNull(result);
     }
-    
+
 }

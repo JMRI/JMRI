@@ -11,8 +11,8 @@ import org.junit.runners.Suite;
 /**
  * Invokes complete set of tests in the jmri.web.servlet.frameimage tree
  *
- * @author	Bob Jacobsen Copyright 2013
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2013
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest {
 }

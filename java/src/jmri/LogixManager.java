@@ -79,7 +79,7 @@ public interface LogixManager extends Manager<Logix> {
 
     /**
      * Support for loading Logixs in a disabled state to debug loops
-     * 
+     *
      * @param s true if Logix should be loadable while disabled
      */
     public void setLoadDisabled(boolean s);

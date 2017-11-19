@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="7.1" lastUpdated="20170218"/>
   <version author="Alain Le Marchand" version="7" lastUpdated="20140427"/>
@@ -22,34 +22,34 @@
   <version author="Michael Mosher" version="2" lastUpdated="20060918"/>
   <version author="Bob Jacobsen" version="1" lastUpdated="20060221"/>
   <!-- Created from version 15 of the Digitrax_01x3 file -->
-  <!-- Ver 2, add CV152,3,5 & AC4400, SD38-2, F40PH decoders  -->
-  <!-- Ver 3, add CV11 for AC4400, SD38-2, F40PH decoders  -->
+  <!-- Ver 2, add CV152,3,5 & AC4400, SD38-2, F40PH decoders -->
+  <!-- Ver 3, add CV11 for AC4400, SD38-2, F40PH decoders -->
   <!-- In the version for CP2.11.4, I have added decoders SDN144A0, SDN144A1, SDN144PS, SDN144K0A, SDN144K1E & SDH164D. -->
-  <!--   also, SDH164K1A, B & C                                            -->
-  <!-- For these decoders, I added CVs 60,133, 134, 154 and                -->
-  <!-- updated labels and defaults to match Digitrax documentation         -->
-  <!-- as of June 24, 2010. I also sorted the CVs into numerical order.    -->
-  <!--                                       Steve Lowens  06/24/2010      -->
-  <!-- For version 2.11.5                                                  -->
-  <!--    Added SDN144A0 and SDN144A1 decoders                             -->
-  <!--    Corrected CV 134 max = 128                                       -->
-  <!--                                       Steve Lowens  03/26/2011      -->
-  <!-- For version 2.11.6                                                  -->
-  <!--    Added Con-cor Zephyr decoders                                    -->
-  <!--                                       Steve Lowens  05/15/2012      -->
-  <!--    Note: Con-cor decoders moved to separate file Digitrax_1SFX.xml  -->
-  <!--                                       Steve Lowens  07/03/2012      -->
-  <!--                                                                     -->
-  <!--    Version 7 (Alain Le Marchand) -                                  -->
-  <!--    Refactored with fragment files - creating new ones for Digitrax  -->
-  <!--    Added missing read-only variables CV121 to 128, CV160            -->
+  <!--   also, SDH164K1A, B & C -->
+  <!-- For these decoders, I added CVs 60,133, 134, 154 and -->
+  <!-- updated labels and defaults to match Digitrax documentation -->
+  <!-- as of June 24, 2010. I also sorted the CVs into numerical order. -->
+  <!--                                       Steve Lowens  06/24/2010 -->
+  <!-- For version 2.11.5 -->
+  <!--    Added SDN144A0 and SDN144A1 decoders -->
+  <!--    Corrected CV 134 max = 128 -->
+  <!--                                       Steve Lowens  03/26/2011 -->
+  <!-- For version 2.11.6 -->
+  <!--    Added Con-cor Zephyr decoders -->
+  <!--                                       Steve Lowens  05/15/2012 -->
+  <!--    Note: Con-cor decoders moved to separate file Digitrax_1SFX.xml -->
+  <!--                                       Steve Lowens  07/03/2012 -->
+  <!-- -->
+  <!--    Version 7 (Alain Le Marchand) - -->
+  <!--    Refactored with fragment files - creating new ones for Digitrax -->
+  <!--    Added missing read-only variables CV121 to 128, CV160 -->
   <!--        and created a new pane "Digitrax Sound Info" to display them -->
-  <!--    Added function labels + updated comments and sizes               -->
-  <!--    Version 7.1 (Alain Le Marchand) -                                -->
+  <!--    Added function labels + updated comments and sizes -->
+  <!--    Version 7.1 (Alain Le Marchand) - -->
   <!--    Size information for SDN144K1E
           Function number = 12 for all decoders
-          (for consist advanced function behavior )                        -->
-  <!--                                             -->
+          (for consist advanced function behavior ) -->
+  <!-- -->
   <decoder>
     <family name="SFX Sound Decoders" mfg="Digitrax">
       <model model="SDN144A0" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1444" comment="for Atlas N-Scale GP38 &amp; similar locos">
@@ -603,8 +603,8 @@
         <label>Variant ID</label>
       </variable>
       <!-- highest used so far: -->
-      <!-- "Sound Option 5"     -->
-      <!-- "Sound Setting 17"   -->
+      <!-- "Sound Option 5" -->
+      <!-- "Sound Setting 17" -->
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">

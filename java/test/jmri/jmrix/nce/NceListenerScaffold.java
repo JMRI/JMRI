@@ -1,9 +1,7 @@
 /**
- * NceInterfaceScaffold.java
+ * Stands in for the NceTrafficController class.
  *
- * Description:	Stands in for the NceTrafficController class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 package jmri.jmrix.nce;
 

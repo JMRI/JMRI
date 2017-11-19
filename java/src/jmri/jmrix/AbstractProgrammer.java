@@ -144,7 +144,7 @@ public abstract class AbstractProgrammer implements Programmer {
     @Override
     public final void setMode(ProgrammingMode m) {
         List<ProgrammingMode> validModes = getSupportedModes();
-        
+
         if (m == null) {
             if (validModes.size()>0) {
                 // null can only be set if there are no valid modes
@@ -153,7 +153,7 @@ public abstract class AbstractProgrammer implements Programmer {
                 mode = null;
             }
         }
-        
+
         if (validModes.contains(m)) {
             ProgrammingMode oldMode = mode;
             mode = m;
@@ -169,9 +169,9 @@ public abstract class AbstractProgrammer implements Programmer {
      * The definition of "best" is up to the specific-system developer.
      * By default, this is the first of the available methods from getSupportedModes;
      * override this method to change that.
-     * 
+     *
      * @return The recommended ProgrammingMode or null if none exists or is defined.
-     */ 
+     */
     public ProgrammingMode getBestMode() {
         if (!getSupportedModes().isEmpty()) {
             return getSupportedModes().get(0);
@@ -214,7 +214,7 @@ public abstract class AbstractProgrammer implements Programmer {
      */
     @Nonnull
     public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
-    
+
 
     /**
      * Internal routine to start timer to protect the mode-change.

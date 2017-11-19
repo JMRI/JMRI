@@ -15,7 +15,7 @@ import org.python.jline.internal.Log;
  *
  * @see apps.tests.Log4JFixture
  *
- * @author	Bob Jacobsen - Copyright 2007
+ * @author Bob Jacobsen - Copyright 2007
  */
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
@@ -64,7 +64,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     static boolean hold = false;
 
-    static private JUnitAppender instance = null;    
+    static private JUnitAppender instance = null;
 
     // package-level access for testing
     static boolean unexpectedFatalSeen = false;
@@ -89,7 +89,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     public static void resetUnexpectedMessageFlags(Level severity) {
-        // cases statements are organized to flow 
+        // cases statements are organized to flow
         switch (severity.toInt()) {
             case Level.INFO_INT:
                 unexpectedInfoSeen = false;
@@ -131,8 +131,8 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             instance().superappend(evt);
         }
     }
-    
-    /** 
+
+    /**
      * do common local processing of event, then pass up to super class
      */
     void superappend(LoggingEvent l) {
@@ -152,7 +152,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         if (l.getLevel() == Level.INFO) {
             unexpectedInfoSeen = true;
         }
-            
+
         super.append(l);
     }
 
@@ -276,14 +276,14 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
-     * See if a message (completely matching particular text) 
+     * See if a message (completely matching particular text)
      * has been emitted yet.
      * @param msg the message text to check for
      * @return null if not present, else the LoggingEvent for possible further checks of level, etc
      */
     public static LoggingEvent checkForMessage(String msg) {
         if (list.isEmpty()) return null;
-        
+
         LoggingEvent evt = list.remove(0);
         while (!compare(evt, msg)) {
             if (list.isEmpty()) {
@@ -292,10 +292,10 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             evt = list.remove(0);
         }
         // fall through with a match
-        
-        return evt; 
+
+        return evt;
     }
-    
+
     /**
      * See if a message that starts with particular text
      * has been emitted yet.
@@ -304,9 +304,9 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      */
     public static LoggingEvent checkForMessageStartingWith(String msg) {
         if (list.isEmpty()) return null;
-        
+
         String tmsg = StringUtils.deleteWhitespace(msg);
-        
+
         LoggingEvent evt = list.remove(0);
         while (! StringUtils.deleteWhitespace(evt.getMessage().toString()).startsWith(tmsg)) {
             if (list.isEmpty()) {
@@ -315,10 +315,10 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             evt = list.remove(0);
         }
         // fall through with a match
-        
-        return evt; 
+
+        return evt;
     }
-    
+
     /**
      * Check that the next queued message was of Warn severity, and has a
      * specific message.
@@ -333,7 +333,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             return;
         }
         LoggingEvent evt = checkForMessage(msg);
-        
+
         if (evt == null) {
              Assert.fail("Looking for message \"" + msg + "\" and didn't find it");
         }
@@ -342,7 +342,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * Assert that a specific message, of any severity, has been logged.
      * <P>
-     * Invokes a JUnit Assert if no matching message is found, but doesn't require it to 
+     * Invokes a JUnit Assert if no matching message is found, but doesn't require it to
      * be the next message. This allows use e.g. for debug-severity messages.
      *
      * @param msg the message to assert exists

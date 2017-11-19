@@ -15,23 +15,23 @@ import org.junit.Test;
  * @author rhwood
  */
 public class AbstractActionModelTest {
-    
+
     public AbstractActionModelTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         Log4JFixture.setUp();
     }
-    
+
     @After
     public void tearDown() {
         Log4JFixture.tearDown();
@@ -83,5 +83,5 @@ public class AbstractActionModelTest {
             // empty method not tested as abstract in class being tested
         }
     }
-    
+
 }

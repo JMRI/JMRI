@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of SerialPacketGenFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialPacketGenFrameTest {
 
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenFrame action = new SerialPacketGenFrame(); 
+        SerialPacketGenFrame action = new SerialPacketGenFrame();
         Assert.assertNotNull("exists", action);
     }
 

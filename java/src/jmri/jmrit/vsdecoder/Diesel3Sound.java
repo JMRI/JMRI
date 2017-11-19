@@ -4,18 +4,18 @@ package jmri.jmrit.vsdecoder;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 // play() : plays short horn pop
 // loop() : starts extended sustain horn
 // stop() : ends extended sustain horn (plays end sound)
-// Suppressing "unused" warnings throughout. There are a dozen 
+// Suppressing "unused" warnings throughout. There are a dozen
 // methods, ctors and values that aren't used and don't have
 // outside access.
 @SuppressWarnings("unused")
@@ -594,7 +594,7 @@ class Diesel3Sound extends EngineSound {
             _sound.unqueueBuffers();
             // Adjust the current notch to match the throttle setting
             log.debug("Notch = " + _notch.getNotch() + " prev = " + _notch.getPrevNotch() + " next = " + _notch.getNextNotch());
-            
+
             // If we're out of whack, find the right notch for the current throttle setting.
             while (!_notch.isInLimits(_throttle)) {
                 if (_throttle > _notch.getAccelLimit()) {
@@ -603,7 +603,7 @@ class Diesel3Sound extends EngineSound {
                     _notch = _parent.getNotch(_notch.getPrevNotch());
                 }
             }
-            
+
             // Only queue the start buffer if we know we're in the idle notch.
             // This is indicated by prevNotch == self.
             if (_notch.isIdleNotch()) {

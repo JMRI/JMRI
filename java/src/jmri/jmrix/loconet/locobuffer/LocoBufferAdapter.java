@@ -44,14 +44,14 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
     }
-    
+
     /**
      * Create a list of possible command stations and append "Standalone LocoNet"
-     * 
+     *
      * Note: This is not suitable for use by any class which extends this class if
      * the hardware interface is part of a command station.
-     * 
-     * @return String[] containing the array of command stations, plus "Standalone 
+     *
+     * @return String[] containing the array of command stations, plus "Standalone
      *          LocoNet"
      */
     public String[] getCommandStationListWithStandaloneLN() {
@@ -62,7 +62,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         result[commandStationNames.length] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
         return result;
     }
-    
+
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
@@ -75,7 +75,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -222,7 +222,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * this, as there seems to be no way to check the number of queued bytes and
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
-     * 
+     *
      * @return an indication of whether the interface is accepting transmit messages.
      */
     @Override
@@ -301,7 +301,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             flow = SerialPort.FLOWCONTROL_NONE;
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
-        
+
         log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
                 + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N

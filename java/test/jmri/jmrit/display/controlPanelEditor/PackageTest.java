@@ -22,8 +22,8 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmrit.display.controlPanelEditor package
  *
- * @author	Bob Jacobsen Copyright 2008, 2009, 2010, 2015
- * @author	Paul Bender Copyright 2017
+ * @author Bob Jacobsen Copyright 2008, 2009, 2010, 2015
+ * @author Paul Bender Copyright 2017
  */
 public class PackageTest {
 

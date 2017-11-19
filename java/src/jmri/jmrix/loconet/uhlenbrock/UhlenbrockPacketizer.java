@@ -69,7 +69,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
 
         // stream to port in single write, as that's needed by serial
         int len = m.getNumDataElements();
-        byte msg[] = new byte[len];
+        byte[] msg = new byte[len];
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) m.getElement(i);
         }
@@ -273,7 +273,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                 try {
                     // get content; failure is a NoSuchElementException
                     log.debug("check for input");
-                    byte msg[] = null;
+                    byte[] msg = null;
                     lastMessage = null;
                     synchronized (this) {
                         lastMessage = xmtLocoNetList.removeFirst();

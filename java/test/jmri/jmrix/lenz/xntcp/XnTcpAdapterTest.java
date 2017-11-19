@@ -7,9 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XnTcpAdapterTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.xntcp.XnTcpAdapter class
+ * Tests for the jmri.jmrix.lenz.xntcp.XnTcpAdapter class
  *
  * @author Paul Bender
  */

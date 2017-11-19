@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -132,7 +131,7 @@ public class CbusMessage {
         return false;
     }
 
-    /* 
+    /*
      * Methods that take a CanReply as argument
      */
     public static int getId(CanReply r) {

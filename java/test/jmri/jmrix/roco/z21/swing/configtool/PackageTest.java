@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmri.jmrix.roco.z21.swing.configtool package
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

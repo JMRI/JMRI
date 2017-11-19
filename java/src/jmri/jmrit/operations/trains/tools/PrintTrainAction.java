@@ -35,7 +35,7 @@ public class PrintTrainAction extends AbstractAction {
         this.isPreview = isPreview;
         this.trainEditFrame = frame;
     }
-    
+
     public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview) {
         super(actionName);
         this.mFrame = mFrame;

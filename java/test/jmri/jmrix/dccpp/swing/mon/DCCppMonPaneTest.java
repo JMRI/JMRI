@@ -2,14 +2,12 @@ package jmri.jmrix.dccpp.swing.mon;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of DCCppMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -23,7 +21,7 @@ public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo(t);
 
         jmri.InstanceManager.store(memo, jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class);
-        // pane for AbstractMonPaneTestBase; panel for JmriPanelTest 
+        // pane for AbstractMonPaneTestBase; panel for JmriPanelTest
         panel = pane = new DCCppMonPane();
         helpTarget = "package.jmri.jmrix.AbstractMonFrame";
         title = "DCC++ Traffic Monitor";

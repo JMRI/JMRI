@@ -13,13 +13,11 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JComponentOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the RpsIcon class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class RpsPositionIconTest {
 
@@ -108,9 +106,9 @@ public class RpsPositionIconTest {
 
             // close the panel target frame.
             EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
-            // this panel isn't behaving like others that create a 
-            // panelEditor. It does not create dialogs when it closes, so call 
-            // requestClose without handling the dialogs as in 
+            // this panel isn't behaving like others that create a
+            // panelEditor. It does not create dialogs when it closes, so call
+            // requestClose without handling the dialogs as in
             // to.closeFrameWithConfirmations()
             to.requestClose();
         }

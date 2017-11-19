@@ -1,17 +1,14 @@
 package jmri.web;
 
-import cucumber.api.Scenario;
 import cucumber.api.java8.En;
-import org.junit.Assert;
-
 import jmri.web.server.WebServer;
-import jmri.util.JUnitAppender;
+import org.junit.Assert;
 
 /**
  * Cucumber helper to handle starting and stoping the web server
  * during web tests.
  *
- * @author  Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WebServerScaffold implements En {
 

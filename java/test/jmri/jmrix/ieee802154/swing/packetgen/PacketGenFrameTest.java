@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of PacketGenFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PacketGenFrameTest {
 
@@ -21,7 +21,7 @@ public class PacketGenFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PacketGenFrame action = new PacketGenFrame();
         Assert.assertNotNull("exists", action);
     }

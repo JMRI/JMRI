@@ -119,7 +119,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             } catch (IllegalArgumentException ex) {
                 log.warn("Failed to provide Turnout \"{}\" in sendStatus", name);
                 return null;
-            }            
+            }
         }
     }
 

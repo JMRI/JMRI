@@ -18,7 +18,7 @@ public class SerialUtil {
 
     static public void setSerialPortParams(SerialPort activeSerialPort, int baud, int databits, int stopbits, int parity)
             throws UnsupportedCommOperationException {
-        /* 
+        /*
          * First try once to work around bug, then do again for real
          * see http://wiki.gb.nrao.edu/bin/view/Pennarray/JavaComm3
          */

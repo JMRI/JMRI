@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Programmer facade which verifies each write via a read, if possible.
  * <p>
- * If the underlying programmer (1) can read and (2) is not already doing a read verify, 
+ * If the underlying programmer (1) can read and (2) is not already doing a read verify,
  * each write operation is followed by a readback.
  * If the value doesn't match, an error is signaled.
  * <p>
@@ -21,10 +21,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2017
  */
- 
+
  /*
  * @startuml jmri/implementation/doc-files/VerifyWriteProgrammerFacade-State-Diagram.png
- * [*] --> NOTPROGRAMMING 
+ * [*] --> NOTPROGRAMMING
  * NOTPROGRAMMING --> READING: readCV()\n(read CV)
  * READING --> NOTPROGRAMMING: OK reply received\n(return status and value)
  * NOTPROGRAMMING --> FINISHWRITE: writeCV()\n(write CV)
@@ -49,9 +49,9 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
     }
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    String _cv;	// remember the cv number being read/written
-    
+    int _val;   // remember the value being read/written for confirmative reply
+    String _cv; // remember the cv number being read/written
+
     // programming interface
     @Override
     synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -106,7 +106,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
      */
     enum ProgState {
         /** Waiting for response to read, will end next */
-        READING, 
+        READING,
         /** Waiting for response to write, issue verify read next */
         FINISHWRITE,
         /** Waiting for response to verify read, will end next */
@@ -130,7 +130,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
             temp.programmingOpReply(value, status);
             return;
         }
-        
+
         if (_usingProgrammer == null) {
             log.error("No listener to notify, reset and ignore");
             state = ProgState.NOTPROGRAMMING;
@@ -138,7 +138,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
         }
 
         jmri.ProgListener temp = _usingProgrammer;
-        
+
         switch (state) {
             case FINISHWRITE:
                 // write completed, can we do read, and is it not already being done?
@@ -151,7 +151,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
                         _usingProgrammer = null; // done
                         state = ProgState.NOTPROGRAMMING;
                         temp.programmingOpReply(value, ProgListener.ConfirmFailed);
-                        return;         
+                        return;
                     }
                     break;
                 }
@@ -165,7 +165,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
                 state = ProgState.NOTPROGRAMMING;
                 temp.programmingOpReply(value, status);
                 break;
-                
+
             case FINISHREAD:
                 _usingProgrammer = null; // done
                 state = ProgState.NOTPROGRAMMING;

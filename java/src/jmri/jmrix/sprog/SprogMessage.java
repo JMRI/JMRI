@@ -2,7 +2,6 @@ package jmri.jmrix.sprog;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The {@link SprogReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -248,7 +247,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
             cr = 1;
         }
 
-        byte msg[] = new byte[len + cr];
+        byte[] msg = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
             if (sprogState != SprogState.SIIBOOTMODE) {
@@ -407,7 +406,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
             l = l + (blockLen - l % blockLen);
         }
         // and data padded with erased condition
-        int padded[] = new int[l];
+        int[] padded = new int[l];
         for (int i = 0; i < l; i++) {
             padded[i] = 0xff;
         }

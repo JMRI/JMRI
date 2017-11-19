@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Abstract interface between a JMRI signal mast and a network connection
  *
  * @author Paul Bender Copyright (C) 2010
- * 
+ *
  */
 abstract public class AbstractSignalMastServer {
 

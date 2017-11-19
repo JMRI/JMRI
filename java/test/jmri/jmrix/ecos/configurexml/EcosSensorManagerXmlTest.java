@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * EcosSensorManagerXmlTest.java
+ * Tests for the EcosSensorManagerXml class
  *
- * Description: tests for the EcosSensorManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class EcosSensorManagerXmlTest {
 

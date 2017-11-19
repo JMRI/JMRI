@@ -157,7 +157,7 @@
       </column>
       <column>
         <display item="SA1 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="SA1 Group" tooltip="Selects the group number" label="    ">
@@ -272,7 +272,7 @@
       </column>
       <column>
         <display item="SA2 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="SA2 Group" tooltip="Selects the group number" label="    ">
@@ -387,7 +387,7 @@
       </column>
       <column>
         <display item="SA3 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="SA3 Group" tooltip="Selects the group number" label="    ">
@@ -502,7 +502,7 @@
       </column>
       <column>
         <display item="SA4 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="SA4 Group" tooltip="Selects the group number" label="    ">
@@ -617,7 +617,7 @@
       </column>
       <column>
         <display item="SA5 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="SA5 Group" tooltip="Selects the group number" label="    ">
@@ -732,7 +732,7 @@
       </column>
       <column>
         <display item="SA6 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="SA6 Group" tooltip="Selects the group number" label="    ">
@@ -847,7 +847,7 @@
       </column>
       <column>
         <display item="SA7 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="SA7 Group" tooltip="Selects the group number" label="    ">
@@ -962,7 +962,7 @@
       </column>
       <column>
         <display item="SA8 CT" tooltip="Respond to Closed/Thrown" label="       ">
-        	 </display>
+             </display>
       </column>
       <column>
         <display item="SA8 Group" tooltip="Selects the group number" label="    ">

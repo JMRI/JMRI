@@ -76,7 +76,7 @@ public class MemoryComboIconXml extends PositionableLabelXml {
             } catch ( org.jdom2.DataConversionException ex) {
                 log.error("failed to convert ComboBoxIcon index attribute");
                 if (items[i]==null) {
-                    items[i] = item;                    
+                    items[i] = item;
                 }
             }
         }

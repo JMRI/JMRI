@@ -300,7 +300,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                         speed = 0;
                     }
                     float val = speed / 126.0f;
-                    
+
                     // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                     if (val != this.speedSetting) {
                         notifyPropertyChangeListener("SpeedSetting", this.speedSetting, val); //IN18N

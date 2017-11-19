@@ -1,7 +1,7 @@
 /**
  * Stands in for the EasyDccTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.easydcc;
 

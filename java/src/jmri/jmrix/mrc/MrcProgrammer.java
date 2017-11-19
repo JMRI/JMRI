@@ -68,7 +68,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
     static final int READCOMMANDSENT = 2;  // read command sent, waiting reply
-    static final int WRITECOMMANDSENT = 4; // POM write command sent 
+    static final int WRITECOMMANDSENT = 4; // POM write command sent
     static final int POMCOMMANDSENT = 6; // ops programming mode, send msg twice
     boolean _progRead = false;
     int _val; // remember the value being read/written for confirmative reply

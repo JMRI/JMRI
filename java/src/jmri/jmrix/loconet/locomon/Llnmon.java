@@ -1858,7 +1858,7 @@ public class Llnmon {
         int pxct1 = l.getElement(5);
         int pxct2 = l.getElement(10);
 
-        int d[] = l.getPeerXfrData();
+        int[] d = l.getPeerXfrData();
 
         if ((src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
                 && ((pxct1 & 0x70) == 0x40)) {
@@ -1923,7 +1923,7 @@ public class Llnmon {
         if ((src == 0x7F) && ((pxct1 & 0x70) == 0x00)) {
 
             if ((dst_l == 0x00) && (dst_h == 0x00)) {
-                char c[] = new char[]{0, 0, 0, 0, 0, 0, 0, 0};
+                char[] c = new char[]{0, 0, 0, 0, 0, 0, 0, 0};
                 c[0] = (char) d[0];
                 c[1] = (char) d[1];
                 c[2] = (char) d[2];
@@ -1964,7 +1964,7 @@ public class Llnmon {
     }
 
     private String interpretSV1Message(LocoNetMessage l) {
-        int d[] = l.getPeerXfrData();
+        int[] d = l.getPeerXfrData();
         if ((l.getElement(4) != 1)
                 || ((l.getElement(5) & 0x70) != 0)
                 || ((l.getElement(10) & 0x70) != 0x10)) {
@@ -1995,7 +1995,7 @@ public class Llnmon {
 
         // (Jabour/Deloof LocoIO), SV Programming messages format 1
         int dst_l = l.getElement(3);
-        int d[] = l.getPeerXfrData();
+        int[] d = l.getPeerXfrData();
         int src = l.getElement(2);
 
         String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
@@ -2957,7 +2957,7 @@ public class Llnmon {
         if ((dirf & 0x40) == 0x40) {
             return "";
         }
-        String dirf0_4[] = interpretF0_F4toStrings(dirf);
+        String[] dirf0_4 = interpretF0_F4toStrings(dirf);
         return Bundle.getMessage("LN_MSG_HELPER_DIRF",
                 Bundle.getMessage((dirf & LnConstants.DIRF_DIR) != 0
                         ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD"),
@@ -4207,7 +4207,7 @@ public class Llnmon {
             } else {
                 encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB2");
             }
-            String funcInfo[] = new String[7];
+            String[] funcInfo = new String[7];
             int mask = 1;
             for (int i = 0; i < 7; i++) {
                 // handle 7 bits of data
@@ -4240,7 +4240,7 @@ public class Llnmon {
         } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
                 && (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
             // For Intellibox-I "one" with SW version 2.x - Special-case for F0 to F4
-            String funcInfo[] = new String[7];
+            String[] funcInfo = new String[7];
             funcInfo[0] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
                     0,
                     (l.getElement(4) & LnConstants.RE_IB1_F0_MASK) == 0 ? Bundle.getMessage("LN_MSG_FUNC_ON")
@@ -4277,9 +4277,9 @@ public class Llnmon {
                 Bundle.getMessage(((funcs & LnConstants.RE_IB2_F12_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
     }
 
-    private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
-    private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
-    private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
+    private static final String[] ds54sensors = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
+    private static final String[] ds64sensors = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
+    private static final String[] se8csensors = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
     private final static Logger log = LoggerFactory.getLogger(Llnmon.class);
 
 }

@@ -39,9 +39,9 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
-    JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
-    JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
-    JSpinner mDelaySpinner[] = new JSpinner[MAXSEQUENCE];
+    JTextField[] mPacketField = new JTextField[MAXSEQUENCE];
+    JCheckBox[] mUseField = new JCheckBox[MAXSEQUENCE];
+    JSpinner[] mDelaySpinner = new JSpinner[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonGo"));
 
     @Override
@@ -234,7 +234,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
      */
     byte[] createPacket(String s) {
         // gather bytes in result
-        byte b[] = StringUtil.bytesFromHexString(s);
+        byte[] b = StringUtil.bytesFromHexString(s);
         if (b.length == 0) {
             return null;  // no such thing as a zero-length message
         }

@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.util.swing.FontComboUtil class.
  *
- * @author	Matthew Harris Copyright 2011
+ * @author Matthew Harris Copyright 2011
  */
 public class FontComboUtilTest {
 

@@ -27,7 +27,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     }
 
     // base class. Implementations will provide InputStream and OutputStream
-    // objects to XNetTrafficController classes, who in turn will deal in messages.    
+    // objects to XNetTrafficController classes, who in turn will deal in messages.
     // returns the InputStream from the port
     @Override
     public abstract DataInputStream getInputStream();
@@ -69,7 +69,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
             }
         }
     }
-    
+
     /**
      * Say if the output buffer is empty or full.
      * This should only be set to false by external processes.
@@ -78,8 +78,8 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     synchronized public void setOutputBufferEmpty(boolean s) {
         outputBufferEmpty = s;
     }
-    
-    
+
+
     /* Option 2 is not currently used with RxTx 2.0.  In the past, it
        was used for the "check buffer status when sending" If this is still set
        in a configuration file, we need to handle it, but we are not writing it
@@ -98,7 +98,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     protected void setCheckBuffer(boolean b) {
         checkBuffer = b;
     }
-    
+
     @Override
     public DCCppSystemConnectionMemo getSystemConnectionMemo() {
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();

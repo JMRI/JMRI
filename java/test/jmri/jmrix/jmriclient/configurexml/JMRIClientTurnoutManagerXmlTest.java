@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JMRIClientTurnoutManagerXmlTest.java
+ * Tests for the JMRIClientTurnoutManagerXml class
  *
- * Description: tests for the JMRIClientTurnoutManagerXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class JMRIClientTurnoutManagerXmlTest {
 

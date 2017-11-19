@@ -519,7 +519,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
         if (scale < 0.5f || scale > 25f) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", _rampIncre.getText()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             _rampIncre.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleIncrement()*100));
         } else {
             scale /= 100;
@@ -654,7 +654,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
 
     /**
      * Retain the key/value pair of a Map or Dictionary as a pair.
-     * 
+     *
      * @param <K> key class
      * @param <V> value class
      */
@@ -673,7 +673,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             this.key = entry.getKey();
             this.value = entry.getValue();
         }
-        
+
         @Override
         public K getKey() {
             return key;

@@ -13,19 +13,19 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" 
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
-  <version author="Martin Pischky (mailto:martin@pischky.de)" 
+  <version author="Martin Pischky (mailto:martin@pischky.de)"
            version="1" lastUpdated="20120618"/>
 
 <!-- This file contains definition for  -->
 
-<!-- version 1 Most is stolen from SoundTraxx_Tsu_Diesel.xml. Based on manual 
-               shipped with Caboose and "SoundTraxx Mobile Decoders, Blackstone 
-               Models Open Platform Passenger Coach and Long Caboose Lighting 
+<!-- version 1 Most is stolen from SoundTraxx_Tsu_Diesel.xml. Based on manual
+               shipped with Caboose and "SoundTraxx Mobile Decoders, Blackstone
+               Models Open Platform Passenger Coach and Long Caboose Lighting
                Decoder Technical Reference, Software Release 1.00" -->
 
 <!-- Decoder Model information follows -->
@@ -40,12 +40,12 @@
              productID="???">
         <versionCV lowVersionID="1"/>
                                       <!-- Function Mapping Table / page 17 -->
-        <output name="1" label="  Marker Lamp B  "/>         <!-- FX0F      -->
-        <output name="2" label="  Marker Lamp A  "/>         <!-- FX0R      -->
+        <output name="1" label="  Marker Lamp B  "/> <!-- FX0F      -->
+        <output name="2" label="  Marker Lamp A  "/> <!-- FX0R      -->
         <output name="Grade Crossing Logic" label="(Horn)"/> <!-- XingLogic -->
-        <output name="FX5" label="  Interior Light  "/>      <!-- FX5       -->
-        <output name="FX6" label="        n.c.      "/>      <!-- FX6       -->
-        <output name="Dimming" />                            <!-- Dimming   -->
+        <output name="FX5" label="  Interior Light  "/> <!-- FX5       -->
+        <output name="FX6" label="        n.c.      "/> <!-- FX6       -->
+        <output name="Dimming" /> <!-- Dimming   -->
       </model>
     </family>
 
@@ -400,7 +400,7 @@
         <label>Consist Address Activation for F3</label>
       </variable>
 
-      <variable label="Consist Address Activation for F4" 
+      <variable label="Consist Address Activation for F4"
                 CV="21" mask="XXXXVXXX" default="0" minFn="4"
                 item="Consist Address Active For F4">
         <enumVal>
@@ -818,7 +818,7 @@
         <label>FL(f) controls Reserved_8</label>
       </variable>
 
-      <variable label="FL(r) controls FX0F" 
+      <variable label="FL(r) controls FX0F"
                 CV="34" mask="XXXXXXXV" default="0"
                 item="FL(r) controls output 1">
         <enumVal>
@@ -2957,11 +2957,11 @@
       <variable label="Marker Lamp Brightness"
                 CV="55" default="25"
                 item="Sound Setting 1"
-                tooltip="&lt;html&gt;The number entered will be the overall 
-                         percentage of brightness. For example a value of 50 
-                         would make the lights half as bright as the default, 
+                tooltip="&lt;html&gt;The number entered will be the overall
+                         percentage of brightness. For example a value of 50
+                         would make the lights half as bright as the default,
                          which is 100. A value of 100-255 will set the output to
-                         100% brightness while a value of 0 will disable the 
+                         100% brightness while a value of 0 will disable the
                          output. &lt;br&gt; The lower the brightness level the
                          longer the capacitor charge will last in analog
                          operation.&lt;/html&gt;">
@@ -2971,11 +2971,11 @@
       <variable label="Interior Brightness"
                 CV="56" default="75"
                 item="Sound Setting 2"
-                tooltip="&lt;html&gt;The number entered will be the overall 
-                         percentage of brightness. For example a value of 50 
-                         would make the lights half as bright as the default, 
+                tooltip="&lt;html&gt;The number entered will be the overall
+                         percentage of brightness. For example a value of 50
+                         would make the lights half as bright as the default,
                          which is 100. A value of 100-255 will set the output to
-                         100% brightness while a value of 0 will disable the 
+                         100% brightness while a value of 0 will disable the
                          output. &lt;br&gt; The lower the brightness level the
                          longer the capacitor charge will last in analog
                          operation.&lt;/html&gt;">
@@ -3019,7 +3019,7 @@
 <!-- End Lighting Configuration -->
 
       <variable label="User Identifier #1 (0-255)"
-                CV="105" 
+                CV="105"
                 item="User Id #1"
                 tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;
                          the decoder is reset to default values, this CV is&lt;br&gt;
@@ -3029,7 +3029,7 @@
       </variable>
 
       <variable label="User Identifier #2 (0-255)"
-                CV="106" 
+                CV="106"
                 item="User Id #2"
                 tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;
                          the decoder is reset to default values, this CV is&lt;br&gt;
@@ -3051,4 +3051,4 @@
 
 </decoder-config>
 
- 	  	 
+

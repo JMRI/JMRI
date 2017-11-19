@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * by the program when placing new rolling stock onto a track.
  *
  * @author Daniel Boudreau Copyright (C) 2012, 2017
- * 
+ *
  */
 class IgnoreUsedTrackFrame extends OperationsFrame {
 
@@ -80,13 +80,13 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         fiftyPercent.setSelected(percentage >= 50);
         seventyfivePercent.setSelected(percentage >= 75);
         hundredPercent.setSelected(percentage >= 100);
-        
+
         // warning text for planned pick ups.
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
         p2.add(new JLabel(Bundle.getMessage("PPWarningMessage")));
         p2.add(new JLabel(Bundle.getMessage("PPWarningMessage2")));
-        
+
         JPanel pW = new JPanel();
         pW.setLayout(new GridBagLayout());
         addItem(pW, p2, 0, 1);
@@ -96,7 +96,7 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         getContentPane().add(pW);
 
         addButtonAction(saveButton);
-        
+
         addHelpMenu("package.jmri.jmrit.operations.Operations_PlannedPickUps", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight200));

@@ -24,7 +24,7 @@
   <!-- version 6 - Removed QSI ver. 6 models to new file - Howard -->
   <!-- version 6 - Added product number variable and build information
                    on Misc. pane - Howard -->
-  <!-- version 7 - Added "Throttle mode" and "Speed to MPH scale" to QSI 
+  <!-- version 7 - Added "Throttle mode" and "Speed to MPH scale" to QSI
                    Misc. pane - wsthompson@earthlink.net -->
   <!-- Version 8 add throttle mode Walt Thompson -->
   <version author="jacobsen@mac.com" version="9" lastUpdated="20150628"/>
@@ -2000,7 +2000,7 @@
         </column>
         <column>
           <label>
-            <text>           </text>
+            <text> </text>
           </label>
         </column>
         <column>

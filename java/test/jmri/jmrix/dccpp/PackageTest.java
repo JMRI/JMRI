@@ -7,9 +7,9 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.dccpp package
  *
- * @author	Bob Jacobsen
- * @author	Mark Underwood
-  */
+ * @author Bob Jacobsen
+ * @author Mark Underwood
+ */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -26,7 +26,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.dccpp.DCCppTest");  // no tests in this class itself
-	suite.addTest(new TestSuite(DCCppCommandStationTest.class));
+        suite.addTest(new TestSuite(DCCppCommandStationTest.class));
         suite.addTest(new TestSuite(DCCppConnectionTypeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppMessageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppReplyTest.class));

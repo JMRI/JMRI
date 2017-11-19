@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * CreateButtonModelXmlTest.java
+ * Tests for the CreateButtonModelXml class
  *
- * Description: tests for the CreateButtonModelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class CreateButtonModelXmlTest {
 

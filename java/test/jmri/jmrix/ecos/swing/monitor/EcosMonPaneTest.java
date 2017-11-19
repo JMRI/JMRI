@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of EcosMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -60,7 +60,7 @@ public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
         // pane for AbstactMonPaneBase, panel for JmriJPanel
         panel = pane = new EcosMonPane();
-        ((EcosMonPane)pane).initContext(memo); 
+        ((EcosMonPane)pane).initContext(memo);
         title = "ECoS Command Monitor";
     }
 

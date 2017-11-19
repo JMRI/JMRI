@@ -12,14 +12,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of DiagnosticFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DiagnosticFrameTest {
 
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DiagnosticFrame action = new DiagnosticFrame(new CMRISystemConnectionMemo()); 
+        DiagnosticFrame action = new DiagnosticFrame(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

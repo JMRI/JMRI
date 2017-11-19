@@ -40,13 +40,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     static private int _nRetries = 5;
 
-    /* According to the specification, DCC++ has a maximum timing 
+    /* According to the specification, DCC++ has a maximum timing
      interval of 500 milliseconds durring normal communications */
     // TODO: Note this timing interval is actually an XpressNet thing...
     // Need to find out what DCC++'s equivalent is.
     static protected final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
     static private int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
-    
+
     //private ArrayList<Integer> valueList = new ArrayList<>();
     private StringBuilder myMessage;
     private String myRegex;
@@ -102,7 +102,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Create a DCCppMessage from a String containing bytes.
      * Since DCCppMessages are text, there is no Hex-to-byte conversion
-     * 
+     *
      * NOTE 15-Feb-17: un-Deprecating this function so that it can be used
      * in the DCCppOverTCP server/client interface.  Messages shouldn't
      * be parsed, they are already in DCC++ format, so we need the string
@@ -119,7 +119,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         _nDataChars = myMessage.length();
         _dataChars = new int[_nDataChars];
     }
-    
+
     // Partial constructor used in the static getMessageType() calls below.
     protected DCCppMessage(char c) {
         setBinary(false);
@@ -129,7 +129,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         myMessage = new StringBuilder(Character.toString(c));
         _nDataChars = myMessage.length();
     }
-    
+
     protected DCCppMessage(char c, String regex) {
         setBinary(false);
         setRetries(_nRetries);
@@ -142,11 +142,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Parse a string and generate/return a DCCppMessage object
-     * 
+     *
      * @param s String of DCC++ message without the {@literal < >} brackets
      * @return DCCppMessage
      */
-    
+
     public static DCCppMessage parseDCCppMessage(String s) {
         // Need to parse the string and construct a message from it.
         Matcher m;
@@ -298,7 +298,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
         return(null);
     }
-    
+
     private void setRegex() {
         Matcher m;
         switch(myMessage.charAt(0)) {
@@ -382,11 +382,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
                 myRegex = "";
         }
     }
-    
+
     /**
      * toString() converts DCCppMessage to String format
      * (without the {@code <>} brackets)
-     * 
+     *
      * @return String form of message.
      */
     @Override
@@ -553,20 +553,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
 
         return text;
-   } 
+   }
 
- 
+
     @Override
     public int getNumDataElements() {
         return(myMessage.length());
 //        return(_nDataChars);
     }
-    
+
     @Override
     public int getElement(int n) {
         return(this.myMessage.charAt(n));
     }
-    
+
     @Override
     public void setElement(int n, int v) {
         // We want the ASCII value, not the string interpretation of the int
@@ -582,7 +582,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     // note that the opcode is part of the message, so we treat it
     // directly
-    // WARNING: use this only with opcodes that have a variable number 
+    // WARNING: use this only with opcodes that have a variable number
     // of arguments following included. Otherwise, just use setElement
     @Override
     public void setOpCode(int i) {
@@ -607,12 +607,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public String getOpCodeString() {
         return(Character.toString(opcode));
     }
-   
+
     private int getGroupCount(){
         Matcher m = match(myMessage.toString(), myRegex, "gvs");
         return m.groupCount();
     }
- 
+
     public String getValueString(int idx) {
         Matcher m = match(myMessage.toString(), myRegex, "gvs");
         if (m == null) {
@@ -625,7 +625,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             return("");
         }
     }
-    
+
     public int getValueInt(int idx) {
         Matcher m = match(myMessage.toString(), myRegex, "gvi");
         if (m == null) {
@@ -638,11 +638,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             return(0);
         }
     }
-    
+
     public boolean getValueBool(int idx) {
         log.debug("msg = {}, regex = {}", myMessage.toString(), myRegex);
         Matcher m = match(myMessage.toString(), myRegex, "gvi");
-        
+
         if (m == null) {
             log.error("No Match!");
             return(false);
@@ -688,8 +688,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * Returns true if this DCCppMessage is properly formatted
      * (or will generate a properly formatted command when
      * converted to String)
-     * 
-     * @return boolean true/false 
+     *
+     * @return boolean true/false
      */
     public boolean isValidMessageFormat() {
         if (this.match(this.myRegex) != null) {
@@ -701,7 +701,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * matches this DCCppMessage against the given regex 'pat'
-     * 
+     *
      * @param pat Regex
      * @return Matcher or null if no match.
      */
@@ -711,7 +711,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * matches the given string against the given Regex pattern.
-     * 
+     *
      * @param s    string to be matched
      * @param pat  Regex string to match against
      * @param name Text name to use in debug messages.
@@ -738,7 +738,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      return(null);
         }
     }
-    
+
     // Identity Methods
     public boolean isThrottleMessage() { return(this.getOpCodeChar() == DCCppConstants.THROTTLE_CMD); }
 
@@ -800,7 +800,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public String getOutputIDString() {
  if (this.isOutputAddMessage() || this.isOutputDeleteMessage() || this.isOutputCmdMessage()) {
             return getValueString(1);
- } else { 
+ } else {
      log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
      return("0");
         }
@@ -867,7 +867,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      return(0);
  }
     }
-    
+
     public boolean getOutputStateBool() {
  if (this.isOutputCmdMessage()) {
             return(getValueInt(2) != 0);
@@ -879,7 +879,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public String getSensorIDString() {
  if (this.isSensorAddMessage()) {
             return getValueString(1);
- } else { 
+ } else {
      log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
      return("0");
         }
@@ -928,7 +928,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      return(0);
         }
     }
-    
+
     public boolean getSensorPullupBool() {
  if (this.isSensorAddMessage()) {
             return(getValueBool(3));
@@ -1239,7 +1239,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             return(0);
         }
     }
-    
+
     public String getOpsWriteBitString() {
         if (this.isOpsWriteBitMessage()) {
             return(getValueString(3));
@@ -1255,7 +1255,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             return(0);
         }
     }
-    
+
     public String getOpsWriteValueString() {
  if (this.isOpsWriteByteMessage()) {
             return(getValueString(3));
@@ -1276,7 +1276,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             return(0);
         }
     }
-    
+
     //------------------------------------------------------
     // Helper methods for Prog Write Byte Commands
 
@@ -1414,7 +1414,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /*
      * Most messages are sent with a reply expected, but
      * we have a few that we treat as though the reply is always
-     * a broadcast message, because the reply usually comes to us 
+     * a broadcast message, because the reply usually comes to us
      * that way.
      */
     // TODO: Not sure this is useful in DCC++
@@ -1454,10 +1454,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // decode messages of a particular form
     // create messages of a particular form
 
-    /* 
-     * The next group of routines are used by Feedback and/or turnout 
-     * control code.  These are used in multiple places within the code, 
-     * so they appear here. 
+    /*
+     * The next group of routines are used by Feedback and/or turnout
+     * control code.  These are used in multiple places within the code,
+     * so they appear here.
      */
 
     /**
@@ -1471,14 +1471,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *
      *    Note that many decoders and controllers combine the ADDRESS and SUBADDRESS into a single number, N,
      *    from  1 through a max of 2044, where
-     *    
+     *
      *    {@code N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0}
-     *    
+     *
      *    OR
-     *    
+     *
      *    {@code ADDRESS = INT((N - 1) / 4) + 1}
      *    {@code SUBADDRESS = (N - 1) % 4}
-     *    
+     *
      *    returns: NONE
     */
     public static DCCppMessage makeAccessoryDecoderMsg(int address, int subaddress, boolean activate) {
@@ -1489,16 +1489,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      return(null);
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.ACCESSORY_CMD);
-        
+
         m.myMessage.append(" " + address);
         m.myMessage.append(" " + subaddress);
         m.myMessage.append(" " + (activate ? "1" : "0"));
         m.myRegex = DCCppConstants.ACCESSORY_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
-    
+
     public static DCCppMessage makeAccessoryDecoderMsg(int address, boolean activate) {
  // Convert the single address to an address/subaddress pair:
  // address = (address - 1) * 4 + subaddress + 1 for address>0;
@@ -1520,7 +1520,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *
      *   ID: the numeric ID (0-32767) of the turnout to control
      *   THROW: 0 (unthrown) or 1 (thrown)
-     *   
+     *
      *   returns:{@code <H ID THROW>}
      *
      * ADD: {@code <T ID ADDRESS SUBADDRESS>}
@@ -1541,12 +1541,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
  if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) return(null);
  // Need to also validate whether turnout is predefined?  Where to store the IDs?
  // Turnout Command
-        
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.TURNOUT_CMD);
         m.myMessage.append(" " + id);
         m.myMessage.append((thrown ? " 1" : " 0"));
         m.myRegex = DCCppConstants.TURNOUT_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -1559,7 +1559,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + id);
         m.myMessage.append(" " + (state ? "1" : "0"));
         m.myRegex = DCCppConstants.OUTPUT_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -1573,7 +1573,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + pin);
         m.myMessage.append(" " + iflag);
         m.myRegex = DCCppConstants.OUTPUT_ADD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -1585,7 +1585,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_CMD);
         m.myMessage.append(" " + id);
         m.myRegex = DCCppConstants.OUTPUT_DELETE_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -1605,7 +1605,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + addr);
         m.myMessage.append(" " + subaddr);
         m.myRegex = DCCppConstants.TURNOUT_ADD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -1617,7 +1617,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         DCCppMessage m = new DCCppMessage(DCCppConstants.TURNOUT_CMD);
         m.myMessage.append(" " + id);
         m.myRegex = DCCppConstants.TURNOUT_DELETE_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -1627,7 +1627,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /** Create/Delete/Query Sensor
-     * 
+     *
      * ADD: {@code <S ID PIN PULLUP>}
      *    ID (0-32767)
      *    PIN: Arduino Pin # of sensor
@@ -1650,7 +1650,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + pin);
         m.myMessage.append(" " + pullup);
         m.myRegex = DCCppConstants.SENSOR_ADD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -1662,7 +1662,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         DCCppMessage m = new DCCppMessage(DCCppConstants.SENSOR_CMD);
         m.myMessage.append(" " + id);
         m.myRegex = DCCppConstants.SENSOR_DELETE_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -1690,10 +1690,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *   ID: the numeric ID (0-32767) of the turnout to control
      *   THROW: 0 (unthrown) or 1 (thrown)
      *    CV: the number of the Configuration Variable memory location in the decoder to write to (1-1024)
-     *    VALUE: the value to be written to the Configuration Variable memory location (0-255) 
+     *    VALUE: the value to be written to the Configuration Variable memory location (0-255)
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
-     *    
+     *
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
      *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV Value)}
@@ -1718,7 +1718,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + callbacknum);
         m.myMessage.append(" " + callbacksub);
         m.myRegex = DCCppConstants.PROG_WRITE_BYTE_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         m.setTimeout(DCCppProgrammingTimeout);
         return(m);
@@ -1730,18 +1730,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * Format: {@code <B CV BIT VALUE CALLBACKNUM CALLBACKSUB>}
      *
      *    writes, and then verifies, a single bit within a Configuration Variable to the decoder of an engine on the programming track
-     *    
+     *
      *    CV: the number of the Configuration Variable memory location in the decoder to write to (1-1024)
      *    BIT: the bit number of the Configurarion Variable memory location to write (0-7)
      *    VALUE: the value of the bit to be written (0-1)
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
-     *    
+     *
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
      *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)}
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
-     */    
+     */
     public static DCCppMessage makeBitWriteDirectCVMsg(int cv, int bit, int val) {
  return(makeBitWriteDirectCVMsg(cv, bit, val, 0, DCCppConstants.PROG_WRITE_CV_BIT));
     }
@@ -1763,7 +1763,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + callbacknum);
         m.myMessage.append(" " + callbacksub);
         m.myRegex = DCCppConstants.PROG_WRITE_BIT_REGEX;
- 
+
         m._nDataChars = m.toString().length();
         m.setTimeout(DCCppProgrammingTimeout);
         return(m);
@@ -1775,16 +1775,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * Format: {@code <R CV CALLBACKNUM CALLBACKSUB>}
      *
      *    reads a Configuration Variable from the decoder of an engine on the programming track
-     *    
+     *
      *    CV: the number of the Configuration Variable memory location in the decoder to read from (1-1024)
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
-     *    
+     *
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
      *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV VALUE>}
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if read could not be verified
-     */    
+     */
     public static DCCppMessage makeReadDirectCVMsg(int cv) {
  return(makeReadDirectCVMsg(cv, 0, DCCppConstants.PROG_READ_CV));
     }
@@ -1797,7 +1797,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      return(null);
  if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
      return(null);
-        
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.PROG_READ_CV);
         m.myMessage.append(" " + cv);
         m.myMessage.append(" " + callbacknum);
@@ -1809,33 +1809,33 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
-    
+
     /**
      * Write Direct CV Byte to Main Track
      *
      * Format: {@code <w CAB CV VALUE>}
      *
      *    writes, without any verification, a Configuration Variable to the decoder of an engine on the main operations track
-     *    
-     *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder 
+     *
+     *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder
      *    CV: the number of the Configuration Variable memory location in the decoder to write to (1-1024)
      *    VALUE: the value to be written to the Configuration Variable memory location (0-255)
-     *    
+     *
      *    returns: NONE
-     */    
+     */
     public static DCCppMessage makeWriteOpsModeCVMsg(int address, int cv, int val) {
  // Sanity check inputs
  if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
      return(null);
  if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
  if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.OPS_WRITE_CV_BYTE);
         m.myMessage.append(" " + address);
         m.myMessage.append(" " + cv);
         m.myMessage.append(" " + val);
         m.myRegex = DCCppConstants.OPS_WRITE_BYTE_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         m.setTimeout(DCCppProgrammingTimeout);
         return(m);
@@ -1847,14 +1847,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * Format: {@code <b CAB CV BIT VALUE>}
      *
      *    writes, without any verification, a single bit within a Configuration Variable to the decoder of an engine on the main operations track
-     *    
-     *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder 
+     *
+     *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder
      *    CV: the number of the Configuration Variable memory location in the decoder to write to (1-1024)
      *    BIT: the bit number of the Configurarion Variable regsiter to write (0-7)
      *    VALUE: the value of the bit to be written (0-1)
-     *    
+     *
      *    returns: NONE
-     */        
+     */
     public static DCCppMessage makeBitWriteOpsModeCVMsg(int address, int cv, int bit, int val) {
 
  // Sanity Check Inputs
@@ -1862,15 +1862,15 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      return(null);
  if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
  if (bit < 0 || bit > 7) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.OPS_WRITE_CV_BIT);
         m.myMessage.append(" " + address);
         m.myMessage.append(" " + cv);
         m.myMessage.append(" " + bit);
         m.myMessage.append(" " + (val == 0 ? "0" : "1"));
-       
+
         m.myRegex = DCCppConstants.OPS_WRITE_BIT_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         m.setTimeout(DCCppProgrammingTimeout);
         return(m);
@@ -1905,7 +1905,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * Format: {@code <c>}
      *
      *    reads current being drawn on main operations track
-     *    
+     *
      *    returns: {@code <a CURRENT>}
      *    where CURRENT = 0-1024, based on exponentially-smoothed weighting scheme
      */
@@ -1920,7 +1920,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *
      *    returns status messages containing track power status, throttle status, turn-out status, and a version number
      *    NOTE: this is very useful as a first command for an interface to send to this sketch in order to verify connectivity and update any GUI to reflect actual throttle and turn-out settings
-     *    
+     *
      *    returns: series of status messages that can be read by an interface to determine status of DCC++ Base Station and important settings
      */
   public static DCCppMessage makeCSStatusMsg() {
@@ -1943,35 +1943,35 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + address);
         m.myMessage.append(" -1 1");
         m.myRegex = DCCppConstants.THROTTLE_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
-    
+
     /*
      * Generate a Speed and Direction Request message
      * @param register is the DCC++ base station register assigned.
      * @param address is the locomotive address
-     * @param speed a normalized speed value (a floating point number between 0 
+     * @param speed a normalized speed value (a floating point number between 0
      *              and 1).  A negative value indicates emergency stop.
      * @param isForward true for forward, false for reverse.
      *
      * Format: {@code <t REGISTER CAB SPEED DIRECTION>}
      *
-     *    sets the throttle for a given register/cab combination 
-     *    
+     *    sets the throttle for a given register/cab combination
+     *
      *    REGISTER: an internal register number, from 1 through MAX_MAIN_REGISTERS (inclusive), to store the DCC packet used to control this throttle setting
      *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder
      *    SPEED: throttle speed from 0-126, or -1 for emergency stop (resets SPEED to 0)
      *    DIRECTION: 1=forward, 0=reverse.  Setting direction when speed=0 or speed=-1 only effects directionality of cab lighting for a stopped train
-     *    
+     *
      *    returns: {@code <T REGISTER SPEED DIRECTION>}
-     *    
+     *
      */
     public static DCCppMessage makeSpeedAndDirectionMsg(int register, int address, float speed, boolean isForward) {
  // Sanity check inputs
  if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
         m.myMessage.append(" " + register);
         m.myMessage.append(" " + address);
@@ -1983,50 +1983,50 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             m.myMessage.append(" " + speedVal);
         }
         m.myMessage.append(" " + (isForward ? "1" : "0"));
-        
+
         m.myRegex = DCCppConstants.THROTTLE_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
 
-    /** 
+    /**
      * Function Group Messages (common serial format)
-     * 
+     *
      * Format: {@code <f CAB BYTE1 [BYTE2]>}
      *
-     *    turns on and off engine decoder functions F0-F28 (F0 is sometimes called FL)  
+     *    turns on and off engine decoder functions F0-F28 (F0 is sometimes called FL)
      *    NOTE: setting requests transmitted directly to mobile engine decoder --- current state of engine functions is not stored by this program
-     *    
+     *
      *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder
-     *    
+     *
      *    To set functions F0-F4 on (=1) or off (=0):
-     *      
+     *
      *    BYTE1:  128 + F1*1 + F2*2 + F3*4 + F4*8 + F0*16
      *    BYTE2:  omitted
-     *   
+     *
      *    To set functions F5-F8 on (=1) or off (=0):
-     *   
+     *
      *    BYTE1:  176 + F5*1 + F6*2 + F7*4 + F8*8
      *    BYTE2:  omitted
-     *   
+     *
      *    To set functions F9-F12 on (=1) or off (=0):
-     *   
+     *
      *    BYTE1:  160 + F9*1 +F10*2 + F11*4 + F12*8
      *    BYTE2:  omitted
-     *   
+     *
      *    To set functions F13-F20 on (=1) or off (=0):
-     *   
-     *    BYTE1: 222 
+     *
+     *    BYTE1: 222
      *    BYTE2: F13*1 + F14*2 + F15*4 + F16*8 + F17*16 + F18*32 + F19*64 + F20*128
-     *   
+     *
      *    To set functions F21-F28 on (=1) of off (=0):
-     *   
+     *
      *    BYTE1: 223
      *    BYTE2: F21*1 + F22*2 + F23*4 + F24*8 + F25*16 + F26*32 + F27*64 + F28*128
-     *   
+     *
      *    returns: NONE
-     * 
+     *
      */
 
     /*
@@ -2044,15 +2044,15 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f1,
             boolean f2,
             boolean f3,
-            boolean f4) 
-    { 
+            boolean f4)
+    {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
-        
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
-        
+
         int byte1 = 128 + (f0 ? 16 : 0);
         byte1 += (f1 ? 1 : 0);
         byte1 += (f2 ? 2 : 0);
@@ -2060,7 +2060,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         byte1 += (f4 ? 8 : 0);
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2083,7 +2083,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
@@ -2095,7 +2095,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2117,7 +2117,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
@@ -2129,7 +2129,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
        m._nDataChars = m.toString().length();
         return(m);
      }
@@ -2150,7 +2150,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
@@ -2161,7 +2161,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         byte1 += (f8 ? 8 : 0);
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2183,7 +2183,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
@@ -2194,7 +2194,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         byte1 += (f12 ? 8 : 0);
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2215,10 +2215,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
- 
+
         int byte1 = 160;
         byte1 += (f9 ? 1 : 0);
         byte1 += (f10 ? 2 : 0);
@@ -2226,7 +2226,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         byte1 += (f12 ? 8 : 0);
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2255,7 +2255,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
@@ -2271,7 +2271,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + DCCppConstants.FUNCTION_GROUP4_BYTE1);
         m.myMessage.append(" " + byte2);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2300,7 +2300,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
@@ -2317,7 +2317,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + DCCppConstants.FUNCTION_GROUP4_BYTE1);
         m.myMessage.append(" " + byte2);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2345,7 +2345,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f28) {
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
@@ -2363,7 +2363,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + DCCppConstants.FUNCTION_GROUP5_BYTE1);
         m.myMessage.append(" " + byte2);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2392,7 +2392,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
@@ -2409,7 +2409,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + DCCppConstants.FUNCTION_GROUP5_BYTE1);
         m.myMessage.append(" " + byte2);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
-        
+
         m._nDataChars = m.toString().length();
         return(m);
     }
@@ -2417,7 +2417,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /*
      * Build an Emergency Off Message
      */
-    
+
 
     /**
      * Test Code Functions... not for normal use
@@ -2428,7 +2428,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         // Sanity Check Inputs
         if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
         if (num_bytes < 2 || num_bytes > 5) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.WRITE_DCC_PACKET_MAIN);
         m.myMessage.append(" " + register);
         for (int k = 0; k < num_bytes; k++) {
@@ -2436,15 +2436,15 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
         m.myRegex = DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX;
         return(m);
-        
+
     }
- 
+
     /** Write DCC Packet to a specified Register on the Programming Track*/
-    public static DCCppMessage makeWriteDCCPacketProgMsg( int register, int num_bytes, byte bytes[]) {
+    public static DCCppMessage makeWriteDCCPacketProgMsg( int register, int num_bytes, byte[] bytes) {
         // Sanity Check Inputs
         if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
         if (num_bytes < 2 || num_bytes > 5) return(null);
- 
+
         DCCppMessage m = new DCCppMessage(DCCppConstants.WRITE_DCC_PACKET_PROG);
         m.myMessage.append(" " + register);
         for (int k = 0; k < num_bytes; k++) {
@@ -2452,7 +2452,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
         m.myRegex = DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX;
         return(m);
-        
+
     }
 
     public static DCCppMessage makeCheckFreeMemMsg() {
@@ -2460,11 +2460,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage makeListRegisterContentsMsg() {
-        return(new DCCppMessage(DCCppConstants.LIST_REGISTER_CONTENTS, 
+        return(new DCCppMessage(DCCppConstants.LIST_REGISTER_CONTENTS,
                    DCCppConstants.LIST_REGISTER_CONTENTS_REGEX));
     }
 
-    // initialize logging    
+    // initialize logging
     private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class);
 
 }

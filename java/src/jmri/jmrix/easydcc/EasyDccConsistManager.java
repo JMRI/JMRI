@@ -114,10 +114,10 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         public void reply(EasyDccReply r) {
             if (currentState == SEARCHREQUESTSENT) {
                 // We sent a request for a consist address.
-                // We need to find out what type of message 
+                // We need to find out what type of message
                 // was received as a response.  If the message
-                // has an opcode of 'G', then it is a response 
-                // to the Display Consist instruction we sent 
+                // has an opcode of 'G', then it is a response
+                // to the Display Consist instruction we sent
                 // previously.  If the message has any other
                 // opcode, we can ignore the message.
                 if (log.isDebugEnabled()) {

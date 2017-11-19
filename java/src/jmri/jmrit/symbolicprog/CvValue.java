@@ -460,7 +460,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 _busy = false;
                 notifyBusyChange(oldBusy, _busy);
             } else if (_confirm) {
-                // _value doesn't change, just the state, and save the value read 
+                // _value doesn't change, just the state, and save the value read
                 _decoderValue = value;
                 // does the decoder value match the file value
                 if (value == _value) {
@@ -494,7 +494,7 @@ public class CvValue extends AbstractValue implements ProgListener {
             timer.setRepeats(false);
             timer.start();
         }
-            
+
         log.debug("CV progOpReply end of handling CV {}", _num); // NOI18N
     }
 

@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * LenzCommandStationTest.java
+ * Tests for the jmri.jmrix.lenz.LenzCommandStation class
  *
- * Description:	tests for the jmri.jmrix.lenz.LenzCommandStation class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LenzCommandStationTest extends TestCase {
 
@@ -49,7 +47,7 @@ public class LenzCommandStationTest extends TestCase {
         // make sure the command station type doesn't change if we send
         // the right prefix (0x63) but a message that doesn't contain the
         // version (2nd byte is not 0x21).
-        r = new XNetReply("63 10 05 0C 7A"); // this is a service mode response. 
+        r = new XNetReply("63 10 05 0C 7A"); // this is a service mode response.
         c.setCommandStationSoftwareVersion(r);
         Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
 
@@ -91,18 +89,18 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
-        r.setElement(3, 0x01); // type is LH200 
+        r.setElement(3, 0x01); // type is LH200
         r.setElement(4, 0x75);
         c.setCommandStationType(r);
         Assert.assertEquals(1, c.getCommandStationType());
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
-        r.setElement(3, 0x02); // type is Compact 
+        r.setElement(3, 0x02); // type is Compact
         r.setElement(4, 0x76);
         c.setCommandStationType(r);
         Assert.assertEquals(2, c.getCommandStationType());
-        // make sure the command station type doesn't change when we send 
+        // make sure the command station type doesn't change when we send
         // the wrong message type.
         r = new XNetReply("01 04 05");
         c.setCommandStationType(r);
@@ -110,7 +108,7 @@ public class LenzCommandStationTest extends TestCase {
         // make sure the command station type doesn't change if we send
         // the right prefix (0x63) but a message that doesn't contain the
         // version (2nd byte is not 0x21).
-        r = new XNetReply("63 10 05 0C 7A"); // this is a service mode response. 
+        r = new XNetReply("63 10 05 0C 7A"); // this is a service mode response.
         c.setCommandStationType(r);
         Assert.assertEquals(2, c.getCommandStationType());
     }
@@ -154,7 +152,7 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
-        r.setElement(3, 0x01); // type is LH200 
+        r.setElement(3, 0x01); // type is LH200
         r.setElement(4, 0x75);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
@@ -162,7 +160,7 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
-        r.setElement(3, 0x02); // type is Compact 
+        r.setElement(3, 0x02); // type is Compact
         r.setElement(4, 0x76);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
@@ -184,7 +182,7 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
-        r.setElement(3, 0x01); // type is LH200 
+        r.setElement(3, 0x01); // type is LH200
         r.setElement(4, 0x75);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
@@ -192,12 +190,12 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
-        r.setElement(3, 0x02); // type is Compact 
+        r.setElement(3, 0x02); // type is Compact
         r.setElement(4, 0x76);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
         Assert.assertFalse(c.isOpsModePossible());
-   } 
+   }
 
 
     public void testGetDCCAddressLow() {
@@ -209,7 +207,7 @@ public class LenzCommandStationTest extends TestCase {
         Assert.assertEquals(0x00,LenzCommandStation.getDCCAddressHigh(0x0042));
         Assert.assertEquals(0xD0,LenzCommandStation.getDCCAddressHigh(0x1042));
     }
-  
+
     public void testGetUserName() {
         LenzCommandStation c = new LenzCommandStation();
         Assert.assertEquals("XpressNet",c.getUserName()); // default.

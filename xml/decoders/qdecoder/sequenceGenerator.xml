@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$				-->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -36,9 +36,9 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
-	<!-- 	CVs for State 1 											 -->
-	<variable item="Duration State 1" CV="301" mask="VVVVVVVV" default="100">
-		<splitVal highCV="300" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 1 -->
+    <variable item="Duration State 1" CV="301" mask="VVVVVVVV" default="100">
+        <splitVal highCV="300" upperMask="VVVVVVVV"/>
     <label>Duration State 1</label>
     <label xml:lang="de">Dauer des Zustands 1</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -107,7 +107,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 1 switches A1" CV="401" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 1 switches A1" CV="401" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 1 switches A1</label>
     <label xml:lang="de">Zustand 1 schaltet A1</label>
@@ -160,7 +160,7 @@
     <decVal max="50"/>
     <label>State 1 successor state</label>
     <label xml:lang="de">Zustand 1 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 1 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 1 initially On" CV="500" mask="VXXXXXXX" default="0">
@@ -170,9 +170,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 2 											 -->
-	<variable item="Duration State 2" CV="303" mask="VVVVVVVV" default="100">
-		<splitVal highCV="302" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 2 -->
+    <variable item="Duration State 2" CV="303" mask="VVVVVVVV" default="100">
+        <splitVal highCV="302" upperMask="VVVVVVVV"/>
     <label>Duration State 2</label>
     <label xml:lang="de">Dauer des Zustands 2</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -241,7 +241,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 2 switches A1" CV="403" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 2 switches A1" CV="403" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 2 switches A1</label>
     <label xml:lang="de">Zustand 2 schaltet A1</label>
@@ -294,7 +294,7 @@
     <decVal max="50"/>
     <label>State 2 successor state</label>
     <label xml:lang="de">Zustand 2 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 2 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 2 initially On" CV="501" mask="VXXXXXXX" default="0">
@@ -304,9 +304,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 3 											 -->
-	<variable item="Duration State 3" CV="305" mask="VVVVVVVV" default="100">
-		<splitVal highCV="304" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 3 -->
+    <variable item="Duration State 3" CV="305" mask="VVVVVVVV" default="100">
+        <splitVal highCV="304" upperMask="VVVVVVVV"/>
     <label>Duration State 3</label>
     <label xml:lang="de">Dauer des Zustands 3</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -375,7 +375,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 3 switches A1" CV="405" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 3 switches A1" CV="405" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 3 switches A1</label>
     <label xml:lang="de">Zustand 3 schaltet A1</label>
@@ -428,7 +428,7 @@
     <decVal max="50"/>
     <label>State 3 successor state</label>
     <label xml:lang="de">Zustand 3 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 3 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 3 initially On" CV="502" mask="VXXXXXXX" default="0">
@@ -438,9 +438,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 4 											 -->
-	<variable item="Duration State 4" CV="307" mask="VVVVVVVV" default="100">
-		<splitVal highCV="306" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 4 -->
+    <variable item="Duration State 4" CV="307" mask="VVVVVVVV" default="100">
+        <splitVal highCV="306" upperMask="VVVVVVVV"/>
     <label>Duration State 4</label>
     <label xml:lang="de">Dauer des Zustands 4</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -509,7 +509,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 4 switches A1" CV="407" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 4 switches A1" CV="407" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 4 switches A1</label>
     <label xml:lang="de">Zustand 4 schaltet A1</label>
@@ -562,7 +562,7 @@
     <decVal max="50"/>
     <label>State 4 successor state</label>
     <label xml:lang="de">Zustand 4 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 4 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 4 initially On" CV="503" mask="VXXXXXXX" default="0">
@@ -572,9 +572,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 5 											 -->
-	<variable item="Duration State 5" CV="309" mask="VVVVVVVV" default="100">
-		<splitVal highCV="308" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 5 -->
+    <variable item="Duration State 5" CV="309" mask="VVVVVVVV" default="100">
+        <splitVal highCV="308" upperMask="VVVVVVVV"/>
     <label>Duration State 5</label>
     <label xml:lang="de">Dauer des Zustands 5</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -643,7 +643,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 5 switches A1" CV="409" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 5 switches A1" CV="409" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 5 switches A1</label>
     <label xml:lang="de">Zustand 5 schaltet A1</label>
@@ -696,7 +696,7 @@
     <decVal max="50"/>
     <label>State 5 successor state</label>
     <label xml:lang="de">Zustand 5 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 5 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 5 initially On" CV="504" mask="VXXXXXXX" default="0">
@@ -706,9 +706,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 6 											 -->
-	<variable item="Duration State 6" CV="311" mask="VVVVVVVV" default="100">
-		<splitVal highCV="310" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 6 -->
+    <variable item="Duration State 6" CV="311" mask="VVVVVVVV" default="100">
+        <splitVal highCV="310" upperMask="VVVVVVVV"/>
     <label>Duration State 6</label>
     <label xml:lang="de">Dauer des Zustands 6</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -777,7 +777,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 6 switches A1" CV="411" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 6 switches A1" CV="411" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 6 switches A1</label>
     <label xml:lang="de">Zustand 6 schaltet A1</label>
@@ -830,7 +830,7 @@
     <decVal max="50"/>
     <label>State 6 successor state</label>
     <label xml:lang="de">Zustand 6 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 6 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 6 initially On" CV="505" mask="VXXXXXXX" default="0">
@@ -840,9 +840,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 7 											 -->
-	<variable item="Duration State 7" CV="313" mask="VVVVVVVV" default="100">
-		<splitVal highCV="312" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 7 -->
+    <variable item="Duration State 7" CV="313" mask="VVVVVVVV" default="100">
+        <splitVal highCV="312" upperMask="VVVVVVVV"/>
     <label>Duration State 7</label>
     <label xml:lang="de">Dauer des Zustands 7</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -911,7 +911,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 7 switches A1" CV="413" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 7 switches A1" CV="413" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 7 switches A1</label>
     <label xml:lang="de">Zustand 7 schaltet A1</label>
@@ -964,7 +964,7 @@
     <decVal max="50"/>
     <label>State 7 successor state</label>
     <label xml:lang="de">Zustand 7 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 7 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 7 initially On" CV="506" mask="VXXXXXXX" default="0">
@@ -974,9 +974,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 8 											 -->
-	<variable item="Duration State 8" CV="315" mask="VVVVVVVV" default="100">
-		<splitVal highCV="314" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 8 -->
+    <variable item="Duration State 8" CV="315" mask="VVVVVVVV" default="100">
+        <splitVal highCV="314" upperMask="VVVVVVVV"/>
     <label>Duration State 8</label>
     <label xml:lang="de">Dauer des Zustands 8</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -1045,7 +1045,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 8 switches A1" CV="415" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 8 switches A1" CV="415" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 8 switches A1</label>
     <label xml:lang="de">Zustand 8 schaltet A1</label>
@@ -1098,7 +1098,7 @@
     <decVal max="50"/>
     <label>State 8 successor state</label>
     <label xml:lang="de">Zustand 8 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 8 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 8 initially On" CV="507" mask="VXXXXXXX" default="0">
@@ -1108,9 +1108,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 9 											 -->
-	<variable item="Duration State 9" CV="317" mask="VVVVVVVV" default="100">
-		<splitVal highCV="316" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 9 -->
+    <variable item="Duration State 9" CV="317" mask="VVVVVVVV" default="100">
+        <splitVal highCV="316" upperMask="VVVVVVVV"/>
     <label>Duration State 9</label>
     <label xml:lang="de">Dauer des Zustands 9</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -1179,7 +1179,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 9 switches A1" CV="417" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 9 switches A1" CV="417" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 9 switches A1</label>
     <label xml:lang="de">Zustand 9 schaltet A1</label>
@@ -1232,7 +1232,7 @@
     <decVal max="50"/>
     <label>State 9 successor state</label>
     <label xml:lang="de">Zustand 9 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 9 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 9 initially On" CV="508" mask="VXXXXXXX" default="0">
@@ -1242,9 +1242,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 10 											 -->
-	<variable item="Duration State 10" CV="319" mask="VVVVVVVV" default="100">
-		<splitVal highCV="318" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 10 -->
+    <variable item="Duration State 10" CV="319" mask="VVVVVVVV" default="100">
+        <splitVal highCV="318" upperMask="VVVVVVVV"/>
     <label>Duration State 10</label>
     <label xml:lang="de">Dauer des Zustands 10</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -1313,7 +1313,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 10 switches A1" CV="419" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 10 switches A1" CV="419" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 10 switches A1</label>
     <label xml:lang="de">Zustand 10 schaltet A1</label>
@@ -1366,7 +1366,7 @@
     <decVal max="50"/>
     <label>State 10 successor state</label>
     <label xml:lang="de">Zustand 10 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 10 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 10 initially On" CV="509" mask="VXXXXXXX" default="0">
@@ -1377,9 +1377,9 @@
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
 
-	<!-- 	CVs for State 11 											 -->
-	<variable item="Duration State 11" CV="321" mask="VVVVVVVV" default="100">
-		<splitVal highCV="320" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 11 -->
+    <variable item="Duration State 11" CV="321" mask="VVVVVVVV" default="100">
+        <splitVal highCV="320" upperMask="VVVVVVVV"/>
     <label>Duration State 11</label>
     <label xml:lang="de">Dauer des Zustands 11</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -1448,7 +1448,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 11 switches A1" CV="421" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 11 switches A1" CV="421" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 11 switches A1</label>
     <label xml:lang="de">Zustand 11 schaltet A1</label>
@@ -1501,7 +1501,7 @@
     <decVal max="50"/>
     <label>State 11 successor state</label>
     <label xml:lang="de">Zustand 11 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 11 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 11 initially On" CV="510" mask="VXXXXXXX" default="0">
@@ -1511,9 +1511,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 12 											 -->
-	<variable item="Duration State 12" CV="323" mask="VVVVVVVV" default="100">
-		<splitVal highCV="322" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 12 -->
+    <variable item="Duration State 12" CV="323" mask="VVVVVVVV" default="100">
+        <splitVal highCV="322" upperMask="VVVVVVVV"/>
     <label>Duration State 12</label>
     <label xml:lang="de">Dauer des Zustands 12</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -1582,7 +1582,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 12 switches A1" CV="423" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 12 switches A1" CV="423" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 12 switches A1</label>
     <label xml:lang="de">Zustand 12 schaltet A1</label>
@@ -1635,7 +1635,7 @@
     <decVal max="50"/>
     <label>State 12 successor state</label>
     <label xml:lang="de">Zustand 12 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 12 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 12 initially On" CV="511" mask="VXXXXXXX" default="0">
@@ -1645,9 +1645,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 13 											 -->
-	<variable item="Duration State 13" CV="325" mask="VVVVVVVV" default="100">
-		<splitVal highCV="324" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 13 -->
+    <variable item="Duration State 13" CV="325" mask="VVVVVVVV" default="100">
+        <splitVal highCV="324" upperMask="VVVVVVVV"/>
     <label>Duration State 13</label>
     <label xml:lang="de">Dauer des Zustands 13</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -1716,7 +1716,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 13 switches A1" CV="425" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 13 switches A1" CV="425" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 13 switches A1</label>
     <label xml:lang="de">Zustand 13 schaltet A1</label>
@@ -1769,7 +1769,7 @@
     <decVal max="50"/>
     <label>State 13 successor state</label>
     <label xml:lang="de">Zustand 13 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 13 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 13 initially On" CV="512" mask="VXXXXXXX" default="0">
@@ -1779,9 +1779,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 14 											 -->
-	<variable item="Duration State 14" CV="327" mask="VVVVVVVV" default="100">
-		<splitVal highCV="326" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 14 -->
+    <variable item="Duration State 14" CV="327" mask="VVVVVVVV" default="100">
+        <splitVal highCV="326" upperMask="VVVVVVVV"/>
     <label>Duration State 14</label>
     <label xml:lang="de">Dauer des Zustands 14</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -1850,7 +1850,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 14 switches A1" CV="427" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 14 switches A1" CV="427" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 14 switches A1</label>
     <label xml:lang="de">Zustand 14 schaltet A1</label>
@@ -1903,7 +1903,7 @@
     <decVal max="50"/>
     <label>State 14 successor state</label>
     <label xml:lang="de">Zustand 14 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 14 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 14 initially On" CV="513" mask="VXXXXXXX" default="0">
@@ -1913,9 +1913,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 15 											 -->
-	<variable item="Duration State 15" CV="329" mask="VVVVVVVV" default="100">
-		<splitVal highCV="328" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 15 -->
+    <variable item="Duration State 15" CV="329" mask="VVVVVVVV" default="100">
+        <splitVal highCV="328" upperMask="VVVVVVVV"/>
     <label>Duration State 15</label>
     <label xml:lang="de">Dauer des Zustands 15</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -1984,7 +1984,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 15 switches A1" CV="429" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 15 switches A1" CV="429" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 15 switches A1</label>
     <label xml:lang="de">Zustand 15 schaltet A1</label>
@@ -2037,7 +2037,7 @@
     <decVal max="50"/>
     <label>State 15 successor state</label>
     <label xml:lang="de">Zustand 15 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 15 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 15 initially On" CV="514" mask="VXXXXXXX" default="0">
@@ -2047,9 +2047,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 16 											 -->
-	<variable item="Duration State 16" CV="331" mask="VVVVVVVV" default="100">
-		<splitVal highCV="330" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 16 -->
+    <variable item="Duration State 16" CV="331" mask="VVVVVVVV" default="100">
+        <splitVal highCV="330" upperMask="VVVVVVVV"/>
     <label>Duration State 16</label>
     <label xml:lang="de">Dauer des Zustands 16</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -2118,7 +2118,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 16 switches A1" CV="431" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 16 switches A1" CV="431" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 16 switches A1</label>
     <label xml:lang="de">Zustand 16 schaltet A1</label>
@@ -2171,7 +2171,7 @@
     <decVal max="50"/>
     <label>State 16 successor state</label>
     <label xml:lang="de">Zustand 16 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 16 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 16 initially On" CV="515" mask="VXXXXXXX" default="0">
@@ -2181,9 +2181,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 17 											 -->
-	<variable item="Duration State 17" CV="333" mask="VVVVVVVV" default="100">
-		<splitVal highCV="332" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 17 -->
+    <variable item="Duration State 17" CV="333" mask="VVVVVVVV" default="100">
+        <splitVal highCV="332" upperMask="VVVVVVVV"/>
     <label>Duration State 17</label>
     <label xml:lang="de">Dauer des Zustands 17</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -2252,7 +2252,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 17 switches A1" CV="433" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 17 switches A1" CV="433" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 17 switches A1</label>
     <label xml:lang="de">Zustand 17 schaltet A1</label>
@@ -2305,7 +2305,7 @@
     <decVal max="50"/>
     <label>State 17 successor state</label>
     <label xml:lang="de">Zustand 17 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 17 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 17 initially On" CV="516" mask="VXXXXXXX" default="0">
@@ -2315,9 +2315,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 18 											 -->
-	<variable item="Duration State 18" CV="335" mask="VVVVVVVV" default="100">
-		<splitVal highCV="334" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 18 -->
+    <variable item="Duration State 18" CV="335" mask="VVVVVVVV" default="100">
+        <splitVal highCV="334" upperMask="VVVVVVVV"/>
     <label>Duration State 18</label>
     <label xml:lang="de">Dauer des Zustands 18</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -2386,7 +2386,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 18 switches A1" CV="435" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 18 switches A1" CV="435" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 18 switches A1</label>
     <label xml:lang="de">Zustand 18 schaltet A1</label>
@@ -2439,7 +2439,7 @@
     <decVal max="50"/>
     <label>State 18 successor state</label>
     <label xml:lang="de">Zustand 18 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 18 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 18 initially On" CV="517" mask="VXXXXXXX" default="0">
@@ -2449,9 +2449,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 19 											 -->
-	<variable item="Duration State 19" CV="337" mask="VVVVVVVV" default="100">
-		<splitVal highCV="336" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 19 -->
+    <variable item="Duration State 19" CV="337" mask="VVVVVVVV" default="100">
+        <splitVal highCV="336" upperMask="VVVVVVVV"/>
     <label>Duration State 19</label>
     <label xml:lang="de">Dauer des Zustands 19</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -2520,7 +2520,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 1aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 19 switches A1" CV="437" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 19 switches A1" CV="437" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 19 switches A1</label>
     <label xml:lang="de">Zustand 19 schaltet A1</label>
@@ -2573,7 +2573,7 @@
     <decVal max="50"/>
     <label>State 19 successor state</label>
     <label xml:lang="de">Zustand 19 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 150 wieder mit Zustand 19 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 1beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 19 initially On" CV="518" mask="VXXXXXXX" default="0">
@@ -2583,9 +2583,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 20 											 -->
-	<variable item="Duration State 20" CV="339" mask="VVVVVVVV" default="100">
-		<splitVal highCV="338" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 20 -->
+    <variable item="Duration State 20" CV="339" mask="VVVVVVVV" default="100">
+        <splitVal highCV="338" upperMask="VVVVVVVV"/>
     <label>Duration State 20</label>
     <label xml:lang="de">Dauer des Zustands 20</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -2654,7 +2654,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 20 switches A1" CV="439" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 20 switches A1" CV="439" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 20 switches A1</label>
     <label xml:lang="de">Zustand 2 schaltet A1</label>
@@ -2707,7 +2707,7 @@
     <decVal max="50"/>
     <label>State 20 successor state</label>
     <label xml:lang="de">Zustand 2 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 2 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 20 initially On" CV="519" mask="VXXXXXXX" default="0">
@@ -2717,9 +2717,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 21 											 -->
-	<variable item="Duration State 21" CV="341" mask="VVVVVVVV" default="100">
-		<splitVal highCV="340" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 21 -->
+    <variable item="Duration State 21" CV="341" mask="VVVVVVVV" default="100">
+        <splitVal highCV="340" upperMask="VVVVVVVV"/>
     <label>Duration State 21</label>
     <label xml:lang="de">Dauer des Zustands 21</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -2788,7 +2788,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 21 switches A1" CV="441" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 21 switches A1" CV="441" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 21 switches A1</label>
     <label xml:lang="de">Zustand 21 schaltet A1</label>
@@ -2841,7 +2841,7 @@
     <decVal max="50"/>
     <label>State 21 successor state</label>
     <label xml:lang="de">Zustand 21 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 21 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 21 initially On" CV="520" mask="VXXXXXXX" default="0">
@@ -2851,9 +2851,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 22 											 -->
-	<variable item="Duration State 22" CV="343" mask="VVVVVVVV" default="100">
-		<splitVal highCV="342" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 22 -->
+    <variable item="Duration State 22" CV="343" mask="VVVVVVVV" default="100">
+        <splitVal highCV="342" upperMask="VVVVVVVV"/>
     <label>Duration State 22</label>
     <label xml:lang="de">Dauer des Zustands 22</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -2922,7 +2922,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 22 switches A1" CV="443" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 22 switches A1" CV="443" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 22 switches A1</label>
     <label xml:lang="de">Zustand 22 schaltet A1</label>
@@ -2975,7 +2975,7 @@
     <decVal max="50"/>
     <label>State 22 successor state</label>
     <label xml:lang="de">Zustand 22 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 22 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 22 initially On" CV="521" mask="VXXXXXXX" default="0">
@@ -2985,9 +2985,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 23 											 -->
-	<variable item="Duration State 23" CV="345" mask="VVVVVVVV" default="100">
-		<splitVal highCV="344" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 23 -->
+    <variable item="Duration State 23" CV="345" mask="VVVVVVVV" default="100">
+        <splitVal highCV="344" upperMask="VVVVVVVV"/>
     <label>Duration State 23</label>
     <label xml:lang="de">Dauer des Zustands 23</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -3056,7 +3056,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 23 switches A1" CV="445" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 23 switches A1" CV="445" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 23 switches A1</label>
     <label xml:lang="de">Zustand 23 schaltet A1</label>
@@ -3109,7 +3109,7 @@
     <decVal max="50"/>
     <label>State 23 successor state</label>
     <label xml:lang="de">Zustand 23 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 23 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 23 initially On" CV="522" mask="VXXXXXXX" default="0">
@@ -3119,9 +3119,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 24 											 -->
-	<variable item="Duration State 24" CV="347" mask="VVVVVVVV" default="100">
-		<splitVal highCV="346" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 24 -->
+    <variable item="Duration State 24" CV="347" mask="VVVVVVVV" default="100">
+        <splitVal highCV="346" upperMask="VVVVVVVV"/>
     <label>Duration State 24</label>
     <label xml:lang="de">Dauer des Zustands 24</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -3190,7 +3190,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 24 switches A1" CV="447" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 24 switches A1" CV="447" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 24 switches A1</label>
     <label xml:lang="de">Zustand 24 schaltet A1</label>
@@ -3243,7 +3243,7 @@
     <decVal max="50"/>
     <label>State 24 successor state</label>
     <label xml:lang="de">Zustand 24 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 24 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 24 initially On" CV="523" mask="VXXXXXXX" default="0">
@@ -3253,9 +3253,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 25 											 -->
-	<variable item="Duration State 25" CV="349" mask="VVVVVVVV" default="100">
-		<splitVal highCV="348" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 25 -->
+    <variable item="Duration State 25" CV="349" mask="VVVVVVVV" default="100">
+        <splitVal highCV="348" upperMask="VVVVVVVV"/>
     <label>Duration State 25</label>
     <label xml:lang="de">Dauer des Zustands 25</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -3324,7 +3324,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 25 switches A1" CV="449" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 25 switches A1" CV="449" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 25 switches A1</label>
     <label xml:lang="de">Zustand 25 schaltet A1</label>
@@ -3377,7 +3377,7 @@
     <decVal max="50"/>
     <label>State 25 successor state</label>
     <label xml:lang="de">Zustand 25 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 25 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 25 initially On" CV="524" mask="VXXXXXXX" default="0">
@@ -3387,9 +3387,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 26 											 -->
-	<variable item="Duration State 26" CV="351" mask="VVVVVVVV" default="100">
-		<splitVal highCV="350" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 26 -->
+    <variable item="Duration State 26" CV="351" mask="VVVVVVVV" default="100">
+        <splitVal highCV="350" upperMask="VVVVVVVV"/>
     <label>Duration State 26</label>
     <label xml:lang="de">Dauer des Zustands 26</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -3458,7 +3458,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 26 switches A1" CV="451" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 26 switches A1" CV="451" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 26 switches A1</label>
     <label xml:lang="de">Zustand 26 schaltet A1</label>
@@ -3511,7 +3511,7 @@
     <decVal max="50"/>
     <label>State 26 successor state</label>
     <label xml:lang="de">Zustand 26 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 26 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 26 initially On" CV="525" mask="VXXXXXXX" default="0">
@@ -3521,9 +3521,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 27 											 -->
-	<variable item="Duration State 27" CV="353" mask="VVVVVVVV" default="100">
-		<splitVal highCV="352" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 27 -->
+    <variable item="Duration State 27" CV="353" mask="VVVVVVVV" default="100">
+        <splitVal highCV="352" upperMask="VVVVVVVV"/>
     <label>Duration State 27</label>
     <label xml:lang="de">Dauer des Zustands 27</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -3592,7 +3592,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 27 switches A1" CV="453" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 27 switches A1" CV="453" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 27 switches A1</label>
     <label xml:lang="de">Zustand 27 schaltet A1</label>
@@ -3645,7 +3645,7 @@
     <decVal max="50"/>
     <label>State 27 successor state</label>
     <label xml:lang="de">Zustand 27 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 27 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 27 initially On" CV="526" mask="VXXXXXXX" default="0">
@@ -3655,9 +3655,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 28 											 -->
-	<variable item="Duration State 28" CV="355" mask="VVVVVVVV" default="100">
-		<splitVal highCV="354" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 28 -->
+    <variable item="Duration State 28" CV="355" mask="VVVVVVVV" default="100">
+        <splitVal highCV="354" upperMask="VVVVVVVV"/>
     <label>Duration State 28</label>
     <label xml:lang="de">Dauer des Zustands 28</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -3726,7 +3726,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 28 switches A1" CV="455" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 28 switches A1" CV="455" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 28 switches A1</label>
     <label xml:lang="de">Zustand 28 schaltet A1</label>
@@ -3779,7 +3779,7 @@
     <decVal max="50"/>
     <label>State 28 successor state</label>
     <label xml:lang="de">Zustand 28 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 28 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 28 initially On" CV="527" mask="VXXXXXXX" default="0">
@@ -3789,9 +3789,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 29 											 -->
-	<variable item="Duration State 29" CV="357" mask="VVVVVVVV" default="100">
-		<splitVal highCV="356" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 29 -->
+    <variable item="Duration State 29" CV="357" mask="VVVVVVVV" default="100">
+        <splitVal highCV="356" upperMask="VVVVVVVV"/>
     <label>Duration State 29</label>
     <label xml:lang="de">Dauer des Zustands 29</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -3860,7 +3860,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 2aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 29 switches A1" CV="457" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 29 switches A1" CV="457" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 29 switches A1</label>
     <label xml:lang="de">Zustand 29 schaltet A1</label>
@@ -3913,7 +3913,7 @@
     <decVal max="50"/>
     <label>State 29 successor state</label>
     <label xml:lang="de">Zustand 29 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 250 wieder mit Zustand 29 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 2beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 29 initially On" CV="528" mask="VXXXXXXX" default="0">
@@ -3923,9 +3923,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 30 											 -->
-	<variable item="Duration State 30" CV="359" mask="VVVVVVVV" default="100">
-		<splitVal highCV="358" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 30 -->
+    <variable item="Duration State 30" CV="359" mask="VVVVVVVV" default="100">
+        <splitVal highCV="358" upperMask="VVVVVVVV"/>
     <label>Duration State 30</label>
     <label xml:lang="de">Dauer des Zustands 30</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -3994,7 +3994,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 30 switches A1" CV="459" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 30 switches A1" CV="459" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 30 switches A1</label>
     <label xml:lang="de">Zustand 3 schaltet A1</label>
@@ -4047,7 +4047,7 @@
     <decVal max="50"/>
     <label>State 30 successor state</label>
     <label xml:lang="de">Zustand 3 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 3 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 30 initially On" CV="529" mask="VXXXXXXX" default="0">
@@ -4057,9 +4057,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 31 											 -->
-	<variable item="Duration State 31" CV="361" mask="VVVVVVVV" default="100">
-		<splitVal highCV="360" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 31 -->
+    <variable item="Duration State 31" CV="361" mask="VVVVVVVV" default="100">
+        <splitVal highCV="360" upperMask="VVVVVVVV"/>
     <label>Duration State 31</label>
     <label xml:lang="de">Dauer des Zustands 31</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -4128,7 +4128,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 31 switches A1" CV="461" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 31 switches A1" CV="461" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 31 switches A1</label>
     <label xml:lang="de">Zustand 31 schaltet A1</label>
@@ -4181,7 +4181,7 @@
     <decVal max="50"/>
     <label>State 31 successor state</label>
     <label xml:lang="de">Zustand 31 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 31 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 31 initially On" CV="530" mask="VXXXXXXX" default="0">
@@ -4191,9 +4191,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 32 											 -->
-	<variable item="Duration State 32" CV="363" mask="VVVVVVVV" default="100">
-		<splitVal highCV="362" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 32 -->
+    <variable item="Duration State 32" CV="363" mask="VVVVVVVV" default="100">
+        <splitVal highCV="362" upperMask="VVVVVVVV"/>
     <label>Duration State 32</label>
     <label xml:lang="de">Dauer des Zustands 32</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -4262,7 +4262,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 32 switches A1" CV="463" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 32 switches A1" CV="463" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 32 switches A1</label>
     <label xml:lang="de">Zustand 32 schaltet A1</label>
@@ -4315,7 +4315,7 @@
     <decVal max="50"/>
     <label>State 32 successor state</label>
     <label xml:lang="de">Zustand 32 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 32 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 32 initially On" CV="531" mask="VXXXXXXX" default="0">
@@ -4325,9 +4325,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 33 											 -->
-	<variable item="Duration State 33" CV="365" mask="VVVVVVVV" default="100">
-		<splitVal highCV="364" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 33 -->
+    <variable item="Duration State 33" CV="365" mask="VVVVVVVV" default="100">
+        <splitVal highCV="364" upperMask="VVVVVVVV"/>
     <label>Duration State 33</label>
     <label xml:lang="de">Dauer des Zustands 33</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -4396,7 +4396,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 33 switches A1" CV="465" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 33 switches A1" CV="465" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 33 switches A1</label>
     <label xml:lang="de">Zustand 33 schaltet A1</label>
@@ -4449,7 +4449,7 @@
     <decVal max="50"/>
     <label>State 33 successor state</label>
     <label xml:lang="de">Zustand 33 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 33 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 33 initially On" CV="532" mask="VXXXXXXX" default="0">
@@ -4459,9 +4459,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 34 											 -->
-	<variable item="Duration State 34" CV="367" mask="VVVVVVVV" default="100">
-		<splitVal highCV="366" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 34 -->
+    <variable item="Duration State 34" CV="367" mask="VVVVVVVV" default="100">
+        <splitVal highCV="366" upperMask="VVVVVVVV"/>
     <label>Duration State 34</label>
     <label xml:lang="de">Dauer des Zustands 34</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -4530,7 +4530,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 34 switches A1" CV="467" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 34 switches A1" CV="467" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 34 switches A1</label>
     <label xml:lang="de">Zustand 34 schaltet A1</label>
@@ -4583,7 +4583,7 @@
     <decVal max="50"/>
     <label>State 34 successor state</label>
     <label xml:lang="de">Zustand 34 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 34 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 34 initially On" CV="533" mask="VXXXXXXX" default="0">
@@ -4593,9 +4593,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 35 											 -->
-	<variable item="Duration State 35" CV="369" mask="VVVVVVVV" default="100">
-		<splitVal highCV="368" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 35 -->
+    <variable item="Duration State 35" CV="369" mask="VVVVVVVV" default="100">
+        <splitVal highCV="368" upperMask="VVVVVVVV"/>
     <label>Duration State 35</label>
     <label xml:lang="de">Dauer des Zustands 35</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -4664,7 +4664,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 35 switches A1" CV="469" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 35 switches A1" CV="469" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 35 switches A1</label>
     <label xml:lang="de">Zustand 35 schaltet A1</label>
@@ -4717,7 +4717,7 @@
     <decVal max="50"/>
     <label>State 35 successor state</label>
     <label xml:lang="de">Zustand 35 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 35 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 35 initially On" CV="534" mask="VXXXXXXX" default="0">
@@ -4727,9 +4727,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 36 											 -->
-	<variable item="Duration State 36" CV="371" mask="VVVVVVVV" default="100">
-		<splitVal highCV="370" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 36 -->
+    <variable item="Duration State 36" CV="371" mask="VVVVVVVV" default="100">
+        <splitVal highCV="370" upperMask="VVVVVVVV"/>
     <label>Duration State 36</label>
     <label xml:lang="de">Dauer des Zustands 36</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -4798,7 +4798,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 36 switches A1" CV="471" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 36 switches A1" CV="471" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 36 switches A1</label>
     <label xml:lang="de">Zustand 36 schaltet A1</label>
@@ -4851,7 +4851,7 @@
     <decVal max="50"/>
     <label>State 36 successor state</label>
     <label xml:lang="de">Zustand 36 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 36 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 36 initially On" CV="535" mask="VXXXXXXX" default="0">
@@ -4861,9 +4861,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 37 											 -->
-	<variable item="Duration State 37" CV="373" mask="VVVVVVVV" default="100">
-		<splitVal highCV="372" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 37 -->
+    <variable item="Duration State 37" CV="373" mask="VVVVVVVV" default="100">
+        <splitVal highCV="372" upperMask="VVVVVVVV"/>
     <label>Duration State 37</label>
     <label xml:lang="de">Dauer des Zustands 37</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -4932,7 +4932,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 37 switches A1" CV="473" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 37 switches A1" CV="473" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 37 switches A1</label>
     <label xml:lang="de">Zustand 37 schaltet A1</label>
@@ -4985,7 +4985,7 @@
     <decVal max="50"/>
     <label>State 37 successor state</label>
     <label xml:lang="de">Zustand 37 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 37 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 37 initially On" CV="536" mask="VXXXXXXX" default="0">
@@ -4995,9 +4995,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 38 											 -->
-	<variable item="Duration State 38" CV="375" mask="VVVVVVVV" default="100">
-		<splitVal highCV="374" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 38 -->
+    <variable item="Duration State 38" CV="375" mask="VVVVVVVV" default="100">
+        <splitVal highCV="374" upperMask="VVVVVVVV"/>
     <label>Duration State 38</label>
     <label xml:lang="de">Dauer des Zustands 38</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -5066,7 +5066,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 38 switches A1" CV="475" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 38 switches A1" CV="475" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 38 switches A1</label>
     <label xml:lang="de">Zustand 38 schaltet A1</label>
@@ -5119,7 +5119,7 @@
     <decVal max="50"/>
     <label>State 38 successor state</label>
     <label xml:lang="de">Zustand 38 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 38 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 38 initially On" CV="537" mask="VXXXXXXX" default="0">
@@ -5129,9 +5129,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 39 											 -->
-	<variable item="Duration State 39" CV="377" mask="VVVVVVVV" default="100">
-		<splitVal highCV="376" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 39 -->
+    <variable item="Duration State 39" CV="377" mask="VVVVVVVV" default="100">
+        <splitVal highCV="376" upperMask="VVVVVVVV"/>
     <label>Duration State 39</label>
     <label xml:lang="de">Dauer des Zustands 39</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -5200,7 +5200,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 3aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 39 switches A1" CV="477" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 39 switches A1" CV="477" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 39 switches A1</label>
     <label xml:lang="de">Zustand 39 schaltet A1</label>
@@ -5253,7 +5253,7 @@
     <decVal max="50"/>
     <label>State 39 successor state</label>
     <label xml:lang="de">Zustand 39 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 350 wieder mit Zustand 39 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 3beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 39 initially On" CV="538" mask="VXXXXXXX" default="0">
@@ -5263,9 +5263,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 40 											 -->
-	<variable item="Duration State 40" CV="379" mask="VVVVVVVV" default="100">
-		<splitVal highCV="378" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 40 -->
+    <variable item="Duration State 40" CV="379" mask="VVVVVVVV" default="100">
+        <splitVal highCV="378" upperMask="VVVVVVVV"/>
     <label>Duration State 40</label>
     <label xml:lang="de">Dauer des Zustands 40</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -5334,7 +5334,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 40 switches A1" CV="479" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 40 switches A1" CV="479" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 40 switches A1</label>
     <label xml:lang="de">Zustand 4 schaltet A1</label>
@@ -5387,7 +5387,7 @@
     <decVal max="50"/>
     <label>State 40 successor state</label>
     <label xml:lang="de">Zustand 4 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 4 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 40 initially On" CV="539" mask="VXXXXXXX" default="0">
@@ -5397,9 +5397,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 41 											 -->
-	<variable item="Duration State 41" CV="381" mask="VVVVVVVV" default="100">
-		<splitVal highCV="380" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 41 -->
+    <variable item="Duration State 41" CV="381" mask="VVVVVVVV" default="100">
+        <splitVal highCV="380" upperMask="VVVVVVVV"/>
     <label>Duration State 41</label>
     <label xml:lang="de">Dauer des Zustands 41</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -5468,7 +5468,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 41 switches A1" CV="481" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 41 switches A1" CV="481" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 41 switches A1</label>
     <label xml:lang="de">Zustand 41 schaltet A1</label>
@@ -5521,7 +5521,7 @@
     <decVal max="50"/>
     <label>State 41 successor state</label>
     <label xml:lang="de">Zustand 41 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 1.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 41 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 41 initially On" CV="540" mask="VXXXXXXX" default="0">
@@ -5531,9 +5531,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 42 											 -->
-	<variable item="Duration State 42" CV="383" mask="VVVVVVVV" default="100">
-		<splitVal highCV="382" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 42 -->
+    <variable item="Duration State 42" CV="383" mask="VVVVVVVV" default="100">
+        <splitVal highCV="382" upperMask="VVVVVVVV"/>
     <label>Duration State 42</label>
     <label xml:lang="de">Dauer des Zustands 42</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -5602,7 +5602,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 42 switches A1" CV="483" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 42 switches A1" CV="483" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 42 switches A1</label>
     <label xml:lang="de">Zustand 42 schaltet A1</label>
@@ -5655,7 +5655,7 @@
     <decVal max="50"/>
     <label>State 42 successor state</label>
     <label xml:lang="de">Zustand 42 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 42 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 42 initially On" CV="541" mask="VXXXXXXX" default="0">
@@ -5665,9 +5665,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 43 											 -->
-	<variable item="Duration State 43" CV="385" mask="VVVVVVVV" default="100">
-		<splitVal highCV="384" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 43 -->
+    <variable item="Duration State 43" CV="385" mask="VVVVVVVV" default="100">
+        <splitVal highCV="384" upperMask="VVVVVVVV"/>
     <label>Duration State 43</label>
     <label xml:lang="de">Dauer des Zustands 43</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -5736,7 +5736,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 43 switches A1" CV="485" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 43 switches A1" CV="485" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 43 switches A1</label>
     <label xml:lang="de">Zustand 43 schaltet A1</label>
@@ -5789,7 +5789,7 @@
     <decVal max="50"/>
     <label>State 43 successor state</label>
     <label xml:lang="de">Zustand 43 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 43 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 43 initially On" CV="542" mask="VXXXXXXX" default="0">
@@ -5799,9 +5799,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 44 											 -->
-	<variable item="Duration State 44" CV="387" mask="VVVVVVVV" default="100">
-		<splitVal highCV="386" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 44 -->
+    <variable item="Duration State 44" CV="387" mask="VVVVVVVV" default="100">
+        <splitVal highCV="386" upperMask="VVVVVVVV"/>
     <label>Duration State 44</label>
     <label xml:lang="de">Dauer des Zustands 44</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -5870,7 +5870,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 44 switches A1" CV="487" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 44 switches A1" CV="487" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 44 switches A1</label>
     <label xml:lang="de">Zustand 44 schaltet A1</label>
@@ -5923,7 +5923,7 @@
     <decVal max="50"/>
     <label>State 44 successor state</label>
     <label xml:lang="de">Zustand 44 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 44 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 44 initially On" CV="543" mask="VXXXXXXX" default="0">
@@ -5933,9 +5933,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 45 											 -->
-	<variable item="Duration State 45" CV="389" mask="VVVVVVVV" default="100">
-		<splitVal highCV="388" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 45 -->
+    <variable item="Duration State 45" CV="389" mask="VVVVVVVV" default="100">
+        <splitVal highCV="388" upperMask="VVVVVVVV"/>
     <label>Duration State 45</label>
     <label xml:lang="de">Dauer des Zustands 45</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -6004,7 +6004,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 45 switches A1" CV="489" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 45 switches A1" CV="489" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 45 switches A1</label>
     <label xml:lang="de">Zustand 45 schaltet A1</label>
@@ -6057,7 +6057,7 @@
     <decVal max="50"/>
     <label>State 45 successor state</label>
     <label xml:lang="de">Zustand 45 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 45 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 45 initially On" CV="544" mask="VXXXXXXX" default="0">
@@ -6067,9 +6067,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 46 											 -->
-	<variable item="Duration State 46" CV="391" mask="VVVVVVVV" default="100">
-		<splitVal highCV="390" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 46 -->
+    <variable item="Duration State 46" CV="391" mask="VVVVVVVV" default="100">
+        <splitVal highCV="390" upperMask="VVVVVVVV"/>
     <label>Duration State 46</label>
     <label xml:lang="de">Dauer des Zustands 46</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -6138,7 +6138,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 46 switches A1" CV="491" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 46 switches A1" CV="491" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 46 switches A1</label>
     <label xml:lang="de">Zustand 46 schaltet A1</label>
@@ -6191,7 +6191,7 @@
     <decVal max="50"/>
     <label>State 46 successor state</label>
     <label xml:lang="de">Zustand 46 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 46 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 46 initially On" CV="545" mask="VXXXXXXX" default="0">
@@ -6201,9 +6201,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 47 											 -->
-	<variable item="Duration State 47" CV="393" mask="VVVVVVVV" default="100">
-		<splitVal highCV="392" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 47 -->
+    <variable item="Duration State 47" CV="393" mask="VVVVVVVV" default="100">
+        <splitVal highCV="392" upperMask="VVVVVVVV"/>
     <label>Duration State 47</label>
     <label xml:lang="de">Dauer des Zustands 47</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -6272,7 +6272,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 47 switches A1" CV="493" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 47 switches A1" CV="493" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 47 switches A1</label>
     <label xml:lang="de">Zustand 47 schaltet A1</label>
@@ -6325,7 +6325,7 @@
     <decVal max="50"/>
     <label>State 47 successor state</label>
     <label xml:lang="de">Zustand 47 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 47 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 47 initially On" CV="546" mask="VXXXXXXX" default="0">
@@ -6335,9 +6335,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 48 											 -->
-	<variable item="Duration State 48" CV="395" mask="VVVVVVVV" default="100">
-		<splitVal highCV="394" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 48 -->
+    <variable item="Duration State 48" CV="395" mask="VVVVVVVV" default="100">
+        <splitVal highCV="394" upperMask="VVVVVVVV"/>
     <label>Duration State 48</label>
     <label xml:lang="de">Dauer des Zustands 48</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -6406,7 +6406,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 48 switches A1" CV="495" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 48 switches A1" CV="495" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 48 switches A1</label>
     <label xml:lang="de">Zustand 48 schaltet A1</label>
@@ -6459,7 +6459,7 @@
     <decVal max="50"/>
     <label>State 48 successor state</label>
     <label xml:lang="de">Zustand 48 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 48 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 48 initially On" CV="547" mask="VXXXXXXX" default="0">
@@ -6469,9 +6469,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 49 											 -->
-	<variable item="Duration State 49" CV="397" mask="VVVVVVVV" default="100">
-		<splitVal highCV="396" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 49 -->
+    <variable item="Duration State 49" CV="397" mask="VVVVVVVV" default="100">
+        <splitVal highCV="396" upperMask="VVVVVVVV"/>
     <label>Duration State 49</label>
     <label xml:lang="de">Dauer des Zustands 49</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -6540,7 +6540,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand 4aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 49 switches A1" CV="497" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 49 switches A1" CV="497" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 49 switches A1</label>
     <label xml:lang="de">Zustand 49 schaltet A1</label>
@@ -6593,7 +6593,7 @@
     <decVal max="50"/>
     <label>State 49 successor state</label>
     <label xml:lang="de">Zustand 49 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 450 wieder mit Zustand 49 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands 4beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 49 initially On" CV="548" mask="VXXXXXXX" default="0">
@@ -6603,9 +6603,9 @@
     <tooltip>&lt;html&gt;0: Off after decoder power-on &lt;br&gt;1: On after decoder power-on&lt;br&gt;If this Bit is set in more than one CV, several sequences run in parallel&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0: beim Einschalten des Decoders aus &lt;br&gt;1: beim Einschalten des Decoders ein&lt;br&gt;Ist dieser Bit in mehreren CVs gesetzt, laufen mehrere Sequenzen gleichzeitig ab&lt;/html&gt;</tooltip>
   </variable>
-	<!-- 	CVs for State 50 											 -->
-	<variable item="Duration State 50" CV="399" mask="VVVVVVVV" default="100">
-		<splitVal highCV="398" upperMask="VVVVVVVV"/>
+    <!-- CVs for State 50 -->
+    <variable item="Duration State 50" CV="399" mask="VVVVVVVV" default="100">
+        <splitVal highCV="398" upperMask="VVVVVVVV"/>
     <label>Duration State 50</label>
     <label xml:lang="de">Dauer des Zustands 50</label>
     <tooltip>Duration of the state in 1/100 seconds</tooltip>
@@ -6674,7 +6674,7 @@
     <tooltip>&lt;html&gt;If a bit is set the corresponding function &lt;br&gt;output is switched while the state is active&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Ist ein Bit gesetzt, wird der entsprechende Funktionsausgang &lt;br&gt;angeschaltet, solange der Zustand aktiviert ist&lt;/html&gt;</tooltip>
   </variable>
-	<variable item="State 50 switches A1" CV="499" mask="XXXXXXVX" default="0" minOut="2">
+    <variable item="State 50 switches A1" CV="499" mask="XXXXXXVX" default="0" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>State 50 switches A1</label>
     <label xml:lang="de">Zustand 5 schaltet A1</label>
@@ -6727,7 +6727,7 @@
     <decVal max="50"/>
     <label>State 50 successor state</label>
     <label xml:lang="de">Zustand 5 Nachfolgezustand</label>
-		<tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Default values confi gure all sequence steps to run one after the other,&lt;br&gt;after state 50 continuing with state 2.&lt;br&gt;The sequence is finished if the CV does not contain&lt;br&gt;a valid successor value (either n > 50 or n = 0).&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert ist so festgelegt, dass alle Zustände nacheinander ablaufen&lt;br&gt;und nach Ende von Zustand 50 wieder mit Zustand 5 fortgesetzt wird.&lt;br&gt;n > 50 oder n = 0 führen dazu, dass eine Sequenz nach Ablauf des Zustands beendet wird.&lt;br&gt;(Was durchaus gewünscht sein kann.)&lt;/html&gt;</tooltip>
   </variable>
   <variable item="State 50 initially On" CV="549" mask="VXXXXXXX" default="0">

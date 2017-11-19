@@ -73,7 +73,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     private void createAttributes() {
-        String prio[] = new String[6];
+        String[] prio = new String[6];
         prio[0] = Level.FATAL.toString();
         prio[1] = Level.ERROR.toString();
         prio[2] = Level.WARN.toString();
@@ -122,7 +122,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
         }
         final String text = temp;
 
-        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+        jmri.util.ThreadingUtil.runOnGUI( ()->{
             try {
                 StyledDocument myDoc = myTextPane.getStyledDocument();
                 myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
@@ -130,7 +130,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
             } catch (BadLocationException badex) {
                 System.err.println(badex);  // can't log this, as it would be recursive error
             }
-        } ); 
+        } );
     }
 
     /**

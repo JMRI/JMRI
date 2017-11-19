@@ -12,7 +12,7 @@ import org.eclipse.jetty.server.Request;
 
 /**
  * helper class for getting uploaded files which are returned as a list object
- * based on examples at http://hmkcode.com/java-servlet-jquery-file-upload/ 
+ * based on examples at http://hmkcode.com/java-servlet-jquery-file-upload/
  *
  */
 public class MultipartRequestHandler {
@@ -40,7 +40,7 @@ public class MultipartRequestHandler {
 
             // if part is multiparts "file"
             if (part.getContentType() != null) {
-                
+
                 // populate a new FileMeta object
                 temp = new FileMeta();
                 temp.setFileName(getFilename(part));
@@ -59,7 +59,7 @@ public class MultipartRequestHandler {
     }
 
     // this method is used to get file name out of request headers
-    // 
+    //
     private static String getFilename(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {

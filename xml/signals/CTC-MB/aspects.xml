@@ -17,7 +17,7 @@
      <author>
         <personname><firstname>Chuck</firstname><surname>Catania</surname></personname>
         <email>info@modelrailroadcontrolsystems.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -26,7 +26,7 @@
         <date>2017=10-11</date>
         <authorinitials>CFC</authorinitials>
         <revremark>>SP Syle Searchlight Signals for CTC Model Boards</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
@@ -53,7 +53,7 @@
       <speed>Normal</speed>
       <speed2>Normal</speed2>
     </aspect>
-	
+
     <aspect>
       <name>Stop</name>
       <indication>Stop</indication>
@@ -103,7 +103,7 @@
     </aspect>
 
  </aspects>
-  
+
   <appearancefiles>
     <appearancefile href="appearance-SL-1-head.xml"/>
     <appearancefile href="appearance-SL-2-head.xml"/>
@@ -113,4 +113,3 @@
  </appearancefiles>
 
 </aspecttable>
-  

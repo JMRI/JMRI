@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * OlcbSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.openlcb.OlcbSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.openlcb.OlcbSystemConnectionMemo class
- *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2016
  */
 public class OlcbSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 

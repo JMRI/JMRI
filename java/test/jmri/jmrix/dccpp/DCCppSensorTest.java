@@ -6,12 +6,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * DCCppSensorTest.java
+ * Tests for the jmri.jmrix.dccpp.DCCppSensor class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppSensor class
- *
- * @author	Bob Jacobsen
- * @author	Mark Underwood
+ * @author Bob Jacobsen
+ * @author Mark Underwood
  */
 public class DCCppSensorTest extends TestCase {
 
@@ -56,7 +54,7 @@ public class DCCppSensorTest extends TestCase {
 
         // Verify this was created in UNKNOWN state
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
-        
+
         // Set the inverted flag
         t.setInverted(true);
 

@@ -37,7 +37,7 @@ public class SensorGroup {
      */
     SensorGroup(String name) {
         this.name = name;
-        // find suitable 
+        // find suitable
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         String group = name.toUpperCase();
         List<String> l = rm.getSystemNameList();

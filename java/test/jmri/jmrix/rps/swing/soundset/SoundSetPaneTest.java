@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of SoundSetPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SoundSetPaneTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SoundSetPane action = new SoundSetPane();
         Assert.assertNotNull("exists", action);
     }

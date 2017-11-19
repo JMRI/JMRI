@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
@@ -44,7 +43,7 @@ public class ComboBoxColorChooserPanel extends AbstractColorChooserPanel {
         // build the combo box.
         colorCombo = new JComboBox<String>();
         for (int i = 0; i < numColors; i++) {
-            colorCombo.addItem(Bundle.getMessage(colorText[i]));   
+            colorCombo.addItem(Bundle.getMessage(colorText[i]));
         }
         colorCombo.setMaximumRowCount(numColors);
         colorCombo.addActionListener( (ActionEvent e) -> {

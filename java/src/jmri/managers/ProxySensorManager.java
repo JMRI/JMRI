@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Implementation of a SensorManager that can serves as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
 public class ProxySensorManager extends AbstractProxyManager<Sensor>
         implements SensorManager {

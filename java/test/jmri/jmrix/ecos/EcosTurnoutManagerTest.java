@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * EcosTurnoutManagerTest.java
+ * Tests for the EcosTurnoutManager class
  *
- * Description:	tests for the EcosTurnoutManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class EcosTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

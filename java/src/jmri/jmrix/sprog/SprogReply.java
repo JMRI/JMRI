@@ -6,12 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SprogReply.java
+ * Carries the reply to a SprogMessage.
  *
- * Description:	Carries the reply to a SprogMessage
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Berridge - refactored, cleaned up, Feb 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Berridge - refactored, cleaned up, Feb 2010
   */
 public class SprogReply extends AbstractMRReply {
 
@@ -85,7 +83,7 @@ public class SprogReply extends AbstractMRReply {
      * Check and strip framing characters and DLE from a SPROG bootloader reply.
      */
     public boolean strip() {
-        char tmp[] = new char[_nDataChars];
+        char[] tmp = new char[_nDataChars];
         int j = 0;
         _isBoot = true; // definitely a boot message
         // Check framing characters

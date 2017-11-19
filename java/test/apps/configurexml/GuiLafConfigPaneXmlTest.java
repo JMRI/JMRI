@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * GuiLafConfigPaneXmlTest.java
+ * Tests for the GuiLafConfigPaneXml class
  *
- * Description: tests for the GuiLafConfigPaneXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class GuiLafConfigPaneXmlTest {
 

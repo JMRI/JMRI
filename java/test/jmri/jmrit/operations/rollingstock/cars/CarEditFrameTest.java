@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations Cars GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class CarEditFrameTest extends OperationsSwingTestCase {
 
@@ -24,7 +24,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
     @Test
     public void testCarEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars();		// load cars
+        loadCars(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
         Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
 
@@ -115,7 +115,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
     @Test
     public void testCarEditFrameRead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars();		// load cars
+        loadCars(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
         // should have 5 cars now
         Assert.assertEquals("number of cars", 5, cManager.getNumEntries());

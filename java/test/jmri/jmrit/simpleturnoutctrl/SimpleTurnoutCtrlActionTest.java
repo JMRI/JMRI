@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of SimpleTurnoutCtrlAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SimpleTurnoutCtrlActionTest {
 
@@ -25,7 +25,7 @@ public class SimpleTurnoutCtrlActionTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SimpleTurnoutCtrlAction action = new SimpleTurnoutCtrlAction(); 
+        SimpleTurnoutCtrlAction action = new SimpleTurnoutCtrlAction();
         Assert.assertNotNull("exists", action);
     }
 

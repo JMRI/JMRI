@@ -18,7 +18,7 @@
   <version author="Michael Mosher" version="3" lastUpdated="20130220"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20140530"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20140819"/>
-  <!-- This file contains the Tsunami definitions for Bowser OEM diesel locomotives	-->
+  <!-- This file contains the Tsunami definitions for Bowser OEM diesel locomotives -->
   <!-- version 1    Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file. -->
   <!-- version 2    Add Rule 17 bit to CV51 & 52 -->
   <!-- version 3    make more use of extrenal includes -->
@@ -31,7 +31,7 @@
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
-<!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->
+  <!--          For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Bowser OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Bowser Tsunami diesel decoders">
@@ -738,7 +738,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Short Horn</label>
       </variable>
-	  <variable item="F3 controls output 9" CV="37" mask="XXVXXXXX" default="0" include="PCC">
+      <variable item="F3 controls output 9" CV="37" mask="XXVXXXXX" default="0" include="PCC">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output output 9</label>
       </variable>
@@ -790,7 +790,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dimming</label>
       </variable>
-	  <!-- begin exchangeable function groups -->
+      <!-- begin exchangeable function groups -->
       <variables>
         <qualifier>
           <variableref>Function Group 2 and 3 Exchange</variableref>
@@ -1396,7 +1396,7 @@
       </variable>
       <variable CV="47" mask="XVVVVVVV" item="Sound Option 11-Not Displayed" default="0" include="PCC" tooltip="Value of 0 = Disabled.  See command station instructions for value to enable this feature.">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<decVal/>
+        <decVal/>
         <label>Analog Horn Control (0-255)</label>
       </variable>
       <!-- Lighting Configuration follows -->
@@ -1559,7 +1559,7 @@
       </variable>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 2-Not Displayed" default="0" include="PCC" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>
       </variable>
       <variable CV="112" mask="XXXXXXVX" item="Sound Option 3" default="0" exclude="PCC" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
@@ -1568,7 +1568,7 @@
       </variable>
       <variable CV="112" mask="XXXXXXVX" item="Sound Option 3-Not Displayed" default="0" include="PCC" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Radiator Fan Enable</label>
       </variable>
       <variable CV="113" item="Sound Group 3 Option 3" default="0" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;     off automatically after timeout period has elapsed.  Set to zero to disable.&lt;/html&gt;">
@@ -1678,7 +1678,7 @@
       </variable>
       <variable CV="115" mask="VVVVXXXX" item="Sound Option 10-Not Displayed" default="0" include="PCC" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<enumVal>
+        <enumVal>
           <enumChoice choice="Not Used">
             <choice>Not Used</choice>
           </enumChoice>
@@ -1695,7 +1695,7 @@
       </variable>
       <variable CV="116" mask="VVXXXXXX" item="Sound Option 4-Not Displayed" default="0" include="PCC" tooltip="Controls how the dynamic brakes interact with the engine RPMs">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumDynamic.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumDynamic.xml"/>
         <label>Dynamic Brake Override</label>
       </variable>
       <variable CV="116" mask="XXXVXXXX" item="Sound Option 5" default="0" exclude="PCC" tooltip="When this option AND manual (notching) engine control is enabled, locomotive will not move until engine starts">
@@ -1704,7 +1704,7 @@
       </variable>
       <variable CV="116" mask="XXXVXXXX" item="Sound Option 5-Not Displayed" default="0" include="PCC" tooltip="When this option AND manual (notching) engine control is enabled, locomotive will not move until engine starts">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumInterlock.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumInterlock.xml"/>
         <label>Engine RPM Interlock</label>
       </variable>
       <variable CV="116" mask="XXXXVVVV" item="Sound Option 6" default="7" exclude="PCC" tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle">
@@ -1713,7 +1713,7 @@
       </variable>
       <variable CV="116" mask="XXXXVVVV" item="Sound Option 6-Not Displayed" default="0" include="PCC" tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
         <label>Engine Notch Rate</label>
       </variable>
       <variable CV="118" item="Advanced Group 2 Option 6" default="204" include="PCC" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
@@ -1908,7 +1908,7 @@
       </variable>
       <variable CV="169" mask="VVVVVVVV" item="Whistle Reverb Level-Not Displayed" default="0" include="PCC" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<decVal/>
+        <decVal/>
         <label>Horn Reverb Level</label>
       </variable>
       <variable item="Bell Reverb Level" CV="170" mask="VVVVVVVV" default="0" exclude="PCC" tooltip="Sets the percentage of the bell signal level to mix into the reverb input">
@@ -1925,7 +1925,7 @@
       </variable>
       <variable CV="171" mask="VVVVVVVV" item="Exhaust Reverb Level-Not Displayed" default="0" include="PCC" tooltip="Sets the percentage of the diesel engine exhaust signal level to mix into the reverb input">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<decVal/>
+        <decVal/>
         <label>Engine Exhaust Reverb Level-Not Displayed</label>
       </variable>
       <variable CV="172" mask="VVVVVVVV" item="Air Pump Reverb Level" default="0" tooltip="Sets the percentage of the air compressor signal level to mix into the reverb input">
@@ -1955,7 +1955,7 @@
       </variable>
       <variable item="Grade Crossing Airhorn Sensitivity-Not Displayed" CV="195" mask="VVVVVVVV" default="4" include="PCC" tooltip="Specifies the positive rate of throttle change needed to activate the automatic grade crossing horn">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<decVal/>
+        <decVal/>
         <label>Grade Crossing Airhorn Sensitivity-Not Displayed</label>
       </variable>
       <variable item="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV" default="3" tooltip="Specifies the negative rate of throttle change needed to activate the automatic brake squeal">
@@ -1968,7 +1968,7 @@
       </variable>
       <variable item="Automatic Grade Crossing Horn Enable (Analog Mode)-Not Displayed" CV="197" mask="XXXXXXXV" default="0" include="PCC" tooltip="Enables the Automatic Grade Crossing Horn in Analog Mode">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Automatic Grade Crossing Horn Enable (Analog Mode)-Not Displayed</label>
       </variable>
       <variable item="Automatic Horn Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="1" exclude="PCC" tooltip="Enables the Automatic Horn Signal in Analog Mode">
@@ -1977,7 +1977,7 @@
       </variable>
       <variable item="Automatic Horn Signal Enable (Analog Mode)-Not Displayed" CV="197" mask="XXXXXXVX" default="1" include="PCC" tooltip="Enables the Automatic Horn Signal in Analog Mode">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Automatic Horn Signal Enable (Analog Mode)-Not Displayed</label>
       </variable>
       <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="1" exclude="PCC" tooltip="Enables the Automatic Bell in Analog Mode">
@@ -2002,7 +2002,7 @@
       </variable>
       <variable item="Automatic Grade Crossing Horn Enable-Not Displayed" CV="198" mask="XXXXXXXV" default="0" include="PCC" tooltip="Enables the Automatic Grade Crossing Horn in Digital Mode">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Automatic Grade Crossing Horn Enable-Not Displayed</label>
       </variable>
       <variable item="Automatic Horn Signal Enable" CV="198" mask="XXXXXXVX" default="0" exclude="PCC" tooltip="Enables the Automatic Horn Signal in Digital Mode">
@@ -2011,7 +2011,7 @@
       </variable>
       <variable item="Automatic Horn Signal Enable-Not Displayed" CV="198" mask="XXXXXXVX" default="0" include="PCC" tooltip="Enables the Automatic Horn Signal in Digital Mode">
         <!-- Not used for PCC Streetcar. CV is present on CV list but not displayed on pane -->
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Automatic Horn Signal Enable-Not Displayed</label>
       </variable>
       <variable item="Automatic Bell Enable" CV="198" mask="XXXXXVXX" default="0" exclude="PCC" tooltip="Enables the Automatic Bell in Digital Mode">

@@ -7,14 +7,14 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the SeeedStudioRfidProtocol class
- * 
+ *
  * SeeedStudio protocol:
- * 
+ *
  * 1-char - [STX] - 0x02
  * 10-chars - ASCII representation of 5 Tag ID bytes
  * 2-chars - ASCII representation of 1 checksum bytes
  * 1-char - [ETX] - 0x03
- * 
+ *
  * @author Matthew Harris
  */
 public class SeeedStudioRfidProtocolTest extends TestCase {

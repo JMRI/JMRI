@@ -444,7 +444,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * The print status for this location's switch list
-     * 
+     *
      * @return UNKNOWN PRINTED MODIFIED UPDATED CSV_GENERATED
      */
     public String getStatus() {
@@ -1208,7 +1208,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /*
      * set the jmri.Reporter object associated with this location.
-     * 
+     *
      * @param reader jmri.Reporter object.
      */
     protected void setReporter(Reporter r) {
@@ -1221,7 +1221,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /*
      * get the jmri.Reporter object associated with this location.
-     * 
+     *
      * @return jmri.Reporter object.
      */
     public Reporter getReporter() {

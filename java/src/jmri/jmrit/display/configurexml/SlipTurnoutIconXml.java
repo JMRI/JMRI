@@ -113,14 +113,14 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         String nameEast = loadTurnout(element, "turnoutEast");
         /*try {
          nameEast=element.getAttribute("turnoutEast").getValue();
-         } catch ( NullPointerException e) { 
+         } catch ( NullPointerException e) {
          log.error("incorrect information for turnout; must use turnout name");
          return;
          }*/
         String nameWest = loadTurnout(element, "turnoutWest");
         /*try {
          nameWest=element.getAttribute("turnoutWest").getValue();
-         } catch ( NullPointerException e) { 
+         } catch ( NullPointerException e) {
          log.error("incorrect information for turnout; must use turnout name");
          return;
          }*/

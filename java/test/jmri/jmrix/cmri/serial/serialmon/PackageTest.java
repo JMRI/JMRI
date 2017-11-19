@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.cmri.serial.serialmon package
  *
- * @author  Paul Bender	Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest{
 

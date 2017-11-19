@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 /**
  * Tests for the jmri.jmrix.roco.z21 package.
- * 
+ *
  * @author Randall Wood (C) 2016
  */
 @RunWith(Suite.class)

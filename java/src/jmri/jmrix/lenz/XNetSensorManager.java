@@ -76,22 +76,22 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
             int numDataBytes = l.getElement(0) & 0x0f;
             for (int i = 1; i < numDataBytes; i += 2) {
                 if (l.getFeedbackMessageType(i) == 2) {
-                    // This is a feedback encoder message. The address of the 
+                    // This is a feedback encoder message. The address of the
                     // Feedback sensor is byte two of the message.
                     int address = l.getFeedbackEncoderMsgAddr(i);
                     log.debug("Message for feedback encoder {}", address);
 
                     int firstaddress = ((address) * 8) + 1;
-                    // Each Feedback encoder includes 8 addresses, so register 
+                    // Each Feedback encoder includes 8 addresses, so register
                     // a sensor for each address.
                     for (int j = 0; j < 8; j++) {
                         String s = prefix + typeLetter() + (firstaddress + j);
                         if (null == getBySystemName(s)) {
-                            // The sensor doesn't exist.  We need to create a 
+                            // The sensor doesn't exist.  We need to create a
                             // new sensor, and forward this message to it.
                             ((XNetSensor) provideSensor(s)).initmessage(l);
                         } else {
-                            // The sensor exists.  We need to forward this 
+                            // The sensor exists.  We need to forward this
                             // message to it.
                             Sensor xns = getBySystemName(s);
                             if (xns == null) {

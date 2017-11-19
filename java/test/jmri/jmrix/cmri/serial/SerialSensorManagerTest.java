@@ -11,8 +11,8 @@ import org.junit.Test;
 /**
  * JUnit tests for the SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2003
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -72,14 +72,14 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
         Assert.assertEquals(NameValidity.INVALID, l.validSystemNameFormat("CSx"));
 //        jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CSx");
-        
+
         Assert.assertEquals(NameValidity.VALID_AS_PREFIX_ONLY, l.validSystemNameFormat("CS2000"));
 //        jmri.util.JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CS2000");
 
         Assert.assertEquals(NameValidity.INVALID, l.validSystemNameFormat("CS"));
 //        jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CS");
     }
-    
+
     @Test
     public void testDefinitions() {
         Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERUA,

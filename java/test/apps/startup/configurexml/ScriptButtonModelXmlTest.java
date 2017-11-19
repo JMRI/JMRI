@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ScriptButtonModelXmlTest.java
+ * Tests for the ScriptButtonModelXml class
  *
- * Description: tests for the ScriptButtonModelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class ScriptButtonModelXmlTest {
 

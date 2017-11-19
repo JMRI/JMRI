@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * SRCPProgrammerTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPProgrammer class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPProgrammer class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPProgrammerTest extends TestCase {
 

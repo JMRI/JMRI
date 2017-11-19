@@ -11,11 +11,11 @@ import org.junit.Test;
 /**
  * Test simple functioning of PacketGenAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PacketGenActionTest {
 
-    
+
     private jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
 
     @Test

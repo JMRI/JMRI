@@ -372,7 +372,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         locoEcosControlGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
         throttletabpanel.add(locoEcosControlGroup);
         /*throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
-        
+
          JPanel _defaultprotocolpanel = new JPanel();
 
          JLabel _defaultprotocolLabel = new JLabel("Sets the Default protocol to use for an Adhoc Loco");

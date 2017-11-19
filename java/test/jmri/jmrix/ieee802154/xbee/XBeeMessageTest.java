@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XBeeMessageTest.java
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeMessage class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeMessage class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XBeeMessageTest {
 

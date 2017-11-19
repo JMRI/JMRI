@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for classes in the jmri.jmrit.beantable.signalmast package
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

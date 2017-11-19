@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * {@code # start of programming session PC -> IB: E5 07 01 49 42 41 56
  * OPC_PEER_XFER, src=7, dst=9345, ?? PC -> IB: 82 7D OPC_GPOFF}
- * 
+ *
  * {@code # read cv 1 R CV CV PC -> IB: ED 1F 01 49 42 71 72 01 00 00 70 00 00
  * 00 00 10 OPC_IMM_PACKET 00 00 00 00 00 00 00 00 00 00 00 00 00 00 65 IB ->
  * PC: B4 6D 01 27 OPC_LONG_ACK, on OPC_IMM_PACKET # cv 1 has value 3 VV IB ->
@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  *
  * <P>
  * @author Lisby Copyright (C) 2014
- * 
+ *
  */
 public class UhlenbrockSlotManager extends SlotManager implements LocoNetListener, CommandStation {
 
@@ -262,7 +262,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     }
 
     /*
-     * Internal method to create the LocoNetMessage for programmer task start 
+     * Internal method to create the LocoNetMessage for programmer task start
      */
     @Override
     protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) {
@@ -300,7 +300,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         //       new Exception("About to initiate programming track for IB-COM. Call tree").printStackTrace();
 
         LocoNetMessage m = new LocoNetMessage(7);
-//log.info("--------startIBComPT");        
+//log.info("--------startIBComPT");
         m.setOpCode(LnConstants.OPC_PEER_XFER);
         m.setElement(1, 0x07);
         m.setElement(2, 0x01);

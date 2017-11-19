@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SpeedoTrafficControllerTest.java
+ * Tests for the jmri.jmrix.bachrus.SpeedoTrafficController class.
  *
- * Description:	tests for the jmri.jmrix.bachrus.SpeedoTrafficController class
- *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SpeedoTrafficControllerTest {
 
@@ -26,7 +24,7 @@ public class SpeedoTrafficControllerTest {
     public void setUp() {
         JUnitUtil.setUp();
     }
-   
+
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

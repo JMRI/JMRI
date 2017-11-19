@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * XNetExceptionTest.java
+ * Tests for the jmri.jmrix.lenz.XNetException class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetException class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetExceptionTest extends TestCase {
 

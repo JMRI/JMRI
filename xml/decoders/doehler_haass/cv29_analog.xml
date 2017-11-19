@@ -29,8 +29,8 @@
       <revnumber>1</revnumber>
       <date>2014-02-20</date>
       <authorinitials>PB</authorinitials>
-      <revremark>Based on nmra/cv29analog.xml - defaults for Doehler and Haass differ from 
-		NMRA template</revremark>
+      <revremark>Based on nmra/cv29analog.xml - defaults for Doehler and Haass differ from
+        NMRA template</revremark>
     </revision>
     <revision>
       <revnumber>2</revnumber>

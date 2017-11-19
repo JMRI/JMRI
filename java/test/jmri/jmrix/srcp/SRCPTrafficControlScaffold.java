@@ -1,10 +1,8 @@
 /**
- * SRCPInterfaceScaffold.java
+ * Stands in for the SRCPTrafficController class.
  *
- * Description:	Stands in for the SRCPTrafficController class
- *
- * @author	Bob Jacobsen
-  */
+ * @author Bob Jacobsen
+ */
 package jmri.jmrix.srcp;
 
 import java.util.Vector;
@@ -63,7 +61,7 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
         if (log.isDebugEnabled()) {
             log.debug("sendTestReply [" + m + "]");
         }
-        notifyReply(m,null);
+        notifyReply(m, null);
         return;
     }
 

@@ -6,25 +6,25 @@ import jmri.jmrix.roco.z21.Z21TrafficController;
 /**
  * Frame for user input of XpressNet messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2002
+ * @author Bob Jacobsen Copyright (C) 2001,2002
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public void initComponents() {
         super.initComponents();
 
-        // all we need to do is set the title 
+        // all we need to do is set the title
         setTitle(Bundle.getMessage("SendZ21MessageTitle"));
 
         // pack to cause display
         pack();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

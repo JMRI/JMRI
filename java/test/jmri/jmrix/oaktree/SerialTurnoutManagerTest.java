@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the SerialTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

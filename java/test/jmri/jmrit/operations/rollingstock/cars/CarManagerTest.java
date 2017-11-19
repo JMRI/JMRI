@@ -18,7 +18,7 @@ import org.junit.Assert;
  * <p>
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarManagerTest extends OperationsTestCase {
 
@@ -405,7 +405,7 @@ public class CarManagerTest extends OperationsTestCase {
         // release cars from trains
         c2.setTrain(null);
         c4.setTrain(null);
-        c6.setTrain(null);	// c6 is located at the end of the route, therefore not available
+        c6.setTrain(null); // c6 is located at the end of the route, therefore not available
 
         // there should be more cars now
         carList = manager.getAvailableTrainList(t1);

@@ -254,7 +254,7 @@
     <label xml:lang="cs">Znepřístupnit zrychlení/zpomalení s F5</label>
     <tooltip xml:lang="cs">Zrychlení/zpomalení zapnuto/vypnuto s F5</tooltip>
     <label xml:lang="ca">Deshabilita inèrcia amb F5</label>
-    
+
   </variable>
   <variable item="Disable momentum with F6" CV="59" mask="XXVXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

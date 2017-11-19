@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of AlignTablePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AlignTablePaneTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AlignTablePane action = new AlignTablePane(new jmri.ModifiedFlag(){
            @Override
            public void setModifiedFlag(boolean flag) {}

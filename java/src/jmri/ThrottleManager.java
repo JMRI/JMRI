@@ -176,7 +176,7 @@ public interface ThrottleManager {
     /**
      * Steal a requested throttle.
      *
-     * @param address desired DccLocoAddress 
+     * @param address desired DccLocoAddress
      * @param l  ThrottleListener requesting the throttle steal occur.
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2

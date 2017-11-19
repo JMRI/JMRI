@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the EasyDccMonFrame class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccMonFrameTest {
 

@@ -49,12 +49,12 @@ public class PositionableRectangle extends PositionableShape {
         });
         return true;
     }
-    
+
     private void makeEditFrame() {
         if (_editFrame == null) {
             _editFrame = new DrawRectangle("editShape", "Rectangle", this);
             setEditParams();
         }
     }
-        
+
 }

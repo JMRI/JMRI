@@ -99,7 +99,7 @@ public class AbstractRailComReporter extends AbstractReporter
     /**
      * getDirection()
      *
-     * Gets the direction (ENTER/EXIT) of the report. Because of the way 
+     * Gets the direction (ENTER/EXIT) of the report. Because of the way
      * RailCom Reporters work, all reports are ENTER type.
      */
     @Override

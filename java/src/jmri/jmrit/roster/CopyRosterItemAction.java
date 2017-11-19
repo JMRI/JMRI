@@ -77,7 +77,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         // set the filename from the ID
         mToEntry.ensureFilenameExists();
 
-        // detach the content element from it's existing file so 
+        // detach the content element from it's existing file so
         // it can be reused
         lroot.detach();
 

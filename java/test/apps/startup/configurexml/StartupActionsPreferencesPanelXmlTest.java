@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * StartupActionsPreferencesPanelXmlTest.java
+ * Tests for the StartupActionsPreferencesPanelXml class
  *
- * Description: tests for the StartupActionsPreferencesPanelXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class StartupActionsPreferencesPanelXmlTest {
 

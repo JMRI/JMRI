@@ -22,7 +22,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Provide access to TMCC via a serial comm port. Normally controlled by the
  * tmcc.serialdriver.SerialDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

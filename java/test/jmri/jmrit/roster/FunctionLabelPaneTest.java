@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Tests for the jmrit.roster.FunctionLabelPane class.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class FunctionLabelPaneTest {
 

@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110123"/>
-  <!-- 
+  <!--
       This decoder XML is for the CHAMPEX-LINDEN Modellspielwaren 16kHz Sound Module,
       CL63000 and following, built for C-L by Massoth.
 
@@ -56,12 +56,12 @@
       Version History:
 
         1.0 - 23 Jan 2011
-              Initial release 
+              Initial release
 -->
   <decoder>
     <family name="Champex-Linden" mfg="Massoth Elektronik, GmbH">
       <model model="Sound Module 63000" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="0" numFns="0" formFactor="G" connector="other">
-		</model>
+        </model>
     </family>
     <programming direct="yes" paged="no" register="yes" ops="no"/>
     <variables>

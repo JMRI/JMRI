@@ -36,7 +36,7 @@ public class Log4JFixture {
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected ERROR or FATAL messages emitted", unexpectedMessageSeen);
-        
+
         // checkThreads(false);  // true means stop on 1st extra thread
     }
 
@@ -63,7 +63,7 @@ public class Log4JFixture {
     static List<Thread> threadsSeen = new ArrayList<Thread>();
 
     /**
-     * Do a diagnostic check of threads, 
+     * Do a diagnostic check of threads,
      * providing a traceback if any new ones are still around.
      * <p>
      * First implementation is rather simplistic.
@@ -72,7 +72,7 @@ public class Log4JFixture {
     static void checkThreads(boolean stop) {
         // now check for extra threads
         count = 0;
-        Thread.getAllStackTraces().keySet().forEach((t) -> 
+        Thread.getAllStackTraces().keySet().forEach((t) ->
             {
                 if (threadsSeen.contains(t)) return;
                 String name = t.getName();
@@ -83,17 +83,17 @@ public class Log4JFixture {
                      || name.startsWith("Image Fetcher ")
                      || name.startsWith("JmDNS(")
                      || name.startsWith("SocketListener(")
-                     || (name.startsWith("Timer-") && 
-                            ( t.getThreadGroup() != null && 
+                     || (name.startsWith("Timer-") &&
+                            ( t.getThreadGroup() != null &&
                                 (t.getThreadGroup().getName().contains("FailOnTimeoutGroup") || t.getThreadGroup().getName().contains("main") )
-                            ) 
+                            )
                         )
-                    )) {  
-                    
+                    )) {
+
                         count++;
                         threadsSeen.add(t);
                         System.out.println("New thread \""+t.getName()+"\" group \""+ (t.getThreadGroup()!=null ? t.getThreadGroup().getName() : "(null)")+"\"");
-                    
+
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
                             for (StackTraceElement e : Thread.getAllStackTraces().get(t)) {
@@ -110,7 +110,7 @@ public class Log4JFixture {
             }
         }
     }
-    
+
     public static void initLogging() {
         String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
         Log4JUtil.initLogging(filename);

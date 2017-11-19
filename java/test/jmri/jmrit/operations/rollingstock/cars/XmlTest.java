@@ -13,7 +13,7 @@ import org.junit.Assert;
  * Tests for the Operations RollingStock Cars XML class Last manually
  * cross-checked on 20090131
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class XmlTest extends OperationsTestCase {
 
@@ -157,15 +157,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("New Number of Cars", 6, tempcarList.size());
 
         InstanceManager.getDefault(CarManagerXml.class).writeOperationsFile();
-//	}
-//
-//	/**
-//	 * Test reading xml car file
-//	 * @throws JDOMException
-//	 * @throws IOException
-//	 */
-//	public void testXMLRead() throws JDOMException, IOException{
-//		CarManager manager = InstanceManager.getDefault(CarManager.class);
+
         manager.dispose();
         manager = InstanceManager.getDefault(CarManager.class);
         tempcarList = manager.getByIdList();

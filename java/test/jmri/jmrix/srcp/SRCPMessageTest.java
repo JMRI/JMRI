@@ -7,12 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SRCPMessageTest.java
+ * Tests for the jmri.jmrix.srcp.SRCPMessage class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPMessage class
- *
- * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SRCPMessageTest {
 
@@ -50,7 +48,7 @@ public class SRCPMessageTest {
        Assert.assertTrue("POWER ON",m1.isEnableMain());
        Assert.assertFalse("POWER OFF",m2.isEnableMain());
        Assert.assertFalse("Bad POWER message",m3.isEnableMain());
-    } 
+    }
 
     //Test canned message formats
     @Test

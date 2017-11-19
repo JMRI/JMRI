@@ -116,7 +116,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                 log.debug("notify client: " + client);
             }
             try {
-                // Skip forwarding the message to the last sender until 
+                // Skip forwarding the message to the last sender until
                 // later.
                 if (lastSender != client) {
                     client.reply(r);
@@ -157,7 +157,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         int len = m.getNumDataElements();
         int cr = 1;  // space for carriage return linefeed
 
-        byte msg[] = new byte[len + cr];
+        byte[] msg = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) m.getElement(i);
@@ -292,7 +292,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                     if (log.isDebugEnabled()) {
                         log.debug("check for input");
                     }
-                    byte msg[];
+                    byte[] msg;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }

@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * Creates a classpath for JMRI from directories
  *
- * @author	Bob Jacobsen, Copyright (C) 2008
+ * @author Bob Jacobsen, Copyright (C) 2008
  */
 public class GetClassPath {
 

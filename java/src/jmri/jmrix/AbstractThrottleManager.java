@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
  * Abstract implementation of a ThrottleManager.
  * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author      Steve Rawlinson Copyright (C) 2016
+ * @author Steve Rawlinson Copyright (C) 2016
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 
@@ -115,8 +115,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * throttleListeners is indexed by the address, and contains as elements an
-     * ArrayList of WaitingThrottle objects, each of which has one ThrottleListner. 
-     * This allows more than one ThrottleLister to request a throttle at a time, 
+     * ArrayList of WaitingThrottle objects, each of which has one ThrottleListner.
+     * This allows more than one ThrottleLister to request a throttle at a time,
      * the entries in this Hashmap are only valid during the throttle setup process.
      */
     private HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<DccLocoAddress, ArrayList<WaitingThrottle>>(5);
@@ -400,7 +400,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Steal a requested throttle.
      *
-     * @param address desired DccLocoAddress 
+     * @param address desired DccLocoAddress
      * @param l  ThrottleListener requesting the throttle steal occur.
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
@@ -503,7 +503,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             listenerOnly.remove(dla);
         }
     }
-    
+
     public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         notifyThrottleKnown(throttle, addr, false);
     }
@@ -643,7 +643,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 addressThrottles.get(la).removeListener(l);
             } else if (l == null) {
                 log.debug("decrementUse called withOUT listener");
-                /*The release release has been called, but as no listener has 
+                /*The release release has been called, but as no listener has
                  been specified, we can only decrement the use flag*/
                 addressThrottles.get(la).decrementUse();
             }
@@ -816,7 +816,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             // Check for duplication here
             if (listeners.contains(l))
                 log.debug("this Addresses listeners already includes listener" + l);
-            else 
+            else
                 listeners.add(l);
         }
 

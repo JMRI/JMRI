@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
- * @author      B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015
- * @version	$Revision: 0 $
+ * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015
  */
 
 public class SimpleTurnout {

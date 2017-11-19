@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * MultiSensorIconXmlTest.java
+ * Tests for the MultiSensorIconXml class
  *
- * Description: tests for the MultiSensorIconXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class MultiSensorIconXmlTest {
 

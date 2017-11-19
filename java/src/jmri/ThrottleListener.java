@@ -59,14 +59,14 @@ public interface ThrottleListener extends EventListener {
  *
  * ThrottleListener-> ThrottleManager : requestThrottle(address,ThrottleListener)
  * group If Throttle Request Cannot Continue
- *    ThrottleListener <-- ThrottleManager : return false 
+ *    ThrottleListener <-- ThrottleManager : return false
  *    deactivate ThrottleManager
  *    note over ThrottleListener : Request ends here
  * end
  * deactivate ThrottleListener
  *
  * == Normal Request Scenario ==
- * 
+ *
  * ThrottleListener-> ThrottleManager : requestThrottle(address,ThrottleListener)
  *
  * group If Throttle Request Can Continue
@@ -76,14 +76,14 @@ public interface ThrottleListener extends EventListener {
  *       note over ThrottleManager : Throttle Manager start system specific actions requred to create a throttle.
  *    == Optional Steal ==
  *       ThrottleListener <-- ThrottleManager : notifyStealThrottleRequired(address)
- *       note over ThrottleListener : To steal or not is determined by the throttle Listener. 
+ *       note over ThrottleListener : To steal or not is determined by the throttle Listener.
  *       group If the Throttle does not wish to steal
  *           ThrottleListener --> ThrottleManager : stealThrottleRequest(address info, false )
  *           note over ThrottleListener : Request ends here
  *       end
  *       group If the Throttle wishes to steal
  *           ThrottleListener --> ThrottleManager : stealThrottleRequest(address info, true)
- *               
+ *
  *               note over ThrottleManager : Throttle creation continues normally.
  *           end
  *
@@ -92,13 +92,13 @@ public interface ThrottleListener extends EventListener {
  *       group If the Throttle creation fails
             ThrottleListener <-- ThrottleManager: notifyFailedThrottleReqest(address)
  *          note over ThrottleListener : Request ends here
- *       end                    
+ *       end
  *       group If the Throttle creation request succeeds
             ThrottleManager <-- Throttle: return new Throttle
  *       end
  *    end
  * ThrottleListener <-- ThrottleManager: notifyThrottleFound(Throttle)
  * note over ThrottleListener : Throttle can now be controlled by ThrottleListener or a delegate.
- * 
+ *
  * @enduml
- */ 
+ */

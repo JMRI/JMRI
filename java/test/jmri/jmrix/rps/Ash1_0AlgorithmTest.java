@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * The default transmitter location for the 7, 13, 13, 13 readings is (0,0,12)
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class Ash1_0AlgorithmTest {
 
@@ -33,7 +33,7 @@ public class Ash1_0AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 0.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 0.0f);
         Point3d s5 = new Point3d(0.0f, 0.0f, 15.0f);
-        Point3d s[] = new Point3d[]{s1, s2, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s2, s3, s4, s5};
 
         Calculator c = new Ash1_0Algorithm(s, vs);
 
@@ -54,7 +54,7 @@ public class Ash1_0AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 0.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 0.0f);
         Point3d s5 = new Point3d(0.0f, 0.0f, 15.0f);
-        Point3d s[] = new Point3d[]{s2, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s2, s3, s4, s5};
 
         Calculator c = new Ash1_0Algorithm(s, vs);
 
@@ -75,7 +75,7 @@ public class Ash1_0AlgorithmTest {
         Point3d s3 = new Point3d(-3.0f, -4.0f, 0.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 0.0f);
         Point3d s5 = new Point3d(0.0f, 0.0f, 15.0f);
-        Point3d s[] = new Point3d[]{s1, s3, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s3, s4, s5};
 
         Calculator c = new Ash1_0Algorithm(s, vs);
 
@@ -96,7 +96,7 @@ public class Ash1_0AlgorithmTest {
         //Point3d s3 = new Point3d(-3.0f,-4.0f, 0.0f);
         Point3d s4 = new Point3d(5.0f, 0.0f, 0.0f);
         Point3d s5 = new Point3d(0.0f, 0.0f, 15.0f);
-        Point3d s[] = new Point3d[]{s1, s2, s4, s5};
+        Point3d[] s = new Point3d[]{s1, s2, s4, s5};
 
         Calculator c = new Ash1_0Algorithm(s, vs);
 
@@ -111,7 +111,7 @@ public class Ash1_0AlgorithmTest {
     public void setUp() {
         Log4JFixture.setUp();
     }
-    
+
     @After
     public void tearDown() {
         Log4JFixture.tearDown();

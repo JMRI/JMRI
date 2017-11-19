@@ -130,7 +130,7 @@ public class TableSorter extends AbstractTableModel {
     private void clearSortingState() {
         clearSortingState = true;
         // Boudreau
-        //viewToModel = null;	// setting viewToModel to null can cause an NPE
+        //viewToModel = null; // setting viewToModel to null can cause an NPE
         // see getGetViewToModel() below.
         modelToView = null;
     }

@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Nigel</firstname><surname>Cliffe</surname></personname>
 
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -22,19 +22,19 @@
         <revnumber>1</revnumber>
         <date>2013-04-30</date>
         <authorinitials>NC</authorinitials>
-        <revremark>Initial Version.  Not linked to Layout Editor automatic routing, so to control Feather use manually constructed 
-				 Logix associated with turnout settings.
-		           The Feather was intended for use with Signal Accessory Decoders such as the Harman SC1. </revremark>
+        <revremark>Initial Version.  Not linked to Layout Editor automatic routing, so to control Feather use manually constructed
+                 Logix associated with turnout settings.
+                   The Feather was intended for use with Signal Accessory Decoders such as the Harman SC1. </revremark>
     </revision>
-    
+
   </revhistory>
-  
+
   <aspecttable>BR</aspecttable>
 
   <name>Feather</name>
-  
+
   <description>Intended for use with Signal Accessory Decoders, eg. Harman SC1</description>
-  
+
   <appearances>
 
     <appearance>
@@ -50,14 +50,14 @@
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position1.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position1.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Two</aspectname>
       <show>yellow</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position2.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position2.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Three</aspectname>
       <show>green</show>
@@ -71,14 +71,14 @@
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position4.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position4.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Five</aspectname>
       <show>flashyellow</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position5.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position5.gif</imagelink>
     </appearance>
-    
+
     <appearance>
       <aspectname>Six</aspectname>
       <show>flashgreen</show>
@@ -87,9 +87,9 @@
     </appearance>
 
   </appearances>
-  
+
   <specificappearances>
-  
+
   </specificappearances>
-  
-</appearancetable>  
+
+</appearancetable>

@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantManager extends AbstractManager<Warrant>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
-    
+
     private HashMap<String, RosterSpeedProfile> _mergeProfiles;
     private HashMap<String, RosterSpeedProfile> _sessionProfiles;
 
@@ -174,7 +174,7 @@ public class WarrantManager extends AbstractManager<Warrant>
     public String getBeanTypeHandled() {
         return jmri.jmrit.logix.Bundle.getMessage("BeanNameWarrant");
     }
-    
+
     protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
         if (_mergeProfiles == null) {
             _mergeProfiles = new HashMap<String, RosterSpeedProfile>();
@@ -191,7 +191,7 @@ public class WarrantManager extends AbstractManager<Warrant>
             _sessionProfiles.put(id, session);
         }
     }
-    
+
     protected RosterSpeedProfile getMergeProfile(String id) {
         if (_mergeProfiles == null) {
             return null;
@@ -204,7 +204,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         }
         return _sessionProfiles.get(id);
     }
-    
+
     protected HashMap<String, RosterSpeedProfile> getMergeProfiles() {
         return _mergeProfiles;
     }

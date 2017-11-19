@@ -7,7 +7,7 @@ import javax.swing.BoxLayout;
 /**
  * Swing action to create and register a RpsTrackingFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class AlignmentPanelAction extends AbstractAction {
 

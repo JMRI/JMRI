@@ -17,7 +17,7 @@ import org.junit.Assert;
 /**
  * Tests for the Operations Logger class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class OperationsLoggerTest extends OperationsTestCase {

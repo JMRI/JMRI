@@ -311,13 +311,13 @@ public class ThrottlesPreferences {
     public boolean isSilentSteal() {
         return _isSilentSteal;
     }
-    
-    
+
+
     public void setSilentSteal(boolean b) {
         _isSilentSteal = b;
         this.dirty = true;
     }
-    
+
     /**
      * Add an AddressListener. AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address

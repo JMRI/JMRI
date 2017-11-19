@@ -27,24 +27,24 @@ public interface XNetPortController extends jmri.jmrix.PortAdapter {
 
     /**
      * Indiciate the command station is currently providing a timeslot to this
-     * port controller. 
+     * port controller.
      *
      * @return true if the command station is currently providing a timeslot.
      */
     public boolean hasTimeSlot();
 
     /**
-     * Set a variable indicating whether or not the command station is 
+     * Set a variable indicating whether or not the command station is
      * providing a timeslot.
      * <p>
-     * This method should be called with the paramter set to false if  
+     * This method should be called with the paramter set to false if
      * a "Command Station No Longer Providing a timeslot for communications"
      * (01 05 04) is received.
      * <p>
      * This method should be called with the parameter set to true if
      * a "Command Station is providing a timeslot for communications again."
      * (01 07 06) is received.
-     * 
+     *
      * @param timeslot true if a timeslot is being sent, false otherwise.
      */
     public void setTimeSlot(boolean timeslot);

@@ -9,7 +9,7 @@
 
   <!-- The panel definitions here require a LocoNet system config memo -->
   <!-- as an argument, supplied via the setContext mechanism -->
-  
+
   <name>LocoNet Tools</name>
 
   <node><name>Monitor &amp; Control</name>
@@ -148,4 +148,4 @@
   </node>
 
 </nodes>
-  
+

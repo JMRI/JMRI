@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * AcelaLightTest.java
+ * Tests for the AcelaLight class
  *
- * Description: tests for the AcelaLight class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class AcelaLightTest {
 

@@ -150,7 +150,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 log.debug("create light: (" + sysName + ")("
                         + (userName == null ? "<null>" : userName) + ")");
             }
-            
+
             Light lgt = null;
             try {
                 lgt = tm.newLight(sysName, userName);

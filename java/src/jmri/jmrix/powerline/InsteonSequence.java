@@ -42,7 +42,7 @@ public class InsteonSequence {
 
     /**
      * Append a new "set address" operation to the sequence
-     * @param idhighbyte   1st addr 
+     * @param idhighbyte   1st addr
      * @param idmiddlebyte 2nd addr
      * @param idlowbyte    3rd addr
      */

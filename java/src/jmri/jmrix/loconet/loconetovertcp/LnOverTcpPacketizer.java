@@ -132,7 +132,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
                         // Decide length
                         switch ((opCode & 0x60) >> 5) {
-                            default:  // not really possible, but this closes selection for FindBugs  
+                            default:  // not really possible, but this closes selection for FindBugs
                             case 0:
                                 /* 2 byte message */
 
@@ -239,7 +239,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                 try {
                     // get content; failure is a NoSuchElementException
                     log.debug("check for input");
-                    byte msg[] = null;
+                    byte[] msg = null;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }

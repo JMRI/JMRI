@@ -9,11 +9,11 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>John</firstname><surname>Lang</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,35 +23,35 @@
         <authorinitials>JDL</authorinitials>
         <revremark>Initial version</revremark>
     </revision>
-    
+
     <revision>
         <revnumber>2</revnumber>
         <date>2013-07-10</date>
         <authorinitials>JDL</authorinitials>
         <revremark>aspect mapping revisions</revremark>
     </revision>
-    
+
     <revision>
         <revnumber>2.1</revnumber>
         <date>2013-12-30</date>
         <authorinitials>JDL</authorinitials>
         <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
     </revision>
-    
+
     <revision>
         <revnumber>2.2</revnumber>
         <date>2015-06-12</date>
         <authorinitials>JDL</authorinitials>
         <revremark>added aspect mapping to Held Aspect</revremark>
     </revision>
-    
+
   </revhistory>
 
   <aspecttable>NYC-1956</aspecttable>
   <name>Double searchlight high permissive signal</name>
   <reference>As described in the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."</reference>
   <description>Appearances for a two-searchlight signal head without other badging</description>
-  
+
   <appearances>
 
     <appearance>
@@ -77,7 +77,7 @@
       <reference>Rule 281B</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 281B.gif</imagelink>
     </appearance>
-        
+
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
@@ -85,7 +85,7 @@
       <reference>Rule 282</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 282.gif</imagelink>
     </appearance>
-        
+
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
@@ -93,7 +93,7 @@
       <reference>Rule 282A</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 282A.gif</imagelink>
     </appearance>
-  
+
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
@@ -109,7 +109,7 @@
       <reference>Rule 290</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 290.gif</imagelink>
     </appearance>
-     
+
     <appearance>
       <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
@@ -117,18 +117,18 @@
       <reference>Rule 291</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 291.gif</imagelink>
     </appearance>
-    
+
   </appearances>
 
   <specificappearances>
-  	<danger>
-  		<aspect>Stop and Proceed</aspect>
-  	</danger>
-  	<held>
-  		<aspect>Stop and Proceed</aspect>
-  	</held>
+      <danger>
+          <aspect>Stop and Proceed</aspect>
+      </danger>
+      <held>
+          <aspect>Stop and Proceed</aspect>
+      </held>
   </specificappearances>
-  
+
   <aspectMappings>
      <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
@@ -139,7 +139,7 @@
       <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
-       
+
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -230,8 +230,8 @@
     </aspectMapping>
 
   </aspectMappings>
-  
-</appearancetable>  
-  
 
-  
+</appearancetable>
+
+
+

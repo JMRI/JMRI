@@ -11,9 +11,9 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Description:	JUnit tests for the AcelaTrafficController class
+ * Tests for the AcelaTrafficController class.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
 public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
@@ -41,10 +41,10 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
 
         ostream.flush();
         JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
-        
-		// test the result of sending
 
-		Assert.assertEquals("total length ", 4, tostream.available());
+        // test the result of sending
+
+        Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", '0', tostream.readByte());
         Assert.assertEquals("Char 1", '1', tostream.readByte());
         Assert.assertEquals("Char 2", '2', tostream.readByte());

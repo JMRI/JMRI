@@ -116,7 +116,7 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
             }
             return false;
         }
-        // here it's an arithmetic op on a variable  
+        // here it's an arithmetic op on a variable
         if (watchedVal == null) {
             if (!warnedDoesntExist) {
                 warnedDoesntExist = true;

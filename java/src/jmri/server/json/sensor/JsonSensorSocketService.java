@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JSON Socket service for {@link jmri.Sensor}s.
- * 
+ *
  * @author Randall Wood
  */
 public class JsonSensorSocketService extends JsonSocketService {
@@ -122,9 +122,9 @@ public class JsonSensorSocketService extends JsonSocketService {
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(SENSORS, locale)); 
+                    connection.sendMessage(service.doGetList(SENSORS, locale));
                     //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();
                     }
                 } catch (JsonException ex) {

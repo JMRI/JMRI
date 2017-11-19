@@ -2,26 +2,26 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under -->
+<!-- the terms of version 2 of the GNU General Public License as published -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- of this license. -->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License -->
+<!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="wsthompson@earthlink.net" version="6" lastUpdated="20050622"/>
   <!-- Based on the contribution of many others -->
   <!-- version 2 - add consist direction - jake -->
   <!-- version 3 - Change LowVersionID to "22" to match my decoder - Ian -->
   <!-- version 4 - fix mfg name - jake -->
-  <!-- version 5 - Changed max values of CV2 thru 6 to 63, this matches the 
-	            Factory specs for max,also ESU pane with Factory Reset - walt -->
+  <!-- version 5 - Changed max values of CV2 thru 6 to 63, this matches the
+                Factory specs for max,also ESU pane with Factory Reset - walt -->
   <!-- version 6 - Massive changes to allow use of Comprehensive rather than
-               customer specific programmer, added CV49 bit 1 "Marklin brake track activated" 
+               customer specific programmer, added CV49 bit 1 "Marklin brake track activated"
              Deleted  factory reset,not provided wsthompson@earthlink.net-->
   <decoder>
     <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" highVersionID="22">

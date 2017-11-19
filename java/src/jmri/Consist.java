@@ -164,7 +164,7 @@ public interface Consist {
      * Get the rosterId of a locomotive within the consist
      *
      * @param address is the Locomotive address of interest
-     * @return string roster Identifier associated with the given address 
+     * @return string roster Identifier associated with the given address
      *         in the consist.  Returns null if no roster entry is associated
      *         with this entry.
      */

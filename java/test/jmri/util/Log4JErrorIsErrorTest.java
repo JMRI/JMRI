@@ -6,11 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Works with the JUnitAppender class to 
+ * Works with the JUnitAppender class to
  * fail if any FATAL or ERROR messages have been
  * emitted (e.g. not expected)
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class Log4JErrorIsErrorTest {
 

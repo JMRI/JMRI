@@ -15,7 +15,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
   */
 public class RosterEntryTest extends TestCase {
 
@@ -110,7 +110,7 @@ public class RosterEntryTest extends TestCase {
     }
 
     public void testFromFile() throws JDOMException, IOException {
-        
+
         //create a RosterEntry from a test xml file
         RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012.xml"));
 
@@ -137,8 +137,8 @@ public class RosterEntryTest extends TestCase {
 
         r.setId("test Id");
         r.setDateUpdated("unparseable date");
-        
-        jmri.util.JUnitAppender.assertWarnMessage("Unable to parse \"unparseable date\" as a date in roster entry \"test Id\"."); 
+
+        jmri.util.JUnitAppender.assertWarnMessage("Unable to parse \"unparseable date\" as a date in roster entry \"test Id\".");
     }
 
     public void testStoreFunctionLockable() {

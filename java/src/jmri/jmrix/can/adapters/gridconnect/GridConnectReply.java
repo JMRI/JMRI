@@ -117,7 +117,7 @@ public class GridConnectReply extends AbstractMRReply {
         return (getElement(_RTRoffset) == 'R');
     }
 
-    // 
+    //
     @Override
     public int maxSize() {
         return MAXLEN;

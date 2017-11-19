@@ -9,16 +9,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of SprogPacketGenFrame 
+ * Test simple functioning of SprogPacketGenFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SprogPacketGenFrameTest {
 
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SprogPacketGenFrame action = new SprogPacketGenFrame(new jmri.jmrix.sprog.SprogSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }

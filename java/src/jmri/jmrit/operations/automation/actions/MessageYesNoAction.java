@@ -14,7 +14,7 @@ public class MessageYesNoAction extends Action {
     public String getName() {
         return Bundle.getMessage("MessageYesNo");
     }
-    
+
     @Override
     public String getActionSuccessfulString() {
         return Bundle.getMessage("ButtonYes");
@@ -36,7 +36,7 @@ public class MessageYesNoAction extends Action {
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 
 }

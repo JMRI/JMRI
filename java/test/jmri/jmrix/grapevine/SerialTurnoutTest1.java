@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, middle bank.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
   */
 public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
 
@@ -33,7 +33,7 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 18 81 2A", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
-    
+
     @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);

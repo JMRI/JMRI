@@ -49,7 +49,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
 
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
 

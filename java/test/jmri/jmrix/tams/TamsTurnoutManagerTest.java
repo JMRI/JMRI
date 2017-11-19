@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the TurnoutManager class
  *
- * @author	Bob Jacobsen  Copyright 2013, 2016
+ * @author Bob Jacobsen  Copyright 2013, 2016
  */
 public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

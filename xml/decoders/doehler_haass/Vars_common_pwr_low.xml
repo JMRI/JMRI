@@ -30,9 +30,9 @@
       <date>2014-02-20</date>
       <authorinitials>PB</authorinitials>
       <revremark>
-		This file containts only variables with default values for low current decoders,
-		such as the DH06A
-	  </revremark>
+        This file containts only variables with default values for low current decoders,
+        such as the DH06A
+      </revremark>
     </revision>
     <revision>
       <revnumber>2</revnumber>

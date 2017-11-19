@@ -6,10 +6,10 @@ import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
 
 /**
- * Panel displaying (and logging) Xpa+Modem command messages.  
+ * Panel displaying (and logging) Xpa+Modem command messages.
  * Derived from XpaMonFrame.
  *
- * @author	Paul Bender Copyright (C) 2004,2016
+ * @author Paul Bender Copyright (C) 2004,2016
  */
 public class XpaMonPane extends jmri.jmrix.AbstractMonPane implements XpaListener {
 
@@ -31,10 +31,10 @@ public class XpaMonPane extends jmri.jmrix.AbstractMonPane implements XpaListene
         }
     }
 
-    @Override 
+    @Override
     protected void init() {
     }
-    
+
     @Override
     public void dispose() {
         XpaTrafficController.instance().removeXpaListener(this);

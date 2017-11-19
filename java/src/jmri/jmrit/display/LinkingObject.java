@@ -36,5 +36,5 @@ public interface LinkingObject extends Cloneable {
     public void updateSize();
 
     public boolean setLinkMenu(JPopupMenu popup);
-//    public void doMouseClicked(MouseEvent event);   
+//    public void doMouseClicked(MouseEvent event);
 }

@@ -15,10 +15,10 @@ import org.junit.Test;
 
 /**
  * Test of LocoMonPane
- * 
+ *
  * Initially written to test filtering
  *
- * @author	Bob Jacobsen   Copyright 2015
+ * @author Bob Jacobsen   Copyright 2015
  */
 public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -38,7 +38,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         pane.setFilterText("A1");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("filter set", "A1", ((LocoMonPane)pane).getFilterText());
-        
+
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ((LocoMonPane)pane).message(m);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -52,7 +52,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         pane.setFilterText("A0");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("filter set", "A0", pane.getFilterText());
-        
+
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ((LocoMonPane)pane).message(m);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -66,7 +66,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         pane.setFilterText("B1 A0");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("filter set", "B1 A0", pane.getFilterText());
-        
+
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ((LocoMonPane)pane).message(m);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -103,7 +103,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
          f.dispose();
     }
 
-    
+
     // The minimal setup for log4J
     @Override
     @Before
@@ -113,14 +113,14 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         // pane for AbstractMonFrameTestBase, panel for JmriPanelTest
         panel = pane = new LocoMonPane();
         helpTarget = "package.jmri.jmrix.loconet.locomon.LocoMonFrame";
-        title = Bundle.getMessage("MenuItemLocoNetMonitor"); 
+        title = Bundle.getMessage("MenuItemLocoNetMonitor");
     }
 
     @Override
     @After
     public void tearDown() {
         pane.dispose();
-        
+
         apps.tests.Log4JFixture.tearDown();
     }
 }

@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.jmrix.lenz.XNetListener;
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Parts of this code are derived from the
  * jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter class.
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 

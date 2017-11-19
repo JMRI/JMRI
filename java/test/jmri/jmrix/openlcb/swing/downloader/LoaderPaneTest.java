@@ -2,13 +2,11 @@ package jmri.jmrix.openlcb.swing.downloader;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 

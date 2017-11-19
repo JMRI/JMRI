@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PositionableCircleXmlTest.java
+ * Tests for the PositionableCircleXml class
  *
- * Description: tests for the PositionableCircleXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender  Copyright (C) 2016
  */
 public class PositionableCircleXmlTest {
 

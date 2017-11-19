@@ -38,7 +38,7 @@ import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
 
 /**
  * Panel for positionables with text and/or colored margins and borders
- * 
+ *
  * @author PeteCressman Copyright (C) 2009, 2015
  */
 public class DecoratorPanel extends JPanel implements ChangeListener, ItemListener {
@@ -116,7 +116,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.NORTH);
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.SOUTH);
         _previewPanel.setBackground(bkgrnd);
-         
+
         _samplePanel = new JPanel();
 //      _samplePanel.setLayout(new BoxLayout(_samplePanel, BoxLayout.X_AXIS));
         _samplePanel.add(Box.createHorizontalStrut(STRUT));
@@ -176,7 +176,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _sample.put("Text", sample);
         this.add(makeTextPanel("Text", sample, TEXT_FONT, true));
         _samplePanel.add(sample);
-        
+
         makeFontPanels();
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
@@ -239,7 +239,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             if (pos instanceof PositionableLabel) {
                 sample.setText(((PositionableLabel)pos).getUnRotatedText());
                 if (pos instanceof jmri.jmrit.display.MemoryIcon) {
-                    addtextField = false;                    
+                    addtextField = false;
                 } else {
                     addtextField = true;
                 }
@@ -256,7 +256,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 sample.setText(field.getText());
                 addtextField = false;
             } else {
-                addtextField = true;                
+                addtextField = true;
             }
             doPopupUtility("Text", TEXT_FONT, sample, addtextField);
         }
@@ -269,8 +269,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(_previewPanel);
         updateSamples();
     }
-    
-    private void doPopupUtility(String type, int which, 
+
+    private void doPopupUtility(String type, int which,
             PositionableLabel sample, boolean editText) {
         PositionablePopupUtil util = sample.getPopupUtility();
         util.setJustification(_util.getJustification());
@@ -284,7 +284,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         util.setFontSize(_util.getFontSize());
         util.setOrientation(_util.getOrientation());
         sample.updateSize();
-       
+
         _sample.put(type, sample);
         this.add(makeTextPanel(type, sample, which, editText));
         _samplePanel.add(sample);
@@ -390,7 +390,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     updateSamples();
                 }
             }.init(sample));
-            p.add(textField);            
+            p.add(textField);
         }
         panel.add(p);
 
@@ -450,7 +450,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     int prevButton = _selectedButton;
                     _selectedButton = button.which;
                     if (Math.abs(prevButton-_selectedButton)<5) {
-                        changeColor();                        
+                        changeColor();
                     }
                 }
             }
@@ -460,15 +460,15 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 return this;
             }
         }.init(button));
-        _buttonGroup.add(button);            
+        _buttonGroup.add(button);
         return button;
     }
 
     private void updateSamples() {
         if (_previewPanel==null) {
-            return;            
+            return;
         }
-        
+
         int mar = _util.getMargin();
         int bor = _util.getBorderSize();
         Border outlineBorder;
@@ -479,7 +479,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
         Font font = _util.getFont();
         int just = _util.getJustification();
-        
+
         Iterator<PositionableLabel> it = _sample.values().iterator();
         while (it.hasNext()) {
             PositionableLabel sam = it.next();
@@ -496,7 +496,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 borderMargin = BorderFactory.createEmptyBorder(mar, mar, mar, mar);
             }
             sam.setBorder(new CompoundBorder(outlineBorder, borderMargin));
-            
+
             switch (just) {
                 case PositionablePopupUtil.LEFT:
                     sam.setHorizontalAlignment(JLabel.LEFT);
@@ -512,7 +512,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             sam.repaint();
         }
         if (_dialog!=null) {
-            _dialog.pack();            
+            _dialog.pack();
         }
     }
 
@@ -553,9 +553,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             SensorIcon icon = (SensorIcon) pos;
             PositionableLabel sample = _sample.get("Active");
             if (sample.isOpaque()) {
-                icon.setBackgroundActive(sample.getBackground());                
+                icon.setBackgroundActive(sample.getBackground());
             } else {
-                icon.setBackgroundActive(null);                
+                icon.setBackgroundActive(null);
             }
             icon.setTextActive(sample.getForeground());
             icon.setActiveText(sample.getText());
@@ -563,27 +563,27 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             sample = _sample.get("InActive");
             icon.setInactiveText(sample.getText());
             if (sample.isOpaque()) {
-                icon.setBackgroundInActive(sample.getBackground());                
+                icon.setBackgroundInActive(sample.getBackground());
             } else {
-                icon.setBackgroundInActive(null);                
+                icon.setBackgroundInActive(null);
             }
             icon.setTextInActive(sample.getForeground());
 
             sample = _sample.get("Unknown");
             icon.setUnknownText(sample.getText());
             if (sample.isOpaque()) {
-                icon.setBackgroundUnknown(sample.getBackground());                
+                icon.setBackgroundUnknown(sample.getBackground());
             } else {
-                icon.setBackgroundUnknown(null);                
+                icon.setBackgroundUnknown(null);
             }
             icon.setTextUnknown(sample.getForeground());
 
             sample = _sample.get("Inconsistent");
             icon.setInconsistentText(sample.getText());
             if (sample.isOpaque()) {
-                icon.setBackgroundInconsistent(sample.getBackground());                
+                icon.setBackgroundInconsistent(sample.getBackground());
             } else {
-                icon.setBackgroundInconsistent(null);                
+                icon.setBackgroundInconsistent(null);
             }
             icon.setTextInconsistent(sample.getForeground());
         } else {
@@ -594,14 +594,14 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 ((PositionableLabel) pos).setText(sample.getText());
             }
             if (sample.isOpaque()) {
-                pos.setBackground(sample.getBackground());                
+                pos.setBackground(sample.getBackground());
             } else {
-                pos.setBackground(null);                
+                pos.setBackground(null);
             }
             _util.setHasBackground(sample.isOpaque());
         }
     }
-    
+
     private void changeColor() {
         switch (_selectedButton) {
             case TEXT_FONT:
@@ -648,7 +648,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 log.warn("Unexpected _selectedButton {}  in changeColor", _selectedButton);
                 break;
         }
-        
+
     }
 
     @Override

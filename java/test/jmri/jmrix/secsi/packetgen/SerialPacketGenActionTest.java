@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of SerialPacketGenAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialPacketGenActionTest {
 
@@ -25,7 +25,7 @@ public class SerialPacketGenActionTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction(); 
+        SerialPacketGenAction action = new SerialPacketGenAction();
         Assert.assertNotNull("exists", action);
     }
 

@@ -88,7 +88,7 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
      /*
              // throttle list window
              children.add(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getXml() );
-     
+
              // throttle windows
              for (Iterator<ThrottleWindow> i = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottleWindows(); i.hasNext();) {
              ThrottleWindow tw = i.next();

@@ -9,8 +9,8 @@ import org.junit.Assert;
 /**
  * JUnit tests for the X10Sequence class
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @author	Dave Duchamp multi-node extensions 2003
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Dave Duchamp multi-node extensions 2003
   */
 public class X10SequenceTest extends TestCase {
 
@@ -23,7 +23,7 @@ public class X10SequenceTest extends TestCase {
         s.addAddress(1, 2);
         s.addFunction(1, 3, 0);
 
-        // 
+        //
         s.reset();
         X10Sequence.Command a1 = s.getCommand();
         Assert.assertTrue("1 is address", a1.isAddress());

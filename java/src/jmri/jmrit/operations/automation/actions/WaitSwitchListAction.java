@@ -22,7 +22,7 @@ public class WaitSwitchListAction extends Action implements PropertyChangeListen
     public String getName() {
         return Bundle.getMessage("WaitForSwitchListChange");
     }
-    
+
     @Override
     public boolean isConcurrentAction() {
         return true;
@@ -35,7 +35,7 @@ public class WaitSwitchListAction extends Action implements PropertyChangeListen
             addPropertyChangeLocations();
         }
     }
-    
+
     /*
      * Waiting for any location's switch list to change
      */
@@ -48,7 +48,7 @@ public class WaitSwitchListAction extends Action implements PropertyChangeListen
             }
         }
     }
-    
+
     private synchronized void addPropertyChangeLocations() {
         for (Location location : InstanceManager.getDefault(LocationManager.class).getList()) {
             location.addPropertyChangeListener(this);

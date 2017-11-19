@@ -55,7 +55,7 @@
         <output name="15" label="Out 15" />
         <output name="16" label="Out 16" />
         <size length="275" width="11" height="3" units="mm" />
-      </model>      
+      </model>
       <model model="NMJ B3-Series DCC Lighting" lowVersionID="4" highVersionID="255" numOuts="14" numFns="17">
         <output name="1" label="Out 1" />
         <output name="2" label="Out 2" />
@@ -181,7 +181,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
 
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      
+
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>

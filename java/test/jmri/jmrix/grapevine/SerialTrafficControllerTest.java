@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the SerialTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2005, 2007, 2008
+ * @author Bob Jacobsen Copyright 2005, 2007, 2008
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
@@ -312,7 +312,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 4, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
-        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'        
+        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'
     }
 
     @SuppressWarnings("unused")

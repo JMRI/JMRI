@@ -12,7 +12,7 @@ import org.junit.Assert;
  * Test the AbstractIdentify class. Since that's an abstract base class, we
  * define a local subclass here for the tests.
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
   */
 public class AbstractIdentifyTest extends TestCase {
 
@@ -226,5 +226,5 @@ public class AbstractIdentifyTest extends TestCase {
         JUnitUtil.tearDown();
     }
 
-	// private final static Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class);
 }

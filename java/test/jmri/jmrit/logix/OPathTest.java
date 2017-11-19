@@ -14,10 +14,10 @@ import org.junit.Test;
 /**
  * Tests for the OPath class
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class OPathTest {
-    
+
     OBlockManager _blkMgr;
     PortalManager _portalMgr;
     jmri.TurnoutManager _turnoutMgr;
@@ -80,14 +80,14 @@ public class OPathTest {
         op1.setBlock(null);
         OPath op2 = new OPath(b1, "name");
         op2.setBlock(null);
-        
+
         Assert.assertFalse("not equals null", op1.equals(null));
         Assert.assertFalse("not equals string", op1.equals(""));
-        
+
         Assert.assertTrue("equals self", op1.equals(op1));
         Assert.assertTrue("on contents", op1.equals(op2));
     }
-    
+
     @Test
     public void testPortals() {
         Portal entryP = _portalMgr.providePortal("entryP");
@@ -98,7 +98,7 @@ public class OPathTest {
         Assert.assertEquals("Get entry portal", entryP, path.getFromPortal());
         Assert.assertEquals("Get exit portal", exitP, path.getToPortal());
     }
-    
+
     @Test
     public void testNameChange() {
         Portal exitP = _portalMgr.providePortal("exitP");
@@ -114,7 +114,7 @@ public class OPathTest {
         path.setTurnouts(0, true, 0, false);
         Assert.assertEquals("path name change", Turnout.CLOSED, to.getCommandedState());
     }
-    
+
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before

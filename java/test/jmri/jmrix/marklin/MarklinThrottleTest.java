@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -45,7 +45,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 2; 
+        int expResult = 2;
         int result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }

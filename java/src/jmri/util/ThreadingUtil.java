@@ -80,7 +80,7 @@ public class ThreadingUtil {
      * @param delay interval in milliseconds
      * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
-    @Nonnull 
+    @Nonnull
     static public Timer runOnLayoutDelayed(@Nonnull ThreadAction ta, int delay) {
         return runOnGUIDelayed(ta, delay);
     }
@@ -155,7 +155,7 @@ public class ThreadingUtil {
      * @param delay interval in milliseconds
      * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
-    @Nonnull 
+    @Nonnull
     static public Timer runOnGUIDelayed(@Nonnull ThreadAction ta, int delay) {
         // dispatch to Swing via timer
         Timer timer = new Timer(delay, (ActionEvent e) -> {

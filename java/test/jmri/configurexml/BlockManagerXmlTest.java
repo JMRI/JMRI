@@ -100,7 +100,7 @@ public class BlockManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT7"));
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT8"));
 
-        // check existance of memories        
+        // check existance of memories
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0001"));
         Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0002"));
@@ -412,7 +412,7 @@ public class BlockManagerXmlTest extends TestCase {
                     && m7.getAspect().equals("Stop"));
             },"Mast state ended as \""+m1.getAspect()+"\" \""+m2.getAspect()+"\" \""+m3.getAspect()+"\" \""+m4.getAspect()+"\" \""+m5.getAspect()+"\" \""+m6.getAspect()+"\" \""+m7.getAspect()+"\", desired state AA/C/C/C/A/S/S");
 
-        // check for expected mast state 
+        // check for expected mast state
         Assert.assertEquals("Signal 1", "Advance Approach", InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)").getAspect());
         Assert.assertEquals("Signal 2", "Clear",            InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)").getAspect());
         Assert.assertEquals("Signal 3", "Clear",            InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)").getAspect());

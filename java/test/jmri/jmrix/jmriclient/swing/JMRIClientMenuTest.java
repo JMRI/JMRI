@@ -13,17 +13,17 @@ import org.junit.Test;
 /**
  * Test simple functioning of JMRIClientMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientMenuTest {
 
 
     private JMRIClientTrafficController tc = null;
     private JMRIClientSystemConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMRIClientMenu action = new JMRIClientMenu(m);
         Assert.assertNotNull("exists", action);
     }

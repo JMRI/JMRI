@@ -368,7 +368,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         addingTurnouts = false;
     }
 
-    /* This is used after an event update form the ecos informing us of a change in the 
+    /* This is used after an event update form the ecos informing us of a change in the
      * turnout list, we have to determine if it is an addition or delete.
      * We should only ever do either a remove or an add in one go.
      */
@@ -665,7 +665,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
     public void refreshItems() {
         /*ask to be notified about newly created turnouts on the layout.
-         Doing the request to view the list, will also kick off a request to 
+         Doing the request to view the list, will also kick off a request to
          view on each individual turnout*/
         EcosMessage m = new EcosMessage("request(11, view)");
         tc.sendEcosMessage(m, this);

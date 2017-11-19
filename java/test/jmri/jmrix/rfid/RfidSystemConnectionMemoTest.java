@@ -7,11 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RfidSystemConnectionMemoTest.java
+ * Tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
