@@ -133,7 +133,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 setSelectedIndex(0);
             }
         }
-
     }
 
     /**

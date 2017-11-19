@@ -8943,6 +8943,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return yScale;
     }
 
+    public Color getDefaultBackgroundColor() {
+        return defaultBackgroundColor;
+    }
+
     public String getDefaultTrackColor() {
         return ColorUtil.colorToColorName(defaultTrackColor);
     }
@@ -9328,32 +9332,27 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         if (inComboBox != null) {
             block = (Block) inComboBox.getNamedBean();
         }
-        result = highlightBlock(block);
-        return result;
+        return highlightBlock(block);
     } //highlightBlockInComboBox
 
     /**
      * highlight the specified block
+     *
      * @param inBlock the block
      * @return true if block was highlighted
      */
     public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
+        blockIDComboBox.setSelectedBean(inBlock);
+
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-
-        Manager m = blockIDComboBox.getManager();
-        List<NamedBean> l = m.getNamedBeanList();
-
+        List<NamedBean> l = blockIDComboBox.getManager().getNamedBeanList();
         for (NamedBean nb : l) {
             Block b = (Block) nb;
             LayoutBlock lb = lbm.getLayoutBlock(b);
-
             if (lb != null) {
                 boolean enable = ((inBlock != null) && b.equals(inBlock));
-                if (enable) {
-                    blockIDComboBox.setSelectedBean(nb);
-                }
                 lb.setUseExtraColor(enable);
                 result |= enable;
             }
@@ -9363,6 +9362,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /**
      * highlight the specified layout block
+     *
      * @param inLayoutBlock the layout block
      * @return true if layout block was highlighted
      */
@@ -9519,6 +9519,16 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
 
+    private boolean drawRailsFlag = false;
+
+    protected boolean isDrawRailsFlag() {
+        return drawRailsFlag;
+    }
+
+    protected void setDrawRailsFlag(boolean bool) {
+        drawRailsFlag = bool;
+    }
+
     /**
      * Special internal class to allow drawing of layout to a JLayeredPane This
      * is the 'target' pane where the layout is displayed
@@ -9547,6 +9557,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
             drawHiddenLayoutTracks(g2);
         }
+
+        drawTrackBallast(g2);
+        drawTrackTies(g2);
 
         List<TrackSegment> trackSegments = getTrackSegments();
         drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
@@ -9589,6 +9602,15 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             //change track stroke width
             trackWidth = main ? mainlineTrackWidth : sideTrackWidth;
+            if (isDrawRailsFlag() && (mainlineTrackWidth > 3.F) && (sideTrackWidth > 2.F)) {
+                trackWidth -= main ? 3.F : 2.F;
+                //float dash_phase = 0.F;
+                //Stroke stroke = g2.getStroke();
+                //if (stroke instanceof BasicStroke) {
+                //    dash_phase = ((BasicStroke) stroke).getDashPhase();
+                //}
+                //g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0, new float[]{2.F, 3.F}, dash_phase));
+            }
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         }
         return trackWidth;
@@ -9610,6 +9632,33 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
         }
     } //drawHiddenLayoutTracks
+
+    private void drawTrackBallast(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(mainlineTrackWidth * 2.F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        g2.setColor(LayoutTrack.defaultBallastColor);
+        for (LayoutTrack tr : layoutTrackList) {
+            if (!tr.isHidden()) {
+                tr.drawBallast(g2);
+            }
+        }
+        setTrackStrokeWidth(g2, !main); // force reset
+    }
+
+    private void drawTrackTies(Graphics2D g2) {
+        float dash_phase = 0;
+        Stroke stroke = g2.getStroke();
+        if (stroke instanceof BasicStroke) {
+            dash_phase = ((BasicStroke) stroke).getDashPhase();
+        }
+        g2.setStroke(new BasicStroke(mainlineTrackWidth * 1.33F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0, new float[]{2.F, 3.F}, dash_phase));
+        g2.setColor(LayoutTrack.defaultTieColor);
+        for (LayoutTrack tr : layoutTrackList) {
+            if (!tr.isHidden()) {
+                tr.drawTies(g2);
+            }
+        }
+        setTrackStrokeWidth(g2, !main); // force reset
+    }
 
     private void drawLayoutTracks(Graphics2D g2) {
         for (LayoutTrack tr : layoutTrackList) {

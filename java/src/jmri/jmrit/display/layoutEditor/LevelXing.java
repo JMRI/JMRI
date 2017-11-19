@@ -1360,7 +1360,7 @@ public class LevelXing extends LayoutTrack {
         setColorForTrackBlock(g2, getLayoutBlockAC());
         // set track width for AC block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
-        // drawHidden AC segment
+        // draw AC segment
         g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
     }
 
@@ -1369,8 +1369,27 @@ public class LevelXing extends LayoutTrack {
         setColorForTrackBlock(g2, getLayoutBlockBD());
         // set track width for BD block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
-        // drawHidden BD segment
+        // draw BD segment
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawBallast(Graphics2D g2) {
+        // draw AC segment
+        g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
+        // draw BD segment
+        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawTies(Graphics2D g2) {
+        drawBallast(g2);    // same code; DRY!
     }
 
     /**

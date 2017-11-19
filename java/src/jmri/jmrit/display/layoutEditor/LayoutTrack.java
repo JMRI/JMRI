@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -70,6 +71,10 @@ public abstract class LayoutTrack {
 
     // package-private
     static Color defaultTrackColor = Color.black;
+    //TODO: Add accessor methods
+    //TODO: Should these be 1)Global, 2)Per-layout, 3)Per-Block or 4)Per-Track?
+    static Color defaultBallastColor = Color.gray;
+    static Color defaultTieColor = new Color(122, 74, 50);
 
     /**
      * constructor method
@@ -116,11 +121,15 @@ public abstract class LayoutTrack {
 
     protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb, boolean forceBlockTrackColor) {
         Color result = defaultTrackColor;
-        if (lb != null) {
-            if (forceBlockTrackColor) {
-                result = lb.getBlockTrackColor();
-            } else {
-                result = lb.getBlockColor();
+        if (layoutEditor.isDrawRailsFlag()) {
+            result = defaultBallastColor;
+        } else {
+            if (lb != null) {
+                if (forceBlockTrackColor) {
+                    result = lb.getBlockTrackColor();
+                } else {
+                    result = lb.getBlockColor();
+                }
             }
         }
         g2.setColor(result);
@@ -138,6 +147,29 @@ public abstract class LayoutTrack {
      * @param g2 the graphics context
      */
     protected abstract void draw(Graphics2D g2);
+
+    /**
+     * draw routine draw track ballast
+     *
+     * @param g2 the graphics context
+     */
+    //protected abstract void drawBallast(Graphics2D g2);
+    //note: placeholder until I get this implemented in all sub-classes
+    //TODO: replace with abstract declaration (above)
+    protected void drawBallast(Graphics2D g2) {
+        //nothing to do here... move along...
+    }
+  /**
+     * draw routine draw track ties
+     *
+     * @param g2 the graphics context
+     */
+    //protected abstract void drawTies(Graphics2D g2);
+    //note: placeholder until I get this implemented in all sub-classes
+    //TODO: replace with abstract declaration (above)
+    protected void drawTies(Graphics2D g2) {
+        //nothing to do here... move along...
+    }
 
     /**
      * highlight unconnected connections
@@ -539,19 +571,17 @@ public abstract class LayoutTrack {
     /**
      * check this track and its neighbors for non-contiguous blocks
      * <p>
-     * For each (non-null) blocks of this track do:
-     * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-     * #2) If this track is not in one of the TrackNameSets for this block
-     * #3) add a new set (with this block/track) to
-     *     blockNamesToTrackNameSetMap and
-     * #4) check all the connections in this
-     *     block (by calling the 2nd method below)
+     * For each (non-null) blocks of this track do: #1) If it's got an entry in
+     * the blockNamesToTrackNameSetMap then #2) If this track is not in one of
+     * the TrackNameSets for this block #3) add a new set (with this
+     * block/track) to blockNamesToTrackNameSetMap and #4) check all the
+     * connections in this block (by calling the 2nd method below)
      * <p>
-     *     Basically, we're maintaining contiguous track sets for each block found
-     *     (in blockNamesToTrackNameSetMap)
+     * Basically, we're maintaining contiguous track sets for each block found
+     * (in blockNamesToTrackNameSetMap)
      *
-     * @param blockNamesToTrackNameSetMaps hashmap of key:block names to
-     *        lists of track name sets for those blocks
+     * @param blockNamesToTrackNameSetMaps hashmap of key:block names to lists
+     *                                     of track name sets for those blocks
      * <p>
      * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
      */
@@ -561,7 +591,7 @@ public abstract class LayoutTrack {
     /**
      * recursive routine to check for all contiguous tracks in this blockName
      *
-     * @param blockName  the block that we're checking for
+     * @param blockName    the block that we're checking for
      * @param TrackNameSet the set of track names in this block
      */
     public abstract void collectContiguousTracksNamesInBlockNamed(

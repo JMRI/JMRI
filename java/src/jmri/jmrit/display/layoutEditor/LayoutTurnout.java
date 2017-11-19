@@ -3406,6 +3406,57 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
+    protected void drawBallast(Graphics2D g2) {
+        Point2D pointA = getCoordsA();
+        Point2D pointB = getCoordsB();
+        Point2D pointC = getCoordsC();
+        Point2D pointD = getCoordsD();
+
+        if (getTurnoutType() == DOUBLE_XOVER) {
+            g2.draw(new Line2D.Double(pointA, pointB));
+            g2.draw(new Line2D.Double(pointA, pointC));
+            g2.draw(new Line2D.Double(pointB, pointD));
+            g2.draw(new Line2D.Double(pointC, pointD));
+        } else if ((getTurnoutType() == SINGLE_SLIP)
+                || (getTurnoutType() == DOUBLE_SLIP)) {
+            g2.draw(new Line2D.Double(pointA, pointD));
+            g2.draw(new Line2D.Double(pointA, pointC));
+            g2.draw(new Line2D.Double(pointB, pointD));
+            if (getTurnoutType() == DOUBLE_SLIP) {
+                g2.draw(new Line2D.Double(pointB, pointC));
+            }
+        } else if ((getTurnoutType() == RH_XOVER)
+                || (getTurnoutType() == LH_XOVER)) {
+            g2.draw(new Line2D.Double(pointA, pointB));
+            if (getTurnoutType() == RH_XOVER) {
+                g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
+                g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
+            }
+            if (getTurnoutType() == LH_XOVER) {
+                g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
+                g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
+            }
+
+            g2.draw(new Line2D.Double(pointC, pointD));
+        } else {    // LH, RH, or WYE Turnouts
+            g2.draw(new Line2D.Double(pointA, center));
+            g2.draw(new Line2D.Double(pointB, center));
+            g2.draw(new Line2D.Double(pointC, center));
+        }   // if (getTurnoutType() == XXX) {} else if... {} else...
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawTies(Graphics2D g2) {
+        drawBallast(g2);    // same code; DRY!
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void drawUnconnected(Graphics2D g2) {
         if (getConnectA() == null) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
