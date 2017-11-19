@@ -13,6 +13,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -412,4 +413,5 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultiSensorItemPanel.class);
+
 }

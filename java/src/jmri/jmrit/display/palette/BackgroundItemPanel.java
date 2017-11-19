@@ -48,7 +48,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JPanel panel = super.instructions(isBackGround);
         JPanel blurb = (JPanel) panel.getComponent(0);
-        blurb.add(new JLabel(Bundle.getMessage("ToColorBackground", "ButtonBackgroundColor")));
+        blurb.add(new JLabel(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor"))));
         blurb.add(javax.swing.Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         return panel;
     }

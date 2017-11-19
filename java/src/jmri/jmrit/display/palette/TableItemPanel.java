@@ -67,20 +67,20 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     /**
-     * Init for creation insert table
+     * Init for creation insert table.
      */
     @Override
     public void init() {
         if (!_initialized) {
             super.init();
-            add(initTablePanel(_model, _editor), 0);      // top of Panel      
+            add(initTablePanel(_model, _editor), 0); // top of Panel
             _buttonPosition = 1;
         }
     }
 
     /**
      * Init for update of existing indicator turnout _bottom3Panel has "Update
-     * Panel" button put into _bottom1Panel
+     * Panel" button put into _bottom1Panel.
      */
     @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
@@ -192,9 +192,10 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     /**
      * Used by Panel Editor to make the final installation of the icon(s) into
      * the user's Panel.
-     * <P>
+     * <p>
      * Note! the selection is cleared. When two successive calls are made, the
      * 2nd will always return null, regardless of the 1st return.
+     *
      * @return bean selected in the table
      */
     public NamedBean getTableSelection() {
@@ -208,7 +209,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             }
             return b;
         } else if (log.isDebugEnabled()) {
-            log.debug("getTableSelection: row= " + row);
+            log.debug("getTableSelection: row= {}", row);
         }
         return null;
     }
@@ -343,4 +344,5 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     private final static Logger log = LoggerFactory.getLogger(TableItemPanel.class);
+
 }

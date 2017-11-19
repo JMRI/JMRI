@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.NamedBean;
@@ -26,6 +27,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.DrawSquares;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     private DetectionPanel _detectPanel;
     private JPanel _tablePanel;
+    protected DrawSquares _squaresPanel; // checkered background
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
 //    private HashMap<String, HashMap<String, NamedIcon>> _updateGroupsMap;
 
@@ -151,7 +154,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /*
-     * Get a handle in order to change visibility
+     * Get a handle in order to change visibility.
      */
     @Override
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
@@ -171,7 +174,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
+        _iconFamilyPanel = new JLayeredPane();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
 
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families
@@ -185,6 +188,14 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             }
             // make _iconPanel & _dragIconPanel before calls to add icons
             addFamilyPanels(familyPanel);
+
+            if (_squaresPanel == null) { // add a white checkered background
+                _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
+                log.debug("DrawSquares() called");
+            }
+            _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
+            _squaresPanel.setVisible(false);
+
             if (_iconGroupsMap == null) {
                 log.error("_iconGroupsMap is null in initIconFamiliesPanel");
                 _family = null;
@@ -196,9 +207,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             familiesMissing();
             //createNewFamily();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("initIconFamiliesPanel done");
-        }
+        log.debug("initIconFamiliesPanel done");
     }
 
     private void resetFamiliesPanel() {
@@ -215,7 +224,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /**
-     * Make matrix of icons - each row has a button to change icons
+     * Make matrix of icons - each row has a button to change icons.
      */
     private void addIcons2Panel(HashMap<String, HashMap<String, NamedIcon>> map) {
         GridBagLayout gridbag = new GridBagLayout();

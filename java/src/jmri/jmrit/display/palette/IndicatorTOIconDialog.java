@@ -25,7 +25,7 @@ public class IndicatorTOIconDialog extends IconDialog {
 
     /**
      * Constructor for existing family to change icons, add/delete icons, or to
-     * delete the family
+     * delete the family.
      */
     public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key,
             HashMap<String, NamedIcon> iconMap) {
@@ -33,14 +33,11 @@ public class IndicatorTOIconDialog extends IconDialog {
         _family = family;
         _key = key;
         sizeLocate();
-        if (log.isDebugEnabled()) {
-            log.debug("IndicatorTOIconDialog ctor done. type= \""
-                    + type + "\", family= \"" + family + "\", key= \"" + key + "\"");
-        }
+        log.debug("IndicatorTOIconDialog ctor done. type= \"{}\" family =\"{}\", key= \"{}\"", type, family, key);
     }
 
     /**
-     * Add/Delete icon family for types that may have more than 1 family
+     * Add/Delete icon family for types that may have more than 1 family.
      */
     @Override
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
@@ -71,7 +68,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for add new status set in makeAddIconButtonPanel
+     * Action item for add new status set in makeAddIconButtonPanel.
      */
     private void addFamilySet() {
         if (log.isDebugEnabled()) {
@@ -106,7 +103,7 @@ public class IndicatorTOIconDialog extends IconDialog {
 
     /**
      * NOT add a new family. Create a status family when previous status was
-     * deleted
+     * deleted.
      */
     private void createNewStatusSet() {
         if (log.isDebugEnabled()) {
@@ -121,7 +118,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for add delete status set in makeAddIconButtonPanel
+     * Action item for add delete status set in makeAddIconButtonPanel.
      */
     private void deleteFamilySet() {
         ItemPalette.removeLevel4IconMap(_type, _parent._family, _key);
@@ -130,7 +127,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for makeDoneButtonPanel
+     * Action item for makeDoneButtonPanel.
      */
     @Override
     protected boolean doDoneAction() {
@@ -156,4 +153,5 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class);
+
 }

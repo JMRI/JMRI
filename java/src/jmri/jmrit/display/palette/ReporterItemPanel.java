@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -52,14 +53,15 @@ public class ReporterItemPanel extends TableItemPanel {
 
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
+        _iconFamilyPanel = new JLayeredPane();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
         _iconPanel = new JPanel();
-        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
+        _iconPanel.setOpaque(false);
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                Bundle.getMessage("PreviewBorderTitle")));
 //        _iconFamilyPanel.add(_iconPanel);
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -27,13 +28,13 @@ import java.util.Enumeration;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
@@ -47,6 +48,7 @@ import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
+import jmri.util.swing.DrawSquares;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,11 +57,10 @@ import org.slf4j.LoggerFactory;
  * panel also displays image files files contained in a node of a tree. Drag and
  * Drop is implemented to drag a display of an icon to the display of an icon
  * that may be added to the panel.
- * <P>
+ * <p>
  * This panel is used in the Icon Editors and also in the ImageIndex Editor.
  *
  * @author Pete Cressman Copyright 2009
- *
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
@@ -69,10 +70,13 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     JPanel _selectedImage;
     static Color _grayColor = new Color(235, 235, 235);
+    static Color _darkGrayColor = new Color(150, 150, 150);
+    protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor};
     protected Color _currentBackground = _grayColor;
+    protected DrawSquares _squaresPanel; // checkered background
 
     JLabel _previewLabel = new JLabel(" ");
-    protected JPanel _preview;
+    protected JLayeredPane _preview;
     boolean _noDrag;
 
     JScrollPane _treePane;
@@ -118,10 +122,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     protected void init(boolean treeDnD) {
         _model = new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
-        if (treeDnD) {   // index editor (right pane)
+        if (treeDnD) { // index editor (right pane)
             _dTree = new DropJTree(_model);
             _noDrag = true;
-        } else {    // Catalog (left pane index editor or all icon editors)
+        } else {       // Catalog (left pane index editor or all icon editors)
             _dTree = new JTree(_model);
             _noDrag = false;
         }
@@ -205,7 +209,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Recursively add the branch nodes to display tree
+     * Recursively add the branch nodes to display tree.
      */
     @SuppressWarnings("unchecked")
     private void addTreeBranch(CatalogTreeNode node) {
@@ -277,7 +281,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Find the corresponding CatalogTreeManager tree to the displayed branch
+     * Find the corresponding CatalogTreeManager tree to the displayed branch.
      */
     private CatalogTree getCorespondingModel(CatalogTreeNode node) {
         TreeNode[] nodes = node.getPath();
@@ -337,7 +341,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     /**
      * Make a change to a node in the displayed tree. Either its name or the
-     * contents of its leaves (image references)
+     * contents of its leaves (image references).
      *
      * @param node the node to change
      * @param name new name for the node
@@ -358,7 +362,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Node names in the path to the root must be unique
+     * Check that Node names in the path to the root are unique.
      */
     private boolean nameOK(CatalogTreeNode node, String name) {
         TreeNode[] nodes = node.getPath();
@@ -382,50 +386,55 @@ public class CatalogPanel extends JPanel implements MouseListener {
      * leaves."); } }
      */
     /**
-     * Setup a display pane for a tree that shows only directory nodes (no file
-     * leaves) The leaves (icon images) will be displayed in this panel.
+     * Set up a display pane for a tree that shows only directory nodes (no file
+     * leaves). The leaves (icon images) will be displayed in this panel.
      */
     private JPanel makePreviewPanel() {
         JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
         previewPanel.add(_previewLabel);
-        _preview = new JPanel();
+        _preview = new JLayeredPane();
+        _preview.setLayout(new FlowLayout());
+        _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
+        _preview.add(_squaresPanel, new Integer (1));
+        _squaresPanel.setVisible(false);  // initially hidden
         JScrollPane js = new JScrollPane(_preview);
-        previewPanel.add(js);
+        previewPanel.add(js); // place icons over the checkered background
         return previewPanel;
     }
 
+    /**
+     * Create panel element containing Set background: drop down list.
+     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
+     *
+     * @return the JPanel with label and drop down
+     */
     private JPanel makeButtonPanel() {
-        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("White"), false);
-        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("LightGray"), true);
-        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("DarkGray"), false);
-        whiteButton.addActionListener((ActionEvent e) -> {
-            _currentBackground = Color.white;
-            setBackground(_preview);
+        JComboBox<String> bgColorBox = new JComboBox<>();
+        bgColorBox.addItem(Bundle.getMessage("White"));
+        bgColorBox.addItem(Bundle.getMessage("LightGray"));
+        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
+        bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option, under development
+        bgColorBox.setSelectedIndex(1); // light gray
+        bgColorBox.addActionListener((ActionEvent e) -> {
+            if (bgColorBox.getSelectedIndex() == 3) {
+                // display checkers background
+                _squaresPanel.setVisible(true);
+                log.debug("paintCheckers() called");
+            } else {
+                _currentBackground = colorChoice[bgColorBox.getSelectedIndex()];
+                _squaresPanel.setVisible(false);
+                _preview.setBackground(_currentBackground);
+            }
         });
-        grayButton.addActionListener((ActionEvent e) -> {
-            _currentBackground = _grayColor;
-            setBackground(_preview);
-        });
-        darkButton.addActionListener((ActionEvent e) -> {
-            _currentBackground = new Color(150, 150, 150);
-            setBackground(_preview);
-        });
+
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
         JPanel pp = new JPanel();
+        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         pp.add(new JLabel(Bundle.getMessage("setBackground")));
+        pp.add(bgColorBox);
         backgroundPanel.add(pp);
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        ButtonGroup selGroup = new ButtonGroup();
-        selGroup.add(whiteButton);
-        selGroup.add(grayButton);
-        selGroup.add(darkButton);
-        buttonPanel.add(whiteButton);
-        buttonPanel.add(grayButton);
-        buttonPanel.add(darkButton);
-        backgroundPanel.add(buttonPanel);
         backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
         return backgroundPanel;
     }
@@ -544,9 +553,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                     continue;
                 }
             }
-//            nameLabel.setText(leaf.getName());
             nameLabel.setName(leaf.getName());
-//            nameLabel.setVerticalTextPosition(JLabel.TOP);
             nameLabel.setBackground(_currentBackground);
             nameLabel.setIcon(icon);
 

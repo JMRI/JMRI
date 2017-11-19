@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -12,21 +13,23 @@ import java.awt.Insets;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
+import jmri.util.swing.DrawSquares;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +37,9 @@ import org.slf4j.LoggerFactory;
  * Create a Dialog to display the images in a file system directory.
  * <p>
  * PreviewDialog is not modal to allow dragNdrop of icons from it to catalog panels and
- * functioning of the catalog panels without dismissing this dialog
+ * functioning of the catalog panels without dismissing this dialog.
+ * Component is used in @link{jmri.jmrit.catalog.DirectorySearcher}, acessed
+ * from @link{jmri.jmrit.catalog.ImageIndexEditor} File menu items.
  *
  * @author Pete Cressman Copyright 2009
  */
@@ -42,10 +47,13 @@ public class PreviewDialog extends JDialog {
 
     JPanel _selectedImage;
     static Color _grayColor = new Color(235, 235, 235);
-    Color _currentBackground = _grayColor;
+    static Color _darkGrayColor = new Color(150, 150, 150);
+    protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor};
+    protected Color _currentBackground = _grayColor;
+    protected DrawSquares _squaresPanel;  // checkered background
 
     JLabel _previewLabel = new JLabel();
-    JPanel _preview;
+    JLayeredPane _preview;
 
     int _cnt;           // number of files displayed when setIcons() method runs
     int _startNum;      // total number of files displayed from a directory
@@ -89,7 +97,7 @@ public class PreviewDialog extends JDialog {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(Box.createHorizontalStrut(5));
 
-        JPanel previewPanel = setupPanel();     // provide panel for images, add to bottom of window
+        JPanel previewPanel = setupPanel(); // provide panel for images, add to bottom of window
         _startNum = startNum;
         needsMore = setIcons(startNum);
         if (_noMemory) {
@@ -152,10 +160,12 @@ public class PreviewDialog extends JDialog {
         return _lookAction;
     }
 
-
-
     /**
-     * Setup a display panel to display icons
+     * Set up a display panel to display icons.
+     * Includes a Set background: drop down list.
+     * @see jmri.jmrit.catalog.CatalogPanel#makeButtonPanel()
+     *
+     * @return the JPanel with preview pane and background color drop down
      */
     private JPanel setupPanel() {
         JPanel previewPanel = new JPanel();
@@ -164,43 +174,37 @@ public class PreviewDialog extends JDialog {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(_previewLabel);
         previewPanel.add(p);
-        _preview = new JPanel();
+        _preview = new JLayeredPane();
+        _preview.setLayout(new FlowLayout());
+        _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
+        _preview.add(_squaresPanel, new Integer (1));
+        _squaresPanel.setVisible(false); // initially hidden
         JScrollPane js = new JScrollPane(_preview);
-        previewPanel.add(js);
-        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("White"), false);
-        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("LightGray"), true);
-        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("DarkGray"), false);
-        whiteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setBackGround(Color.white);
-            }
-        });
-        grayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setBackGround(_grayColor);
-            }
-        });
-        darkButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setBackGround(new Color(150, 150, 150));
+        previewPanel.add(js); // place icons over the checkered background
+
+        JComboBox<String> bgColorBox = new JComboBox<>();
+        bgColorBox.addItem(Bundle.getMessage("White"));
+        bgColorBox.addItem(Bundle.getMessage("LightGray"));
+        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
+        bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option, under development
+        bgColorBox.setSelectedIndex(1); // light gray
+        bgColorBox.addActionListener((ActionEvent e) -> {
+            if (bgColorBox.getSelectedIndex() == 3) {
+                // display checkers background
+                _squaresPanel.setVisible(true);
+                log.debug("paintCheckers() called");
+            } else {
+                _currentBackground = colorChoice[bgColorBox.getSelectedIndex()];
+                _squaresPanel.setVisible(false);
+                _preview.setBackground(_currentBackground);
             }
         });
         JPanel pp = new JPanel();
+        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         pp.add(new JLabel(Bundle.getMessage("setBackground")));
+        pp.add(bgColorBox);
         previewPanel.add(pp);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        ButtonGroup selGroup = new ButtonGroup();
-        selGroup.add(whiteButton);
-        selGroup.add(grayButton);
-        selGroup.add(darkButton);
-        panel.add(whiteButton);
-        panel.add(grayButton);
-        panel.add(darkButton);
-        previewPanel.add(panel);
+
         return previewPanel;
     }
 

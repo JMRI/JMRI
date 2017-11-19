@@ -7,6 +7,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -79,15 +80,13 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
 
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
+        _iconFamilyPanel = new JLayeredPane();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
-
-//        _iconFamilyPanel.add(_dragIconPanel);
     }
 
     @Override
@@ -111,7 +110,6 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         panel.add(label, c);
         c.gridy = 1;
         _writeMem = new MemoryInputIcon(5, _editor);
-//        JPanel p0 = makeDragIcon(_writeMem, Type.READWRITE);
         panel.add(makeDragIcon(_writeMem, Type.READWRITE), c);
         
         _spinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
@@ -179,7 +177,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     }
 
     /*
-     * Set column width for InputMemoryIcon
+     * Set column width for InputMemoryIcon.
      */
     @Override
     public void stateChanged(ChangeEvent e) {
@@ -193,7 +191,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     }
 
     /**
-     * ListSelectionListener action from table
+     * ListSelectionListener action from table.
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -325,4 +323,5 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         }
 
     private final static Logger log = LoggerFactory.getLogger(MemoryItemPanel.class);
+
 }

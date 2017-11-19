@@ -15,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -69,14 +70,14 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
+        _iconFamilyPanel = new JLayeredPane();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
         if (_table != null) {
             int row = _table.getSelectedRow();
-            getIconMap(row);        // sets _currentIconMap & _mast, if they exist.
+            getIconMap(row); // sets _currentIconMap + _mast, if they exist.
         }
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
@@ -162,9 +163,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         NamedBean bean = _model.getBeanAt(row);
 
         if (bean == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("getIconMap: NamedBean is null at row " + row);
-            }
+            log.debug("getIconMap: NamedBean is null at row {}", row);
             _mast = null;
             _currentIconMap = null;
             _family = null;
@@ -174,7 +173,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         try {
             _mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(bean.getDisplayName());
         } catch (IllegalArgumentException ex) {
-            log.error("getIconMap: No SignalMast called " + bean.getDisplayName());
+            log.error("getIconMap: No SignalMast called {}", bean.getDisplayName());
             _currentIconMap = null;
             return;
         }
@@ -194,8 +193,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("getIconMap: for " + _family
-                    + " size= " + _currentIconMap.size());
+            log.debug("getIconMap for {}  size= {}", _family, _currentIconMap.size());
         }
     }
 
@@ -223,7 +221,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
     }
 
     /**
-     * ListSelectionListener action
+     * ListSelectionListener action.
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -297,11 +295,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                 sb.append(" icons for \"");
                 sb.append(bean.getDisplayName());
                 sb.append("\"");
-                return  sb.toString();
+                return sb.toString();
             }
             return null;                
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalMastItemPanel.class);
+
 }

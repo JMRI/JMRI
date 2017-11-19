@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * JPanels for the various item types that come from tool Tables - e.g. Sensors,
  * Turnouts, etc.
  * 
-* Devices such as these have sets of icons to display their various states.
+ * Devices such as these have sets of icons to display their various states.
  * such sets are called a "family" in the code. These devices then may have sets
  * of families to provide the user with a choice of the icon set to use for a
  * particular device.
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * The subclass FamilyItemPanel.java and its subclasses
  * handles these devices.
  * 
-* Other devices, e.g. backgrounds or memory, may use only one or no icon to
+ * Other devices, e.g. backgrounds or memory, may use only one or no icon to
  * display. The subclass IconItemPanel.java and its subclasses handles these
  * devices.
  */
@@ -40,6 +40,7 @@ public abstract class ItemPanel extends JPanel {
 
     /**
      * Constructor for all table types.
+     *
      * @param parentFrame ItemPalette instance
      * @param type identifier of the ItemPanel type
      * @param editor Editor that last called for the ItemPalette
@@ -54,7 +55,7 @@ public abstract class ItemPanel extends JPanel {
     /**
      * Initializes panel for selecting a new Control Panel item or for updating
      * an existing item. Adds table if item is a bean. i.e. customizes for the
-     * item type
+     * item type.
      */
     public void init() {
         _initialized = true;
@@ -66,12 +67,11 @@ public abstract class ItemPanel extends JPanel {
 
     protected void initLinkPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+        panel.setLayout(new FlowLayout());
         panel.add(new JLabel(Bundle.getMessage("LinkName")));
         panel.add(_linkName);
         _linkName.setToolTipText(Bundle.getMessage("ToolTipLink"));
         panel.setToolTipText(Bundle.getMessage("ToolTipLink"));
-
         add(panel);
     }
 
@@ -135,7 +135,7 @@ public abstract class ItemPanel extends JPanel {
         } else if (type.equals("Portal")) {
             return PORTAL;
         } else {
-            log.error("Item type \"" + type + "\" cannot create icon sets!");
+            log.error("Item type \"{}\" cannot create icon sets!", type);
             return null;
         }
     }
@@ -163,4 +163,5 @@ public abstract class ItemPanel extends JPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPanel.class);
+
 }

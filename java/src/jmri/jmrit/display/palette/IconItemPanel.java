@@ -23,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,6 +36,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.DrawSquares;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +53,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     CatalogPanel _catalog;
     JLabel _selectedIcon;
     JButton deleteIconButton;
-    protected int _level = Editor.ICONS;      // sub classes can override (e.g. Background)
+    protected int _level = Editor.ICONS; // sub classes can override (e.g. Background)
 
     /**
      * Constructor for plain icons and backgrounds
@@ -147,7 +149,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
-            NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
+            NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
             JPanel panel = new JPanel();
             panel.setBackground(bkgrdColor);
             String borderName = ItemPalette.convertText(entry.getKey());
@@ -188,7 +190,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     /*
-     *  For plain icons and backgrounds, families panel is the icon panel of just one family.
+     * For plain icons and backgrounds, families panel is the icon panel of just one family.
      */
     protected void removeIconFamiliesPanel() {
         if (_iconPanel != null) {
@@ -211,7 +213,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
      */
     public void initButtonPanel() {
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+        bottomPanel.setLayout(new FlowLayout());
 
         _catalogButton = new JButton(Bundle.getMessage("ButtonShowCatalog"));
         _catalogButton.addActionListener(new ActionListener() {

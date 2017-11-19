@@ -24,11 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for text labels
+ * ItemPanel for text labels.
  */
 public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
-    //    JTextField _text;
     DecoratorPanel _decorator;
 
     public TextItemPanel(ItemPalette parentFrame, String type, Editor editor) {
@@ -78,7 +77,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     }
 
     /**
-     * Export a Positionable item from panel
+     * Export a Positionable item from panel.
      */
     class DragDecoratorLabel extends PositionableLabel implements DragGestureListener, DragSourceListener, Transferable {
 
@@ -171,4 +170,5 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TextItemPanel.class);
+
 }
