@@ -146,7 +146,7 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -2092,7 +2092,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         inComboBox.setText("");
 
         // set the max number of rows that will fit onscreen
-        JmriBeanComboBox.setupComboBoxMaxRows(inComboBox);
+        JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
 
         inComboBox.setFirstItemBlank(inFirstBlank);
         inComboBox.setSelectedIndex(-1);
