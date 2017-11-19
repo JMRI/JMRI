@@ -328,7 +328,8 @@ public class LayoutEditorChecks {
         //if (layoutTrack.getName().equals("TO1")
         //        || layoutTrack.getName().equals("TO2")
         //        || layoutTrack.getName().equals("TO3")) {
-        //    log.info("-Stop here!");
+
+        //    log.debug("*Stop here!");
         //}
             layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
         }

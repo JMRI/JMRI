@@ -10361,7 +10361,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     // and therefore "event.getButton() == MouseEvent.BUTTON3" doesn't work.
     // event.getButton() always return 0 for MouseMoveEvent.
     private boolean isMetaDown(MouseEvent event) {
-        if (SystemType.isWindows()) {
+        if (SystemType.isWindows() || SystemType.isLinux()) {
             return SwingUtilities.isRightMouseButton(event);
         } else {
             return event.isMetaDown();

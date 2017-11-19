@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.lang.Float.POSITIVE_INFINITY;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -895,46 +897,75 @@ public class LevelXing extends LayoutTrack {
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
-
+        //note: optimization here: instead of creating rectangles for all the
+        // points to check below, we create a rectangle for the test point
+        // and test if the points below are in that rectangle instead.
         Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Point2D p, minPoint = MathUtil.zeroPoint2D;
+
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+        double distance, minDistance = POSITIVE_INFINITY;
 
         if (!requireUnconnected) {
             //check the center point
-            if (r.contains(getCoordsCenter())) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
                 result = LEVEL_XING_CENTER;
             }
         }
 
         if (!requireUnconnected || (getConnectA() == null)) {
             //check the A connection point
-            if (r.contains(getCoordsA())) {
+            p = getCoordsA();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
                 result = LEVEL_XING_A;
             }
         }
 
         if (!requireUnconnected || (getConnectB() == null)) {
             //check the B connection point
-            if (r.contains(getCoordsB())) {
-                //mouse was pressed on this connection point
-                result = LEVEL_XING_B;
+            p = getCoordsB();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = LEVEL_XING_A;
             }
         }
 
         if (!requireUnconnected || (getConnectC() == null)) {
             //check the C connection point
-            if (r.contains(getCoordsC())) {
-                result = LEVEL_XING_C;
+            p = getCoordsC();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = LEVEL_XING_A;
             }
         }
 
         if (!requireUnconnected || (getConnectD() == null)) {
             //check the D connection point
-            if (r.contains(getCoordsD())) {
-                result = LEVEL_XING_D;
+            p = getCoordsD();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = LEVEL_XING_A;
             }
         }
+        if ((useRectangles && !r.contains(minPoint))
+                || (!useRectangles && (minDistance > circleRadius))) {
+            result = NONE;
+        }
         return result;
-    }
+    }   // findHitPointType
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
@@ -1557,7 +1588,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.info("-New block ('{}') trackNameSets", theBlockName);
+                log.debug("*New block ('{}') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -1566,7 +1597,7 @@ public class LevelXing extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.info("-    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -1585,7 +1616,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameAC != null) && (blockNameAC.equals(blockName))) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // it's time to play... flood your neighbours!
                 if (connectA != null) {
@@ -1599,7 +1630,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameBD != null) && (blockNameBD.equals(blockName))) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // it's time to play... flood your neighbours!
                 if (connectB != null) {
