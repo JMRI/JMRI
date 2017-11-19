@@ -198,7 +198,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     break;
             }
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @Override
@@ -225,7 +225,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     /**

@@ -40,9 +40,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         option1Name = "FlowControl"; // NOI18N
         option2Name = "CommandStation"; // NOI18N
         option3Name = "TurnoutHandle"; // NOI18N
-        options.put(option1Name, new Option("Connection uses:", validOption1));
-        options.put(option2Name, new Option("Command station type:", getCommandStationListWithStandaloneLN(), false));
-        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
+        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial")), validOption1));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));
+        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
     }
     
     /**

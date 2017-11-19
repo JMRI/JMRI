@@ -3998,6 +3998,6 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class);
+
 }

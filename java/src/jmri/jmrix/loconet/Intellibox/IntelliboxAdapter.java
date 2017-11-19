@@ -7,9 +7,9 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
  * correctly with the Intellibox on-board serial port.
- * <P>
+ * <p>
  * Since this is by definition connected to an Intellibox, the command station
- * prompt has limited choices
+ * prompt has limited choices.
  *
  * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
@@ -21,9 +21,9 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
 
         // define command station options
         options.remove(option2Name);
-        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
 
-        validSpeeds = new String[]{"19200", "38400", "115200"};
+        validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud115200")};
         validSpeedValues = new int[]{19200, 38400, 115200};
     }
 
@@ -68,11 +68,11 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
      * Rephrase option 1, so that it doesn't talk about LocoBuffer
      */
     public String option1Name() {
-        return "Serial connection uses ";
+        return Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial"));
     }
 
     /**
-     * Provide just one valid command station value
+     * Provide just one valid command station value.
      */
     public String[] commandStationOptions() {
         String[] retval = {

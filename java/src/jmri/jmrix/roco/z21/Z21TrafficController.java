@@ -159,7 +159,11 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                         }
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // retain if needed later
-                        log.error("retry wait interupted");
+                        if(!threadStopRequest) {
+                           log.error("retry wait interupted");
+                        } else {
+                           log.error("retry wait interupted durring thread stop");
+                        }
                     }
                 } else {
                     log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
@@ -223,7 +227,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 try {
                     transmitLoop();
                 } catch (Throwable e) {
-                    log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
+                    if(!threadStopRequest) log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
                     // ThreadDeath must be thrown per Java API JavaDocs
                     if (e instanceof ThreadDeath) {
                         throw e;

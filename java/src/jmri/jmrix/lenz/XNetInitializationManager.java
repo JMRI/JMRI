@@ -45,10 +45,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
              Ops Mode Programming */
             systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
             jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
-            /* the consist manager has to be set up AFTER the programmer, to
-             prevent the default consist manager from being loaded on top of it */
             systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-            jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
             systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
             jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
             systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
@@ -71,10 +68,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
                 systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-                /* the consist manager has to be set up AFTER the programmer, to
-                 prevent the default consist manager from being loaded on top of it */
                 systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-                jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
             } else if (CSType == 0x01) {
                 if (log.isDebugEnabled()) {
                     log.debug("Command Station is LH200");
@@ -97,10 +91,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 systemMemo.getXNetTrafficController()
                         .getCommandStation()
                         .setTrafficController(systemMemo.getXNetTrafficController());
-                /* the consist manager has to be set up AFTER the programmer, to
-                 prevent the default consist manager from being loaded on top of it */
                 systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-                jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
                 systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
                 systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
@@ -143,10 +134,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                  Ops Mode Programming */
                 systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
                 jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
-                /* the consist manager has to be set up AFTER the programmer, to
-                 prevent the default consist manager from being loaded on top of it */
                 systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-                jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
                 systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
                 systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));

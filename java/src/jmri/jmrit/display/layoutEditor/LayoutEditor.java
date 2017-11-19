@@ -144,7 +144,7 @@ import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.jmrit.signalling.AddEntryExitPairAction;
+import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.util.ColorUtil;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
@@ -2102,9 +2102,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //setupComboBox
 
     /**
-     * set the maximum number of rows based on screen size
+     * Set the maximum number of rows based on screen size.
      *
-     * @param inComboBox
+     * @param inComboBox the combo box to set up rows for
      */
     public static void setupComboBoxMaxRows(@Nonnull JmriBeanComboBox inComboBox) {
         // find the max height of all popup items
