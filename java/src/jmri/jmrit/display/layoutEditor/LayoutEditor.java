@@ -139,7 +139,7 @@ import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.jmrit.signalling.AddEntryExitPairAction;
+import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.util.ColorUtil;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
@@ -2545,11 +2545,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //
         // set background color
         //
-        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor"));
+        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         optionMenu.add(backgroundColorMenuItem);
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("SetBackgroundColor"),
+                    Bundle.getMessage("SetBackgroundColor", ""),
                     defaultBackgroundColor);
             if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
                 defaultBackgroundColor = desiredColor;
@@ -2562,11 +2562,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //
         // set default text color
         //
-        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor"));
+        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         optionMenu.add(textColorMenuItem);
         textColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("DefaultTextColor"),
+                    Bundle.getMessage("DefaultTextColor", ""),
                     defaultTextColor);
             if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
                 setDefaultTextColor(desiredColor);

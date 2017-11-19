@@ -100,7 +100,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             }
 
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         /*if (T.equals(jmri.CommandStation.class))
          return (T)commandStation;*/
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     /**

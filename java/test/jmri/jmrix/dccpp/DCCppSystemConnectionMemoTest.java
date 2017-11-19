@@ -1,10 +1,10 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * DCCppSystemConnectionMemoTest.java
@@ -14,20 +14,20 @@ import org.junit.Assert;
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppSystemConnectionMemoTest extends TestCase {
+public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
+    @Test
     public void testCtor() {
-        // infrastructure objects
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-
-        DCCppSystemConnectionMemo t = new DCCppSystemConnectionMemo(tc);
+        DCCppSystemConnectionMemo t = (DCCppSystemConnectionMemo) scm;  
         Assert.assertNotNull(t);
         Assert.assertNotNull(t.getDCCppTrafficController());
         // While we are constructing the memo, we should also set the 
         // SystemMemo parameter in the traffic controller.
-        Assert.assertNotNull(tc.getSystemConnectionMemo());
+        Assert.assertNotNull(t.getDCCppTrafficController().getSystemConnectionMemo());
     }
 
+    @Test
     public void testDCCppTrafficControllerSetCtor() {
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -44,31 +44,20 @@ public class DCCppSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }
 
-    // from here down is testing infrastructure
-    public DCCppSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppSystemConnectionMemoTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        // infrastructure objects
+        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+
+        scm = new DCCppSystemConnectionMemo(tc);
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
