@@ -1,5 +1,6 @@
 package jmri.jmrix.anyma;
 
+import jmri.implementation.AbstractLightTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +13,7 @@ import org.junit.Test;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_UsbLightTest {
+public class AnymaDMX_UsbLightTest extends AbstractLightTestBase {
 
     private AnymaDMX_SystemConnectionMemo _memo = null;
 
@@ -21,6 +22,12 @@ public class AnymaDMX_UsbLightTest {
         AnymaDMX_UsbLight light = new AnymaDMX_UsbLight(
                 "DXL1", "Test Light", _memo);
         Assert.assertNotNull("ConnectionConfig constructor", light);
+    }
+
+    public void checkOnMsgSent() {
+    }
+
+    public void checkOffMsgSent() {
     }
 
     @Before

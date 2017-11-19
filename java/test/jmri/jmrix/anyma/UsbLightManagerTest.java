@@ -1,5 +1,6 @@
 package jmri.jmrix.anyma;
 
+import jmri.managers.AbstractLightMgrTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +13,7 @@ import org.junit.Test;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class UsbLightManagerTest {
+public class UsbLightManagerTest extends AbstractLightMgrTestBase {
 
     private AnymaDMX_SystemConnectionMemo _memo = null;
 
@@ -20,6 +21,10 @@ public class UsbLightManagerTest {
     public void ConstructorTest() {
         Assert.assertNotNull("ConnectionConfig constructor",
                 new UsbLightManager(_memo));
+    }
+
+    public String getSystemName(int i) {
+        return null;
     }
 
     @Before

@@ -110,7 +110,6 @@ abstract public class SystemConnectionMemo extends Bean {
 
     /**
      * Provide access to the system user name string.
-     (
      * <p>
      * This was previously fixed at configuration time.
      *
