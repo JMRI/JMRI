@@ -9,7 +9,8 @@
 
   <title>JMRI: Simple Signal Logic Example</title>
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20151107"><!-- Style -->
+  <meta name="Date.Modified" content="20151107">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,7 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -39,7 +41,7 @@
       <p>This page provides an example of using the JMRI <a href=
       "../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple
       Signal Logic</a> (in short: SSL) to control Signals Heads
-      connected to a Digitrax SE8c board. This also works for other
+      connected to a Digitrax SE8C board. This also works for other
       types of <i>single head</i> hardware signals, including LEDs
       connected to stationary decoders, C/MRI systems, etc.<br>
       Please try our <a href="#example1">ready-to-use example</a>
@@ -173,9 +175,9 @@ Red, Red and Yellow respectively.
 
         <li>To learn how signals are configured in SSL, open the
         "Simple Signal Logic" item in the Tools menu.<a href=
-        "../../../images/SE8cExampleLogic.png"><img src=
-        "../../../images/SE8cExampleLogic.png" align="right"
-          width="290" height="270" hspace="0" vspace="0" alt=
+        "../../../images/SslExample.png"><img src=
+        "../../../images/SslExample.png" align="right"
+          width="452" height="287" hspace="0" vspace="0" alt=
           "Simple Signal Logic Window"></a> In the pane that opens,
           enter a Signal (Head) Name, e.g. "Section 5A", in the top
           text field and hit the Return key. You should get
@@ -267,7 +269,7 @@ Red, Red and Yellow respectively.
             <li>You can also use the "Add..." button on the Turnout
             Table to open a pane to enter new Turnouts.</li>
 
-            <li>The "Turnout Control..." pane in the Tools menu
+            <li>The "Turnout Control..." pane, found in the Tools menu,
             also creates a new Turnout entry for every turnout
             address you operate.</li>
           </ul>
@@ -275,20 +277,19 @@ Red, Red and Yellow respectively.
 
         <li>If you have Signal Heads connected to "turnout-type"
         outputs, tell the program about those Turnout addresses too
-        (SE8c users skip this step). <a name="definesignals" id=
-        "definesignals"></a></li>
+        (SE8C users skip this step).
 
+        <a name="definesignals" id="definesignals"></a></li>
         <li>
           Tell PanelPro
-          how your Signal Heads are addressed:<a name=
-          "definesignals" id="definesignals"></a> <a href=
+          how your Signal Heads are addressed:<a href=
           "../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"><img src="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"
           align="right" width="299" height="118" hspace="0" vspace=
           "0" alt="Signal Head Table Figure"></a>
 
           <ul>
-            <li>From the Tools menu, open the "Tables" &gt;
-            "Signals" &gt; "Signal Heads" tool.</li>
+            <li>From the PanelPro <b>Tools</b> menu, open the <b>Tables
+            &gt; Signals &gt; Signal Heads</b> tool.</li>
 
             <li>Click the "<a href=
             "../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a>"
@@ -353,9 +354,9 @@ Red, Red and Yellow respectively.
         Logic (SSL) Tool.<br>
           Open the "Simple Signal Logic" tool from the "Tools"
           menu. You should get a pane with a number of fields:
-          <a href="../../../images/SE8cExampleLogic.png"><img src=
-          "../../../images/SE8cExampleLogic.png" align="right"
-          width="290" height="270" hspace="2" vspace="0" alt=
+          <a href="../../../images/SslExample.png"><img src=
+          "../../../images/SslExample.png" align="right"
+          width="452" height="287" hspace="2" vspace="0" alt=
           "Simple Signal Logic Window"></a>
 
           <ul>

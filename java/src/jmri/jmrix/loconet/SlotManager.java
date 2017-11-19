@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Controls a collection of slots, acting as the counter-part of a LocoNet
  * command station.
- * <P>
+ * <p>
  * A SlotListener can register to hear changes. By registering here, the
  * SlotListener is saying that it wants to be notified of a change in any slot.
  * Alternately, the SlotListener can register with some specific slot, done via
@@ -33,18 +33,18 @@ import org.slf4j.LoggerFactory;
  * read from the command station, the first message directly setting F9 through
  * F28 will not have a place to store information. Instead, it will trigger a
  * slot read, so the following messages will be properly handled.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ * <p>
  * This Programmer implementation is single-user only. It's not clear whether
  * the command stations can have multiple programming requests outstanding (e.g.
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
@@ -749,6 +749,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public LnCommandStationType getCommandStationType() {
         return commandStationType;
     }
+
     protected LnCommandStationType commandStationType = null;
 
     /**
