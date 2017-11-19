@@ -91,6 +91,12 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Added TSU-4400 model</revremark>
         </revision>
+        <revision>
+            <revnumber>6</revnumber>
+            <date>2017-09-18</date>
+            <authorinitials>MJM</authorinitials>
+            <revremark>Added Poppet Valves select and more PM to Baldwin and other decoders</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
@@ -1368,7 +1374,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXXVVV" item="Sound Option 5" include="279,283,287,291" default="0" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXXVVV" item="Sound Option 5" include="279,283,287,291" default="0" tooltip="Select one of prime mover sound effects, GTEL and GenSet only after Sept 2017">
                 <enumVal>
                     <enumChoice>
                         <choice>Baldwin VO</choice>
@@ -1391,6 +1397,21 @@
                     <enumChoice>
                         <choice>Fairbanks-Morse</choice>
                     </enumChoice>
+                    <enumChoice>
+                        <choice>GE GTEL UP Slab Side</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>GE GTEL UP Veranda</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>GE GTEL UP Big Blow A unit</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>GE GTEL UP Big Blow B unit</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Cummins QSK19C x3 GenSet</choice>
+                    </enumChoice>
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
@@ -1405,6 +1426,17 @@
             <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="278,282,286,34,280,283,287,291" default="0" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
+            </variable>
+            <variable CV="123" mask="XXXXXVVV" item="Sound Option 16" default="0" tooltip="Select one of Poppet Valves sound effects, for decoders built after Sept 2017">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Poppet Valves</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Electronic Air Dryer</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Poppet Valves Select</label>
             </variable>
             <!-- End Sound Selection -->
             <!-- Volume Controls follow -->

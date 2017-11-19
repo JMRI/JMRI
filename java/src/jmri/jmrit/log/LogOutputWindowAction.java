@@ -5,7 +5,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
 /**
- * Open a window to recieve Log4J output
+ * Open a window to receive Log4J output.
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @see jmri.util.JLogoutputFrame
@@ -20,6 +20,8 @@ public class LogOutputWindowAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame f = jmri.util.JLogoutputFrame.getInstance().getMainFrame();
+        f.setTitle("LogOutputTitle");
         f.setVisible(true);
     }
+
 }

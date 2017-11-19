@@ -375,9 +375,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     return;
                 }
                 break;
-            default:
-                log.warn("Unhandled slider type: {}", displaySlider);
-                break;
         }
         sliderPanel.setVisible(true);
         speedSlider.setEnabled(speedControllerEnable);

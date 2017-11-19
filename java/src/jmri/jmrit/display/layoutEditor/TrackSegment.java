@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.lang.Float.POSITIVE_INFINITY;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
 import java.awt.BasicStroke;
@@ -49,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * TrackSegments may be drawn as dashed lines or solid lines. In addition
  * TrackSegments may be hidden when the panel is not in EditMode.
  *
- * @author Dave Duchamp Copyright (c) 2004-2009
+ * @author Dave Duchamp Copyright (p) 2004-2009
  */
 public class TrackSegment extends LayoutTrack {
 
@@ -628,21 +629,36 @@ public class TrackSegment extends LayoutTrack {
             //note: optimization here: instead of creating rectangles for all the
             // points to check below, we create a rectangle for the test point
             // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+            Point2D p, minPoint = MathUtil.zeroPoint2D;
+
+            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+            double distance, minDistance = POSITIVE_INFINITY;
 
             if (isCircle()) {
-                if (r.contains(getCoordsCenterCircle())) {
+                p = getCoordsCenterCircle();
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minPoint = p;
                     result = TRACK_CIRCLE_CENTRE;
                 }
             } else if (isBezier()) {
                 // hit testing for the control points
                 // note: control points will override center circle
                 for (int index = 0; index < bezierControlPoints.size(); index++) {
-                    if (r.contains(bezierControlPoints.get(index))) {
-                        result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
-                        break;
+                    p = bezierControlPoints.get(index);
+                    distance = MathUtil.distance(p, hitPoint);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        minPoint = p;
+                        result = TRACK_CIRCLE_CENTRE;
                     }
                 }
+            }
+            if ((useRectangles && !r.contains(minPoint))
+                    || (!useRectangles && (minDistance > circleRadius))) {
+                result = NONE;
             }
             if (result == NONE) {
                 if (r.contains(getCentreSeg())) {
@@ -801,57 +817,8 @@ public class TrackSegment extends LayoutTrack {
         popup.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TrackSegment ts_this = TrackSegment.this;
-                // create a new anchor
-                Point2D p = getCentreSeg();
-                PositionablePoint newAnchor = layoutEditor.addAnchor(p);
-                // link it to me
-                layoutEditor.setLink(newAnchor, POS_POINT, ts_this, TRACK);
-
-                //get unique name for a new track segment
-                String name = layoutEditor.getFinder().uniqueName("T", 0);
-
-                //create it between the new anchor and my connect2(/type2)
-                TrackSegment newTrackSegment = new TrackSegment(name,
-                        newAnchor, POS_POINT,
-                        connect2, type2,
-                        isDashed(), isMainline(), layoutEditor);
-                // add it to known tracks
-                layoutEditor.getLayoutTracks().add(newTrackSegment);
-                layoutEditor.setDirty();
-
-                // copy attributes to new track segment
-                newTrackSegment.setArc(ts_this.isArc());
-                newTrackSegment.setCircle(ts_this.isCircle());
-                //newTrackSegment.setBezier(ts_this.isBezier());
-                newTrackSegment.setFlip(ts_this.isFlip());
-
-                // link my connect2 to the new track segment
-                if (connect2 instanceof PositionablePoint) {
-                    PositionablePoint pp = (PositionablePoint) connect2;
-                    pp.replaceTrackConnection(ts_this, newTrackSegment);
-                } else {
-                    layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
-                }
-
-                // link the new anchor to the new track segment
-                layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
-
-                // link me to the new newAnchor
-                connect2 = newAnchor;
-                type2 = POS_POINT;
-
-                //check on layout block
-                LayoutBlock b = ts_this.getLayoutBlock();
-
-                if (b != null) {
-                    newTrackSegment.setLayoutBlock(b);
-                    layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-                    newTrackSegment.updateBlockInfo();
-                }
-                layoutEditor.setDirty();
-                layoutEditor.redrawPanel();
-            }
+                splitTrackSegment();
+            };
         });
 
         JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
@@ -926,6 +893,62 @@ public class TrackSegment extends LayoutTrack {
         popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popup;
     }   // showPopup
+
+    /**
+     * split this TrackSegment
+     */
+    private void splitTrackSegment() {
+        // create a new anchor
+        Point2D p = getCentreSeg();
+        PositionablePoint newAnchor = layoutEditor.addAnchor(p);
+        // link it to me
+        layoutEditor.setLink(newAnchor, POS_POINT, this, TRACK);
+
+        //get unique name for a new track segment
+        String name = layoutEditor.getFinder().uniqueName("T", 0);
+
+        //create it between the new anchor and my connect2(/type2)
+        TrackSegment newTrackSegment = new TrackSegment(name,
+                newAnchor, POS_POINT,
+                connect2, type2,
+                isDashed(), isMainline(), layoutEditor);
+        // add it to known tracks
+        layoutEditor.getLayoutTracks().add(newTrackSegment);
+        layoutEditor.setDirty();
+
+        // copy attributes to new track segment
+        newTrackSegment.setLayoutBlock(this.getLayoutBlock());
+        newTrackSegment.setArc(this.isArc());
+        newTrackSegment.setCircle(this.isCircle());
+        //newTrackSegment.setBezier(this.isBezier());
+        newTrackSegment.setFlip(this.isFlip());
+
+        // link my connect2 to the new track segment
+        if (connect2 instanceof PositionablePoint) {
+            PositionablePoint pp = (PositionablePoint) connect2;
+            pp.replaceTrackConnection(this, newTrackSegment);
+        } else {
+            layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
+        }
+
+        // link the new anchor to the new track segment
+        layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
+
+        // link me to the new newAnchor
+        connect2 = newAnchor;
+        type2 = POS_POINT;
+
+        //check on layout block
+        LayoutBlock b = this.getLayoutBlock();
+
+        if (b != null) {
+            newTrackSegment.setLayoutBlock(b);
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            newTrackSegment.updateBlockInfo();
+        }
+        layoutEditor.setDirty();
+        layoutEditor.redrawPanel();
+    }
 
     /**
      * Display popup menu for information and editing.
@@ -1807,7 +1830,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.info("•New block ('{}') trackNameSets", blockName);
+                log.debug("*New block ('{}') trackNameSets", blockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(blockName, TrackNameSets);
             }
@@ -1816,7 +1839,7 @@ public class TrackSegment extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.info("•    Add track '{}' to TrackNameSets for block '{}'", getName(), blockName);
+                log.debug("*    Add track '{}' to TrackNameSets for block '{}'", getName(), blockName);
             }
             // (#4)
             if (connect1 != null) {
@@ -1838,7 +1861,7 @@ public class TrackSegment extends LayoutTrack {
             if (this.blockName.equals(blockName)) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // these should never be null... but just in case...
                 // it's time to play... flood your neighbours!
@@ -1859,6 +1882,6 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+
 }
