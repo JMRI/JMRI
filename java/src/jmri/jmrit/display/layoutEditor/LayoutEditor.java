@@ -2725,6 +2725,18 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenu trackMenu = new JMenu(Bundle.getMessage("TrackMenuTitle"));
         optionMenu.add(trackMenu);
 
+        // set track drawing options menu item
+        JMenuItem jmi = new JMenuItem(Bundle.getMessage("SetTrackDrawingOptions"));
+        trackMenu.add(jmi);
+        jmi.setToolTipText(Bundle.getMessage("SetTrackDrawingOptionsToolTip"));
+        jmi.addActionListener((ActionEvent event) -> {
+            LayoutTrackDrawingOptionsDialog ltdod = new LayoutTrackDrawingOptionsDialog(
+                    this, true, getLayoutTrackDrawingOptions());
+
+            ltdod.pack();
+            ltdod.setVisible(true);
+        });
+
         //set track width menu item
         JMenuItem widthItem = new JMenuItem(Bundle.getMessage("SetTrackWidth") + "...");
         trackMenu.add(widthItem);
@@ -2866,6 +2878,20 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         return optionMenu;
     } //setupOptionMenu
+
+    /*============================================*\
+    |* LayoutTrackDrawingOptions accessor methods *|
+    \*============================================*/
+    private LayoutTrackDrawingOptions layoutTrackDrawingOptions
+            = new LayoutTrackDrawingOptions();
+
+    protected LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
+        return layoutTrackDrawingOptions;
+    }
+
+    protected void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
+        layoutTrackDrawingOptions = ltdo;
+    }
 
     private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;
     private AddEntryExitPairAction addEntryExitPairAction = null;
