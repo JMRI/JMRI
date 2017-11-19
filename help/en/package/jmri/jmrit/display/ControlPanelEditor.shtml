@@ -178,7 +178,7 @@
       panel window, then you should repeat "Zoom to Fit" to resize
       the display to fit the new panel window dimensions.</p>
 
-      <h3>AddItems Menu</h3>The <b>Item Palette</b> menu item opens
+      <h3>Add Items Menu</h3>The <b>Item Palette</b> menu item opens
       a tabbed window which allows you to add item icons to the
       panel. Each item type has a tab in the window. Adding items
       is done by drag and drop. Iconic items may have multiple sets
@@ -186,7 +186,8 @@
       added or deleted to suit the user. Details may be found at
       <a href="ItemPalette.shtml">The Item Palette</a>. Note that
       the Item Palette can also be opened with the accelerator key,
-      Control P.
+      Control P. The icons are displayed on the background
+      of the last editor to call the Item Palette.
 
       <p>The Palette in Control Panel Editor does not support the
       <b>Slip/3-Way/Scissor</b> turnout icons that are available
