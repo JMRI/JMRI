@@ -1,4 +1,3 @@
-
 <!-- Sidebar -->
 <!-- UpDated by Blorec Herv&#233; le 2016-09-12-->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -12,15 +11,15 @@
 
 
 		<dt><h3><a href="index.shtml">Signalisation</a></h3></dt>
-		<dd>Ajout de signaux à votre réseau avec JMRI.
+		<dd>Ajout de signaux &agrave; votre r&#233;seau avec JMRI.
 		    <ul>
-		    <li><dfn><a href="SignalingSetup.shtml">Signalisation Démarrage Rapide</a></dfn>
+		    <li><dfn><a href="SignalingSetup.shtml">Signalisation D&#233;marrage Rapide</a></dfn>
 		    <li><dfn><a href="AspectSignaling.shtml">Aspect Signalisation</a></dfn>
 		    <li><dfn><a href="SignalHeads.shtml">Feux de Signalisation</a></dfn>
-		    <li><dfn><a href="SignalMasts.shtml">Mâts de Signalisation</a></dfn>
+		    <li><dfn><a href="SignalMasts.shtml">M&#226;ts de Signalisation</a></dfn>
 		    <li><dfn><a href="SignalGroups.shtml">Groupes de Signaux</a></dfn>
-		    <li><dfn><a href="SignalMastLogic.shtml">Logique Mâts de Signalisation</a></dfn>
-		    <li><dfn><a href="interlock/index.shtml">Enclenchements &amp; Entrée Sortie  </a></dfn>
+		    <li><dfn><a href="SignalMastLogic.shtml">Logique M&#226;ts de Signalisation</a></dfn>
+		    <li><dfn><a href="interlock/index.shtml">Enclenchements &amp; Entr&#233;e Sortie  </a></dfn>
 		    </ul>
 	</dd>
 
@@ -38,7 +37,7 @@
 				<li><dfn><a href="../Memories.shtml">Variables M&#233;moire</a></dfn>
 				<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
 				<li><dfn><a href="../LRoutes.shtml">LItin&#233;raires</a></dfn>
-		    <li><dfn><a href="../Sections.shtml">Sections</a></dfn>
+		        <li><dfn><a href="../Sections.shtml">Sections</a></dfn>
 				<li><dfn><a href="../Logix.shtml">Logix</a></dfn>
 				<li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
 				<li><dfn><a href="../speedometer/index.shtml">Compteur</a></dfn>
