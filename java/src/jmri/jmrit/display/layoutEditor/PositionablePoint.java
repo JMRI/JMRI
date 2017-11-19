@@ -1783,4 +1783,5 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+
 }
