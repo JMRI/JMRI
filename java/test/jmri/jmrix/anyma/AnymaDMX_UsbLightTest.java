@@ -5,7 +5,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for AnymaDMX_UsbLight class.
@@ -15,13 +14,15 @@ import org.junit.Test;
  */
 public class AnymaDMX_UsbLightTest extends AbstractLightTestBase {
 
+    public AnymaDMX_UsbLightTest(String s) {
+        super(s);
+    }
+
     private AnymaDMX_SystemConnectionMemo _memo = null;
 
-    @Test
-    public void ConstructorTest() {
-        AnymaDMX_UsbLight light = new AnymaDMX_UsbLight(
-                "DXL1", "Test Light", _memo);
-        Assert.assertNotNull("ConnectionConfig constructor", light);
+    public void testCreate() {
+        t = new AnymaDMX_UsbLight("DXL1", "Test Light", _memo);
+        Assert.assertNotNull("testCreate", t);
     }
 
     public int numListeners() {
@@ -39,6 +40,7 @@ public class AnymaDMX_UsbLightTest extends AbstractLightTestBase {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         _memo = new AnymaDMX_SystemConnectionMemo();
+        t = new AnymaDMX_UsbLight("DXL1", "Test Light", _memo);
     }
 
     @After
