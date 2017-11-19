@@ -44,7 +44,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private JPanel _tablePanel;
     protected DrawSquares _squaresPanel; // checkered background
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
-//    private HashMap<String, HashMap<String, NamedIcon>> _updateGroupsMap;
 
     public IndicatorTOItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Turnout> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -176,7 +175,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     protected void initIconFamiliesPanel() {
         _iconFamilyPanel = new JLayeredPane();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-
+        _iconFamilyPanel.setOpaque(true);
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families
                 = ItemPalette.getLevel4FamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
@@ -186,27 +185,26 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             if (_iconGroupsMap == null) {
                 _iconGroupsMap = families.get(_family);
             }
-            // make _iconPanel & _dragIconPanel before calls to add icons
+            // make _iconPanel + _dragIconPanel before calls to add icons
             addFamilyPanels(familyPanel);
-
-            if (_squaresPanel == null) { // add a white checkered background
-                _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
-                log.debug("DrawSquares() called");
-            }
-            _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
-            _squaresPanel.setVisible(false);
 
             if (_iconGroupsMap == null) {
                 log.error("_iconGroupsMap is null in initIconFamiliesPanel");
                 _family = null;
             } else {
-                addIcons2Panel(_iconGroupsMap);  // need to have family iconMap identified before calling
+                addIcons2Panel(_iconGroupsMap); // need to have family iconMap identified before calling
                 makeDndIconPanel(_iconGroupsMap.get("ClearTrack"), "TurnoutStateClosed");
             }
         } else {
             familiesMissing();
-            //createNewFamily();
         }
+        if (_squaresPanel == null) { // add a white checkered background
+            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
+            log.debug("DrawSquares() called");
+        }
+        _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
+        _squaresPanel.setVisible(false);
+
         log.debug("initIconFamiliesPanel done");
     }
 
@@ -248,7 +246,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             String stateName = entry.getKey();
             JPanel panel = new JPanel();
             panel.add(new JLabel(ItemPalette.convertText(stateName)));
-            panel.setBackground(_editor.getTargetPanel().getBackground());
+            panel.setOpaque(false);
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
             c.gridx++;
@@ -261,7 +259,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 NamedIcon icon = new NamedIcon(ent.getValue());    // make copy for possible reduction
                 icon.reduceTo(100, 100, 0.2);
                 panel = new JPanel();
-                panel.setBackground(_editor.getTargetPanel().getBackground());
+                panel.setOpaque(false);
                 panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                         borderName));
                 //if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon at ("
@@ -281,7 +279,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 c.gridx++;
             }
             panel = new JPanel();
-            panel.setBackground(_editor.getTargetPanel().getBackground());
+            panel.setOpaque(false);
             JButton button = new JButton(Bundle.getMessage("ButtonEditIcons"));
             button.addActionListener(new ActionListener() {
                 String key;
@@ -427,10 +425,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
         _iconFamilyPanel.remove(_iconPanel);
         _iconPanel = new JPanel();
-        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
+        _iconPanel.setOpaque(false);
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
         _iconFamilyPanel.add(_iconPanel, 0);
-        if (!_supressDragging) {
+        if (!_suppressDragging) {
             _iconFamilyPanel.remove(_dragIconPanel);
             makeDragIconPanel(1);
 //            _dragIconPanel = new JPanel();

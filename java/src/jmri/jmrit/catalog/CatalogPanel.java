@@ -395,7 +395,11 @@ public class CatalogPanel extends JPanel implements MouseListener {
         previewPanel.add(_previewLabel);
         _preview = new JLayeredPane();
         _preview.setLayout(new FlowLayout());
-        _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
+        _preview.setOpaque(true);
+        if (_squaresPanel == null) { // add a white checkered background
+            _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
+            log.debug("CatalogPanel DrawSquares() called");
+        }
         _preview.add(_squaresPanel, new Integer (1));
         _squaresPanel.setVisible(false);  // initially hidden
         JScrollPane js = new JScrollPane(_preview);
@@ -415,16 +419,18 @@ public class CatalogPanel extends JPanel implements MouseListener {
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option, under development
-        bgColorBox.setSelectedIndex(1); // light gray
+        bgColorBox.setSelectedIndex(0); // white
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (bgColorBox.getSelectedIndex() == 3) {
                 // display checkers background
                 _squaresPanel.setVisible(true);
+                _preview.setOpaque(false);
                 log.debug("paintCheckers() called");
             } else {
                 _currentBackground = colorChoice[bgColorBox.getSelectedIndex()];
                 _squaresPanel.setVisible(false);
-                _preview.setBackground(_currentBackground);
+                _preview.setOpaque(true);
+                setBackground(_preview); // sets all bg colors
             }
         });
 
@@ -554,7 +560,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 }
             }
             nameLabel.setName(leaf.getName());
-            nameLabel.setBackground(_currentBackground);
+            nameLabel.setOpaque(false);
             nameLabel.setIcon(icon);
 
             JPanel p = new JPanel();

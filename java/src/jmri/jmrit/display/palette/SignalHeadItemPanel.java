@@ -71,8 +71,9 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     protected void showIcons() {
         _iconFamilyPanel.remove(_iconPanel);
         _iconPanel = new JPanel();
-        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
+        _iconPanel.setOpaque(false);
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                Bundle.getMessage("PreviewBorderTitle")));
         _iconFamilyPanel.add(_iconPanel, 0);
         addIconsToPanel(_currentIconMap);
         _iconPanel.setVisible(true);
@@ -97,7 +98,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     }
 
     /**
-     * ListSelectionListener action
+     * ListSelectionListener action.
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -106,7 +107,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         }
         int row = _table.getSelectedRow();
         if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= " + row);
+            log.debug("Table valueChanged: row= {}", row);
         }
         if (row >= 0) {
             _updateButton.setEnabled(true);
@@ -228,4 +229,5 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class);
+
 }

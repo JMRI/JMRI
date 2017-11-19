@@ -42,9 +42,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected JPanel _iconPanel;         // panel contained in _iconFamilyPanel - all icons in family
     protected DrawSquares _squaresPanel; // checkered background
     protected JPanel _dragIconPanel;     // contained in _iconFamilyPanel - to drag to control panel
-    protected boolean _supressDragging;
+    protected boolean _suppressDragging;
     protected int _buttonPosition = 0;
-    JPanel _bottom1Panel;  // Typically _showIconsButton and _editIconsButton
+    JPanel _bottom1Panel;  // typically _showIconsButton and _editIconsButton
     JPanel _bottom2Panel;  // createIconFamilyButton - when all families have been deleted 
     JButton _showIconsButton;
     JButton _editIconsButton;
@@ -62,10 +62,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
     /**
      * Constructor types with multiple families and multiple icon families.
      *
-     * @param parentFrame parentFrame
-     * @param type type
-     * @param family family
-     * @param editor editor
+     * @param parentFrame enclosing parentFrame
+     * @param type bean type
+     * @param family icon family
+     * @param editor panel editor
      */
     public FamilyItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, editor);
@@ -81,7 +81,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             Thread.yield();
             _update = false;
-            _supressDragging = false;
+            _suppressDragging = false;
             makeBottomPanel(null);
             super.init();
         }
@@ -97,10 +97,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
-        _supressDragging = true; // do dragging when updating
+        _suppressDragging = true; // do dragging when updating
         _currentIconMap = iconMap;
         if (iconMap != null) {
-            checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
+            checkCurrentMap(iconMap); // is map in families?, does user want to add it? etc
         }
         makeBottomPanel(doneAction);
 //        setSize(getPreferredSize());
@@ -113,7 +113,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     public void init(ActionListener doneAction) {
         _update = false;
-        _supressDragging = true; // do dragging in circuitBuilder
+        _suppressDragging = true; // do dragging in circuitBuilder
         _bottom1Panel = new JPanel();
         addShowButtonToBottom();
         addUpdateButtonToBottom(doneAction);
@@ -235,7 +235,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             } else if (bgColorBox.getSelectedIndex() == 4) {
                 // display checkers background
                 _squaresPanel.setVisible(true);
-                log.debug("checkers visible");
+                log.debug("FamilyItemPanel checkers visible");
             } else {
                 _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 not in colorChoice[]
                 _squaresPanel.setVisible(false);
@@ -345,6 +345,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (families != null && families.size() > 0) {
             _iconFamilyPanel = new JLayeredPane();
             _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+            _iconFamilyPanel.setOpaque(true);
             JPanel familyPanel = makeFamilyButtons(families.keySet().iterator(), (_currentIconMap == null));
             if (_currentIconMap == null) {
                 _currentIconMap = families.get(_family);
@@ -472,7 +473,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 Bundle.getMessage("PreviewBorderTitle")));
         _iconFamilyPanel.add(_iconPanel); // place icons over the checkered background
         _iconPanel.setVisible(false);     // initially hidden
-        if (!_supressDragging) {
+        if (!_suppressDragging) {
             makeDragIconPanel(0);
         }
         _iconFamilyPanel.add(familyPanel);
@@ -586,7 +587,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        if (_supressDragging) {
+        if (_suppressDragging) {
             return;
         }
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
@@ -632,7 +633,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _iconPanel.setVisible(false);
-        if (!_supressDragging) {
+        if (!_suppressDragging) {
             _dragIconPanel.setVisible(true);
             _dragIconPanel.invalidate();
         }
@@ -645,7 +646,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _iconPanel.setVisible(true);
         _iconPanel.invalidate();
-        if (!_supressDragging) {
+        if (!_suppressDragging) {
             _dragIconPanel.setVisible(false);
         }
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
@@ -759,7 +760,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (map != null) {
             _currentIconMap = map;
         }
-        if (!_supressDragging) {
+        if (!_suppressDragging) {
             makeDragIconPanel(0);
             makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
         }

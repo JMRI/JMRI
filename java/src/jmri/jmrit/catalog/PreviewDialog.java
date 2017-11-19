@@ -175,10 +175,16 @@ public class PreviewDialog extends JDialog {
         p.add(_previewLabel);
         previewPanel.add(p);
         _preview = new JLayeredPane();
+        _preview.setOpaque(true);
         _preview.setLayout(new FlowLayout());
-        _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
+
+        if (_squaresPanel == null) { // add a white checkered background
+            _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
+            log.debug("PreviewDialog DrawSquares() called");
+        }
         _preview.add(_squaresPanel, new Integer (1));
         _squaresPanel.setVisible(false); // initially hidden
+
         JScrollPane js = new JScrollPane(_preview);
         previewPanel.add(js); // place icons over the checkered background
 
@@ -187,16 +193,18 @@ public class PreviewDialog extends JDialog {
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option, under development
-        bgColorBox.setSelectedIndex(1); // light gray
+        bgColorBox.setSelectedIndex(0); // white
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (bgColorBox.getSelectedIndex() == 3) {
                 // display checkers background
                 _squaresPanel.setVisible(true);
+                _preview.setOpaque(false);
                 log.debug("paintCheckers() called");
             } else {
                 _currentBackground = colorChoice[bgColorBox.getSelectedIndex()];
                 _squaresPanel.setVisible(false);
-                _preview.setBackground(_currentBackground);
+                _preview.setOpaque(true);
+                setBackGround(_currentBackground); // sets all bg colors
             }
         });
         JPanel pp = new JPanel();
@@ -236,9 +244,7 @@ public class PreviewDialog extends JDialog {
         if (_preview == null) {
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("resetPanel");
-        }
+        log.debug("resetPanel");
         Component[] comp = _preview.getComponents();
         for (int i = comp.length - 1; i >= 0; i--) {
             _preview.remove(i);
@@ -280,9 +286,7 @@ public class PreviewDialog extends JDialog {
         _noMemory = false;
         Thread.setDefaultUncaughtExceptionHandler(new MemoryExceptionHandler());
         // allow room for ImageFetcher threads
-        if (log.isDebugEnabled()) {
-            log.debug("setIcons: startNum= {}", startNum);
-        }
+        log.debug("setIcons: startNum= {}", startNum);
         GridBagLayout gridbag = new GridBagLayout();
         _preview.setLayout(gridbag);
         GridBagConstraints c = new GridBagConstraints();
@@ -300,7 +304,7 @@ public class PreviewDialog extends JDialog {
         int nAvail = 1;
 
         long memoryAvailable = availableMemory();
-        long memoryUsed = 0;        // estmate
+        long memoryUsed = 0;        // estimate
         for (int i = 0; i < files.length; i++) {
             String ext = jmri.util.FileChooserFilter.getFileExtension(files[i]);
             for (int k = 0; k < _filter.length; k++) {
@@ -366,23 +370,24 @@ public class PreviewDialog extends JDialog {
                         image = new JLabel(cnfe.getMessage());
                     }
                     image.setOpaque(true);
-                    //image.setName(name);
-                    image.setBackground(_currentBackground);
+                    // image.setName(name);
+                    // image.setBackground(_currentBackground);
                     image.setIcon(icon);
                     JPanel p = new JPanel();
+                    p.setOpaque(false);
                     p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
                     p.add(image);
                     if (name.length() > 18) {
                         name = name.substring(0, 18);
                     }
                     JLabel nameLabel = new JLabel(name);
+                    nameLabel.setOpaque(false);
                     JLabel label = new JLabel(Bundle.getMessage("scale", CatalogPanel.printDbl(scale, 2)));
+                    label.setOpaque(false);
                     p.add(label);
                     p.add(nameLabel);
                     gridbag.setConstraints(p, c);
-                    if (log.isDebugEnabled()) {
-                        log.debug("{} inserted at ({}, {})", name, c.gridx, c.gridy);
-                    }
+                    log.debug("{} inserted at ({}, {})", name, c.gridx, c.gridy);
                     _preview.add(p);
                 }
                 if (_noMemory) {

@@ -28,6 +28,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.DrawSquares;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,6 +117,13 @@ public class MultiSensorItemPanel extends TableItemPanel {
         super.initIconFamiliesPanel();
         makeMultiSensorPanel();
         _iconFamilyPanel.add(_multiSensorPanel);
+
+        if (_squaresPanel == null) { // add a white checkered background
+            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
+            log.debug("DrawSquares() called");
+        }
+        _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
+        _squaresPanel.setVisible(false);
     }
 
     private void makeMultiSensorPanel() {

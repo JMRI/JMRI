@@ -34,8 +34,8 @@ public abstract class ItemPanel extends JPanel {
     protected JmriJFrame _paletteFrame;
     protected String _itemType;
     protected Editor _editor;
-    protected boolean _initialized = false;    // Has init() been run
-    protected boolean _update = false;    // Editing existing icon, do not allow icon dragging. Set in init()
+    protected boolean _initialized = false; // Has init() been run
+    protected boolean _update = false;      // Editing existing icon, do not allow icon dragging. Set in init()
     JTextField _linkName = new JTextField(30);
 
     /**

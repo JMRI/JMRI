@@ -62,7 +62,7 @@ public class NamedIcon extends ImageIcon {
      * Create a named icon that includes an image to be loaded from a URL.
      * <p>
      * The default access form is "file:", so a bare pathname to an icon file
-     * will also work for the URL argument
+     * will also work for the URL argument.
      *
      * @param pUrl  URL of image file to load
      * @param pName Human-readable name for the icon
@@ -71,11 +71,11 @@ public class NamedIcon extends ImageIcon {
         super(FileUtil.findURL(pUrl));
         URL u = FileUtil.findURL(pUrl);
         if (u == null) {
-            log.warn("Could not load image from " + pUrl + " (file does not exist)");
+            log.warn("Could not load image from {} (file does not exist)", pUrl);
         }
         mDefaultImage = getImage();
         if (mDefaultImage == null) {
-            log.warn("Could not load image from " + pUrl + " (image is null)");
+            log.warn("Could not load image from {} (image is null)", pUrl);
         }
         mName = pName;
         mURL = FileUtil.getPortableFilename(pUrl);
@@ -481,4 +481,5 @@ public class NamedIcon extends ImageIcon {
     }
 
     private final static Logger log = LoggerFactory.getLogger(NamedIcon.class);
+
 }

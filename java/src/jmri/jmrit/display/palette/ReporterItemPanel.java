@@ -21,6 +21,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.DrawSquares;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,17 +55,25 @@ public class ReporterItemPanel extends TableItemPanel {
     @Override
     protected void initIconFamiliesPanel() {
         _iconFamilyPanel = new JLayeredPane();
+        _iconFamilyPanel.setOpaque(true);
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
-        _iconPanel = new JPanel();
-        _iconPanel.setOpaque(false);
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                Bundle.getMessage("PreviewBorderTitle")));
+//        _iconPanel = new JPanel();
+//        _iconPanel.setOpaque(false);
+//        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+//                Bundle.getMessage("PreviewBorderTitle")));
 //        _iconFamilyPanel.add(_iconPanel);
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
+
+        if (_squaresPanel == null) { // add a white checkered background
+            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
+            log.debug("DrawSquares() called");
+        }
+        _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
+        _squaresPanel.setVisible(false);
     }
 
     @Override
@@ -83,11 +92,11 @@ public class ReporterItemPanel extends TableItemPanel {
         }
         _reporter = new ReporterIcon(_editor);
         JPanel panel = new JPanel();
-        panel.setBackground(_editor.getTargetPanel().getBackground());
+        panel.setOpaque(false);
         JPanel comp;
         try {
             comp = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-            comp.setBackground(_editor.getTargetPanel().getBackground());
+            comp.setOpaque(false);
             comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();

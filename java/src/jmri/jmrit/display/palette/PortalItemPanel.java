@@ -37,7 +37,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
     public void init() {
         if (!_initialized) {
             super.init();
-            _supressDragging = true;
+            _suppressDragging = true;
             add(makeChangeDefaultIconsPanel());
         }
     }

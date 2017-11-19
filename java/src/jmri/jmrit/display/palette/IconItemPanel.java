@@ -25,6 +25,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
@@ -120,7 +121,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
             if (families.size() != 1) {
-                log.warn("ItemType \"" + _itemType + "\" has " + families.size() + " families.");
+                log.warn("ItemType \"{}\" has {}", _itemType, families.size());
             }
             Iterator<String> iter = families.keySet().iterator();
             while (iter.hasNext()) {
@@ -130,7 +131,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             }
         } else {
             // make create message todo!!!
-            log.error("Item type \"" + _itemType + "\" has " + (families == null ? "null" : families.size()) + " families.");
+            log.error("Item type \"{}\" has {} families.", _itemType, (families == null ? "null" : families.size()));
         }
     }
 
@@ -140,24 +141,24 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
      * @param iconMap set of icons to add to panel
      */
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
-        Color bkgrdColor = _editor.getTargetPanel().getBackground();
         _iconPanel = new JPanel();
-        _iconPanel.setBackground(bkgrdColor);
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), Bundle.getMessage("PreviewBorderTitle")));
+        _iconPanel.setOpaque(false);
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                Bundle.getMessage("PreviewBorderTitle")));
         JPanel iPanel = new JPanel();
-        iPanel.setBackground(bkgrdColor);
+        iPanel.setOpaque(false);
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
             JPanel panel = new JPanel();
-            panel.setBackground(bkgrdColor);
+            panel.setOpaque(false);
             String borderName = ItemPalette.convertText(entry.getKey());
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     borderName));
             try {
                 JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), _level);
-                label.setBackground(bkgrdColor);
+                label.setOpaque(false);
                 label.setName(borderName);
                 label.setToolTipText(icon.getName());
                 panel.add(label);
@@ -399,7 +400,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             level = zLevel;
 
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
+            log.debug("DropJLabel ctor");
         }
 
         @Override
@@ -413,9 +414,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
                 return null;
             }
             String url = ((NamedIcon) getIcon()).getURL();
-            if (log.isDebugEnabled()) {
-                log.debug("DragJLabel.getTransferData url= " + url);
-            }
+            log.debug("DragJLabel.getTransferData url= {}", url);
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 String link = _linkName.getText().trim();
                 PositionableLabel l;
@@ -465,26 +464,18 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
                     accept(e, newIcon);
                 } else if (e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     String text = (String) tr.getTransferData(DataFlavor.stringFlavor);
-                    if (log.isDebugEnabled()) {
-                        log.debug("drop for stringFlavor " + text);
-                    }
+                    log.debug("drop for stringFlavor {}", text);
                     NamedIcon newIcon = new NamedIcon(text, text);
                     accept(e, newIcon);
                 } else {
-                    if (log.isDebugEnabled()) {
-                        log.debug("DropJLabel.drop REJECTED!");
-                    }
+                    log.debug("DropJLabel.drop REJECTED!");
                     e.rejectDrop();
                 }
             } catch (IOException ioe) {
-                if (log.isDebugEnabled()) {
-                    log.debug("DropPanel.drop REJECTED!");
-                }
+                log.debug("DropPanel.drop REJECTED!");
                 e.rejectDrop();
             } catch (UnsupportedFlavorException ufe) {
-                if (log.isDebugEnabled()) {
-                    log.debug("DropJLabel.drop REJECTED!");
-                }
+                log.debug("DropJLabel.drop REJECTED!");
                 e.rejectDrop();
             }
         }
@@ -494,8 +485,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             DropTarget target = (DropTarget) e.getSource();
             IconDragJLabel label = (IconDragJLabel) target.getComponent();
             if (log.isDebugEnabled()) {
-                log.debug("accept drop for " + label.getName()
-                        + ", " + newIcon.getURL());
+                log.debug("accept drop for {}, {}", label.getName(), newIcon.getURL());
             }
             if (newIcon == null || newIcon.getIconWidth() < 1 || newIcon.getIconHeight() < 1) {
                 label.setText(Bundle.getMessage("invisibleIcon"));
@@ -512,8 +502,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             addIconsToPanel(_iconMap);
             e.dropComplete(true);
             if (log.isDebugEnabled()) {
-                log.debug("DropJLabel.drop COMPLETED for " + label.getName()
-                        + ", " + (newIcon != null ? newIcon.getURL() : " newIcon==null "));
+                log.debug("DropJLabel.drop COMPLETED for {}, {}", label.getName(),
+                        (newIcon != null ? newIcon.getURL() : " newIcon==null "));
             }
         }
     }

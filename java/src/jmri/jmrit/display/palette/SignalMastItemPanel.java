@@ -30,6 +30,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.DrawSquares;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +49,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _table.getSelectionModel().addListSelectionListener(this);
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
-//            makeDragIconPanel();
             initIconFamiliesPanel();
             add(_iconFamilyPanel, 1);            
         }
@@ -72,6 +72,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
     protected void initIconFamiliesPanel() {
         _iconFamilyPanel = new JLayeredPane();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+        _iconFamilyPanel.setOpaque(true);
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
@@ -82,14 +83,22 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
         _iconPanel = new JPanel();
-        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
+        _iconPanel.setOpaque(false);
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                Bundle.getMessage("PreviewBorderTitle")));
         addIconsToPanel(_currentIconMap);
-        _iconFamilyPanel.add(_dragIconPanel);
+        // _iconFamilyPanel.add(_dragIconPanel, new Integer (2)); // added twice? illegal position error
+
+        if (_squaresPanel == null) { // add a white checkered background
+            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
+            log.debug("DrawSquares() called");
+        }
+        _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
+        _squaresPanel.setVisible(false);
+
         JPanel panel = new JPanel();
         if (_mast != null) {
-            panel.add(new JLabel(Bundle.getMessage("IconSetName") + " "
-                    + _mast.getSignalSystem().getSystemName()));
+            panel.add(new JLabel(Bundle.getMessage("IconSetName", _mast.getSignalSystem().getSystemName())));
         } else {
             panel.add(new JLabel(Bundle.getMessage("PickRowMast")));
         }
@@ -108,14 +117,14 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
         NamedIcon icon = getDragIcon();
         JPanel panel = new JPanel();
-        panel.setBackground(_editor.getTargetPanel().getBackground());
+        panel.setOpaque(false);
         String borderName = ItemPalette.convertText("dragToPanel");
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 borderName));
         JLabel label;
         try {
             label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), icon);
-            label.setBackground(_editor.getTargetPanel().getBackground());
+            label.setOpaque(false);
             label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
@@ -216,7 +225,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _editor = ed;
         if (_initialized) {
             makeDragIconPanel(0);
-            makeDndIconPanel(_currentIconMap, "");  // empty key OK, this uses getDragIcon()
+            makeDndIconPanel(_currentIconMap, ""); // empty key OK, this uses getDragIcon()
         }
     }
 
