@@ -18,6 +18,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import javax.usb.UsbDevice;
@@ -25,6 +26,7 @@ import javax.usb.UsbDisconnectedException;
 import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
+import javax.usb.UsbPort;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
 import jmri.util.USBUtil;
@@ -43,7 +45,25 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
     private final UsbServicesListener usbServicesListener = new UsbServicesListener() {
         @Override
         public void usbDeviceAttached(UsbServicesEvent use) {
-            // TODO: use sublter method to add device to tree
+            // subtler method to add usbDevice to tree
+            UsbDevice usbDevice = use.getUsbDevice();
+            UsbPort usbPort = usbDevice.getParentUsbPort();
+            if (usbPort != null) {
+                UsbDevice parentUsbDevice = usbPort.getUsbHub();
+                UsbTreeNode parentNode = findNodeForDevice(root, parentUsbDevice);
+                if (parentNode != null) {
+                    UsbTreeNode node = new UsbTreeNode(usbDevice);
+                    parentNode.add(node);
+                    if (usbTree != null) {
+                        TreePath selection = usbTree.getSelectionPath();
+                        ((DefaultTreeModel) usbTree.getModel()).nodeChanged(parentNode);
+                        //Shouldn't have to do this… but .nodeChanged(parent) isn't enough
+                        ((DefaultTreeModel) usbTree.getModel()).reload(root);
+                        usbTree.setSelectionPath(selection);
+                    }
+                    return;
+                }
+            }
             UsbTreeNode root = UsbBrowserPanel.this.root;
             root.removeAllChildren();
             UsbBrowserPanel.this.buildTree(root);
@@ -51,10 +71,26 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         @Override
         public void usbDeviceDetached(UsbServicesEvent use) {
-            // TODO: use sublter method to remove device from tree
+            // subtler method to remove usbDevice from tree
             UsbTreeNode root = UsbBrowserPanel.this.root;
-            root.removeAllChildren();
-            UsbBrowserPanel.this.buildTree(root);
+            UsbDevice usbDevice = use.getUsbDevice();
+            UsbTreeNode usbTreeNode = findNodeForDevice(root, usbDevice);
+            if (usbTreeNode != null) {
+                TreeNode parentTreeNode = usbTreeNode.getParent();
+                usbTreeNode.removeFromParent();
+                if (usbTree != null) {
+                    TreePath selection = usbTree.getSelectionPath();
+                    if (parentTreeNode != null) {
+                        ((DefaultTreeModel) usbTree.getModel()).reload(parentTreeNode);
+                    } else {
+                        ((DefaultTreeModel) usbTree.getModel()).reload(root);
+                    }
+                    usbTree.setSelectionPath(selection);
+                }
+            } else {
+                root.removeAllChildren();
+                UsbBrowserPanel.this.buildTree(root);
+            }
         }
     };
     private final TreeSelectionListener treeSelectionListener = (TreeSelectionEvent e) -> {
@@ -104,6 +140,32 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             ((DefaultTreeModel) usbTree.getModel()).reload(root);
             usbTree.setSelectionPath(selection);
         }
+    }
+
+    /*
+     * recursively search all children of root for usb device
+     */
+    private UsbTreeNode findNodeForDevice(UsbTreeNode root, UsbDevice usbDevice) {
+        UsbTreeNode result = null;  // assume failure (pessimist!)
+        if (!root.isLeaf()) {
+            for (int idx = 0; idx < root.getChildCount(); idx++) {
+                TreeNode treeNode = root.getChildAt(idx);
+                if (treeNode instanceof UsbTreeNode) {
+                    UsbTreeNode usbTreeNode = (UsbTreeNode) treeNode;
+                    UsbDevice tryUsbDevice = usbTreeNode.getUsbDevice();
+                    log.debug("* findNodeForDevice-usbTreeNode device: " + tryUsbDevice);
+                    if ((tryUsbDevice != null) && (tryUsbDevice == usbDevice)) {
+                        result = usbTreeNode;
+                        break;
+                    }
+                    result = findNodeForDevice(usbTreeNode, usbDevice);
+                    if (result != null) {
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     public void dispose() {
@@ -202,24 +264,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             if (userObject == null) {
                 return Bundle.getMessage("UnableToGetUsbRootHub");
             } else if (userObject instanceof UsbDevice) {
-                try {
-                    UsbDevice device = ((UsbDevice) userObject);
-                    String manufacturerString = device.getManufacturerString();
-                    manufacturerString = (manufacturerString == null) ? "" : manufacturerString;
-                    String productString = device.getProductString();
-                    productString = (productString == null) ? "" : productString;
-                    if (productString.isEmpty()) {
-                        if (!manufacturerString.isEmpty()) {
-                            return manufacturerString;
-                        }
-                    } else if (manufacturerString.isEmpty() || productString.startsWith(manufacturerString)) {
-                        return productString;
-                    } else {
-                        return manufacturerString + " " + productString;
-                    }
-                } catch (UsbException | UnsupportedEncodingException | UsbDisconnectedException ex) {
-                    log.error("Unable to get USB device properties for {}", userObject);
-                }
+                return USBUtil.getFullProductName((UsbDevice) userObject);
             }
             return super.toString();
         }
@@ -228,7 +273,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
     private static class UsbDeviceTableModel extends AbstractTableModel {
 
         private UsbTreeNode node = null;
-        //private UsbDevice device = null;
+        //private UsbDevice usbDevice = null;
 
         @Override
         public int getRowCount() {
@@ -309,10 +354,10 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             fireTableDataChanged();
         }
 
-        // public void setUsbDevice(UsbDevice device) {
-        //     UsbDevice old = device;
-        //     this.device = device;
-        //     if ((old == null && device != null) || (old != null && device == null)) {
+        // public void setUsbDevice(UsbDevice usbDevice) {
+        //     UsbDevice old = usbDevice;
+        //     this.usbDevice = usbDevice;
+        //     if ((old == null && usbDevice != null) || (old != null && usbDevice == null)) {
         //         fireTableStructureChanged();
         //     }
         //     fireTableDataChanged();

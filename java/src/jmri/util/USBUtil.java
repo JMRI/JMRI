@@ -22,6 +22,8 @@ import javax.usb.event.UsbPipeDataEvent;
 import javax.usb.event.UsbPipeErrorEvent;
 import javax.usb.event.UsbPipeListener;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * useful usb utilities
@@ -184,7 +186,7 @@ public final class USBUtil {
     }   // recursivelyCollectUSBDevices
 
     /**
-     * read message (synchronious)
+     * read message (synchronous)
      *
      * @param iface    the interface
      * @param endPoint the end point
@@ -207,7 +209,7 @@ public final class USBUtil {
 
             byte[] data = new byte[8];
             int received = pipe.syncSubmit(data);
-            System.out.println(received + " bytes received");
+            log.debug(received + " bytes received");
 
             pipe.close();
 
@@ -225,7 +227,7 @@ public final class USBUtil {
     }
 
     /**
-     * read message asynchronious
+     * read message asynchronous
      *
      * @param iface    the interface
      * @param endPoint the end point
@@ -250,18 +252,18 @@ public final class USBUtil {
             pipe.addUsbPipeListener(new UsbPipeListener() {
                 @Override
                 public void errorEventOccurred(UsbPipeErrorEvent event) {
+                    log.error("UsbPipeErrorEvent: " + event);
                     UsbException error = event.getUsbException();
-                    error.printStackTrace();
+                    log.error("UsbException: " + error);
                 }
 
                 @Override
                 public void dataEventOccurred(UsbPipeDataEvent event) {
                     byte[] data = event.getData();
-
-                    System.out.println(data + " bytes received");
+                    log.debug(data + " bytes received: " + data);
                 }
             });
-//			pipe.close();
+			pipe.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -324,7 +326,7 @@ public final class USBUtil {
             pipe.syncSubmit(str.getBytes());
             pipe.syncSubmit(cutP);
 
-            System.out.println(sent + " bytes sent");
+            log.debug(sent + " bytes sent");
             pipe.close();
 
         } catch (Exception ex) {
@@ -339,4 +341,8 @@ public final class USBUtil {
             }
         }
     }
+
+    //initialize logging
+    private transient final static Logger log
+            = LoggerFactory.getLogger(USBUtil.class);
 }   // class USBUtil
