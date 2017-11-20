@@ -98,11 +98,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.ClockControl.class)) {
             return true;
         }
-        /*if (type.equals(jmri.CommandStation.class))
-         return true;
-         if (type.equals(jmri.ConsistManager.class))
-         return true;*/
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
     /**
@@ -133,19 +129,13 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.ClockControl.class)) {
             return (T) getClockControl();
         }
-        /*if (T.equals(jmri.CommandStation.class))
-         return (T)getMrcTrafficController();
-         if (T.equals(jmri.ConsistManager.class))
-         return (T)getConsistManager();*/
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     private MrcPowerManager powerManager;
     private MrcTurnoutManager turnoutManager;
     private MrcThrottleManager throttleManager;
     private MrcClockControl clockManager;
-
-    /*private MrcConsistManager consistManager;*/
 
     /**
      * Configure the common managers for MRC connections. This puts the common
@@ -171,8 +161,6 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         clockManager = new jmri.jmrix.mrc.MrcClockControl(getMrcTrafficController(), getSystemPrefix());
         InstanceManager.addClockControl(clockManager);
 
-        /*consistManager = new jmri.jmrix.mrc.MrcConsistManager(this);
-         InstanceManager.setConsistManager(consistManager);*/
     }
 
     public MrcPowerManager getPowerManager() {
@@ -190,8 +178,6 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public MrcClockControl getClockControl() {
         return clockManager;
     }
-
-    /*public MrcConsistManager  getConsistManager() { return consistManager; }*/
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
@@ -217,8 +203,6 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (clockManager != null) {
             InstanceManager.deregister(clockManager, jmri.jmrix.mrc.MrcClockControl.class);
         }
-        /*if (consistManager != null)
-         InstanceManager.deregister(consistManager, jmri.jmrix.mrc.MrcConsistManager.class);*/
 
         super.dispose();
     }

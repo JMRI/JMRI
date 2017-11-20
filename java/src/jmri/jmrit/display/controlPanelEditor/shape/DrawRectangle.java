@@ -116,4 +116,5 @@ public class DrawRectangle extends DrawFrame {
     void setDisplayHeight(int h) {
         _heightText.setText(Integer.toString(h));
     }
+
 }

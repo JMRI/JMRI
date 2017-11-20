@@ -64,7 +64,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
 
     public PositionableShape(Editor editor) {
         super(editor);
-        super.setName("Graphic");
+        super.setName("Graphic"); // NOI18N
         super.setShowToolTip(false);
         super.setDisplayLevel(ControlPanelEditor.LABELS);
     }
@@ -371,10 +371,10 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     /**
-     * Attach a named sensor to shape
+     * Attach a named sensor to a PositionableShape.
      *
      * @param pName Used as a system/user name to lookup the sensor object
-     * @param hide true if sensor should be hidden
+     * @param hide true if the sensor should hide the shape
      * @param level level at which sensor is placed
      * @return error message, if any
      */
@@ -587,4 +587,5 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableShape.class);
+
 }

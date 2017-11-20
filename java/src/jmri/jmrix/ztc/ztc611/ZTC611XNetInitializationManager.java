@@ -46,10 +46,7 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         Ops Mode Programming */
         systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
         jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
-        /* the consist manager has to be set up AFTER the programmer, to
-        prevent the default consist manager from being loaded on top of it */
         systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-        jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
         systemMemo.setTurnoutManager(new ZTC611XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));

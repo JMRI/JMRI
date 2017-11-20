@@ -12,15 +12,15 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class Mx1SystemConnectionMemoTest {
+public class Mx1SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
      
-    Mx1SystemConnectionMemo memo = null;
-
+    @Override
     @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
+    @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
@@ -33,9 +33,10 @@ public class Mx1SystemConnectionMemoTest {
           public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
           }
        };
-       memo = new Mx1SystemConnectionMemo(tc);
+       scm = new Mx1SystemConnectionMemo(tc);
     }
 
+    @Override
     @After
     public void tearDown(){
        JUnitUtil.tearDown();

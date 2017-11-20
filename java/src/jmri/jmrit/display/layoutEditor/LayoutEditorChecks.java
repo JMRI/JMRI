@@ -414,4 +414,4 @@ public class LayoutEditorChecks {
 
     private final static Logger log = LoggerFactory.getLogger(LayoutEditorChecks.class
     );
-}   // class LayoutEditorChecks
+}
