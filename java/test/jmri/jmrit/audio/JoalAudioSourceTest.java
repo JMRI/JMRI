@@ -4,7 +4,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,14 +14,12 @@ import org.junit.Test;
 public class JoalAudioSourceTest {
 
     @Test
-    @Ignore("Fails when the constructor calls the superclass constructor")
     public void testCtor() {
         JoalAudioSource l = new JoalAudioSource("test");
         Assert.assertNotNull("exists", l);
     }
 
     @Test
-    @Ignore("Fails when the constructor calls the superclass constructor")
     public void testC2Stringtor() {
         JoalAudioSource l = new JoalAudioSource("testsysname","testusername");
         Assert.assertNotNull("exists", l);
@@ -31,6 +28,9 @@ public class JoalAudioSourceTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.AudioManager am = new DefaultAudioManager();
+        jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
+        am.init();
     }
 
     @After
