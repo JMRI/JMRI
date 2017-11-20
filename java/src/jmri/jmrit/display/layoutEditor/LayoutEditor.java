@@ -13,7 +13,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
@@ -73,7 +72,6 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -90,8 +88,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -102,7 +98,6 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.basic.BasicComboPopup;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
@@ -151,7 +146,7 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -2089,53 +2084,19 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      *                       blank
      */
     public static void setupComboBox(@Nonnull JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
+        log.debug("LE setupComboBox called");
+
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(true);
         inComboBox.setValidateMode(inValidateMode);
         inComboBox.setText("");
-        log.debug("LE setupComboBox called");
 
-        setupComboBoxMaxRows(inComboBox);
+        // set the max number of rows that will fit onscreen
+        JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
 
         inComboBox.setFirstItemBlank(inFirstBlank);
         inComboBox.setSelectedIndex(-1);
     } //setupComboBox
-
-    /**
-     * Set the maximum number of rows based on screen size.
-     *
-     * @param inComboBox the combo box to set up rows for
-     */
-    public static void setupComboBoxMaxRows(@Nonnull JmriBeanComboBox inComboBox) {
-        // find the max height of all popup items
-        BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
-        JList list = popup.getList();
-        ListModel lm = list.getModel();
-        ListCellRenderer renderer = list.getCellRenderer();
-        int maxItemHeight = 12; // pick some absolute minimum here
-        for (int i = 0; i < lm.getSize(); ++i) {
-            Object value = lm.getElementAt(i);
-            Component c = renderer.getListCellRendererComponent(list, value, i, false, false);
-            maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
-        }
-
-        int itemsPerScreen = inComboBox.getMaximumRowCount();
-        // calculate the number of items that will fit on the screen
-        if (!GraphicsEnvironment.isHeadless()) {
-            // note: this line returns the maximum available size, accounting all
-            // taskbars etc. no matter where they are aligned:
-            Rectangle maxWindowBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-            itemsPerScreen = (int) maxWindowBounds.getHeight() / maxItemHeight;
-        }
-
-        // calculate an even division of the number of items (min 8)
-        // that will fit on the screen
-        int c = Math.max(8, inComboBox.getItemCount());
-        while (c > itemsPerScreen) {
-            c /= 2; // keeps this a even division of the number of items
-        };
-        inComboBox.setMaximumRowCount(c);
-    }
 
     /**
      * Grabs a subset of the possible KeyEvent constants and puts them into a
