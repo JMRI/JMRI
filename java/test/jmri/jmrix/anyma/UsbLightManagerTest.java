@@ -1,11 +1,14 @@
 package jmri.jmrix.anyma;
 
+import jmri.Light;
 import jmri.managers.AbstractLightMgrTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for UsbLightManager class.
@@ -26,6 +29,29 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
         return "DXL" + i;
     }
 
+    @Test
+    public void testAsAbstractFactory() {
+        String systemName = "DXL21";
+        String userName = "My Name";
+        Light tl = l.newLight(systemName, userName);
+
+        if (log.isDebugEnabled()) {
+            log.debug("new light value: " + tl);
+        }
+        Assert.assertNotNull(tl);
+
+        // make sure loaded into tables
+        if (log.isDebugEnabled()) {
+            log.debug("by system name: " + l.getBySystemName(systemName));
+        }
+        Assert.assertNotNull(l.getBySystemName(systemName));
+
+        if (log.isDebugEnabled()) {
+            log.debug("by user name:   " + l.getByUserName(userName));
+        }
+        Assert.assertNotNull(l.getByUserName(userName));
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -39,4 +65,7 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+    
+    private final static Logger log
+            = LoggerFactory.getLogger(UsbLightManagerTest.class);
 }
