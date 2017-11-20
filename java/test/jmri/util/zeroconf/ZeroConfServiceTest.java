@@ -49,11 +49,10 @@ public class ZeroConfServiceTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-       mockStatic(JmDNS.class);
-
-       Mockito.when(JmDNS.create()).thenReturn(jmdns);
-       Mockito.when(JmDNS.create(any(InetAddress.class))).thenReturn(jmdns);
-       Mockito.when(JmDNS.create(any(InetAddress.class), anyString())).thenReturn(jmdns);
+        mockStatic(JmDNS.class);
+        Mockito.when(JmDNS.create()).thenReturn(jmdns);
+        Mockito.when(JmDNS.create(any(InetAddress.class))).thenReturn(jmdns);
+        Mockito.when(JmDNS.create(any(InetAddress.class), anyString())).thenReturn(jmdns);
     }
 
     @AfterClass
@@ -63,7 +62,9 @@ public class ZeroConfServiceTest {
     @Before
     public void setUp() throws Exception {
         //Log4JFixture.setUp(); // log4j is mocked.
+        ZeroConfService.reset();
         JUnitUtil.resetProfileManager();
+
         java.net.InetAddress addr = java.net.Inet4Address.getLoopbackAddress();
         JmDNSImpl jmdnsi = PowerMockito.spy(new JmDNSImpl(addr,"test"));
 
@@ -76,6 +77,7 @@ public class ZeroConfServiceTest {
 
     @After
     public void tearDown() throws Exception {
+        ZeroConfService.reset();
         jmdns = null;
     }
 

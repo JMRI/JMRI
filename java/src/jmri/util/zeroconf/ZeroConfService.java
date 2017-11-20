@@ -480,6 +480,15 @@ public class ZeroConfService {
         return addrList;
     }
 
+    /*
+     * Package protected method used to clear the static hashmaps.
+     * Primarilly used for testing.
+     */
+    static void reset(){
+       services.clear();
+       netServices.clear();
+    }
+
     public void addEventListener(ZeroConfServiceListener l) {
         this.listeners.add(l);
     }
