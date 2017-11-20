@@ -1,6 +1,8 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.AbstractEditorTestBase;
+import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,14 +16,14 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class SwitchboardEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
-        
+public class SwitchboardEditorTest extends AbstractEditorTestBase {
+
     private SwitchboardEditor swe = null;
 
     @Test
     public void testDefaultCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists", new SwitchboardEditor() );
+        Assert.assertNotNull("exists", new SwitchboardEditor());
     }
 
     @Test
@@ -67,14 +69,14 @@ public class SwitchboardEditorTest extends jmri.jmrit.display.AbstractEditorTest
     @Test
     public void testGetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Text Color",jmri.util.ColorUtil.ColorBlack, swe.getDefaultTextColor());
+        Assert.assertEquals("Default Text Color", ColorUtil.ColorBlack, swe.getDefaultTextColor());
     }
 
     @Test
     public void testSetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        swe.setDefaultTextColor(jmri.util.ColorUtil.ColorPink);
-        Assert.assertEquals("Default Text Color after Set",jmri.util.ColorUtil.ColorPink, swe.getDefaultTextColor());
+        swe.setDefaultTextColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, swe.getDefaultTextColor());
     }
 
     @Before

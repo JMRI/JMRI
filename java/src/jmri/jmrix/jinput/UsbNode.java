@@ -34,9 +34,6 @@ public class UsbNode extends DefaultMutableTreeNode {
 
     @Override
     public int hashCode() {
-        if (component != null) {
-            return component.hashCode();
-        }
         if (controller == null) {
             return super.hashCode();
         } else {
@@ -54,14 +51,14 @@ public class UsbNode extends DefaultMutableTreeNode {
 
     @Override
     public boolean equals(Object a) {
-        if (a == null) {
-            return false;
+        boolean result = false;
+        if ((a != null) && (a instanceof UsbNode)) {
+            UsbNode usbNode = (UsbNode) a;
+            result = (name.equals(usbNode.name)
+                    && (controller == usbNode.controller)
+                    && (component == usbNode.component));
         }
-        if (!(a instanceof UsbNode)) {
-            return false;
-        }
-        UsbNode opp = (UsbNode) a;
-        return (name.equals(opp.name)) && (controller == opp.controller) && (component == opp.component);
+        return result;
     }
 
     public void setValue(float val) {
@@ -126,18 +123,13 @@ public class UsbNode extends DefaultMutableTreeNode {
      *         component, or newly created
      */
     static public UsbNode getNode(String name, Controller controller, Component component) {
-        Object key = controller;
-        if (component != null) {
-            key = component;
+        Object key = (component != null) ? component : controller;
+        UsbNode result = NODES.get(key);
+        if (result == null) {
+            result = new UsbNode(name, controller, component);
+            NODES.put(key, result);
         }
-
-        UsbNode temp = NODES.get(key);
-        if (temp != null) {
-            return temp;
-        }
-        UsbNode node = new UsbNode(name, controller, component);
-        NODES.put(key, node);
-        return node;
+        return result;
     }
 
     private static final HashMap<Object, UsbNode> NODES = new HashMap<>();

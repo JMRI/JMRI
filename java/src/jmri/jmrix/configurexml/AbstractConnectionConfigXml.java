@@ -19,6 +19,9 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     public AbstractConnectionConfigXml() {
     }
 
+    /**
+     * get instance
+     */
     abstract protected void getInstance();
 
     abstract protected void register();
@@ -57,6 +60,13 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     protected void extendElement(Element e) {
     }
 
+    /**
+     * load common attributes and elements
+     *
+     * @param shared  the shared element
+     * @param perNode the per node element
+     * @param adapter the port adapter
+     */
     protected void loadCommon(Element shared, Element perNode, PortAdapter adapter) {
         if (perNode.getAttribute("option1") != null) {
             String option1Setting = perNode.getAttribute("option1").getValue();
@@ -103,9 +113,14 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
                 }
             }
         }
-
     }
 
+    /**
+     * save options
+     *
+     * @param e       the element
+     * @param adapter the port adapter
+     */
     protected void saveOptions(Element e, PortAdapter adapter) {
         Element element = new Element("options");
         String[] options = adapter.getOptions();
@@ -119,6 +134,13 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         e.addContent(element);
     }
 
+    /**
+     * load options
+     *
+     * @param shared  the shared element
+     * @param perNode the per node element
+     * @param adapter the port adapter
+     */
     protected void loadOptions(Element shared, Element perNode, PortAdapter adapter) {
         if (perNode == null) {
             return;
@@ -140,10 +162,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @param o       An object to update with data from element.
+     * {@inheritDoc}
      */
     @Override
     public void load(Element element, Object o) {

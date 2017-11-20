@@ -128,6 +128,15 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     protected ArrayList<JComponent> additionalItems = new ArrayList<>(0);
 
+    /**
+     * Load the Swing widgets needed to configure this connection into a
+     * specified JPanel. Used during the configuration process to fill out the
+     * preferences window with content specific to this Connection type. The
+     * JPanel contents need to handle their own gets/sets to the underlying
+     * Connection content.
+     *
+     * @param details The specific Swing object to be configured and filled.
+     */
     @Override
     abstract public void loadDetails(final JPanel details);
 
@@ -194,10 +203,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     abstract public void setDisabled(boolean disable);
 
     /**
-     * Register the ConnectionConfig with the running JMRI process. It is
-     * strongly recommended that overriding implementations call
-     * super.register() since this implementation performs all required
-     * registration tasks.
+     * {@inheritDoc}
      */
     @Override
     public void register() {
