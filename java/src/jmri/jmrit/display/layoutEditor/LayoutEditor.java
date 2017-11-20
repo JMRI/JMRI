@@ -9585,15 +9585,15 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
 
         drawTrackBallast(g2);
-        drawTrackTies(g2);
-
-        List<TrackSegment> trackSegments = getTrackSegments();
-        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
-        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
-        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
-        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
-
-        drawLayoutTracks(g2);
+//        drawTrackTies(g2);
+//
+//        List<TrackSegment> trackSegments = getTrackSegments();
+//        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
+//        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
+//        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
+//        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
+//
+//        drawLayoutTracks(g2);
 
         // things that only get drawn in edit mode
         if (isEditable()) {
@@ -9646,6 +9646,44 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return trackWidth;
     }
 
+    private boolean ballastMain = false;
+    private Stroke ballastStroke = null;
+    private Color ballastColor = null;
+
+    protected Stroke setBallastStroke(Graphics2D g2, boolean needMain) {
+        log.debug("setTrackStrokeWidth(g2, {}), main: {}", needMain, main);
+        if ((ballastStroke == null)
+                || (ballastColor == null)
+                || (ballastMain != needMain)) {
+            //get ballast stroke width
+
+            if (needMain) {
+                int mainBallastWidth = layoutTrackDrawingOptions.getMainBallastWidth();
+                ballastColor = layoutTrackDrawingOptions.getMainBallastColor();
+                ballastStroke = new BasicStroke(mainBallastWidth,
+                                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+            } else {
+                int sideBallastWidth = layoutTrackDrawingOptions.getSideBallastWidth();
+                ballastColor = layoutTrackDrawingOptions.getSideBallastColor();
+                ballastStroke = new BasicStroke(sideBallastWidth,
+                                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+            }
+            g2.setColor(ballastColor);
+            g2.setStroke(ballastStroke);
+
+            ballastMain = needMain;
+        }
+        return ballastStroke;
+    }
+
+    protected Stroke getBallastStroke() {
+        return ballastStroke;
+    }
+
+    protected Color getBallastColor() {
+        return ballastColor;
+    }
+
     private void drawHiddenLayoutTracks(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
         setTrackStrokeWidth(g2, false);
@@ -9660,8 +9698,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //drawHiddenLayoutTracks
 
     private void drawTrackBallast(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(mainlineTrackWidth * 2.F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        g2.setColor(LayoutTrack.defaultBallastColor);
         for (LayoutTrack tr : layoutTrackList) {
             if (!tr.isHidden()) {
                 tr.drawBallast(g2);
@@ -9671,16 +9707,21 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     private void drawTrackTies(Graphics2D g2) {
+
         float dash_phase = 0;
         Stroke stroke = g2.getStroke();
         if (stroke instanceof BasicStroke) {
             dash_phase = ((BasicStroke) stroke).getDashPhase();
         }
-        g2.setStroke(new BasicStroke(mainlineTrackWidth * 1.33F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0, new float[]{2.F, 3.F}, dash_phase));
+        g2.setStroke(new BasicStroke(mainlineTrackWidth * 1.33F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.F, new float[]{2.F, 6.F}, dash_phase));
         g2.setColor(LayoutTrack.defaultTieColor);
+
         for (LayoutTrack tr : layoutTrackList) {
             if (!tr.isHidden()) {
-                tr.drawTies(g2);
+                if (tr.isMainline()) //layoutTrackDrawingOptions
+                {
+                    tr.drawTies(g2);
+                }
             }
         }
         setTrackStrokeWidth(g2, !main); // force reset

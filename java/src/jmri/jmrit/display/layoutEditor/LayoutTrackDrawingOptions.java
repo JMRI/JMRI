@@ -6,7 +6,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
-import javafx.beans.property.IntegerProperty;
 
 /**
  *
@@ -14,17 +13,7 @@ import javafx.beans.property.IntegerProperty;
  */
 public class LayoutTrackDrawingOptions {
 
-    private IntegerProperty demoIntegerProperty;
-
-    protected IntegerProperty getDemoIntegerProperty() {
-        return demoIntegerProperty;
-    }
-
-    protected void setDemoIntegerProperty(IntegerProperty val) {
-        demoIntegerProperty = val;
-    }
-    
-    private int sideBallastWidth = 0;   // defaults to off
+    private int sideBallastWidth = 6;   // defaults to zero (off)
 
     protected int getSideBallastWidth() {
         return sideBallastWidth;
@@ -94,7 +83,7 @@ public class LayoutTrackDrawingOptions {
         sideRailCount = val;
     }
 
-    private int sideRailWidth = 2;
+    private int sideRailWidth = 3;
 
     protected int getSideRailWidth() {
         return sideRailWidth;
@@ -124,7 +113,7 @@ public class LayoutTrackDrawingOptions {
         sideRailColor = val;
     }
 
-    private int mainBallastWidth = 0;
+    private int mainBallastWidth = 8;   // defaults to zero (off)
 
     protected int getMainBallastWidth() {
         return mainBallastWidth;

@@ -847,6 +847,10 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    public boolean isMainline() {
+        return (isMainlineAC() || isMainlineBD());
+    }
+
     /**
      * Modify coordinates methods
      */

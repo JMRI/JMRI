@@ -702,8 +702,8 @@ public class PositionablePoint extends LayoutTrack {
                 result = false;
             }
         } else {
-                log.error("Already connected to {}", newTrack.getName());
-                result = false;
+            log.error("Already connected to {}", newTrack.getName());
+            result = false;
         }
         return result;
     }   // replaceTrackConnection
@@ -1413,6 +1413,28 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
+    public boolean isMainline() {
+        boolean result = false; // assume failure (pessimist!)
+        if (getConnect1() != null) {
+            result = getConnect1().isMainline();
+        }
+        if (getType() == ANCHOR) {
+            if (getConnect2() != null) {
+                result |= getConnect2().isMainline();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawBallast(Graphics2D g2) {
+        //layoutEditor.setBallastStroke(g2, isMainline());
+        // nothing to do here... (yet!) Move along...
+    }
+
     /**
      * draw this PositionablePoint
      *
@@ -1789,7 +1811,7 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-   /**
+    /**
      * {@inheritDoc}
      */
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {

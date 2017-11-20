@@ -819,7 +819,8 @@ public class TrackSegment extends LayoutTrack {
             @Override
             public void actionPerformed(ActionEvent e) {
                 splitTrackSegment();
-            };
+            }
+        ;
         });
 
         JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
@@ -1563,6 +1564,7 @@ public class TrackSegment extends LayoutTrack {
     @Override
     protected void drawBallast(Graphics2D g2) {
         if (!isDashed()) {
+            layoutEditor.setBallastStroke(g2, isMainline());
             drawSolid(g2);
         }
     }

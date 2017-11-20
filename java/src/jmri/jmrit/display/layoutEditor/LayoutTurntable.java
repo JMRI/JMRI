@@ -381,6 +381,10 @@ public class LayoutTurntable extends LayoutTrack {
         return result;
     }
 
+    public boolean isMainline() {
+        return false;
+    }
+
     /**
      * Modify coordinates methods
      */
@@ -732,13 +736,12 @@ public class LayoutTurntable extends LayoutTrack {
                 lastKnownIndex = -1;
             }
         }
-    }
+    }   // class RayTrack
 
     /**
-     * draw this turntable
-     *
-     * @param g2 the graphics port to draw to
+     * {@inheritDoc}
      */
+    @Override
     protected void draw(Graphics2D g2) {
         // draw turntable circle - default track color, side track width
         float trackWidth = layoutEditor.setTrackStrokeWidth(g2, false);
@@ -769,6 +772,15 @@ public class LayoutTurntable extends LayoutTrack {
                 g2.draw(new Line2D.Double(pt1, pt2));
             }
         }
+    }   // draw
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawBallast(Graphics2D g2) {
+        //layoutEditor.setBallastStroke(g2, isMainline());
+        // nothing to do here... (yet?) Move along...
     }
 
     /**

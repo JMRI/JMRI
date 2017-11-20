@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -141,6 +140,8 @@ public abstract class LayoutTrack {
         return setColorForTrackBlock(g2, lb, false);
     }
 
+    public abstract boolean isMainline();
+
     /**
      * one draw routine to rule them all...
      *
@@ -153,13 +154,9 @@ public abstract class LayoutTrack {
      *
      * @param g2 the graphics context
      */
-    //protected abstract void drawBallast(Graphics2D g2);
-    //note: placeholder until I get this implemented in all sub-classes
-    //TODO: replace with abstract declaration (above)
-    protected void drawBallast(Graphics2D g2) {
-        //nothing to do here... move along...
-    }
-  /**
+    protected abstract void drawBallast(Graphics2D g2);
+
+    /**
      * draw routine draw track ties
      *
      * @param g2 the graphics context
@@ -600,10 +597,11 @@ public abstract class LayoutTrack {
 
     /**
      * Assign all the layout blocks in this track
-     * @param layoutBlock to this layout block
-     * (used by the Tools menu's "Assign block to selection" item)
+     *
+     * @param layoutBlock to this layout block (used by the Tools menu's "Assign
+     *                    block to selection" item)
      */
     public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
-    
+
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }
