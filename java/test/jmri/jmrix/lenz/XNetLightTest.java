@@ -1,7 +1,9 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetLight} class.
@@ -31,14 +33,10 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTestBase {
         Assert.assertEquals("OFF state", jmri.Light.OFF, t.getState());
     }
 
-    // from here down is testing infrastructure
-    public XNetLightTest(String s) {
-        super(s);
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -47,8 +45,8 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTestBase {
         t = new XNetLight(xnis, xlm, "XL21");
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

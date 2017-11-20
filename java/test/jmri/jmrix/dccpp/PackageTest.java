@@ -39,7 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppProgrammerManagerTest.class));
         suite.addTest(new TestSuite(DCCppPowerManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppThrottleManagerTest.class));
-        suite.addTest(new TestSuite(DCCppLightTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppLightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppLightManagerTest.class));
         suite.addTest(new TestSuite(DCCppOpsModeProgrammerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppStreamPortControllerTest.class));
