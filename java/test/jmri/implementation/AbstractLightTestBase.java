@@ -2,8 +2,9 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import jmri.Light;
-import junit.framework.TestCase;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Abstract Base Class for Light tests in specific jmrix packages. This is not
@@ -12,22 +13,18 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen 2002, 2004, 2005, 2007, 2008
   */
-public abstract class AbstractLightTestBase extends TestCase {
+public abstract class AbstractLightTestBase {
 
     // implementing classes must provide these abstract members:
     //
-    @Override
-    abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
+    @Before
+    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
     abstract public int numListeners();	// return number of listeners registered with the TrafficController
 
     abstract public void checkOnMsgSent();
 
     abstract public void checkOffMsgSent();
-
-    public AbstractLightTestBase(String s) {
-        super(s);
-    }
 
     protected Light t = null;	// holds objects under test
 
@@ -43,11 +40,13 @@ public abstract class AbstractLightTestBase extends TestCase {
 
     // start of common tests
     // test creation - real work is in the setup() routine
+    @Test
     public void testCreate() {
         // initial state when created must be OFF
         Assert.assertEquals("initial commanded state", Light.OFF, t.getState());
     }
 
+    @Test
     public void testAddListener() {
         t.addPropertyChangeListener(new Listen());
         listenerResult = false;
@@ -58,6 +57,7 @@ public abstract class AbstractLightTestBase extends TestCase {
         Assert.assertTrue("listener invoked by setCommandedState", listenerResult);
     }
 
+    @Test
     public void testRemoveListener() {
         Listen ln = new Listen();
         t.addPropertyChangeListener(ln);
@@ -68,6 +68,7 @@ public abstract class AbstractLightTestBase extends TestCase {
                 !listenerResult);
     }
 
+    @Test
     public void testDispose() {
         t.setState(Light.ON);  	// in case registration with TrafficController
         //is deferred to after first use
@@ -75,6 +76,7 @@ public abstract class AbstractLightTestBase extends TestCase {
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }
 
+    @Test
     public void testCommandOff() {
         t.setState(Light.OFF);
         // check
@@ -83,6 +85,7 @@ public abstract class AbstractLightTestBase extends TestCase {
         checkOffMsgSent();
     }
 
+    @Test
     public void testCommandOn() {
         t.setState(Light.ON);
         // check
