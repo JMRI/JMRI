@@ -454,8 +454,9 @@ git push github
 ```
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.9.7". Add the next release milestone (created above) to it. Typical text:
-
+```
  This is the third release of the 4.10 cycle. It's intended to be released around Novemebr 18 from HEAD of master.
+```
 
 - Confirm that the tag for the current release (release-4.9.6) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
@@ -495,7 +496,8 @@ Test version 4.9.6 of JMRI/DecoderPro is available for download.
 
 This is the next in a series of test releases that will culminate in a production release, hopefully in December 2017.
 
-There have been a lot of updates in this version, so it should be considered experimental.
+- Alt: There have been a lot of updates in this version, so it should be considered experimental.
+- Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
 
 If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there’s a necessary migration step. (Not needed on Windows) Please see the release note for details: <http://jmri.org/releasenotes/jmri4.9.6.shtml#migration>
 
