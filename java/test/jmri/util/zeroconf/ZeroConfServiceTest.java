@@ -13,7 +13,6 @@ import java.net.InetAddress;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -180,9 +179,6 @@ public class ZeroConfServiceTest {
         Assert.assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
-        }));
         Assert.assertTrue(instance.isPublished());
         instance.stop();
         Assert.assertFalse(instance.isPublished());
@@ -217,9 +213,6 @@ public class ZeroConfServiceTest {
         Assert.assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
-        }));
         Assert.assertTrue(instance.isPublished());
         ZeroConfService.stopAll();
         JUnitUtil.waitFor(() -> {
