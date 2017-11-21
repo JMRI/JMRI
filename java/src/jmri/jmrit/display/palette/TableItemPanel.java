@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for the various item types that come from tool Tables - e.g.
- * Sensors, Turnouts, etc.
+ * Memory, Signal Head etc.
  * 
-* @author Pete Cressman Copyright (c) 2010, 2011
+ * @author Pete Cressman Copyright (c) 2010, 2011
  */
 public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
 

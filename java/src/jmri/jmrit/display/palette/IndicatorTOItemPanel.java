@@ -17,7 +17,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.NamedBean;
@@ -173,7 +172,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JLayeredPane();
+        _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
         _iconFamilyPanel.setOpaque(true);
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families
@@ -202,7 +201,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
             log.debug("DrawSquares() called");
         }
-        _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
+        _iconFamilyPanel.add(_squaresPanel, -1); // place behind icons
         _squaresPanel.setVisible(false);
 
         log.debug("initIconFamiliesPanel done");

@@ -19,7 +19,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -95,7 +94,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     AJSpinner _heightSpin;
 
     JColorChooser _chooser;
-    JLayeredPane _previewPanel;
+    JPanel _previewPanel;
     JPanel _samplePanel;
     private PositionablePopupUtil _util;
     private Hashtable<String, PositionableLabel> _sample = null;
@@ -119,7 +118,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _chooser = new JColorChooser(_currentBackground);
         _sample = new Hashtable<>();
 
-        _previewPanel = new JLayeredPane();
+        _previewPanel = new JPanel();
         _previewPanel.setLayout(new BorderLayout());
         _previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
@@ -193,7 +192,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
         this.add(_chooser);
-        _previewPanel.add(_squaresPanel, BorderLayout.CENTER, new Integer(1)); // place behind icons
+        _previewPanel.add(_squaresPanel, BorderLayout.CENTER, -1); // place behind icons
         _squaresPanel.setVisible(false); // initially hidden
         _previewPanel.add(_samplePanel, BorderLayout.CENTER);
         this.add(_previewPanel);
@@ -535,34 +534,34 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     /**
      * Create panel element containing [Set background:] drop down list.
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
+     * @see FamilyItemPanel
      *
-     * @return the JPanel with label and drop down
+     * @return a JPanel with label and drop down
      */
     private JPanel makeButtonPanel() {
         JComboBox<String> bgColorBox = new JComboBox<>();
-        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); //  PanelColor key is specific for CPE, too long for combo
+        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-        // bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option, under development
+        // bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option not yet in combobox, under development
         bgColorBox.setSelectedIndex(0); // panel bg color
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (bgColorBox.getSelectedIndex() == 0) {
                 // use panel background color
                 _currentBackground = _editor.getTargetPanel().getBackground();
-//                _previewPanel.setOpaque(true);
                 _squaresPanel.setVisible(false);
+                _previewPanel.setBackground(_currentBackground);
             } else if (bgColorBox.getSelectedIndex() == 4) {
                 // display checkers background
-//                _previewPanel.setOpaque(false);
                 _squaresPanel.setVisible(true);
-                log.debug("checkers visible");
+                log.debug("DecoratorPanel checkers visible");
+                 _previewPanel.setOpaque(false);
             } else {
-                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 not in colorChoice[]
-//                _previewPanel.setOpaque(true);
+                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 is not in colorChoice[]
                 _squaresPanel.setVisible(false);
+                _previewPanel.setBackground(_currentBackground);
             }
-            _previewPanel.setBackground(_currentBackground);
         });
 
         JPanel backgroundPanel = new JPanel();

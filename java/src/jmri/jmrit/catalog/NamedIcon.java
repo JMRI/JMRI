@@ -224,10 +224,7 @@ public class NamedIcon extends ImageIcon {
      * @return new Image object containing the rotated input image
      */
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {
-        if (log.isDebugEnabled()) {
-            log.debug("createRotatedImage: pRotation= " + pRotation
-                    + ", mRotation= " + mRotation);
-        }
+        log.debug("createRotatedImage: pRotation= {}, mRotation= {}", pRotation, mRotation);
         if (pRotation == 0) {
             return pImage;
         }
@@ -323,8 +320,8 @@ public class NamedIcon extends ImageIcon {
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
         if (w <= 0 || h <= 0) {
             if (log.isDebugEnabled()) {
-                log.debug("transformImage bad coords "
-                        + ((jmri.jmrit.display.Positionable) comp).getNameString());
+                log.debug("transformImage bad coords {}",
+                        ((jmri.jmrit.display.Positionable) comp).getNameString());
             }
             return;
         }

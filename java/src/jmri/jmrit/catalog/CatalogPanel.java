@@ -30,13 +30,13 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.OverlayLayout;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -76,7 +76,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
     protected DrawSquares _squaresPanel; // checkered background
 
     JLabel _previewLabel = new JLabel(" ");
-    protected JLayeredPane _preview;
+    protected JPanel _preview;
+    protected JScrollPane js;
     boolean _noDrag;
 
     JScrollPane _treePane;
@@ -102,9 +103,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(p1);
         p.add(makePreviewPanel());
-//        JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, p1, makePreviewPanel());
-//        sp.setResizeWeight(0.2);
-//        add(sp);
         add(p);
         add(makeButtonPanel());
     }
@@ -143,7 +141,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         });
         _dTree.setExpandsSelectedPaths(true);
         _treePane.setViewportView(_dTree);
-//        setupPanel();
     }
 
     public void updatePanel() {
@@ -385,6 +382,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      * log.debug("nodeName= "+n.getUserObject()+" has "+n.getLeaves().size()+"
      * leaves."); } }
      */
+
     /**
      * Set up a display pane for a tree that shows only directory nodes (no file
      * leaves). The leaves (icon images) will be displayed in this panel.
@@ -393,22 +391,22 @@ public class CatalogPanel extends JPanel implements MouseListener {
         JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
         previewPanel.add(_previewLabel);
-        _preview = new JLayeredPane();
-        _preview.setLayout(new FlowLayout());
-        _preview.setOpaque(true);
+        _preview = new JPanel();
+        _preview.setLayout(new OverlayLayout(_preview));
+        _preview.setOpaque(false);
         if (_squaresPanel == null) { // add a white checkered background
             _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
             log.debug("CatalogPanel DrawSquares() called");
         }
-        _preview.add(_squaresPanel, new Integer (1));
-        _squaresPanel.setVisible(false);  // initially hidden
-        JScrollPane js = new JScrollPane(_preview);
-        previewPanel.add(js); // place icons over the checkered background
+        _preview.add(_squaresPanel, -1); // place behind icons
+        _squaresPanel.setVisible(false); // initially hidden
+        js = new JScrollPane(_preview);
+        previewPanel.add(js);            // place icons over the checkered background
         return previewPanel;
     }
 
     /**
-     * Create panel element containing Set background: drop down list.
+     * Create panel element containing a "Set background:" drop down list.
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      *
      * @return the JPanel with label and drop down
@@ -418,20 +416,21 @@ public class CatalogPanel extends JPanel implements MouseListener {
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-        bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option, under development
-        bgColorBox.setSelectedIndex(0); // white
+        bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option
+        bgColorBox.setSelectedIndex(0); // start as "White"
         bgColorBox.addActionListener((ActionEvent e) -> {
-            if (bgColorBox.getSelectedIndex() == 3) {
-                // display checkers background
+            if (bgColorBox.getSelectedIndex() == 3) {     // display checkers background
+                _currentBackground = null;
                 _squaresPanel.setVisible(true);
-                _preview.setOpaque(false);
+                // _preview.setOpaque(false);
+                // _preview.setBackground(grid); // put BufferedImage directly on _preview background?
                 log.debug("paintCheckers() called");
             } else {
                 _currentBackground = colorChoice[bgColorBox.getSelectedIndex()];
                 _squaresPanel.setVisible(false);
-                _preview.setOpaque(true);
-                setBackground(_preview); // sets all bg colors
+                // _preview.setOpaque(true);
             }
+            setBackground(_preview); // sets all bg colors, revalidate, note: makes them opaque
         });
 
         JPanel backgroundPanel = new JPanel();
@@ -446,7 +445,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     public void setBackground(Container container) {
-        container.setBackground(_currentBackground);
+        if (_currentBackground != null) {
+            container.setBackground(_currentBackground);
+        }
         Component[] comp = container.getComponents();
         for (Component comp1 : comp) {
             comp1.setBackground(_currentBackground);
@@ -467,7 +468,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             comp1.removeMouseListener(this);
         }
         _preview.removeAll();
-        setBackground(_preview);
+        //setBackground(_preview);
         _preview.repaint();
     }
 
@@ -483,7 +484,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     private boolean _noMemory = false;
 
     /**
-     * Display the icons in the preview panel
+     * Display the icons in the preview panel.
      */
     private String setIcons() {
         Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -530,7 +531,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
             if (c.gridx < numCol) {
                 c.gridx++;
-            } else if (c.gridy < numRow) { //start next row
+            } else if (c.gridy < numRow) { // start next row
                 c.gridy++;
                 if (!newCol) {
                     c.gridx = 0;
@@ -729,7 +730,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             // deselect to refresh panel
             _dTree.setSelectionPath(null);
             _dTree.setSelectionPath(path);
-//            updatePanel();
+            // updatePanel();
             InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         }
     }
@@ -880,4 +881,5 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CatalogPanel.class);
+
 }

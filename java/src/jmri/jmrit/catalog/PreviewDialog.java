@@ -22,7 +22,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -53,7 +52,7 @@ public class PreviewDialog extends JDialog {
     protected DrawSquares _squaresPanel;  // checkered background
 
     JLabel _previewLabel = new JLabel();
-    JLayeredPane _preview;
+    JPanel _preview;
 
     int _cnt;           // number of files displayed when setIcons() method runs
     int _startNum;      // total number of files displayed from a directory
@@ -174,19 +173,16 @@ public class PreviewDialog extends JDialog {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(_previewLabel);
         previewPanel.add(p);
-        _preview = new JLayeredPane();
-        _preview.setOpaque(true);
+        _preview = new JPanel();
         _preview.setLayout(new FlowLayout());
-
         if (_squaresPanel == null) { // add a white checkered background
             _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
             log.debug("PreviewDialog DrawSquares() called");
         }
-        _preview.add(_squaresPanel, new Integer (1));
+        _preview.add(_squaresPanel, -1); // place behind icons
         _squaresPanel.setVisible(false); // initially hidden
-
         JScrollPane js = new JScrollPane(_preview);
-        previewPanel.add(js); // place icons over the checkered background
+        previewPanel.add(js);            // place icons over the checkered background
 
         JComboBox<String> bgColorBox = new JComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("White"));
@@ -199,12 +195,12 @@ public class PreviewDialog extends JDialog {
                 // display checkers background
                 _squaresPanel.setVisible(true);
                 _preview.setOpaque(false);
+                setBackGround(null);
                 log.debug("paintCheckers() called");
             } else {
-                _currentBackground = colorChoice[bgColorBox.getSelectedIndex()];
                 _squaresPanel.setVisible(false);
                 _preview.setOpaque(true);
-                setBackGround(_currentBackground); // sets all bg colors
+                setBackGround(colorChoice[bgColorBox.getSelectedIndex()]); // sets all bg colors, makes them opaque
             }
         });
         JPanel pp = new JPanel();
@@ -217,14 +213,20 @@ public class PreviewDialog extends JDialog {
     }
 
     private void setBackGround(Color color) {
-        _preview.setBackground(color);
-        _currentBackground = color;
+        if (color != null) {
+            _preview.setBackground(color);
+            _currentBackground = color;
+        }
         Component[] comp = _preview.getComponents();
         for (int i = 0; i < comp.length; i++) {
             JLabel l = null;
             if (comp[i].getClass().getName().equals("javax.swing.JPanel")) {
                 JPanel p = (JPanel) comp[i];
-                p.setBackground(color);
+                if (color != null) {
+                    p.setBackground(color);
+                } else {
+                    p.setOpaque(false);
+                }
                 l = (JLabel) p.getComponent(0);
             } else if (comp[i].getClass().getName().equals("javax.swing.JLabel")) {
                 l = (JLabel) comp[i];
@@ -234,7 +236,11 @@ public class PreviewDialog extends JDialog {
                 }
                 return;
             }
-            l.setBackground(color);
+            if (color != null) {
+                l.setBackground(color);
+            } else {
+                l.setOpaque(false);
+            }
         }
         _preview.invalidate();
     }

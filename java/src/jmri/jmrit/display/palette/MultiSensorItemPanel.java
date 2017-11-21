@@ -13,7 +13,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -122,7 +121,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
             log.debug("DrawSquares() called");
         }
-        _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
+        _iconFamilyPanel.add(_squaresPanel, -1); // place behind icons
         _squaresPanel.setVisible(false);
     }
 

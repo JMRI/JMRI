@@ -19,10 +19,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.OverlayLayout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.DrawSquares;
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public abstract class FamilyItemPanel extends ItemPanel {
 
     protected String _family;
-    protected JLayeredPane _iconFamilyPanel;
+    protected JPanel _iconFamilyPanel;
     protected JPanel _iconPanel;         // panel contained in _iconFamilyPanel - all icons in family
     protected DrawSquares _squaresPanel; // checkered background
     protected JPanel _dragIconPanel;     // contained in _iconFamilyPanel - to drag to control panel
@@ -103,7 +103,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             checkCurrentMap(iconMap); // is map in families?, does user want to add it? etc
         }
         makeBottomPanel(doneAction);
-//        setSize(getPreferredSize());
+        // setSize(getPreferredSize());
     }
 
     /**
@@ -216,8 +216,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
     /**
      * Create panel element containing [Set background:] drop down list.
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
+     * @see DecoratorPanel
      *
-     * @return the JPanel with label and drop down
+     * @return a JPanel with label and drop down
      */
     private JPanel makeButtonPanel() {
         JComboBox<String> bgColorBox = new JComboBox<>();
@@ -225,22 +226,23 @@ public abstract class FamilyItemPanel extends ItemPanel {
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-        bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option, under development
+        // bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option not yet in combobox, under development
         bgColorBox.setSelectedIndex(0); // panel bg color
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (bgColorBox.getSelectedIndex() == 0) {
                 // use panel background color
                 _currentBackground = _editor.getTargetPanel().getBackground();
                 _squaresPanel.setVisible(false);
-            } else if (bgColorBox.getSelectedIndex() == 4) {
-                // display checkers background
+                _iconFamilyPanel.setBackground(_currentBackground);
+            } else if (bgColorBox.getSelectedIndex() == 4) { // display checkers background, under development 4.9.6
                 _squaresPanel.setVisible(true);
                 log.debug("FamilyItemPanel checkers visible");
+                _iconFamilyPanel.setOpaque(false);
             } else {
-                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 not in colorChoice[]
+                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 is not in colorChoice[]
                 _squaresPanel.setVisible(false);
+                _iconFamilyPanel.setBackground(_currentBackground);
             }
-            _iconFamilyPanel.setBackground(_currentBackground);
         });
 
         JPanel backgroundPanel = new JPanel();
@@ -269,9 +271,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
             return;
         } else { // no match with Palette families
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
-//                JOptionPane.showMessageDialog(_paletteFrame, 
-//                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType), 
-//                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            //                JOptionPane.showMessageDialog(_paletteFrame,
+            //                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
+            //                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 // make sure name does not duplicate a known name
                 _family = null;
             }
@@ -283,7 +285,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 if (_family == null || _family.trim().length() == 0) {
                     // bail out
                     _family = null;
-//              _suppressNamePrompts = true;
+                    // _suppressNamePrompts = true;
                     return;
                 }
             }
@@ -343,22 +345,21 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected void initIconFamiliesPanel() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
-            _iconFamilyPanel = new JLayeredPane();
+            _iconFamilyPanel = new JPanel();
             _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-            _iconFamilyPanel.setOpaque(true);
             JPanel familyPanel = makeFamilyButtons(families.keySet().iterator(), (_currentIconMap == null));
             if (_currentIconMap == null) {
                 _currentIconMap = families.get(_family);
             }
             // make _iconPanel & _dragIconPanel before calls to add icons
             addFamilyPanels(familyPanel);
-
+            _iconPanel.setLayout(new OverlayLayout(_iconPanel));
             if (_squaresPanel == null) { // add a white checkered background
-                _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
+                _squaresPanel = new DrawSquares(_iconPanel, 10);
                 log.debug("DrawSquares() called");
             }
-            _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
-            _squaresPanel.setVisible(false);                      // initially hidden
+            _iconPanel.add(_squaresPanel, -1); // place behind icons
+            _squaresPanel.setVisible(false);   // initially hidden
 
             if (_currentIconMap == null) {
                 log.error("currentIconMap is null in initIconFamiliesPanel");
@@ -468,11 +469,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected void addFamilyPanels(JPanel familyPanel) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _iconPanel = new JPanel(new FlowLayout());
-        _iconPanel.setOpaque(false);
+        _iconPanel.setOpaque(false);      // to show background color/squares
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
-        _iconFamilyPanel.add(_iconPanel); // place icons over the checkered background
-        _iconPanel.setVisible(false);     // initially hidden
+        _iconFamilyPanel.add(_iconPanel);
+        _iconPanel.setVisible(false); // initially hidden
         if (!_suppressDragging) {
             makeDragIconPanel(0);
         }
@@ -493,7 +494,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _iconFamilyPanel.remove(_dragIconPanel);            
         }
         _dragIconPanel = new JPanel();
-        _dragIconPanel.setOpaque(false);
+        _dragIconPanel.setOpaque(false); // to show background color/squares
         _dragIconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
@@ -539,7 +540,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
-            NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
+            NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
             icon.reduceTo(100, 100, 0.2);
             JPanel panel = new JPanel(new FlowLayout());
             panel.setOpaque(false);
@@ -550,7 +551,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             JLabel image = new JLabel(icon);
             if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
                 image.setText(Bundle.getMessage("invisibleIcon"));
-                image.setForeground(Color.lightGray);
+                image.setOpaque(false);
             }
             image.setToolTipText(icon.getName());
             panel.add(image);
@@ -609,7 +610,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                     label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap, icon);
                     if (label != null) {
                         label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-//                        label.setIcon(icon);
+                        // label.setIcon(icon);
                         label.setName(borderName);
                         panel.add(label);
                     }

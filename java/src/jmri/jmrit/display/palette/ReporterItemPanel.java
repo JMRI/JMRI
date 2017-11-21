@@ -4,14 +4,17 @@ import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -37,6 +40,7 @@ public class ReporterItemPanel extends TableItemPanel {
     public void init() {
         if (!_initialized) {
             super.init();
+            add(makeButtonPanel());
         }
     }
 
@@ -54,7 +58,7 @@ public class ReporterItemPanel extends TableItemPanel {
 
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JLayeredPane();
+        _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setOpaque(true);
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
         if (!_update) {
@@ -72,7 +76,7 @@ public class ReporterItemPanel extends TableItemPanel {
             _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
             log.debug("DrawSquares() called");
         }
-        _iconFamilyPanel.add(_squaresPanel, new Integer (1)); // place behind icons
+        _iconFamilyPanel.add(_squaresPanel, -1); // place behind icons
         _squaresPanel.setVisible(false);
     }
 
@@ -114,6 +118,50 @@ public class ReporterItemPanel extends TableItemPanel {
 
     protected JPanel makeItemButtonPanel() {
         return new JPanel();
+    }
+
+    /**
+     * Create panel element containing [Set background:] drop down list.
+     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
+     * @see DecoratorPanel
+     * @see FamilyItemPanel
+     *
+     * @return a JPanel with label and drop down
+     */
+    private JPanel makeButtonPanel() {
+        JComboBox<String> bgColorBox = new JComboBox<>();
+        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
+        bgColorBox.addItem(Bundle.getMessage("White"));
+        bgColorBox.addItem(Bundle.getMessage("LightGray"));
+        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
+        // bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option not yet in combobox, under development
+        bgColorBox.setSelectedIndex(0); // panel bg color
+        bgColorBox.addActionListener((ActionEvent e) -> {
+            if (bgColorBox.getSelectedIndex() == 0) {
+                // use panel background color
+                _currentBackground = _editor.getTargetPanel().getBackground();
+                _squaresPanel.setVisible(false);
+                _iconFamilyPanel.setBackground(_currentBackground);
+            } else if (bgColorBox.getSelectedIndex() == 4) { // display checkers background, under development 4.9.6
+                _squaresPanel.setVisible(true);
+                log.debug("FamilyItemPanel checkers visible");
+                _iconFamilyPanel.setOpaque(false);
+            } else {
+                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 is not in colorChoice[]
+                _squaresPanel.setVisible(false);
+                _iconFamilyPanel.setBackground(_currentBackground);
+            }
+        });
+
+        JPanel backgroundPanel = new JPanel();
+        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
+        JPanel pp = new JPanel();
+        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
+        pp.add(new JLabel(Bundle.getMessage("setBackground")));
+        pp.add(bgColorBox);
+        backgroundPanel.add(pp);
+        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
+        return backgroundPanel;
     }
 
     /**

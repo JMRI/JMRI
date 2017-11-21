@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelectionListener {
+public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelectionListener {
 
     public SignalHeadItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
