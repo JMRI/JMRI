@@ -27,17 +27,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="previewPanel" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="mainlineTracksPanel" linkSize="20" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="mainlineTracksPanel" linkSize="30" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="sidelineTracksPanel" linkSize="20" min="-2" max="-2" attributes="0"/>
+                      <Component id="sidelineTracksPanel" linkSize="30" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="presetsLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="presetsComboBox" min="-2" pref="166" max="-2" attributes="0"/>
@@ -54,22 +54,21 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="sidelineTracksPanel" linkSize="21" max="32767" attributes="0"/>
-                  <Component id="mainlineTracksPanel" linkSize="21" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="previewPanel" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="sidelineTracksPanel" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="presetsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="presetsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="mainlineTracksPanel" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="previewPanel" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="presetsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="presetsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -91,39 +90,34 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="mainRailWidthLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="mainTieLengthLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="mainRailGapLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="mainBallastWidthLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="mainTieColorLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="mainTieWidthLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="mainBallastColorLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="mainTieGapLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="mainRailCountLabel" linkSize="14" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="mainBallastColorChooserPanel" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainBallastWidthSpinner" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainRailWidthSpinner" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainRailGapSpinner" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainTieLengthSpinner" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainTieColorChooserPanel" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainTieWidthSpinner" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainTieGapSpinner" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainRailCountSpinner" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="mainRailColorLabel" min="-2" pref="293" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="mainRailColorChooserPanel" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="mainTieGapLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainRailWidthLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainTieLengthLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainTieColorLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainBallastWidthLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainRailGapLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainTieWidthLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainRailCountLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainBlockLineWidthLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainBallastColorLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mainRailColorLabel" linkSize="25" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="137" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="mainTieWidthSpinner" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainRailCountSpinner" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainBlockLineSpinner" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainRailWidthSpinner" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainTieLengthSpinner" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainRailColorButton" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainTieGapSpinner" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainTieColorButton" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainRailGapSpinner" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainBallastColorButton" linkSize="28" alignment="1" max="32767" attributes="0"/>
+                      <Component id="mainBallastWidthSpinner" linkSize="28" alignment="1" min="-2" pref="64" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -131,58 +125,60 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="mainBallastWidthLabel" linkSize="11" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="mainBallastWidthSpinner" linkSize="11" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="mainBallastColorChooserPanel" linkSize="11" max="32767" attributes="0"/>
-                      <Component id="mainBallastColorLabel" linkSize="11" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="mainTieLengthLabel" linkSize="11" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="mainTieLengthSpinner" linkSize="11" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="mainTieWidthLabel" linkSize="11" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="mainTieWidthSpinner" linkSize="11" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="mainTieGapSpinner" linkSize="11" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="mainTieGapLabel" linkSize="11" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="mainBallastWidthLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainBallastColorLabel" linkSize="26" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainTieLengthLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainTieWidthLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainTieGapLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainTieColorLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainRailCountLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="mainRailWidthLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainRailGapLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainRailColorLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainBlockLineWidthLabel" linkSize="26" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="mainBallastWidthSpinner" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainBallastColorButton" linkSize="26" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainTieLengthSpinner" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainTieWidthSpinner" linkSize="26" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="mainTieColorLabel" linkSize="11" min="-2" max="-2" attributes="0"/>
-                              <Component id="mainTieColorChooserPanel" linkSize="11" min="-2" max="-2" attributes="0"/>
+                              <Component id="mainTieGapSpinner" linkSize="26" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
+                                  <Component id="mainTieColorButton" linkSize="26" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainRailCountSpinner" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="mainRailWidthSpinner" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainRailGapSpinner" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainRailColorButton" linkSize="26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="mainBlockLineSpinner" linkSize="26" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="mainRailCountLabel" linkSize="11" min="-2" max="-2" attributes="0"/>
-                      <Component id="mainRailCountSpinner" linkSize="11" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="mainRailWidthLabel" linkSize="11" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="mainRailWidthSpinner" linkSize="11" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="mainRailGapLabel" linkSize="11" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="mainRailGapSpinner" linkSize="11" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="mainRailColorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="mainRailColorChooserPanel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -194,7 +190,6 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Ballast Width:"/>
-            <Property name="toolTipText" type="java.lang.String" value="Use &apos;+&apos; or &apos;*&apos; for track width relative"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="mainBallastWidthSpinner">
@@ -202,17 +197,14 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the width of the ballast"/>
+            <Property name="toolTipText" type="java.lang.String" value="Set the width of the mainline ballast"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="ltdOptions.getMainBallastWidth()" type="code"/>
+              <Connection code="ltdOptions.getSideBallastWidth()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainBallastWidthSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainBallastWidthSpinnerVetoableChange"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="LayoutTrackDrawingOptionsDialog_mainBallastWidthSpinner"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="mainBallastColorLabel">
           <Properties>
@@ -220,7 +212,6 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Ballast Color:"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="LayoutTrackDrawingOptionsDialog_jLabel2"/>
@@ -228,17 +219,17 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
         </Component>
-        <Container class="jmri.util.swing.ButtonSwatchColorChooserPanel" name="mainBallastColorChooserPanel">
+        <Container class="javax.swing.JButton" name="mainBallastColorButton">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Set the color of the mainline ballast"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder bevelType="1"/>
               </Border>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the color of the ballast"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mainBallastColorChooserPanelMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mainBallastColorButtonMouseClicked"/>
           </Events>
 
           <Layout>
@@ -264,13 +255,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the length of the ties"/>
+            <Property name="toolTipText" type="java.lang.String" value="Set the length of the mainline ties"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="ltdOptions.getMainTieLength()" type="code"/>
+              <Connection code="ltdOptions.getSideTieLength()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainTieLengthSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainTieLengthSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="mainTieWidthLabel">
@@ -283,13 +274,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the width of the ties"/>
+            <Property name="toolTipText" type="java.lang.String" value="Set the width of the mainline ties"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="ltdOptions.getMainTieWidth()" type="code"/>
+              <Connection code="ltdOptions.getSideTieWidth()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainTieWidthSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainTieWidthSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="mainTieGapLabel">
@@ -302,13 +293,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the gap between the ties"/>
+            <Property name="toolTipText" type="java.lang.String" value="Set the gap between the mainline ties"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="ltdOptions.getMainTieGap()" type="code"/>
+              <Connection code="ltdOptions.getSideTieGap()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainTieGapSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainTieGapSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="mainTieColorLabel">
@@ -317,7 +308,6 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Tie Color:"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="LayoutTrackDrawingOptionsDialog_jLabel2"/>
@@ -325,17 +315,17 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
         </Component>
-        <Container class="jmri.util.swing.ButtonSwatchColorChooserPanel" name="mainTieColorChooserPanel">
+        <Container class="javax.swing.JButton" name="mainTieColorButton">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Set the color of the mainline ties"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder bevelType="1"/>
               </Border>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the color of the ties"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mainTieColorChooserPanelMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mainTieColorButtonMouseClicked"/>
           </Events>
 
           <Layout>
@@ -361,18 +351,19 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" maximum="3" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Select the number of Rails (1...3)"/>
+            <Property name="toolTipText" type="java.lang.String" value="Select the number of mainline rails (1...3)"/>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="ltdOptions.getMainRailCount()" type="code"/>
+              <Connection code="ltdOptions.getSideRailCount()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainRailCountSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainRailCountSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="mainRailWidthLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Rail Width"/>
+            <Property name="text" type="java.lang.String" value="Rail Width:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="mainRailWidthSpinner">
@@ -380,19 +371,19 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Select the number of Rails (1...3)"/>
+            <Property name="toolTipText" type="java.lang.String" value="Select the number of mainline rails (1...3)"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="ltdOptions.getMainRailWidth()" type="code"/>
+              <Connection code="ltdOptions.getSideRailWidth()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainRailWidthSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainRailWidthSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="mainRailGapLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Rail Gap"/>
+            <Property name="text" type="java.lang.String" value="Rail Gap:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="mainRailGapSpinner">
@@ -400,14 +391,14 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Select the gap between the rails"/>
+            <Property name="toolTipText" type="java.lang.String" value="Select the gap between the mainline rails"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="ltdOptions.getMainRailGap()" type="code"/>
+              <Connection code="ltdOptions.getSideRailGap()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainRailGapSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainRailGapSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="mainRailColorLabel">
@@ -416,7 +407,6 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Rail Color:"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="LayoutTrackDrawingOptionsDialog_jLabel2"/>
@@ -424,18 +414,17 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
         </Component>
-        <Container class="jmri.util.swing.ButtonSwatchColorChooserPanel" name="mainRailColorChooserPanel">
+        <Container class="javax.swing.JButton" name="mainRailColorButton">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Set the color of the mainline ties"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder bevelType="1"/>
               </Border>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the color of the ties"/>
           </Properties>
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="mainRailColorChooserPanelFocusLost"/>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mainRailColorChooserPanelMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mainRailColorButtonMouseClicked"/>
           </Events>
 
           <Layout>
@@ -451,6 +440,26 @@
             </DimensionLayout>
           </Layout>
         </Container>
+        <Component class="javax.swing.JLabel" name="mainBlockLineWidthLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Block Line Width:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="mainBlockLineSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Select the gap between the mainline rails"/>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
+            <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="ltdOptions.getSideRailGap()" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainBlockLineSpinnerVetoableChange"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="sidelineTracksPanel">
@@ -473,38 +482,37 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="sideTieWidthLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="sideTieGapLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="sideBallastWidthLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="sideBallastColorLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="sideRailCountLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="sideTieLengthLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="sideTieColorLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="sideRailWidthLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                              <Component id="sideRailGapLabel" linkSize="13" alignment="1" min="-2" pref="293" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="sideRailWidthSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="sideRailGapSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="sideTieLengthSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="sideTieColorChooserPanel" linkSize="16" alignment="0" max="32767" attributes="0"/>
-                              <Component id="sideTieWidthSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="sideTieGapSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="sideRailCountSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="sideBallastColorChooserPanel" linkSize="16" alignment="0" max="32767" attributes="0"/>
-                              <Component id="sideBallastWidthSpinner" linkSize="16" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                          <Component id="sideTieWidthLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideTieGapLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideBallastWidthLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideBallastColorLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideRailCountLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideTieLengthLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideTieColorLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideRailWidthLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideRailGapLabel" linkSize="13" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="sideRailColorLabel" min="-2" pref="293" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="sideRailColorChooserPanel" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="sideRailColorLabel" linkSize="13" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="sideBlockLineWidthLabel" alignment="0" pref="173" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="72" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="sideRailWidthSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideRailGapSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideTieLengthSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideTieColorButton" linkSize="16" alignment="0" max="32767" attributes="0"/>
+                          <Component id="sideTieWidthSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideTieGapSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideRailCountSpinner" linkSize="16" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideBallastColorButton" linkSize="16" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="sideRailColorButton" linkSize="16" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="sideBlockLineWidthSpinner" linkSize="16" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="sideBallastWidthSpinner" linkSize="16" alignment="1" min="-2" pref="64" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -517,7 +525,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="sideBallastColorChooserPanel" linkSize="15" alignment="0" max="32767" attributes="0"/>
+                      <Component id="sideBallastColorButton" linkSize="15" alignment="0" max="32767" attributes="0"/>
                       <Component id="sideBallastColorLabel" linkSize="15" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -538,7 +546,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="sideTieColorLabel" linkSize="15" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="sideTieColorChooserPanel" linkSize="15" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="sideTieColorButton" linkSize="15" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -559,8 +567,13 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="sideRailColorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="sideRailColorChooserPanel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="sideRailColorLabel" linkSize="15" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="sideRailColorButton" linkSize="15" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="sideBlockLineWidthLabel" linkSize="15" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="sideBlockLineWidthSpinner" linkSize="15" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -573,7 +586,6 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Ballast Width:"/>
-            <Property name="toolTipText" type="java.lang.String" value="Use &apos;+&apos; or &apos;*&apos; for track width relative"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideBallastWidthSpinner">
@@ -581,13 +593,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the width of the ballast"/>
+            <Property name="toolTipText" type="java.lang.String" value="Set the width of the sideline ballast"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideBallastWidth()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideBallastWidthSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideBallastWidthSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="sideBallastColorLabel">
@@ -596,7 +608,6 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Ballast Color:"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="LayoutTrackDrawingOptionsDialog_jLabel2"/>
@@ -604,17 +615,17 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
         </Component>
-        <Container class="jmri.util.swing.ButtonSwatchColorChooserPanel" name="sideBallastColorChooserPanel">
+        <Container class="javax.swing.JButton" name="sideBallastColorButton">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Set the color of the sideline ballast"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder bevelType="1"/>
               </Border>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the color of the ballast"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sideBallastColorChooserPanelMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sideBallastColorButtonMouseClicked"/>
           </Events>
 
           <Layout>
@@ -640,13 +651,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the length of the ties"/>
+            <Property name="toolTipText" type="java.lang.String" value="Set the length of the sideline ties"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideTieLength()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideTieLengthSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideTieLengthSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="sideTieWidthLabel">
@@ -659,13 +670,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the width of the ties"/>
+            <Property name="toolTipText" type="java.lang.String" value="Set the width of the sideline ties"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideTieWidth()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideTieWidthSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideTieWidthSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="sideTieGapLabel">
@@ -678,13 +689,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the gap between the ties"/>
+            <Property name="toolTipText" type="java.lang.String" value="Set the gap between the sideline ties"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideTieGap()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideTieGapSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideTieGapSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="sideTieColorLabel">
@@ -693,7 +704,6 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Tie Color:"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="LayoutTrackDrawingOptionsDialog_jLabel2"/>
@@ -701,18 +711,17 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
         </Component>
-        <Container class="jmri.util.swing.ButtonSwatchColorChooserPanel" name="sideTieColorChooserPanel">
+        <Container class="javax.swing.JButton" name="sideTieColorButton">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Set the color of the sideline ties"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder bevelType="1"/>
               </Border>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the color of the ties"/>
           </Properties>
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="sideTieColorChooserPanelFocusLost"/>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sideTieColorChooserPanelMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mainRailColorButtonMouseClicked"/>
           </Events>
 
           <Layout>
@@ -738,19 +747,19 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" maximum="3" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Select the number of Rails (1...3)"/>
+            <Property name="toolTipText" type="java.lang.String" value="Select the number of sideline rails (1...3)"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideRailCount()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideRailCountSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideRailCountSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="sideRailWidthLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Rail Width"/>
+            <Property name="text" type="java.lang.String" value="Rail Width:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideRailWidthSpinner">
@@ -758,19 +767,19 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Select the number of Rails (1...3)"/>
+            <Property name="toolTipText" type="java.lang.String" value="Select the width of the sideline rails"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideRailWidth()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideRailWidthSpinnerStateChanged"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideRailWidthSpinnerVetoableChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="sideRailGapLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Rail Gap"/>
+            <Property name="text" type="java.lang.String" value="Rail Gap:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideRailGapSpinner">
@@ -778,14 +787,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Select the gap between the rails"/>
+            <Property name="toolTipText" type="java.lang.String" value="Select the gap between the sideline rails"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideRailGap()" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideRailGapSpinnerStateChanged"/>
             <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideRailGapSpinnerVetoableChange"/>
           </Events>
         </Component>
@@ -795,7 +803,6 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Rail Color:"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="LayoutTrackDrawingOptionsDialog_jLabel2"/>
@@ -803,18 +810,17 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
         </Component>
-        <Container class="jmri.util.swing.ButtonSwatchColorChooserPanel" name="sideRailColorChooserPanel">
+        <Container class="javax.swing.JButton" name="sideRailColorButton">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Set the color of the sideline ties"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder bevelType="1"/>
               </Border>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Set the color of the ties"/>
           </Properties>
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="sideRailColorChooserPanelFocusLost"/>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sideRailColorChooserPanelMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sideRailColorButtonMouseClicked"/>
           </Events>
 
           <Layout>
@@ -830,6 +836,26 @@
             </DimensionLayout>
           </Layout>
         </Container>
+        <Component class="javax.swing.JLabel" name="sideBlockLineWidthLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Block Line Width:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="sideBlockLineWidthSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Select the gap between the sideline rails"/>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
+            <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="ltdOptions.getSideRailGap()" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideBlockLineWidthSpinnerVetoableChange"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="previewPanel">
@@ -853,8 +879,9 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="previewLayeredPane" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <Component id="previewLayeredPane" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -871,7 +898,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="110" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>

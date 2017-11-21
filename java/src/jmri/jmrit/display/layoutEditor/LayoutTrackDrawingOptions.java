@@ -13,7 +13,7 @@ import java.awt.Color;
  */
 public class LayoutTrackDrawingOptions {
 
-    private int sideBallastWidth = 6;   // defaults to zero (off)
+    private int sideBallastWidth = 13;   // defaults to zero (off)
 
     protected int getSideBallastWidth() {
         return sideBallastWidth;
@@ -33,7 +33,7 @@ public class LayoutTrackDrawingOptions {
         sideBallastColor = val;
     }
 
-    private int sideTieLength = 0;
+    private int sideTieLength = 9;
 
     protected int getSideTieLength() {
         return sideTieLength;
@@ -53,7 +53,7 @@ public class LayoutTrackDrawingOptions {
         sideTieColor = val;
     }
 
-    private int sideTieWidth = 2;
+    private int sideTieWidth = 3;
 
     protected int getSideTieWidth() {
         return sideTieWidth;
@@ -73,7 +73,7 @@ public class LayoutTrackDrawingOptions {
         sideTieGap = val;
     }
 
-    private int sideRailCount = 1;
+    private int sideRailCount = 2;
 
     protected int getSideRailCount() {
         return sideRailCount;
@@ -83,7 +83,7 @@ public class LayoutTrackDrawingOptions {
         sideRailCount = val;
     }
 
-    private int sideRailWidth = 3;
+    private int sideRailWidth = 1;
 
     protected int getSideRailWidth() {
         return sideRailWidth;
@@ -113,7 +113,17 @@ public class LayoutTrackDrawingOptions {
         sideRailColor = val;
     }
 
-    private int mainBallastWidth = 8;   // defaults to zero (off)
+    private int sideBlockLineWidth = 3;
+
+    protected int getSideBlockLineWidth() {
+        return sideBlockLineWidth;
+    }
+
+    protected void setSideBlockLineWidth(int val) {
+        sideBlockLineWidth = val;
+    }
+
+    private int mainBallastWidth = 15;   // defaults to zero (off)
 
     protected int getMainBallastWidth() {
         return mainBallastWidth;
@@ -133,7 +143,7 @@ public class LayoutTrackDrawingOptions {
         mainBallastColor = val;
     }
 
-    private int mainTieLength = 0;
+    private int mainTieLength = 11;
 
     protected int getMainTieLength() {
         return mainTieLength;
@@ -173,7 +183,7 @@ public class LayoutTrackDrawingOptions {
         mainTieGap = val;
     }
 
-    private int mainRailCount = 1;
+    private int mainRailCount = 2;
 
     protected int getMainRailCount() {
         return mainRailCount;
@@ -183,7 +193,7 @@ public class LayoutTrackDrawingOptions {
         mainRailCount = val;
     }
 
-    private int mainRailWidth = 4;
+    private int mainRailWidth = 2;
 
     protected int getMainRailWidth() {
         return mainRailWidth;
@@ -211,5 +221,15 @@ public class LayoutTrackDrawingOptions {
 
     protected void setMainRailColor(Color val) {
         mainRailColor = val;
+    }
+
+    private int mainBlockLineWidth = 3;
+
+    protected int getMainBlockLineWidth() {
+        return mainBlockLineWidth;
+    }
+
+    protected void setMainBlockLineWidth(int val) {
+        mainBlockLineWidth = val;
     }
 }

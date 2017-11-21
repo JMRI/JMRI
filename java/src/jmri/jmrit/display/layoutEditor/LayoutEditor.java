@@ -9547,15 +9547,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         drawTrackBallast(g2);
-//        drawTrackTies(g2);
-//
-//        List<TrackSegment> trackSegments = getTrackSegments();
-//        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
-//        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
-//        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
-//        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
-//
-//        drawLayoutTracks(g2);
+        drawTrackTies(g2);
+
+        List<TrackSegment> trackSegments = getTrackSegments();
+        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
+        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
+        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
+        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
+
+        drawLayoutTracks(g2);
 
         // things that only get drawn in edit mode
         if (isEditable()) {
@@ -9618,7 +9618,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 || (ballastColor == null)
                 || (ballastMain != needMain)) {
             //get ballast stroke width
-
             if (needMain) {
                 int mainBallastWidth = layoutTrackDrawingOptions.getMainBallastWidth();
                 ballastColor = layoutTrackDrawingOptions.getMainBallastColor();
