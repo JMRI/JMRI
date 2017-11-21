@@ -13,8 +13,10 @@ import java.net.InetAddress;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -56,6 +58,27 @@ public class ZeroConfServiceTest {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+    }
+
+
+    class TestZeroConfServiceListener implements ZeroConfServiceListener {
+
+       public boolean queuedService = false;
+       public boolean publishedService = false;
+       public boolean unpublishedService = false;
+
+       public void serviceQueued(ZeroConfServiceEvent se){
+          queuedService = true;
+       }
+
+       public void servicePublished(ZeroConfServiceEvent se) {
+          publishedService = true;
+       }
+
+       public void serviceUnpublished(ZeroConfServiceEvent se) {
+          unpublishedService = true;
+       }
+
     }
 
     @Before
@@ -171,24 +194,35 @@ public class ZeroConfServiceTest {
     }
 
     /**
-     * Test of the publish  method, of class ZeroConfService.
+     * Test of the publish and stop methods, of class ZeroConfService.
      */
     @Test
     public void testPublishAndStop() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
+        TestZeroConfServiceListener zcl = new TestZeroConfServiceListener();
+        instance.addEventListener(zcl);
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
+        Assume.assumeTrue("queued event received", JUnitUtil.waitFor(() -> {
+           return zcl.queuedService;
+        }));
+        Assume.assumeTrue("published event received", JUnitUtil.waitFor(() -> {
+           return zcl.publishedService;
+        }));
         Assert.assertTrue(instance.isPublished());
         instance.stop();
+        Assume.assumeTrue("unpublished event received", JUnitUtil.waitFor(() -> {
+           return zcl.unpublishedService;
+        }));
         Assert.assertFalse(instance.isPublished());
-    
     }
 
     /**
      * Test of stop method, of class ZeroConfService.
      */
     @Test
+    @Ignore("duplicate")
     public void testStop() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
@@ -211,13 +245,21 @@ public class ZeroConfServiceTest {
     public void testStopAll() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
+        TestZeroConfServiceListener zcl = new TestZeroConfServiceListener();
+        instance.addEventListener(zcl);
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
+        Assume.assumeTrue("queued event received", JUnitUtil.waitFor(() -> {
+           return zcl.queuedService;
+        }));
+        Assume.assumeTrue("published event received", JUnitUtil.waitFor(() -> {
+           return zcl.publishedService;
+        }));
         Assert.assertTrue(instance.isPublished());
         ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == false;
-        }, "Stopping ZeroConf Service");
+        Assume.assumeTrue("unpublished event received", JUnitUtil.waitFor(() -> {
+           return zcl.unpublishedService;
+        }));
         Assert.assertFalse(instance.isPublished());
     }
 
