@@ -47,8 +47,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.simulator.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.networkdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.class));
-        suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.easydccmon.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.packetgen.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccNetworkPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccSystemConnectionMemoTest.class));
@@ -60,6 +59,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(EasyDccProgrammerManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.swing.PackageTest.class));
 
         return suite;
     }

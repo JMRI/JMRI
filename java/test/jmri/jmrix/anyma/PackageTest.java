@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
     AnymaDMX_UsbPortAdapterTest.class,
     UsbLightManagerTest.class,
     jmri.jmrix.anyma.configurexml.PackageTest.class,
+    BundleTest.class,
     })
 
 /**

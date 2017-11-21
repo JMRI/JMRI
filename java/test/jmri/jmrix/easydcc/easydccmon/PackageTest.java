@@ -1,4 +1,4 @@
-package jmri.jmrix.easydcc.packetgen;
+package jmri.jmrix.easydcc.easydccmon;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -6,12 +6,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    EasyDccPacketGenActionTest.class,
-    EasyDccPacketGenFrameTest.class,
-    BundleTest.class
+   BundleTest.class,
+   EasyDccMonFrameTest.class,
+   EasyDccMonActionTest.class   
 })
 /**
- * Tests for the jmri.jmrix.swing package
+ * Tests for the jmri.jmrix.easydcc.easydccmon package
  *
  * @author      Paul Bender Copyright (C) 2017
  */
