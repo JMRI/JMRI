@@ -89,8 +89,10 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-
-        return super.get(type);
+        if(type.equals(jmri.ConsistManager.class)){
+           return (T) getConsistManager();
+        }
+        return null;
     }
 
     @Override
@@ -110,8 +112,10 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
             return getProgrammerManager().isAddressedModePossible();
         }
-
-        return super.provides(type);
+        if(type.equals(jmri.ConsistManager.class)){
+           return(getConsistManager()!=null);
+        } 
+        return false;
     }
 
     @Override
