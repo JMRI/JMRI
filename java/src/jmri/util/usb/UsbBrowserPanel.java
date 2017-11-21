@@ -11,17 +11,21 @@
  *============================================================================*/
 package jmri.util.usb;
 
+import java.awt.Image;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -34,6 +38,7 @@ import javax.usb.UsbHub;
 import javax.usb.UsbPort;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
+import jmri.util.FileUtil;
 import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,6 +127,40 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         }
         initComponents();
         buildTree(root);
+
+        //
+        // Change the default JTree icons
+        //
+        try {
+            // get the tree cell renderer
+            DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) usbTree.getCellRenderer();
+
+            // get the size of the current icon
+            Icon openIcon = renderer.getOpenIcon();
+            int w = openIcon.getIconWidth();
+            int h = openIcon.getIconHeight();
+
+            // get the usb port icon
+            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Port.jpg"));
+            Image image = imageIcon.getImage(); // convert it to an image
+            image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+            imageIcon = new ImageIcon(image);  // convert it back to an icon
+            // use it for both the open and closed icons
+            renderer.setOpenIcon(imageIcon);
+            renderer.setClosedIcon(imageIcon);
+
+            // get the usb plug icon
+            imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Plug.jpg"));
+            image = imageIcon.getImage(); // convert it to an image
+            image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+            imageIcon = new ImageIcon(image);  // convert it back to an icon
+            // use it for the leaf icon
+            renderer.setLeafIcon(imageIcon);
+        } catch (RuntimeException e) {
+            throw e;    // runtime exceptions make me throw up
+        } catch (Exception e) {
+            // ignore others
+        }
     }
 
     private void buildTree(UsbTreeNode root) {
@@ -149,14 +188,30 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * expand all containers in tree
+     *
+     * @param tree the tree
+     */
     public void expandAll(@Nullable JTree tree) {
         expandAll(tree, true);
     }
 
+    /**
+     * unexpand all containers in tree
+     *
+     * @param tree the tree
+     */
     public void unexpandAll(@Nullable JTree tree) {
         expandAll(tree, false);
     }
 
+    /**
+     * (un)expand all containers in tree
+     *
+     * @param tree   the tree
+     * @param expand set true to expand; false to unexpand
+     */
     public void expandAll(@Nullable JTree tree, boolean expand) {
         if (tree != null) {
             TreeNode root = (TreeNode) tree.getModel().getRoot();
@@ -215,6 +270,9 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void dispose() {
         try {
             UsbHostManager.getUsbServices().
@@ -237,7 +295,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane(this.usbTree);
         usbTree = new javax.swing.JTree(this.root);
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        detailTable = new javax.swing.JTable();
 
         jSplitPane1.setBorder(null);
         jSplitPane1.setResizeWeight(0.5);
@@ -251,8 +309,8 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         jSplitPane1.setLeftComponent(jScrollPane1);
 
-        jTable1.setModel(this.deviceModel);
-        jScrollPane2.setViewportView(jTable1);
+        detailTable.setModel(this.deviceModel);
+        jScrollPane2.setViewportView(detailTable);
 
         jSplitPane1.setRightComponent(jScrollPane2);
 
@@ -270,10 +328,10 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable detailTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTree usbTree;
     // End of variables declaration//GEN-END:variables
 
@@ -313,7 +371,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             if (userObject == null) {
                 return Bundle.getMessage("UnableToGetUsbRootHub");
             } else if (userObject instanceof UsbDevice) {
-                return USBUtil.getFullProductName((UsbDevice) userObject);
+                return "" + userObject;
             }
             return super.toString();
         }
@@ -326,7 +384,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         @Override
         public int getRowCount() {
-            return ((node != null) && (node.getUsbDevice() != null)) ? 6 : 1;
+            return ((node != null) && (node.getUsbDevice() != null)) ? 10 : 1;
         }
 
         @Override
@@ -342,11 +400,13 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         @Override
         @CheckReturnValue
         public Object getValueAt(int rowIndex, int columnIndex) {
+            Object result = null;
+
             if ((node == null) || (node.getUsbDevice() == null)) {
                 return Bundle.getMessage("EmptySelection");
             }
             switch (columnIndex) {
-                case 0:
+                case 0: {
                     switch (rowIndex) {
                         case 0:
                             return Bundle.getMessage("UsbDeviceManufacturer");
@@ -359,29 +419,62 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                         case 4:
                             return Bundle.getMessage("UsbDeviceProductId");
                         case 5:
+                            return Bundle.getMessage("UsbDeviceClass");
+                        case 6:
+                            return Bundle.getMessage("UsbDeviceSubClass");
+                        case 7:
+                            return Bundle.getMessage("UsbDeviceProtocol");
+                        case 8:
+                            return Bundle.getMessage("UsbDeviceBCDDevice");
+                        case 9:
                             return Bundle.getMessage("UsbDeviceLocationId");
                         default:
                             break;
                     }
                     break;
+                }
                 case -1:
-                case 1:
+                case 1: {
                     try {
+                        UsbDevice usbDevice = node.getUsbDevice();
                         switch (rowIndex) {
                             case 0:
-                                return node.getUsbDevice().getManufacturerString();
+                                result = "?";
+                                return usbDevice.getManufacturerString();
                             case 1:
-                                return node.getUsbDevice().getProductString();
+                                result = "?";
+                                return usbDevice.getProductString();
                             case 2:
-                                return node.getUsbDevice().getSerialNumberString();
+                                result = "?";
+                                return usbDevice.getSerialNumberString();
                             case 3:
-                                return String.format("0x%04X", node.getUsbDevice().getUsbDeviceDescriptor().idVendor());
+                                result = "0x????";
+                                return String.format("0x%04X", usbDevice.getUsbDeviceDescriptor().idVendor());
                             case 4:
-                                return String.format("0x%04X", node.getUsbDevice().getUsbDeviceDescriptor().idProduct());
+                                result = "0x????";
+                                return String.format("0x%04X", usbDevice.getUsbDeviceDescriptor().idProduct());
                             case 5:
-                                return USBUtil.getLocationID(node.getUsbDevice());
+                                result = "?";
+                                return String.format("%d", usbDevice.getUsbDeviceDescriptor().bDeviceClass());
+                            case 6:
+                                result = "?";
+                                return String.format("%d", usbDevice.getUsbDeviceDescriptor().bDeviceSubClass());
+                            case 7:
+                                result = "?";
+                                return String.format("%d", usbDevice.getUsbDeviceDescriptor().bDeviceProtocol());
+                            case 8:
+                                log.info("* usbDevice: " + usbDevice);
+                                log.info("* usbDevice.getUsbDeviceDescriptor():\n" + usbDevice.getUsbDeviceDescriptor());
+                                result = "##.##";
+                                short version = usbDevice.getUsbDeviceDescriptor().bcdDevice();
+                                byte hiVersion = (byte) (version >> 8);
+                                byte loVersion = (byte) version;
+                                return String.format("%X.%02X", hiVersion, loVersion);
+                            case 9:
+                                result = "0x########";
+                                return USBUtil.getLocationID(usbDevice);
                             default:
-                                return null;
+                                break;
                         }
                     } catch (UsbDisconnectedException ex) {
                         node.setUsbDevice(null);
@@ -389,10 +482,12 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                         log.error("Unable to get USB device property.", ex);
                     }
                     break;
-                default:
-                    return null;
+                }
+                default: {
+                    break;
+                }
             }
-            return null;
+            return result;
         }   // getValueAt
 
         public void setNode(@Nullable UsbTreeNode node) {
