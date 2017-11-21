@@ -141,7 +141,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             int h = openIcon.getIconHeight();
 
             // get the usb port icon
-            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Port.jpg"));
+            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Hub.png"));
             Image image = imageIcon.getImage(); // convert it to an image
             image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
             imageIcon = new ImageIcon(image);  // convert it back to an icon
@@ -371,7 +371,12 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             if (userObject == null) {
                 return Bundle.getMessage("UnableToGetUsbRootHub");
             } else if (userObject instanceof UsbDevice) {
-                return "" + userObject;
+                UsbDevice usbDevice = (UsbDevice) userObject;
+                String fullProductName = USBUtil.getFullProductName(usbDevice);
+                if ((fullProductName == null) || fullProductName.isEmpty()) {
+                    return "" + userObject;
+                }
+                return fullProductName;
             }
             return super.toString();
         }
