@@ -1291,6 +1291,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="METHOD" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1454,6 +1457,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="METHOD" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1480,6 +1486,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="METHOD" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1505,6 +1514,9 @@
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="METHOD" value="COVEREDCOUNT" minimum="1"/>
               </rule>
           </check>
        </jacoco:report>
