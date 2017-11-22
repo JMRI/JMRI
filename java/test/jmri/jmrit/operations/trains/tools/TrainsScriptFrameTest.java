@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,11 +15,11 @@ import org.junit.Test;
 public class TrainsScriptFrameTest {
 
     @Test
-    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScriptFrame t = new TrainsScriptFrame();
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
